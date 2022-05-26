@@ -1,0 +1,9 @@
+Deploy:
+
+* Datendatei erzeugen
+* lokal testen
+* kompilieren
+* per FTP die Dateien hochladen
+* web.xml: nicht mehr nur localhost akzeptieren
+* Tomcat Restart
+* Sicherheitstests durchführen
