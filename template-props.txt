@@ -1,0 +1,3 @@
+basePath= [ path to savings ; on the server: /webs/_NEW/k40321mu/tomcat/webapps/ROOT/
+runOnServer=true / false
+auth=[authentification string]

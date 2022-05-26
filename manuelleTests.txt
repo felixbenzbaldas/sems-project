@@ -1,0 +1,8 @@
+DEPLOY
+A Datendatei erzeugen
+A lokal testen
+A kompilieren
+A per FTP die Dateien hochladen
+A web.xml: nicht mehr nur localhost akzeptieren
+A Tomcat Restart
+A Sicherheitstests durchführen

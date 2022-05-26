@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es6",
+    "sourceMap": false,
+    "outDir": "ROOT/target"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
