@@ -290,4 +290,30 @@ export class DetailsView {
         List.insertInListAtPosition(this.detailUserInterfaceObjects, newUio, indexOfUIO);
         Html.insertChildAtPosition(this.uiElement, newUio.uiElement, indexOfUIO);
     }
+
+    public getRawTextOfTree(level : number) : string {
+        let text : string = '';
+        for (let i = 0; i < this.detailUserInterfaceObjects.length; i++) {
+            let detailTovc : TextObjectViewController = TextObjectViewController.map.get(this.detailUserInterfaceObjects[i]);
+            text += detailTovc.getRawTextOfTree_Safe(level);
+            if (i + 1 < this.detailUserInterfaceObjects.length) {
+                text += '\n';
+            }
+        }
+        return text;
+    }
+    
+    public getPositionOfDetailUIO(detailUIO : UserInterfaceObject) : number {
+        return this.detailUserInterfaceObjects.indexOf(detailUIO);
+    }
+
+    public getUioAtPosition(position : number) : UserInterfaceObject {
+        return this.detailUserInterfaceObjects[position];
+    }
+
+    public getNumberOfDetails() : number {
+        return this.detailUserInterfaceObjects.length;
+    }
+
+    
 }

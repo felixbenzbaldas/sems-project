@@ -100,4 +100,20 @@ export class View {
             }
         }
     }
+
+    public static getNextUioOnSameLevel(uio : UserInterfaceObject) {
+        let parentTovc : TextObjectViewController = TextObjectViewController.map.get(uio.viewContext);
+        let position = parentTovc.detailsView.getPositionOfDetailUIO(uio);
+        if (position + 1 < parentTovc.detailsView.getNumberOfDetails()) {
+            return parentTovc.detailsView.getUioAtPosition(position + 1);
+        } else {
+            let nextParentTovc : TextObjectViewController =
+                TextObjectViewController.map.get(View.getNextUioOnSameLevel(uio.viewContext));
+            if (!nextParentTovc.isCollapsed()) {
+                return nextParentTovc.detailsView.getUioAtPosition(0);
+            } else {
+                return null;
+            }
+        }
+    }
 }

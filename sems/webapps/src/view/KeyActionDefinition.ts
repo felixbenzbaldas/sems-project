@@ -102,6 +102,12 @@ export class KeyActionDefinition {
             }, function() {
                 textObjectViewController.exportRawText();
         });
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = "2";
+            }, function() {
+                textObjectViewController.exportFourObjectsSafe();
+        });
         return map;
     }
 

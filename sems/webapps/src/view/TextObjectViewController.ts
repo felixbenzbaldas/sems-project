@@ -621,4 +621,71 @@ export class TextObjectViewController {
         this.headText.updateTextProperty();
         textArea.value = this.props.get(TEXT);
     }
+
+    public exportFourObjectsSafe() {
+        this.ensureExpanded();
+        let textArea : HTMLTextAreaElement = document.createElement("textarea");
+        Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
+        this.headText.updateTextProperty();
+        let text : string = '';
+        text += this.getRawTextOfTree_Safe(0);
+        //
+        text += '\n';
+        let nextTovc : TextObjectViewController = TextObjectViewController.map.get(View.getNextUioOnSameLevel(this.uio));
+        text += nextTovc.getRawTextOfTree_Safe(0);
+        //
+        text += '\n';
+        let nextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel(nextTovc.getUserInterfaceObject()));
+        text += nextNextTovc.getRawTextOfTree_Safe(0);
+        //
+        text += '\n';
+        let nextNextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel(nextNextTovc.getUserInterfaceObject()));
+        text += nextNextNextTovc.getRawTextOfTree_Safe(0);
+        //
+        textArea.value = text;
+    }
+
+    public getRawTextOfTree_Safe(level : number) : string{
+        let text : string = "";
+        if (level == 0) {
+            text += this.getTextSafe().toLocaleUpperCase();
+            text += '\n';
+            if (!this.isCollapsed() && this.bodyAvailable() && !this.textHasXXXMark()) {
+                text += '\n';
+                text += this.detailsView.getRawTextOfTree(level + 1);
+                text += '\n';
+            }
+        } else {
+            for (let i = 1; i < level - 1; i++) {
+                text += '  ';
+            }
+            if (level > 1) {
+                text += '- ';
+            }
+            text += this.getTextSafe();
+            if (!this.isCollapsed() && this.bodyAvailable() && !this.textHasXXXMark()) {
+                text += '\n';
+                text += this.detailsView.getRawTextOfTree(level + 1);
+            }
+        }
+        return text;
+    }
+
+    public getTextSafe() : string {
+        if (this.textHasXXXMark()) {
+            let text : string = this.props.get(TEXT);
+            return text.substring(0, text.indexOf('XXX')) + '[pS]';
+        } else {
+            return this.getText();
+        }
+    }
+
+    public textHasXXXMark() : boolean {
+        return this.getText().indexOf('XXX') >= 0;
+    }
+
+    public getText() : string {
+        return this.props.get(TEXT) as string;
+    }
+
 }
