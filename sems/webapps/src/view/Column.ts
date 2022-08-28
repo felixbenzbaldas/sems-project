@@ -452,8 +452,7 @@ export class Column {
         tovc.context.updateContextAsSubitem();
     }
 
-    private getNextColumn() : Column {
-        // let indexOfNextColumn = (ColumnManager.columns.indexOf(this) + 1 ) % ColumnManager.columns.length;
+    public getNextColumn() : Column {
         if (!List.isLastElement(ColumnManager.columns, this)) {
             let indexOfNextColumn = ColumnManager.columns.indexOf(this) + 1;
             return ColumnManager.columns[indexOfNextColumn];
@@ -462,10 +461,9 @@ export class Column {
         }
     }
 
-    private getPreviousColumn() : Column {
+    public getPreviousColumn() : Column {
         let indexOfPrevColumn = ColumnManager.columns.indexOf(this) - 1;
         if (indexOfPrevColumn < 0) {
-            // indexOfPrevColumn += ColumnManager.columns.length;
             return null;
         }
         return ColumnManager.columns[indexOfPrevColumn];
@@ -537,5 +535,24 @@ export class Column {
 
     public expandSecondObject() {
         this.listOfUIOs[1].scaleUp();
+    }
+
+    public hasChildUio() : boolean {
+        return this.listOfUIOs.length > 0;
+    }
+
+    public getFirstChildUio() : UserInterfaceObject {
+        return this.listOfUIOs[0];
+    }
+
+    public hasNextChildUio(childUio : UserInterfaceObject) {
+        let position = this.listOfUIOs.indexOf(childUio);
+        return position + 1 < this.listOfUIOs.length;
+    }
+
+    // check hasNextChildUio before!
+    public getNextChildUio(childUio : UserInterfaceObject) {
+        let position = this.listOfUIOs.indexOf(childUio);
+        return this.listOfUIOs[position + 1];
     }
 }

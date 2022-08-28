@@ -3,11 +3,14 @@ import { DEFAULT_EXPANDED, TEXT } from "../Consts";
 import { RemotePropertiesOfSemsObject } from "../data/RemotePropertiesOfSemsObject";
 import { AnimatedHeadBody } from "../general/AnimatedHeadBody";
 import { General } from "../general/General";
+import { Column } from "./Column";
+import { ColumnManager } from "./ColumnManager";
 import { HypertextView } from "./HypertextView";
 import { ImageView } from "./ImageView";
 import { LinkView } from "./LinkView";
 import { TextObjectViewController } from "./TextObjectViewController";
 import { UserInterfaceObject } from "./UserInterfaceObject";
+import { ViewTypes } from "./ViewTypes";
 
 export class View {
     static DEFAULT_MARGIN_TOP = "0.05rem";
@@ -126,12 +129,23 @@ export class View {
         }
     }
 
-    public static getNextUio_skippingChilds(uio : UserInterfaceObject) : UserInterfaceObject{
-        let parentTovc : TextObjectViewController = TextObjectViewController.map.get(uio.viewContext);
-        if (parentTovc.hasNextChildUio(uio)) {
-            return parentTovc.getNextChildUio(uio);
+    // can return null
+    public static getNextUio_skippingChilds(uio : UserInterfaceObject) : UserInterfaceObject {
+        if (uio.viewContext.viewType == ViewTypes.COLUMN) {
+            let column : Column = Column.map.get(uio.viewContext);
+            if (column.hasNextChildUio(uio)) {
+                return column.getNextChildUio(uio);
+            } else {
+                return null;
+            }
         } else {
-            return View.getNextUio_skippingChilds(uio.viewContext);
+            let parentTovc : TextObjectViewController = TextObjectViewController.map.get(uio.viewContext);
+            if (parentTovc.hasNextChildUio(uio)) {
+                return parentTovc.getNextChildUio(uio);
+            } else {
+                return View.getNextUio_skippingChilds(uio.viewContext);
+            }
         }
     }
+
 }
