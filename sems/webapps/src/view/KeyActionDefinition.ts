@@ -106,7 +106,8 @@ export class KeyActionDefinition {
             keyEvent.sk = true;
             keyEvent.key = "2";
             }, function() {
-                textObjectViewController.exportFourObjectsSafe();
+                // textObjectViewController.exportFourObjectsSafe();
+                textObjectViewController.exportFourObjectsSafe_Html();
         });
         return map;
     }

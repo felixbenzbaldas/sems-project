@@ -108,6 +108,9 @@ export class TextObjectViewController {
         userInterfaceObject.eventController.addObserver(EventTypes.FOCUS_NEXT, function() {
             textObjectViewController.focusNext();
         });
+        userInterfaceObject.eventController.addObserver(EventTypes.JUMP_FORWARD, function() {
+            textObjectViewController.jumpForward();
+        });
         userInterfaceObject.eventController.addObserver(EventTypes.FOCUS_NEXT_WORD, function() {
             textObjectViewController.focusNextWord();
         });
@@ -518,6 +521,42 @@ export class TextObjectViewController {
         }
     }
 
+    public jumpForward() {
+        let currentUio = this.uio;
+        for (let i = 0; i < 7; i++) {
+            let nextUio = View.getNextUio(currentUio);
+            if (nextUio != null) {
+                currentUio = nextUio;
+            }
+        }
+        currentUio.focus();
+        currentUio.eventController.triggerEvent(EventTypes.CURSOR_HINT, null);
+    }
+
+    public hasChildUio() : boolean {
+        // TODO ignoring contextAsSubitm at the moment
+        if (this.isCollapsed()) {
+            return false;
+        } else {
+            return this.detailsView.getNumberOfDetails() > 0;
+        }
+    }
+    public getFirstChildUio() : UserInterfaceObject {
+        // TODO skipping contextAsSubitm at the moment
+        return this.detailsView.getUioAtPosition(0);
+    }
+
+    public hasNextChildUio(childUio : UserInterfaceObject) {
+        let position = this.detailsView.getPositionOfDetailUIO(childUio);
+        return position + 1 < this.detailsView.getNumberOfDetails();
+    }
+
+    // check hasNextChildUio before!
+    public getNextChildUio(childUio : UserInterfaceObject) {
+        let position = this.detailsView.getPositionOfDetailUIO(childUio);
+        return this.detailsView.getUioAtPosition(position + 1);
+    }
+
     public focusNextWord() {
         if (this.isCollapsed()) {
             this.getEventController().triggerEvent(EventTypes.FOCUS_NEXT_WORD_vc, null);
@@ -622,6 +661,72 @@ export class TextObjectViewController {
         textArea.value = this.props.get(TEXT);
     }
 
+    
+
+    public exportFourObjectsSafe_Html() {
+        this.ensureExpanded();
+        let textArea : HTMLTextAreaElement = document.createElement("textarea");
+        Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
+        this.headText.updateTextProperty();
+        let text : string;
+        let div : HTMLDivElement = document.createElement('div');
+        //
+        div.appendChild(this.getHtmlOfTree_Safe(0));
+        //
+        let nextTovc : TextObjectViewController = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(this.uio));
+        div.appendChild(nextTovc.getHtmlOfTree_Safe(0));
+        //
+        let nextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextTovc.getUserInterfaceObject()));
+        div.appendChild(nextNextTovc.getHtmlOfTree_Safe(0));
+        //
+        let nextNextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextNextTovc.getUserInterfaceObject()));
+        div.appendChild(nextNextNextTovc.getHtmlOfTree_Safe(0));
+        //
+        text = div.innerHTML;
+        textArea.value = text;
+    }
+
+    public getHtmlOfTree_Safe(level : number) : HTMLElement {
+        let htmlElement : HTMLElement;
+        htmlElement = document.createElement('div');
+        if (level == 0) {
+            let p : HTMLParagraphElement = document.createElement('p');
+            htmlElement.appendChild(p);
+            p.style.fontSize = "2rem";
+            p.style.color = "gold";
+            p.innerHTML = this.getTextSafe();
+            if (!this.isCollapsed() && this.bodyAvailable() && !this.textHasXXXMark()) {
+                htmlElement.appendChild(this.detailsView.getHtmlOfTree(level + 1));
+            }
+        } else {
+            if (level == 1) {
+                let p : HTMLParagraphElement = document.createElement('p');
+                htmlElement.appendChild(p);
+                p.style.fontSize = "1rem";
+                p.style.color = "blue";
+                p.innerHTML = this.getTextSafe();
+                if (!this.isCollapsed() && this.bodyAvailable() && !this.textHasXXXMark()) {
+                    let ul : HTMLUListElement = document.createElement('ul');
+                    htmlElement.appendChild(ul);
+                    ul.appendChild(this.detailsView.getHtmlOfTree(level + 1));
+                }
+            } else {
+                let li : HTMLLIElement = document.createElement('li');
+                htmlElement.appendChild(li);
+                li.style.fontSize = "1rem";
+                li.style.color = "blue";
+                li.innerHTML = this.getTextSafe();
+                if (!this.isCollapsed() && this.bodyAvailable() && !this.textHasXXXMark()) {
+                    let ul : HTMLUListElement = document.createElement('ul');
+                    htmlElement.appendChild(ul);
+                    ul.appendChild(this.detailsView.getHtmlOfTree(level + 1));
+                }
+            }
+        }
+        return htmlElement;
+    }
+
+
     public exportFourObjectsSafe() {
         this.ensureExpanded();
         let textArea : HTMLTextAreaElement = document.createElement("textarea");
@@ -631,15 +736,15 @@ export class TextObjectViewController {
         text += this.getRawTextOfTree_Safe(0);
         //
         text += '\n';
-        let nextTovc : TextObjectViewController = TextObjectViewController.map.get(View.getNextUioOnSameLevel(this.uio));
+        let nextTovc : TextObjectViewController = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(this.uio));
         text += nextTovc.getRawTextOfTree_Safe(0);
         //
         text += '\n';
-        let nextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel(nextTovc.getUserInterfaceObject()));
+        let nextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextTovc.getUserInterfaceObject()));
         text += nextNextTovc.getRawTextOfTree_Safe(0);
         //
         text += '\n';
-        let nextNextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel(nextNextTovc.getUserInterfaceObject()));
+        let nextNextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextNextTovc.getUserInterfaceObject()));
         text += nextNextNextTovc.getRawTextOfTree_Safe(0);
         //
         textArea.value = text;

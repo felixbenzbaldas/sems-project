@@ -10,6 +10,7 @@ import { UserInterfaceObject } from "./UserInterfaceObject";
 import { View } from "./View";
 
 export class DetailsView {
+    
     private userInterfaceObject : UserInterfaceObject;
     private detailsData : DetailsData;
     private uiElement : HTMLElement;
@@ -290,6 +291,17 @@ export class DetailsView {
         List.insertInListAtPosition(this.detailUserInterfaceObjects, newUio, indexOfUIO);
         Html.insertChildAtPosition(this.uiElement, newUio.uiElement, indexOfUIO);
     }
+
+    public getHtmlOfTree(level : number): HTMLElement {
+        let htmlElement : HTMLElement = document.createElement('div');
+        for (let i = 0; i < this.detailUserInterfaceObjects.length; i++) {
+            let detailTovc : TextObjectViewController = TextObjectViewController.map.get(this.detailUserInterfaceObjects[i]);
+            htmlElement.appendChild(detailTovc.getHtmlOfTree_Safe(level));
+        }
+        return htmlElement;
+
+    }
+
 
     public getRawTextOfTree(level : number) : string {
         let text : string = '';

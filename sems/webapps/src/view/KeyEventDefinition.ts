@@ -31,6 +31,14 @@ export class KeyEventDefinition {
             keyEvent.sk = true;
             keyEvent.key = "k";
         });
+        this.addMapping(EventTypes.JUMP_BACKWARD, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = "8";
+        });
+        this.addMapping(EventTypes.JUMP_FORWARD, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = ",";
+        });
         this.addMapping(EventTypes.FOCUS_PREV, function(keyEvent : KeyEvent) {
             keyEvent.ctrl = true;
             keyEvent.key = "ArrowUp";

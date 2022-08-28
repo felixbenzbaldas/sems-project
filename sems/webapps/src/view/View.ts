@@ -101,19 +101,37 @@ export class View {
         }
     }
 
-    public static getNextUioOnSameLevel(uio : UserInterfaceObject) {
+    public static getNextUioOnSameLevel_skippingParents(uio : UserInterfaceObject) {
         let parentTovc : TextObjectViewController = TextObjectViewController.map.get(uio.viewContext);
         let position = parentTovc.detailsView.getPositionOfDetailUIO(uio);
         if (position + 1 < parentTovc.detailsView.getNumberOfDetails()) {
             return parentTovc.detailsView.getUioAtPosition(position + 1);
         } else {
             let nextParentTovc : TextObjectViewController =
-                TextObjectViewController.map.get(View.getNextUioOnSameLevel(uio.viewContext));
+                TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(uio.viewContext));
             if (!nextParentTovc.isCollapsed()) {
                 return nextParentTovc.detailsView.getUioAtPosition(0);
             } else {
                 return null;
             }
+        }
+    }
+
+    public static getNextUio(uio : UserInterfaceObject) : UserInterfaceObject{
+        let tovc : TextObjectViewController = TextObjectViewController.map.get(uio);
+        if (tovc.hasChildUio()) {
+            return tovc.getFirstChildUio();
+        } else {
+            return this.getNextUio_skippingChilds(uio);
+        }
+    }
+
+    public static getNextUio_skippingChilds(uio : UserInterfaceObject) : UserInterfaceObject{
+        let parentTovc : TextObjectViewController = TextObjectViewController.map.get(uio.viewContext);
+        if (parentTovc.hasNextChildUio(uio)) {
+            return parentTovc.getNextChildUio(uio);
+        } else {
+            return View.getNextUio_skippingChilds(uio.viewContext);
         }
     }
 }
