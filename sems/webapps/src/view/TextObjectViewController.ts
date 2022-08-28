@@ -111,6 +111,9 @@ export class TextObjectViewController {
         userInterfaceObject.eventController.addObserver(EventTypes.JUMP_FORWARD, function() {
             textObjectViewController.jumpForward();
         });
+        userInterfaceObject.eventController.addObserver(EventTypes.JUMP_BACKWARD, function() {
+            textObjectViewController.jumpBackward();
+        });
         userInterfaceObject.eventController.addObserver(EventTypes.FOCUS_NEXT_WORD, function() {
             textObjectViewController.focusNextWord();
         });
@@ -521,6 +524,18 @@ export class TextObjectViewController {
         }
     }
 
+    public jumpBackward() {
+        let currentUio = this.uio;
+        for (let i = 0; i < 7; i++) {
+            let prevUio = View.getPrevUio(currentUio);
+            if (prevUio != null) {
+                currentUio = prevUio;
+            }
+        }
+        currentUio.focus();
+        currentUio.eventController.triggerEvent(EventTypes.CURSOR_HINT, null);
+    }
+
     public jumpForward() {
         let currentUio = this.uio;
         for (let i = 0; i < 7; i++) {
@@ -546,6 +561,8 @@ export class TextObjectViewController {
         return this.detailsView.getUioAtPosition(0);
     }
 
+    
+
     public hasNextChildUio(childUio : UserInterfaceObject) {
         let position = this.detailsView.getPositionOfDetailUIO(childUio);
         return position + 1 < this.detailsView.getNumberOfDetails();
@@ -555,6 +572,28 @@ export class TextObjectViewController {
     public getNextChildUio(childUio : UserInterfaceObject) {
         let position = this.detailsView.getPositionOfDetailUIO(childUio);
         return this.detailsView.getUioAtPosition(position + 1);
+    }
+
+    public getPrevUio(childUio : UserInterfaceObject) {
+        let position = this.detailsView.getPositionOfDetailUIO(childUio);
+        if (position == 0) {
+            return this.uio;
+        } else {
+            let prevUioOnSameLevel : UserInterfaceObject = this.detailsView.getUioAtPosition(position - 1);
+            let tocv : TextObjectViewController = TextObjectViewController.map.get(prevUioOnSameLevel);
+            return tocv.getLastUio();
+        }
+    }
+
+    // Returns the last uio that belongs to this. If no childUio is available, then the own uio is returned.
+    public getLastUio() : UserInterfaceObject {
+        if (this.hasChildUio()) {
+            let lastChildUio : UserInterfaceObject = this.detailsView.getUioAtPosition(this.detailsView.getNumberOfDetails() - 1);
+            let tovc : TextObjectViewController = TextObjectViewController.map.get(lastChildUio);
+            return tovc.getLastUio();
+        } else {
+            return this.uio;
+        }
     }
 
     public focusNextWord() {
@@ -660,8 +699,6 @@ export class TextObjectViewController {
         this.headText.updateTextProperty();
         textArea.value = this.props.get(TEXT);
     }
-
-    
 
     public exportFourObjectsSafe_Html() {
         this.ensureExpanded();

@@ -555,4 +555,16 @@ export class Column {
         let position = this.listOfUIOs.indexOf(childUio);
         return this.listOfUIOs[position + 1];
     }
+
+    public getPrevUio(childUio : UserInterfaceObject) {
+        let position = this.listOfUIOs.indexOf(childUio);
+        if (position == 0) {
+            return null;
+        } else {
+            let previousUioOnSameLevel = this.listOfUIOs[position - 1];
+            let tovc : TextObjectViewController = TextObjectViewController.map.get(previousUioOnSameLevel);
+            return tovc.getLastUio();
+        }
+    }
+
 }

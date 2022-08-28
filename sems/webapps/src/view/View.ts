@@ -120,6 +120,16 @@ export class View {
         }
     }
 
+    public static getPrevUio(uio : UserInterfaceObject) : UserInterfaceObject{
+        if (uio.viewContext.viewType == ViewTypes.COLUMN) {
+            let column : Column = Column.map.get(uio.viewContext);
+            return column.getPrevUio(uio);
+        } else {
+            let parentTovc : TextObjectViewController = TextObjectViewController.map.get(uio.viewContext);
+            return parentTovc.getPrevUio(uio);
+        }
+    }
+
     public static getNextUio(uio : UserInterfaceObject) : UserInterfaceObject{
         let tovc : TextObjectViewController = TextObjectViewController.map.get(uio);
         if (tovc.hasChildUio()) {
