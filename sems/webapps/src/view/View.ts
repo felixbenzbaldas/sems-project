@@ -130,6 +130,7 @@ export class View {
     }
 
     // can return null
+    // returns the next UserInterfaceObject skipping the childs of uio
     public static getNextUio_skippingChilds(uio : UserInterfaceObject) : UserInterfaceObject {
         if (uio.viewContext.viewType == ViewTypes.COLUMN) {
             let column : Column = Column.map.get(uio.viewContext);
