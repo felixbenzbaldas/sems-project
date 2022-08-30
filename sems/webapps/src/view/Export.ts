@@ -2,6 +2,7 @@ import { TextObjectViewController } from "./TextObjectViewController";
 import { View } from "./View";
 
 export class Export {
+
     public static fourDays_safe_html(tovc : TextObjectViewController) : string {
         let div : HTMLDivElement = document.createElement('div');
         let currentTovc : TextObjectViewController = tovc;
@@ -76,8 +77,6 @@ export class Export {
         return tovc.getText().indexOf('XXX') >= 0;
     }
 
-
-    
     // public exportFourObjectsSafe() {
     //     this.ensureExpanded();
     //     let textArea : HTMLTextAreaElement = document.createElement("textarea");
@@ -122,6 +121,18 @@ export class Export {
     //         if (!this.isCollapsed() && !this.textHasXXXMark()) {
     //             text += '\n';
     //             text += this.detailsView.getRawTextOfTree(level + 1);
+    //         }
+    //     }
+    //     return text;
+    // }
+    
+    // public getRawTextOfTree(level : number) : string {
+    //     let text : string = '';
+    //     for (let i = 0; i < this.detailUserInterfaceObjects.length; i++) {
+    //         let detailTovc : TextObjectViewController = TextObjectViewController.map.get(this.detailUserInterfaceObjects[i]);
+    //         text += detailTovc.getRawTextOfTree_Safe(level);
+    //         if (i + 1 < this.detailUserInterfaceObjects.length) {
+    //             text += '\n';
     //         }
     //     }
     //     return text;
