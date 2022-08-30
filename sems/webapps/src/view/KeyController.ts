@@ -88,8 +88,6 @@ export class KeyController {
             } else if (App.keyMap.has(compareString)) {
                 keyEvent.stopPropagationAndPreventDefault();
                 this.uio.eventController.triggerEvent(App.keyMap.get(compareString), null);
-            } else {
-                // console.log("")
             }
         }
     }
