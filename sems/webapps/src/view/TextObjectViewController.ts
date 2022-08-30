@@ -724,6 +724,7 @@ export class TextObjectViewController {
     }
 
     public getHtmlOfTree_Safe(level : number) : HTMLElement {
+        console.log("getHtmlOfTree_Safe v1");
         let htmlElement : HTMLElement;
         htmlElement = document.createElement('div');
         if (level == 0) {
@@ -732,7 +733,7 @@ export class TextObjectViewController {
             p.style.fontSize = "2rem";
             p.style.color = "gold";
             p.innerHTML = this.getTextSafe();
-            if (!this.isCollapsed() && this.bodyAvailable() && !this.textHasXXXMark()) {
+            if (!this.isCollapsed() && !this.textHasXXXMark()) {
                 htmlElement.appendChild(this.detailsView.getHtmlOfTree(level + 1));
             }
         } else {
@@ -742,7 +743,7 @@ export class TextObjectViewController {
                 p.style.fontSize = "1rem";
                 p.style.color = "blue";
                 p.innerHTML = this.getTextSafe();
-                if (!this.isCollapsed() && this.bodyAvailable() && !this.textHasXXXMark()) {
+                if (!this.isCollapsed() && !this.textHasXXXMark()) {
                     let ul : HTMLUListElement = document.createElement('ul');
                     htmlElement.appendChild(ul);
                     ul.appendChild(this.detailsView.getHtmlOfTree(level + 1));
@@ -753,7 +754,7 @@ export class TextObjectViewController {
                 li.style.fontSize = "1rem";
                 li.style.color = "blue";
                 li.innerHTML = this.getTextSafe();
-                if (!this.isCollapsed() && this.bodyAvailable() && !this.textHasXXXMark()) {
+                if (!this.isCollapsed() && !this.textHasXXXMark()) {
                     let ul : HTMLUListElement = document.createElement('ul');
                     htmlElement.appendChild(ul);
                     ul.appendChild(this.detailsView.getHtmlOfTree(level + 1));
@@ -792,7 +793,7 @@ export class TextObjectViewController {
         if (level == 0) {
             text += this.getTextSafe().toLocaleUpperCase();
             text += '\n';
-            if (!this.isCollapsed() && this.bodyAvailable() && !this.textHasXXXMark()) {
+            if (!this.isCollapsed() &&!this.textHasXXXMark()) {
                 text += '\n';
                 text += this.detailsView.getRawTextOfTree(level + 1);
                 text += '\n';
@@ -805,7 +806,7 @@ export class TextObjectViewController {
                 text += '- ';
             }
             text += this.getTextSafe();
-            if (!this.isCollapsed() && this.bodyAvailable() && !this.textHasXXXMark()) {
+            if (!this.isCollapsed() && !this.textHasXXXMark()) {
                 text += '\n';
                 text += this.detailsView.getRawTextOfTree(level + 1);
             }
