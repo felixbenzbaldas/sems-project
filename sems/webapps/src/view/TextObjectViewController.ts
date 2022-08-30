@@ -14,6 +14,7 @@ import { Column } from "./Column";
 import { ColumnManager } from "./ColumnManager";
 import { Context } from "./Context";
 import { DetailsView } from "./DetailsView";
+import { Export } from "./Export";
 import { HeadText } from "./HeadText";
 import { UserInterfaceObject } from "./UserInterfaceObject";
 import { View } from "./View";
@@ -701,6 +702,7 @@ export class TextObjectViewController {
     }
 
     public exportFourObjectsSafe_Html() {
+        console.log("exportFourObjectsSafe_Html v1");
         this.ensureExpanded();
         let textArea : HTMLTextAreaElement = document.createElement("textarea");
         Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
@@ -708,124 +710,73 @@ export class TextObjectViewController {
         let text : string;
         let div : HTMLDivElement = document.createElement('div');
         //
-        div.appendChild(this.getHtmlOfTree_Safe(0));
+        div.appendChild(Export.getHtmlOfTree_Safe(this, 0));
         //
         let nextTovc : TextObjectViewController = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(this.uio));
-        div.appendChild(nextTovc.getHtmlOfTree_Safe(0));
+        div.appendChild(Export.getHtmlOfTree_Safe(nextTovc, 0));
         //
         let nextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextTovc.getUserInterfaceObject()));
-        div.appendChild(nextNextTovc.getHtmlOfTree_Safe(0));
+        div.appendChild(Export.getHtmlOfTree_Safe(nextNextTovc, 0));
         //
         let nextNextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextNextTovc.getUserInterfaceObject()));
-        div.appendChild(nextNextNextTovc.getHtmlOfTree_Safe(0));
+        div.appendChild(Export.getHtmlOfTree_Safe(nextNextNextTovc, 0));
         //
         text = div.innerHTML;
         textArea.value = text;
     }
 
-    public getHtmlOfTree_Safe(level : number) : HTMLElement {
-        console.log("getHtmlOfTree_Safe v1");
-        let htmlElement : HTMLElement;
-        htmlElement = document.createElement('div');
-        if (level == 0) {
-            let p : HTMLParagraphElement = document.createElement('p');
-            htmlElement.appendChild(p);
-            p.style.fontSize = "2rem";
-            p.style.color = "gold";
-            p.innerHTML = this.getTextSafe();
-            if (!this.isCollapsed() && !this.textHasXXXMark()) {
-                htmlElement.appendChild(this.detailsView.getHtmlOfTree(level + 1));
-            }
-        } else {
-            if (level == 1) {
-                let p : HTMLParagraphElement = document.createElement('p');
-                htmlElement.appendChild(p);
-                p.style.fontSize = "1rem";
-                p.style.color = "blue";
-                p.innerHTML = this.getTextSafe();
-                if (!this.isCollapsed() && !this.textHasXXXMark()) {
-                    let ul : HTMLUListElement = document.createElement('ul');
-                    htmlElement.appendChild(ul);
-                    ul.appendChild(this.detailsView.getHtmlOfTree(level + 1));
-                }
-            } else {
-                let li : HTMLLIElement = document.createElement('li');
-                htmlElement.appendChild(li);
-                li.style.fontSize = "1rem";
-                li.style.color = "blue";
-                li.innerHTML = this.getTextSafe();
-                if (!this.isCollapsed() && !this.textHasXXXMark()) {
-                    let ul : HTMLUListElement = document.createElement('ul');
-                    htmlElement.appendChild(ul);
-                    ul.appendChild(this.detailsView.getHtmlOfTree(level + 1));
-                }
-            }
-        }
-        return htmlElement;
+    public getListOfDetailUio() : Array<UserInterfaceObject> {
+        return this.detailsView.getListOfDetailUios();
     }
 
+    // public exportFourObjectsSafe() {
+    //     this.ensureExpanded();
+    //     let textArea : HTMLTextAreaElement = document.createElement("textarea");
+    //     Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
+    //     this.headText.updateTextProperty();
+    //     let text : string = '';
+    //     text += this.getRawTextOfTree_Safe(0);
+    //     //
+    //     text += '\n';
+    //     let nextTovc : TextObjectViewController = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(this.uio));
+    //     text += nextTovc.getRawTextOfTree_Safe(0);
+    //     //
+    //     text += '\n';
+    //     let nextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextTovc.getUserInterfaceObject()));
+    //     text += nextNextTovc.getRawTextOfTree_Safe(0);
+    //     //
+    //     text += '\n';
+    //     let nextNextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextNextTovc.getUserInterfaceObject()));
+    //     text += nextNextNextTovc.getRawTextOfTree_Safe(0);
+    //     //
+    //     textArea.value = text;
+    // }
 
-    public exportFourObjectsSafe() {
-        this.ensureExpanded();
-        let textArea : HTMLTextAreaElement = document.createElement("textarea");
-        Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
-        this.headText.updateTextProperty();
-        let text : string = '';
-        text += this.getRawTextOfTree_Safe(0);
-        //
-        text += '\n';
-        let nextTovc : TextObjectViewController = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(this.uio));
-        text += nextTovc.getRawTextOfTree_Safe(0);
-        //
-        text += '\n';
-        let nextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextTovc.getUserInterfaceObject()));
-        text += nextNextTovc.getRawTextOfTree_Safe(0);
-        //
-        text += '\n';
-        let nextNextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextNextTovc.getUserInterfaceObject()));
-        text += nextNextNextTovc.getRawTextOfTree_Safe(0);
-        //
-        textArea.value = text;
-    }
-
-    public getRawTextOfTree_Safe(level : number) : string{
-        let text : string = "";
-        if (level == 0) {
-            text += this.getTextSafe().toLocaleUpperCase();
-            text += '\n';
-            if (!this.isCollapsed() &&!this.textHasXXXMark()) {
-                text += '\n';
-                text += this.detailsView.getRawTextOfTree(level + 1);
-                text += '\n';
-            }
-        } else {
-            for (let i = 1; i < level - 1; i++) {
-                text += '  ';
-            }
-            if (level > 1) {
-                text += '- ';
-            }
-            text += this.getTextSafe();
-            if (!this.isCollapsed() && !this.textHasXXXMark()) {
-                text += '\n';
-                text += this.detailsView.getRawTextOfTree(level + 1);
-            }
-        }
-        return text;
-    }
-
-    public getTextSafe() : string {
-        if (this.textHasXXXMark()) {
-            let text : string = this.props.get(TEXT);
-            return text.substring(0, text.indexOf('XXX')) + '[pS]';
-        } else {
-            return this.getText();
-        }
-    }
-
-    public textHasXXXMark() : boolean {
-        return this.getText().indexOf('XXX') >= 0;
-    }
+    // public getRawTextOfTree_Safe(level : number) : string{
+    //     let text : string = "";
+    //     if (level == 0) {
+    //         text += this.getTextSafe().toLocaleUpperCase();
+    //         text += '\n';
+    //         if (!this.isCollapsed() &&!this.textHasXXXMark()) {
+    //             text += '\n';
+    //             text += this.detailsView.getRawTextOfTree(level + 1);
+    //             text += '\n';
+    //         }
+    //     } else {
+    //         for (let i = 1; i < level - 1; i++) {
+    //             text += '  ';
+    //         }
+    //         if (level > 1) {
+    //             text += '- ';
+    //         }
+    //         text += this.getTextSafe();
+    //         if (!this.isCollapsed() && !this.textHasXXXMark()) {
+    //             text += '\n';
+    //             text += this.detailsView.getRawTextOfTree(level + 1);
+    //         }
+    //     }
+    //     return text;
+    // }
 
     public getText() : string {
         return this.props.get(TEXT) as string;

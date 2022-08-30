@@ -292,28 +292,17 @@ export class DetailsView {
         Html.insertChildAtPosition(this.uiElement, newUio.uiElement, indexOfUIO);
     }
 
-    public getHtmlOfTree(level : number): HTMLElement {
-        let htmlElement : HTMLElement = document.createElement('div');
-        for (let i = 0; i < this.detailUserInterfaceObjects.length; i++) {
-            let detailTovc : TextObjectViewController = TextObjectViewController.map.get(this.detailUserInterfaceObjects[i]);
-            htmlElement.appendChild(detailTovc.getHtmlOfTree_Safe(level));
-        }
-        return htmlElement;
-
-    }
-
-
-    public getRawTextOfTree(level : number) : string {
-        let text : string = '';
-        for (let i = 0; i < this.detailUserInterfaceObjects.length; i++) {
-            let detailTovc : TextObjectViewController = TextObjectViewController.map.get(this.detailUserInterfaceObjects[i]);
-            text += detailTovc.getRawTextOfTree_Safe(level);
-            if (i + 1 < this.detailUserInterfaceObjects.length) {
-                text += '\n';
-            }
-        }
-        return text;
-    }
+    // public getRawTextOfTree(level : number) : string {
+    //     let text : string = '';
+    //     for (let i = 0; i < this.detailUserInterfaceObjects.length; i++) {
+    //         let detailTovc : TextObjectViewController = TextObjectViewController.map.get(this.detailUserInterfaceObjects[i]);
+    //         text += detailTovc.getRawTextOfTree_Safe(level);
+    //         if (i + 1 < this.detailUserInterfaceObjects.length) {
+    //             text += '\n';
+    //         }
+    //     }
+    //     return text;
+    // }
     
     public getPositionOfDetailUIO(detailUIO : UserInterfaceObject) : number {
         return this.detailUserInterfaceObjects.indexOf(detailUIO);
@@ -327,5 +316,7 @@ export class DetailsView {
         return this.detailUserInterfaceObjects.length;
     }
 
-    
+    public getListOfDetailUios() {
+        return this.detailUserInterfaceObjects;
+    }
 }
