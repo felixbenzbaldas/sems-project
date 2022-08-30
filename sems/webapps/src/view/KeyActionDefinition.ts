@@ -107,7 +107,7 @@ export class KeyActionDefinition {
             keyEvent.key = "2";
             }, function() {
                 // textObjectViewController.exportFourObjectsSafe();
-                textObjectViewController.exportFourObjectsSafe_Html();
+                textObjectViewController.export_fourDays_safe_html();
         });
         return map;
     }

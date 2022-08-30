@@ -694,89 +694,24 @@ export class TextObjectViewController {
     }
 
     public exportRawText() {
-        this.ensureExpanded();
+        this.ensureExpanded(); // XXX that is not really correct!
         let textArea : HTMLTextAreaElement = document.createElement("textarea");
         this.headBody.getBody().appendChild(textArea);
         this.headText.updateTextProperty();
         textArea.value = this.props.get(TEXT);
     }
 
-    public exportFourObjectsSafe_Html() {
-        console.log("exportFourObjectsSafe_Html v1");
-        this.ensureExpanded();
+    public export_fourDays_safe_html() {
+        this.ensureExpanded(); // XXX that is not really correct!
         let textArea : HTMLTextAreaElement = document.createElement("textarea");
         Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
         this.headText.updateTextProperty();
-        let text : string;
-        let div : HTMLDivElement = document.createElement('div');
-        //
-        div.appendChild(Export.getHtmlOfTree_Safe(this, 0));
-        //
-        let nextTovc : TextObjectViewController = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(this.uio));
-        div.appendChild(Export.getHtmlOfTree_Safe(nextTovc, 0));
-        //
-        let nextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextTovc.getUserInterfaceObject()));
-        div.appendChild(Export.getHtmlOfTree_Safe(nextNextTovc, 0));
-        //
-        let nextNextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextNextTovc.getUserInterfaceObject()));
-        div.appendChild(Export.getHtmlOfTree_Safe(nextNextNextTovc, 0));
-        //
-        text = div.innerHTML;
-        textArea.value = text;
+        textArea.value = Export.fourDays_safe_html(this);
     }
 
     public getListOfDetailUio() : Array<UserInterfaceObject> {
         return this.detailsView.getListOfDetailUios();
     }
-
-    // public exportFourObjectsSafe() {
-    //     this.ensureExpanded();
-    //     let textArea : HTMLTextAreaElement = document.createElement("textarea");
-    //     Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
-    //     this.headText.updateTextProperty();
-    //     let text : string = '';
-    //     text += this.getRawTextOfTree_Safe(0);
-    //     //
-    //     text += '\n';
-    //     let nextTovc : TextObjectViewController = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(this.uio));
-    //     text += nextTovc.getRawTextOfTree_Safe(0);
-    //     //
-    //     text += '\n';
-    //     let nextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextTovc.getUserInterfaceObject()));
-    //     text += nextNextTovc.getRawTextOfTree_Safe(0);
-    //     //
-    //     text += '\n';
-    //     let nextNextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextNextTovc.getUserInterfaceObject()));
-    //     text += nextNextNextTovc.getRawTextOfTree_Safe(0);
-    //     //
-    //     textArea.value = text;
-    // }
-
-    // public getRawTextOfTree_Safe(level : number) : string{
-    //     let text : string = "";
-    //     if (level == 0) {
-    //         text += this.getTextSafe().toLocaleUpperCase();
-    //         text += '\n';
-    //         if (!this.isCollapsed() &&!this.textHasXXXMark()) {
-    //             text += '\n';
-    //             text += this.detailsView.getRawTextOfTree(level + 1);
-    //             text += '\n';
-    //         }
-    //     } else {
-    //         for (let i = 1; i < level - 1; i++) {
-    //             text += '  ';
-    //         }
-    //         if (level > 1) {
-    //             text += '- ';
-    //         }
-    //         text += this.getTextSafe();
-    //         if (!this.isCollapsed() && !this.textHasXXXMark()) {
-    //             text += '\n';
-    //             text += this.detailsView.getRawTextOfTree(level + 1);
-    //         }
-    //     }
-    //     return text;
-    // }
 
     public getText() : string {
         return this.props.get(TEXT) as string;

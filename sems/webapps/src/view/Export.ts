@@ -1,9 +1,17 @@
 import { TextObjectViewController } from "./TextObjectViewController";
+import { View } from "./View";
 
 export class Export {
-    // public static fourDays_safe_html(tovc : TextObjectViewController) : HTMLElement {
-        
-    // }
+    public static fourDays_safe_html(tovc : TextObjectViewController) : string {
+        let div : HTMLDivElement = document.createElement('div');
+        let currentTovc : TextObjectViewController = tovc;
+        div.appendChild(Export.getHtmlOfTree_Safe(currentTovc, 0));
+        for (let i = 0; i < 3; i++) {
+            currentTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(currentTovc.getUserInterfaceObject()));
+            div.appendChild(Export.getHtmlOfTree_Safe(currentTovc, 0));
+        }
+        return div.innerHTML;
+    }
 
     public static getHtmlOfTree_Safe(tovc : TextObjectViewController, level : number) : HTMLElement {
         let htmlElement : HTMLElement;
@@ -67,4 +75,55 @@ export class Export {
     public static textHasXXXMark(tovc : TextObjectViewController) : boolean {
         return tovc.getText().indexOf('XXX') >= 0;
     }
+
+
+    
+    // public exportFourObjectsSafe() {
+    //     this.ensureExpanded();
+    //     let textArea : HTMLTextAreaElement = document.createElement("textarea");
+    //     Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
+    //     this.headText.updateTextProperty();
+    //     let text : string = '';
+    //     text += this.getRawTextOfTree_Safe(0);
+    //     //
+    //     text += '\n';
+    //     let nextTovc : TextObjectViewController = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(this.uio));
+    //     text += nextTovc.getRawTextOfTree_Safe(0);
+    //     //
+    //     text += '\n';
+    //     let nextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextTovc.getUserInterfaceObject()));
+    //     text += nextNextTovc.getRawTextOfTree_Safe(0);
+    //     //
+    //     text += '\n';
+    //     let nextNextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextNextTovc.getUserInterfaceObject()));
+    //     text += nextNextNextTovc.getRawTextOfTree_Safe(0);
+    //     //
+    //     textArea.value = text;
+    // }
+
+    // public getRawTextOfTree_Safe(level : number) : string{
+    //     let text : string = "";
+    //     if (level == 0) {
+    //         text += this.getTextSafe().toLocaleUpperCase();
+    //         text += '\n';
+    //         if (!this.isCollapsed() &&!this.textHasXXXMark()) {
+    //             text += '\n';
+    //             text += this.detailsView.getRawTextOfTree(level + 1);
+    //             text += '\n';
+    //         }
+    //     } else {
+    //         for (let i = 1; i < level - 1; i++) {
+    //             text += '  ';
+    //         }
+    //         if (level > 1) {
+    //             text += '- ';
+    //         }
+    //         text += this.getTextSafe();
+    //         if (!this.isCollapsed() && !this.textHasXXXMark()) {
+    //             text += '\n';
+    //             text += this.detailsView.getRawTextOfTree(level + 1);
+    //         }
+    //     }
+    //     return text;
+    // }
 }
