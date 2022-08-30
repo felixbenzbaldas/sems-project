@@ -101,8 +101,8 @@ public class Persistence {
 		return "sh" + nameOfSemsHouse + ".json";
 	}
 	
-	public static void saveSemsHouse(SemsHouse semsHouse) throws Exception {
-		Persistence.saveJson(getBasePath() + "savings/" + getTimestamp() + "/" + getFileNameOfSemsHouse(App.getNameOfSemsHouse(semsHouse)), semsHouse.toJson());
+	public static void saveSemsHouse(String dirPath, SemsHouse semsHouse) throws Exception {
+		Persistence.saveJson(dirPath + getFileNameOfSemsHouse(App.getNameOfSemsHouse(semsHouse)), semsHouse.toJson());
 	}
 	
 	public static SemsHouse loadSemsHouse(String nameOfSemsHouse) throws Exception {

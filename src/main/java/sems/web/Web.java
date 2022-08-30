@@ -100,8 +100,10 @@ public class Web extends HttpServlet {
 			});
 			//
 			addResponse(SAVE, cr -> {
-				Persistence.saveSemsHouse(App.semsHouseZero);
-				Persistence.saveSemsHouse(App.semsHouseOne);
+				System.out.println("save v2");
+				String dirPath = Persistence.getBasePath() + "savings/" + Persistence.getTimestamp() + "/";
+				Persistence.saveSemsHouse(dirPath, App.semsHouseZero);
+				Persistence.saveSemsHouse(dirPath, App.semsHouseOne);
 				cr.setResponse(SUCCESS);
 			});
 			addResponse(CLEAR, cr -> {
