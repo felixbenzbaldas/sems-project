@@ -104,15 +104,14 @@ export class HeadText {
         // });
         //
         let keyActionsMap = KeyActionDefinition.createKeyActions_TextObject(this.textObjectViewController);
-        this.addSaveKeyAction(keyActionsMap);
         this.semsText.addKeyEventListener(function(keyEvent : KeyEvent) {
             let compareString = keyEvent.createCompareString();
             if (keyActionsMap.has(compareString)) {
-                keyEvent.stopPropagationAndPreventDefault();
+                keyEvent.preventDefault();
                 keyActionsMap.get(compareString)();
             } else {
                 if (App.keyMap.has(compareString)) {
-                    keyEvent.stopPropagationAndPreventDefault();
+                    keyEvent.preventDefault();
                     self.userInterfaceObject.eventController.triggerEvent(App.keyMap.get(compareString), null);
                 }
             }
@@ -123,18 +122,6 @@ export class HeadText {
                 self.semsText.focusLastFocused();
             }
         }
-    }
-
-    private addSaveKeyAction(map) {
-        let keyEvent : KeyEvent = new KeyEvent();
-        keyEvent.ctrl = true;
-        keyEvent.key = "s";
-        let self = this;
-        let action = function() {
-            self.updateTextProperty();
-            SemsServer.save();
-        };
-        map.set(keyEvent.createCompareString(), action);
     }
     
     private getProps() : RemotePropertiesOfSemsObject {

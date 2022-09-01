@@ -143,9 +143,8 @@ export class App {
     static createGlobalKeyBindings() {
         App.globalKeyActions = KeyActionDefinition.createKeyActions_Global();
         window.onkeydown = function(ev: KeyboardEvent) {
-            if (App.manualFocus == null) {
-                App.globalKeyDown(ev);
-            } else {
+            App.globalKeyDown(ev);
+            if (ev.target == document.body) {
                 App.manualFocus.triggerKeyDown(ev);
             }
             // avoid surprising scrolling
@@ -154,9 +153,8 @@ export class App {
             }
         };
         window.onkeyup = function(ev: KeyboardEvent) {
-            if (App.manualFocus == null) {
-                App.globalKeyUp(ev);
-            } else {
+            App.globalKeyUp(ev);
+            if (ev.target == document.body) {
                 App.manualFocus.triggerKeyUp(ev);
             }
         };
@@ -167,7 +165,6 @@ export class App {
         let compareString = keyEvent.createCompareString();
         if (App.globalKeyActions.has(compareString)) {
             ev.preventDefault();
-            ev.stopPropagation();
             App.globalKeyActions.get(compareString)();
         }
     }
@@ -177,7 +174,6 @@ export class App {
         let compareString = keyEvent.createCompareString();
         if (App.globalKeyActions.has(compareString)) {
             ev.preventDefault();
-            ev.stopPropagation();
         }
     }
 

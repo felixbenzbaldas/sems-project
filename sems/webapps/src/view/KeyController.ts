@@ -44,7 +44,6 @@ export class KeyController {
             let compareString = keyEvent.createCompareString();
             if (self.keyActions.has(compareString) || self.keyEventDefinitions.has(compareString) || App.keyMap.has(compareString)) {
                 ev.preventDefault();
-                ev.stopPropagation();
             }
             self.whiteSpaceHandler.keyUp(ev.key);
         };
@@ -79,14 +78,14 @@ export class KeyController {
     private triggerKeyEvent(keyEvent : KeyEvent) {
         let compareString = keyEvent.createCompareString();
         if (this.keyActions.has(compareString)) {
-            keyEvent.stopPropagationAndPreventDefault();
+            keyEvent.preventDefault();
             this.keyActions.get(compareString)();
         } else {
             if (this.keyEventDefinitions.has(compareString)) {
-                keyEvent.stopPropagationAndPreventDefault();
+                keyEvent.preventDefault();
                 this.uio.eventController.triggerEvent(this.keyEventDefinitions.get(compareString), null);
             } else if (App.keyMap.has(compareString)) {
-                keyEvent.stopPropagationAndPreventDefault();
+                keyEvent.preventDefault();
                 this.uio.eventController.triggerEvent(App.keyMap.get(compareString), null);
             }
         }

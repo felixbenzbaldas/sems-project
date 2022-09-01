@@ -147,12 +147,10 @@ export class SemsText {
                     if (ev.ctrlKey) {
                         semsWord.deleteWordEvent();
                         ev.preventDefault();
-                        ev.stopPropagation();
                     } else {
                         if (semsWord.input.value.length == 0) {
                             semsWord.deleteWordEvent();
                             ev.preventDefault();
-                            ev.stopPropagation();
                         }
                     }
                 }
@@ -181,7 +179,6 @@ export class SemsText {
         semsWord.input.onkeyup = function(ev: KeyboardEvent) {
             if (ev.key == " " || semsWord.whiteSpaceHandler.isWhiteSpaceDown()) {
                 ev.preventDefault();
-                ev.stopPropagation();
                 semsWord.whiteSpaceHandler.keyUp(ev.key);
             }
             self.adaptWidth(semsWord.input);

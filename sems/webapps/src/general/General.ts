@@ -22,22 +22,20 @@ export class General {
     }
 
     
+    // TODO wird derzeit nicht verwendet!
     static addKeyActionToHtmlElement(htmlElement, keyEvent : KeyEvent, action : Function) {
         htmlElement.addEventListener("keydown", function(ev: KeyboardEvent) {
             if (General.checkCondition(ev, keyEvent)) {
                 ev.preventDefault();
                 action();
-                ev.stopPropagation();
             }
         });
         htmlElement.addEventListener("keyup", function(ev: KeyboardEvent) {
             if (General.checkCondition(ev, keyEvent)) {
                 ev.preventDefault();
-                ev.stopPropagation();
             }
         });
     }
-
     private static checkCondition(ev: KeyboardEvent, keyEvent : KeyEvent) {
         return General.primEquals(KeyEvent.createFromKeyboardEvent(ev).createCompareString(), keyEvent.createCompareString());
     }

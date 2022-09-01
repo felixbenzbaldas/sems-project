@@ -46,10 +46,9 @@ export class KeyEvent {
         return keyEvent;
     }
 
-    public stopPropagationAndPreventDefault() {
+    public preventDefault() {
         if (this.keyboardEvent != null) {
             this.keyboardEvent.preventDefault();
-            this.keyboardEvent.stopPropagation();
         }
     }
 }

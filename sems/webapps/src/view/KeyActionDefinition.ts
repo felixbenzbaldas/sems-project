@@ -119,6 +119,10 @@ export class KeyActionDefinition {
                 keyEvent.ctrl = true;
                 keyEvent.key = "s";
                 }, function() {
+                    if (TextObjectViewController.map.has(App.focusedUIO)) {
+                        let tovc : TextObjectViewController = TextObjectViewController.map.get(App.focusedUIO);
+                        tovc.headText.updateTextProperty();
+                    }
                     SemsServer.save();
             });
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
