@@ -8,7 +8,6 @@ import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStrings
 export class KeyEventDefinition {
     private keyMap : MapWithPrimitiveStringsAsKey = new MapWithPrimitiveStringsAsKey();
 
-    // note: EventTypes don't bubble, so be careful when defining EventTypes here
     public createKeyMap() : MapWithPrimitiveStringsAsKey {
         this.addMapping(EventTypes.FOCUS_PREV, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
