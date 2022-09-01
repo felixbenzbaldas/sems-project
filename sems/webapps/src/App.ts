@@ -37,11 +37,15 @@ export class App {
 
     static LIST_OF_DELETED_OBJECTS = "1-60449731";
 
+    // Mapping von KeyEvents auf EventTypes. (Wird von KeyEventDefinition erzeugt.)
     static keyMap = new MapWithPrimitiveStringsAsKey();
 
     static widthCalculationSpan;
 
+    // Wird für Komponenten verwendet, welche keinen JavaScript-Fokus nehmen können.
+    // Das sind insbesondere StringRelationshipView und Column.
     static manualFocus;
+
     static focusedUIO : UserInterfaceObject;
 
     static backgroundColor : string = "grey";

@@ -7,6 +7,9 @@ import { ColumnManager } from "./ColumnManager";
 import { TextObjectViewController } from "./TextObjectViewController";
 import { UserInterfaceObject } from "./UserInterfaceObject";
 
+
+// Diese Klasse wird benutzt, um Mappings von KeyEvents auf Functions zu erstellen.
+// Hier wird also einem KeyEvent direkt ein Codestück zugeordnet.
 export class KeyActionDefinition {
     
     public static createKeyActions_TextObject(textObjectViewController : TextObjectViewController) : MapWithPrimitiveStringsAsKey {

@@ -5,6 +5,11 @@ import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStrings
 import { WhiteSpaceHandler } from "./SemsText/WhiteSpaceHandler";
 import { UserInterfaceObject } from "./UserInterfaceObject";
 
+// Wird für Komponenten mit manuellem Fokus verwendet.
+// Empfängt Instanzen von KeyboardEvent (TypeScript-Klasse).
+// Löst automatisch KeyEvents aus. Es werden insbesondere auch KeyEvents mit der Sems-Taste ("Sk") automatisch ausgelöst.
+// KeyEvents werden ggf. auf EventTypes gemappt.
+// Der EventType wird dann am zugeordneten Uio ausgelöst.
 export class KeyController {
 
     private keyActions : MapWithPrimitiveStringsAsKey = new MapWithPrimitiveStringsAsKey();

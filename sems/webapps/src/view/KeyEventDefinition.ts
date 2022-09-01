@@ -2,6 +2,9 @@ import { EventTypes } from "../EventTypes";
 import { KeyEvent } from "../general/KeyEvent";
 import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStringsAsKey";
 
+
+// Diese Klasse wird benutzt, um das Mapping von KeyEvents auf EventTypes zu erstellen.
+// Hier wird einem KeyEvent also eine logische Bedeutung zugeordnet.
 export class KeyEventDefinition {
     private keyMap : MapWithPrimitiveStringsAsKey = new MapWithPrimitiveStringsAsKey();
 

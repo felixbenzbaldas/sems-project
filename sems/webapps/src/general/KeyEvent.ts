@@ -1,4 +1,11 @@
 export const KeyEventDelimiter = "+";
+
+
+// Eine Instanz dieser Klasse repräsentiert auf logischer Ebene das Auftreten einer Tastenkombination
+// (bzw. das Drücken oder Loslassen einer einzelnen Taste).
+// Diese Klasse ordnet jedem KeyEvent einen eindeutigen String zu.
+// Dieser String wird für Vergleiche bzw. für Mappings benutzt (siehe zum Beispiel KeyEventDefinition).
+// Ein KeyEvent kann manuell oder von einem KeyboardEvent (TypeScript-Klasse) erzeugt werden.
 export class KeyEvent {
 
     public sk : boolean = false; // "SemsKey" = white space
