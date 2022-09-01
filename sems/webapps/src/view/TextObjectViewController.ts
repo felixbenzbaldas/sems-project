@@ -696,9 +696,9 @@ export class TextObjectViewController {
     public exportRawText() {
         this.ensureExpanded(); // XXX that is not really correct!
         let textArea : HTMLTextAreaElement = document.createElement("textarea");
-        this.headBody.getBody().appendChild(textArea);
+        Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
         this.headText.updateTextProperty();
-        textArea.value = this.props.get(TEXT);
+        textArea.value = Export.getRawTextOfTree(this, 0);
     }
 
     public export_fourDays_safe_html() {

@@ -77,64 +77,42 @@ export class Export {
         return tovc.getText().indexOf('XXX') >= 0;
     }
 
-    // public exportFourObjectsSafe() {
-    //     this.ensureExpanded();
-    //     let textArea : HTMLTextAreaElement = document.createElement("textarea");
-    //     Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
-    //     this.headText.updateTextProperty();
-    //     let text : string = '';
-    //     text += this.getRawTextOfTree_Safe(0);
-    //     //
-    //     text += '\n';
-    //     let nextTovc : TextObjectViewController = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(this.uio));
-    //     text += nextTovc.getRawTextOfTree_Safe(0);
-    //     //
-    //     text += '\n';
-    //     let nextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextTovc.getUserInterfaceObject()));
-    //     text += nextNextTovc.getRawTextOfTree_Safe(0);
-    //     //
-    //     text += '\n';
-    //     let nextNextNextTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(nextNextTovc.getUserInterfaceObject()));
-    //     text += nextNextNextTovc.getRawTextOfTree_Safe(0);
-    //     //
-    //     textArea.value = text;
-    // }
-
-    // public getRawTextOfTree_Safe(level : number) : string{
-    //     let text : string = "";
-    //     if (level == 0) {
-    //         text += this.getTextSafe().toLocaleUpperCase();
-    //         text += '\n';
-    //         if (!this.isCollapsed() &&!this.textHasXXXMark()) {
-    //             text += '\n';
-    //             text += this.detailsView.getRawTextOfTree(level + 1);
-    //             text += '\n';
-    //         }
-    //     } else {
-    //         for (let i = 1; i < level - 1; i++) {
-    //             text += '  ';
-    //         }
-    //         if (level > 1) {
-    //             text += '- ';
-    //         }
-    //         text += this.getTextSafe();
-    //         if (!this.isCollapsed() && !this.textHasXXXMark()) {
-    //             text += '\n';
-    //             text += this.detailsView.getRawTextOfTree(level + 1);
-    //         }
-    //     }
-    //     return text;
-    // }
+    public static getRawTextOfTree(tovc : TextObjectViewController, level : number) : string{
+        let text : string = "";
+        if (level == 0) {
+            text += tovc.getText();
+            text += '\n';
+            if (!tovc.isCollapsed()) {
+                text += '\n';
+                text += Export.getRawTextOfDetailUios(tovc, level + 1);
+                text += '\n';
+            }
+        } else {
+            for (let i = 1; i < level - 1; i++) {
+                text += '  ';
+            }
+            if (level > 1) {
+                text += '- ';
+            }
+            text += tovc.getText();
+            if (!tovc.isCollapsed()) {
+                text += '\n';
+                text += Export.getRawTextOfDetailUios(tovc, level + 1);
+            }
+        }
+        return text;
+    }
     
-    // public getRawTextOfTree(level : number) : string {
-    //     let text : string = '';
-    //     for (let i = 0; i < this.detailUserInterfaceObjects.length; i++) {
-    //         let detailTovc : TextObjectViewController = TextObjectViewController.map.get(this.detailUserInterfaceObjects[i]);
-    //         text += detailTovc.getRawTextOfTree_Safe(level);
-    //         if (i + 1 < this.detailUserInterfaceObjects.length) {
-    //             text += '\n';
-    //         }
-    //     }
-    //     return text;
-    // }
+    private static getRawTextOfDetailUios(tovc : TextObjectViewController, level : number) : string {
+        let text : string = '';
+        let listOfDetailUio = tovc.getListOfDetailUio();
+        for (let i = 0; i < listOfDetailUio.length; i++) {
+            let detailTovc : TextObjectViewController = TextObjectViewController.map.get(listOfDetailUio[i]);
+            text += Export.getRawTextOfTree(detailTovc, level);
+            if (i + 1 < listOfDetailUio.length) {
+                text += '\n';
+            }
+        }
+        return text;
+    }
 }
