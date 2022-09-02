@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import sems.general.JsonUtil;
@@ -31,7 +33,7 @@ public class SemsObject {
 				semsAddress -> (String) semsAddress
 				).collect(Collectors.toList());
 		semsObject.semsHouse = semsHouse;
-		semsObject.installChangeDetection();
+		semsObject.installChangeDetection();		
 		return semsObject;
 	}
 
@@ -56,9 +58,8 @@ public class SemsObject {
 	
 	public void installChangeDetection() {
 		hasUnsavedChanges = false;
-		props.onChanged = (Object obj) -> {
+		props.onChanged = () -> {
 			this.registerChange();
-			return null;
 		};
 	}
 	

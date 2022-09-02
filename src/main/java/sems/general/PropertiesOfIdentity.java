@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 public class PropertiesOfIdentity {
 	private Map<String, Object> map = new HashMap<>();
-	public Function<?, ?> onChanged;
+	public Procedure onChanged;
 	
 	public void setProperty(String property, Object value) {
 		boolean changed;
@@ -45,7 +45,7 @@ public class PropertiesOfIdentity {
 	
 	private void callOnChanged() {
 		if (onChanged != null) {
-			onChanged.apply(null);
+			onChanged.invoke();
 		}
 	}
 }
