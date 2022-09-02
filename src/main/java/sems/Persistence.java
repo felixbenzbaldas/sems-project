@@ -112,8 +112,6 @@ public class Persistence {
 	}
 	
 	public static SemsHouse loadSemsHouse(String nameOfSemsHouse) throws Exception {
-		SemsHouse semsHouse = SemsHouse.createFromJson(Persistence.loadJson(getPathOfSemsHouse(nameOfSemsHouse)));
-		semsHouse.removeChangeMarks();
-		return semsHouse;
+		return SemsHouse.createFromJson(Persistence.loadJson(getPathOfSemsHouse(nameOfSemsHouse)));
 	}
 }

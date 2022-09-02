@@ -1,5 +1,10 @@
 package sems;
-import static sems.Consts.*;
+import static sems.Consts.DELETED_OBJECTS_LIST;
+import static sems.Consts.ID_COUNTER;
+import static sems.Consts.OBJECTS;
+import static sems.Consts.ROOT_OBJECT;
+import static sems.Consts.TEXT;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -7,15 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 import sems.general.JsonUtil;
-import sems.general.Properties;
 import sems.general.Utils;
 
 public class SemsHouse {
 	private SemsObject rootObject;
 	private Map<String, SemsObject> semsObjectsMap = new HashMap<>();
 	private int idCounter = 0;
-	
-	public List<String> listOfDeletedObjects = new LinkedList<String>();
+	private List<String> listOfDeletedObjects = new LinkedList<String>();
 	
 	
 	public static SemsHouse createFromJson(Object json) {
@@ -70,6 +73,7 @@ public class SemsHouse {
 		SemsObject obj = new SemsObject(App.getNameOfSemsHouse(this) + "-" + createNewSemsName());
 		obj.setSemsHouse(this);
 		semsObjectsMap.put(obj.getSemsAddress(), obj);
+		obj.installChangeDetection();
 		return obj;
 	}
 

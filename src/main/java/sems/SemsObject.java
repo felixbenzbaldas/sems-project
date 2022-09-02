@@ -18,7 +18,7 @@ public class SemsObject {
 	private List<String> details = new ArrayList<>();
 	private SemsHouse semsHouse;
 	private PropertiesOfIdentity props; 
-	public boolean hasUnsavedChanges = false;
+	public boolean hasUnsavedChanges;
 
 	public static SemsObject createFromJson(Object json, SemsHouse semsHouse) {
 		Map<String, Object> jsonObject = (Map<String, Object>) json;
@@ -31,6 +31,7 @@ public class SemsObject {
 				semsAddress -> (String) semsAddress
 				).collect(Collectors.toList());
 		semsObject.semsHouse = semsHouse;
+		semsObject.installChangeDetection();
 		return semsObject;
 	}
 
@@ -49,12 +50,16 @@ public class SemsObject {
 	
 	private void initialize() {
 		props = App.objProperties.getPropertiesOfIdentity(getSemsAddress());
+		props.setProperty(IS_PRIVATE, false);
+		props.setProperty(DEFAULT_EXPANDED, true);
+	}
+	
+	public void installChangeDetection() {
+		hasUnsavedChanges = false;
 		props.onChanged = (Object obj) -> {
 			this.registerChange();
 			return null;
 		};
-		props.setProperty(IS_PRIVATE, false);
-		props.setProperty(DEFAULT_EXPANDED, true);
 	}
 	
 	public List<SemsObject> createListOfDetails() {
