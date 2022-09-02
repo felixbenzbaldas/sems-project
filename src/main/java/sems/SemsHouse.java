@@ -15,6 +15,8 @@ public class SemsHouse {
 	private Map<String, SemsObject> semsObjectsMap = new HashMap<>();
 	private int idCounter = 0;
 	
+	public List<String> listOfDeletedObjects = new LinkedList<String>();
+	
 	
 	public static SemsHouse createFromJson(Object json) {
 		Map<String, Object> jsonObject = (Map<String, Object>) json;
@@ -27,7 +29,7 @@ public class SemsHouse {
 		semsHouse.setRootObject(semsHouse.getInThisHouse(JsonUtil.getString(jsonObject, ROOT_OBJECT)));
 		return semsHouse;
 	}
-	
+
 	public Object toJson() {
 		Map<String, Object> jsonObject = new HashMap<String, Object>();
 		jsonObject.put(ROOT_OBJECT, getRootObject().getSemsAddress());
@@ -37,6 +39,19 @@ public class SemsHouse {
 			objects.add(semsObject.toJson());
 		}
 		jsonObject.put(OBJECTS, objects);
+		return jsonObject;
+	}
+
+	public Object getChangesAsJson() {
+		Map<String, Object> jsonObject = new HashMap<String, Object>();
+		List<Object> objects = new LinkedList<Object>();
+		for (SemsObject semsObject : getObjects()) {
+			if (semsObject.hasUnsavedChanges) {
+				objects.add(semsObject.toJson());
+			}
+		}
+		jsonObject.put(OBJECTS, objects);
+		jsonObject.put(DELETED_OBJECTS_LIST, listOfDeletedObjects);
 		return jsonObject;
 	}
 	
@@ -90,5 +105,18 @@ public class SemsHouse {
 	
 	public void removeSemsObject(SemsObject toRemove) {
 		semsObjectsMap.remove(toRemove.getSemsAddress());
+		listOfDeletedObjects.add(toRemove.getSemsAddress());
+	}
+	
+	public void removeChangeMarks() {
+		for (SemsObject semsObject : getObjects()) {
+			if (semsObject.hasUnsavedChanges) {
+				semsObject.hasUnsavedChanges = false;
+			}
+		}
+	}
+	
+	public void resetListOfDeletedObjects() {
+		listOfDeletedObjects = new LinkedList<String>();
 	}
 }

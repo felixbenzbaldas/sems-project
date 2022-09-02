@@ -105,6 +105,12 @@ public class Web extends HttpServlet {
 				Persistence.saveSemsHouse(dirPath, App.semsHouseOne);
 				cr.setResponse(SUCCESS);
 			});
+			addResponse(SAVE_CHANGES, cr -> {
+				String dirPath = Persistence.getBasePath() + "changes/" + Persistence.getTimestamp() + "-changes/";
+				Persistence.saveChangesOfSemsHouse(dirPath, App.semsHouseZero);
+				Persistence.saveChangesOfSemsHouse(dirPath, App.semsHouseOne);
+				cr.setResponse(SUCCESS);
+			});
 			addResponse(CLEAR, cr -> {
 				cr.getSemsObject().clear();
 				cr.setResponse(SUCCESS);

@@ -17,6 +17,7 @@ export const IS_PRIVATE = "isPrivate";
 export const ROOT_OBJECT = "rootObject";
 export const GET_DETAILS = "getDetails";
 export const SAVE = "save";
+export const SAVE_CHANGES = "saveChanges";
 export const TEXT = "text";
 export const SEMS_HOUSE = "semsHouse";
 export const DETAILS = "details";

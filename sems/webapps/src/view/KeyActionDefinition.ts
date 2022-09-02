@@ -127,6 +127,19 @@ export class KeyActionDefinition {
                     }
                     SemsServer.save();
             });
+
+            KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+                keyEvent.ctrl = true;
+                keyEvent.key = "l";
+                }, function() {
+                    if (TextObjectViewController.map.has(App.focusedUIO)) {
+                        let tovc : TextObjectViewController = TextObjectViewController.map.get(App.focusedUIO);
+                        tovc.headText.updateTextProperty();
+                    }
+                    console.log("saveChanges");
+                    SemsServer.saveChanges();
+            });
+
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
                 keyEvent.ctrl = true;
                 keyEvent.key = "6";

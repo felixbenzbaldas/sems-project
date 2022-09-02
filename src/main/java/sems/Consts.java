@@ -20,6 +20,7 @@ public class Consts {
 	public static final String ROOT_OBJECT = "rootObject";
 	public static final String GET_DETAILS = "getDetails";
 	public static final String SAVE = "save";
+	public static final String SAVE_CHANGES = "saveChanges";
 	public static final String SEMS_HOUSE = "semsHouse";
 	public static final String TEXT = "text";
 	public static final String HAS_DETAILS = "hasDetails";
@@ -39,4 +40,5 @@ public class Consts {
 	public static final String SEMS_ADDRESS_PERSISTENCE = "id";
 	public static final String ID_COUNTER = "idCounter";
 	public static final String OBJECTS = "objects";
+	public static final String DELETED_OBJECTS_LIST = "deleted";
 }

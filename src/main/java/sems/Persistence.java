@@ -100,12 +100,20 @@ public class Persistence {
 	public static String getFileNameOfSemsHouse(String nameOfSemsHouse) {
 		return "sh" + nameOfSemsHouse + ".json";
 	}
-	
+
 	public static void saveSemsHouse(String dirPath, SemsHouse semsHouse) throws Exception {
 		Persistence.saveJson(dirPath + getFileNameOfSemsHouse(App.getNameOfSemsHouse(semsHouse)), semsHouse.toJson());
 	}
 	
+	public static void saveChangesOfSemsHouse(String dirPath, SemsHouse semsHouse) throws Exception {
+		Persistence.saveJson(dirPath + getFileNameOfSemsHouse(App.getNameOfSemsHouse(semsHouse)), semsHouse.getChangesAsJson());
+		semsHouse.removeChangeMarks();
+		semsHouse.resetListOfDeletedObjects();
+	}
+	
 	public static SemsHouse loadSemsHouse(String nameOfSemsHouse) throws Exception {
-		return SemsHouse.createFromJson(Persistence.loadJson(getPathOfSemsHouse(nameOfSemsHouse)));
+		SemsHouse semsHouse = SemsHouse.createFromJson(Persistence.loadJson(getPathOfSemsHouse(nameOfSemsHouse)));
+		semsHouse.removeChangeMarks();
+		return semsHouse;
 	}
 }

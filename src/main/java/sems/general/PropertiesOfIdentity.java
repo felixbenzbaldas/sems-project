@@ -3,12 +3,23 @@ package sems.general;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 public class PropertiesOfIdentity {
 	private Map<String, Object> map = new HashMap<>();
+	public Function<?, ?> onChanged;
 	
 	public void setProperty(String property, Object value) {
+		boolean changed;
+		if (value == null) {
+			changed = map.get(property) != null;
+		} else {
+			changed = !value.equals(map.get(property));
+		}
 		map.put(property, value);
+		if (changed) {
+			callOnChanged();
+		}
 	}
 	
 	public String getString(String property) {
@@ -29,5 +40,12 @@ public class PropertiesOfIdentity {
 	
 	public void clear() {
 		map = new HashMap<>();
+		callOnChanged();
+	}
+	
+	private void callOnChanged() {
+		if (onChanged != null) {
+			onChanged.apply(null);
+		}
 	}
 }

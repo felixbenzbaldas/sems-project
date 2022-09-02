@@ -17,14 +17,15 @@ public class SemsObject {
 	private String semsAddress;
 	private List<String> details = new ArrayList<>();
 	private SemsHouse semsHouse;
+	private PropertiesOfIdentity props; 
+	public boolean hasUnsavedChanges = false;
 
 	public static SemsObject createFromJson(Object json, SemsHouse semsHouse) {
 		Map<String, Object> jsonObject = (Map<String, Object>) json;
 		SemsObject semsObject = new SemsObject(JsonUtil.getString(jsonObject, SEMS_ADDRESS_PERSISTENCE));
-		PropertiesOfIdentity props = App.objProperties.getPropertiesOfIdentity(semsObject.getSemsAddress());
 		Map<String, Object> propertiesJson = (Map<String, Object>) jsonObject.get(PROPERTIES);
 		for (String property : propertiesJson.keySet()) {
-			props.setProperty(property, propertiesJson.get(property));
+			semsObject.props.setProperty(property, propertiesJson.get(property));
 		}
 		semsObject.details = JsonUtil.getList(jsonObject, DETAILS).stream().map(
 				semsAddress -> (String) semsAddress
@@ -47,8 +48,13 @@ public class SemsObject {
 	}
 	
 	private void initialize() {
-		App.objProperties.setProperty(getSemsAddress(), IS_PRIVATE, false);
-		App.objProperties.setProperty(getSemsAddress(), DEFAULT_EXPANDED, true);
+		props = App.objProperties.getPropertiesOfIdentity(getSemsAddress());
+		props.onChanged = (Object obj) -> {
+			this.registerChange();
+			return null;
+		};
+		props.setProperty(IS_PRIVATE, false);
+		props.setProperty(DEFAULT_EXPANDED, true);
 	}
 	
 	public List<SemsObject> createListOfDetails() {
@@ -61,10 +67,12 @@ public class SemsObject {
 	
 	public void addDetail(SemsObject detail) {
 		this.details.add(detail.getSemsAddress());
+		registerChange();
 	}
 	
 	public void addDetail(int position, SemsObject detail) {
 		this.details.add(position, detail.getSemsAddress());
+		registerChange();
 	}
 	
 	public String getSemsAddress() {
@@ -73,6 +81,7 @@ public class SemsObject {
 
 	public void deleteDetail(SemsObject detail) {
 		this.details.remove(detail.getSemsAddress());
+		registerChange();
 	}
 	
 	public SemsHouse getSemsHouse() {
@@ -93,5 +102,10 @@ public class SemsObject {
 		while(!this.details.isEmpty()) {
 			this.details.remove(0);
 		}
+		registerChange();
+	}
+	
+	private void registerChange() {
+		this.hasUnsavedChanges = true;
 	}
 }
