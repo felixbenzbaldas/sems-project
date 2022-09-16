@@ -397,10 +397,12 @@ export class TextObjectViewController {
         if (!this.isCollapsed()) {
             this.collapseWithoutAnimation();
         }
+        this.headText.updateTextProperty();
         App.openObject(this.getSemsAddress());
     }
 
     public openAfter() {
+        this.headText.updateTextProperty();
         let topLevelObject = this.getTopLevelObject();
         topLevelObject.eventController.triggerEvent(EventTypes.SCALE_TO_LEVEL_ONE, null);
         let column : Column = Column.map.get(topLevelObject.viewContext);
