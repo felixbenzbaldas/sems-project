@@ -1,15 +1,12 @@
 package sems;
-import static sems.Consts.DELETED_OBJECTS_LIST;
-import static sems.Consts.ID_COUNTER;
-import static sems.Consts.OBJECTS;
-import static sems.Consts.ROOT_OBJECT;
-import static sems.Consts.TEXT;
+import static sems.Consts.*;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import sems.general.JsonUtil;
 import sems.general.Utils;
@@ -20,6 +17,8 @@ public class SemsHouse {
 	private int idCounter = 0;
 	private List<String> listOfDeletedObjects = new LinkedList<String>();
 	
+	private List<String> doNotLoadList = new LinkedList<String>();
+
 	
 	public static SemsHouse createFromJson(Object json) {
 		Map<String, Object> jsonObject = (Map<String, Object>) json;
@@ -31,6 +30,41 @@ public class SemsHouse {
 		}
 		semsHouse.setRootObject(semsHouse.getInThisHouse(JsonUtil.getString(jsonObject, ROOT_OBJECT)));
 		return semsHouse;
+	}
+
+	
+	public static void loadFromJson(SemsHouse semsHouse, Object json) {
+		Map<String, Object> jsonObject = (Map<String, Object>) json;
+		if (jsonObject.containsKey(DELETED_OBJECTS_LIST)) {
+			semsHouse.doNotLoadList.addAll(JsonUtil.getList(jsonObject, DELETED_OBJECTS_LIST).stream().map(
+					semsAddress -> (String) semsAddress
+					).collect(Collectors.toList()));
+			
+			System.out.println("doNotLoadList:");
+			for (String semsAddr: semsHouse.doNotLoadList) {
+				System.out.println(semsAddr);
+			}
+		}
+		if (jsonObject.containsKey(ID_COUNTER)) {
+			semsHouse.setIdCounter(JsonUtil.getInt(jsonObject, ID_COUNTER));
+		}
+		for (Object obj: JsonUtil.getList(jsonObject, OBJECTS)) {
+			String semsAddressOfJsonObj = getSemsAddressOfJsonObj(obj);
+			if (!semsHouse.semsObjectsMap.containsKey(semsAddressOfJsonObj)) {
+				if (!semsHouse.doNotLoadList.contains(semsAddressOfJsonObj)) {
+					SemsObject semsObject = SemsObject.createFromJson(obj, semsHouse);
+					semsHouse.semsObjectsMap.put(semsObject.getSemsAddress(), semsObject);
+				}
+			}
+		}
+		if (jsonObject.containsKey(ROOT_OBJECT)) {
+			semsHouse.setRootObject(semsHouse.getInThisHouse(JsonUtil.getString(jsonObject, ROOT_OBJECT)));
+		}
+	}
+	
+	private static String getSemsAddressOfJsonObj(Object jsonObj) {
+		Map<String, Object> jsonObject = (Map<String, Object>) jsonObj;
+		return (String) jsonObject.get(SEMS_ADDRESS_PERSISTENCE);
 	}
 
 	public Object toJson() {

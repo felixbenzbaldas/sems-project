@@ -41,4 +41,6 @@ public class Consts {
 	public static final String ID_COUNTER = "idCounter";
 	public static final String OBJECTS = "objects";
 	public static final String DELETED_OBJECTS_LIST = "deleted";
+	public static final String CHANGES = "changes";
+	
 }

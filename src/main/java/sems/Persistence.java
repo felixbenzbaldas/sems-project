@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import static sems.Consts.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,6 +18,8 @@ import sems.general.Config;
 import sems.web.Web;
 
 public class Persistence {
+	
+	private static boolean tmpLoadWithChanges = true;
 	
 	public static String getTimestamp() {
 		Date date = new Date();
@@ -57,29 +60,9 @@ public class Persistence {
 	}
 	
 	static private String getLastSavingFolder() {
-		File savingsFolder = new File(getBasePath() + "savings");
-		String[] savings = savingsFolder.list();
-		Comparator<String> stringComparator = new Comparator<String>() {
-			@Override
-			public int compare(String arg0, String arg1) {
-				List<Integer> arg0AsNumbersList = toNumbersList(arg0);
-				List<Integer> arg1AsNumbersList = toNumbersList(arg1);
-				for (int i = 0; i < arg0AsNumbersList.size(); i++) {
-					if (arg0AsNumbersList.get(i).equals(arg1AsNumbersList.get(i))) {
-						continue;
-					} else {
-						if (arg0AsNumbersList.get(i) < arg1AsNumbersList.get(i)) {
-							return -1;
-						} else {
-							return 1;
-						}
-					}
-				}
-				return 0;
-			}
-		};
-		Arrays.sort(savings, stringComparator);
-		return savings[savings.length - 1];
+		List<String> pathsUntilLastCompleteSaving = getDirNamesUntilLastCompleteSaving();
+		String toReturn = pathsUntilLastCompleteSaving.get(pathsUntilLastCompleteSaving.size() - 1);
+		return toReturn;
 	}
 	
 	private static List<Integer> toNumbersList(String string) {
@@ -87,7 +70,9 @@ public class Persistence {
 		List<Integer> numbersList = new LinkedList<Integer>();
 		for (int i = 0; i < splitted.length; i++) {
 			if (splitted[i].length() > 0) {
-				numbersList.add(Integer.valueOf(splitted[i]));
+				if (!splitted[i].contains(CHANGES)) {
+					numbersList.add(Integer.valueOf(splitted[i]));
+				}
 			}
 		}
 		return numbersList;
@@ -103,6 +88,8 @@ public class Persistence {
 
 	public static void saveSemsHouse(String dirPath, SemsHouse semsHouse) throws Exception {
 		Persistence.saveJson(dirPath + getFileNameOfSemsHouse(App.getNameOfSemsHouse(semsHouse)), semsHouse.toJson());
+		semsHouse.removeChangeMarks();
+		semsHouse.resetListOfDeletedObjects();
 	}
 	
 	public static void saveChangesOfSemsHouse(String dirPath, SemsHouse semsHouse) throws Exception {
@@ -112,6 +99,51 @@ public class Persistence {
 	}
 	
 	public static SemsHouse loadSemsHouse(String nameOfSemsHouse) throws Exception {
-		return SemsHouse.createFromJson(Persistence.loadJson(getPathOfSemsHouse(nameOfSemsHouse)));
+		if (tmpLoadWithChanges) {
+			List<String> listOfDirNames = getDirNamesUntilLastCompleteSaving();
+			SemsHouse semsHouse = new SemsHouse();
+			for (int i = 0; i < listOfDirNames.size(); i++) {
+				SemsHouse.loadFromJson(semsHouse, Persistence.loadJson(getPathWithDirNameAndSemsHouse(listOfDirNames.get(i), nameOfSemsHouse)));
+			}
+			return semsHouse;
+		} else {
+			return SemsHouse.createFromJson(Persistence.loadJson(getPathOfSemsHouse(nameOfSemsHouse)));
+		}
+	}
+	
+	private static String getPathWithDirNameAndSemsHouse(String dirName, String nameOfSemsHouse) {
+		return getBasePath() + "savings/" + dirName + "/" + getFileNameOfSemsHouse(nameOfSemsHouse);
+	}
+	
+	private static List<String> getDirNamesUntilLastCompleteSaving() {
+		File savingsFolder = new File(getBasePath() + "savings");
+		String[] savings = savingsFolder.list();
+		Comparator<String> stringComparator_absteigend = new Comparator<String>() {
+			@Override
+			public int compare(String dirName0, String dirName1) {
+				List<Integer> arg0AsNumbersList = toNumbersList(dirName0);
+				List<Integer> arg1AsNumbersList = toNumbersList(dirName1);
+				for (int i = 0; i < arg0AsNumbersList.size(); i++) {
+					if (arg0AsNumbersList.get(i).equals(arg1AsNumbersList.get(i))) {
+						continue;
+					} else {
+						if (arg0AsNumbersList.get(i) < arg1AsNumbersList.get(i)) {
+							return 1;
+						} else {
+							return -1;
+						}
+					}
+				}
+				return 0;
+			}
+		};
+		Arrays.sort(savings, stringComparator_absteigend);
+		for (int i = 0;i < savings.length;i++) {
+			if (!savings[i].contains(CHANGES) ) {
+				List<String> toReturn = Arrays.asList(savings).subList(0, i + 1);
+				return toReturn;
+			}
+		}
+		throw new RuntimeException("Error! Found no complete saving!");
 	}
 }
