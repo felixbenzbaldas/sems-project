@@ -31,7 +31,7 @@ public class Scripts {
 						addedObject = true;
 					}
 				}
-				String contextAddress = App.objProperties.getString(obj.getSemsAddress(), Consts.CONTEXT);
+				String contextAddress = obj.props.getString(Consts.CONTEXT);
 				if (contextAddress != null) {
 					SemsObject contextObj = App.get(contextAddress);
 					if (!objectsThatAreAccessibleFromRoot.contains(contextObj)) {
@@ -47,7 +47,7 @@ public class Scripts {
 		for (SemsObject obj : allObjects) {
 			if (!objectsThatAreAccessibleFromRoot.contains(obj)) {
 				// delete text to be sure
-				App.objProperties.setProperty(obj.getSemsAddress(), Consts.TEXT, "");
+				obj.props.setProperty(Consts.TEXT, "");
 				//
 				SemsHouse semsHouse = obj.getSemsHouse();
 				semsHouse.removeSemsObject(obj);
@@ -61,7 +61,7 @@ public class Scripts {
 		int counter = 0;
 		int absWeightGesamt = 0;
 		for (SemsObject obj : App.getAllObjects()) {
-			String text = App.objProperties.getString(obj.getSemsAddress(), Consts.TEXT);
+			String text = obj.props.getString(Consts.TEXT);
 			if (text != null) {
 				if (text.startsWith("__") || text.startsWith(">_")) {
 					// 1. die ersten beiden Zeichen abschneiden
@@ -92,7 +92,7 @@ public class Scripts {
 						for (int i = 2; i < array.length; i++) {
 							newText += " _ " + array[i];
 						}
-						App.objProperties.setProperty(obj.getSemsAddress(), Consts.TEXT, newText);
+						obj.props.setProperty(Consts.TEXT, newText);
 					}
 				}
 			}

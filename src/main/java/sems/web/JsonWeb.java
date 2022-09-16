@@ -29,14 +29,14 @@ public class JsonWeb {
 		Map<String, Object> jsonObject = new HashMap<String, Object>();
 		String semsAddress = semsObject.getSemsAddress();
 		jsonObject.put(SEMS_ADDRESS, semsAddress);
-		PropertiesOfIdentity props = App.objProperties.getPropertiesOfIdentity(semsAddress);
+		PropertiesOfIdentity props = semsObject.props;
 		if (props.get(DEFAULT_EXPANDED) != null) {
 			if (props.getBoolean(DEFAULT_EXPANDED)) {
 				jsonObject.put(DETAILS, semsObject.getDetails());
 			}
 		}
 		jsonObject.put(HAS_DETAILS, semsObject.getDetails().size() > 0);
-		jsonObject.put(PROPERTIES, App.getJsonOfProperties(semsAddress));
+		jsonObject.put(PROPERTIES, App.getJsonOfProperties(props));
 		return jsonObject;
 	}
 	

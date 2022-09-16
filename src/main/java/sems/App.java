@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 
 import sems.general.Config;
-import sems.general.Properties;
 import sems.general.PropertiesOfIdentity;
 import sems.web.LoadDependencies;
 import sems.web.Web;
@@ -22,10 +21,6 @@ public class App {
 	public static SemsHouse semsHouseOne;
 	public static String nameOfSemsHouseZero = "0";
 	public static String nameOfSemsHouseOne= "1";
-	
-
-	public static Properties objProperties = new Properties();
-	
 	
 	public synchronized static void initialize() throws Exception {
 		Config.load();
@@ -75,20 +70,16 @@ public class App {
 	}
 	
 	static public void insertContextDetailAtPosition(String context, String detail, int position) {
-		App.get(context).addDetail(position, App.get(detail));
-		objProperties.getPropertiesOfIdentity(detail).setProperty(CONTEXT, context);
+		SemsObject detailObj = App.get(detail);
+		App.get(context).addDetail(position, detailObj);
+		detailObj.props.setProperty(CONTEXT, context);
 	}
 	
 	static public void insertLinkDetailAtPosition(SemsObject subject, SemsObject linkDetail, int position) {
 		subject.addDetail(position, linkDetail);
 	}
 	
-	static public void clearObjProperties() {
-		objProperties = new Properties();
-	}
-	
-	static public Map<String, Object> getJsonOfProperties(String identity) {
-		PropertiesOfIdentity props =  App.objProperties.getPropertiesOfIdentity(identity);
+	static public Map<String, Object> getJsonOfProperties(PropertiesOfIdentity props) {
 		Map<String, Object> propertiesJson = new HashMap<String, Object>();
 		for (String property : props.getProperties()) {
 			propertiesJson.put(property, props.get(property));

@@ -94,7 +94,7 @@ public class SemsHouse {
 	
 	public SemsObject createSemsObject(String text) {
 		SemsObject obj = createSemsObject();
-		App.objProperties.setProperty(obj.getSemsAddress(), TEXT, text);
+		obj.props.setProperty(TEXT, text);
 		return obj;
 	}
 	

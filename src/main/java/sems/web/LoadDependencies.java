@@ -30,7 +30,7 @@ public class LoadDependencies {
 			String current = todo.pop();
 			if (!done.contains(current)) {
 				SemsObject semsObject = App.get(current);
-				PropertiesOfIdentity props = App.objProperties.getPropertiesOfIdentity(current);
+				PropertiesOfIdentity props = semsObject.props;
 				if (props.get(DEFAULT_EXPANDED) != null) {
 					if (props.getBoolean(DEFAULT_EXPANDED)) {
 						todo.addAll(semsObject.getDetails());

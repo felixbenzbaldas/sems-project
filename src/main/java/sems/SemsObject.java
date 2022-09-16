@@ -19,7 +19,7 @@ public class SemsObject {
 	private String semsAddress;
 	private List<String> details = new ArrayList<>();
 	private SemsHouse semsHouse;
-	private PropertiesOfIdentity props; 
+	public final PropertiesOfIdentity props = new PropertiesOfIdentity(); 
 	public boolean hasUnsavedChanges;
 
 	public static SemsObject createFromJson(Object json, SemsHouse semsHouse) {
@@ -40,7 +40,7 @@ public class SemsObject {
 	public Object toJson() {
 		Map<String, Object> jsonObject = new HashMap<String, Object>();
 		jsonObject.put(SEMS_ADDRESS_PERSISTENCE, getSemsAddress());
-		jsonObject.put(PROPERTIES, App.getJsonOfProperties(getSemsAddress()));
+		jsonObject.put(PROPERTIES, App.getJsonOfProperties(props));
 		jsonObject.put(DETAILS, details);
 		return jsonObject;
 	}
@@ -51,7 +51,6 @@ public class SemsObject {
 	}
 	
 	private void initialize() {
-		props = App.objProperties.getPropertiesOfIdentity(getSemsAddress());
 		props.setProperty(IS_PRIVATE, false);
 		props.setProperty(DEFAULT_EXPANDED, true);
 	}
@@ -100,7 +99,6 @@ public class SemsObject {
 	
 	public void clear() {
 		deleteAllDetails();
-		PropertiesOfIdentity props = App.objProperties.getPropertiesOfIdentity(this.getSemsAddress());
 		props.clear();
 	}
 	

@@ -80,7 +80,8 @@ public class Web extends HttpServlet {
 				cr.setResponse(obj.getSemsAddress());
 			});
 			addResponse(SET_PROPERTY, cr -> {
-				App.objProperties.setProperty(cr.get(SEMS_ADDRESS), cr.get(PROPERTY), cr.getContentObj());
+				SemsObject semsObject = cr.getSemsObject();
+				semsObject.props.setProperty(cr.get(PROPERTY), cr.getContentObj());
 			});
 			//
 			addResponse(DETAIL, cr -> {
