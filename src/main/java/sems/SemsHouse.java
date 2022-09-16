@@ -39,11 +39,6 @@ public class SemsHouse {
 			semsHouse.doNotLoadList.addAll(JsonUtil.getList(jsonObject, DELETED_OBJECTS_LIST).stream().map(
 					semsAddress -> (String) semsAddress
 					).collect(Collectors.toList()));
-			
-			System.out.println("doNotLoadList:");
-			for (String semsAddr: semsHouse.doNotLoadList) {
-				System.out.println(semsAddr);
-			}
 		}
 		if (jsonObject.containsKey(ID_COUNTER)) {
 			semsHouse.setIdCounter(JsonUtil.getInt(jsonObject, ID_COUNTER));
