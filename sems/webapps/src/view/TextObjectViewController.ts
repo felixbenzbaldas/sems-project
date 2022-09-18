@@ -585,7 +585,7 @@ export class TextObjectViewController {
             return this.uio;
         } else {
             let prevUioOnSameLevel : UserInterfaceObject = this.detailsView.getUioAtPosition(position - 1);
-            let tocv : TextObjectViewController = TextObjectViewController.map.get(prevUioOnSameLevel);
+            let tocv : TextObjectViewController = prevUioOnSameLevel.tovcOpt;
             return tocv.getLastUio();
         }
     }
@@ -594,7 +594,7 @@ export class TextObjectViewController {
     public getLastUio() : UserInterfaceObject {
         if (this.hasChildUio()) {
             let lastChildUio : UserInterfaceObject = this.detailsView.getUioAtPosition(this.detailsView.getNumberOfDetails() - 1);
-            let tovc : TextObjectViewController = TextObjectViewController.map.get(lastChildUio);
+            let tovc : TextObjectViewController = lastChildUio.tovcOpt;
             return tovc.getLastUio();
         } else {
             return this.uio;

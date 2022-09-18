@@ -55,8 +55,8 @@ export class UserInterfaceObject {
     }
 
     public scaleUp() {
-        if (TextObjectViewController.map.has(this)) {
-            TextObjectViewController.map.get(this).scaleUp();
+        if (this.tovcOpt != null) {
+            this.tovcOpt.scaleUp();
         }
     }
 
@@ -65,8 +65,8 @@ export class UserInterfaceObject {
     }
 
     public scaleDownIsPossible() : boolean {
-        if (TextObjectViewController.map.has(this)) {
-            return TextObjectViewController.map.get(this).scaleDownIsPossible();
+        if (this.tovcOpt != null) {
+            return this.tovcOpt.scaleDownIsPossible();
         } else {
             return false;
         }

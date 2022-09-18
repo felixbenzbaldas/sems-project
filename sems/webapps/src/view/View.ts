@@ -4,7 +4,6 @@ import { RemotePropertiesOfSemsObject } from "../data/RemotePropertiesOfSemsObje
 import { AnimatedHeadBody } from "../general/AnimatedHeadBody";
 import { General } from "../general/General";
 import { Column } from "./Column";
-import { ColumnManager } from "./ColumnManager";
 import { HypertextView } from "./HypertextView";
 import { ImageView } from "./ImageView";
 import { LinkView } from "./LinkView";
@@ -105,13 +104,13 @@ export class View {
     }
 
     public static getNextUioOnSameLevel_skippingParents(uio : UserInterfaceObject) {
-        let parentTovc : TextObjectViewController = TextObjectViewController.map.get(uio.viewContext);
+        let parentTovc : TextObjectViewController = uio.viewContext.tovcOpt;
         let position = parentTovc.detailsView.getPositionOfDetailUIO(uio);
         if (position + 1 < parentTovc.detailsView.getNumberOfDetails()) {
             return parentTovc.detailsView.getUioAtPosition(position + 1);
         } else {
             let nextParentTovc : TextObjectViewController =
-                TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(uio.viewContext));
+                View.getNextUioOnSameLevel_skippingParents(uio.viewContext).tovcOpt;
             if (!nextParentTovc.isCollapsed()) {
                 return nextParentTovc.detailsView.getUioAtPosition(0);
             } else {
@@ -125,13 +124,13 @@ export class View {
             let column : Column = Column.map.get(uio.viewContext);
             return column.getPrevUio(uio);
         } else {
-            let parentTovc : TextObjectViewController = TextObjectViewController.map.get(uio.viewContext);
+            let parentTovc : TextObjectViewController = uio.viewContext.tovcOpt;
             return parentTovc.getPrevUio(uio);
         }
     }
 
     public static getNextUio(uio : UserInterfaceObject) : UserInterfaceObject{
-        let tovc : TextObjectViewController = TextObjectViewController.map.get(uio);
+        let tovc : TextObjectViewController = uio.tovcOpt;
         if (tovc.hasChildUio()) {
             return tovc.getFirstChildUio();
         } else {
@@ -150,7 +149,7 @@ export class View {
                 return null;
             }
         } else {
-            let parentTovc : TextObjectViewController = TextObjectViewController.map.get(uio.viewContext);
+            let parentTovc : TextObjectViewController = uio.viewContext.tovcOpt;
             if (parentTovc.hasNextChildUio(uio)) {
                 return parentTovc.getNextChildUio(uio);
             } else {
