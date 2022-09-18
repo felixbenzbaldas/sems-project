@@ -81,7 +81,10 @@ public class Web extends HttpServlet {
 			});
 			addResponse(SET_PROPERTY, cr -> {
 				SemsObject semsObject = cr.getSemsObject();
-				semsObject.props.setProperty(cr.get(PROPERTY), cr.getContentObj());
+				System.out.println("request: " + SET_PROPERTY + ", property: " + cr.get(PROPERTY));
+				Object contentObj = cr.getContentObj();
+				System.out.println("   contentObj: " + contentObj);
+				semsObject.props.setProperty(cr.get(PROPERTY), contentObj);
 			});
 			//
 			addResponse(DETAIL, cr -> {
