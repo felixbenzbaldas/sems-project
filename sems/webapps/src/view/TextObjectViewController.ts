@@ -36,11 +36,13 @@ export class TextObjectViewController {
     // pre-condition: object is loaded
     public static installTextObjectViewController(semsAddress : string, viewContext : UserInterfaceObject) : UserInterfaceObject {
         let userInterfaceObject : UserInterfaceObject = new UserInterfaceObject();
+        console.log("tovcOpt at beginning " + userInterfaceObject.tovcOpt);
         userInterfaceObject.semsAddress = semsAddress;
         userInterfaceObject.props = App.objProperties.getPropertiesOfObject(userInterfaceObject.semsAddress);
         userInterfaceObject.viewContext = viewContext;
         let textObjectViewController : TextObjectViewController = new TextObjectViewController(userInterfaceObject, userInterfaceObject.props);
         TextObjectViewController.map.set(userInterfaceObject, textObjectViewController);
+        userInterfaceObject.tovcOpt = textObjectViewController;
         textObjectViewController.detailsData = DetailsData.map.get(semsAddress);
         //
         textObjectViewController.context = Context.create(userInterfaceObject);
