@@ -14,13 +14,11 @@ export class UserInterfaceObject {
     public props : RemotePropertiesOfSemsObject;
     public uiElement : HTMLElement;
 
-    // Optionally contains an instance of TextObjectViewController.
-    // A null-value means, that this uio has no tovc. 
+    // The suffix "opt" means, that the value is optionally.
+    // A null-value means, that this uio has no value.
     public tovcOpt : TextObjectViewController = null;
-
     public columnOpt : Column = null;
-
-    public stringRelationshipView_opt : StringRelationshipView;
+    public stringRelationshipView_opt : StringRelationshipView = null;
 
     public eventController : EventController;
     public viewContext: UserInterfaceObject;
