@@ -426,7 +426,8 @@ export class SemsText {
                 if (this.semsText.listOfWords.length > 0) {
                     this.semsText.listOfWords[0].setCaretToBeginningOfWord();
                 } else {
-                    General.callIfNotNull(this.semsText.on_delete);
+                    this.semsText.setText('');
+                    this.semsText.focusFirstWord();
                 }
             }
         }
