@@ -121,7 +121,7 @@ export class View {
 
     public static getPrevUio(uio : UserInterfaceObject) : UserInterfaceObject{
         if (uio.viewContext.viewType == ViewTypes.COLUMN) {
-            let column : Column = Column.map.get(uio.viewContext);
+            let column : Column = uio.viewContext.columnOpt;
             return column.getPrevUio(uio);
         } else {
             let parentTovc : TextObjectViewController = uio.viewContext.tovcOpt;
@@ -142,7 +142,7 @@ export class View {
     // returns the next UserInterfaceObject skipping the childs of uio
     public static getNextUio_skippingChilds(uio : UserInterfaceObject) : UserInterfaceObject {
         if (uio.viewContext.viewType == ViewTypes.COLUMN) {
-            let column : Column = Column.map.get(uio.viewContext);
+            let column : Column = uio.viewContext.columnOpt;
             if (column.hasNextChildUio(uio)) {
                 return column.getNextChildUio(uio);
             } else {

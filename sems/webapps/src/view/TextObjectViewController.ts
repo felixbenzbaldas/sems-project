@@ -387,7 +387,7 @@ export class TextObjectViewController {
 
     public getColumn() : Column {
         let topLevelObject = this.getTopLevelObject();
-        let column : Column = Column.map.get(topLevelObject.viewContext);
+        let column : Column = topLevelObject.viewContext.columnOpt;
         return column;
     }
 
@@ -403,7 +403,7 @@ export class TextObjectViewController {
         this.headText.updateTextProperty();
         let topLevelObject = this.getTopLevelObject();
         topLevelObject.eventController.triggerEvent(EventTypes.SCALE_TO_LEVEL_ONE, null);
-        let column : Column = Column.map.get(topLevelObject.viewContext);
+        let column : Column = topLevelObject.viewContext.columnOpt;
         let uio : UserInterfaceObject = column.createUIOAfter(topLevelObject, this.getSemsAddress());
         uio.focus();
         uio.scaleUp();
@@ -411,7 +411,7 @@ export class TextObjectViewController {
 
     public openOverviewAfter() {
         let topLevelObject = this.getTopLevelObject();
-        let column : Column = Column.map.get(topLevelObject.viewContext);
+        let column : Column = topLevelObject.viewContext.columnOpt;
         let uio : UserInterfaceObject = column.createUIOAfter(topLevelObject, OVERVIEW_ADDR);
         uio.focus();
         uio.scaleUp();
@@ -420,7 +420,7 @@ export class TextObjectViewController {
     public replaceTopLevelObject() {
         this.openAfter();
         let topLevelObject = this.getTopLevelObject();
-        let column : Column = Column.map.get(topLevelObject.viewContext);
+        let column : Column = topLevelObject.viewContext.columnOpt;
         column.addToDeletedListAndDelete(topLevelObject);
     }
 
@@ -430,13 +430,13 @@ export class TextObjectViewController {
 
     public focusPrevColumn() {
         let topLevelObject = this.getTopLevelObject();
-        let column : Column = Column.map.get(topLevelObject.viewContext);
+        let column : Column = topLevelObject.viewContext.columnOpt;
         column.userInterfaceObject.getEventController().triggerEvent(EventTypes.FOCUS_PREV_COLUMN, null);
     }
 
     public focusNextColumn() {
         let topLevelObject = this.getTopLevelObject();
-        let column : Column = Column.map.get(topLevelObject.viewContext);
+        let column : Column = topLevelObject.viewContext.columnOpt;
         column.userInterfaceObject.getEventController().triggerEvent(EventTypes.FOCUS_NEXT_COLUMN, null);
     }
 
@@ -446,13 +446,13 @@ export class TextObjectViewController {
 
     public focusNextTopLevelObject() {
         let topLevelObject = this.getTopLevelObject();
-        let column : Column = Column.map.get(topLevelObject.viewContext);
+        let column : Column = topLevelObject.viewContext.columnOpt;
         column.focusNextTopLevelObject(topLevelObject);
     }
 
     public focusPrevTopLevelObject() {
         let topLevelObject = this.getTopLevelObject();
-        let column : Column = Column.map.get(topLevelObject.viewContext);
+        let column : Column = topLevelObject.viewContext.columnOpt;
         column.focusPrevTopLevelObject(topLevelObject);
     }
 

@@ -199,20 +199,20 @@ export class StringRelationshipView {
 
     private getColumn() : Column {
         let topLevelObject = this.getTopLevelObject();
-        let column : Column = Column.map.get(topLevelObject.viewContext);
+        let column : Column = topLevelObject.viewContext.columnOpt;
         return column;
     }
 
     
     private focusPrevColumn() {
         let topLevelObject = this.getTopLevelObject();
-        let column : Column = Column.map.get(topLevelObject.viewContext);
+        let column : Column = topLevelObject.viewContext.columnOpt;
         column.userInterfaceObject.getEventController().triggerEvent(EventTypes.FOCUS_PREV_COLUMN, null);
     }
 
     private focusNextColumn() {
         let topLevelObject = this.getTopLevelObject();
-        let column : Column = Column.map.get(topLevelObject.viewContext);
+        let column : Column = topLevelObject.viewContext.columnOpt;
         column.userInterfaceObject.getEventController().triggerEvent(EventTypes.FOCUS_NEXT_COLUMN, null);
     }
 
