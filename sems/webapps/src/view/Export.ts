@@ -1,4 +1,5 @@
 import { TextObjectViewController } from "./TextObjectViewController";
+import { UserInterfaceObject } from "./UserInterfaceObject";
 import { View } from "./View";
 
 export class Export {
@@ -8,7 +9,8 @@ export class Export {
         let currentTovc : TextObjectViewController = tovc;
         div.appendChild(Export.getHtmlOfTree_Safe(currentTovc, 0));
         for (let i = 0; i < 3; i++) {
-            currentTovc = TextObjectViewController.map.get(View.getNextUioOnSameLevel_skippingParents(currentTovc.getUserInterfaceObject()));
+            let nextUio : UserInterfaceObject = View.getNextUioOnSameLevel_skippingParents(currentTovc.getUserInterfaceObject());
+            currentTovc = nextUio.tovcOpt;
             div.appendChild(Export.getHtmlOfTree_Safe(currentTovc, 0));
         }
         return div.innerHTML;
@@ -67,7 +69,7 @@ export class Export {
         let htmlElement : HTMLElement = document.createElement('div');
         let listOfDetailUio = tovc.getListOfDetailUio();
         for (let i = 0; i < listOfDetailUio.length; i++) {
-            let detailTovc : TextObjectViewController = TextObjectViewController.map.get(listOfDetailUio[i]);
+            let detailTovc : TextObjectViewController = listOfDetailUio[i].tovcOpt;
             htmlElement.appendChild(Export.getHtmlOfTree_Safe(detailTovc, level));
         }
         return htmlElement;
@@ -107,7 +109,7 @@ export class Export {
         let text : string = '';
         let listOfDetailUio = tovc.getListOfDetailUio();
         for (let i = 0; i < listOfDetailUio.length; i++) {
-            let detailTovc : TextObjectViewController = TextObjectViewController.map.get(listOfDetailUio[i]);
+            let detailTovc : TextObjectViewController = listOfDetailUio[i].tovcOpt;
             text += Export.getRawTextOfTree(detailTovc, level);
             if (i + 1 < listOfDetailUio.length) {
                 text += '\n';
