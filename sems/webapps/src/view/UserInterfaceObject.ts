@@ -1,6 +1,7 @@
 import { RemotePropertiesOfSemsObject } from "../data/RemotePropertiesOfSemsObject";
 import { EventTypes } from "../EventTypes";
 import { EventController } from "../general/EventController";
+import { Column } from "./Column";
 import { StringRelationshipView } from "./StringRelationshipView";
 import { TextObjectViewController } from "./TextObjectViewController";
 import { ViewTypes } from "./ViewTypes";
@@ -17,6 +18,10 @@ export class UserInterfaceObject {
     // A null-value means, that this uio has no tovc. 
     public tovcOpt : TextObjectViewController = null;
 
+    public columnOpt : Column = null;
+
+    public stringRelationshipView_opt : StringRelationshipView;
+
     public eventController : EventController;
     public viewContext: UserInterfaceObject;
     
@@ -28,7 +33,7 @@ export class UserInterfaceObject {
 
     public lastFocusedSubitem : UserInterfaceObject;
 
-    public stringRelationshipView : StringRelationshipView;
+    
 
     constructor() {
         this.eventController = new EventController(this);

@@ -22,7 +22,7 @@ export class StringRelationshipView {
     static create(stringRelationship : string, addressOfObject : string, viewContext : UserInterfaceObject) : StringRelationshipView {
         let stringRelationshipView = new StringRelationshipView();
         stringRelationshipView.uio = new UserInterfaceObject();
-        stringRelationshipView.uio.stringRelationshipView = stringRelationshipView;
+        stringRelationshipView.uio.stringRelationshipView_opt = stringRelationshipView;
         stringRelationshipView.keyController = new KeyController();
         stringRelationshipView.keyController.transmitKeyEventsTo(stringRelationshipView.uio);
         stringRelationshipView.uio.viewContext = viewContext;

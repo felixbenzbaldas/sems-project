@@ -41,6 +41,7 @@ export class Column {
         column.userInterfaceObject.viewType = ViewTypes.COLUMN;
         column.userInterfaceObject.uiElement = column.createUiElement();
         Column.map.set(column.userInterfaceObject, column);
+        
         if (App.LOCAL_MODE) {
             column.detailsData = DetailsData.map.get(semsAddress);
             column.detailsData.ensureDetailsAreLoaded(function() {
