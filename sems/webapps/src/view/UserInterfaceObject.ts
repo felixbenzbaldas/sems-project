@@ -81,7 +81,7 @@ export class UserInterfaceObject {
         if (this.viewContext == null) {
             return this;
         } else {
-            if (this.viewContext.viewType == ViewTypes.COLUMN) {
+            if (this.viewContext.columnOpt != null) {
                 return this;
             } else {
                 return this.viewContext.getTopLevelObject();

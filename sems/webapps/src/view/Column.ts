@@ -16,8 +16,6 @@ import { ViewTypes } from "./ViewTypes";
 
 export class Column {
     
-    public static map : MapWithPrimitiveStringsAsKey = new MapWithPrimitiveStringsAsKey();
-
     public userInterfaceObject : UserInterfaceObject;
     private listOfUIOs: Array<UserInterfaceObject> = [];
 
@@ -38,9 +36,7 @@ export class Column {
         if (App.LOCAL_MODE) {
             column.userInterfaceObject.semsAddress = semsAddress;
         }
-        column.userInterfaceObject.viewType = ViewTypes.COLUMN;
         column.userInterfaceObject.uiElement = column.createUiElement();
-        Column.map.set(column.userInterfaceObject, column);
         column.userInterfaceObject.columnOpt = column;
         if (App.LOCAL_MODE) {
             column.detailsData = DetailsData.map.get(semsAddress);

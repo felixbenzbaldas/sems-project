@@ -120,7 +120,7 @@ export class View {
     }
 
     public static getPrevUio(uio : UserInterfaceObject) : UserInterfaceObject{
-        if (uio.viewContext.viewType == ViewTypes.COLUMN) {
+        if (uio.viewContext.columnOpt != null) {
             let column : Column = uio.viewContext.columnOpt;
             return column.getPrevUio(uio);
         } else {
@@ -141,7 +141,7 @@ export class View {
     // can return null
     // returns the next UserInterfaceObject skipping the childs of uio
     public static getNextUio_skippingChilds(uio : UserInterfaceObject) : UserInterfaceObject {
-        if (uio.viewContext.viewType == ViewTypes.COLUMN) {
+        if (uio.viewContext.columnOpt != null) {
             let column : Column = uio.viewContext.columnOpt;
             if (column.hasNextChildUio(uio)) {
                 return column.getNextChildUio(uio);
