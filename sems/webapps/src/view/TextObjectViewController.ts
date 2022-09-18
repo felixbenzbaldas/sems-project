@@ -21,8 +21,6 @@ import { View } from "./View";
 
 export class TextObjectViewController {
 
-    public static map : Map<UserInterfaceObject, TextObjectViewController> = new Map();
-    
     public detailsData : DetailsData;
     public headBody: AnimatedHeadBody = View.createStyledAnimatedHeadBody();
 
@@ -36,12 +34,10 @@ export class TextObjectViewController {
     // pre-condition: object is loaded
     public static installTextObjectViewController(semsAddress : string, viewContext : UserInterfaceObject) : UserInterfaceObject {
         let userInterfaceObject : UserInterfaceObject = new UserInterfaceObject();
-        console.log("tovcOpt at beginning " + userInterfaceObject.tovcOpt);
         userInterfaceObject.semsAddress = semsAddress;
         userInterfaceObject.props = App.objProperties.getPropertiesOfObject(userInterfaceObject.semsAddress);
         userInterfaceObject.viewContext = viewContext;
         let textObjectViewController : TextObjectViewController = new TextObjectViewController(userInterfaceObject, userInterfaceObject.props);
-        TextObjectViewController.map.set(userInterfaceObject, textObjectViewController);
         userInterfaceObject.tovcOpt = textObjectViewController;
         textObjectViewController.detailsData = DetailsData.map.get(semsAddress);
         //
@@ -698,7 +694,9 @@ export class TextObjectViewController {
     }
 
     public exportRawText() {
-        this.ensureExpanded(); // XXX that is not really correct!
+        if (this.isCollapsed()) {
+            throw 'uio must be expanded!';
+        }
         let textArea : HTMLTextAreaElement = document.createElement("textarea");
         Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
         this.headText.updateTextProperty();
@@ -706,7 +704,9 @@ export class TextObjectViewController {
     }
 
     public export_fourDays_safe_html() {
-        this.ensureExpanded(); // XXX that is not really correct!
+        if (this.isCollapsed()) {
+            throw 'uio must be expanded!';
+        }
         let textArea : HTMLTextAreaElement = document.createElement("textarea");
         Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
         this.headText.updateTextProperty();
