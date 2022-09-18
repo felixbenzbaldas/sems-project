@@ -152,14 +152,14 @@ export class Column {
         };
         this.placeholderDiv.ondrop = function(event) {
             event.preventDefault();
-            let tovc : TextObjectViewController = TextObjectViewController.map.get(App.draggedUIO);
+            let tovc : TextObjectViewController = App.draggedUIO.tovcOpt;
             // UIO von bisheriger Stelle lösen
             if (tovc.isTopLevelObject()) {
                 let originColumn : Column = tovc.getColumn();
                 originColumn.delete(App.draggedUIO);
             } else {
                 let viewContextUIO : UserInterfaceObject = App.draggedUIO.getViewContext();
-                let viewContextTOVC : TextObjectViewController = TextObjectViewController.map.get(viewContextUIO);
+                let viewContextTOVC : TextObjectViewController = viewContextUIO.tovcOpt;
                 viewContextTOVC.detailsView.refreshUIO(App.draggedUIO);
             }
             //
@@ -448,7 +448,7 @@ export class Column {
     public adaptUIO(uio: UserInterfaceObject) {
         uio.viewContext = this.userInterfaceObject;
         this.setCallbacks(uio);
-        let tovc : TextObjectViewController = TextObjectViewController.map.get(uio);
+        let tovc : TextObjectViewController = uio.tovcOpt;
         tovc.context.updateContextAsSubitem();
     }
 
@@ -562,7 +562,7 @@ export class Column {
             return null;
         } else {
             let previousUioOnSameLevel = this.listOfUIOs[position - 1];
-            let tovc : TextObjectViewController = TextObjectViewController.map.get(previousUioOnSameLevel);
+            let tovc : TextObjectViewController = previousUioOnSameLevel.tovcOpt;
             return tovc.getLastUio();
         }
     }

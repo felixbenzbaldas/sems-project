@@ -101,8 +101,8 @@ export class DetailsView {
         let self = this;
         return function () {
             App.addToDeletedList(userInterfaceObject.semsAddress);
-            if (TextObjectViewController.map.has(userInterfaceObject)) {
-                TextObjectViewController.map.get(userInterfaceObject).context.deleteContextIfDisplayedInContext();
+            if (userInterfaceObject.tovcOpt != null) {
+                userInterfaceObject.tovcOpt.context.deleteContextIfDisplayedInContext();
             }
             let indexOfDetail = self.detailUserInterfaceObjects.indexOf(userInterfaceObject);
             self.detailsData.deleteDetail(userInterfaceObject.getSemsAddress(), indexOfDetail);

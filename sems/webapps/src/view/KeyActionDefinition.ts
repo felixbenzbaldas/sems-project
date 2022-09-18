@@ -121,8 +121,8 @@ export class KeyActionDefinition {
                 keyEvent.ctrl = true;
                 keyEvent.key = "s";
                 }, function() {
-                    if (TextObjectViewController.map.has(App.focusedUIO)) {
-                        let tovc : TextObjectViewController = TextObjectViewController.map.get(App.focusedUIO);
+                    if (App.focusedUIO.tovcOpt != null) {
+                        let tovc : TextObjectViewController = App.focusedUIO.tovcOpt;
                         tovc.headText.updateTextProperty();
                     }
                     SemsServer.save();
@@ -132,8 +132,8 @@ export class KeyActionDefinition {
                 keyEvent.ctrl = true;
                 keyEvent.key = "l";
                 }, function() {
-                    if (TextObjectViewController.map.has(App.focusedUIO)) {
-                        let tovc : TextObjectViewController = TextObjectViewController.map.get(App.focusedUIO);
+                    if (App.focusedUIO.tovcOpt != null) {
+                        let tovc : TextObjectViewController = App.focusedUIO.tovcOpt;
                         tovc.headText.updateTextProperty();
                     }
                     console.log("saveChanges");

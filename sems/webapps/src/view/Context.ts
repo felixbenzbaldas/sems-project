@@ -24,7 +24,7 @@ export class Context {
 
     public static create(userInterfaceObject: UserInterfaceObject) : Context {
         let context = new Context();
-        context.textObjectViewController = TextObjectViewController.map.get(userInterfaceObject);
+        context.textObjectViewController = userInterfaceObject.tovcOpt;
         context.userInterfaceObject = userInterfaceObject;
         context.props = App.objProperties.getPropertiesOfObject(context.getSemsAddress());
         context.contextIconElement = ContextIcon.createContextIconElement();
