@@ -9,10 +9,7 @@ export class Export {
         let currentTovc : TextObjectViewController = tovc;
         div.appendChild(Export.getHtmlOfTree_Safe(currentTovc, 0));
         for (let i = 0; i < 3; i++) {
-            
-            let nextUio : UserInterfaceObject = View.getNextUioOnSameLevel_skippingParents(currentTovc.getUserInterfaceObject());
-            currentTovc = nextUio.tovcOpt;
-
+            currentTovc = View.getNextUioOnSameLevel_skippingParents(currentTovc.getUserInterfaceObject()).tovcOpt;
             div.appendChild(Export.getHtmlOfTree_Safe(currentTovc, 0));
         }
         return div.innerHTML;
