@@ -79,6 +79,10 @@ export class TextObjectViewController {
                 textObjectViewController.ensureExpanded();
                 let semsAddressOfPasteObject = App.clipboard;
                 ObjectLoader.ensureLoaded(semsAddressOfPasteObject, function() {
+                    if (App.obj_in_clipboard_lost_context) {
+                        App.objProperties.setProperty(semsAddressOfPasteObject, CONTEXT, userInterfaceObject.semsAddress);
+                        App.obj_in_clipboard_lost_context = false;
+                    }
                     textObjectViewController.detailsView.createLinkDetailAtPositionAndFocusIt(0, semsAddressOfPasteObject);
                 });
             }
@@ -145,12 +149,18 @@ export class TextObjectViewController {
             textObjectViewController.openOverviewAfter();
         });
         userInterfaceObject.eventController.addObserver(EventTypes.CUT, function() {
-            textObjectViewController.copyEvent();
+            App.clipboard = userInterfaceObject.semsAddress;
+            if (App.objProperties.get(userInterfaceObject.semsAddress, CONTEXT) == null) {
+                App.obj_in_clipboard_lost_context = false;
+            } else {
+                App.obj_in_clipboard_lost_context = true;
+            }
             textObjectViewController.headText.updateTextProperty();
             userInterfaceObject.onDeleteEvent();
         });
         userInterfaceObject.eventController.addObserver(EventTypes.COPY, function() {
-            textObjectViewController.copyEvent();
+            App.clipboard = userInterfaceObject.semsAddress;
+            App.obj_in_clipboard_lost_context = false;
         });
         userInterfaceObject.eventController.addObserver(EventTypes.DELETE, function() {
             textObjectViewController.headText.updateTextProperty();
@@ -304,10 +314,6 @@ export class TextObjectViewController {
         if (this.props.get(DEFAULT_EXPANDED)) {
             this.expandIfCollapsedAndBodyIsAvailable();
         }
-    }
-
-    public copyEvent() {
-        App.clipboard = this.getSemsAddress();
     }
 
     public toggleLogicalContextEvent() {

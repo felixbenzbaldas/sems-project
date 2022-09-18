@@ -1,4 +1,5 @@
 import { App } from "../App";
+import { CONTEXT } from "../Consts";
 import { DetailsData } from "../data/DetailsData";
 import { ObjectLoader } from "../data/ObjectLoader";
 import { EventTypes } from "../EventTypes";
@@ -133,6 +134,10 @@ export class DetailsView {
             ObjectLoader.ensureLoaded(semsAddressOfPasteObject, function() {
                 self.detailsData.createLinkDetailAtPostion(semsAddressOfPasteObject, indexOfDetail + 1);
                 let newDetailUserInterfaceObject = self.createDetailUserInterfaceObject(semsAddressOfPasteObject);
+                if (App.obj_in_clipboard_lost_context) {
+                    App.objProperties.setProperty(semsAddressOfPasteObject, CONTEXT, self.userInterfaceObject.semsAddress);
+                    App.obj_in_clipboard_lost_context = false;
+                }
                 self.insertUserInterfaceObjectAtPositionAndFocusIt(newDetailUserInterfaceObject, indexOfDetail + 1);
             });
         };

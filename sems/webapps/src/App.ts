@@ -25,6 +25,7 @@ export class App {
     static CONTENT_OBJ : string;
 
     static clipboard : string;
+    static obj_in_clipboard_lost_context : boolean = false;
 
     static focusedVisualObject;
     
