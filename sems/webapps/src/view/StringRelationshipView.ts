@@ -58,13 +58,13 @@ export class StringRelationshipView {
         stringRelationshipView.uio.eventController.on(EventTypes.REPLACE_TOP_LEVEL_OBJECT, function() {
             ObjectLoader.ensureLoaded(stringRelationshipView.addressOfObject, function() {
                 stringRelationshipView.createObject(stringRelationshipView.addressOfObject);
-                TextObjectViewController.map.get(stringRelationshipView.object_UserInterfaceObject).replaceTopLevelObject();
+                stringRelationshipView.object_UserInterfaceObject.tovcOpt.replaceTopLevelObject();
             });
         });
         stringRelationshipView.uio.eventController.on(EventTypes.OPEN, function() {
             ObjectLoader.ensureLoaded(stringRelationshipView.addressOfObject, function() {
                 stringRelationshipView.createObject(stringRelationshipView.addressOfObject);
-                TextObjectViewController.map.get(stringRelationshipView.object_UserInterfaceObject).open();
+                stringRelationshipView.object_UserInterfaceObject.tovcOpt.open();
             });
         });
         stringRelationshipView.uio.eventController.on(EventTypes.FOCUS_VIEW_CONTEXT, function() {

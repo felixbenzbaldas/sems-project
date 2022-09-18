@@ -66,7 +66,7 @@ export class App {
     static onlyOneColumn : boolean;
 
     static runApp() {
-        console.log("App-v1");
+        console.log("App-v2");
         if (App.isFCDomain() || App.isLocal()) {
             App.extractHrefEnding();
             EventTypeInfo.init();
