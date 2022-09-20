@@ -150,11 +150,7 @@ export class TextObjectViewController {
         });
         userInterfaceObject.eventController.addObserver(EventTypes.CUT, function() {
             App.clipboard = userInterfaceObject.semsAddress;
-            if (App.objProperties.get(userInterfaceObject.semsAddress, CONTEXT) == null) {
-                App.obj_in_clipboard_lost_context = false;
-            } else {
-                App.obj_in_clipboard_lost_context = true;
-            }
+            App.obj_in_clipboard_lost_context = textObjectViewController.context.visualContextIsLogicalContext();
             textObjectViewController.headText.updateTextProperty();
             userInterfaceObject.onDeleteEvent();
         });

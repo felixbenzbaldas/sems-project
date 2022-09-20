@@ -132,11 +132,11 @@ export class Context {
         }
     }
     
-    private hasLogicalContext() : boolean {
+    public hasLogicalContext() : boolean {
         return this.props.get(CONTEXT) != null;
     }
     
-    private visualContextIsLogicalContext(): boolean {
+    public visualContextIsLogicalContext(): boolean {
         if (this.hasViewContext()) {
             return this.userInterfaceObject.getViewContext().getSemsAddress() == this.getProps().get(CONTEXT);
         } else {
