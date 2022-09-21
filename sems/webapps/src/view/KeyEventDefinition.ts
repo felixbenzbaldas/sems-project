@@ -65,15 +65,15 @@ export class KeyEventDefinition {
         });
         this.addMapping(EventTypes.SCALE_DOWN, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
-            keyEvent.key = "u";
+            keyEvent.key = "e";
         });
         this.addMapping(EventTypes.SCALE_UP, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
-            keyEvent.key = "j";
+            keyEvent.key = "d";
         });
         this.addMapping(EventTypes.OPEN_OVERVIEW, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
-            keyEvent.key = "h";
+            keyEvent.key = "g";
         });
         this.addMapping(EventTypes.CUT, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
@@ -119,11 +119,11 @@ export class KeyEventDefinition {
         });
         this.addMapping(EventTypes.REPLACE_TOP_LEVEL_OBJECT, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
-            keyEvent.key = "m";
+            keyEvent.key = "a";
         });
         this.addMapping(EventTypes.OPEN, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
-            keyEvent.key = "n";
+            keyEvent.key = "q";
         });
         this.addMapping(EventTypes.DO_NOTHING, function(keyEvent : KeyEvent) {
             keyEvent.ctrl = true;

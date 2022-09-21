@@ -257,7 +257,7 @@ export class SemsText {
             let self = this;
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
                 keyEvent.sk = true;
-                keyEvent.key = "e";
+                keyEvent.key = "4";
                 }, function() {
                     if (self.getCaretPosition() == 0) {
                         let index = self.semsText.listOfWords.indexOf(self);
@@ -268,7 +268,7 @@ export class SemsText {
             });
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
                 keyEvent.sk = true;
-                keyEvent.key = "d";
+                keyEvent.key = "5";
                 }, function() {
                     if (self.getCaretPosition() == self.input.value.length) {
                         let index = self.semsText.listOfWords.indexOf(self);
@@ -311,18 +311,18 @@ export class SemsText {
                 }, function() {
                     List.getLastElement(self.semsText.listOfWords).setCaretToLastPosition();
             });
-            KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-                keyEvent.sk = true;
-                keyEvent.key = "q";
-                }, function() {
-                    self.setCaret(0);
-            });
-            KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-                keyEvent.sk = true;
-                keyEvent.key = "a";
-                }, function() {
-                    self.setCaret(self.input.value.length);
-            });
+            // KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            //     keyEvent.sk = true;
+            //     keyEvent.key = "q";
+            //     }, function() {
+            //         self.setCaret(0);
+            // });
+            // KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            //     keyEvent.sk = true;
+            //     keyEvent.key = "a";
+            //     }, function() {
+            //         self.setCaret(self.input.value.length);
+            // });
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
                 keyEvent.sk = true;
                 keyEvent.key = ".";

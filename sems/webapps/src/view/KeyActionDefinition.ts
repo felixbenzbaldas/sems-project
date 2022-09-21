@@ -21,12 +21,12 @@ export class KeyActionDefinition {
             }, function() {
                 textObjectViewController.moveToCurrentHouse();
         });
-        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "b";
-            }, function() {
-                uio.uiElement.scrollIntoView();
-        });
+        // KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+        //     keyEvent.sk = true;
+        //     keyEvent.key = "b";
+        //     }, function() {
+        //         uio.uiElement.scrollIntoView();
+        // });
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.ctrl = true;
             keyEvent.key = "f";
