@@ -94,7 +94,7 @@ export class KeyActionDefinition {
         // SCROLL_FORWARDS
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
-            keyEvent.key = "g";
+            keyEvent.key = "b";
             }, function() {
                 let column = textObjectViewController.getColumn();
                 column.smoothScroll_additive(280);
