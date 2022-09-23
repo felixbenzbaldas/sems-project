@@ -87,11 +87,9 @@ export class Column {
         });
         column.userInterfaceObject.getEventController().addObserver(EventTypes.PASTE, function() {
             let semsAddressOfPasteObject = App.clipboard;
-            ObjectLoader.ensureLoaded(semsAddressOfPasteObject, function() {
-                let uio = column.createListUserInterfaceObject(semsAddressOfPasteObject);
-                column.insertUserInterfaceObjectAtPosition(uio, 0);
-                uio.focus();
-            });
+            let uio = column.createListUserInterfaceObject(semsAddressOfPasteObject);
+            column.insertUserInterfaceObjectAtPosition(uio, 0);
+            uio.focus();
         });
         column.userInterfaceObject.getEventController().addObserver(EventTypes.DELETE, function() {
             ColumnManager.deleteColumnEvent(column);

@@ -131,15 +131,13 @@ export class DetailsView {
         return function () {
             let indexOfDetail = self.detailUserInterfaceObjects.indexOf(detailUserInterfaceObject);
             let semsAddressOfPasteObject = App.clipboard;
-            ObjectLoader.ensureLoaded(semsAddressOfPasteObject, function() {
-                self.detailsData.createLinkDetailAtPostion(semsAddressOfPasteObject, indexOfDetail + 1);
-                let newDetailUserInterfaceObject = self.createDetailUserInterfaceObject(semsAddressOfPasteObject);
-                if (App.obj_in_clipboard_lost_context) {
-                    App.objProperties.setProperty(semsAddressOfPasteObject, CONTEXT, self.userInterfaceObject.semsAddress);
-                    App.obj_in_clipboard_lost_context = false;
-                }
-                self.insertUserInterfaceObjectAtPositionAndFocusIt(newDetailUserInterfaceObject, indexOfDetail + 1);
-            });
+            self.detailsData.createLinkDetailAtPostion(semsAddressOfPasteObject, indexOfDetail + 1);
+            let newDetailUserInterfaceObject = self.createDetailUserInterfaceObject(semsAddressOfPasteObject);
+            if (App.obj_in_clipboard_lost_context) {
+                App.objProperties.setProperty(semsAddressOfPasteObject, CONTEXT, self.userInterfaceObject.semsAddress);
+                App.obj_in_clipboard_lost_context = false;
+            }
+            self.insertUserInterfaceObjectAtPositionAndFocusIt(newDetailUserInterfaceObject, indexOfDetail + 1);
         };
     }
 

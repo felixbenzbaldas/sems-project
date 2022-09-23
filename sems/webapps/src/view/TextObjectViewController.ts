@@ -78,13 +78,11 @@ export class TextObjectViewController {
             } else {
                 textObjectViewController.ensureExpanded();
                 let semsAddressOfPasteObject = App.clipboard;
-                ObjectLoader.ensureLoaded(semsAddressOfPasteObject, function() {
-                    if (App.obj_in_clipboard_lost_context) {
-                        App.objProperties.setProperty(semsAddressOfPasteObject, CONTEXT, userInterfaceObject.semsAddress);
-                        App.obj_in_clipboard_lost_context = false;
-                    }
-                    textObjectViewController.detailsView.createLinkDetailAtPositionAndFocusIt(0, semsAddressOfPasteObject);
-                });
+                if (App.obj_in_clipboard_lost_context) {
+                    App.objProperties.setProperty(semsAddressOfPasteObject, CONTEXT, userInterfaceObject.semsAddress);
+                    App.obj_in_clipboard_lost_context = false;
+                }
+                textObjectViewController.detailsView.createLinkDetailAtPositionAndFocusIt(0, semsAddressOfPasteObject);
             }
         });
         userInterfaceObject.eventController.addObserver(EventTypes.TOGGLE_EXPAND, function() {

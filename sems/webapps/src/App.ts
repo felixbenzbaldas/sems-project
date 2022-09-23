@@ -24,6 +24,7 @@ export class App {
     static ABOUT_OBJ : string;
     static CONTENT_OBJ : string;
 
+    // assert: an object in clipboad is loaded
     static clipboard : string;
     static obj_in_clipboard_lost_context : boolean = false;
 
@@ -67,7 +68,7 @@ export class App {
     static onlyOneColumn : boolean;
 
     static runApp() {
-        console.log("App-v3");
+        console.log("App-v4");
         if (App.isFCDomain() || App.isLocal()) {
             App.extractHrefEnding();
             EventTypeInfo.init();
