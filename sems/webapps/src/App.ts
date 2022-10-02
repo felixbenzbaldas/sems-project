@@ -10,6 +10,7 @@ import { MapWithPrimitiveStringsAsKey } from "./general/MapWithPrimitiveStringsA
 import { TestApp } from "./test/TestApp";
 import { Column } from "./view/Column";
 import { ColumnManager } from "./view/ColumnManager";
+import { KeyMode as KeyMode } from "./view/KeyMode";
 import { KeyActionDefinition } from "./view/KeyActionDefinition";
 import { KeyEventDefinition } from "./view/KeyEventDefinition";
 import { UserInterfaceObject } from "./view/UserInterfaceObject";
@@ -23,6 +24,8 @@ export class App {
     static log : boolean;
     static ABOUT_OBJ : string;
     static CONTENT_OBJ : string;
+
+    static keyMode : KeyMode = KeyMode.NORMAL;
 
     // assert: an object in clipboad is loaded
     static clipboard : string;
@@ -41,6 +44,7 @@ export class App {
 
     // Mapping von KeyEvents auf EventTypes. (Wird von KeyEventDefinition erzeugt.)
     static keyMap = new MapWithPrimitiveStringsAsKey();
+    static keyMap_normalMode = new MapWithPrimitiveStringsAsKey();
 
     static widthCalculationSpan;
 
@@ -68,12 +72,13 @@ export class App {
     static onlyOneColumn : boolean;
 
     static runApp() {
-        console.log("App-v4");
+        console.log("App-v7");
         if (App.isFCDomain() || App.isLocal()) {
             App.extractHrefEnding();
             EventTypeInfo.init();
             App.dynamicConfiguration();
             App.keyMap = new KeyEventDefinition().createKeyMap();
+            App.keyMap_normalMode = new KeyEventDefinition().createKeyMap_normalMode();
             App.createGlobalKeyBindings();
             if (App.TEST_MODE) {
                 document.body.appendChild(new TestApp().getUiElement());

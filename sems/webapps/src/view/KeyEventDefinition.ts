@@ -6,9 +6,10 @@ import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStrings
 // Diese Klasse wird benutzt, um das Mapping von KeyEvents auf EventTypes zu erstellen.
 // Hier wird einem KeyEvent also eine logische Bedeutung zugeordnet.
 export class KeyEventDefinition {
-    private keyMap : MapWithPrimitiveStringsAsKey = new MapWithPrimitiveStringsAsKey();
+    private keyMap : MapWithPrimitiveStringsAsKey;
 
     public createKeyMap() : MapWithPrimitiveStringsAsKey {
+        this.keyMap = new MapWithPrimitiveStringsAsKey();
         this.addMapping(EventTypes.FOCUS_PREV, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
             keyEvent.key = "i";
@@ -121,10 +122,6 @@ export class KeyEventDefinition {
             keyEvent.sk = true;
             keyEvent.key = "a";
         });
-        this.addMapping(EventTypes.OPEN, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "q";
-        });
         this.addMapping(EventTypes.DO_NOTHING, function(keyEvent : KeyEvent) {
             keyEvent.ctrl = true;
             keyEvent.key = "-";
@@ -132,6 +129,14 @@ export class KeyEventDefinition {
         this.addMapping(EventTypes.DO_NOTHING, function(keyEvent : KeyEvent) {
             keyEvent.ctrl = true;
             keyEvent.key = "m";
+        });
+        return this.keyMap;
+    }
+    
+    public createKeyMap_normalMode() : MapWithPrimitiveStringsAsKey {
+        this.keyMap = new MapWithPrimitiveStringsAsKey();
+        this.addMapping(EventTypes.OPEN, function(keyEvent : KeyEvent) {
+            keyEvent.key = "q";
         });
         return this.keyMap;
     }

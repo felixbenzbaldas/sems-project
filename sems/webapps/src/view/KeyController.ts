@@ -2,6 +2,7 @@ import { App } from "../App";
 import { EventTypes } from "../EventTypes";
 import { KeyEvent } from "../general/KeyEvent";
 import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStringsAsKey";
+import { KeyMode } from "./KeyMode";
 import { WhiteSpaceHandler } from "./SemsText/WhiteSpaceHandler";
 import { UserInterfaceObject } from "./UserInterfaceObject";
 
@@ -49,6 +50,10 @@ export class KeyController {
             let compareString = keyEvent.createCompareString();
             if (self.keyActions.has(compareString) || self.keyEventDefinitions.has(compareString) || App.keyMap.has(compareString)) {
                 ev.preventDefault();
+            } else {
+                if (App.keyMap_normalMode.has(compareString)) {
+                    ev.preventDefault();
+                }
             }
             self.whiteSpaceHandler.keyUp(ev.key);
         };
@@ -89,9 +94,17 @@ export class KeyController {
             if (this.keyEventDefinitions.has(compareString)) {
                 keyEvent.preventDefault();
                 this.uio.eventController.triggerEvent(this.keyEventDefinitions.get(compareString), null);
-            } else if (App.keyMap.has(compareString)) {
-                keyEvent.preventDefault();
-                this.uio.eventController.triggerEvent(App.keyMap.get(compareString), null);
+            } else {
+                if (App.keyMap.has(compareString)) {
+                    keyEvent.preventDefault();
+                    this.uio.eventController.triggerEvent(App.keyMap.get(compareString), null);
+                }
+                if (App.keyMode == KeyMode.NORMAL) {
+                    if (App.keyMap_normalMode.has(compareString)) {
+                        keyEvent.preventDefault();
+                        this.uio.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
+                    }
+                }
             }
         }
     }

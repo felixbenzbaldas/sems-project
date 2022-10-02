@@ -4,6 +4,7 @@ import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStrings
 import { SemsServer } from "../SemsServer";
 import { Textgeneration } from "../semsWeb/Textgeneration";
 import { ColumnManager } from "./ColumnManager";
+import { KeyMode } from "./KeyMode";
 import { TextObjectViewController } from "./TextObjectViewController";
 import { UserInterfaceObject } from "./UserInterfaceObject";
 
@@ -110,6 +111,15 @@ export class KeyActionDefinition {
             keyEvent.key = "2";
             }, function() {
                 textObjectViewController.export_fourDays_safe_html();
+        });
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = "r";
+            }, function() {
+                console.log("switch key mode");
+                // switch keyMode
+                App.keyMode = (App.keyMode + 1) % 2;
+                console.log("new keymode = " + App.keyMode);
         });
         return map;
     }

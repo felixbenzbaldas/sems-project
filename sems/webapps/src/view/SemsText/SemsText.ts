@@ -7,6 +7,7 @@ import { KeyEvent } from "../../general/KeyEvent";
 import { List } from "../../general/List";
 import { MapWithPrimitiveStringsAsKey } from "../../general/MapWithPrimitiveStringsAsKey";
 import { KeyActionDefinition } from "../KeyActionDefinition";
+import { KeyMode } from "../KeyMode";
 import { WhiteSpaceHandler } from "./WhiteSpaceHandler";
 
 export class SemsText {
@@ -160,19 +161,26 @@ export class SemsText {
                 ev.preventDefault();
                 semsWord.whiteSpaceHandler.keyDown(ev.key);
             } else {
-                if (semsWord.hasNoSelection()) {
+                if (App.keyMode == KeyMode.INSERTION) {
+                    if (semsWord.hasNoSelection()) {
+                        if (semsWord.simpleDefaultKey(ev)) {
+                            ev.preventDefault();
+                            let caretPosition = semsWord.input.selectionStart;
+                            let oldText : string = semsWord.input.value;
+                            let left = oldText.substring(0, caretPosition);
+                            let right = oldText.substring(caretPosition, oldText.length);
+                            let newText = left + ev.key + right;
+                            semsWord.input.value = newText;
+                            semsWord.input.selectionStart = caretPosition + ev.key.length;
+                            semsWord.input.selectionEnd = semsWord.input.selectionStart;
+                            self.adaptWidth(semsWord.input);
+                        }
+                    }
+                } else {
                     if (semsWord.simpleDefaultKey(ev)) {
                         ev.preventDefault();
-                        let caretPosition = semsWord.input.selectionStart;
-                        let oldText : string = semsWord.input.value;
-                        let left = oldText.substring(0, caretPosition);
-                        let right = oldText.substring(caretPosition, oldText.length);
-                        let newText = left + ev.key + right;
-                        semsWord.input.value = newText;
-                        semsWord.input.selectionStart = caretPosition + ev.key.length;
-                        semsWord.input.selectionEnd = semsWord.input.selectionStart;
-                        self.adaptWidth(semsWord.input);
                     }
+                    semsWord.simpeDefaultKeyDown(ev);
                 }
             }
         };
@@ -236,7 +244,7 @@ export class SemsText {
         public whiteSpaceHandler : WhiteSpaceHandler = new WhiteSpaceHandler();
     
         private semsText : SemsText;
-        private mapKeyActions;
+        private mapKeyActions : MapWithPrimitiveStringsAsKey;
     
         constructor(semsText : SemsText) {
             this.eventController = new EventController(this);
@@ -278,7 +286,6 @@ export class SemsText {
                     }
             });
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-                keyEvent.sk = true;
                 keyEvent.key = "r";
                 }, function() {
                     let index = self.semsText.listOfWords.indexOf(self);
@@ -448,6 +455,13 @@ export class SemsText {
                 self.input.style.zIndex = "0";
                 self.input.style.boxShadow = "none";
             }, animationTime * 2000);
+        }
+
+        public simpeDefaultKeyDown(ev : KeyboardEvent) {
+            let keyEventString : string = KeyEvent.createFromKeyboardEvent(ev).createCompareString();
+            if (this.mapKeyActions.has(keyEventString)) {
+                this.mapKeyActions.get(keyEventString)();
+            }
         }
 
     }

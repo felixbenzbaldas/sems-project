@@ -6,6 +6,7 @@ import { General } from "../general/General";
 import { KeyEvent } from "../general/KeyEvent";
 import { SemsServer } from "../SemsServer";
 import { KeyActionDefinition } from "./KeyActionDefinition";
+import { KeyMode } from "./KeyMode";
 import { SemsText } from "./SemsText/SemsText";
 import { TextObjectViewController } from "./TextObjectViewController";
 import { UserInterfaceObject } from "./UserInterfaceObject";
@@ -113,6 +114,12 @@ export class HeadText {
                 if (App.keyMap.has(compareString)) {
                     keyEvent.preventDefault();
                     self.userInterfaceObject.eventController.triggerEvent(App.keyMap.get(compareString), null);
+                }
+                if (App.keyMode == KeyMode.NORMAL) {
+                    if (App.keyMap_normalMode.has(compareString)) {
+                        keyEvent.preventDefault();
+                        self.userInterfaceObject.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
+                    }
                 }
             }
         });
