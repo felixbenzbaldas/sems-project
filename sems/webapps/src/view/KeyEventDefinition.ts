@@ -110,9 +110,6 @@ export class KeyEventDefinition {
         this.addMapping(EventTypes.PASTE, function(keyEvent : KeyEvent) {
             keyEvent.key = "v";
         });
-        this.addMapping(EventTypes.DELETE, function(keyEvent : KeyEvent) {
-            keyEvent.key = "Backspace";
-        });
         this.addMapping(EventTypes.GO_TO_END_OF_LIST, function(keyEvent : KeyEvent) {
             keyEvent.key = "l";
         });
