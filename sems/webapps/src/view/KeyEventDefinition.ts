@@ -36,6 +36,10 @@ export class KeyEventDefinition {
             keyEvent.shift = true;
             keyEvent.key = "ArrowDown";
         });
+        this.addMapping(EventTypes.NEW_SUBITEM, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = "Enter";
+        });
         this.addMapping(EventTypes.DELETE, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
             keyEvent.key = "Backspace";
