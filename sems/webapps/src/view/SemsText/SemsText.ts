@@ -264,7 +264,6 @@ export class SemsText {
             let map = new MapWithPrimitiveStringsAsKey();
             let self = this;
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-                keyEvent.sk = true;
                 keyEvent.key = "4";
                 }, function() {
                     if (self.getCaretPosition() == 0) {
@@ -275,7 +274,6 @@ export class SemsText {
                     }
             });
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-                keyEvent.sk = true;
                 keyEvent.key = "5";
                 }, function() {
                     if (self.getCaretPosition() == self.input.value.length) {
@@ -296,7 +294,6 @@ export class SemsText {
                     }
             });
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-                keyEvent.sk = true;
                 keyEvent.key = "f";
                 }, function() {
                     let index = self.semsText.listOfWords.indexOf(self);
@@ -307,13 +304,11 @@ export class SemsText {
                     }
             });
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-                keyEvent.sk = true;
                 keyEvent.key = "w";
                 }, function() {
                     self.semsText.listOfWords[0].setCaretToLastPosition();
             });
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-                keyEvent.sk = true;
                 keyEvent.key = "s";
                 }, function() {
                     List.getLastElement(self.semsText.listOfWords).setCaretToLastPosition();
@@ -331,7 +326,6 @@ export class SemsText {
             //         self.setCaret(self.input.value.length);
             // });
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-                keyEvent.sk = true;
                 keyEvent.key = ".";
                 }, function() {
                     let indexOfWord = self.semsText.listOfWords.indexOf(self);
