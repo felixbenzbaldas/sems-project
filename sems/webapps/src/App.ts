@@ -72,7 +72,7 @@ export class App {
     static onlyOneColumn : boolean;
 
     static runApp() {
-        console.log("App-v9");
+        console.log("App-v6");
         if (App.isFCDomain() || App.isLocal()) {
             App.extractHrefEnding();
             EventTypeInfo.init();
@@ -371,5 +371,12 @@ export class App {
 
     static setOnlyOneColumn_pres_mode() {
         App.onlyOneColumn = ColumnManager.getNumberOfColumnsByWindowWidth_presMode() == 1;
+    }
+
+    public static switchKeyMode() {
+        console.log("switch key mode");
+        this.keyMode = (this.keyMode + 1) % 2;
+        console.log("new keymode = " + this.keyMode);
+        ColumnManager.adaptStyleForKeyMode(this.keyMode);
     }
 }

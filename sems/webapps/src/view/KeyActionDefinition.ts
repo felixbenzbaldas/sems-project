@@ -116,10 +116,7 @@ export class KeyActionDefinition {
             keyEvent.sk = true;
             keyEvent.key = "r";
             }, function() {
-                console.log("switch key mode");
-                // switch keyMode
-                App.keyMode = (App.keyMode + 1) % 2;
-                console.log("new keymode = " + App.keyMode);
+                App.switchKeyMode();
         });
         return map;
     }
