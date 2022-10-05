@@ -14,20 +14,10 @@ export class ColumnManager {
     public static semsAddress_localMode = "1-44451244";
     private static detailsData : DetailsData;
 
-
-    public static adaptStyleForKeyMode(keyMode : KeyMode) {
-        if (keyMode == KeyMode.INSERTION) {
-            this.uiElement.style.boxShadow = "inset 0rem -1.5rem 2.5rem -0.7rem green";
-        } else {
-            this.uiElement.style.boxShadow = "none";
-        }
-    }
-
     public static init() {
         this.uiElement = document.createElement("div");
         this.uiElement.style.overflowX = "auto";
         this.uiElement.style.whiteSpace = "nowrap";
-        this.adaptStyleForKeyMode(App.keyMode);
         if (App.LOCAL_MODE) {
             ObjectLoader.ensureLoaded(ColumnManager.semsAddress_localMode, function() {
                 ColumnManager.detailsData = DetailsData.map.get(ColumnManager.semsAddress_localMode);

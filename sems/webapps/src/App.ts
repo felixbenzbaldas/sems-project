@@ -17,6 +17,7 @@ import { UserInterfaceObject } from "./view/UserInterfaceObject";
 import { View } from "./view/View";
 
 export class App {
+    static version = 5;
 
     static LOCAL_MODE : boolean = true;
     static EN_VERSION : boolean = false;
@@ -71,8 +72,10 @@ export class App {
 
     static onlyOneColumn : boolean;
 
+    static keyModeShadowDiv : HTMLDivElement;
+
     static runApp() {
-        console.log("App-v6");
+        console.log("App-v" + this.version);
         if (App.isFCDomain() || App.isLocal()) {
             App.extractHrefEnding();
             EventTypeInfo.init();
@@ -261,6 +264,13 @@ export class App {
         document.body.style.overflow = "hidden";
         ColumnManager.init();
         document.body.appendChild(ColumnManager.uiElement);
+        //
+        this.keyModeShadowDiv = document.createElement("div");
+        document.body.appendChild(this.keyModeShadowDiv);
+        this.keyModeShadowDiv.style.position = "relative";
+        this.keyModeShadowDiv.style.zIndex = "1";
+        this.adaptStyleForKeyMode(App.keyMode);
+        //
         setTimeout(function() {
             ColumnManager.columns[0].focusColumnOrFirstObject();
         }, 50);
@@ -377,6 +387,15 @@ export class App {
         console.log("switch key mode");
         this.keyMode = (this.keyMode + 1) % 2;
         console.log("new keymode = " + this.keyMode);
-        ColumnManager.adaptStyleForKeyMode(this.keyMode);
+        this.adaptStyleForKeyMode(this.keyMode);
+    }
+
+    
+    public static adaptStyleForKeyMode(keyMode : KeyMode) {
+        if (keyMode == KeyMode.INSERTION) {
+            this.keyModeShadowDiv.style.boxShadow = "0rem 0rem 1.2rem 0.7rem green";
+        } else {
+            this.keyModeShadowDiv.style.boxShadow = "none";
+        }
     }
 }
