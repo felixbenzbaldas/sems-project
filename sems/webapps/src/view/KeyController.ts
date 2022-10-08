@@ -46,15 +46,6 @@ export class KeyController {
             self.whiteSpaceHandler.keyDown(ev.key);
         };
         this.keyUpFunction = function(ev: KeyboardEvent) {
-            let keyEvent = KeyEvent.createFromKeyboardEvent(ev);
-            let compareString = keyEvent.createCompareString();
-            if (self.keyActions.has(compareString) || self.keyEventDefinitions.has(compareString) || App.keyMap.has(compareString)) {
-                ev.preventDefault();
-            } else {
-                if (App.keyMap_normalMode.has(compareString)) {
-                    ev.preventDefault();
-                }
-            }
             self.whiteSpaceHandler.keyUp(ev.key);
         };
     }
