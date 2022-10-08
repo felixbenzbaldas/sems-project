@@ -180,36 +180,6 @@ export class App {
         }
     }
 
-    // static configureWebsite() {
-    //     App.setAboutObj();
-    //     App.setContentObj();
-    // }
-
-    // static setAboutObj() {
-    //     if (App.EN_VERSION) {
-    //         App.ABOUT_OBJ = "0-502";
-    //     } else {
-    //         App.ABOUT_OBJ = "0-41";
-    //     }
-    // }
-
-    // static setContentObj() {
-    //     let obj = App.getObject();
-    //     if (obj == null) {
-    //         if (ServerRequest.basisAddress == SemsServer.FELIX_SITE) {
-    //             App.CONTENT_OBJ = "0-251";
-    //         } else {
-    //             if (App.EN_VERSION) {
-    //                 App.CONTENT_OBJ = "0-503";
-    //             } else {
-    //                 App.CONTENT_OBJ = "0-45";
-    //             }
-    //         }
-    //     } else {
-    //         App.CONTENT_OBJ = obj;
-    //     }
-    // }
-
     static getObject() : string {
         const url : string = window.location.href;
         if (url.split("?").length > 1) {
