@@ -733,7 +733,7 @@ export class TextObjectViewController {
                 hours += timeOfThisObject;
             }
         }
-        this.props.set(TEXT, this.headText.getSemsText().getText() + ' ' + hours + ' h');
+        this.props.set(TEXT, this.headText.getSemsText().getText() + ' [' + hours + ']');
         this.focus();
     }
 }
