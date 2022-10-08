@@ -483,8 +483,12 @@ export class Column {
         this.keyController.triggerKeyUp(ev);
     }
 
-    public getContentHeight() : number {     
-        return this.getUiElement().scrollHeight;
+    public getContentHeight() : number {
+        let contentHeight : number = 0;
+        for (let uio of this.listOfUIOs) {
+            contentHeight += uio.uiElement.offsetHeight;
+        }
+        return contentHeight;
     }
 
     private scaleDown() {
