@@ -113,8 +113,7 @@ export class KeyActionDefinition {
                 textObjectViewController.export_fourDays_safe_html();
         });
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "r";
+            keyEvent.key = "Escape";
             }, function() {
                 App.switchKeyMode();
         });
