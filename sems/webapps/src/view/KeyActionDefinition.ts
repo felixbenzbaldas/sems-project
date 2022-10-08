@@ -112,11 +112,6 @@ export class KeyActionDefinition {
             }, function() {
                 textObjectViewController.countPlannedTime();
         });
-        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-            keyEvent.key = "Escape";
-            }, function() {
-                App.switchKeyMode();
-        });
         return map;
     }
 
@@ -134,6 +129,11 @@ export class KeyActionDefinition {
     public static createKeyActions_Global() : MapWithPrimitiveStringsAsKey {
         let map = new MapWithPrimitiveStringsAsKey();
         if (App.LOCAL_MODE) {
+            KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+                keyEvent.key = "Escape";
+                }, function() {
+                    App.switchKeyMode();
+            });
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
                 keyEvent.ctrl = true;
                 keyEvent.key = "s";
