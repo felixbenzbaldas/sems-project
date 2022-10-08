@@ -76,28 +76,21 @@ export class App {
 
     static runApp() {
         console.log("App-v" + this.version);
-        if (App.isFCDomain() || App.isLocal()) {
-            App.extractHrefEnding();
-            EventTypeInfo.init();
-            App.dynamicConfiguration();
-            App.keyMap = new KeyEventDefinition().createKeyMap();
-            App.keyMap_normalMode = new KeyEventDefinition().createKeyMap_normalMode();
-            App.createGlobalKeyBindings();
-            if (App.TEST_MODE) {
-                document.body.appendChild(new TestApp().getUiElement());
-                document.body.appendChild(App.createPlaceholderDiv());
-            } else {
-                if (App.LOCAL_MODE) {
-                    App.createLocal();
-                } else {
-                    App.createWebsite();
-                }
-            }
+        App.extractHrefEnding();
+        EventTypeInfo.init();
+        App.dynamicConfiguration();
+        App.keyMap = new KeyEventDefinition().createKeyMap();
+        App.keyMap_normalMode = new KeyEventDefinition().createKeyMap_normalMode();
+        App.createGlobalKeyBindings();
+        if (App.TEST_MODE) {
+            document.body.appendChild(new TestApp().getUiElement());
+            document.body.appendChild(App.createPlaceholderDiv());
         } else {
-            let image : HTMLImageElement = document.createElement("img");
-            image.src = "resources/sky.jpg";
-            image.style.height = "300px";
-            document.body.appendChild(image);
+            if (App.LOCAL_MODE) {
+                App.createLocal();
+            } else {
+                App.createWebsite();
+            }
         }
     }
 
@@ -113,11 +106,6 @@ export class App {
         if (General.primEquals(window.location.hostname, "localhost")) {
             App.hrefEnding = App.hrefEnding.substring(5); // remove port
         }
-    }
-
-    static isFCDomain() : boolean {
-        return General.primEquals(window.location.hostname, App.fcDomain) 
-                    || General.primEquals(window.location.hostname, "www." + App.fcDomain);
     }
 
     static isLocal() : boolean {
