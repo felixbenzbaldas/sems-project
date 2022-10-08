@@ -729,10 +729,8 @@ export class TextObjectViewController {
                 console.log("match: " + textOfDetail);
                 let firstWord : string = textOfDetail.split(' ')[0];
                 let timeOfThisObject : number;
-                if (firstWord.match(/^\d+$/)) {
-                    timeOfThisObject = parseFloat(firstWord);
-                    hours += timeOfThisObject;
-                }
+                timeOfThisObject = parseFloat(firstWord.replace(',', '.'));
+                hours += timeOfThisObject;
             }
         }
         this.props.set(TEXT, this.headText.getSemsText().getText() + ' ' + hours + ' h');
