@@ -105,21 +105,25 @@ export class HeadText {
         // });
         //
         let keyActionsMap = KeyActionDefinition.createKeyActions_TextObject(this.textObjectViewController);
+        let keyActionsMap_normalMode = KeyActionDefinition.createKeyActions_TextObject_normalMode(this.textObjectViewController);
         this.semsText.addKeyEventListener(function(keyEvent : KeyEvent) {
             let compareString = keyEvent.createCompareString();
             if (keyActionsMap.has(compareString)) {
                 keyEvent.preventDefault();
                 keyActionsMap.get(compareString)();
-            } else {
-                if (App.keyMap.has(compareString)) {
+            }
+            if (App.keyMap.has(compareString)) {
+                keyEvent.preventDefault();
+                self.userInterfaceObject.eventController.triggerEvent(App.keyMap.get(compareString), null);
+            }
+            if (App.keyMode == KeyMode.NORMAL) {
+                if (keyActionsMap_normalMode.has(compareString)) {
                     keyEvent.preventDefault();
-                    self.userInterfaceObject.eventController.triggerEvent(App.keyMap.get(compareString), null);
+                    keyActionsMap_normalMode.get(compareString)();
                 }
-                if (App.keyMode == KeyMode.NORMAL) {
-                    if (App.keyMap_normalMode.has(compareString)) {
-                        keyEvent.preventDefault();
-                        self.userInterfaceObject.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
-                    }
+                if (App.keyMap_normalMode.has(compareString)) {
+                    keyEvent.preventDefault();
+                    self.userInterfaceObject.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
                 }
             }
         });

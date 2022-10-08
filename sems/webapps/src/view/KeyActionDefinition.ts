@@ -47,12 +47,6 @@ export class KeyActionDefinition {
                 textObjectViewController.toggleLogicalContextEvent();
         });
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "y";
-            }, function() {
-                uio.onPasteNextEvent();
-        });
-        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.key = "Enter";
             }, function() {
                 uio.onEnterEvent();
@@ -116,6 +110,17 @@ export class KeyActionDefinition {
             keyEvent.key = "Escape";
             }, function() {
                 App.switchKeyMode();
+        });
+        return map;
+    }
+
+    public static createKeyActions_TextObject_normalMode(textObjectViewController : TextObjectViewController) : MapWithPrimitiveStringsAsKey {
+        let map = new MapWithPrimitiveStringsAsKey();
+        let uio : UserInterfaceObject = textObjectViewController.getUserInterfaceObject();
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.key = "y";
+            }, function() {
+                uio.onPasteNextEvent();
         });
         return map;
     }
