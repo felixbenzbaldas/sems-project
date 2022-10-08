@@ -14,7 +14,6 @@ import { UserInterfaceObject } from "./UserInterfaceObject";
 export class KeyController {
 
     private keyActions : MapWithPrimitiveStringsAsKey = new MapWithPrimitiveStringsAsKey();
-    private keyEventDefinitions : MapWithPrimitiveStringsAsKey = new MapWithPrimitiveStringsAsKey();
     private uio : UserInterfaceObject;
 
     private whiteSpaceHandler : WhiteSpaceHandler = new WhiteSpaceHandler();
@@ -60,10 +59,6 @@ export class KeyController {
         }
     }
 
-    public setKeyEventDefinition(keyEvent : KeyEvent, eventType : EventTypes) {
-        this.keyEventDefinitions.set(keyEvent, eventType);
-    }
-
     public transmitKeyEventsTo(uio : UserInterfaceObject) {
         this.uio = uio;
     }
@@ -82,19 +77,14 @@ export class KeyController {
             keyEvent.preventDefault();
             this.keyActions.get(compareString)();
         } else {
-            if (this.keyEventDefinitions.has(compareString)) {
+            if (App.keyMap.has(compareString)) {
                 keyEvent.preventDefault();
-                this.uio.eventController.triggerEvent(this.keyEventDefinitions.get(compareString), null);
-            } else {
-                if (App.keyMap.has(compareString)) {
+                this.uio.eventController.triggerEvent(App.keyMap.get(compareString), null);
+            }
+            if (App.keyMode == KeyMode.NORMAL) {
+                if (App.keyMap_normalMode.has(compareString)) {
                     keyEvent.preventDefault();
-                    this.uio.eventController.triggerEvent(App.keyMap.get(compareString), null);
-                }
-                if (App.keyMode == KeyMode.NORMAL) {
-                    if (App.keyMap_normalMode.has(compareString)) {
-                        keyEvent.preventDefault();
-                        this.uio.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
-                    }
+                    this.uio.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
                 }
             }
         }
