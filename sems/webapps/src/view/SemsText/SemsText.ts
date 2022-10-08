@@ -180,7 +180,10 @@ export class SemsText {
                     if (semsWord.simpleDefaultKey(ev)) {
                         ev.preventDefault();
                     }
-                    semsWord.simpeDefaultKeyDown(ev);
+                    let keyEventString : string = KeyEvent.createFromKeyboardEvent(ev).createCompareString();
+                    if (semsWord.mapKeyActions.has(keyEventString)) {
+                        semsWord.mapKeyActions.get(keyEventString)();
+                    }
                 }
             }
         };
@@ -244,7 +247,7 @@ export class SemsText {
         public whiteSpaceHandler : WhiteSpaceHandler = new WhiteSpaceHandler();
     
         private semsText : SemsText;
-        private mapKeyActions : MapWithPrimitiveStringsAsKey;
+        mapKeyActions : MapWithPrimitiveStringsAsKey;
     
         constructor(semsText : SemsText) {
             this.eventController = new EventController(this);
@@ -450,13 +453,5 @@ export class SemsText {
                 self.input.style.boxShadow = "none";
             }, animationTime * 2000);
         }
-
-        public simpeDefaultKeyDown(ev : KeyboardEvent) {
-            let keyEventString : string = KeyEvent.createFromKeyboardEvent(ev).createCompareString();
-            if (this.mapKeyActions.has(keyEventString)) {
-                this.mapKeyActions.get(keyEventString)();
-            }
-        }
-
     }
 }
