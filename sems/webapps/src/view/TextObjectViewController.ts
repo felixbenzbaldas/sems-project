@@ -721,4 +721,20 @@ export class TextObjectViewController {
         return this.props.get(TEXT) as string;
     }
 
+    public countPlannedTime() {
+        let hours : number = 0;
+        for (let id of this.detailsData.getDetails()) {
+            let textOfDetail : string = App.objProperties.get(id, TEXT);
+            if (textOfDetail.match(/^\d+\sh/)) {
+                let firstWord : string = textOfDetail.split(' ')[0];
+                let timeOfThisObject : number;
+                if (firstWord.match(/^\d+$/)) {
+                    timeOfThisObject = parseFloat(firstWord);
+                    hours += timeOfThisObject;
+                }
+            }
+        }
+        this.props.set(TEXT, this.headText.getSemsText().getText() + ' ' + hours + ' h');
+        this.focus();
+    }
 }

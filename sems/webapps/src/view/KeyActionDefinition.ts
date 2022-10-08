@@ -107,6 +107,12 @@ export class KeyActionDefinition {
                 textObjectViewController.export_fourDays_safe_html();
         });
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = "4";
+            }, function() {
+                textObjectViewController.countPlannedTime();
+        });
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.key = "Escape";
             }, function() {
                 App.switchKeyMode();
