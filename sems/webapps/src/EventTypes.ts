@@ -3,6 +3,7 @@ export enum EventTypes {
     DELETED,
     CHANGED,
     PROPERTY_CHANGE,
+    DETAILS_CHANGE,
     FOCUS,
     CUT,
     COPY,

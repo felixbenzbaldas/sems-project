@@ -8,6 +8,7 @@ export class EventTypeInfo {
         this.nameOfEventType.set(EventTypes.DELETED, "DELETED");
         this.nameOfEventType.set(EventTypes.CHANGED, "CHANGED");
         this.nameOfEventType.set(EventTypes.PROPERTY_CHANGE, "PROPERTY_CHANGE");
+        this.nameOfEventType.set(EventTypes.DETAILS_CHANGE, "DETAILS_CHANGE");
         this.nameOfEventType.set(EventTypes.FOCUS, "FOCUS");
         this.nameOfEventType.set(EventTypes.CUT, "CUT");
         this.nameOfEventType.set(EventTypes.COPY, "COPY");

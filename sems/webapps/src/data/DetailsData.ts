@@ -4,6 +4,7 @@ import { List } from "../general/List";
 import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStringsAsKey";
 import { ObjectLoader } from "./ObjectLoader";
 import { SemsServer } from "../SemsServer";
+import { EventTypes } from "../EventTypes";
 
 export class DetailsData {
 
@@ -59,6 +60,7 @@ export class DetailsData {
     public deleteDetail(semsAddress : string, position : number) {
         SemsServer.deleteDetail(this.semsAddress, semsAddress);
         List.deleteInListAtPosition(this.details, position);
+        App.objEvents.triggerEvent(this.semsAddress, EventTypes.DETAILS_CHANGE, null);
     }
 
     public createContextDetailAtPostion(text : string, position : number, callback : Function) {
@@ -66,6 +68,7 @@ export class DetailsData {
         SemsServer.createContextDetailAtPosition(text, position, this.semsAddress, function(addressOfNewDetail) {
             ObjectLoader.ensureLoaded(addressOfNewDetail, function() {
                 List.insertInListAtPosition(self.details, addressOfNewDetail, position);
+                App.objEvents.triggerEvent(self.semsAddress, EventTypes.DETAILS_CHANGE, null);
                 callback(addressOfNewDetail);
             });
         });
@@ -74,6 +77,7 @@ export class DetailsData {
     public createLinkDetailAtPostion(detailSemsAddress : string, position : number) {
         List.insertInListAtPosition(this.details, detailSemsAddress, position);
         SemsServer.insertLinkDetailAtPosition(this.semsAddress, detailSemsAddress, position);
+        App.objEvents.triggerEvent(this.semsAddress, EventTypes.DETAILS_CHANGE, null);
     }
 
     public clear() {

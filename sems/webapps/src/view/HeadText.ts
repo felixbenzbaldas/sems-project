@@ -85,6 +85,7 @@ export class HeadText {
             }
         };
         App.objEvents.addObserver(this.getSemsAddress(), EventTypes.PROPERTY_CHANGE, this.dataObserver);
+        App.objEvents.addObserver(this.getSemsAddress(), EventTypes.DETAILS_CHANGE, this.dataObserver);
         this.userInterfaceObject.getEventController().addObserver(EventTypes.CHANGED, function() {
             self.update_exceptText();
         });
