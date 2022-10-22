@@ -733,7 +733,25 @@ export class TextObjectViewController {
                 hours += timeOfThisObject;
             }
         }
-        this.props.set(TEXT, this.headText.getSemsText().getText() + ' [' + hours + ']');
-        this.focus();
+        let newHoursBox : string = '[' + hours + ']';
+        let textBefore : string = this.headText.getSemsText().getText();
+        let newText : string;
+        let boxRegex = /\[.*\]/;
+        if (textBefore.match(boxRegex)) {
+            newText = textBefore.replace(boxRegex, newHoursBox);
+        } else {
+            newText = textBefore + ' ' + newHoursBox;
+        }
+        let wasFocused : boolean = this.headText.getSemsText().hasFocus();
+        this.props.set(TEXT, newText);
+        if (wasFocused) {
+            this.focus();
+        }
+    }
+
+    public childChanged() {
+        if (this.getText().match(/^(Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag|fplan)/)) {
+            this.countPlannedTime();
+        }
     }
 }

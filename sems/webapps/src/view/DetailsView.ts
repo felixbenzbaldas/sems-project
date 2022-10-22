@@ -75,6 +75,10 @@ export class DetailsView {
         userInterfaceObject.getEventController().on(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, this.getOnFocusNextEventFunction(userInterfaceObject));
         userInterfaceObject.getEventController().on(EventTypes.GO_TO_END_OF_LIST_vc, this.goToEndOfList_Function(userInterfaceObject));
         userInterfaceObject.getEventController().on(EventTypes.FOCUSED, this.focused_Function(userInterfaceObject));
+        let self = this;
+        userInterfaceObject.getEventController().on(EventTypes.CHANGED, function() {
+            self.textObjectViewController.childChanged();
+        });
         return userInterfaceObject;
     }
 
@@ -109,6 +113,7 @@ export class DetailsView {
             self.detailsData.deleteDetail(userInterfaceObject.getSemsAddress(), indexOfDetail);
             List.deleteInListAtPosition(self.detailUserInterfaceObjects, indexOfDetail);
             self.uiElement.removeChild(userInterfaceObject.getUiElement());
+            self.textObjectViewController.childChanged();
             if (self.detailUserInterfaceObjects.length > 0) {
                 self.detailUserInterfaceObjects[Math.min(self.detailUserInterfaceObjects.length - 1, indexOfDetail)].focus();
             } else {

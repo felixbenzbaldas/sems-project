@@ -292,6 +292,7 @@ export class HeadText {
 
     public updateTextProperty() {
         this.getProps().set(TEXT, this.semsText.getText());
+        this.userInterfaceObject.getEventController().triggerEvent(EventTypes.CHANGED, null);
     }
 
     public getSemsText() : SemsText {
