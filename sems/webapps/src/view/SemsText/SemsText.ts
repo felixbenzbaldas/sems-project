@@ -361,8 +361,16 @@ export class SemsText {
             let newWord = this.semsText.createSemsWord();
             List.insertInListAtPosition(this.semsText.listOfWords, newWord, indexOfWord + 1);
             Html.insertChildAtPosition(this.semsText.uiElement, newWord.input, indexOfWord + 1);
-            newWord.input.value = this.whiteSpaceHandler.getKeyDownsDuringWhiteSpaceDown();
-            newWord.setCaretToEndOfWord();
+            let keyDownsDuringWhiteSpaceDown : string = this.whiteSpaceHandler.getKeyDownsDuringWhiteSpaceDown();
+            let newWordText = "";
+            newWordText += keyDownsDuringWhiteSpaceDown;
+            let caretPosition : number = this.input.selectionStart;
+            if (caretPosition < this.input.value.length) {
+                newWordText += this.input.value.substring(caretPosition);
+                this.input.value = this.input.value.substring(0, caretPosition);
+            }
+            newWord.input.value = newWordText;
+            newWord.setCaret(keyDownsDuringWhiteSpaceDown.length);
             this.semsText.adaptWidth(newWord.input);
         }
     
