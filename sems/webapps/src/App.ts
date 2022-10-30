@@ -57,6 +57,7 @@ export class App {
 
     static backgroundColor : string = "grey";
     static fontColor : string = "yellow";
+    static colorForFocusedObjInNormalMode : string = "red";
     static secondColor : string = "#efefef"; // light grey
     static thirdColor = "orange";
 
@@ -385,6 +386,11 @@ export class App {
             this.keyModeShadowDiv_left.style.boxShadow = "none";
             this.keyModeShadowDiv_right.style.boxShadow = "none";
             this.keyModeShadowDiv_top.style.boxShadow = "none";
+        }
+        if (this.focusedUIO != null) {
+            if (this.focusedUIO.tovcOpt != null) {
+                this.focusedUIO.tovcOpt.adaptStyleForKeyMode();
+            }
         }
     }
 }

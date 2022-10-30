@@ -172,6 +172,7 @@ export class SemsText {
                 ev.preventDefault();
                 semsWord.whiteSpaceHandler.keyDown(ev.key);
             } else {
+                let keyEventString : string = KeyEvent.createFromKeyboardEvent(ev).createCompareString();
                 if (App.keyMode == KeyMode.INSERTION) {
                     if (semsWord.hasNoSelection()) {
                         if (semsWord.simpleDefaultKey(ev)) {
@@ -191,10 +192,12 @@ export class SemsText {
                     if (semsWord.simpleDefaultKey(ev)) {
                         ev.preventDefault();
                     }
-                    let keyEventString : string = KeyEvent.createFromKeyboardEvent(ev).createCompareString();
-                    if (semsWord.mapKeyActions.has(keyEventString)) {
-                        semsWord.mapKeyActions.get(keyEventString)();
+                    if (semsWord.mapKeyActions_normalMode.has(keyEventString)) {
+                        semsWord.mapKeyActions_normalMode.get(keyEventString)();
                     }
+                }
+                if (semsWord.mapKeyActions.has(keyEventString)) {
+                    semsWord.mapKeyActions.get(keyEventString)();
                 }
             }
         };
@@ -259,12 +262,14 @@ export class SemsText {
     
         private semsText : SemsText;
         mapKeyActions : MapWithPrimitiveStringsAsKey;
+        mapKeyActions_normalMode : MapWithPrimitiveStringsAsKey;
     
         constructor(semsText : SemsText) {
             this.eventController = new EventController(this);
             this.semsText = semsText;
             this.input = this.createInputElement();
             this.mapKeyActions = this.createKeyActions();
+            this.mapKeyActions_normalMode = this.createKeyActions_normalMode();
             let self = this;
             this.whiteSpaceHandler.on_whiteSpaceUp = function() {
                 self.whiteSpaceUp();
@@ -273,8 +278,65 @@ export class SemsText {
                 self.keyDownAndUpDuringWhiteSpaceDown(key);
             }
         }
-    
+
+        
         private createKeyActions() : MapWithPrimitiveStringsAsKey {
+            let map = new MapWithPrimitiveStringsAsKey();
+            let self = this;
+            KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+                keyEvent.key = "ArrowLeft";
+                }, function() {
+                    if (self.getCaretPosition() == 0) {
+                        self.semsText.listOfWords[self.getIndexOfWord() - 1].setCaretToEndOfWord();
+                    } else {
+                        self.setCaret(self.getCaretPosition() - 1);
+                    }
+            });
+            KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+                keyEvent.key = "ArrowRight";
+                }, function() {
+                    if (self.getCaretPosition() == self.input.value.length) {
+                        self.semsText.listOfWords[self.getIndexOfWord() + 1].setCaretToBeginningOfWord();
+                    } else {
+                        self.setCaret(self.getCaretPosition() + 1);
+                    }
+            });
+            KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+                keyEvent.key = "ArrowLeft";
+                keyEvent.ctrl = true;
+                }, function() {
+                    let index = self.getIndexOfWord();
+                    if (index > 0) {
+                        self.semsText.listOfWords[index - 1].setCaretToLastPosition();
+                    } else {
+                        General.callIfNotNull(self.semsText.on_FocusPrevWord);
+                    }
+            });
+            KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+                keyEvent.key = "ArrowRight";
+                keyEvent.ctrl = true;
+                }, function() {
+                    let index = self.getIndexOfWord();
+                    if (index < self.semsText.listOfWords.length - 1) {
+                        self.semsText.listOfWords[index + 1].setCaretToLastPosition();
+                    } else {
+                        General.callIfNotNull(self.semsText.on_FocusNextWord);
+                    }
+            });
+            KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+                keyEvent.key = "Home";
+                }, function() {
+                    self.semsText.listOfWords[0].setCaretToBeginningOfWord();
+            });
+            KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+                keyEvent.key = "End";
+                }, function() {
+                    self.semsText.listOfWords[self.semsText.listOfWords.length - 1].setCaretToEndOfWord();
+            });
+            return map;
+        }
+
+        private createKeyActions_normalMode() : MapWithPrimitiveStringsAsKey {
             let map = new MapWithPrimitiveStringsAsKey();
             let self = this;
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
@@ -425,8 +487,8 @@ export class SemsText {
             keyEvent.sk = true;
             keyEvent.key = key;
             let keyEventString = keyEvent.createCompareString();
-            if (this.mapKeyActions.has(keyEventString)) {
-                this.mapKeyActions.get(keyEventString)();
+            if (this.mapKeyActions_normalMode.has(keyEventString)) {
+                this.mapKeyActions_normalMode.get(keyEventString)();
             }
             for (let keyEventListener of this.semsText.listOfKeyEventListener) {
                 keyEventListener(keyEvent);

@@ -16,6 +16,7 @@ import { Context } from "./Context";
 import { DetailsView } from "./DetailsView";
 import { Export } from "./Export";
 import { HeadText } from "./HeadText";
+import { KeyMode } from "./KeyMode";
 import { UserInterfaceObject } from "./UserInterfaceObject";
 import { View } from "./View";
 
@@ -54,6 +55,7 @@ export class TextObjectViewController {
         textObjectViewController.headBody.getHead().appendChild(textObjectViewController.context.getUiElementOfContextIcon());
         textObjectViewController.headBody.getHead().appendChild(textObjectViewController.headText.getUiElement());
         //
+        textObjectViewController.adaptStyleForKeyMode();
         if (userInterfaceObject.props.get(DEFAULT_EXPANDED)) {
             if (View.hasSuperiorInDefaultExpandedChain(userInterfaceObject, userInterfaceObject.getSemsAddress())) {
                 textObjectViewController.headBody.getHead().innerHTML = "[[DUPLICATE]] " + userInterfaceObject.props.get(TEXT);
@@ -753,5 +755,9 @@ export class TextObjectViewController {
         if (this.getText().match(/^(Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag|fplan)/)) {
             this.countPlannedTime();
         }
+    }
+
+    public adaptStyleForKeyMode() {
+        this.headText.updateTextColor();
     }
 }

@@ -61,10 +61,12 @@ export class HeadText {
         let self = this;
         this.semsText.onBlur = function () {
             self.updateTextProperty();
+            self.textObjectViewController.adaptStyleForKeyMode();
         };
         this.semsText.onFocus = function () {
             App.deleteManualFocusAndFocusedUIO();
             App.focusedUIO = self.userInterfaceObject;
+            self.textObjectViewController.adaptStyleForKeyMode();
             self.userInterfaceObject.lastFocusedSubitem = null;
             self.userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUSED, null);
         };
@@ -168,7 +170,7 @@ export class HeadText {
         }
     }
 
-    private updateTextColor() {
+    public updateTextColor() {
         this.semsText.setHomogenousStyleForText("color", this.getTextColor());
     }
 
@@ -176,9 +178,13 @@ export class HeadText {
         if (this.getProps().get(IS_PRIVATE)) {
             return "red";
         } else {
-            if (App.LOCAL_MODE) {
-                if (!this.userInterfaceObject.semsAddress.startsWith("1-")) {
-                    return "green";
+            if (App.keyMode == KeyMode.NORMAL && this.semsText.hasFocus()) {
+                return App.colorForFocusedObjInNormalMode;
+            } else {
+                if (App.LOCAL_MODE) {
+                    if (!this.userInterfaceObject.semsAddress.startsWith("1-")) {
+                        return "green";
+                    }
                 }
             }
         }

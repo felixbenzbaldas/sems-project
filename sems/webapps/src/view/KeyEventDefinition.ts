@@ -36,6 +36,30 @@ export class KeyEventDefinition {
             keyEvent.shift = true;
             keyEvent.key = "ArrowDown";
         });
+        this.addMapping(EventTypes.FOCUS_PREV_COLUMN, function(keyEvent : KeyEvent) {
+            keyEvent.key = "PageUp";
+        });
+        this.addMapping(EventTypes.FOCUS_NEXT_COLUMN, function(keyEvent : KeyEvent) {
+            keyEvent.key = "PageDown";
+        });
+        this.addMapping(EventTypes.FOCUS_PREV, function(keyEvent : KeyEvent) {
+            keyEvent.key = "ArrowUp";
+        });
+        this.addMapping(EventTypes.FOCUS_NEXT, function(keyEvent : KeyEvent) {
+            keyEvent.key = "ArrowDown";
+        });
+        this.addMapping(EventTypes.JUMP_BACKWARD, function(keyEvent : KeyEvent) {
+            keyEvent.key = "ArrowUp";
+            keyEvent.ctrl = true;
+        });
+        this.addMapping(EventTypes.JUMP_FORWARD, function(keyEvent : KeyEvent) {
+            keyEvent.key = "ArrowDown";
+            keyEvent.ctrl = true;
+        });
+
+
+
+
         this.addMapping(EventTypes.NEW_SUBITEM, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
             keyEvent.key = "Enter";
