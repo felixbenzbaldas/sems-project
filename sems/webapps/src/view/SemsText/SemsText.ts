@@ -152,6 +152,17 @@ export class SemsText {
                         if (semsWord.input.value.length == 0) {
                             semsWord.deleteWordEvent();
                             ev.preventDefault();
+                        } else if (semsWord.getCaretPosition() == 0) {
+                            let indexOfWord = semsWord.getIndexOfWord();
+                            if (indexOfWord > 0) {
+                                let prevWord = self.listOfWords[indexOfWord - 1];
+                                semsWord.input.value = prevWord.input.value + semsWord.input.value;
+                                semsWord.setCaret(prevWord.input.value.length);
+                                List.deleteInListAtPosition(self.listOfWords, indexOfWord - 1);
+                                Html.remove(prevWord.input);
+                                ev.preventDefault();
+                            }
+
                         }
                     }
                 }
@@ -270,8 +281,7 @@ export class SemsText {
                 keyEvent.key = "4";
                 }, function() {
                     if (self.getCaretPosition() == 0) {
-                        let index = self.semsText.listOfWords.indexOf(self);
-                        self.semsText.listOfWords[index - 1].setCaretToEndOfWord();
+                        self.semsText.listOfWords[self.getIndexOfWord() - 1].setCaretToEndOfWord();
                     } else {
                         self.setCaret(self.getCaretPosition() - 1);
                     }
@@ -280,8 +290,7 @@ export class SemsText {
                 keyEvent.key = "5";
                 }, function() {
                     if (self.getCaretPosition() == self.input.value.length) {
-                        let index = self.semsText.listOfWords.indexOf(self);
-                        self.semsText.listOfWords[index + 1].setCaretToBeginningOfWord();
+                        self.semsText.listOfWords[self.getIndexOfWord() + 1].setCaretToBeginningOfWord();
                     } else {
                         self.setCaret(self.getCaretPosition() + 1);
                     }
@@ -289,7 +298,7 @@ export class SemsText {
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
                 keyEvent.key = "r";
                 }, function() {
-                    let index = self.semsText.listOfWords.indexOf(self);
+                    let index = self.getIndexOfWord();
                     if (index > 0) {
                         self.semsText.listOfWords[index - 1].setCaretToLastPosition();
                     } else {
@@ -299,7 +308,7 @@ export class SemsText {
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
                 keyEvent.key = "f";
                 }, function() {
-                    let index = self.semsText.listOfWords.indexOf(self);
+                    let index = self.getIndexOfWord();
                     if (index < self.semsText.listOfWords.length - 1) {
                         self.semsText.listOfWords[index + 1].setCaretToLastPosition();
                     } else {
@@ -331,7 +340,7 @@ export class SemsText {
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
                 keyEvent.key = ".";
                 }, function() {
-                    let indexOfWord = self.semsText.listOfWords.indexOf(self);
+                    let indexOfWord = self.getIndexOfWord();
                     let newWord = self.semsText.createSemsWord();
                     List.insertInListAtPosition(self.semsText.listOfWords, newWord, indexOfWord);
                     Html.insertChildAtPosition(self.semsText.uiElement, newWord.input, indexOfWord);
@@ -357,7 +366,7 @@ export class SemsText {
         }
     
         private whiteSpaceUp() {
-            let indexOfWord = this.semsText.listOfWords.indexOf(this);
+            let indexOfWord = this.getIndexOfWord();
             let newWord = this.semsText.createSemsWord();
             List.insertInListAtPosition(this.semsText.listOfWords, newWord, indexOfWord + 1);
             Html.insertChildAtPosition(this.semsText.uiElement, newWord.input, indexOfWord + 1);
@@ -429,7 +438,7 @@ export class SemsText {
         }
 
         public deleteWordEvent() {
-            let indexOfWord = this.semsText.listOfWords.indexOf(this);
+            let indexOfWord = this.getIndexOfWord();
             List.deleteInListAtPosition(this.semsText.listOfWords, indexOfWord);
             Html.remove(this.input);
             if (indexOfWord > 0) {
@@ -460,6 +469,10 @@ export class SemsText {
                 self.input.style.zIndex = "0";
                 self.input.style.boxShadow = "none";
             }, animationTime * 2000);
+        }
+
+        public getIndexOfWord() : number {
+            return this.semsText.listOfWords.indexOf(this);
         }
     }
 }
