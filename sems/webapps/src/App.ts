@@ -253,7 +253,7 @@ export class App {
         this.keyModeShadowDiv_top.style.top = "0";
         this.keyModeShadowDiv_top.style.width = "100%";
         
-        this.adaptStyleForKeyMode(App.keyMode);
+        this.adaptStyleForKeyMode();
         //
         setTimeout(function() {
             ColumnManager.columns[0].focusColumnOrFirstObject();
@@ -368,15 +368,13 @@ export class App {
     }
 
     public static switchKeyMode() {
-        console.log("switch key mode");
         this.keyMode = (this.keyMode + 1) % 2;
-        console.log("new keymode = " + this.keyMode);
-        this.adaptStyleForKeyMode(this.keyMode);
+        this.adaptStyleForKeyMode();
     }
 
     
-    public static adaptStyleForKeyMode(keyMode : KeyMode) {
-        if (keyMode == KeyMode.INSERTION) {
+    public static adaptStyleForKeyMode() {
+        if (this.keyMode == KeyMode.INSERTION) {
             this.keyModeShadowDiv_bottom.style.boxShadow = "0rem 0rem 1.2rem 0.7rem green";
             this.keyModeShadowDiv_left.style.boxShadow = "0rem 0rem 0.3rem 0.15rem green";
             this.keyModeShadowDiv_right.style.boxShadow = "0rem 0rem 0.6rem 0.35rem green";
