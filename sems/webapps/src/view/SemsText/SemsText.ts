@@ -194,10 +194,12 @@ export class SemsText {
                     }
                     if (semsWord.mapKeyActions_normalMode.has(keyEventString)) {
                         semsWord.mapKeyActions_normalMode.get(keyEventString)();
+                        ev.preventDefault();
                     }
                 }
                 if (semsWord.mapKeyActions.has(keyEventString)) {
                     semsWord.mapKeyActions.get(keyEventString)();
+                    ev.preventDefault();
                 }
             }
         };
