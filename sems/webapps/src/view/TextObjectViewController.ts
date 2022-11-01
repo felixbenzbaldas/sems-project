@@ -728,7 +728,6 @@ export class TextObjectViewController {
         for (let id of this.detailsData.getDetails()) {
             let textOfDetail : string = App.objProperties.get(id, TEXT);
             if (textOfDetail.match(/^\d+(,\d+)?\sf/)) {
-                console.log("match: " + textOfDetail);
                 let firstWord : string = textOfDetail.split(' ')[0];
                 let timeOfThisObject : number;
                 timeOfThisObject = parseFloat(firstWord.replace(',', '.'));
