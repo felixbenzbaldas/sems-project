@@ -106,6 +106,12 @@ export class KeyActionDefinition {
             }, function() {
                 textObjectViewController.export_fourDays_safe_html();
         });
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = "y";
+            }, function() {
+                uio.onPasteNextEvent();
+        });
         return map;
     }
 
