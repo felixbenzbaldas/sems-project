@@ -32,5 +32,6 @@ export const SUCCESS = "success";
 export const CLEAR = "clear";
 export const CLEAN = "clean";
 export const UPDATE = "update";
+export const SEARCH = "search";
 //
 export const OVERVIEW_ADDR = "1-1629";

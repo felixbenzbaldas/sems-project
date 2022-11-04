@@ -36,6 +36,8 @@ public class Consts {
 	public static final String CLEAR = "clear";
 	public static final String CLEAN = "clean";
 	public static final String UPDATE= "update";
+	public static final String SEARCH = "search";
+	
 	// Persistence
 	public static final String SEMS_ADDRESS_PERSISTENCE = "id";
 	public static final String ID_COUNTER = "idCounter";

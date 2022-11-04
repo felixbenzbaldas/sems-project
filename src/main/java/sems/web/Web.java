@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -124,6 +125,16 @@ public class Web extends HttpServlet {
 			addResponse(UPDATE, cr -> {
 				Scripts.update();
 				cr.setResponse(SUCCESS);
+			});
+			addResponse(SEARCH, cr -> {
+				SemsObject semsObject = cr.getSemsObject();
+				String searchText = semsObject.getText();
+				List<SemsObject> searchResultOfHouseOne = App.semsHouseOne.search(searchText);
+				semsObject.getDetails().addAll(searchResultOfHouseOne.stream().map(obj -> obj.getSemsAddress()).collect(Collectors.toList()));
+				semsObject.props.setProperty(TEXT, "searched");
+				String semsAddress = semsObject.getSemsAddress();
+				Set<String> loadDependencies = new LoadDependencies(semsAddress).get();
+				cr.setResponse(jsonToString(setToJson(loadDependencies)));
 			});
 		}
 	}

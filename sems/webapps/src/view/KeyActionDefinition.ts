@@ -78,6 +78,18 @@ export class KeyActionDefinition {
             }, function() {
                 textObjectViewController.openObject();
         });
+
+        
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = "s";
+            }, function() {
+                textObjectViewController.search();
+        });
+
+
+
+
         // SCROLL_BACKWARDS
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;

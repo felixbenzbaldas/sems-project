@@ -112,4 +112,8 @@ public class SemsObject {
 	private void registerChange() {
 		this.hasUnsavedChanges = true;
 	}
+	
+	public String getText() {
+		return this.props.getString(TEXT);
+	}
 }

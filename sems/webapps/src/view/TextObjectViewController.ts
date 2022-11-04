@@ -759,4 +759,11 @@ export class TextObjectViewController {
     public adaptStyleForKeyMode() {
         this.headText.updateTextColor();
     }
+
+    public search() {
+        this.headText.updateTextProperty();
+        SemsServer.search(this.getSemsAddress(), (jsonObject) => {
+            console.log("search: received from server: " + JSON.stringify(jsonObject));
+        });
+    }
 }
