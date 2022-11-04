@@ -27,9 +27,9 @@ export class ObjectLoader {
     // assertion: listOfJsonObjects contains all load dependencies
     public static listOfJsonObjectsArrived(listOfJsonObjects : Array<any>) {
         ObjectLoader.installObjects(listOfJsonObjects);
-        let newcomer = ObjectLoader.getNewcomer(ObjectLoader.getAddresses(listOfJsonObjects));
-        ObjectLoader.setLoaded(newcomer);
-        ObjectLoader.triggerLoadedEvent(newcomer);
+        let newcomers = ObjectLoader.getNewcomers(ObjectLoader.getAddresses(listOfJsonObjects));
+        ObjectLoader.setLoaded(newcomers);
+        ObjectLoader.triggerLoadedEvent(newcomers);
     }
 
     private static installObjects(listOfJsonObjects : Array<any>) {
@@ -48,14 +48,14 @@ export class ObjectLoader {
         return addresses;
     }
 
-    private static getNewcomer(listOfAddresses : Array<string>) {
-        let newcomer = [];
+    private static getNewcomers(listOfAddresses : Array<string>) {
+        let newcomers = [];
         for (let address of listOfAddresses) {
             if (!ObjectLoader.isLoaded(address)) {
-                newcomer.push(address);
+                newcomers.push(address);
             }
         }
-        return newcomer;
+        return newcomers;
     }
 
     private static setLoaded(listOfAddresses : Array<string>) {
