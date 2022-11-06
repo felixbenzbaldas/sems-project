@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import sems.App;
 import sems.Persistence;
 import sems.Scripts;
+import sems.SemsAddressParser;
 import sems.SemsObject;
 import sems.general.Config;
 import sems.general.ThrowingConsumer;
@@ -130,8 +131,9 @@ public class Web extends HttpServlet {
 				SemsObject semsObject = cr.getSemsObject();
 				String searchText = semsObject.getText();
 				List<SemsObject> searchResultOfHouseOne = App.semsHouseOne.search(searchText); // XXX hier muss eine Sicherheitsüberprüfung statt finden!!!
-				semsObject.getDetails().addAll(searchResultOfHouseOne.stream().map(obj -> obj.getSemsAddress()).collect(Collectors.toList()));
-				semsObject.props.setProperty(TEXT, "searched");
+				List<String> listOfAddresses = searchResultOfHouseOne.stream().filter(obj -> obj != semsObject).map(obj -> obj.getSemsAddress()).collect(Collectors.toList());
+				semsObject.getDetails().addAll(listOfAddresses.subList(0, Math.min(100, listOfAddresses.size())));
+				semsObject.props.setProperty(TEXT, "Die Suche nach \"" + searchText + "\" ergab folgende Treffer. (" + listOfAddresses.size() + ")");
 				String semsAddress = semsObject.getSemsAddress();
 				Set<String> loadDependencies = new LoadDependencies(semsAddress).get();
 				cr.setResponse(jsonToString(setToJson(loadDependencies)));
