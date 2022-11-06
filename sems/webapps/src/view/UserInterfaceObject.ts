@@ -4,6 +4,7 @@ import { EventController } from "../general/EventController";
 import { Column } from "./Column";
 import { StringRelationshipView } from "./StringRelationshipView";
 import { TextObjectViewController } from "./TextObjectViewController";
+import { View } from "./View";
 import { ViewTypes } from "./ViewTypes";
 
 export class UserInterfaceObject {
@@ -31,10 +32,15 @@ export class UserInterfaceObject {
 
     public lastFocusedSubitem : UserInterfaceObject;
 
-    
-
     constructor() {
         this.eventController = new EventController(this);
+        let self = this;
+        this.eventController.addObserver(EventTypes.JUMP_BACKWARD, function() {
+            self.jumpBackward();
+        });
+        this.eventController.addObserver(EventTypes.JUMP_FORWARD, function() {
+            self.jumpForward();
+        });
     }
 
     public getUiElement() {
@@ -100,5 +106,31 @@ export class UserInterfaceObject {
 
     public getEventController() {
         return this.eventController;
+    }
+
+    //////////////////////////////////////////////
+    
+    public jumpBackward() {
+        let currentUio : UserInterfaceObject = this;
+        for (let i = 0; i < 7; i++) {
+            let prevUio = View.getPrevUio(currentUio);
+            if (prevUio != null) {
+                currentUio = prevUio;
+            }
+        }
+        currentUio.focus();
+        currentUio.eventController.triggerEvent(EventTypes.CURSOR_HINT, null);
+    }
+
+    public jumpForward() {
+        let currentUio :  UserInterfaceObject = this;
+        for (let i = 0; i < 7; i++) {
+            let nextUio = View.getNextUio(currentUio);
+            if (nextUio != null) {
+                currentUio = nextUio;
+            }
+        }
+        currentUio.focus();
+        currentUio.eventController.triggerEvent(EventTypes.CURSOR_HINT, null);
     }
 }

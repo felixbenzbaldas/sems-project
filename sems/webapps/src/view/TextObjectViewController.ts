@@ -112,12 +112,6 @@ export class TextObjectViewController {
         userInterfaceObject.eventController.addObserver(EventTypes.FOCUS_NEXT, function() {
             textObjectViewController.focusNext();
         });
-        userInterfaceObject.eventController.addObserver(EventTypes.JUMP_FORWARD, function() {
-            textObjectViewController.jumpForward();
-        });
-        userInterfaceObject.eventController.addObserver(EventTypes.JUMP_BACKWARD, function() {
-            textObjectViewController.jumpBackward();
-        });
         userInterfaceObject.eventController.addObserver(EventTypes.FOCUS_NEXT_WORD, function() {
             textObjectViewController.focusNextWord();
         });
@@ -528,30 +522,6 @@ export class TextObjectViewController {
         }
     }
 
-    public jumpBackward() {
-        let currentUio = this.uio;
-        for (let i = 0; i < 7; i++) {
-            let prevUio = View.getPrevUio(currentUio);
-            if (prevUio != null) {
-                currentUio = prevUio;
-            }
-        }
-        currentUio.focus();
-        currentUio.eventController.triggerEvent(EventTypes.CURSOR_HINT, null);
-    }
-
-    public jumpForward() {
-        let currentUio = this.uio;
-        for (let i = 0; i < 7; i++) {
-            let nextUio = View.getNextUio(currentUio);
-            if (nextUio != null) {
-                currentUio = nextUio;
-            }
-        }
-        currentUio.focus();
-        currentUio.eventController.triggerEvent(EventTypes.CURSOR_HINT, null);
-    }
-
     public hasChildUio() : boolean {
         // TODO ignoring contextAsSubitm at the moment
         if (this.isCollapsed()) {
@@ -564,8 +534,6 @@ export class TextObjectViewController {
         // TODO skipping contextAsSubitm at the moment
         return this.detailsView.getUioAtPosition(0);
     }
-
-    
 
     public hasNextChildUio(childUio : UserInterfaceObject) {
         let position = this.detailsView.getPositionOfDetailUIO(childUio);
