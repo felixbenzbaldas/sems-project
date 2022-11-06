@@ -36,6 +36,7 @@ export class DetailsView {
     }
 
     public updateView() {
+        console.log("DetailsView updateView");
         Html.removeAllChildren(this.uiElement);
         this.detailUserInterfaceObjects = [];
         let self = this;

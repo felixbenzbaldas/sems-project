@@ -146,7 +146,8 @@ export class HeadText {
         return !this.getProps().get(DEFAULT_EXPANDED) && this.textObjectViewController.bodyAvailable();
     }
 
-    private update() {
+    public update() {
+        console.log("HeadText update");
         this.updateText();
         this.updateTextColor();
         this.updateOnClick();

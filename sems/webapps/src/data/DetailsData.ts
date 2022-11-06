@@ -83,4 +83,14 @@ export class DetailsData {
     public clear() {
         this.details = [];
     }
+
+    public setHasDetailsAfterLoading(hasDetailsAfterLoading : boolean) {
+        this.hasDetailsAfterLoading = hasDetailsAfterLoading;
+        App.objEvents.triggerEvent(this.semsAddress, EventTypes.DETAILS_CHANGE, null);
+    }
+
+    public setDetails(details : Array<string>) {
+        this.details = details;
+        App.objEvents.triggerEvent(this.semsAddress, EventTypes.DETAILS_CHANGE, null);
+    }
 }

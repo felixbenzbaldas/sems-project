@@ -1,5 +1,5 @@
 import { App } from "../App";
-import { DEFAULT_EXPANDED, DETAILS, HAS_DETAILS, SEMS_ADDRESS } from "../Consts";
+import { DEFAULT_EXPANDED, DETAILS, HAS_DETAILS, PROPERTIES, SEMS_ADDRESS, TEXT } from "../Consts";
 import { DetailsData } from "./DetailsData";
 
 export class TextObject {
@@ -16,5 +16,18 @@ export class TextObject {
         let detailsData = new DetailsData(address, jsonObject[HAS_DETAILS],
             details);
         DetailsData.map.set(address, detailsData);
+    }
+
+    public static update(jsonObject) {
+        console.log("TextObject update");
+        console.log(jsonObject[DETAILS].length);
+        console.log(jsonObject[PROPERTIES][TEXT]);
+        console.log(jsonObject[SEMS_ADDRESS]);
+        let address : string = jsonObject[SEMS_ADDRESS];
+        App.objProperties.getPropertiesOfObject(address).updateFromJson(jsonObject);
+        //
+        let detailsData : DetailsData = DetailsData.map.get(address);
+        detailsData.setHasDetailsAfterLoading(jsonObject[HAS_DETAILS]);
+        detailsData.setDetails(jsonObject[DETAILS]);
     }
 }

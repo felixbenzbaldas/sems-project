@@ -129,7 +129,7 @@ public class Web extends HttpServlet {
 			addResponse(SEARCH, cr -> {
 				SemsObject semsObject = cr.getSemsObject();
 				String searchText = semsObject.getText();
-				List<SemsObject> searchResultOfHouseOne = App.semsHouseOne.search(searchText);
+				List<SemsObject> searchResultOfHouseOne = App.semsHouseOne.search(searchText); // XXX hier muss eine Sicherheitsüberprüfung statt finden!!!
 				semsObject.getDetails().addAll(searchResultOfHouseOne.stream().map(obj -> obj.getSemsAddress()).collect(Collectors.toList()));
 				semsObject.props.setProperty(TEXT, "searched");
 				String semsAddress = semsObject.getSemsAddress();

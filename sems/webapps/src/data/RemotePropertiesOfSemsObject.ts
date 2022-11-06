@@ -38,4 +38,13 @@ export class RemotePropertiesOfSemsObject {
     public clear() {
         this.map = new MapWithPrimitiveStringsAsKey();
     }
+
+    public updateFromJson(json) {
+        this.clear();
+        let propertiesJson = json[PROPERTIES];
+        let self = this;
+        Object.keys(propertiesJson).forEach(function(property){
+            self.map.set(property, propertiesJson[property]);
+        });
+    }
 }

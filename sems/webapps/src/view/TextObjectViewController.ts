@@ -1,9 +1,10 @@
 import { App } from "../App";
-import { CONTEXT, DEFAULT_EXPANDED, IS_PRIVATE, OVERVIEW_ADDR, TEXT } from "../Consts";
+import { CONTEXT, DEFAULT_EXPANDED, IS_PRIVATE, OVERVIEW_ADDR, SEMS_ADDRESS, TEXT } from "../Consts";
 import { Data } from "../data/Data";
 import { DetailsData } from "../data/DetailsData";
 import { ObjectLoader } from "../data/ObjectLoader";
 import { RemotePropertiesOfSemsObject } from "../data/RemotePropertiesOfSemsObject";
+import { TextObject } from "../data/TextObject";
 import { EventTypes } from "../EventTypes";
 import { AnimatedHeadBody } from "../general/AnimatedHeadBody";
 import { EventController } from "../general/EventController";
@@ -762,8 +763,15 @@ export class TextObjectViewController {
 
     public search() {
         this.headText.updateTextProperty();
-        SemsServer.search(this.getSemsAddress(), (jsonObject) => {
-            console.log("search: received from server: " + JSON.stringify(jsonObject));
+        let self = this;
+        SemsServer.search(this.getSemsAddress(), (listOfObjects : Array<any>) => {
+            let jsonObject = listOfObjects.filter(obj => General.primEquals(obj[SEMS_ADDRESS], self.getSemsAddress()))[0];
+            TextObject.update(jsonObject);
+            ObjectLoader.listOfJsonObjectsArrived(listOfObjects);
+            self.ensureExpanded();
+            self.detailsView.updateView();
+            self.headText.update();
+            self.focus();
         });
     }
 }
