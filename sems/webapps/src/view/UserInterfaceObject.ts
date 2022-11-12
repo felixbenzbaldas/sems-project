@@ -113,9 +113,11 @@ export class UserInterfaceObject {
     public jumpBackward() {
         let currentUio: UserInterfaceObject = this;
         for (let i = 0; i < 7; i++) {
-            let prevUio = View.getPrevUio(currentUio);
-            if (prevUio != null) {
+            let prevUio = currentUio.getPrevUio();
+            if (prevUio != null && prevUio.columnOpt == null) {
                 currentUio = prevUio;
+            } else {
+                break;
             }
         }
         currentUio.focus();
@@ -125,17 +127,16 @@ export class UserInterfaceObject {
     public jumpForward() {
         let currentUio: UserInterfaceObject = this;
         for (let i = 0; i < 7; i++) {
-            // let nextUio = View.getNextUio(currentUio);
             let nextUio = currentUio.getNextUio();
             if (nextUio != null) {
                 currentUio = nextUio;
+            } else {
+                break;
             }
         }
         currentUio.focus();
         currentUio.eventController.triggerEvent(EventTypes.CURSOR_HINT, null);
     }
-
-    ///////////
 
     public getListOfChildUios(): Array<UserInterfaceObject> {
         if (this.tovcOpt != null) {
@@ -146,7 +147,25 @@ export class UserInterfaceObject {
         return [];
     }
 
-    public getNextUio(): UserInterfaceObject {
+    public getPrevUio() : UserInterfaceObject {
+        if (this.viewContext == null) {
+            return null;
+        } else {
+            return this.viewContext.getPrevUioOfChildUio(this);
+        }
+    }
+
+    public getPrevUioOfChildUio(childUio : UserInterfaceObject) : UserInterfaceObject {
+        let children : Array<UserInterfaceObject> = this.getListOfChildUios();
+        let position = children.indexOf(childUio);
+        if (position > 0) {
+            return children[position - 1].getLastUio();
+        } else {
+            return this;
+        }
+    }
+
+    public getNextUio() : UserInterfaceObject {
         let children : Array<UserInterfaceObject> = this.getListOfChildUios();
         if (children.length > 0) {
             return children[0];
@@ -155,6 +174,7 @@ export class UserInterfaceObject {
         }
     }
 
+    // returns the next UserInterfaceObject skipping the children of this
     public getNextUio_skippingChildren() : UserInterfaceObject {
         if (this.viewContext == null) {
             return null;
@@ -167,6 +187,16 @@ export class UserInterfaceObject {
             } else {
                 return parentUio.getNextUio_skippingChildren();
             }
+        }
+    }
+    
+    // Returns the last uio that belongs to this. If no childUio is available, then this is returned.
+    public getLastUio() : UserInterfaceObject {
+        let children : Array<UserInterfaceObject> = this.getListOfChildUios();
+        if (children.length > 0) {
+            return children[children.length - 1].getLastUio();
+        } else {
+            return this;
         }
     }
 

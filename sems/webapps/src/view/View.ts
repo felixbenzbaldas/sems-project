@@ -119,43 +119,4 @@ export class View {
         }
     }
 
-    public static getPrevUio(uio : UserInterfaceObject) : UserInterfaceObject{
-        if (uio.viewContext.columnOpt != null) {
-            let column : Column = uio.viewContext.columnOpt;
-            return column.getPrevUio(uio);
-        } else {
-            let parentTovc : TextObjectViewController = uio.viewContext.tovcOpt;
-            return parentTovc.getPrevUio(uio);
-        }
-    }
-
-    public static getNextUio(uio : UserInterfaceObject) : UserInterfaceObject{
-        let tovc : TextObjectViewController = uio.tovcOpt;
-        if (tovc.hasChildUio()) {
-            return tovc.getFirstChildUio();
-        } else {
-            return this.getNextUio_skippingChilds(uio);
-        }
-    }
-
-    // can return null
-    // returns the next UserInterfaceObject skipping the childs of uio
-    public static getNextUio_skippingChilds(uio : UserInterfaceObject) : UserInterfaceObject {
-        if (uio.viewContext.columnOpt != null) {
-            let column : Column = uio.viewContext.columnOpt;
-            if (column.hasNextChildUio(uio)) {
-                return column.getNextChildUio(uio);
-            } else {
-                return null;
-            }
-        } else {
-            let parentTovc : TextObjectViewController = uio.viewContext.tovcOpt;
-            if (parentTovc.hasNextChildUio(uio)) {
-                return parentTovc.getNextChildUio(uio);
-            } else {
-                return View.getNextUio_skippingChilds(uio.viewContext);
-            }
-        }
-    }
-
 }
