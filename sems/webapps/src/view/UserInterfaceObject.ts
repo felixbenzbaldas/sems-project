@@ -9,36 +9,36 @@ import { ViewTypes } from "./ViewTypes";
 
 export class UserInterfaceObject {
 
-    public viewType : ViewTypes;
-    
-    public semsAddress : string;
-    public props : RemotePropertiesOfSemsObject;
-    public uiElement : HTMLElement;
+    public viewType: ViewTypes;
+
+    public semsAddress: string;
+    public props: RemotePropertiesOfSemsObject;
+    public uiElement: HTMLElement;
 
     // The suffix "opt" means, that the value is optionally.
     // A null-value means, that this uio has no value.
-    public tovcOpt : TextObjectViewController = null;
-    public columnOpt : Column = null;
-    public stringRelationshipView_opt : StringRelationshipView = null;
+    public tovcOpt: TextObjectViewController = null;
+    public columnOpt: Column = null;
+    public stringRelationshipView_opt: StringRelationshipView = null;
 
-    public eventController : EventController;
+    public eventController: EventController;
     public viewContext: UserInterfaceObject;
-    
+
     public onDeleteEvent: Function;
     public onEnterEvent: Function;
     public onPasteNextEvent: Function;
 
     public onInformMove: Function;
 
-    public lastFocusedSubitem : UserInterfaceObject;
+    public lastFocusedSubitem: UserInterfaceObject;
 
     constructor() {
         this.eventController = new EventController(this);
         let self = this;
-        this.eventController.addObserver(EventTypes.JUMP_BACKWARD, function() {
+        this.eventController.addObserver(EventTypes.JUMP_BACKWARD, function () {
             self.jumpBackward();
         });
-        this.eventController.addObserver(EventTypes.JUMP_FORWARD, function() {
+        this.eventController.addObserver(EventTypes.JUMP_FORWARD, function () {
             self.jumpForward();
         });
     }
@@ -58,7 +58,7 @@ export class UserInterfaceObject {
     public triggerChangedEvent() {
         this.eventController.triggerEvent(EventTypes.CHANGED, null);
     }
-    
+
     public delete() {
         this.getEventController().triggerEvent(EventTypes.DELETED, null);
     }
@@ -73,7 +73,7 @@ export class UserInterfaceObject {
         this.eventController.triggerEvent(EventTypes.SCALE_DOWN, null);
     }
 
-    public scaleDownIsPossible() : boolean {
+    public scaleDownIsPossible(): boolean {
         if (this.tovcOpt != null) {
             return this.tovcOpt.scaleDownIsPossible();
         } else {
@@ -81,7 +81,7 @@ export class UserInterfaceObject {
         }
     }
 
-    public getTopLevelObject() : UserInterfaceObject {
+    public getTopLevelObject(): UserInterfaceObject {
         if (this.viewContext == null) {
             return this;
         } else {
@@ -96,11 +96,11 @@ export class UserInterfaceObject {
     //////////////////////////////////////////////
     // Properties (deprecated - properties are public, no need for getters)
 
-    public getSemsAddress() : string {
+    public getSemsAddress(): string {
         return this.semsAddress;
     }
 
-    public getViewContext() : UserInterfaceObject {
+    public getViewContext(): UserInterfaceObject {
         return this.viewContext;
     }
 
@@ -109,9 +109,9 @@ export class UserInterfaceObject {
     }
 
     //////////////////////////////////////////////
-    
+
     public jumpBackward() {
-        let currentUio : UserInterfaceObject = this;
+        let currentUio: UserInterfaceObject = this;
         for (let i = 0; i < 7; i++) {
             let prevUio = View.getPrevUio(currentUio);
             if (prevUio != null) {
@@ -123,9 +123,10 @@ export class UserInterfaceObject {
     }
 
     public jumpForward() {
-        let currentUio :  UserInterfaceObject = this;
+        let currentUio: UserInterfaceObject = this;
         for (let i = 0; i < 7; i++) {
-            let nextUio = View.getNextUio(currentUio);
+            // let nextUio = View.getNextUio(currentUio);
+            let nextUio = currentUio.getNextUio();
             if (nextUio != null) {
                 currentUio = nextUio;
             }
@@ -133,4 +134,40 @@ export class UserInterfaceObject {
         currentUio.focus();
         currentUio.eventController.triggerEvent(EventTypes.CURSOR_HINT, null);
     }
+
+    ///////////
+
+    public getListOfChildUios(): Array<UserInterfaceObject> {
+        if (this.tovcOpt != null) {
+            return this.tovcOpt.getListOfChildUios();
+        } else if (this.columnOpt != null) {
+            return this.columnOpt.getListOfChildUios();
+        }
+        return [];
+    }
+
+    public getNextUio(): UserInterfaceObject {
+        let children : Array<UserInterfaceObject> = this.getListOfChildUios();
+        if (children.length > 0) {
+            return children[0];
+        } else {
+            return this.getNextUio_skippingChildren();
+        }
+    }
+
+    public getNextUio_skippingChildren() : UserInterfaceObject {
+        if (this.viewContext == null) {
+            return null;
+        } else {
+            let parentUio = this.viewContext;
+            let childrenOfParent : Array<UserInterfaceObject> = parentUio.getListOfChildUios();
+            let position = childrenOfParent.indexOf(this);
+            if (position + 1 < childrenOfParent.length) {
+                return childrenOfParent[position + 1];
+            } else {
+                return parentUio.getNextUio_skippingChildren();
+            }
+        }
+    }
+
 }

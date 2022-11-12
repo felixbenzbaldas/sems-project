@@ -566,4 +566,7 @@ export class Column {
         }
     }
 
+    public getListOfChildUios() : Array<UserInterfaceObject> {
+        return this.listOfUIOs;
+    }
 }

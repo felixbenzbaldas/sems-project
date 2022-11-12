@@ -557,6 +557,14 @@ export class TextObjectViewController {
         }
     }
 
+    public getListOfChildUios() : Array<UserInterfaceObject> {
+        if (this.isCollapsed()) {
+            return [];
+        } else {
+            return this.getListOfDetailUio(); // XXX context
+        }
+    }
+
     // Returns the last uio that belongs to this. If no childUio is available, then the own uio is returned.
     public getLastUio() : UserInterfaceObject {
         if (this.hasChildUio()) {
@@ -704,7 +712,6 @@ export class TextObjectViewController {
             }
         }
         let newHoursBox : string = '[' + hours.toString().replace('.', ',') + ']';
-        console.log("newHoursBox: " + newHoursBox);
         let textBefore : string = this.headText.getSemsText().getText();
         let newText : string;
         let boxRegex = /\[.*\]/;
