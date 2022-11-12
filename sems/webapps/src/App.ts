@@ -57,7 +57,7 @@ export class App {
 
     static backgroundColor : string = "grey";
     static fontColor : string = "yellow";
-    static colorForFocusedObjInNormalMode : string = "red";
+    static colorForFocusedObjInNormalMode : string = "orange";
     static secondColor : string = "#efefef"; // light grey
     static thirdColor = "orange";
 

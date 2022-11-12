@@ -703,7 +703,8 @@ export class TextObjectViewController {
                 hours += timeOfThisObject;
             }
         }
-        let newHoursBox : string = '[' + hours + ']';
+        let newHoursBox : string = '[' + hours.toString().replace('.', ',') + ']';
+        console.log("newHoursBox: " + newHoursBox);
         let textBefore : string = this.headText.getSemsText().getText();
         let newText : string;
         let boxRegex = /\[.*\]/;
