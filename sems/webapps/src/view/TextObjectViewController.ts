@@ -522,57 +522,11 @@ export class TextObjectViewController {
         }
     }
 
-    public hasChildUio() : boolean {
-        // TODO ignoring contextAsSubitm at the moment
-        if (this.isCollapsed()) {
-            return false;
-        } else {
-            return this.detailsView.getNumberOfDetails() > 0;
-        }
-    }
-    public getFirstChildUio() : UserInterfaceObject {
-        // TODO skipping contextAsSubitm at the moment
-        return this.detailsView.getUioAtPosition(0);
-    }
-
-    public hasNextChildUio(childUio : UserInterfaceObject) {
-        let position = this.detailsView.getPositionOfDetailUIO(childUio);
-        return position + 1 < this.detailsView.getNumberOfDetails();
-    }
-
-    // check hasNextChildUio before!
-    public getNextChildUio(childUio : UserInterfaceObject) {
-        let position = this.detailsView.getPositionOfDetailUIO(childUio);
-        return this.detailsView.getUioAtPosition(position + 1);
-    }
-
-    public getPrevUio(childUio : UserInterfaceObject) {
-        let position = this.detailsView.getPositionOfDetailUIO(childUio);
-        if (position == 0) {
-            return this.uio;
-        } else {
-            let prevUioOnSameLevel : UserInterfaceObject = this.detailsView.getUioAtPosition(position - 1);
-            let tocv : TextObjectViewController = prevUioOnSameLevel.tovcOpt;
-            return tocv.getLastUio();
-        }
-    }
-
     public getListOfChildUios() : Array<UserInterfaceObject> {
         if (this.isCollapsed()) {
             return [];
         } else {
             return this.getListOfDetailUio(); // XXX context
-        }
-    }
-
-    // Returns the last uio that belongs to this. If no childUio is available, then the own uio is returned.
-    public getLastUio() : UserInterfaceObject {
-        if (this.hasChildUio()) {
-            let lastChildUio : UserInterfaceObject = this.detailsView.getUioAtPosition(this.detailsView.getNumberOfDetails() - 1);
-            let tovc : TextObjectViewController = lastChildUio.tovcOpt;
-            return tovc.getLastUio();
-        } else {
-            return this.uio;
         }
     }
 

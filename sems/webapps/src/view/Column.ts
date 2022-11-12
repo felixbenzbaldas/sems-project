@@ -536,36 +536,6 @@ export class Column {
         this.listOfUIOs[1].scaleUp();
     }
 
-    public hasChildUio() : boolean {
-        return this.listOfUIOs.length > 0;
-    }
-
-    public getFirstChildUio() : UserInterfaceObject {
-        return this.listOfUIOs[0];
-    }
-
-    public hasNextChildUio(childUio : UserInterfaceObject) {
-        let position = this.listOfUIOs.indexOf(childUio);
-        return position + 1 < this.listOfUIOs.length;
-    }
-
-    // check hasNextChildUio before!
-    public getNextChildUio(childUio : UserInterfaceObject) {
-        let position = this.listOfUIOs.indexOf(childUio);
-        return this.listOfUIOs[position + 1];
-    }
-
-    public getPrevUio(childUio : UserInterfaceObject) {
-        let position = this.listOfUIOs.indexOf(childUio);
-        if (position == 0) {
-            return null;
-        } else {
-            let previousUioOnSameLevel = this.listOfUIOs[position - 1];
-            let tovc : TextObjectViewController = previousUioOnSameLevel.tovcOpt;
-            return tovc.getLastUio();
-        }
-    }
-
     public getListOfChildUios() : Array<UserInterfaceObject> {
         return this.listOfUIOs;
     }

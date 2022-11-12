@@ -17,7 +17,7 @@ import { UserInterfaceObject } from "./view/UserInterfaceObject";
 import { View } from "./view/View";
 
 export class App {
-    static version = 6;
+    static version = 15;
 
     static LOCAL_MODE : boolean = true;
     static EN_VERSION : boolean = false;
