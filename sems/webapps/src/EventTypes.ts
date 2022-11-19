@@ -9,7 +9,6 @@ export enum EventTypes {
     COPY,
     PASTE,
     TOGGLE_EXPAND,
-    FOCUS_NEXT_ON_SAME_LEVEL,
     FOCUS_PREV,
     FOCUS_NEXT,
     JUMP_FORWARD,

@@ -76,16 +76,6 @@ export class Context {
         }
         this.contextAsSubitem = StringRelationshipView.create(text, this.getProps().get(CONTEXT), this.userInterfaceObject);
         let self = this;
-        this.contextAsSubitem.getUserInterfaceObject().eventController.on(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, function() {
-            if (self.textObjectViewController.detailsView.hasContent()) {
-                self.textObjectViewController.detailsView.takeFocusFromTop();
-            } else {
-                self.userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, null);
-            }
-        });
-        this.contextAsSubitem.getUserInterfaceObject().eventController.on(EventTypes.FOCUS_PREV, function() {
-            self.userInterfaceObject.focus();
-        });
         this.contextAsSubitem.getUserInterfaceObject().eventController.on(EventTypes.GO_TO_END_OF_LIST_vc, function() {
             if (self.textObjectViewController.detailsView.hasContent()) {
                 self.textObjectViewController.detailsView.focusLastObject();

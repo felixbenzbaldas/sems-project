@@ -69,10 +69,8 @@ export class DetailsView {
         userInterfaceObject.onDeleteEvent = this.getOnDeleteEventFunction(userInterfaceObject);
         userInterfaceObject.onEnterEvent = this.getOnEnterEventFunction(userInterfaceObject);
         userInterfaceObject.onPasteNextEvent = this.getOnPasteNextEventFunction(userInterfaceObject);
-        userInterfaceObject.getEventController().on(EventTypes.FOCUS_PREV, this.getOnFocusPrevEventFunction(userInterfaceObject));
         userInterfaceObject.getEventController().on(EventTypes.FOCUS_PREV_WORD, this.getOnFocusPrevWordEventFunction(userInterfaceObject));
         userInterfaceObject.getEventController().on(EventTypes.FOCUS_NEXT_WORD_vc, this.getOnFocusNextWordEventFunction(userInterfaceObject));
-        userInterfaceObject.getEventController().on(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, this.getOnFocusNextEventFunction(userInterfaceObject));
         userInterfaceObject.getEventController().on(EventTypes.GO_TO_END_OF_LIST_vc, this.goToEndOfList_Function(userInterfaceObject));
         userInterfaceObject.getEventController().on(EventTypes.FOCUSED, this.focused_Function(userInterfaceObject));
         let self = this;
@@ -146,22 +144,6 @@ export class DetailsView {
         };
     }
 
-    private getOnFocusPrevEventFunction(detailUserInterfaceObject : UserInterfaceObject) {
-        let self = this;
-        return function () {
-            let indexOfDetail = self.detailUserInterfaceObjects.indexOf(detailUserInterfaceObject);
-            if (indexOfDetail > 0) {
-                self.detailUserInterfaceObjects[indexOfDetail - 1].takeCursorFromBottom();
-            } else {
-                if (self.textObjectViewController.context.showContextAsSubitem()) {
-                    self.textObjectViewController.context.contextAsSubitem_takeFocusFromBottom();
-                } else {
-                    self.userInterfaceObject.focus();
-                }
-            }
-        };
-    }
-
     private getOnFocusPrevWordEventFunction(detailUserInterfaceObject : UserInterfaceObject) {
         let self = this;
         return function () {
@@ -182,18 +164,6 @@ export class DetailsView {
                 self.detailUserInterfaceObjects[indexOfDetail + 1].eventController.triggerEvent(EventTypes.FOCUS_FIRST_WORD, null);
             } else {
                 self.userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUS_NEXT_WORD_vc, null);
-            }
-        };
-    }
-
-    private getOnFocusNextEventFunction(detailUserInterfaceObject : UserInterfaceObject) {
-        let self = this;
-        return function () {
-            let indexOfDetail = self.detailUserInterfaceObjects.indexOf(detailUserInterfaceObject);
-            if (indexOfDetail + 1 < self.detailUserInterfaceObjects.length) {
-                self.detailUserInterfaceObjects[indexOfDetail + 1].focus();
-            } else {
-                self.userInterfaceObject.getEventController().triggerEvent(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, null);
             }
         };
     }

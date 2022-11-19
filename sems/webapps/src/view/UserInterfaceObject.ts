@@ -35,6 +35,12 @@ export class UserInterfaceObject {
     constructor() {
         this.eventController = new EventController(this);
         let self = this;
+        this.eventController.addObserver(EventTypes.FOCUS_PREV, function() {
+            self.focusPrev();
+        });
+        this.eventController.addObserver(EventTypes.FOCUS_NEXT, function() {
+            self.focusNext();
+        });
         this.eventController.addObserver(EventTypes.JUMP_BACKWARD, function () {
             self.jumpBackward();
         });
@@ -109,6 +115,20 @@ export class UserInterfaceObject {
     }
 
     //////////////////////////////////////////////
+
+    public focusPrev() {
+        let prevUio = this.getPrevUio();
+        if (prevUio != null) {
+            prevUio.focus();
+        }
+    }
+
+    public focusNext() {
+        let nextUio = this.getNextUio();
+        if (nextUio != null) {
+            nextUio.focus();
+        }
+    }
 
     public jumpBackward() {
         let currentUio: UserInterfaceObject = this;

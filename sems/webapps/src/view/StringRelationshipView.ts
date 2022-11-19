@@ -39,13 +39,6 @@ export class StringRelationshipView {
         stringRelationshipView.uio.eventController.on(EventTypes.SCALE_DOWN, function() {
             stringRelationshipView.scaleDown();
         });
-        stringRelationshipView.uio.eventController.on(EventTypes.FOCUS_NEXT, function() {
-            if (!stringRelationshipView.headBody.isCollapsed()) {
-                stringRelationshipView.object_UserInterfaceObject.focus();
-            } else {
-                stringRelationshipView.uio.eventController.triggerEvent(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, null);
-            }
-        });
         stringRelationshipView.uio.eventController.on(EventTypes.FOCUS, function() {
             stringRelationshipView.focus();
         });
@@ -136,12 +129,6 @@ export class StringRelationshipView {
         this.object_UserInterfaceObject = View.createFromSemsAddress(semsAddress, null);
         this.object_UserInterfaceObject.viewContext = this.uio;
         let self = this;
-        this.object_UserInterfaceObject.eventController.on(EventTypes.FOCUS_PREV, function() {
-            self.focus();
-        });
-        this.object_UserInterfaceObject.eventController.on(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, function() {
-            self.uio.eventController.triggerEvent(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, null);
-        });
         this.object_UserInterfaceObject.eventController.on(EventTypes.GO_TO_END_OF_LIST_vc, function() {
             self.uio.eventController.triggerEvent(EventTypes.GO_TO_END_OF_LIST_vc, null);
         });

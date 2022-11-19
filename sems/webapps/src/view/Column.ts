@@ -76,12 +76,6 @@ export class Column {
             }
             App.focusedUIO.eventController.triggerEvent(EventTypes.CURSOR_HINT, null);
         });
-        column.userInterfaceObject.getEventController().addObserver(EventTypes.FOCUS_PREV, function() {
-            column.getPreviousColumn().takeCursorFromBottom();
-        });
-        column.userInterfaceObject.getEventController().addObserver(EventTypes.FOCUS_NEXT, function() {
-            column.getNextColumn().focusColumnOrFirstObject();
-        });
         column.userInterfaceObject.getEventController().addObserver(EventTypes.OPEN_OVERVIEW, function() {
             column.insertOverview();
         });
@@ -189,8 +183,6 @@ export class Column {
         userInterfaceObject.onDeleteEvent = this.getOnDeleteEventFunction(userInterfaceObject);
         userInterfaceObject.onEnterEvent = this.getOnEnterEventFunction(userInterfaceObject);
         userInterfaceObject.onPasteNextEvent = this.getOnPasteNextEventFunction(userInterfaceObject);
-        userInterfaceObject.getEventController().on(EventTypes.FOCUS_PREV, this.getOnFocusPrevEventFunction(userInterfaceObject));
-        userInterfaceObject.getEventController().on(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, this.getOnFocusNextEventFunction(userInterfaceObject));
         let self = this;
         userInterfaceObject.getEventController().on(EventTypes.GO_TO_END_OF_LIST_vc, function() {
             if (!List.isLastElement(self.listOfUIOs, userInterfaceObject)) {
@@ -280,30 +272,6 @@ export class Column {
             let uio : UserInterfaceObject = self.createListUserInterfaceObject(App.clipboard);
             self.insertUserInterfaceObjectAtPosition(uio, indexOfUIO + 1);
             uio.focus();
-        };
-    }
-
-    private getOnFocusPrevEventFunction(uio : UserInterfaceObject) {
-        let self = this;
-        return function () {
-            let index = self.listOfUIOs.indexOf(uio);
-            if (index > 0) {
-                self.listOfUIOs[index - 1].takeCursorFromBottom();
-            } else {
-                self.getPreviousColumn().takeCursorFromBottom();
-            }
-        };
-    }
-
-    private getOnFocusNextEventFunction(uio : UserInterfaceObject) {
-        let self = this;
-        return function () {
-            let index = self.listOfUIOs.indexOf(uio);
-            if (index + 1 < self.listOfUIOs.length) {
-                self.listOfUIOs[index + 1].focus();
-            } else {
-                self.getNextColumn().takeCursorFromTop();
-            }
         };
     }
 

@@ -109,9 +109,6 @@ export class TextObjectViewController {
         userInterfaceObject.eventController.addObserver(EventTypes.FOCUS_NEXT_COLUMN, function() {
             textObjectViewController.focusNextColumn();
         });
-        userInterfaceObject.eventController.addObserver(EventTypes.FOCUS_NEXT, function() {
-            textObjectViewController.focusNext();
-        });
         userInterfaceObject.eventController.addObserver(EventTypes.FOCUS_NEXT_WORD, function() {
             textObjectViewController.focusNextWord();
         });
@@ -506,20 +503,6 @@ export class TextObjectViewController {
     public moveTopLevelObject_backward() {
         let column : Column = this.getColumn();
         column.viewMoveBackward(this.getTopLevelObject());
-    }
-
-    public focusNext() {
-        if (this.isCollapsed()) {
-            this.getEventController().triggerEvent(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, null);
-        } else {
-            if (this.context.showContextAsSubitem()) {
-                this.context.focusContextAsSubitem();
-            } else if (this.detailsView.hasContent()) {
-                this.detailsView.takeFocusFromTop();
-            } else {
-                this.getEventController().triggerEvent(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, null);
-            }
-        }
     }
 
     public getListOfChildUios() : Array<UserInterfaceObject> {
