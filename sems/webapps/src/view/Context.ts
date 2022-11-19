@@ -198,4 +198,9 @@ export class Context {
     public contextAsSubitem_takeFocusFromBottom() {
         this.contextAsSubitem.takeFocusFromBottom();
     }
+
+    // note: this returns the UIO of the StringRelationshipView!
+    public getUioOfContextAsSubitem() {
+        return this.contextAsSubitem.getUserInterfaceObject();
+    }
 }

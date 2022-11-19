@@ -238,4 +238,12 @@ export class StringRelationshipView {
             }
         }
     }
+
+    public getListOfChildUios() : Array<UserInterfaceObject> {
+        if (this.headBody.isCollapsed()) {
+            return [];
+        } else {
+            return [this.object_UserInterfaceObject];
+        }
+    }
 }

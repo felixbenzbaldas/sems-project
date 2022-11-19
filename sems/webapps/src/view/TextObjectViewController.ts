@@ -526,7 +526,12 @@ export class TextObjectViewController {
         if (this.isCollapsed()) {
             return [];
         } else {
-            return this.getListOfDetailUio(); // XXX context
+            let children : Array<UserInterfaceObject> = [];
+            if (this.context.showContextAsSubitem()) {
+                children.push(this.context.getUioOfContextAsSubitem());
+            }
+            children = children.concat(this.detailsView.getListOfDetailUios());
+            return children;
         }
     }
 

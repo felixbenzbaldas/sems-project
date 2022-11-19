@@ -161,6 +161,7 @@ export class SemsText {
                                 List.deleteInListAtPosition(self.listOfWords, indexOfWord - 1);
                                 Html.remove(prevWord.input);
                                 ev.preventDefault();
+                                self.adaptWidth(semsWord.input);
                             }
 
                         }

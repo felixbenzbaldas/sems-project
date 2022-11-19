@@ -147,7 +147,6 @@ export class HeadText {
     }
 
     public update() {
-        console.log("HeadText update");
         this.updateText();
         this.updateTextColor();
         this.updateOnClick();

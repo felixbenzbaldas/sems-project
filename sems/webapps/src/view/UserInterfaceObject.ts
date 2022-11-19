@@ -143,6 +143,8 @@ export class UserInterfaceObject {
             return this.tovcOpt.getListOfChildUios();
         } else if (this.columnOpt != null) {
             return this.columnOpt.getListOfChildUios();
+        } else if (this.stringRelationshipView_opt != null) {
+            return this.stringRelationshipView_opt.getListOfChildUios();
         }
         return [];
     }
