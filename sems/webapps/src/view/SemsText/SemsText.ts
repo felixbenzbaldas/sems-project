@@ -35,6 +35,7 @@ export class SemsText {
     }
 
     public setText(text : string) {
+        let wasFocused : boolean = this.hasFocus();
         Html.removeAllChildren(this.uiElement);
         this.listOfWords = [];
         this.lastFocusedWord = null;
@@ -45,6 +46,9 @@ export class SemsText {
             for (let wordString of arrayOfWordStrings) {
                 this.createAndAddSemsWord(wordString);
             }
+        }
+        if (wasFocused) {
+            this.focusLastWord();
         }
     }
 
