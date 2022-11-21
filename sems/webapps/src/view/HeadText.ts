@@ -15,70 +15,43 @@ export class HeadText {
     private textObjectViewController : TextObjectViewController;
     private userInterfaceObject : UserInterfaceObject;
 
-    private semsText : SemsText;
     private dataObserver : Function;
     private props : RemotePropertiesOfSemsObject;
 
-    private div_pres_mode = document.createElement("div");
+    private span : HTMLSpanElement = document.createElement('span');
+    private uiElement : HTMLDivElement = document.createElement('div');
 
     static create(textObjectViewController : TextObjectViewController) : HeadText {
         let ht = new HeadText();
         ht.textObjectViewController = textObjectViewController;
         ht.userInterfaceObject = textObjectViewController.getUserInterfaceObject();
         ht.props = App.objProperties.getPropertiesOfObject(ht.getSemsAddress());
-        if (App.LOCAL_MODE) {
-            ht.initialize_localMode();
-        } else {
-            ht.div_pres_mode.innerHTML = ht.props.get(TEXT);
-            ht.div_pres_mode.style.fontFamily = App.fontFamily;
-            ht.div_pres_mode.style.fontSize = App.fontSize;
-            ht.div_pres_mode.style.color = App.fontColor;
-            ht.updateOnClick();
-            ht.updateOnContextmenu();
-            ht.updateUnderline();
-            ht.userInterfaceObject.getEventController().addObserver(EventTypes.CHANGED, function() {
-                ht.updateUnderline();
-            });
-        }
+        ht.initialize();
         return ht;
     }
 
     public getUiElement() : HTMLElement {
-        if (App.LOCAL_MODE) {
-            return this.semsText.getUiElement();
-        } else {
-            return this.div_pres_mode;
-        }
+        return this.uiElement;
     }
 
     public focus() {
-        this.semsText.focusLastFocused();
+        this.span.focus();
     }
 
-    private initialize_localMode() {
-        this.semsText = new SemsText(App.widthCalculationSpan);
+    private initialize() {
         this.update();
         let self = this;
-        this.semsText.onBlur = function () {
+        this.span.onblur = function () {
             self.updateTextProperty();
             self.textObjectViewController.adaptStyleForKeyMode();
         };
-        this.semsText.onFocus = function () {
+        this.span.onfocus = function () {
             App.deleteManualFocusAndFocusedUIO();
             App.focusedUIO = self.userInterfaceObject;
             self.textObjectViewController.adaptStyleForKeyMode();
             self.userInterfaceObject.lastFocusedSubitem = null;
             self.userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUSED, null);
         };
-        this.semsText.on_FocusPrevWord = function() {
-            self.userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUS_PREV_WORD, null);
-        };
-        this.semsText.on_FocusNextWord = function() {
-            self.userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUS_NEXT_WORD, null);
-        };
-        this.semsText.on_delete = function() {
-            self.userInterfaceObject.eventController.triggerEvent(EventTypes.DELETE, null);
-        }
         this.dataObserver = function (property : string) {
             if (General.primEquals(property, TEXT)) {
                 self.updateText();
@@ -94,12 +67,6 @@ export class HeadText {
         this.userInterfaceObject.getEventController().addObserver(EventTypes.DELETED, function() {
             self.delete();
         });
-        // this.anchorElement.oncontextmenu = function(ev : MouseEvent) {
-        //     if (!ev.ctrlKey) {
-        //         ev.preventDefault();
-        //         self.userInterfaceObject.scaleUp();
-        //     }
-        // }
         // paste unformatted
         // this.anchorElement.addEventListener("paste", function(ev : any) {
         //     ev.preventDefault();
@@ -109,31 +76,31 @@ export class HeadText {
         //
         let keyActionsMap = KeyActionDefinition.createKeyActions_TextObject(this.textObjectViewController);
         let keyActionsMap_normalMode = KeyActionDefinition.createKeyActions_TextObject_normalMode(this.textObjectViewController);
-        this.semsText.addKeyEventListener(function(keyEvent : KeyEvent) {
-            let compareString = keyEvent.createCompareString();
-            if (keyActionsMap.has(compareString)) {
-                keyEvent.preventDefault();
-                keyActionsMap.get(compareString)();
-            }
-            if (App.keyMap.has(compareString)) {
-                keyEvent.preventDefault();
-                self.userInterfaceObject.eventController.triggerEvent(App.keyMap.get(compareString), null);
-            }
-            if (App.keyMode == KeyMode.NORMAL) {
-                if (keyActionsMap_normalMode.has(compareString)) {
-                    keyEvent.preventDefault();
-                    keyActionsMap_normalMode.get(compareString)();
-                }
-                if (App.keyMap_normalMode.has(compareString)) {
-                    keyEvent.preventDefault();
-                    self.userInterfaceObject.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
-                }
-            }
-        });
-        this.semsText.getUiElement().onmousedown = function(ev : MouseEvent) {
+        // this.semsText.addKeyEventListener(function(keyEvent : KeyEvent) {
+        //     let compareString = keyEvent.createCompareString();
+        //     if (keyActionsMap.has(compareString)) {
+        //         keyEvent.preventDefault();
+        //         keyActionsMap.get(compareString)();
+        //     }
+        //     if (App.keyMap.has(compareString)) {
+        //         keyEvent.preventDefault();
+        //         self.userInterfaceObject.eventController.triggerEvent(App.keyMap.get(compareString), null);
+        //     }
+        //     if (App.keyMode == KeyMode.NORMAL) {
+        //         if (keyActionsMap_normalMode.has(compareString)) {
+        //             keyEvent.preventDefault();
+        //             keyActionsMap_normalMode.get(compareString)();
+        //         }
+        //         if (App.keyMap_normalMode.has(compareString)) {
+        //             keyEvent.preventDefault();
+        //             self.userInterfaceObject.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
+        //         }
+        //     }
+        // });
+        this.uiElement.onmousedown = function(ev : MouseEvent) {
             if (!ev.ctrlKey) {
                 ev.preventDefault();
-                self.semsText.focusLastFocused();
+                self.focus();
             }
         }
     }
@@ -163,22 +130,22 @@ export class HeadText {
     }
 
     private updateText() {
-        if (!General.primEquals(this.semsText.getText(), this.getProps().get(TEXT))) {
-            this.semsText.setText(this.getProps().get(TEXT));
-        } else if (this.semsText.getText() == null) {
-            this.semsText.setText("");
+        if (!General.primEquals(this.getTextOfUiElement(), this.getProps().get(TEXT))) {
+            this.setTextOfUiElement(this.getProps().get(TEXT));
+        } else if (this.getTextOfUiElement() == null) {
+            this.setTextOfUiElement("");
         }
     }
 
     public updateTextColor() {
-        this.semsText.setHomogenousStyleForText("color", this.getTextColor());
+        this.span.style.color = this.getTextColor();
     }
 
     private getTextColor() : string {
         if (this.getProps().get(IS_PRIVATE)) {
             return "red";
         } else {
-            if (App.keyMode == KeyMode.NORMAL && this.semsText.hasFocus()) {
+            if (App.keyMode == KeyMode.NORMAL && this.span.hasFocus()) {
                 return App.colorForFocusedObjInNormalMode;
             } else {
                 if (App.LOCAL_MODE) {
@@ -217,23 +184,11 @@ export class HeadText {
             };
         } else {
             this.getUiElement().onclick = function(ev) {
-                if (App.LOCAL_MODE) {
-                    if (!self.semsText.hasFocus()) {
-                        self.semsText.focusLastWord();
-                    }
-                } else {
-                    if (ev.ctrlKey) {
-                        self.showHref();
-                    }
+                if (!self.semsText.hasFocus()) {
+                    self.semsText.focusLastWord();
                 }
             }
         }
-    }
-
-    private showHref() {
-        let semsAddress : string = this.getSemsAddress();
-        let href = "http://www.demoDomain.de/?id=" + semsAddress;
-        alert("Link auf dieses Element: " + href);
     }
 
     private updateOnContextmenu() {
@@ -307,5 +262,13 @@ export class HeadText {
 
     public cursorHint() {
         this.semsText.cursorHint();
+    }
+
+    public getTextOfUiElement() : string {
+        return this.uiElement.innerText;
+    }
+
+    public setTextOfUiElement(text : string) {
+        this.uiElement.innerText = text;
     }
 }

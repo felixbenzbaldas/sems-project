@@ -11,6 +11,7 @@ import { EventController } from "../general/EventController";
 import { General } from "../general/General";
 import { Html } from "../general/Html";
 import { SemsServer } from "../SemsServer";
+import { func } from "../test/hamjest/hamjest";
 import { Column } from "./Column";
 import { ColumnManager } from "./ColumnManager";
 import { Context } from "./Context";
@@ -618,10 +619,17 @@ export class TextObjectViewController {
         if (this.isCollapsed()) {
             throw 'uio must be expanded!';
         }
-        let textArea : HTMLTextAreaElement = document.createElement("textarea");
-        Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
+        // let textArea : HTMLTextAreaElement = document.createElement("textarea");
+        // Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
+        // this.headText.updateTextProperty();
+        // textArea.value = Export.getRawTextOfTree(this, 0);
+        let span : HTMLSpanElement = document.createElement('span');
+        Html.insertChildAtPosition(this.headBody.getBody(), span, 0);
         this.headText.updateTextProperty();
-        textArea.value = Export.getRawTextOfTree(this, 0);
+        span.innerText = Export.getRawTextOfTree(this, 0);
+        span.style.backgroundColor = "gold";
+        span.contentEditable = "true";
+        span.style.whiteSpace = "pre-wrap";
     }
 
     public export_fourDays_safe_html() {

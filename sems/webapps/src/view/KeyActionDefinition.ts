@@ -142,11 +142,6 @@ export class KeyActionDefinition {
         let map = new MapWithPrimitiveStringsAsKey();
         if (App.LOCAL_MODE) {
             KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-                keyEvent.key = "Escape";
-                }, function() {
-                    App.switchKeyMode();
-            });
-            KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
                 keyEvent.ctrl = true;
                 keyEvent.key = "s";
                 }, function() {

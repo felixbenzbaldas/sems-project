@@ -227,34 +227,6 @@ export class App {
         ColumnManager.init();
         document.body.appendChild(ColumnManager.uiElement);
         //
-        this.keyModeShadowDiv_bottom = document.createElement("div");
-        document.body.appendChild(this.keyModeShadowDiv_bottom);
-        this.keyModeShadowDiv_bottom.style.position = "fixed";
-        this.keyModeShadowDiv_bottom.style.bottom = "0";
-        this.keyModeShadowDiv_bottom.style.width = "100%";
-
-        this.keyModeShadowDiv_left = document.createElement("div");
-        document.body.appendChild(this.keyModeShadowDiv_left);
-        this.keyModeShadowDiv_left.style.position = "fixed";
-        this.keyModeShadowDiv_left.style.left = "0";
-        this.keyModeShadowDiv_left.style.top = "0";
-        this.keyModeShadowDiv_left.style.height = "100%";
-
-        this.keyModeShadowDiv_right = document.createElement("div");
-        document.body.appendChild(this.keyModeShadowDiv_right);
-        this.keyModeShadowDiv_right.style.position = "fixed";
-        this.keyModeShadowDiv_right.style.right = "0";
-        this.keyModeShadowDiv_right.style.top = "0";
-        this.keyModeShadowDiv_right.style.height = "100%";
-
-        this.keyModeShadowDiv_top = document.createElement("div");
-        document.body.appendChild(this.keyModeShadowDiv_top);
-        this.keyModeShadowDiv_top.style.position = "fixed";
-        this.keyModeShadowDiv_top.style.top = "0";
-        this.keyModeShadowDiv_top.style.width = "100%";
-        
-        this.adaptStyleForKeyMode();
-        //
         setTimeout(function() {
             ColumnManager.columns[0].focusColumnOrFirstObject();
         }, 50);
@@ -367,28 +339,4 @@ export class App {
         App.onlyOneColumn = ColumnManager.getNumberOfColumnsByWindowWidth_presMode() == 1;
     }
 
-    public static switchKeyMode() {
-        this.keyMode = (this.keyMode + 1) % 2;
-        this.adaptStyleForKeyMode();
-    }
-
-    
-    public static adaptStyleForKeyMode() {
-        if (this.keyMode == KeyMode.INSERTION) {
-            this.keyModeShadowDiv_bottom.style.boxShadow = "0rem 0rem 1.2rem 0.7rem green";
-            this.keyModeShadowDiv_left.style.boxShadow = "0rem 0rem 0.3rem 0.15rem green";
-            this.keyModeShadowDiv_right.style.boxShadow = "0rem 0rem 0.6rem 0.35rem green";
-            this.keyModeShadowDiv_top.style.boxShadow = "0rem 0rem 0.3rem 0.15rem green";
-        } else {
-            this.keyModeShadowDiv_bottom.style.boxShadow = "none";
-            this.keyModeShadowDiv_left.style.boxShadow = "none";
-            this.keyModeShadowDiv_right.style.boxShadow = "none";
-            this.keyModeShadowDiv_top.style.boxShadow = "none";
-        }
-        if (this.focusedUIO != null) {
-            if (this.focusedUIO.tovcOpt != null) {
-                this.focusedUIO.tovcOpt.adaptStyleForKeyMode();
-            }
-        }
-    }
 }
