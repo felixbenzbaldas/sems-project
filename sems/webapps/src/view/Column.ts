@@ -447,10 +447,6 @@ export class Column {
         this.keyController.triggerKeyDown(ev);
     }
 
-    public triggerKeyUp(ev: KeyboardEvent) {
-        this.keyController.triggerKeyUp(ev);
-    }
-
     public getContentHeight() : number {
         let contentHeight : number = 0;
         for (let uio of this.listOfUIOs) {

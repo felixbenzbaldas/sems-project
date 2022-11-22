@@ -3,11 +3,7 @@ import { DEFAULT_EXPANDED, IS_PRIVATE, TEXT } from "../Consts";
 import { RemotePropertiesOfSemsObject } from "../data/RemotePropertiesOfSemsObject";
 import { EventTypes } from "../EventTypes";
 import { General } from "../general/General";
-import { KeyEvent } from "../general/KeyEvent";
-import { SemsServer } from "../SemsServer";
 import { KeyActionDefinition } from "./KeyActionDefinition";
-import { KeyMode } from "./KeyMode";
-import { SemsText } from "./SemsText/SemsText";
 import { TextObjectViewController } from "./TextObjectViewController";
 import { UserInterfaceObject } from "./UserInterfaceObject";
 
@@ -145,17 +141,12 @@ export class HeadText {
         if (this.getProps().get(IS_PRIVATE)) {
             return "red";
         } else {
-            if (App.keyMode == KeyMode.NORMAL && this.span.hasFocus()) {
-                return App.colorForFocusedObjInNormalMode;
+            if (!this.userInterfaceObject.semsAddress.startsWith("1-")) {
+                return "green";
             } else {
-                if (App.LOCAL_MODE) {
-                    if (!this.userInterfaceObject.semsAddress.startsWith("1-")) {
-                        return "green";
-                    }
-                }
+                return App.fontColor;
             }
         }
-        return App.fontColor;
     }
 
     private updateOnClick() {
@@ -163,18 +154,12 @@ export class HeadText {
         if (this.clickable()) {
             this.getUiElement().onclick = function (ev) {
                 if (ev.ctrlKey) {
-                    if (App.LOCAL_MODE) {
-                        if (!self.semsText.hasFocus()) {
-                            self.semsText.focusLastWord();
-                        }
-                    } else {
-                        self.showHref();
+                    if (!self.hasFocus()) {
+                        self.focus();
                     }
                 } else {
                     ev.preventDefault();
-                    if (App.LOCAL_MODE) {
-                        self.semsText.focusLastFocused();
-                    }
+                    self.focus();
                     if (self.textObjectViewController.isCollapsed()) {
                         self.textObjectViewController.expandIfCollapsedAndBodyIsAvailable();
                     } else {
@@ -184,8 +169,8 @@ export class HeadText {
             };
         } else {
             this.getUiElement().onclick = function(ev) {
-                if (!self.semsText.hasFocus()) {
-                    self.semsText.focusLastWord();
+                if (!self.hasFocus()) {
+                    self.focus();
                 }
             }
         }
@@ -236,11 +221,7 @@ export class HeadText {
     }
 
     private setStyleForText(property : string, value : string) {
-        if (App.LOCAL_MODE) {
-            this.semsText.setHomogenousStyleForText(property, value);
-        } else {
-            this.div_pres_mode.style.setProperty(property, value);
-        }
+        this.span.style.setProperty(property, value);
     }
 
     private delete() {
@@ -252,16 +233,12 @@ export class HeadText {
     }
 
     public updateTextProperty() {
-        this.getProps().set(TEXT, this.semsText.getText());
+        this.getProps().set(TEXT, this.getTextOfUiElement());
         this.userInterfaceObject.getEventController().triggerEvent(EventTypes.CHANGED, null);
     }
 
-    public getSemsText() : SemsText {
-        return this.semsText;
-    }
-
     public cursorHint() {
-        this.semsText.cursorHint();
+        // TODO
     }
 
     public getTextOfUiElement() : string {
@@ -270,5 +247,9 @@ export class HeadText {
 
     public setTextOfUiElement(text : string) {
         this.uiElement.innerText = text;
+    }
+
+    public hasFocus() : boolean {
+        return document.activeElement == this.span;
     }
 }

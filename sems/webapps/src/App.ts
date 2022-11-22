@@ -10,14 +10,13 @@ import { MapWithPrimitiveStringsAsKey } from "./general/MapWithPrimitiveStringsA
 import { TestApp } from "./test/TestApp";
 import { Column } from "./view/Column";
 import { ColumnManager } from "./view/ColumnManager";
-import { KeyMode as KeyMode } from "./view/KeyMode";
 import { KeyActionDefinition } from "./view/KeyActionDefinition";
 import { KeyEventDefinition } from "./view/KeyEventDefinition";
 import { UserInterfaceObject } from "./view/UserInterfaceObject";
 import { View } from "./view/View";
 
 export class App {
-    static version = 15;
+    static version = 17;
 
     static LOCAL_MODE : boolean = true;
     static EN_VERSION : boolean = false;
@@ -25,8 +24,6 @@ export class App {
     static log : boolean;
     static ABOUT_OBJ : string;
     static CONTENT_OBJ : string;
-
-    static keyMode : KeyMode = KeyMode.NORMAL;
 
     // assert: an object in clipboad is loaded
     static clipboard : string;
@@ -72,6 +69,8 @@ export class App {
     static fcDomain = "demoDomain.de";
 
     static onlyOneColumn : boolean;
+
+    static whitespaceIsDown : boolean = false;
 
     static keyModeShadowDiv_top : HTMLDivElement;
     static keyModeShadowDiv_bottom : HTMLDivElement;
@@ -151,32 +150,35 @@ export class App {
         App.globalKeyActions = KeyActionDefinition.createKeyActions_Global();
         window.onkeydown = function(ev: KeyboardEvent) {
             App.globalKeyDown(ev);
-            if (ev.target == document.body) {
-                App.manualFocus.triggerKeyDown(ev);
-            }
-            // avoid surprising scrolling
-            if (ev.key == " ") {
-                ev.preventDefault();
-            }
         };
         window.onkeyup = function(ev: KeyboardEvent) {
             App.globalKeyUp(ev);
-            if (ev.target == document.body) {
-                App.manualFocus.triggerKeyUp(ev);
-            }
         };
     }
 
     private static globalKeyDown(ev: KeyboardEvent) {
+        if (ev.key == " ") {
+            App.whitespaceIsDown = true;
+        }
         let keyEvent = KeyEvent.createFromKeyboardEvent(ev);
         let compareString = keyEvent.createCompareString();
         if (App.globalKeyActions.has(compareString)) {
             ev.preventDefault();
             App.globalKeyActions.get(compareString)();
         }
+        if (ev.target == document.body) {
+            App.manualFocus.triggerKeyDown(ev);
+            // avoid surprising scrolling
+            if (ev.key == " ") {
+                ev.preventDefault();
+            }
+        }
     }
 
     private static globalKeyUp(ev: KeyboardEvent) {
+        if (ev.key == " ") {
+            App.whitespaceIsDown = false;
+        }
         let keyEvent = KeyEvent.createFromKeyboardEvent(ev);
         let compareString = keyEvent.createCompareString();
         if (App.globalKeyActions.has(compareString)) {

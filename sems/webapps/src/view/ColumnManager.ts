@@ -6,7 +6,6 @@ import { Html } from "../general/Html";
 import { List } from "../general/List";
 import { SemsServer } from "../SemsServer";
 import { Column } from "./Column";
-import { KeyMode } from "./KeyMode";
 
 export class ColumnManager {
     public static uiElement : HTMLElement;

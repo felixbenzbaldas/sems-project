@@ -11,14 +11,12 @@ import { EventController } from "../general/EventController";
 import { General } from "../general/General";
 import { Html } from "../general/Html";
 import { SemsServer } from "../SemsServer";
-import { func } from "../test/hamjest/hamjest";
 import { Column } from "./Column";
 import { ColumnManager } from "./ColumnManager";
 import { Context } from "./Context";
 import { DetailsView } from "./DetailsView";
 import { Export } from "./Export";
 import { HeadText } from "./HeadText";
-import { KeyMode } from "./KeyMode";
 import { UserInterfaceObject } from "./UserInterfaceObject";
 import { View } from "./View";
 
@@ -190,20 +188,6 @@ export class TextObjectViewController {
             } else {
                 userInterfaceObject.lastFocusedSubitem.eventController.triggerEvent(EventTypes.FOCUS_LAST_FOCUSED, null);
             }
-        });
-        userInterfaceObject.getEventController().addObserver(EventTypes.FOCUS_LAST_WORD, function() {
-            if (textObjectViewController.isCollapsed()) {
-                textObjectViewController.headText.getSemsText().focusLastWord();
-            } else {
-                if (textObjectViewController.detailsView.hasContent()) {
-                    textObjectViewController.detailsView.focusLastWord();
-                } else {
-                    textObjectViewController.headText.getSemsText().focusLastWord();
-                }
-            }
-        });
-        userInterfaceObject.getEventController().addObserver(EventTypes.FOCUS_FIRST_WORD, function() {
-            textObjectViewController.headText.getSemsText().focusFirstWord();
         });
         userInterfaceObject.getEventController().addObserver(EventTypes.FOCUS_VIEW_CONTEXT, function() {
             userInterfaceObject.viewContext.focus();
@@ -662,7 +646,7 @@ export class TextObjectViewController {
             }
         }
         let newHoursBox : string = '[' + hours.toString().replace('.', ',') + ']';
-        let textBefore : string = this.headText.getSemsText().getText();
+        let textBefore : string = this.headText.getTextOfUiElement();
         let newText : string;
         let boxRegex = /\[.*\]/;
         if (textBefore.match(boxRegex)) {
@@ -670,7 +654,7 @@ export class TextObjectViewController {
         } else {
             newText = textBefore + ' ' + newHoursBox;
         }
-        let wasFocused : boolean = this.headText.getSemsText().hasFocus();
+        let wasFocused : boolean = this.headText.hasFocus();
         this.props.set(TEXT, newText);
         if (wasFocused) {
             this.focus();

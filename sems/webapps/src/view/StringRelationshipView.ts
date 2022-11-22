@@ -175,10 +175,6 @@ export class StringRelationshipView {
         
     }
 
-    public triggerKeyUp(ev: KeyboardEvent) {
-        this.keyController.triggerKeyUp(ev);
-    }
-
     
     private getTopLevelObject() : UserInterfaceObject {
         return this.uio.getTopLevelObject();

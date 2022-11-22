@@ -1,9 +1,6 @@
 import { App } from "../App";
-import { EventTypes } from "../EventTypes";
 import { KeyEvent } from "../general/KeyEvent";
 import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStringsAsKey";
-import { KeyMode } from "./KeyMode";
-import { WhiteSpaceHandler } from "./SemsText/WhiteSpaceHandler";
 import { UserInterfaceObject } from "./UserInterfaceObject";
 
 // Wird für Komponenten mit manuellem Fokus verwendet.
@@ -15,39 +12,6 @@ export class KeyController {
 
     private keyActions : MapWithPrimitiveStringsAsKey = new MapWithPrimitiveStringsAsKey();
     private uio : UserInterfaceObject;
-
-    private whiteSpaceHandler : WhiteSpaceHandler = new WhiteSpaceHandler();
-
-    private keyDownFunction : Function;
-    private keyUpFunction : Function;
-
-    constructor() {
-        this.createKeyFunctions();
-        let self = this;
-        this.whiteSpaceHandler.on_keyDownAndUpDuringWhiteSpaceDown = function(key : string) {
-            let keyEvent : KeyEvent = new KeyEvent();
-            keyEvent.sk = true;
-            keyEvent.key = key;
-            self.triggerKeyEvent(keyEvent);
-        };
-    }
-
-    private setHtmlElement(htmlElement) {
-        htmlElement.addEventListener("keydown", this.keyDownFunction);
-        htmlElement.addEventListener("keyup", this.keyUpFunction);
-    }
-
-    private createKeyFunctions() {
-        let self = this;
-        this.keyDownFunction = function(ev: KeyboardEvent) {
-            let keyEvent = KeyEvent.createFromKeyboardEvent(ev);
-            self.triggerKeyEvent(keyEvent);
-            self.whiteSpaceHandler.keyDown(ev.key);
-        };
-        this.keyUpFunction = function(ev: KeyboardEvent) {
-            self.whiteSpaceHandler.keyUp(ev.key);
-        };
-    }
 
     public setKeyAction(keyEvent : string, action : Function) {
         this.keyActions.set(keyEvent, action);
@@ -64,11 +28,7 @@ export class KeyController {
     }
 
     public triggerKeyDown(ev: KeyboardEvent) {
-        this.keyDownFunction(ev);
-    }
-
-    public triggerKeyUp(ev: KeyboardEvent) {
-        this.keyUpFunction(ev);
+        this.triggerKeyEvent(KeyEvent.createFromKeyboardEvent(ev));
     }
 
     private triggerKeyEvent(keyEvent : KeyEvent) {
@@ -81,11 +41,9 @@ export class KeyController {
                 keyEvent.preventDefault();
                 this.uio.eventController.triggerEvent(App.keyMap.get(compareString), null);
             }
-            if (App.keyMode == KeyMode.NORMAL) {
-                if (App.keyMap_normalMode.has(compareString)) {
-                    keyEvent.preventDefault();
-                    this.uio.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
-                }
+            if (App.keyMap_normalMode.has(compareString)) {
+                keyEvent.preventDefault();
+                this.uio.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
             }
         }
     }

@@ -151,7 +151,7 @@ export class DetailsView {
             if (indexOfDetail > 0) {
                 self.detailUserInterfaceObjects[indexOfDetail - 1].eventController.triggerEvent(EventTypes.FOCUS_LAST_WORD, null);
             } else {
-                self.textObjectViewController.headText.getSemsText().focusLastWord();
+                self.textObjectViewController.headText.focus();
             }
         };
     }

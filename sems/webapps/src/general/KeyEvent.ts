@@ -1,3 +1,5 @@
+import { App } from "../App";
+
 export const KeyEventDelimiter = "+";
 
 
@@ -48,6 +50,7 @@ export class KeyEvent {
         keyEvent.ctrl = ev.ctrlKey;
         keyEvent.shift = ev.shiftKey;
         keyEvent.alt = ev.altKey;
+        keyEvent.sk = App.whitespaceIsDown;
         keyEvent.key = ev.key;
         keyEvent.keyboardEvent = ev;
         return keyEvent;

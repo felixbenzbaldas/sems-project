@@ -4,7 +4,6 @@ import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStrings
 import { SemsServer } from "../SemsServer";
 import { Textgeneration } from "../semsWeb/Textgeneration";
 import { ColumnManager } from "./ColumnManager";
-import { KeyMode } from "./KeyMode";
 import { TextObjectViewController } from "./TextObjectViewController";
 import { UserInterfaceObject } from "./UserInterfaceObject";
 
@@ -78,18 +77,12 @@ export class KeyActionDefinition {
             }, function() {
                 textObjectViewController.openObject();
         });
-
-        
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
             keyEvent.key = "s";
             }, function() {
                 textObjectViewController.search();
         });
-
-
-
-
         // SCROLL_BACKWARDS
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
