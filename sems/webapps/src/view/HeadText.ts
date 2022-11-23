@@ -34,23 +34,34 @@ export class HeadText {
         this.span.focus();
     }
 
+    public setFocusedStyle() {
+        this.uiElement.style.borderColor = "orange";
+    }
+
+    public setNotFocusedStyle() {
+        this.uiElement.style.borderColor = App.backgroundColor;
+    }
+
     private initialize() {
         this.update();
         let self = this;
         this.uiElement.appendChild(this.span);
+        this.span.style.minHeight = "1rem";
         this.uiElement.style.minHeight = "1rem";
         let borderWidth = "0.1rem";
         this.uiElement.style.border = "solid";
         this.uiElement.style.borderWidth = borderWidth;
         this.uiElement.style.padding = "-" + borderWidth;
+        this.setNotFocusedStyle();
+        this.span.contentEditable = "true";
         this.span.onblur = function () {
+            self.setNotFocusedStyle();
             self.updateTextProperty();
-            self.textObjectViewController.adaptStyleForKeyMode();
         };
         this.span.onfocus = function () {
+            self.setFocusedStyle();
             App.deleteManualFocusAndFocusedUIO();
             App.focusedUIO = self.userInterfaceObject;
-            self.textObjectViewController.adaptStyleForKeyMode();
             self.userInterfaceObject.lastFocusedSubitem = null;
             self.userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUSED, null);
         };

@@ -55,7 +55,6 @@ export class TextObjectViewController {
         textObjectViewController.headBody.getHead().appendChild(textObjectViewController.context.getUiElementOfContextIcon());
         textObjectViewController.headBody.getHead().appendChild(textObjectViewController.headText.getUiElement());
         //
-        textObjectViewController.adaptStyleForKeyMode();
         if (userInterfaceObject.props.get(DEFAULT_EXPANDED)) {
             if (View.hasSuperiorInDefaultExpandedChain(userInterfaceObject, userInterfaceObject.getSemsAddress())) {
                 textObjectViewController.headBody.getHead().innerHTML = "[[DUPLICATE]] " + userInterfaceObject.props.get(TEXT);
@@ -665,10 +664,6 @@ export class TextObjectViewController {
         if (this.getText().match(/^(Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag|fplan)/)) {
             this.countPlannedTime();
         }
-    }
-
-    public adaptStyleForKeyMode() {
-        this.headText.updateTextColor();
     }
 
     public search() {
