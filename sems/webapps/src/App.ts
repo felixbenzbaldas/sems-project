@@ -72,11 +72,6 @@ export class App {
 
     static whitespaceIsDown : boolean = false;
 
-    static keyModeShadowDiv_top : HTMLDivElement;
-    static keyModeShadowDiv_bottom : HTMLDivElement;
-    static keyModeShadowDiv_left : HTMLDivElement;
-    static keyModeShadowDiv_right : HTMLDivElement;
-
     static runApp() {
         console.log("App-v" + this.version);
         App.extractHrefEnding();
