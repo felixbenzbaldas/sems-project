@@ -14,7 +14,7 @@ export class HeadText {
     private dataObserver : Function;
     private props : RemotePropertiesOfSemsObject;
 
-    private span : HTMLSpanElement = document.createElement('span');
+    private textDiv : HTMLDivElement = document.createElement('div');
     private uiElement : HTMLDivElement = document.createElement('div');
 
     static create(textObjectViewController : TextObjectViewController) : HeadText {
@@ -31,7 +31,7 @@ export class HeadText {
     }
 
     public focus() {
-        this.span.focus();
+        this.textDiv.focus();
     }
 
     public setFocusedStyle() {
@@ -45,27 +45,28 @@ export class HeadText {
     private initialize() {
         this.update();
         let self = this;
-        this.uiElement.appendChild(this.span);
-        this.span.style.minHeight = "1rem";
+        this.uiElement.appendChild(this.textDiv);
+        this.textDiv.style.minHeight = "1rem";
         this.uiElement.style.minHeight = "1rem";
         let borderWidth = "0.1rem";
         this.uiElement.style.border = "solid";
         this.uiElement.style.borderWidth = borderWidth;
         this.uiElement.style.padding = "-" + borderWidth;
         this.setNotFocusedStyle();
-        this.span.contentEditable = "true";
-        this.span.style.outline = "0px solid transparent";
-        this.span.style.whiteSpace = "pre-wrap"; // avoid a bug in Mozilla Firefox (STR + Backspace creates weird white space)
-        this.span.onblur = function () {
+        this.textDiv.contentEditable = "true";
+        this.textDiv.style.outline = "0px solid transparent";
+        this.textDiv.style.whiteSpace = "pre-wrap"; // avoid a bug in Mozilla Firefox (STR + Backspace creates weird white space)
+        this.textDiv.onblur = function () {
             self.setNotFocusedStyle();
             self.updateTextProperty();
         };
-        this.span.onfocus = function () {
+        this.textDiv.onfocus = function () {
             self.setFocusedStyle();
             App.deleteManualFocusAndFocusedUIO();
             App.focusedUIO = self.userInterfaceObject;
             self.userInterfaceObject.lastFocusedSubitem = null;
             self.userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUSED, null);
+            self.setCaret(self.getDisplayedText().length);
         };
         this.dataObserver = function (property : string) {
             if (General.primEquals(property, TEXT)) {
@@ -153,7 +154,7 @@ export class HeadText {
     }
 
     public updateTextColor() {
-        this.span.style.color = this.getTextColor();
+        this.textDiv.style.color = this.getTextColor();
     }
 
     private getTextColor() : string {
@@ -240,7 +241,7 @@ export class HeadText {
     }
 
     private setStyleForText(property : string, value : string) {
-        this.span.style.setProperty(property, value);
+        this.textDiv.style.setProperty(property, value);
     }
 
     private delete() {
@@ -261,14 +262,23 @@ export class HeadText {
     }
 
     public getDisplayedText() : string {
-        return this.span.innerText;
+        return this.textDiv.innerText;
     }
 
     public setDisplayedText(text : string) {
-        this.span.innerText = text;
+        this.textDiv.innerText = text;
     }
 
     public hasFocus() : boolean {
-        return document.activeElement == this.span;
+        return document.activeElement == this.textDiv;
+    }
+
+    public setCaret(position : number) {
+        let range : Range = document.createRange();
+        let selection : Selection = document.getSelection();
+        range.setStart(this.textDiv.childNodes[0], position);
+        range.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(range);
     }
 }
