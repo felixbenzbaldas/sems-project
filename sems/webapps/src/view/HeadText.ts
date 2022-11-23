@@ -37,6 +37,7 @@ export class HeadText {
     private initialize() {
         this.update();
         let self = this;
+        this.uiElement.appendChild(this.span);
         this.span.onblur = function () {
             self.updateTextProperty();
             self.textObjectViewController.adaptStyleForKeyMode();
@@ -126,10 +127,10 @@ export class HeadText {
     }
 
     private updateText() {
-        if (!General.primEquals(this.getTextOfUiElement(), this.getProps().get(TEXT))) {
-            this.setTextOfUiElement(this.getProps().get(TEXT));
-        } else if (this.getTextOfUiElement() == null) {
-            this.setTextOfUiElement("");
+        if (!General.primEquals(this.getDisplayedText(), this.getProps().get(TEXT))) {
+            this.setDisplayedText(this.getProps().get(TEXT));
+        } else if (this.getDisplayedText() == null) {
+            this.setDisplayedText("");
         }
     }
 
@@ -233,7 +234,7 @@ export class HeadText {
     }
 
     public updateTextProperty() {
-        this.getProps().set(TEXT, this.getTextOfUiElement());
+        this.getProps().set(TEXT, this.getDisplayedText());
         this.userInterfaceObject.getEventController().triggerEvent(EventTypes.CHANGED, null);
     }
 
@@ -241,12 +242,12 @@ export class HeadText {
         // TODO
     }
 
-    public getTextOfUiElement() : string {
-        return this.uiElement.innerText;
+    public getDisplayedText() : string {
+        return this.span.innerText;
     }
 
-    public setTextOfUiElement(text : string) {
-        this.uiElement.innerText = text;
+    public setDisplayedText(text : string) {
+        this.span.innerText = text;
     }
 
     public hasFocus() : boolean {

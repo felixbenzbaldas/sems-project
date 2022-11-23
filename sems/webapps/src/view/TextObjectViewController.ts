@@ -646,7 +646,7 @@ export class TextObjectViewController {
             }
         }
         let newHoursBox : string = '[' + hours.toString().replace('.', ',') + ']';
-        let textBefore : string = this.headText.getTextOfUiElement();
+        let textBefore : string = this.headText.getDisplayedText();
         let newText : string;
         let boxRegex = /\[.*\]/;
         if (textBefore.match(boxRegex)) {
