@@ -38,6 +38,11 @@ export class HeadText {
         this.update();
         let self = this;
         this.uiElement.appendChild(this.span);
+        this.uiElement.style.minHeight = "1rem";
+        let borderWidth = "0.1rem";
+        this.uiElement.style.border = "solid";
+        this.uiElement.style.borderWidth = borderWidth;
+        this.uiElement.style.padding = "-" + borderWidth;
         this.span.onblur = function () {
             self.updateTextProperty();
             self.textObjectViewController.adaptStyleForKeyMode();
