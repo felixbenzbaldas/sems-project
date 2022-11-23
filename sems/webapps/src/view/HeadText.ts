@@ -54,6 +54,8 @@ export class HeadText {
         this.uiElement.style.padding = "-" + borderWidth;
         this.setNotFocusedStyle();
         this.span.contentEditable = "true";
+        this.span.style.outline = "0px solid transparent";
+        this.span.style.whiteSpace = "pre-wrap"; // avoid a bug in Mozilla Firefox (STR + Backspace creates weird white space)
         this.span.onblur = function () {
             self.setNotFocusedStyle();
             self.updateTextProperty();
