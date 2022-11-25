@@ -9,18 +9,18 @@ import { TextObjectViewController } from "./TextObjectViewController";
 import { UserInterfaceObject } from "./UserInterfaceObject";
 
 export class HeadText {
-    private textObjectViewController : TextObjectViewController;
-    private userInterfaceObject : UserInterfaceObject;
+    private textObjectViewController: TextObjectViewController;
+    private userInterfaceObject: UserInterfaceObject;
 
-    private dataObserver : Function;
-    private props : RemotePropertiesOfSemsObject;
+    private dataObserver: Function;
+    private props: RemotePropertiesOfSemsObject;
 
-    private textDiv : HTMLDivElement = document.createElement('div');
-    private uiElement : HTMLDivElement = document.createElement('div');
+    private textDiv: HTMLDivElement = document.createElement('div');
+    private uiElement: HTMLDivElement = document.createElement('div');
 
-    private editView : boolean;
+    private editView: boolean;
 
-    static create(textObjectViewController : TextObjectViewController) : HeadText {
+    static create(textObjectViewController: TextObjectViewController): HeadText {
         let ht = new HeadText();
         ht.editView = false;
         ht.textObjectViewController = textObjectViewController;
@@ -30,7 +30,7 @@ export class HeadText {
         return ht;
     }
 
-    public getUiElement() : HTMLElement {
+    public getUiElement(): HTMLElement {
         return this.uiElement;
     }
 
@@ -74,7 +74,7 @@ export class HeadText {
         };
         let keyActionsMap = KeyActionDefinition.createKeyActions_TextObject(this.textObjectViewController);
         let keyActionsMap_readView = KeyActionDefinition.createKeyActions_TextObject_readView(this.textObjectViewController);
-        this.textDiv.onkeydown = function(ev: KeyboardEvent) {
+        this.textDiv.onkeydown = function (ev: KeyboardEvent) {
             let keyEvent = KeyEvent.createFromKeyboardEvent(ev);
             let compareString = keyEvent.createCompareString();
             if (keyActionsMap.has(compareString)) {
@@ -85,11 +85,11 @@ export class HeadText {
                 self.userInterfaceObject.eventController.triggerEvent(App.keyMap.get(compareString), null);
             } else if (!self.editView) {
                 if (keyActionsMap_readView.has(compareString)) {
-                keyEvent.preventDefault();
-                keyActionsMap_readView.get(compareString)();
+                    keyEvent.preventDefault();
+                    keyActionsMap_readView.get(compareString)();
                 } else if (App.keyMap_readView.has(compareString)) {
-                keyEvent.preventDefault();
-                self.userInterfaceObject.eventController.triggerEvent(App.keyMap_readView.get(compareString), null);
+                    keyEvent.preventDefault();
+                    self.userInterfaceObject.eventController.triggerEvent(App.keyMap_readView.get(compareString), null);
                 }
             }
             if (!self.editView) {
@@ -98,7 +98,7 @@ export class HeadText {
                 }
             }
         };
-        this.dataObserver = function (property : string) {
+        this.dataObserver = function (property: string) {
             if (General.primEquals(property, TEXT)) {
                 self.updateText();
             } else {
@@ -107,19 +107,19 @@ export class HeadText {
         };
         App.objEvents.addObserver(this.getSemsAddress(), EventTypes.PROPERTY_CHANGE, this.dataObserver);
         App.objEvents.addObserver(this.getSemsAddress(), EventTypes.DETAILS_CHANGE, this.dataObserver);
-        this.userInterfaceObject.getEventController().addObserver(EventTypes.CHANGED, function() {
+        this.userInterfaceObject.getEventController().addObserver(EventTypes.CHANGED, function () {
             self.update_exceptText();
         });
-        this.userInterfaceObject.getEventController().addObserver(EventTypes.DELETED, function() {
+        this.userInterfaceObject.getEventController().addObserver(EventTypes.DELETED, function () {
             self.delete();
         });
         // paste unformatted
-        this.textDiv.addEventListener("paste", function(ev : any) {
+        this.textDiv.addEventListener("paste", function (ev: any) {
             ev.preventDefault();
             var text = (ev.originalEvent || ev).clipboardData.getData('text/plain');
             document.execCommand("insertText", false, text);
         });
-        this.uiElement.onmousedown = function(ev : MouseEvent) {
+        this.uiElement.onmousedown = function (ev: MouseEvent) {
             if (!ev.ctrlKey) {
                 ev.preventDefault();
                 self.focus();
@@ -127,19 +127,16 @@ export class HeadText {
         }
     }
 
-    
-    
     // true if simple default case (key should be printed)
-    public simpleDefaultKey(ev : KeyboardEvent) {
+    public simpleDefaultKey(ev: KeyboardEvent) {
         return ev.key.length == 1 && !ev.ctrlKey;
     }
 
-
-    private getProps() : RemotePropertiesOfSemsObject {
+    private getProps(): RemotePropertiesOfSemsObject {
         return this.props;
     }
-    
-    private clickable() : boolean {
+
+    private clickable(): boolean {
         return !this.getProps().get(DEFAULT_EXPANDED) && this.textObjectViewController.bodyAvailable();
     }
 
@@ -171,7 +168,7 @@ export class HeadText {
         this.textDiv.style.color = this.getTextColor();
     }
 
-    private getTextColor() : string {
+    private getTextColor(): string {
         if (this.getProps().get(IS_PRIVATE)) {
             return "red";
         } else {
@@ -202,7 +199,7 @@ export class HeadText {
                 }
             };
         } else {
-            this.getUiElement().onclick = function(ev) {
+            this.getUiElement().onclick = function (ev) {
                 if (!self.hasFocus()) {
                     self.focus();
                 }
@@ -247,14 +244,14 @@ export class HeadText {
         this.setStyleForText("cursor", "pointer");
         this.getUiElement().style.cursor = "pointer";
     }
-    
+
     public mark_noDefaultClick() {
         this.setStyleForText("text-decoration", "none");
         this.setStyleForText("cursor", "default");
         this.getUiElement().style.cursor = "default";
     }
 
-    private setStyleForText(property : string, value : string) {
+    private setStyleForText(property: string, value: string) {
         this.textDiv.style.setProperty(property, value);
     }
 
@@ -275,21 +272,21 @@ export class HeadText {
         // TODO
     }
 
-    public getDisplayedText() : string {
+    public getDisplayedText(): string {
         return this.textDiv.innerText;
     }
 
-    public setDisplayedText(text : string) {
+    public setDisplayedText(text: string) {
         this.textDiv.innerText = text;
     }
 
-    public hasFocus() : boolean {
+    public hasFocus(): boolean {
         return document.activeElement == this.textDiv;
     }
 
-    public setCaret(position : number) {
-        let range : Range = document.createRange();
-        let selection : Selection = document.getSelection();
+    public setCaret(position: number) {
+        let range: Range = document.createRange();
+        let selection: Selection = document.getSelection();
         range.setStart(this.textDiv.childNodes[0], position);
         range.collapse(true);
         selection.removeAllRanges();
