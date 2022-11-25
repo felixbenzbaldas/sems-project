@@ -41,9 +41,9 @@ export class KeyController {
                 keyEvent.preventDefault();
                 this.uio.eventController.triggerEvent(App.keyMap.get(compareString), null);
             }
-            if (App.keyMap_normalMode.has(compareString)) {
+            if (App.keyMap_readView.has(compareString)) {
                 keyEvent.preventDefault();
-                this.uio.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
+                this.uio.eventController.triggerEvent(App.keyMap_readView.get(compareString), null);
             }
         }
     }

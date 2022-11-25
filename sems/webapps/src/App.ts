@@ -42,7 +42,7 @@ export class App {
 
     // Mapping von KeyEvents auf EventTypes. (Wird von KeyEventDefinition erzeugt.)
     static keyMap = new MapWithPrimitiveStringsAsKey();
-    static keyMap_normalMode = new MapWithPrimitiveStringsAsKey();
+    static keyMap_readView = new MapWithPrimitiveStringsAsKey();
 
     static widthCalculationSpan;
 
@@ -78,7 +78,7 @@ export class App {
         EventTypeInfo.init();
         App.dynamicConfiguration();
         App.keyMap = new KeyEventDefinition().createKeyMap();
-        App.keyMap_normalMode = new KeyEventDefinition().createKeyMap_normalMode();
+        App.keyMap_readView = new KeyEventDefinition().createKeyMap_normalMode();
         App.createGlobalKeyBindings();
         if (App.TEST_MODE) {
             document.body.appendChild(new TestApp().getUiElement());

@@ -120,7 +120,7 @@ export class KeyActionDefinition {
         return map;
     }
 
-    public static createKeyActions_TextObject_normalMode(textObjectViewController : TextObjectViewController) : MapWithPrimitiveStringsAsKey {
+    public static createKeyActions_TextObject_readView(textObjectViewController : TextObjectViewController) : MapWithPrimitiveStringsAsKey {
         let map = new MapWithPrimitiveStringsAsKey();
         let uio : UserInterfaceObject = textObjectViewController.getUserInterfaceObject();
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {

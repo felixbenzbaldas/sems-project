@@ -3,6 +3,7 @@ import { DEFAULT_EXPANDED, IS_PRIVATE, TEXT } from "../Consts";
 import { RemotePropertiesOfSemsObject } from "../data/RemotePropertiesOfSemsObject";
 import { EventTypes } from "../EventTypes";
 import { General } from "../general/General";
+import { KeyEvent } from "../general/KeyEvent";
 import { KeyActionDefinition } from "./KeyActionDefinition";
 import { TextObjectViewController } from "./TextObjectViewController";
 import { UserInterfaceObject } from "./UserInterfaceObject";
@@ -17,8 +18,11 @@ export class HeadText {
     private textDiv : HTMLDivElement = document.createElement('div');
     private uiElement : HTMLDivElement = document.createElement('div');
 
+    private editView : boolean;
+
     static create(textObjectViewController : TextObjectViewController) : HeadText {
         let ht = new HeadText();
+        ht.editView = false;
         ht.textObjectViewController = textObjectViewController;
         ht.userInterfaceObject = textObjectViewController.getUserInterfaceObject();
         ht.props = App.objProperties.getPropertiesOfObject(ht.getSemsAddress());
@@ -68,6 +72,32 @@ export class HeadText {
             self.userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUSED, null);
             self.setCaret(self.getDisplayedText().length);
         };
+        let keyActionsMap = KeyActionDefinition.createKeyActions_TextObject(this.textObjectViewController);
+        let keyActionsMap_readView = KeyActionDefinition.createKeyActions_TextObject_readView(this.textObjectViewController);
+        this.textDiv.onkeydown = function(ev: KeyboardEvent) {
+            let keyEvent = KeyEvent.createFromKeyboardEvent(ev);
+            let compareString = keyEvent.createCompareString();
+            if (keyActionsMap.has(compareString)) {
+                keyEvent.preventDefault();
+                keyActionsMap.get(compareString)();
+            } else if (App.keyMap.has(compareString)) {
+                keyEvent.preventDefault();
+                self.userInterfaceObject.eventController.triggerEvent(App.keyMap.get(compareString), null);
+            } else if (!self.editView) {
+                if (keyActionsMap_readView.has(compareString)) {
+                keyEvent.preventDefault();
+                keyActionsMap_readView.get(compareString)();
+                } else if (App.keyMap_readView.has(compareString)) {
+                keyEvent.preventDefault();
+                self.userInterfaceObject.eventController.triggerEvent(App.keyMap_readView.get(compareString), null);
+                }
+            }
+            if (!self.editView) {
+                if (self.simpleDefaultKey(ev)) {
+                    ev.preventDefault();
+                }
+            }
+        };
         this.dataObserver = function (property : string) {
             if (General.primEquals(property, TEXT)) {
                 self.updateText();
@@ -90,29 +120,6 @@ export class HeadText {
         //     document.execCommand("insertText", false, text);
         // });
         //
-        let keyActionsMap = KeyActionDefinition.createKeyActions_TextObject(this.textObjectViewController);
-        let keyActionsMap_normalMode = KeyActionDefinition.createKeyActions_TextObject_normalMode(this.textObjectViewController);
-        // this.semsText.addKeyEventListener(function(keyEvent : KeyEvent) {
-        //     let compareString = keyEvent.createCompareString();
-        //     if (keyActionsMap.has(compareString)) {
-        //         keyEvent.preventDefault();
-        //         keyActionsMap.get(compareString)();
-        //     }
-        //     if (App.keyMap.has(compareString)) {
-        //         keyEvent.preventDefault();
-        //         self.userInterfaceObject.eventController.triggerEvent(App.keyMap.get(compareString), null);
-        //     }
-        //     if (App.keyMode == KeyMode.NORMAL) {
-        //         if (keyActionsMap_normalMode.has(compareString)) {
-        //             keyEvent.preventDefault();
-        //             keyActionsMap_normalMode.get(compareString)();
-        //         }
-        //         if (App.keyMap_normalMode.has(compareString)) {
-        //             keyEvent.preventDefault();
-        //             self.userInterfaceObject.eventController.triggerEvent(App.keyMap_normalMode.get(compareString), null);
-        //         }
-        //     }
-        // });
         this.uiElement.onmousedown = function(ev : MouseEvent) {
             if (!ev.ctrlKey) {
                 ev.preventDefault();
@@ -120,7 +127,15 @@ export class HeadText {
             }
         }
     }
+
     
+    
+    // true if simple default case (key should be printed)
+    public simpleDefaultKey(ev : KeyboardEvent) {
+        return ev.key.length == 1 && !ev.ctrlKey;
+    }
+
+
     private getProps() : RemotePropertiesOfSemsObject {
         return this.props;
     }
