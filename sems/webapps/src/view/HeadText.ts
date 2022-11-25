@@ -114,12 +114,11 @@ export class HeadText {
             self.delete();
         });
         // paste unformatted
-        // this.anchorElement.addEventListener("paste", function(ev : any) {
-        //     ev.preventDefault();
-        //     var text = (ev.originalEvent || ev).clipboardData.getData('text/plain');
-        //     document.execCommand("insertText", false, text);
-        // });
-        //
+        this.textDiv.addEventListener("paste", function(ev : any) {
+            ev.preventDefault();
+            var text = (ev.originalEvent || ev).clipboardData.getData('text/plain');
+            document.execCommand("insertText", false, text);
+        });
         this.uiElement.onmousedown = function(ev : MouseEvent) {
             if (!ev.ctrlKey) {
                 ev.preventDefault();
