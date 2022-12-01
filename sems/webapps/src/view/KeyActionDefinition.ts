@@ -128,6 +128,13 @@ export class KeyActionDefinition {
             }, function() {
                 uio.onPasteNextEvent();
         });
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.ctrl = true;
+            keyEvent.key = "i";
+            }, function() {
+                textObjectViewController.headText.toEditView();
+        });
+
         return map;
     }
 

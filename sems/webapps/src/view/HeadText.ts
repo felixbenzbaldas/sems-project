@@ -146,6 +146,10 @@ export class HeadText {
     private bodyAvailable() : boolean {
         return this.textObjectViewController.bodyAvailable();
     }
+    
+    public isCollapsed() : boolean {
+        return this.textObjectViewController.isCollapsed();
+    }
 
     private isDefaultExpanded() : boolean {
         return this.getProps().get(DEFAULT_EXPANDED);
@@ -288,9 +292,5 @@ export class HeadText {
 
     public toEditView() {
         this.editView = true;
-    }
-
-    public isCollapsed() : boolean {
-        return this.textObjectViewController.isCollapsed();
     }
 }
