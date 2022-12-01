@@ -49,7 +49,7 @@ export class TextObjectViewController {
         textObjectViewController.detailsView.onLostFocus = function() {
             userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUS, null);
         };
-        textObjectViewController.headText = HeadText.create(textObjectViewController);
+        textObjectViewController.headText = new HeadText(textObjectViewController);
         //
         userInterfaceObject.uiElement = textObjectViewController.headBody.getUiElement();
         textObjectViewController.headBody.getHead().appendChild(textObjectViewController.context.getUiElementOfContextIcon());

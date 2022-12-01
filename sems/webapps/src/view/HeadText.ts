@@ -18,32 +18,17 @@ export class HeadText {
     private textDiv: HTMLDivElement = document.createElement('div');
     private uiElement: HTMLDivElement = document.createElement('div');
 
-    private editView: boolean;
+    private editView: boolean = false;
 
-    static create(textObjectViewController: TextObjectViewController): HeadText {
-        let ht = new HeadText();
-        ht.editView = false;
-        ht.textObjectViewController = textObjectViewController;
-        ht.userInterfaceObject = textObjectViewController.getUserInterfaceObject();
-        ht.props = App.objProperties.getPropertiesOfObject(ht.getSemsAddress());
-        ht.initialize();
-        return ht;
-    }
-
-    public getUiElement(): HTMLElement {
-        return this.uiElement;
-    }
-
-    public focus() {
-        this.textDiv.focus();
-    }
-
-    private initialize() {
+    constructor(textObjectViewController: TextObjectViewController) {
+        this.textObjectViewController = textObjectViewController;
+        this.userInterfaceObject = textObjectViewController.getUserInterfaceObject();
+        this.props = App.objProperties.getPropertiesOfObject(this.getSemsAddress());
+        //
         this.update();
         let self = this;
         this.uiElement.appendChild(this.textDiv);
         this.textDiv.style.minHeight = "1rem";
-        this.uiElement.style.minHeight = "1rem";
         let borderWidth = "0.1rem";
         this.uiElement.style.border = "solid";
         this.uiElement.style.borderWidth = borderWidth;
@@ -120,6 +105,15 @@ export class HeadText {
                 self.focus();
             }
         }
+    }
+
+    
+    public getUiElement(): HTMLElement {
+        return this.uiElement;
+    }
+
+    public focus() {
+        this.textDiv.focus();
     }
 
     // true if simple default case (key should be printed)
