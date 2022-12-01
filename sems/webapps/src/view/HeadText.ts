@@ -38,18 +38,6 @@ export class HeadText {
         this.textDiv.focus();
     }
 
-    public updateBorderStyle() {
-        if (this.hasFocus()) {
-            if (this.editView) {
-                this.uiElement.style.borderColor = "green";
-            } else {
-                this.uiElement.style.borderColor = "orange";
-            }
-        } else {
-            this.uiElement.style.borderColor = App.backgroundColor;
-        }
-    }
-
     private initialize() {
         this.update();
         let self = this;
@@ -155,42 +143,6 @@ export class HeadText {
         return this.getProps().get(DEFAULT_EXPANDED);
     }
 
-    public update() {
-        this.updateDisplayedText();
-        this.update_exceptDisplayedText();
-    }
-
-    // purpose: avoid loss of untransmitted text
-    private update_exceptDisplayedText() {
-        this.updateTextColor();
-        this.updateUnderline();
-        this.updateCursorStyle();
-        this.updateBorderStyle();
-    }
-
-    private updateDisplayedText() {
-        if (!General.primEquals(this.getDisplayedText(), this.getProps().get(TEXT))) {
-            this.setDisplayedText(this.getProps().get(TEXT));
-        } else if (this.getDisplayedText() == null) {
-            this.setDisplayedText("");
-        }
-    }
-
-    public updateTextColor() {
-        this.textDiv.style.color = this.getTextColor();
-    }
-
-    private getTextColor(): string {
-        if (this.getProps().get(IS_PRIVATE)) {
-            return "red";
-        } else {
-            if (!this.userInterfaceObject.semsAddress.startsWith("1-")) {
-                return "green";
-            } else {
-                return App.fontColor;
-            }
-        }
-    }
 
     private setOnClick() {
         let self = this;
@@ -224,32 +176,6 @@ export class HeadText {
             }
         };
        
-    }
-
-    private updateUnderline() {
-        if (this.bodyAvailable() && !this.isDefaultExpanded()) {
-            if (this.isCollapsed()) {
-                this.setStyleForText("text-decoration", "underline");
-                this.setStyleForText("text-decoration-style", "solid");
-            } else {
-                this.setStyleForText("text-decoration", "underline");
-                this.setStyleForText("text-decoration-style", "double");
-            }
-        } else {
-            this.setStyleForText("text-decoration", "none");
-        }
-    }
-
-    private updateCursorStyle() {
-        if (this.bodyAvailable() && !this.isDefaultExpanded()) {
-            this.getUiElement().style.cursor = "pointer";
-        } else {
-            this.getUiElement().style.cursor = "default";
-        }
-    }
-
-    private setStyleForText(property: string, value: string) {
-        this.textDiv.style.setProperty(property, value);
     }
 
     private delete() {
@@ -292,5 +218,85 @@ export class HeadText {
 
     public toEditView() {
         this.editView = true;
+    }
+
+
+
+
+
+    public update() {
+        this.updateDisplayedText();
+        this.update_exceptDisplayedText();
+    }
+
+    // purpose: avoid loss of untransmitted text
+    private update_exceptDisplayedText() {
+        this.updateTextColor();
+        this.updateUnderline();
+        this.updateCursorStyle();
+        this.updateBorderStyle();
+    }
+
+    private updateDisplayedText() {
+        if (!General.primEquals(this.getDisplayedText(), this.getProps().get(TEXT))) {
+            this.setDisplayedText(this.getProps().get(TEXT));
+        } else if (this.getDisplayedText() == null) {
+            this.setDisplayedText("");
+        }
+    }
+
+    public updateTextColor() {
+        this.textDiv.style.color = this.getTextColor();
+    }
+
+    private getTextColor(): string {
+        if (this.getProps().get(IS_PRIVATE)) {
+            return "red";
+        } else {
+            if (!this.userInterfaceObject.semsAddress.startsWith("1-")) {
+                return "green";
+            } else {
+                return App.fontColor;
+            }
+        }
+    }
+
+    public updateBorderStyle() {
+        if (this.hasFocus()) {
+            if (this.editView) {
+                this.uiElement.style.borderColor = "green";
+            } else {
+                this.uiElement.style.borderColor = "orange";
+            }
+        } else {
+            this.uiElement.style.borderColor = App.backgroundColor;
+        }
+    }
+
+    
+    private updateUnderline() {
+        if (this.bodyAvailable() && !this.isDefaultExpanded()) {
+            if (this.isCollapsed()) {
+                this.setStyleForText("text-decoration", "underline");
+                this.setStyleForText("text-decoration-style", "solid");
+            } else {
+                this.setStyleForText("text-decoration", "underline");
+                this.setStyleForText("text-decoration-style", "double");
+            }
+        } else {
+            this.setStyleForText("text-decoration", "none");
+        }
+    }
+
+    private updateCursorStyle() {
+        if (this.bodyAvailable() && !this.isDefaultExpanded()) {
+            this.getUiElement().style.cursor = "pointer";
+        } else {
+            this.getUiElement().style.cursor = "default";
+        }
+    }
+
+    private setStyleForText(property: string, value: string) {
+        this.textDiv.style.setProperty(property, value);
     }
 }
