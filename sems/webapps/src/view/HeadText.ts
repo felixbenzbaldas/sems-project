@@ -100,7 +100,7 @@ export class HeadText {
         };
         this.dataObserver = function (property: string) {
             if (General.primEquals(property, TEXT)) {
-                self.updateText();
+                self.updateDisplayedText();
             } else {
                 self.update_exceptText();
             }
@@ -141,7 +141,7 @@ export class HeadText {
     }
 
     public update() {
-        this.updateText();
+        this.updateDisplayedText();
         this.updateTextColor();
         this.updateOnClick();
         this.updateOnContextmenu();
@@ -156,7 +156,7 @@ export class HeadText {
         this.updateUnderline();
     }
 
-    private updateText() {
+    private updateDisplayedText() {
         if (!General.primEquals(this.getDisplayedText(), this.getProps().get(TEXT))) {
             this.setDisplayedText(this.getProps().get(TEXT));
         } else if (this.getDisplayedText() == null) {
