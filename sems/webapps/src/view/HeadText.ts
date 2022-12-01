@@ -212,11 +212,10 @@ export class HeadText {
 
     public toEditView() {
         this.editView = true;
+        this.updateBorderStyle();
     }
 
-
-
-
+    /////////////// update /////////////////////
 
     public update() {
         this.updateDisplayedText();
