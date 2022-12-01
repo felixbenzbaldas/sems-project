@@ -14,7 +14,6 @@ export class EventTypeInfo {
         this.nameOfEventType.set(EventTypes.COPY, "COPY");
         this.nameOfEventType.set(EventTypes.PASTE, "PASTE");
         this.nameOfEventType.set(EventTypes.TOGGLE_EXPAND, "TOGGLE_EXPAND");
-        this.nameOfEventType.set(EventTypes.FOCUS_NEXT_ON_SAME_LEVEL, "FOCUS_NEXT_ON_SAME_LEVEL");
         this.nameOfEventType.set(EventTypes.FOCUS_PREV, "FOCUS_PREV");
         this.nameOfEventType.set(EventTypes.FOCUS_NEXT, "FOCUS_NEXT");
         this.nameOfEventType.set(EventTypes.FOCUS_PREV_TOP_LEVEL_OBJECT, "FOCUS_PREV_TOP_LEVEL_OBJECT");
