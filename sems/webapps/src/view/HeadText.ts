@@ -38,12 +38,16 @@ export class HeadText {
         this.textDiv.focus();
     }
 
-    public setFocusedStyle() {
-        this.uiElement.style.borderColor = "orange";
-    }
-
-    public setNotFocusedStyle() {
-        this.uiElement.style.borderColor = App.backgroundColor;
+    public updateBorderStyle() {
+        if (this.hasFocus()) {
+            if (this.editView) {
+                this.uiElement.style.borderColor = "green";
+            } else {
+                this.uiElement.style.borderColor = "orange";
+            }
+        } else {
+            this.uiElement.style.borderColor = App.backgroundColor;
+        }
     }
 
     private initialize() {
@@ -56,21 +60,22 @@ export class HeadText {
         this.uiElement.style.border = "solid";
         this.uiElement.style.borderWidth = borderWidth;
         this.uiElement.style.padding = "-" + borderWidth;
-        this.setNotFocusedStyle();
+        this.updateBorderStyle();
         this.textDiv.contentEditable = "true";
         this.textDiv.style.outline = "0px solid transparent";
         this.textDiv.style.whiteSpace = "pre-wrap"; // avoid a bug in Mozilla Firefox (STR + Backspace creates weird white space)
         this.textDiv.onblur = function () {
-            self.setNotFocusedStyle();
+            self.updateBorderStyle();
             self.updateTextProperty();
         };
         this.textDiv.onfocus = function () {
-            self.setFocusedStyle();
+            self.updateBorderStyle();
             App.deleteManualFocusAndFocusedUIO();
             App.focusedUIO = self.userInterfaceObject;
             self.userInterfaceObject.lastFocusedSubitem = null;
             self.userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUSED, null);
             self.setCaret(self.getDisplayedText().length);
+            self.updateBorderStyle();
         };
         let keyActionsMap = KeyActionDefinition.createKeyActions_TextObject(this.textObjectViewController);
         let keyActionsMap_readView = KeyActionDefinition.createKeyActions_TextObject_readView(this.textObjectViewController);
@@ -102,13 +107,15 @@ export class HeadText {
             if (General.primEquals(property, TEXT)) {
                 self.updateDisplayedText();
             } else {
-                self.update_exceptText();
+                self.update_exceptDisplayedText();
             }
         };
+        this.setOnClick();
+        this.setOnContextmenu();
         App.objEvents.addObserver(this.getSemsAddress(), EventTypes.PROPERTY_CHANGE, this.dataObserver);
         App.objEvents.addObserver(this.getSemsAddress(), EventTypes.DETAILS_CHANGE, this.dataObserver);
         this.userInterfaceObject.getEventController().addObserver(EventTypes.CHANGED, function () {
-            self.update_exceptText();
+            self.update_exceptDisplayedText();
         });
         this.userInterfaceObject.getEventController().addObserver(EventTypes.DELETED, function () {
             self.delete();
@@ -136,24 +143,25 @@ export class HeadText {
         return this.props;
     }
 
-    private clickable(): boolean {
-        return !this.getProps().get(DEFAULT_EXPANDED) && this.textObjectViewController.bodyAvailable();
+    private bodyAvailable() : boolean {
+        return this.textObjectViewController.bodyAvailable();
+    }
+
+    private isDefaultExpanded() : boolean {
+        return this.getProps().get(DEFAULT_EXPANDED);
     }
 
     public update() {
         this.updateDisplayedText();
-        this.updateTextColor();
-        this.updateOnClick();
-        this.updateOnContextmenu();
-        this.updateUnderline();
+        this.update_exceptDisplayedText();
     }
 
     // purpose: avoid loss of untransmitted text
-    private update_exceptText() {
+    private update_exceptDisplayedText() {
         this.updateTextColor();
-        this.updateOnClick();
-        this.updateOnContextmenu();
         this.updateUnderline();
+        this.updateCursorStyle();
+        this.updateBorderStyle();
     }
 
     private updateDisplayedText() {
@@ -180,34 +188,28 @@ export class HeadText {
         }
     }
 
-    private updateOnClick() {
+    private setOnClick() {
         let self = this;
-        if (this.clickable()) {
-            this.getUiElement().onclick = function (ev) {
-                if (ev.ctrlKey) {
-                    if (!self.hasFocus()) {
-                        self.focus();
-                    }
-                } else {
-                    ev.preventDefault();
+        this.getUiElement().onclick = (ev) => {
+            if (ev.ctrlKey) {
+                if (!self.hasFocus()) {
                     self.focus();
+                }
+            } else {
+                ev.preventDefault();
+                self.focus();
+                if (!self.isDefaultExpanded()) {
                     if (self.textObjectViewController.isCollapsed()) {
                         self.textObjectViewController.expandIfCollapsedAndBodyIsAvailable();
                     } else {
                         self.textObjectViewController.collapse();
                     }
                 }
-            };
-        } else {
-            this.getUiElement().onclick = function (ev) {
-                if (!self.hasFocus()) {
-                    self.focus();
-                }
             }
-        }
+        };
     }
 
-    private updateOnContextmenu() {
+    private setOnContextmenu() {
         let self = this;
         this.getUiElement().oncontextmenu = function (ev) {
             ev.preventDefault();
@@ -217,38 +219,29 @@ export class HeadText {
                 self.textObjectViewController.scaleUp();
             }
         };
+       
     }
 
     private updateUnderline() {
-        if (this.clickable()) {
-            if (this.textObjectViewController.isCollapsed()) {
-                this.mark_collapsed_strongRels();
+        if (this.bodyAvailable() && !this.isDefaultExpanded()) {
+            if (this.isCollapsed()) {
+                this.setStyleForText("text-decoration", "underline");
+                this.setStyleForText("text-decoration-style", "solid");
             } else {
-                this.mark_expanded();
+                this.setStyleForText("text-decoration", "underline");
+                this.setStyleForText("text-decoration-style", "double");
             }
         } else {
-            this.mark_noDefaultClick();
+            this.setStyleForText("text-decoration", "none");
         }
     }
 
-    public mark_collapsed_strongRels() {
-        this.setStyleForText("text-decoration", "underline");
-        this.setStyleForText("text-decoration-style", "solid");
-        this.setStyleForText("cursor", "pointer");
-        this.getUiElement().style.cursor = "pointer";
-    }
-
-    public mark_expanded() {
-        this.setStyleForText("text-decoration", "underline");
-        this.setStyleForText("text-decoration-style", "double");
-        this.setStyleForText("cursor", "pointer");
-        this.getUiElement().style.cursor = "pointer";
-    }
-
-    public mark_noDefaultClick() {
-        this.setStyleForText("text-decoration", "none");
-        this.setStyleForText("cursor", "default");
-        this.getUiElement().style.cursor = "default";
+    private updateCursorStyle() {
+        if (this.bodyAvailable() && !this.isDefaultExpanded()) {
+            this.getUiElement().style.cursor = "pointer";
+        } else {
+            this.getUiElement().style.cursor = "default";
+        }
     }
 
     private setStyleForText(property: string, value: string) {
@@ -291,5 +284,13 @@ export class HeadText {
         range.collapse(true);
         selection.removeAllRanges();
         selection.addRange(range);
+    }
+
+    public toEditView() {
+        this.editView = true;
+    }
+
+    public isCollapsed() : boolean {
+        return this.textObjectViewController.isCollapsed();
     }
 }
