@@ -28,11 +28,11 @@ export class HeadText {
         this.update();
         let self = this;
         this.uiElement.appendChild(this.textDiv);
-        this.textDiv.style.minHeight = "1rem";
         let borderWidth = "0.1rem";
         this.uiElement.style.border = "solid";
         this.uiElement.style.borderWidth = borderWidth;
         this.uiElement.style.padding = "-" + borderWidth;
+        this.textDiv.style.minHeight = "1rem";
         this.updateBorderStyle();
         this.textDiv.contentEditable = "true";
         this.textDiv.style.outline = "0px solid transparent";
