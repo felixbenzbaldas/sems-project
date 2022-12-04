@@ -117,6 +117,12 @@ export class KeyActionDefinition {
             }, function() {
                 uio.onPasteNextEvent();
         });
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.ctrl = true;
+            keyEvent.key = "Enter";
+            }, function() {
+                textObjectViewController.headText.toReadView();
+        });
         return map;
     }
 

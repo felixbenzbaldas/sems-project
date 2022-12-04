@@ -250,17 +250,25 @@ export class Column {
         let self = this;
         return function () {
             let indexOfDetail = self.listOfUIOs.indexOf(userInterfaceObject);
-            self.createObjectAtPositionAndFocusIt(indexOfDetail + 1);
+            self.createObjectAtPositionAndFocusIt(indexOfDetail + 1, () => {
+                if (userInterfaceObject.tovcOpt != null) {
+                    userInterfaceObject.tovcOpt.headText.toReadView();
+                }
+            });
         };
     }
 
-    public createObjectAtPositionAndFocusIt(position : number) {
+    public createObjectAtPositionAndFocusIt(position : number, callback? : Function) {
         let self = this;
         SemsServer.createTextObject("", function(address){
             ObjectLoader.ensureLoaded(address, function() {
                 let uio : UserInterfaceObject = self.createListUserInterfaceObject(address);
                 self.insertUserInterfaceObjectAtPosition(uio, position);
                 uio.focus();
+                uio.tovcOpt.headText.toEditView();
+                if (callback) {
+                    callback();
+                }
             });
         });
     }

@@ -80,11 +80,17 @@ export class DetailsView {
         return userInterfaceObject;
     }
 
-    public createContextDetailAtPositionAndFocusIt(position : number) {
+    public createContextDetailAtPositionAndFocusIt_editView(position : number, callback? : Function) {
         let self = this;
         this.detailsData.createContextDetailAtPostion("", position, function(detailSemsAddress) {
             let detailUserInterfaceObject = self.createDetailUserInterfaceObject(detailSemsAddress);
             self.insertUserInterfaceObjectAtPositionAndFocusIt(detailUserInterfaceObject, position);
+            if (detailUserInterfaceObject.tovcOpt != null) {
+                detailUserInterfaceObject.tovcOpt.headText.toEditView();
+            }
+            if (callback) {
+                callback();
+            }
         });
     }
 
@@ -125,7 +131,11 @@ export class DetailsView {
         let self = this;
         return function () {
             let indexOfDetail = self.detailUserInterfaceObjects.indexOf(detailUserInterfaceObject);
-            self.createContextDetailAtPositionAndFocusIt(indexOfDetail + 1);
+            self.createContextDetailAtPositionAndFocusIt_editView(indexOfDetail + 1, () => {
+                if (detailUserInterfaceObject.tovcOpt != null) {
+                    detailUserInterfaceObject.tovcOpt.headText.toReadView();
+                }
+            });
         };
     }
 

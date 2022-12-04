@@ -57,11 +57,11 @@ export class KeyEventDefinition {
             keyEvent.ctrl = true;
         });
         this.addMapping(EventTypes.NEW_SUBITEM, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "Enter";
+            keyEvent.key = "Tab";
         });
         this.addMapping(EventTypes.DELETE, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
+            keyEvent.ctrl = true;
+            keyEvent.shift = true;
             keyEvent.key = "Backspace";
         });
         this.addMapping(EventTypes.NEW_COLUMN_PREV, function(keyEvent : KeyEvent) {

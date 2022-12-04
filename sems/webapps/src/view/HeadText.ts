@@ -215,6 +215,11 @@ export class HeadText {
         this.updateBorderStyle();
     }
 
+    public toReadView() {
+        this.editView = false;
+        this.updateBorderStyle();
+    }
+
     /////////////// update /////////////////////
 
     public update() {
