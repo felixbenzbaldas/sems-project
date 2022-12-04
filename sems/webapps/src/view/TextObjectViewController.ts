@@ -116,7 +116,9 @@ export class TextObjectViewController {
             } else {
                 textObjectViewController.detailsData.ensureDetailsAreLoaded(function() {
                     textObjectViewController.ensureExpanded();
-                    textObjectViewController.detailsView.createContextDetailAtPositionAndFocusIt_editView(0);
+                    textObjectViewController.detailsView.createContextDetailAtPositionAndFocusIt_editView(0, () => {
+                        textObjectViewController.headText.toReadView();
+                    });
                 });
             }
         });
