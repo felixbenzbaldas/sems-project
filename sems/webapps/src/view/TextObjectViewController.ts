@@ -290,6 +290,10 @@ export class TextObjectViewController {
         }
     }
 
+    public setDefaultExpanded(defaultExpanded : boolean) {
+        this.props.set(DEFAULT_EXPANDED, defaultExpanded);
+    }
+
     public toggleLogicalContextEvent() {
         this.context.toggleLogicalContextEvent();
     }

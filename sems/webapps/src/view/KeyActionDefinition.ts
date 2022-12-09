@@ -1,6 +1,7 @@
 import { App } from "../App";
 import { KeyEvent } from "../general/KeyEvent";
 import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStringsAsKey";
+import { getPrivateCode } from "../privateCode/privateCode";
 import { SemsServer } from "../SemsServer";
 import { Textgeneration } from "../semsWeb/Textgeneration";
 import { ColumnManager } from "./ColumnManager";
@@ -15,6 +16,7 @@ export class KeyActionDefinition {
     public static createKeyActions_TextObject(textObjectViewController : TextObjectViewController) : MapWithPrimitiveStringsAsKey {
         let map = new MapWithPrimitiveStringsAsKey();
         let uio : UserInterfaceObject = textObjectViewController.getUserInterfaceObject();
+        getPrivateCode().addKeyEvents(map, textObjectViewController);
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.ctrl = true;
             keyEvent.key = "2";
