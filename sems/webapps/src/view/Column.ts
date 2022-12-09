@@ -447,6 +447,7 @@ export class Column {
                 let uio = self.createListUserInterfaceObject(semsAddress);
                 self.insertUserInterfaceObjectAtPosition(uio, 0);
                 uio.focus();
+                uio.tovcOpt.headText.toEditView();
             });
         });
     }
