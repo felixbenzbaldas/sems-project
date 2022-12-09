@@ -252,7 +252,7 @@ export class App {
         return placeholderDiv;
     }
 
-    public static getUserInterfaceObjectForSemsAddress(semsAddress : string, callback : Function) {
+    public static getUserInterfaceObjectForSemsAddress(semsAddress : string, callback : ((uio : UserInterfaceObject) => void)) {
         ObjectLoader.ensureLoaded(semsAddress, function() {
             callback(View.createFromSemsAddress(semsAddress, null));
         });
