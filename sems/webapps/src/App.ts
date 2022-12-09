@@ -197,10 +197,6 @@ export class App {
         App.fontSize = "20px";
         document.body.style.backgroundColor = App.backgroundColor;
         document.body.style.margin = "0rem";
-        let invisibleArea = App.createInvisibleArea();
-        document.body.appendChild(invisibleArea);
-        App.widthCalculationSpan = App.createWidthCalculationSpan();
-        invisibleArea.appendChild(App.widthCalculationSpan);
         document.body.style.overflow = "hidden";
         ColumnManager.init();
         document.body.appendChild(ColumnManager.uiElement);
@@ -215,10 +211,6 @@ export class App {
         App.installTheme();
         document.body.style.backgroundColor = App.backgroundColor;
         document.body.style.margin = "0rem";
-        let invisibleArea = App.createInvisibleArea();
-        document.body.appendChild(invisibleArea);
-        App.widthCalculationSpan = App.createWidthCalculationSpan();
-        invisibleArea.appendChild(App.widthCalculationSpan);
         //
         document.body.style.overflow = "hidden";
         ColumnManager.init();
@@ -291,25 +283,6 @@ export class App {
                 list.createLinkDetailAtPostion(semsAddress, 0);
             })
         });
-    }
-    
-    static createInvisibleArea() : HTMLElement {
-        let div = document.createElement("div");
-        div.style.visibility = "hidden";
-        div.style.width = "0px";
-        div.style.height = "0px";
-        div.style.overflowX = "hidden";
-        div.style.overflowY = "hidden";
-        return div;
-    }
-
-    static createWidthCalculationSpan() : HTMLSpanElement {
-        let widthCalculationSpan = document.createElement("span");
-        widthCalculationSpan.style.fontFamily = App.fontFamily;
-        widthCalculationSpan.style.fontSize = App.fontSize;
-        widthCalculationSpan.contentEditable = "true";
-        widthCalculationSpan.style.whiteSpace = "nowrap";
-        return widthCalculationSpan;
     }
 
     static deleteManualFocusAndFocusedUIO() {
