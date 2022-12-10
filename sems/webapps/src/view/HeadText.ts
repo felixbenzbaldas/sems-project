@@ -96,8 +96,8 @@ export class HeadText {
         // paste unformatted
         this.textDiv.addEventListener("paste", function (ev: any) {
             ev.preventDefault();
-            var text = (ev.originalEvent || ev).clipboardData.getData('text/plain');
-            document.execCommand("insertText", false, text);
+            let text : string = (ev.originalEvent || ev).clipboardData.getData('text/plain');
+            document.execCommand("insertText", false, self.removeOneNewlineAtTheEndIfPresent(text));
         });
         this.uiElement.onmousedown = function (ev: MouseEvent) {
             if (!ev.ctrlKey) {
@@ -189,8 +189,18 @@ export class HeadText {
         // TODO
     }
 
+    // The usage of cut and paste unfortunately produces a newline character at the end.
+    // However this newline character has no effect on the displayed text.
     public getDisplayedText(): string {
-        return this.textDiv.innerText;
+        return this.removeOneNewlineAtTheEndIfPresent(this.textDiv.innerText);
+    }
+    
+    private removeOneNewlineAtTheEndIfPresent(text : string) {
+        if (text.endsWith('\n')) {
+            return text.substring(0, text.length - 1);
+        } else {
+            return text;
+        }
     }
 
     public setDisplayedText(text: string) {
