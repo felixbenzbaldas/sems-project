@@ -685,4 +685,19 @@ export class TextObjectViewController {
             self.focus();
         });
     }
+
+    // callback delivers detailTOVC
+    public createContextDetail(text : string, position : number, callback? : ((detailTovc : TextObjectViewController) => void)) {
+        this.ensureExpanded();
+        this.detailsView.createContextDetailAtPosition(position, detailUio => {
+            detailUio.tovcOpt.headText.setDisplayedText(text);
+            if (callback) {
+                callback(detailUio.tovcOpt);
+            }
+        });
+    }
+
+    public setDisplayedText(text : string) {
+        this.headText.setDisplayedText(text);
+    }
 }
