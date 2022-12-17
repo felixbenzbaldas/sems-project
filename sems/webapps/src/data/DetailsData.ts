@@ -63,6 +63,7 @@ export class DetailsData {
         App.objEvents.triggerEvent(this.semsAddress, EventTypes.DETAILS_CHANGE, null);
     }
 
+    // also ensures that created detail is loaded
     public createContextDetailAtPostion(text : string, position : number, callback : Function) {
         let self = this;
         SemsServer.createContextDetailAtPosition(text, position, this.semsAddress, function(addressOfNewDetail) {
