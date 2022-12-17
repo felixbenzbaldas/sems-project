@@ -81,12 +81,10 @@ export class DetailsView {
     }
 
     public createContextDetailAtPositionAndFocusIt_editView(position : number, callback? : Function) {
-        let self = this;
-        this.detailsData.createContextDetailAtPostion("", position, function(detailSemsAddress) {
-            let detailUserInterfaceObject = self.createDetailUserInterfaceObject(detailSemsAddress);
-            self.insertUserInterfaceObjectAtPositionAndFocusIt(detailUserInterfaceObject, position);
-            if (detailUserInterfaceObject.tovcOpt != null) {
-                detailUserInterfaceObject.tovcOpt.headText.toEditView();
+        this.createContextDetailAtPosition(position, detailUio => {
+            detailUio.focus();
+            if (detailUio.tovcOpt != null) {
+                detailUio.tovcOpt.headText.toEditView();
             }
             if (callback) {
                 callback();
@@ -94,16 +92,28 @@ export class DetailsView {
         });
     }
 
+    // callback delivers detailUio
+    public createContextDetailAtPosition(position : number, callback? : ((detailUio : UserInterfaceObject) => void)) {
+        let self = this;
+        this.detailsData.createContextDetailAtPostion("", position, function(detailSemsAddress) {
+            let detailUio = self.createDetailUserInterfaceObject(detailSemsAddress);
+            self.insertUserInterfaceObjectAtPosition(detailUio, position);
+            if (callback) {
+                callback(detailUio);
+            }
+        });
+    }
+
     public createLinkDetailAtPositionAndFocusIt(position : number, address : string) {
         this.detailsData.createLinkDetailAtPostion(address, position);
         let detailUserInterfaceObject = this.createDetailUserInterfaceObject(address);
-        this.insertUserInterfaceObjectAtPositionAndFocusIt(detailUserInterfaceObject, position);
+        this.insertUserInterfaceObjectAtPosition(detailUserInterfaceObject, position);
+        detailUserInterfaceObject.focus();
     }
 
-    private insertUserInterfaceObjectAtPositionAndFocusIt(detailUserInterfaceObject : UserInterfaceObject, position : number) {
+    private insertUserInterfaceObjectAtPosition(detailUserInterfaceObject : UserInterfaceObject, position : number) {
         List.insertInListAtPosition(this.detailUserInterfaceObjects, detailUserInterfaceObject, position);
         Html.insertChildAtPosition(this.uiElement, detailUserInterfaceObject.getUiElement(), position);
-        detailUserInterfaceObject.focus();
     }
     
     private getOnDeleteEventFunction(userInterfaceObject : UserInterfaceObject) {
@@ -150,7 +160,8 @@ export class DetailsView {
                 App.objProperties.setProperty(semsAddressOfPasteObject, CONTEXT, self.userInterfaceObject.semsAddress);
                 App.obj_in_clipboard_lost_context = false;
             }
-            self.insertUserInterfaceObjectAtPositionAndFocusIt(newDetailUserInterfaceObject, indexOfDetail + 1);
+            self.insertUserInterfaceObjectAtPosition(newDetailUserInterfaceObject, indexOfDetail + 1);
+            newDetailUserInterfaceObject.focus();
         };
     }
 
