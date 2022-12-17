@@ -47,7 +47,7 @@ export class HeadText {
             App.focusedUIO = self.userInterfaceObject;
             self.userInterfaceObject.lastFocusedSubitem = null;
             self.userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUSED, null);
-            self.setCaret(self.getDisplayedText().length);
+            self.ensureFocusedAndSetCaret(self.getDisplayedText().length);
             self.updateBorderStyle();
         };
         let keyActionsMap = KeyActionDefinition.createKeyActions_TextObject(this.textObjectViewController);
@@ -211,13 +211,18 @@ export class HeadText {
         return document.activeElement == this.textDiv;
     }
 
-    public setCaret(position: number) {
+    public ensureFocusedAndSetCaret(position: number) {
+        if (!this.hasFocus()) {
+            this.focus();
+        }
         let range: Range = document.createRange();
-        let selection: Selection = document.getSelection();
-        range.setStart(this.textDiv.childNodes[0], position);
-        range.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(range);
+        if (this.textDiv.childNodes.length > 0) {
+            range.setStart(this.textDiv.childNodes[0], position);
+            range.collapse(true);
+            let selection: Selection = document.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
     }
 
     public toEditView() {
