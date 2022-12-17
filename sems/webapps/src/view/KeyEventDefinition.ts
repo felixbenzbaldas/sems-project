@@ -90,30 +90,6 @@ export class KeyEventDefinition {
             keyEvent.ctrl = true;
             keyEvent.key = "m";
         });
-        this.addMapping(EventTypes.OPEN, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "q";
-        });
-        this.addMapping(EventTypes.REPLACE_TOP_LEVEL_OBJECT, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "a";
-        });
-        this.addMapping(EventTypes.OPEN_OVERVIEW, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "g";
-        });
-        this.addMapping(EventTypes.CUT, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "x";
-        });
-        this.addMapping(EventTypes.COPY, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "c";
-        });
-        this.addMapping(EventTypes.PASTE, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "v";
-        });
         return this.keyMap;
     }
     
