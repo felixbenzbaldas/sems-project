@@ -18,14 +18,6 @@ export class KeyEventDefinition {
         //     keyEvent.sk = true;
         //     keyEvent.key = "XXX";
         // });
-        this.addMapping(EventTypes.FOCUS_PREV, function(keyEvent : KeyEvent) {
-            keyEvent.ctrl = true;
-            keyEvent.key = "ArrowUp";
-        });
-        this.addMapping(EventTypes.FOCUS_NEXT, function(keyEvent : KeyEvent) {
-            keyEvent.ctrl = true;
-            keyEvent.key = "ArrowDown";
-        });
         this.addMapping(EventTypes.SCALE_DOWN, function(keyEvent : KeyEvent) {
             keyEvent.ctrl = true;
             keyEvent.shift = true;
@@ -43,18 +35,20 @@ export class KeyEventDefinition {
             keyEvent.key = "PageDown";
         });
         this.addMapping(EventTypes.FOCUS_PREV, function(keyEvent : KeyEvent) {
+            keyEvent.ctrl = true;
             keyEvent.key = "ArrowUp";
         });
         this.addMapping(EventTypes.FOCUS_NEXT, function(keyEvent : KeyEvent) {
+            keyEvent.ctrl = true;
             keyEvent.key = "ArrowDown";
         });
         this.addMapping(EventTypes.JUMP_BACKWARD, function(keyEvent : KeyEvent) {
             keyEvent.key = "ArrowUp";
-            keyEvent.ctrl = true;
+            keyEvent.alt = true;
         });
         this.addMapping(EventTypes.JUMP_FORWARD, function(keyEvent : KeyEvent) {
             keyEvent.key = "ArrowDown";
-            keyEvent.ctrl = true;
+            keyEvent.alt = true;
         });
         this.addMapping(EventTypes.NEW_SUBITEM, function(keyEvent : KeyEvent) {
             keyEvent.key = "Tab";
