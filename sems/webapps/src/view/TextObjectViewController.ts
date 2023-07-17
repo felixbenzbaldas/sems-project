@@ -74,16 +74,21 @@ export class TextObjectViewController {
             textObjectViewController.headText.focus();
         });
         userInterfaceObject.eventController.addObserver(EventTypes.PASTE, function() {
-            if (textObjectViewController.isCollapsed() && textObjectViewController.bodyAvailable()) {
-                textObjectViewController.expandIfCollapsedAndBodyIsAvailable();
+            if (textObjectViewController.headText.getDisplayedText().length == 0 && !textObjectViewController.bodyAvailable()) {
+                userInterfaceObject.onPasteNextEvent();
+                userInterfaceObject.onDeleteEvent();
             } else {
-                textObjectViewController.ensureExpanded();
-                let semsAddressOfPasteObject = App.clipboard;
-                if (App.obj_in_clipboard_lost_context) {
-                    App.objProperties.setProperty(semsAddressOfPasteObject, CONTEXT, userInterfaceObject.semsAddress);
-                    App.obj_in_clipboard_lost_context = false;
+                if (textObjectViewController.isCollapsed() && textObjectViewController.bodyAvailable()) {
+                    textObjectViewController.expandIfCollapsedAndBodyIsAvailable();
+                } else {
+                    textObjectViewController.ensureExpanded();
+                    let semsAddressOfPasteObject = App.clipboard;
+                    if (App.obj_in_clipboard_lost_context) {
+                        App.objProperties.setProperty(semsAddressOfPasteObject, CONTEXT, userInterfaceObject.semsAddress);
+                        App.obj_in_clipboard_lost_context = false;
+                    }
+                    textObjectViewController.detailsView.createLinkDetailAtPositionAndFocusIt(0, semsAddressOfPasteObject);
                 }
-                textObjectViewController.detailsView.createLinkDetailAtPositionAndFocusIt(0, semsAddressOfPasteObject);
             }
         });
         userInterfaceObject.eventController.addObserver(EventTypes.TOGGLE_EXPAND, function() {
@@ -685,6 +690,23 @@ export class TextObjectViewController {
             self.focus();
         });
     }
+
+    public searchUsages() {
+        this.headText.updateTextProperty();
+        let self = this;
+        SemsServer.searchUsages(this.getSemsAddress(), (listOfObjects : Array<any>) => {
+            console.log("searchUsages | listOfObjects = " + General.stringifyJson(listOfObjects));
+            let jsonObject = listOfObjects.filter(obj => General.primEquals(obj[SEMS_ADDRESS], self.getSemsAddress()))[0];
+            TextObject.update(jsonObject);
+            ObjectLoader.listOfJsonObjectsArrived(listOfObjects);
+            self.ensureExpanded();
+            self.detailsView.updateView();
+            self.headText.update();
+            self.focus();
+        });
+    }
+
+
 
     // callback delivers detailTOVC
     public createContextDetail(text : string, position : number, callback? : ((detailTovc : TextObjectViewController) => void)) {
