@@ -162,4 +162,14 @@ public class SemsHouse {
 		}
 		return searchResult;
 	}
+	
+	public List<SemsObject> searchUsages(String address) {
+		List<SemsObject> searchResult = new LinkedList<SemsObject>();
+		for (SemsObject current : this.semsObjectsMap.values()) {
+			if (current.getDetails().contains(address)) {
+				searchResult.add(current);
+			}
+		}
+		return searchResult;
+	}
 }

@@ -19,7 +19,7 @@ export class TextObject {
     }
 
     public static update(jsonObject) {
-        console.log("TextObject update");
+        console.log("TextObject update | jsonObject = " + JSON.stringify(jsonObject, null, 4));
         console.log(jsonObject[DETAILS].length);
         console.log(jsonObject[PROPERTIES][TEXT]);
         console.log(jsonObject[SEMS_ADDRESS]);

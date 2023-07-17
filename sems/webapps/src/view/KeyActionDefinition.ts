@@ -142,6 +142,12 @@ export class KeyActionDefinition {
             }, function() {
                 textObjectViewController.search();
         });
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = "u";
+            }, function() {
+                textObjectViewController.searchUsages();
+        });
         return map;
     }
 

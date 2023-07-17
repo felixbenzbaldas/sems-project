@@ -138,6 +138,16 @@ public class Web extends HttpServlet {
 				Set<String> loadDependencies = new LoadDependencies(semsAddress).get();
 				cr.setResponse(jsonToString(setToJson(loadDependencies)));
 			});
+			addResponse(USAGES, cr -> {
+				System.out.println("USAGES");
+				SemsObject semsObject = cr.getSemsObject();
+				List<SemsObject> searchResultOfHouseOne = App.semsHouseOne.searchUsages(semsObject.getSemsAddress()); // XXX Sicherheitsüberprüfung?
+				List<String> listOfAddresses = searchResultOfHouseOne.stream().filter(obj -> obj != semsObject).map(obj -> obj.getSemsAddress()).collect(Collectors.toList());
+				semsObject.getDetails().addAll(listOfAddresses);
+				String semsAddress = semsObject.getSemsAddress();
+				Set<String> loadDependencies = new LoadDependencies(semsAddress).get();
+				cr.setResponse(jsonToString(setToJson(loadDependencies)));
+			});
 		}
 	}
 

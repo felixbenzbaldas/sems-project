@@ -69,4 +69,8 @@ export class General {
             f.call(this);
         }
     }
+
+    public static stringifyJson(json) {
+        return JSON.stringify(json, null, 4);
+    }
 }
