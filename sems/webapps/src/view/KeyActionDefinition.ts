@@ -146,7 +146,7 @@ export class KeyActionDefinition {
             keyEvent.sk = true;
             keyEvent.key = "u";
             }, function() {
-                textObjectViewController.searchUsages();
+                textObjectViewController.searchLinkContexts();
         });
         return map;
     }

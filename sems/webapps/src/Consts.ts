@@ -33,6 +33,6 @@ export const CLEAR = "clear";
 export const CLEAN = "clean";
 export const UPDATE = "update";
 export const SEARCH = "search";
-export const USAGES = "usages";
+export const LINK_CONTEXTS = "linkContexts";
 //
 export const OVERVIEW_ADDR = "1-1629";

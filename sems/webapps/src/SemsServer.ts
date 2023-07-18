@@ -1,5 +1,5 @@
 import { App } from "./App";
-import { CONTEXT, CONTEXT_DETAIL_AT_POSITION, CREATE_CONTEXT, DEFAULT_EXPANDED, DELETE_CONTEXT, DELETE_DETAIL, DETAIL, GET_DETAILS, INSERT_LINK_DETAIL_AT_POSITION, IS_PRIVATE, METHOD, POSITION, ROOT_OBJECT, SAVE, SEMS_HOUSE, SEMS_ADDRESS, SET_PRIVATE, SET_TEXT, TEXT_OBJECT, SET_PROPERTY, PROPERTY, GET_OBJ, SUCCESS, CLEAR, CLEAN, UPDATE, SAVE_CHANGES, SEARCH, USAGES} from "./Consts";
+import { CONTEXT, CONTEXT_DETAIL_AT_POSITION, CREATE_CONTEXT, DEFAULT_EXPANDED, DELETE_CONTEXT, DELETE_DETAIL, DETAIL, GET_DETAILS, INSERT_LINK_DETAIL_AT_POSITION, IS_PRIVATE, METHOD, POSITION, ROOT_OBJECT, SAVE, SEMS_HOUSE, SEMS_ADDRESS, SET_PRIVATE, SET_TEXT, TEXT_OBJECT, SET_PROPERTY, PROPERTY, GET_OBJ, SUCCESS, CLEAR, CLEAN, UPDATE, SAVE_CHANGES, SEARCH, LINK_CONTEXTS} from "./Consts";
 import { General } from "./general/General";
 import { ServerRequest } from "./general/ServerRequest";
 
@@ -190,13 +190,13 @@ export class SemsServer {
         serverRequest.doRequest();
     }
 
-    public static searchUsages(semsAddress : string, callback : Function) {
+    public static searchLinkContexts(semsAddress : string, callback : Function) {
         let serverRequest : ServerRequest = new ServerRequest();
         serverRequest.setType_POST();
-        serverRequest.setArg(METHOD, USAGES);
+        serverRequest.setArg(METHOD, LINK_CONTEXTS);
         serverRequest.setArg(SEMS_ADDRESS, semsAddress);
-        serverRequest.callback = function(jsonText) {
-            callback(JSON.parse(jsonText));
+        serverRequest.callback = function(address) {
+            callback(address);
         }
         serverRequest.doRequest();
     }

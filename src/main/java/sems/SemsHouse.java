@@ -163,11 +163,14 @@ public class SemsHouse {
 		return searchResult;
 	}
 	
-	public List<SemsObject> searchUsages(String address) {
-		List<SemsObject> searchResult = new LinkedList<SemsObject>();
+	public List<String> searchLinkContexts(String address) {
+		SemsObject obj = App.get(address);
+		List<String> searchResult = new LinkedList<>();
 		for (SemsObject current : this.semsObjectsMap.values()) {
 			if (current.getDetails().contains(address)) {
-				searchResult.add(current);
+				if (!current.getSemsAddress().equals(obj.props.get(CONTEXT))) {
+					searchResult.add(current.getSemsAddress());
+				}
 			}
 		}
 		return searchResult;

@@ -683,22 +683,15 @@ export class TextObjectViewController {
         });
     }
 
-    public searchUsages() {
-        this.headText.updateTextProperty();
-        let self = this;
-        SemsServer.searchUsages(this.getSemsAddress(), (listOfObjects : Array<any>) => {
-            console.log("searchUsages | listOfObjects = " + General.stringifyJson(listOfObjects));
-            let jsonObject = listOfObjects.filter(obj => General.primEquals(obj[SEMS_ADDRESS], self.getSemsAddress()))[0];
-            TextObject.update(jsonObject);
-            ObjectLoader.listOfJsonObjectsArrived(listOfObjects);
-            self.ensureExpanded();
-            self.detailsView.updateView();
-            self.headText.update();
-            self.focus();
+    public searchLinkContexts() {
+        SemsServer.searchLinkContexts(this.getSemsAddress(), (address : string) => {
+            ObjectLoader.ensureLoaded(address, () => {
+                const uio = ColumnManager.columns[0].createUIOAtPosition(0, address);
+                uio.focus();
+                uio.scaleUp();
+            });
         });
     }
-
-
 
     // callback delivers detailTOVC
     public createContextDetail(text : string, position : number, callback? : ((detailTovc : TextObjectViewController) => void)) {

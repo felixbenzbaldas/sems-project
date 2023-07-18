@@ -37,7 +37,7 @@ public class Consts {
 	public static final String CLEAN = "clean";
 	public static final String UPDATE= "update";
 	public static final String SEARCH = "search";
-	public static final String USAGES = "usages";
+	public static final String LINK_CONTEXTS = "linkContexts";
 	// Persistence
 	public static final String SEMS_ADDRESS_PERSISTENCE = "id";
 	public static final String ID_COUNTER = "idCounter";
