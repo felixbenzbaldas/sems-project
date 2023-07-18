@@ -9,7 +9,8 @@ sems/webapps/ROOT/target/*
 !sems/webapps/ROOT/target/test/
 sems/webapps/ROOT/target/test/*
 !sems/webapps/ROOT/target/test/hamjest
-killRunOpenRoot.bat
+killRunOpen.bat
+runOpen.bat
 props.txt
 sems/webapps/src/privateCode/*
 !sems/webapps/src/privateCode/privateCode.d.ts
