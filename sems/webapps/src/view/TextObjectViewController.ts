@@ -3,6 +3,7 @@ import { CONTEXT, DEFAULT_EXPANDED, IS_PRIVATE, OVERVIEW_ADDR, SEMS_ADDRESS, TEX
 import { Data } from "../data/Data";
 import { DetailsData } from "../data/DetailsData";
 import { ObjectLoader } from "../data/ObjectLoader";
+import { RemoteProperties } from "../data/RemoteProperties";
 import { RemotePropertiesOfSemsObject } from "../data/RemotePropertiesOfSemsObject";
 import { TextObject } from "../data/TextObject";
 import { EventTypes } from "../EventTypes";
@@ -610,20 +611,17 @@ export class TextObjectViewController {
     }
 
     public exportRawText() {
-        if (this.isCollapsed()) {
-            throw 'uio must be expanded!';
-        }
-        // let textArea : HTMLTextAreaElement = document.createElement("textarea");
-        // Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
-        // this.headText.updateTextProperty();
-        // textArea.value = Export.getRawTextOfTree(this, 0);
-        let span : HTMLSpanElement = document.createElement('span');
-        Html.insertChildAtPosition(this.headBody.getBody(), span, 0);
         this.headText.updateTextProperty();
-        span.innerText = Export.getRawTextOfTree(this, 0);
-        span.style.backgroundColor = "gold";
-        span.contentEditable = "true";
-        span.style.whiteSpace = "pre-wrap";
+        SemsServer.createTextObject("raw Text from >>> " + this.getText() + " <<<.", addressOfLabelObject => {
+            SemsServer.createTextObject(Export.getRawTextOfTree(this, 0), addressOfDetail => {
+                SemsServer.createDetail(addressOfLabelObject, addressOfDetail, () => {
+                    ObjectLoader.ensureLoaded(addressOfLabelObject, () => {
+                        ColumnManager.columns[0].createUIOAtPosition(0, addressOfLabelObject).focus();
+                        App.objProperties.setProperty(addressOfLabelObject, DEFAULT_EXPANDED, false);
+                    });
+                });
+            });
+        });
     }
 
     public export_fourDays_safe_html() {
