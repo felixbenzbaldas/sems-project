@@ -1,4 +1,4 @@
-import { OVERVIEW_ADDR } from "./Consts";
+import { DEFAULT_EXPANDED, OVERVIEW_ADDR } from "./Consts";
 import { DetailsData } from "./data/DetailsData";
 import { ObjectLoader } from "./data/ObjectLoader";
 import { RemoteProperties } from "./data/RemoteProperties";
@@ -7,6 +7,7 @@ import { Events } from "./general/Events";
 import { General } from "./general/General";
 import { KeyEvent } from "./general/KeyEvent";
 import { MapWithPrimitiveStringsAsKey } from "./general/MapWithPrimitiveStringsAsKey";
+import { SemsServer } from "./SemsServer";
 import { TestApp } from "./test/TestApp";
 import { Column } from "./view/Column";
 import { ColumnManager } from "./view/ColumnManager";
@@ -307,6 +308,19 @@ export class App {
 
     static setOnlyOneColumn_pres_mode() {
         App.onlyOneColumn = ColumnManager.getNumberOfColumnsByWindowWidth_presMode() == 1;
+    }
+
+    static createLabeledText_ensureLoaded(label : string, text : string, callback : Function) {
+        SemsServer.createTextObject(label, addressOfLabelObject => {
+            SemsServer.createTextObject(text, addressOfDetail => {
+                SemsServer.createDetail(addressOfLabelObject, addressOfDetail, () => {
+                    ObjectLoader.ensureLoaded(addressOfLabelObject, () => {
+                        App.objProperties.setProperty(addressOfLabelObject, DEFAULT_EXPANDED, false);
+                        callback(addressOfLabelObject);
+                    });
+                });
+            });
+        });
     }
 
 }

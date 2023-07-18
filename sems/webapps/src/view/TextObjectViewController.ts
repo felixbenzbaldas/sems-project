@@ -612,26 +612,20 @@ export class TextObjectViewController {
 
     public exportRawText() {
         this.headText.updateTextProperty();
-        SemsServer.createTextObject("raw Text from >>> " + this.getText() + " <<<.", addressOfLabelObject => {
-            SemsServer.createTextObject(Export.getRawTextOfTree(this, 0), addressOfDetail => {
-                SemsServer.createDetail(addressOfLabelObject, addressOfDetail, () => {
-                    ObjectLoader.ensureLoaded(addressOfLabelObject, () => {
-                        ColumnManager.columns[0].createUIOAtPosition(0, addressOfLabelObject).focus();
-                        App.objProperties.setProperty(addressOfLabelObject, DEFAULT_EXPANDED, false);
-                    });
-                });
-            });
+        App.createLabeledText_ensureLoaded("[exported text]", Export.getRawTextOfTree(this, 0), address => {
+            const uio = ColumnManager.columns[0].createUIOAtPosition(0, address);
+            uio.focus();
+            uio.scaleUp();
         });
     }
 
-    public export_fourDays_safe_html() {
-        if (this.isCollapsed()) {
-            throw 'uio must be expanded!';
-        }
-        let textArea : HTMLTextAreaElement = document.createElement("textarea");
-        Html.insertChildAtPosition(this.headBody.getBody(), textArea, 0);
+    public exportHtml() {
         this.headText.updateTextProperty();
-        textArea.value = Export.fourDays_safe_html(this);
+        App.createLabeledText_ensureLoaded("[exported html]", Export.getHtmlOfTree_Safe(this, 0).innerHTML, address => {
+            const uio = ColumnManager.columns[0].createUIOAtPosition(0, address);
+            uio.focus();
+            uio.scaleUp();
+        });
     }
 
     public getListOfDetailUio() : Array<UserInterfaceObject> {

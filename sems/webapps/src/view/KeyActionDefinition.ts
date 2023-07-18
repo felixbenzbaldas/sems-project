@@ -105,7 +105,7 @@ export class KeyActionDefinition {
             keyEvent.sk = true;
             keyEvent.key = "2";
             }, function() {
-                textObjectViewController.export_fourDays_safe_html();
+                textObjectViewController.exportHtml();
         });
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;

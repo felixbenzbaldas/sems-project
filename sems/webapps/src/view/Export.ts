@@ -4,17 +4,6 @@ import { View } from "./View";
 
 export class Export {
 
-    public static fourDays_safe_html(tovc : TextObjectViewController) : string {
-        let div : HTMLDivElement = document.createElement('div');
-        let currentTovc : TextObjectViewController = tovc;
-        div.appendChild(Export.getHtmlOfTree_Safe(currentTovc, 0));
-        for (let i = 0; i < 3; i++) {
-            currentTovc = View.getNextUioOnSameLevel_skippingParents(currentTovc.getUserInterfaceObject()).tovcOpt;
-            div.appendChild(Export.getHtmlOfTree_Safe(currentTovc, 0));
-        }
-        return div.innerHTML;
-    }
-
     public static getHtmlOfTree_Safe(tovc : TextObjectViewController, level : number) : HTMLElement {
         let htmlElement : HTMLElement;
         htmlElement = document.createElement('div');
