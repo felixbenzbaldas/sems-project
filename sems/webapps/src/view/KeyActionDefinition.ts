@@ -119,6 +119,12 @@ export class KeyActionDefinition {
             }, function() {
                 textObjectViewController.headText.toReadView();
         });
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.alt = true;
+            keyEvent.key = "s";
+            }, function() {
+                textObjectViewController.search();
+        });
         return map;
     }
 
@@ -135,12 +141,6 @@ export class KeyActionDefinition {
             keyEvent.key = "i";
             }, function() {
                 textObjectViewController.headText.toEditView();
-        });
-        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "s";
-            }, function() {
-                textObjectViewController.search();
         });
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;

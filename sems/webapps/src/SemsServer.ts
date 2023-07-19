@@ -184,8 +184,8 @@ export class SemsServer {
         serverRequest.setType_POST();
         serverRequest.setArg(METHOD, SEARCH);
         serverRequest.setArg(SEMS_ADDRESS, semsAddress);
-        serverRequest.callback = function(jsonText) {
-            callback(JSON.parse(jsonText));
+        serverRequest.callback = function(address) {
+            callback(address);
         }
         serverRequest.doRequest();
     }

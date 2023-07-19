@@ -172,6 +172,10 @@ export class Column {
         this.insertUserInterfaceObjectAtPosition(listUserInterfaceObject, position);
         return listUserInterfaceObject;
     }
+
+    public createUIOAtLastPosition(address : string) : UserInterfaceObject {
+        return this.createUIOAtPosition(this.listOfUIOs.length, address);
+    }
     
     private createListUserInterfaceObject(semsAddress : string) : UserInterfaceObject {
         let userInterfaceObject = View.createFromSemsAddress(semsAddress, this.userInterfaceObject);

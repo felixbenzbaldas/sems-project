@@ -131,12 +131,12 @@ public class Web extends HttpServlet {
 				SemsObject semsObject = cr.getSemsObject();
 				String searchText = semsObject.getText();
 				List<SemsObject> searchResult = App.search(searchText);
+				SemsObject searchResultObject = App.semsHouseOne.createSemsObject();
 				List<String> listOfAddresses = searchResult.stream().filter(obj -> obj != semsObject).map(obj -> obj.getSemsAddress()).collect(Collectors.toList());
-				semsObject.getDetails().addAll(listOfAddresses.subList(0, Math.min(300, listOfAddresses.size())));
-				semsObject.props.setProperty(TEXT, "Die Suche nach \"" + searchText + "\" ergab folgende Treffer. (" + listOfAddresses.size() + ")");
-				String semsAddress = semsObject.getSemsAddress();
-				Set<String> loadDependencies = new LoadDependencies(semsAddress).get();
-				cr.setResponse(jsonToString(setToJson(loadDependencies)));
+				searchResultObject.getDetails().addAll(listOfAddresses.subList(0, Math.min(300, listOfAddresses.size())));
+				searchResultObject.props.setProperty(TEXT, "Die Suche nach \"" + searchText + "\" ergab folgende Treffer. (" + listOfAddresses.size() + ")");
+				searchResultObject.props.setProperty(DEFAULT_EXPANDED, false);
+				cr.setResponse(searchResultObject.getSemsAddress());
 			});
 			addResponse(LINK_CONTEXTS, cr -> {
 				SemsObject linkContexts = App.semsHouseOne.createSemsObject("[link contexts]");

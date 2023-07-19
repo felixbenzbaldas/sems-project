@@ -671,15 +671,17 @@ export class TextObjectViewController {
 
     public search() {
         this.headText.updateTextProperty();
-        let self = this;
-        SemsServer.search(this.getSemsAddress(), (listOfObjects : Array<any>) => {
-            let jsonObject = listOfObjects.filter(obj => General.primEquals(obj[SEMS_ADDRESS], self.getSemsAddress()))[0];
-            TextObject.update(jsonObject);
-            ObjectLoader.listOfJsonObjectsArrived(listOfObjects);
-            self.ensureExpanded();
-            self.detailsView.updateView();
-            self.headText.update();
-            self.focus();
+        SemsServer.search(this.getSemsAddress(), (address : string) => {
+            ObjectLoader.ensureLoaded(address, () => {
+                let column;
+                if (this.getColumn().getNextColumn()) {
+                    column = this.getColumn().getNextColumn();
+                } else {
+                    column = this.getColumn().getPreviousColumn();
+                }
+                const uio = column.createUIOAtPosition(0, address);
+                uio.scaleUp();
+            });
         });
     }
 
