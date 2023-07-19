@@ -130,9 +130,9 @@ public class Web extends HttpServlet {
 			addResponse(SEARCH, cr -> {
 				SemsObject semsObject = cr.getSemsObject();
 				String searchText = semsObject.getText();
-				List<SemsObject> searchResultOfHouseOne = App.semsHouseOne.search(searchText);
-				List<String> listOfAddresses = searchResultOfHouseOne.stream().filter(obj -> obj != semsObject).map(obj -> obj.getSemsAddress()).collect(Collectors.toList());
-				semsObject.getDetails().addAll(listOfAddresses.subList(0, Math.min(100, listOfAddresses.size())));
+				List<SemsObject> searchResult = App.search(searchText);
+				List<String> listOfAddresses = searchResult.stream().filter(obj -> obj != semsObject).map(obj -> obj.getSemsAddress()).collect(Collectors.toList());
+				semsObject.getDetails().addAll(listOfAddresses.subList(0, Math.min(300, listOfAddresses.size())));
 				semsObject.props.setProperty(TEXT, "Die Suche nach \"" + searchText + "\" ergab folgende Treffer. (" + listOfAddresses.size() + ")");
 				String semsAddress = semsObject.getSemsAddress();
 				Set<String> loadDependencies = new LoadDependencies(semsAddress).get();
@@ -140,10 +140,8 @@ public class Web extends HttpServlet {
 			});
 			addResponse(LINK_CONTEXTS, cr -> {
 				SemsObject linkContexts = App.semsHouseOne.createSemsObject("[link contexts]");
-				List<String> searchResultOfHouseZero= App.semsHouseZero.searchLinkContexts(cr.getSemsObject().getSemsAddress());
-				List<String> searchResultOfHouseOne = App.semsHouseOne.searchLinkContexts(cr.getSemsObject().getSemsAddress());
-				linkContexts.getDetails().addAll(searchResultOfHouseZero);
-				linkContexts.getDetails().addAll(searchResultOfHouseOne);
+				List<String> searchResult= App.searchLinkContexts(cr.getSemsObject().getSemsAddress());
+				linkContexts.getDetails().addAll(searchResult);
 				linkContexts.props.setProperty(DEFAULT_EXPANDED, false);
 				cr.setResponse(linkContexts.getSemsAddress());
 			});

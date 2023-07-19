@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -101,5 +102,28 @@ public class App {
 		allObjects.addAll(semsHouseOne.getObjects());
 		allObjects.addAll(semsHouseZero.getObjects());
 		return allObjects;
+	}
+	
+	public static List<SemsObject> search(String searchText) {
+		List<SemsObject> searchResult = new LinkedList<SemsObject>();
+		for (SemsObject obj : getAllObjects()) {
+			if (obj.getText().toLowerCase().contains(searchText.toLowerCase())) {
+				searchResult.add(obj);
+			}
+		}
+		return searchResult;
+	}
+	
+	public static List<String> searchLinkContexts(String address) {
+		SemsObject obj = App.get(address);
+		List<String> searchResult = new LinkedList<>();
+		for (SemsObject current : getAllObjects()) {
+			if (current.getDetails().contains(address)) {
+				if (!current.getSemsAddress().equals(obj.props.get(CONTEXT))) {
+					searchResult.add(current.getSemsAddress());
+				}
+			}
+		}
+		return searchResult;
 	}
 }

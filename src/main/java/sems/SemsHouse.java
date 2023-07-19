@@ -152,27 +152,4 @@ public class SemsHouse {
 	public void resetListOfDeletedObjects() {
 		listOfDeletedObjects = new LinkedList<String>();
 	}
-	
-	public List<SemsObject> search(String searchText) {
-		List<SemsObject> searchResult = new LinkedList<SemsObject>();
-		for (SemsObject obj : this.semsObjectsMap.values()) {
-			if (obj.getText().toLowerCase().contains(searchText.toLowerCase())) {
-				searchResult.add(obj);
-			}
-		}
-		return searchResult;
-	}
-	
-	public List<String> searchLinkContexts(String address) {
-		SemsObject obj = App.get(address);
-		List<String> searchResult = new LinkedList<>();
-		for (SemsObject current : this.semsObjectsMap.values()) {
-			if (current.getDetails().contains(address)) {
-				if (!current.getSemsAddress().equals(obj.props.get(CONTEXT))) {
-					searchResult.add(current.getSemsAddress());
-				}
-			}
-		}
-		return searchResult;
-	}
 }
