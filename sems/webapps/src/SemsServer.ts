@@ -181,7 +181,7 @@ export class SemsServer {
 
     public static search(semsAddress : string, callback : Function) {
         let serverRequest : ServerRequest = new ServerRequest();
-        serverRequest.setType_GET(); // XXX wird das überhaupt benötigt?
+        serverRequest.setType_POST();
         serverRequest.setArg(METHOD, SEARCH);
         serverRequest.setArg(SEMS_ADDRESS, semsAddress);
         serverRequest.callback = function(jsonText) {
