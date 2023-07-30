@@ -79,22 +79,6 @@ export class KeyActionDefinition {
             }, function() {
                 textObjectViewController.openObject();
         });
-        // SCROLL_BACKWARDS
-        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "t";
-            }, function() {
-                let column = textObjectViewController.getColumn();
-                column.smoothScroll_additive(-280);
-        });
-        // SCROLL_FORWARDS
-        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
-            keyEvent.sk = true;
-            keyEvent.key = "b";
-            }, function() {
-                let column = textObjectViewController.getColumn();
-                column.smoothScroll_additive(280);
-        });
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.sk = true;
             keyEvent.key = "1";
@@ -147,6 +131,22 @@ export class KeyActionDefinition {
             keyEvent.key = "u";
             }, function() {
                 textObjectViewController.searchLinkContexts();
+        });
+        // SCROLL_BACKWARDS
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = "t";
+            }, function() {
+                let column = textObjectViewController.getColumn();
+                column.smoothScroll_additive(-280);
+        });
+        // SCROLL_FORWARDS
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = "b";
+            }, function() {
+                let column = textObjectViewController.getColumn();
+                column.smoothScroll_additive(280);
         });
         return map;
     }
