@@ -11,7 +11,8 @@ export class DetailsData {
     public static map : MapWithPrimitiveStringsAsKey = new MapWithPrimitiveStringsAsKey();
 
     private semsAddress: string;
-    private hasDetailsAfterLoading: boolean;
+    private _hasDetails: boolean;
+    // if details == null that does not mean there are no details. Maybe they are just not loaded.
     private details : Array<string>;
 
 
@@ -21,16 +22,12 @@ export class DetailsData {
         if (App.objProperties.get(detailsData.semsAddress, DEFAULT_EXPANDED)) {
             detailsData.details = json[DETAILS];
         }
-        detailsData.hasDetailsAfterLoading = json[HAS_DETAILS];
+        detailsData._hasDetails = json[HAS_DETAILS];
         DetailsData.map.set(detailsData.semsAddress, detailsData);
     }
 
     public hasDetails() : boolean {
-        if (this.details == null) {
-            return this.hasDetailsAfterLoading;
-        } else {
-            return this.details.length > 0;
-        }
+        return this._hasDetails;
     }
 
     public getDetails() : Array<string> {
@@ -63,6 +60,9 @@ export class DetailsData {
     public deleteDetail(semsAddress : string, position : number) {
         SemsServer.deleteDetail(this.semsAddress, semsAddress);
         List.deleteInListAtPosition(this.details, position);
+        if (this.details.length == 0) {
+            this._hasDetails = false;
+        }
         App.objEvents.triggerEvent(this.semsAddress, EventTypes.DETAILS_CHANGE, null);
     }
 
@@ -71,15 +71,20 @@ export class DetailsData {
         let self = this;
         SemsServer.createContextDetailAtPosition(text, position, this.semsAddress, function(addressOfNewDetail) {
             ObjectLoader.ensureLoaded(addressOfNewDetail, function() {
-                List.insertInListAtPosition(self.details, addressOfNewDetail, position);
+                self.insertDetailAtPosition(addressOfNewDetail, position);
                 App.objEvents.triggerEvent(self.semsAddress, EventTypes.DETAILS_CHANGE, null);
                 callback(addressOfNewDetail);
             });
         });
     }
 
+    private insertDetailAtPosition(detail : string, position : number) {
+        List.insertInListAtPosition(this.details, detail, position);
+        this._hasDetails = true;
+    }
+
     public createLinkDetailAtPostion(detailSemsAddress : string, position : number) {
-        List.insertInListAtPosition(this.details, detailSemsAddress, position);
+        this.insertDetailAtPosition(detailSemsAddress, position);
         SemsServer.insertLinkDetailAtPosition(this.semsAddress, detailSemsAddress, position);
         App.objEvents.triggerEvent(this.semsAddress, EventTypes.DETAILS_CHANGE, null);
     }
@@ -88,14 +93,4 @@ export class DetailsData {
         this.details = [];
     }
 
-    // not used at the moment
-    public setHasDetailsAfterLoading(hasDetailsAfterLoading : boolean) {
-        this.hasDetailsAfterLoading = hasDetailsAfterLoading;
-        App.objEvents.triggerEvent(this.semsAddress, EventTypes.DETAILS_CHANGE, null);
-    }
-
-    public setDetails(details : Array<string>) {
-        this.details = details;
-        App.objEvents.triggerEvent(this.semsAddress, EventTypes.DETAILS_CHANGE, null);
-    }
 }
