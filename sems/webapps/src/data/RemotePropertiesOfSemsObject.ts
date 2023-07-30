@@ -39,6 +39,7 @@ export class RemotePropertiesOfSemsObject {
         this.map = new MapWithPrimitiveStringsAsKey();
     }
 
+    // not used at the moment
     public updateFromJson(json) {
         this.clear();
         let propertiesJson = json[PROPERTIES];

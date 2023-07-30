@@ -5,24 +5,12 @@ import { DetailsData } from "./DetailsData";
 export class TextObject {
     
     public static createTextObjectFromJson(jsonObject) {
-        let address : string = jsonObject[SEMS_ADDRESS];
         App.objProperties.createFromJson(jsonObject);
-        //
-        let details : Array<string> = null;
-        if (App.objProperties.get(address, DEFAULT_EXPANDED)) {
-            details = jsonObject[DETAILS];
-        }
-        //
-        let detailsData = new DetailsData(address, jsonObject[HAS_DETAILS],
-            details);
-        DetailsData.map.set(address, detailsData);
+        DetailsData.createFromJson(jsonObject);
     }
 
+    // not used at the moment
     public static update(jsonObject) {
-        console.log("TextObject update | jsonObject = " + JSON.stringify(jsonObject, null, 4));
-        console.log(jsonObject[DETAILS].length);
-        console.log(jsonObject[PROPERTIES][TEXT]);
-        console.log(jsonObject[SEMS_ADDRESS]);
         let address : string = jsonObject[SEMS_ADDRESS];
         App.objProperties.getPropertiesOfObject(address).updateFromJson(jsonObject);
         //

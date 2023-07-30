@@ -1,5 +1,5 @@
 import { App } from "../App";
-import { DEFAULT_EXPANDED, DETAILS, LOAD_DEPENDENCIES, SEMS_ADDRESS } from "../Consts";
+import { DEFAULT_EXPANDED, DETAILS, HAS_DETAILS, LOAD_DEPENDENCIES, SEMS_ADDRESS } from "../Consts";
 import { List } from "../general/List";
 import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStringsAsKey";
 import { ObjectLoader } from "./ObjectLoader";
@@ -14,12 +14,15 @@ export class DetailsData {
     private hasDetailsAfterLoading: boolean;
     private details : Array<string>;
 
-    constructor(semsAddress : string, hasDetailsAfterLoading : boolean, details : Array<string>) {
-        this.semsAddress = semsAddress;
-        if (App.objProperties.get(semsAddress, DEFAULT_EXPANDED)) {
-            this.details = details;
+
+    public static createFromJson(json) {
+        let detailsData : DetailsData = new DetailsData();
+        detailsData.semsAddress = json[SEMS_ADDRESS];
+        if (App.objProperties.get(detailsData.semsAddress, DEFAULT_EXPANDED)) {
+            detailsData.details = json[DETAILS];
         }
-        this.hasDetailsAfterLoading = hasDetailsAfterLoading;
+        detailsData.hasDetailsAfterLoading = json[HAS_DETAILS];
+        DetailsData.map.set(detailsData.semsAddress, detailsData);
     }
 
     public hasDetails() : boolean {
@@ -85,6 +88,7 @@ export class DetailsData {
         this.details = [];
     }
 
+    // not used at the moment
     public setHasDetailsAfterLoading(hasDetailsAfterLoading : boolean) {
         this.hasDetailsAfterLoading = hasDetailsAfterLoading;
         App.objEvents.triggerEvent(this.semsAddress, EventTypes.DETAILS_CHANGE, null);
