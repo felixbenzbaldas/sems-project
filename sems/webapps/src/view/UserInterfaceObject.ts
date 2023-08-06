@@ -79,6 +79,16 @@ export class UserInterfaceObject {
         this.eventController.triggerEvent(EventTypes.SCALE_DOWN, null);
     }
 
+    public contextsafe_scroll_forward() {
+        for(let uio of this.getListOfChildUios()) {
+            if (uio.scaleDownIsPossible()) {
+                uio.contextsafe_scroll_forward();
+                return;
+            }
+        }
+        this.scaleDown();
+    }
+
     public scaleDownIsPossible(): boolean {
         if (this.tovcOpt != null) {
             return this.tovcOpt.scaleDownIsPossible();

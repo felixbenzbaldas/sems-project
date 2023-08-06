@@ -148,6 +148,14 @@ export class KeyActionDefinition {
                 let column = textObjectViewController.getColumn();
                 column.smoothScroll_additive(280);
         });
+        // SCROLL_CONTEXT_SAFE
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.sk = true;
+            keyEvent.key = "g";
+            }, function() {
+                let column = textObjectViewController.getColumn();
+                column.userInterfaceObject.contextsafe_scroll_forward();
+        });
         return map;
     }
 
