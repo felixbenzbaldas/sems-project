@@ -420,6 +420,19 @@ export class Column {
         }
     }
 
+    public moveToNextColumn(userInterfaceObject : UserInterfaceObject) {
+        let nextColumn : Column;
+        if (this.getNextColumn() != null) {
+            nextColumn = this.getNextColumn();
+        } else if (this.getPreviousColumn() != null) {
+            nextColumn = ColumnManager.columns[0];
+        }
+        this.delete(userInterfaceObject);
+        nextColumn.adaptUIO(userInterfaceObject);
+        nextColumn.insertUserInterfaceObjectAtPosition(userInterfaceObject, nextColumn.getListOfChildUios().length);
+        userInterfaceObject.eventController.triggerEvent(EventTypes.FOCUS_LAST_FOCUSED, null);
+    }
+
     public adaptUIO(uio: UserInterfaceObject) {
         uio.viewContext = this.userInterfaceObject;
         this.setCallbacks(uio);
@@ -492,6 +505,14 @@ export class Column {
             }
         }
         this.getUiElement().scrollTo(scrollConfig);
+    }
+
+    public scrollToTop() {
+        this.scroll_SOLL = 0;
+        this.getUiElement().scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
     }
 
     public updateSOLL(deltaY : number) {

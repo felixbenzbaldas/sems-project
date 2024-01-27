@@ -382,11 +382,15 @@ export class TextObjectViewController {
     }
 
     public open() {
-        if (!this.isCollapsed()) {
-            this.collapseWithoutAnimation();
+        if (this.isTopLevelObject()) {
+            this.getColumn().moveToNextColumn(this.getUserInterfaceObject());
+        } else {
+            if (!this.isCollapsed()) {
+                this.collapseWithoutAnimation();
+            }
+            this.headText.updateTextProperty();
+            App.openObject(this.getSemsAddress());
         }
-        this.headText.updateTextProperty();
-        App.openObject(this.getSemsAddress());
     }
 
     public openAfter() {
