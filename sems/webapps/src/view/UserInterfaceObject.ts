@@ -80,6 +80,9 @@ export class UserInterfaceObject {
     }
 
     public contextsafe_scroll_forward() {
+        if (this.tovcOpt) {
+            this.tovcOpt.getColumn().scrollToTop();
+        }
         for(let uio of this.getListOfChildUios()) {
             if (uio.scaleDownIsPossible()) {
                 uio.contextsafe_scroll_forward();
