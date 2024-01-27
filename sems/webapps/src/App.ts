@@ -7,6 +7,7 @@ import { Events } from "./general/Events";
 import { General } from "./general/General";
 import { KeyEvent } from "./general/KeyEvent";
 import { MapWithPrimitiveStringsAsKey } from "./general/MapWithPrimitiveStringsAsKey";
+import { getPrivateCode } from "./privateCode/privateCode";
 import { SemsServer } from "./SemsServer";
 import { TestApp } from "./test/TestApp";
 import { Column } from "./view/Column";
@@ -44,6 +45,8 @@ export class App {
     // Mapping von KeyEvents auf EventTypes. (Wird von KeyEventDefinition erzeugt.)
     static keyMap = new MapWithPrimitiveStringsAsKey();
     static keyMap_readView = new MapWithPrimitiveStringsAsKey();
+
+    static header : HTMLDivElement;
 
     static widthCalculationSpan;
 
@@ -210,6 +213,9 @@ export class App {
 
     static createLocal() {
         App.installTheme();
+        App.header = document.createElement("div");
+        document.body.appendChild(App.header);
+
         document.body.style.backgroundColor = App.backgroundColor;
         document.body.style.margin = "0rem";
         //
@@ -221,6 +227,7 @@ export class App {
             ColumnManager.columns[0].focusColumnOrFirstObject();
         }, 50);
         ObjectLoader.ensureLoaded(OVERVIEW_ADDR, General.emptyFunction);
+        getPrivateCode().addHeader();
     }
 
     static installTheme() {
