@@ -14,3 +14,4 @@ runOpen.bat
 props.txt
 sems/webapps/src/privateCode/*
 !sems/webapps/src/privateCode/privateCode.d.ts
+/.idea
