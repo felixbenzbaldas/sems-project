@@ -25,11 +25,13 @@ export class View {
 
     // pre-condition: object is loaded
     public static createFromSemsAddress(semsAddress : string, viewContext : UserInterfaceObject) : UserInterfaceObject {
+        let props : RemotePropertiesOfSemsObject = App.objProperties.getPropertiesOfObject(semsAddress);
+        let text : string = props.get(TEXT);
         if (App.LOCAL_MODE) {
-            return TextObjectViewController.installTextObjectViewController(semsAddress, viewContext);
+            if (text.startsWith("#img")) {
+                return ImageView.installImage(semsAddress);
+            }
         } else {
-            let props : RemotePropertiesOfSemsObject = App.objProperties.getPropertiesOfObject(semsAddress);
-            let text : string = props.get(TEXT);
             if (text.startsWith("[Error: object does not exist or access denied.]")) {
                 let userInterfaceObject : UserInterfaceObject = new UserInterfaceObject();
                 userInterfaceObject.uiElement = document.createElement("div");
@@ -40,10 +42,9 @@ export class View {
                 return LinkView.install(semsAddress);
             } else if (text.startsWith("#htext")) {
                 return HypertextView.install(semsAddress);
-            } else {
-                return TextObjectViewController.installTextObjectViewController(semsAddress, viewContext);
             }
         }
+        return TextObjectViewController.installTextObjectViewController(semsAddress, viewContext);
     }
 
     static createDivWithDefaultMargin_innerHtml(innerHtml) {
