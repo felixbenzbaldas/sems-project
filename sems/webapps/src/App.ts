@@ -10,6 +10,7 @@ import { MapWithPrimitiveStringsAsKey } from "./general/MapWithPrimitiveStringsA
 import { getPrivateCode } from "./privateCode/privateCode";
 import { SemsServer } from "./SemsServer";
 import { TestApp } from "./test/TestApp";
+import { TMP_VERSION } from "./Version";
 import { Column } from "./view/Column";
 import { ColumnManager } from "./view/ColumnManager";
 import { KeyActionDefinition } from "./view/KeyActionDefinition";
@@ -18,7 +19,6 @@ import { UserInterfaceObject } from "./view/UserInterfaceObject";
 import { View } from "./view/View";
 
 export class App {
-    static version = 17;
 
     static LOCAL_MODE : boolean = true;
     static EN_VERSION : boolean = false;
@@ -77,7 +77,7 @@ export class App {
     static whitespaceIsDown : boolean = false;
 
     static runApp() {
-        console.log("App-v" + this.version);
+        console.log("App-v" + TMP_VERSION);
         App.extractHrefEnding();
         EventTypeInfo.init();
         App.dynamicConfiguration();
