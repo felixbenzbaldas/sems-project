@@ -1,9 +1,8 @@
 // The expand- and collapse-methods throw an exception when called while instance is busy.
-// Before you use these methods, you have to check, that it is not busy.
 export class AnimatedExpandAndCollapse {
     private outerDiv : HTMLDivElement;
     private innerDiv : HTMLDivElement;
-    public basisAnimationTime : number = 0.11;
+    public basisAnimationTime : number = 1;
     public basisHeight : number = 60;
     private isCollapsedFlag : boolean;
 
@@ -15,6 +14,8 @@ export class AnimatedExpandAndCollapse {
         this.outerDiv.appendChild(this.innerDiv);
         this.outerDiv.style.overflow = "hidden";
         this.outerDiv.style.height = "0px";
+        this.outerDiv.style.transitionProperty = "height";
+        this.outerDiv.style.transitionTimingFunction = "linear";
         this.isCollapsedFlag = true;
     }
 
@@ -24,7 +25,6 @@ export class AnimatedExpandAndCollapse {
 
     private checkBusy() {
         if (this.isBusyFlag) {
-            alert("Error in AnimatedExpandAndCollapse - instance is busy!");
             throw 'Error in AnimatedExpandAndCollapse - instance is busy!';
         }
     }
@@ -52,8 +52,9 @@ export class AnimatedExpandAndCollapse {
     }
 
     private setEffectiveAnimationTime() {
-        let effectiveAnimationTime = this.basisAnimationTime * Math.pow(this.innerDiv.offsetHeight / this.basisHeight, 1 / 3);
-        this.outerDiv.style.transition = "height " + effectiveAnimationTime + "s";
+        // let effectiveAnimationTime = this.basisAnimationTime * Math.pow(this.innerDiv.offsetHeight / this.basisHeight, 1 / 3);
+        let effectiveAnimationTime = Math.min(this.basisAnimationTime * this.innerDiv.offsetHeight / this.basisHeight, 5);
+        this.outerDiv.style.transitionDuration = effectiveAnimationTime + "s";
         return effectiveAnimationTime;
     }
     

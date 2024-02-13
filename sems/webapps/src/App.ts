@@ -227,7 +227,7 @@ export class App {
             ColumnManager.columns[0].focusColumnOrFirstObject();
         }, 50);
         ObjectLoader.ensureLoaded(OVERVIEW_ADDR, General.emptyFunction);
-        getPrivateCode().addHeader();
+        // getPrivateCode().addHeader();
     }
 
     static installTheme() {
