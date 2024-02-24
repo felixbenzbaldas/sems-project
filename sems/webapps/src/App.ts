@@ -56,11 +56,13 @@ export class App {
 
     static focusedUIO : UserInterfaceObject;
 
-    static backgroundColor : string = "grey";
-    static fontColor : string = "yellow";
-    static colorForFocusedObjInNormalMode : string = "orange";
-    static secondColor : string = "#efefef"; // light grey
-    static thirdColor = "orange";
+    static backgroundColor : string;
+    static fontColor : string;
+    static buttonFontColor : string;
+    static buttonFontColor_selected : string;
+    static selectionColor : string;
+    static focusBorderColor : string;
+    static focusBorderColor_editView : string;
 
     private static globalKeyActions : MapWithPrimitiveStringsAsKey;
 
@@ -240,18 +242,25 @@ export class App {
         let dullBlue = "rgb(102, 102, 255)";
         let darkBlue = "rgb(45, 45, 134)";
         let turquoise = "rgb(51, 204, 204)";
-        // 
-        // App.backgroundColor = lightGold;
-        // App.fontColor = redViolett;
-        // App.secondColor = "black";
-        // 
-        // App.backgroundColor = darkerGold;
-        // App.fontColor = darkDarkViolett;
+        let lightGrey = "#efefef";
         //
+        // THEME: gold font and violett background
         App.backgroundColor = darkDarkViolett;
         App.fontColor = darkGold;
-        App.secondColor = dullBlue;
-        App.thirdColor = turquoise;
+        App.buttonFontColor = dullBlue;
+        App.buttonFontColor_selected = turquoise;
+        App.selectionColor = turquoise;
+        App.focusBorderColor = "orange";
+        App.focusBorderColor_editView = "green";
+        //
+        // THEME: yellow on grey
+        // App.backgroundColor = "grey";
+        // App.fontColor = "yellow";
+        // App.buttonFontColor = lightGrey;
+        // App.buttonFontColor_selected = lightGrey;
+        // App.selectionColor = "orange";
+        // App.focusBorderColor = "orange";
+        // App.focusBorderColor_editView = "green";
     }
 
     static createPlaceholderDiv() {

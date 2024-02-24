@@ -363,7 +363,7 @@ export class Column {
         if (App.LOCAL_MODE) {
             this.focusMark = document.createElement("div");
             this.focusMark.style.height = "3px";
-            this.focusMark.style.backgroundColor = App.thirdColor;
+            this.focusMark.style.backgroundColor = App.selectionColor;
             Html.insertChildAtPosition(this.userInterfaceObject.uiElement, this.focusMark, 0);
         }
     }

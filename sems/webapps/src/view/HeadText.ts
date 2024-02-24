@@ -277,9 +277,9 @@ export class HeadText {
     public updateBorderStyle() {
         if (this.hasFocus()) {
             if (this.editView) {
-                this.uiElement.style.borderColor = "green";
+                this.uiElement.style.borderColor = App.focusBorderColor_editView;
             } else {
-                this.uiElement.style.borderColor = "orange";
+                this.uiElement.style.borderColor = App.focusBorderColor;
             }
         } else {
             this.uiElement.style.borderColor = App.backgroundColor;
