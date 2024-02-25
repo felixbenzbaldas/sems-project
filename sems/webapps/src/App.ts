@@ -245,22 +245,22 @@ export class App {
         let lightGrey = "#efefef";
         //
         // THEME: gold font and violett background
-        App.backgroundColor = darkDarkViolett;
-        App.fontColor = darkGold;
-        App.buttonFontColor = dullBlue;
-        App.buttonFontColor_selected = turquoise;
-        App.selectionColor = turquoise;
-        App.focusBorderColor = "orange";
-        App.focusBorderColor_editView = "green";
-        //
-        // THEME: yellow on grey
-        // App.backgroundColor = "grey";
-        // App.fontColor = "yellow";
-        // App.buttonFontColor = lightGrey;
-        // App.buttonFontColor_selected = lightGrey;
-        // App.selectionColor = "orange";
+        // App.backgroundColor = darkDarkViolett;
+        // App.fontColor = darkGold;
+        // App.buttonFontColor = dullBlue;
+        // App.buttonFontColor_selected = turquoise;
+        // App.selectionColor = turquoise;
         // App.focusBorderColor = "orange";
         // App.focusBorderColor_editView = "green";
+        //
+        // THEME: yellow on grey
+        App.backgroundColor = "grey";
+        App.fontColor = "yellow";
+        App.buttonFontColor = lightGrey;
+        App.buttonFontColor_selected = lightGrey;
+        App.selectionColor = "orange";
+        App.focusBorderColor = "orange";
+        App.focusBorderColor_editView = "green";
     }
 
     static createPlaceholderDiv() {
