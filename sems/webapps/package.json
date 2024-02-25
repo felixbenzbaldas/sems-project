@@ -1,0 +1,13 @@
+{
+  "name": "sems-client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Felix Benz-Baldas",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
