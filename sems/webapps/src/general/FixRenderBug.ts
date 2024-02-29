@@ -20,6 +20,6 @@ export class FixRenderBug {
     }
 
     static rerenderBackgroundColor(htmlElement : HTMLElement) {
-        htmlElement.style.backgroundColor = App.backgroundColor;
+        htmlElement.style.backgroundColor = App.theme.backgroundColor;
     }
 }

@@ -78,9 +78,9 @@ export class StringRelationshipView {
         this.headBody.getHead().innerText = "[" + stringProperty + "]";
         this.headBody.getHead().style.fontSize = "0.9rem";
         if (App.LOCAL_MODE) {
-            this.headBody.getHead().style.color = App.buttonFontColor;
+            this.headBody.getHead().style.color = App.theme.buttonFontColor;
         } else {
-            this.headBody.getHead().style.color = App.buttonFontColor_selected;
+            this.headBody.getHead().style.color = App.theme.buttonFontColor_selected;
         }
         HeadTextUtil.setStyle(this.headBody.getHead());
         let self = this;
@@ -150,7 +150,7 @@ export class StringRelationshipView {
         App.manualFocus = this;
         App.focusedUIO = this.uio;
         if (App.LOCAL_MODE) {
-            this.headBody.getHead().style.color = App.buttonFontColor_selected;
+            this.headBody.getHead().style.color = App.theme.buttonFontColor_selected;
         }
     }
 
@@ -166,7 +166,7 @@ export class StringRelationshipView {
         App.manualFocus = null;
         App.focusedUIO = null;
         if (App.LOCAL_MODE) {
-            this.headBody.getHead().style.color = App.buttonFontColor;
+            this.headBody.getHead().style.color = App.theme.buttonFontColor;
         }
     }
 

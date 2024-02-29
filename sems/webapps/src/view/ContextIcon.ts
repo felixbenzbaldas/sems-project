@@ -12,7 +12,7 @@ export class ContextIcon {
         contextIconElement.style.marginLeft = "-" + ContextIcon.CONTEXT_ICON_WIDTH;
         contextIconElement.style.width = ContextIcon.CONTEXT_ICON_WIDTH;
         contextIconElement.style.float = "left";
-        contextIconElement.style.color = App.fontColor;
+        contextIconElement.style.color = App.theme.fontColor;
         return contextIconElement;
     }
 

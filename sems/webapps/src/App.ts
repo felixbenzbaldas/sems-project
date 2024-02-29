@@ -17,6 +17,8 @@ import { KeyActionDefinition } from "./view/KeyActionDefinition";
 import { KeyEventDefinition } from "./view/KeyEventDefinition";
 import { UserInterfaceObject } from "./view/UserInterfaceObject";
 import { View } from "./view/View";
+import {Theme} from "./Theme";
+import {Color} from "./Color";
 
 export class App {
 
@@ -56,13 +58,7 @@ export class App {
 
     static focusedUIO : UserInterfaceObject;
 
-    static backgroundColor : string;
-    static fontColor : string;
-    static buttonFontColor : string;
-    static buttonFontColor_selected : string;
-    static selectionColor : string;
-    static focusBorderColor : string;
-    static focusBorderColor_editView : string;
+    static theme : Theme;
 
     private static globalKeyActions : MapWithPrimitiveStringsAsKey;
 
@@ -197,11 +193,11 @@ export class App {
 
     static createWebsite() {
         App.setOnlyOneColumn_pres_mode();
-        App.backgroundColor = "rgb(204, 255, 204)"; // hellgrün
-        App.fontColor = "rgb(255, 102, 153)"; // hell-violett
+        App.theme.backgroundColor = "rgb(204, 255, 204)"; // hellgrün
+        App.theme.fontColor = "rgb(255, 102, 153)"; // hell-violett
         App.fontFamily = "Calibri";
         App.fontSize = "20px";
-        document.body.style.backgroundColor = App.backgroundColor;
+        document.body.style.backgroundColor = App.theme.backgroundColor;
         document.body.style.margin = "0rem";
         document.body.style.overflow = "hidden";
         ColumnManager.init();
@@ -214,11 +210,11 @@ export class App {
     }
 
     static createLocal() {
-        App.installTheme();
+        App.theme = getPrivateCode().getTheme();
         App.header = document.createElement("div");
         document.body.appendChild(App.header);
 
-        document.body.style.backgroundColor = App.backgroundColor;
+        document.body.style.backgroundColor = App.theme.backgroundColor;
         document.body.style.margin = "0rem";
         //
         document.body.style.overflow = "hidden";
@@ -230,37 +226,6 @@ export class App {
         }, 50);
         ObjectLoader.ensureLoaded(OVERVIEW_ADDR, General.emptyFunction);
         // getPrivateCode().addHeader();
-    }
-
-    static installTheme() {
-        let lightGold = "rgb(255, 247, 204)";
-        let redViolett = "rgb(179, 0, 89)";
-        let darkViolett = "rgb(153, 0, 204)";
-        let darkerGold = "rgb(230, 138, 0)";
-        let darkGold = "rgb(204, 173, 0)";
-        let darkDarkViolett = "rgb(96, 0, 128)";
-        let dullBlue = "rgb(102, 102, 255)";
-        let darkBlue = "rgb(45, 45, 134)";
-        let turquoise = "rgb(51, 204, 204)";
-        let lightGrey = "#efefef";
-        //
-        // THEME: gold font and violett background
-        // App.backgroundColor = darkDarkViolett;
-        // App.fontColor = darkGold;
-        // App.buttonFontColor = dullBlue;
-        // App.buttonFontColor_selected = turquoise;
-        // App.selectionColor = turquoise;
-        // App.focusBorderColor = "orange";
-        // App.focusBorderColor_editView = "green";
-        //
-        // THEME: yellow on grey
-        App.backgroundColor = "grey";
-        App.fontColor = "yellow";
-        App.buttonFontColor = lightGrey;
-        App.buttonFontColor_selected = lightGrey;
-        App.selectionColor = "orange";
-        App.focusBorderColor = "orange";
-        App.focusBorderColor_editView = "green";
     }
 
     static createPlaceholderDiv() {

@@ -73,7 +73,7 @@ export class View {
         htmlElement.style.paddingRight = "0rem";
         //
         htmlElement.style.borderLeft = "solid";
-        htmlElement.style.borderColor = App.fontColor;
+        htmlElement.style.borderColor = App.theme.fontColor;
         htmlElement.style.borderLeftWidth = View.DEFAULT_BORDER_WIDTH;
     }
 

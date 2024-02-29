@@ -269,7 +269,7 @@ export class HeadText {
             if (!this.userInterfaceObject.semsAddress.startsWith("1-")) {
                 return "green";
             } else {
-                return App.fontColor;
+                return App.theme.fontColor;
             }
         }
     }
@@ -277,12 +277,12 @@ export class HeadText {
     public updateBorderStyle() {
         if (this.hasFocus()) {
             if (this.editView) {
-                this.uiElement.style.borderColor = App.focusBorderColor_editView;
+                this.uiElement.style.borderColor = App.theme.focusBorderColor_editView;
             } else {
-                this.uiElement.style.borderColor = App.focusBorderColor;
+                this.uiElement.style.borderColor = App.theme.focusBorderColor;
             }
         } else {
-            this.uiElement.style.borderColor = App.backgroundColor;
+            this.uiElement.style.borderColor = App.theme.backgroundColor;
         }
     }
 
