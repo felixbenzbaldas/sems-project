@@ -16,3 +16,4 @@ sems/webapps/src/privateCode/*
 !sems/webapps/src/privateCode/privateCode.d.ts
 /.idea
 /sems/webapps/node_modules/*
+/sems/webapps/.idea/
