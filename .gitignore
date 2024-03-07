@@ -17,3 +17,8 @@ sems/webapps/src/privateCode/*
 /.idea
 /sems/webapps/node_modules/*
 /sems/webapps/.idea/
+
+
+.gradle
+build/
+gradle/
