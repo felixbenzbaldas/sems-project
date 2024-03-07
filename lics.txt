@@ -1,0 +1,4 @@
+This file contains licences of dependencies used in this project.
+
+- https://github.com/TNG/JGiven?tab=Apache-2.0-1-ov-file#readme
+- https://github.com/FasterXML/jackson-databind?tab=Apache-2.0-1-ov-file#readme
