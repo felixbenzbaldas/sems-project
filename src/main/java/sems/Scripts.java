@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.eclipse.jdt.internal.compiler.ast.AllocationExpression;
-
 public class Scripts {
 	
 	private static List<String> rootObjects = Arrays.asList("1-44451244", "1-1629");
@@ -43,7 +41,7 @@ public class Scripts {
 			objectsThatAreAccessibleFromRoot.addAll(newObjects);
 		}
 		Set<SemsObject> allObjects = App.getAllObjects();
-		System.out.println("zu löschen: " + (allObjects.size() - objectsThatAreAccessibleFromRoot.size()));
+		System.out.println("zu lï¿½schen: " + (allObjects.size() - objectsThatAreAccessibleFromRoot.size()));
 		for (SemsObject obj : allObjects) {
 			if (!objectsThatAreAccessibleFromRoot.contains(obj)) {
 				// delete text to be sure
@@ -71,7 +69,7 @@ public class Scripts {
 					if (array.length >= 2) {
 						counter++;
 						System.out.println("absolutes Gewicht: " + array[0]);
-						System.err.println("tägliches Gewicht: " + array[1]);
+						System.err.println("tï¿½gliches Gewicht: " + array[1]);
 						int absWeight = Integer.parseInt(array[0]);
 						int dailyWeight = Integer.parseInt(array[1]);
 						int newAbsWeight = absWeight + dailyWeight;
