@@ -1,1 +1,0 @@
-export const TMP_VERSION = 1;
