@@ -1,4 +1,4 @@
-package sems;
+package sems.general;
 
 import java.util.Random;
 
@@ -15,7 +15,7 @@ public class RandomString {
 
     public RandomString() {
         this.allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
-        this.length = 9;
+        this.length = 10;
     }
 
     public String next() {

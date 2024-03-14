@@ -9,21 +9,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import sems.general.JsonUtil;
-import sems.general.Utils;
+import sems.general.RandomString;
 
 public class SemsHouse {
 	private SemsObject rootObject;
 	private Map<String, SemsObject> semsObjectsMap = new HashMap<>();
-	private int idCounter = 0;
 	private List<String> listOfDeletedObjects = new LinkedList<String>();
 	
 	private List<String> doNotLoadList = new LinkedList<String>();
+
+	private RandomString randomString = new RandomString();
 
 	
 	public static SemsHouse createFromJson(Object json) {
 		Map<String, Object> jsonObject = (Map<String, Object>) json;
 		SemsHouse semsHouse = new SemsHouse();
-		semsHouse.setIdCounter(JsonUtil.getInt(jsonObject, ID_COUNTER));
 		for (Object obj: JsonUtil.getList(jsonObject, OBJECTS)) {
 			SemsObject semsObject = SemsObject.createFromJson(obj, semsHouse);
 			semsHouse.semsObjectsMap.put(semsObject.getSemsAddress(), semsObject);
@@ -39,9 +39,6 @@ public class SemsHouse {
 			semsHouse.doNotLoadList.addAll(JsonUtil.getList(jsonObject, DELETED_OBJECTS_LIST).stream().map(
 					semsAddress -> (String) semsAddress
 					).collect(Collectors.toList()));
-		}
-		if (jsonObject.containsKey(ID_COUNTER)) {
-			semsHouse.setIdCounter(JsonUtil.getInt(jsonObject, ID_COUNTER));
 		}
 		for (Object obj: JsonUtil.getList(jsonObject, OBJECTS)) {
 			String semsAddressOfJsonObj = getSemsAddressOfJsonObj(obj);
@@ -65,7 +62,6 @@ public class SemsHouse {
 	public Object toJson() {
 		Map<String, Object> jsonObject = new HashMap<String, Object>();
 		jsonObject.put(ROOT_OBJECT, getRootObject().getSemsAddress());
-		jsonObject.put(ID_COUNTER, getIdCounter());
 		List<Object> objects = new LinkedList<Object>();
 		for (SemsObject semsObject : getObjects()) {
 			objects.add(semsObject.toJson());
@@ -88,8 +84,7 @@ public class SemsHouse {
 	}
 	
 	public String createNewSemsName() {
-		String newSemsName = Utils.getRandom(2) + String.valueOf(idCounter++) + Utils.getRandom(2);
-		return newSemsName;
+		return randomString.next();
 	}
 	
 	public SemsObject createSemsObject(String text) {
@@ -125,13 +120,6 @@ public class SemsHouse {
 		this.rootObject = obj;
 	}
 
-	public int getIdCounter() {
-		return idCounter;
-	}
-	public void setIdCounter(int idCounter) {
-		this.idCounter = idCounter;
-	}
-	
 	public Collection<SemsObject> getObjects() {
 		return semsObjectsMap.values();
 	}

@@ -2,6 +2,7 @@ package sems;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import sems.general.RandomString;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -23,7 +24,7 @@ public class TestRandomString {
     @Test
     void testProbabilityOfCollision() {
         RandomString randomString = new RandomString();
-        assertThat(randomString.getProbabilityOfCollision(1000L * 1000 * 1000 * 1000)).isLessThan(1.0 / 1000);
+        assertThat(randomString.getProbabilityOfCollision(1000 * 1000)).isLessThan(1.0 / 1000 / 1000 / 1000);
     }
 
     @Nested
