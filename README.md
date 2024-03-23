@@ -19,7 +19,7 @@ Der Unterstrich zeigt, dass man den Punkt ein- bzw. ausklappen kann:
 
 ![](images/expanded.png)
 
-Wenn ein Punkt außerhalb seines Kontexts zu sehen ist, dann erscheint ein entsprechner Button darunter.
+Wenn ein Punkt außerhalb seines Kontexts zu sehen ist, dann erscheint ein entsprechender Button darunter.
 Mit Klick auf "Kontext", kann man den Kontext unterhalb des Objektes aufklappen.
 
 ![](images/context.png)
@@ -36,6 +36,6 @@ Bilder können innerhalb der Gliederung angezeigt werden:
 
 ![](images/img.png)
 
-Sems kann komplett per Tastatur bedient werden. Beispiel: Um zwischen Punkten zu navigieren werden die Buchstaben "i" und "k" verwendet (vowärts und rückwärts).
+Sems kann komplett per Tastatur bedient werden. Beispiel: Um zwischen Punkten zu navigieren werden die Buchstaben "i" und "k" verwendet (vorwärts und rückwärts).
 
 Punkte können hinzugefügt und editiert werden.
