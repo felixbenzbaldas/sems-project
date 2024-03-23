@@ -24,7 +24,7 @@ Mit Klick auf "Kontext", kann man den Kontext unterhalb des Objektes aufklappen.
 
 ![](images/context.png)
 
-Objekte können an mehren Stellen "eingehängt" werden:
+Objekte können an mehreren Stellen "eingehängt" werden:
 
 ![](images/insert.png)
 
