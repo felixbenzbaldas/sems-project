@@ -9,6 +9,10 @@ images and structured data.
 - improve project description
 - refactor
 
+#### Design principle
+
+The visual design principle of sems is described and analyzed in my [bachelor thesis](https://www.dropbox.com/scl/fi/didrs41osq94s3agbclxn/Details-im-Kontext-anzeigen.pdf?rlkey=c374hlvzoskz4fbkevfdgfzsj&dl=0).
+
 #### What can you do with Sems?
 
 Mit Sems kann man Gliederungen erstellen:
