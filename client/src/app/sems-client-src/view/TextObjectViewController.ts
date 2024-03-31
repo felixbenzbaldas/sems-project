@@ -714,4 +714,12 @@ export class TextObjectViewController {
         this.headText.setDisplayedText(text);
         this.headText.updateTextProperty();
     }
+
+    selectARandomDetail() {
+        let numberOfDetails = this.getListOfDetailUio().length;
+        let index = Math.floor(Math.random() * numberOfDetails);
+        let randomDetail : TextObjectViewController = this.getListOfDetailUio()[index].tovcOpt;
+        randomDetail.setText(" :-) " + randomDetail.getText());
+    }
+
 }

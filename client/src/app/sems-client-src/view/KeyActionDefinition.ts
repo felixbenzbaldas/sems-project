@@ -107,6 +107,13 @@ export class KeyActionDefinition {
             }, function() {
                 textObjectViewController.search();
         });
+        KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
+            keyEvent.ctrl = true;
+            keyEvent.shift = true;
+            keyEvent.key = "*";
+            }, function() {
+                textObjectViewController.selectARandomDetail();
+        });
         return map;
     }
 
