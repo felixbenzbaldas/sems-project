@@ -43,3 +43,15 @@ Bilder können innerhalb der Gliederung angezeigt werden:
 Sems kann komplett per Tastatur bedient werden. Beispiel: Um zwischen Punkten zu navigieren werden die Buchstaben "i" und "k" verwendet (vorwärts und rückwärts).
 
 Punkte können hinzugefügt und editiert werden.
+
+#### Installation and start
+
+- create gradle.properties and set deploymentPath
+- create props.txt from template-props.txt
+- create file tomcat/bin/setenv.bat from tomcat/bin/template-setenv.bat 
+- set environment variable CATALINA_HOME as described in *tomcat/Apache Tomcat/RUNNING.txt*
+- gradle buildClient
+- gradle localDeployNoClientBuild
+- tomcat-app/bin/startup.bat
+- open browser and navigate to http://localhost:8080/?auth=[individual]
+- see KeyActionDefinition.ts and KeyEventDefinition.ts for usage of keys
