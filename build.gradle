@@ -24,17 +24,6 @@ test {
     useJUnitPlatform()
 }
 
-task localDeployServer {
-    dependsOn(build)
-    doLast {
-        delete 'sems/webapps/server/WEB-INF/classes'
-        copy {
-            from 'build/classes/java/main'
-            into 'sems/webapps/server/WEB-INF/classes'
-        }
-    }
-}
-
 task buildClient {
     doLast {
         exec {
@@ -44,17 +33,21 @@ task buildClient {
     }
 }
 
-task localDeployClient {
-    dependsOn(buildClient)
+task localDeploy {
+    dependsOn(build, buildClient)
     doLast {
-        delete 'sems/webapps/ROOT'
+        delete deploymentPath + '/tomcat-app'
+        copy {
+            from 'sems'
+            into deploymentPath + '/tomcat-app'
+        }
+        copy {
+            from 'build/classes/java/main'
+            into deploymentPath +  '/tomcat-app/webapps/server/WEB-INF/classes'
+        }
         copy {
             from 'client/dist/client/browser'
-            into 'sems/webapps/ROOT'
+            into deploymentPath + '/tomcat-app/webapps/ROOT'
         }
     }
-}
-
-task localDeploy {
-    dependsOn(localDeployServer, localDeployClient)
 }

@@ -15,3 +15,8 @@ gradle/
 
 killRunOpen.bat
 runOpen.bat
+
+gradle.properties
+
+sems/bin/setenv.bat
+/gradle.properties

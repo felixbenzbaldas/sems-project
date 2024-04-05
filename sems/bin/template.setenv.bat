@@ -1,0 +1,1 @@
+set CATALINA_OPTS=-DpropertiesPath=[path to props.txt file]
