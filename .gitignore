@@ -1,22 +1,8 @@
 .settings
-sems/logs/
-sems/webapps/server/WEB-INF/classes/*
-sems/webapps/ROOT/*
-
-props.txt
 /.idea
-/sems/webapps/node_modules/*
-/sems/webapps/.idea/
 
 .gradle
 build/
 gradle/
-
-
-killRunOpen.bat
-runOpen.bat
-
+tomcat/bin/setenv.bat
 gradle.properties
-
-sems/bin/setenv.bat
-/gradle.properties
