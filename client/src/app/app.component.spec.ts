@@ -1,5 +1,6 @@
 import { WebAdapter } from "./WebAdapter";
 import { SemsObject } from "./SemsObject";
+import { Observable } from "rxjs";
 
 describe('app', () => {
 
@@ -20,5 +21,15 @@ describe('app', () => {
     expect(semsObject).toBeTruthy();
   });
 
+  it('test add detail', done => {
+    let semsObject = new SemsObject();
+    let observable : Observable<String>  = semsObject.addDetail(new SemsObject());
+    observable.subscribe({
+      next: message => {
+        expect(message).toBe("success");
+        done();
+      }
+    });
+  });
 
 });
