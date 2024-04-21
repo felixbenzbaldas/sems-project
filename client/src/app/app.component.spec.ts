@@ -22,8 +22,11 @@ describe('app', () => {
 
   it('test add detail', async () => {
     let semsObject = new SemsObject();
-    let response = await semsObject.addDetail(new SemsObject());
-    expect(response).toBe("1-fj46jrfirt");
+    let detail = new SemsObject();
+
+    await semsObject.addDetail(detail);
+
+    expect(semsObject.getDetails()[0]).toEqual(detail);
   });
 
 });

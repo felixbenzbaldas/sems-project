@@ -1,16 +1,16 @@
-import { Observable, firstValueFrom, of } from "rxjs";
 
 export class SemsObject {
 
 
   private details : Array<SemsObject> = [];
 
-  addDetail(detail: SemsObject) : Promise<String> {
-    return firstValueFrom(of("1-fj46jrfirt"));
+  addDetail(detail: SemsObject) : Promise<void> {
+    this.details.push(detail);
+    return new Promise<void>(resolve => { resolve(); });
   }
 
   getDetails() : Array<SemsObject> {
-    return [];
+    return this.details;
   }
 
 }
