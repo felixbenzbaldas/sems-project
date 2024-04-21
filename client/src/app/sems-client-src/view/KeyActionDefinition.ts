@@ -1,6 +1,7 @@
 import { App } from "../App";
 import { KeyEvent } from "../general/KeyEvent";
 import { MapWithPrimitiveStringsAsKey } from "../general/MapWithPrimitiveStringsAsKey";
+import { getMacro } from "../macro/sems-macro";
 import { SemsServer } from "../SemsServer";
 import { Textgeneration } from "../semsWeb/Textgeneration";
 import { ColumnManager } from "./ColumnManager";
@@ -15,6 +16,11 @@ export class KeyActionDefinition {
     public static createKeyActions_TextObject(textObjectViewController : TextObjectViewController) : MapWithPrimitiveStringsAsKey {
         let map = new MapWithPrimitiveStringsAsKey();
         let uio : UserInterfaceObject = textObjectViewController.getUserInterfaceObject();
+        try {
+            getMacro().addKeyEvents(map, textObjectViewController);
+        } catch (error) {
+            console.warn("Could not execute macro!");
+        }
         KeyActionDefinition.addKeyEvent(map, function(keyEvent : KeyEvent) {
             keyEvent.ctrl = true;
             keyEvent.key = "2";

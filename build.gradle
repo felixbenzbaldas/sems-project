@@ -26,8 +26,37 @@ test {
 
 task buildClient {
     doLast {
+        copy {
+            from 'client'
+            into buildClientPath
+        }
+        copy {
+            from macroFolder
+            into buildClientPath + '/src/app/sems-client-src/macro/'
+        }
         exec {
-            workingDir 'client'
+            workingDir buildClientPath
+            commandLine 'cmd', '/c', 'ng build'
+        }
+    }
+}
+
+task copyClientExcludeNodeModules(type: Copy) {
+    from ('client') {
+        exclude '/node_modules/*', '/.angular/'
+    }
+    into buildClientPath
+}
+
+task buildClient_excludeNodeModules {
+    dependsOn(copyClientExcludeNodeModules)
+    doLast {
+        copy {
+            from macroFolder
+            into buildClientPath + '/src/app/sems-client-src/macro/'
+        }
+        exec {
+            workingDir buildClientPath
             commandLine 'cmd', '/c', 'ng build'
         }
     }
@@ -46,8 +75,18 @@ task localDeployNoClientBuild {
             into deploymentPath +  '/tomcat-app/webapps/server/WEB-INF/classes'
         }
         copy {
-            from 'client/dist/client/browser'
+            from buildClientPath + '/dist/client/browser'
             into deploymentPath + '/tomcat-app/webapps/ROOT'
+        }
+    }
+}
+
+task localDeploy_excludeNodeModules {
+    dependsOn(buildClient, localDeployNoClientBuild)
+    doLast {
+        copy {
+            from clientResources
+            into deploymentPath + '/tomcat-app/webapps/ROOT/resources/'
         }
     }
 }
