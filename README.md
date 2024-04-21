@@ -4,10 +4,7 @@ Sems could be described as an outliner tool.
 The goal of Sems is a convenient way to work with notes,
 images and structured data.
 
-#### TODO
-- improve project setup
-- improve project description
-- refactor
+At the moment the code quality is not on the level of clean code. The goal is to improve at least the quality of the most important parts.
 
 #### Design principle
 
@@ -46,7 +43,7 @@ Punkte können hinzugefügt und editiert werden.
 
 #### Installation and start
 
-- create gradle.properties and set deploymentPath
+- create gradle.properties from template-gradle.properties
 - create props.txt from template-props.txt
 - create file tomcat/bin/setenv.bat from tomcat/bin/template-setenv.bat 
 - set environment variable CATALINA_HOME as described in *tomcat/Apache Tomcat/RUNNING.txt*
