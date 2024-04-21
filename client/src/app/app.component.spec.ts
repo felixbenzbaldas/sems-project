@@ -3,7 +3,7 @@ import { WebAdapter } from "./WebAdapter";
 
 describe('app', () => {
 
-  it('test create SemsObject from json', () => {
+  it('can create SemsObject from json', () => {
     let jsonSemsObject = {
       "id":"1-cmcCvfEhP2",
       "details":[],
@@ -20,7 +20,7 @@ describe('app', () => {
     expect(semsObject).toBeTruthy();
   });
 
-  it('test add detail', async () => {
+  it('can add detail', async () => {
     let semsObject = new SemsObject();
     let detail = new SemsObject();
 
