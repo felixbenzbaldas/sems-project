@@ -88,7 +88,7 @@ task copyClientResources(type: Copy) {
 }
 
 task localDeploy_excludeNodeModules {
-    dependsOn(buildClient, localDeployNoClientBuild, copyClientResources)
+    dependsOn(buildClient_excludeNodeModules, localDeployNoClientBuild, copyClientResources)
     doLast {
         copy {
             from clientResources
