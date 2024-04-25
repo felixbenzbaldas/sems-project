@@ -16,6 +16,7 @@ import { UserInterfaceObject } from "./view/UserInterfaceObject";
 import { View } from "./view/View";
 import {Theme} from "./Theme";
 import {Color} from "./Color";
+import { getMacro } from "./macro/sems-macro";
 
 export class App {
 
@@ -200,6 +201,11 @@ export class App {
 
     static createLocal() {
         App.theme = Theme.yellowOnGreyTheme;
+        try {
+            App.theme = getMacro().getTheme();
+        } catch (error) {
+            console.error('Could not get theme from macro.');
+        }
         App.header = document.createElement("div");
         document.body.appendChild(App.header);
 
