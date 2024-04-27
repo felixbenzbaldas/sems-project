@@ -1,5 +1,8 @@
-import { SemsObject } from "./SemsObject";
-import { WebAdapter } from "./WebAdapter";
+import {SemsHouse} from "./SemsHouse";
+import {SemsObject} from "./SemsObject";
+import {WebAdapter} from "./WebAdapter";
+import {SemsLocation} from "./SemsLocation";
+import {lastValueFrom, of} from "rxjs";
 
 describe('app', () => {
 
@@ -27,6 +30,21 @@ describe('app', () => {
     await semsObject.addDetail(detail);
 
     expect(semsObject.getDetails()[0]).toEqual(detail);
+  });
+
+  it('can create remote SemsObject', async () => {
+    let createdSemsObject = new SemsObject();
+    let semsLocationMock = {} as SemsLocation;
+    semsLocationMock.createSemsObject = jest.fn().mockImplementation(
+        (semsHouse : SemsHouse) => {
+          return lastValueFrom(of(createdSemsObject));
+    });
+    let semsHouse = new SemsHouse(semsLocationMock);
+
+    let semsObject = await semsHouse.createSemsObject();
+
+    expect(semsObject).toBeTruthy();
+    expect(semsLocationMock.createSemsObject).toHaveBeenCalledWith(semsHouse);
   });
 
 });
