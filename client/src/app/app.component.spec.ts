@@ -47,4 +47,19 @@ describe('app', () => {
     expect(semsLocationMock.createSemsObject).toHaveBeenCalledWith(semsHouse);
   });
 
+  it('can observe SemsObject', done  => {
+    let semsObject = new SemsObject();
+    semsObject.subscribe({
+      next: value => {
+        try {
+          expect(value).toBe("addedDetail");
+          done();
+        } catch (error) {
+          done(error);
+        }
+      }
+    });
+    semsObject.addDetail(new SemsObject());
+  });
+
 });

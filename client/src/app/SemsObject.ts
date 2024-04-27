@@ -1,16 +1,25 @@
+import {Observer, Subject, Subscribable, Unsubscribable} from "rxjs";
 
-export class SemsObject {
+export class SemsObject implements Subscribable<any> {
 
 
   private details : Array<SemsObject> = [];
+  private subject : Subject<any> = new Subject<any>();
 
   addDetail(detail: SemsObject) : Promise<void> {
-    this.details.push(detail);
-    return new Promise<void>(resolve => { resolve(); });
+    return new Promise<void>(resolve => {
+      this.details.push(detail);
+      this.subject.next("addedDetail");
+      resolve();
+    });
   }
 
   getDetails() : Array<SemsObject> {
     return this.details;
+  }
+
+  subscribe(observer: Partial<Observer<any>>): Unsubscribable {
+    return this.subject.subscribe(observer);
   }
 
 }
