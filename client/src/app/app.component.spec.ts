@@ -53,7 +53,7 @@ describe('app', () => {
     semsObject.subscribe({
       next: value => {
         try {
-          expect(value).toBe("addedDetail");
+          expect(value).toEqual("addedDetail");
           done();
         } catch (error) {
           done(error);
@@ -68,8 +68,8 @@ describe('app', () => {
 
     let semsAddress = SemsAddress.parse(addressString);
 
-    expect(semsAddress.getHouse()).toBe("1");
-    expect(semsAddress.getName()).toBe("abc");
+    expect(semsAddress.getHouse()).toEqual("1");
+    expect(semsAddress.getName()).toEqual("abc");
   });
 
 });
