@@ -1,12 +1,13 @@
 import {Observer, Subject, Subscribable, Unsubscribable} from "rxjs";
+import {SemsAddress} from "./SemsAddress";
 
 export class SemsObject implements Subscribable<any> {
 
 
-  private details : Array<SemsObject> = [];
+  private details : Array<SemsAddress> = [];
   private subject : Subject<any> = new Subject<any>();
 
-  addDetail(detail: SemsObject) : Promise<void> {
+  addDetail(detail: SemsAddress) : Promise<void> {
     return new Promise<void>(resolve => {
       this.details.push(detail);
       this.subject.next("addedDetail");
@@ -14,7 +15,7 @@ export class SemsObject implements Subscribable<any> {
     });
   }
 
-  getDetails() : Array<SemsObject> {
+  getDetails() : Array<SemsAddress> {
     return this.details;
   }
 

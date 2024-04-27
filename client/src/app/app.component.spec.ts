@@ -3,6 +3,7 @@ import {SemsObject} from "./SemsObject";
 import {WebAdapter} from "./WebAdapter";
 import {SemsLocation} from "./SemsLocation";
 import {lastValueFrom, of} from "rxjs";
+import {SemsAddress} from "./SemsAddress";
 
 describe('app', () => {
 
@@ -25,11 +26,11 @@ describe('app', () => {
 
   it('can add detail', async () => {
     let semsObject = new SemsObject();
-    let detail = new SemsObject();
+    let addressOfDetail = new SemsAddress();
 
-    await semsObject.addDetail(detail);
+    await semsObject.addDetail(addressOfDetail);
 
-    expect(semsObject.getDetails()[0]).toEqual(detail);
+    expect(semsObject.getDetails()[0]).toBe(addressOfDetail);
   });
 
   it('can create remote SemsObject', async () => {
@@ -59,7 +60,16 @@ describe('app', () => {
         }
       }
     });
-    semsObject.addDetail(new SemsObject());
+    semsObject.addDetail(new SemsAddress());
+  });
+
+  it('can parse SemsAddress', () => {
+    let addressString = "1-abc";
+
+    let semsAddress = SemsAddress.parse(addressString);
+
+    expect(semsAddress.getHouse()).toBe("1");
+    expect(semsAddress.getName()).toBe("abc");
   });
 
 });
