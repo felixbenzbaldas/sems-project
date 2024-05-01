@@ -1,7 +1,7 @@
 export class SemsAddress {
 
-    private house : string;
-    private name : string;
+    private house: string;
+    private name: string;
 
     getHouse() {
         return this.house;

@@ -3,7 +3,7 @@ import {SemsObjectImpl} from "./SemsObjectImpl";
 
 export class SemsLocation {
 
-    createSemsObject(semsHouse : SemsHouse): Promise<SemsObjectImpl> {
+    createSemsObject(semsHouse: SemsHouse): Promise<SemsObjectImpl> {
         return undefined;
     }
 }
