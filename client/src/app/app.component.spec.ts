@@ -5,6 +5,7 @@ import {SemsLocation} from "./SemsLocation";
 import {lastValueFrom, of} from "rxjs";
 import {SemsAddress} from "./SemsAddress";
 import {SemsObject} from "./SemsObject";
+import {SemsObjectType} from "./SemsObjectType";
 
 describe('app', () => {
 
@@ -21,7 +22,10 @@ describe('app', () => {
 
         let semsObject: SemsObject = webAdapter.createSemsObjectFromJson(jsonSemsObject);
 
-        expect(semsObject).toBeTruthy();
+        expect(semsObject.getSemsAddress()).toEqual(SemsAddress.parse("1-abc"));
+        expect(semsObject.getType()).toBe(SemsObjectType.TEXT_WITH_DETAILS);
+
+        expect(semsObject.getText().getValue()).toEqual("Beispiel");
     });
 
     it('can add detail', async () => {

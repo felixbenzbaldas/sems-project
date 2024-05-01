@@ -1,13 +1,44 @@
 import {Observer, Subject, Unsubscribable} from "rxjs";
 import {SemsAddress} from "./SemsAddress";
 import {SemsObject} from "./SemsObject";
+import {SemsObjectType} from "./SemsObjectType";
+import {SemsText} from "./SemsText";
 
 export class SemsObjectImpl implements SemsObject {
 
-
+    private semsAddress : SemsAddress;
     private details: Array<SemsAddress> = [];
     private subject: Subject<any> = new Subject<any>();
+    private semsText: SemsText;
 
+
+    static create(semsAddressString : string) : SemsObjectImpl {
+        let semsObjectImpl = new SemsObjectImpl();
+        semsObjectImpl.semsAddress = SemsAddress.parse(semsAddressString);
+        return semsObjectImpl;
+    }
+
+    setText(semsText : SemsText) {
+        this.semsText = semsText;
+    }
+
+    // implementations of SemsObject interface
+
+    getSemsAddress(): SemsAddress {
+        return this.semsAddress;
+    }
+
+    getType(): SemsObjectType {
+        if (this.semsText) {
+            return SemsObjectType.TEXT_WITH_DETAILS;
+        } else {
+            return undefined;
+        }
+    }
+
+    getText() : SemsText {
+        return this.semsText;
+    }
     addDetail(detail: SemsAddress): Promise<void> {
         return new Promise<void>(resolve => {
             this.details.push(detail);
