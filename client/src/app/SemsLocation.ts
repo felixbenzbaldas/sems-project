@@ -1,9 +1,9 @@
 import {SemsHouse} from "./SemsHouse";
-import {SemsObject} from "./SemsObject";
+import {SemsObjectImpl} from "./SemsObjectImpl";
 
 export class SemsLocation {
 
-    createSemsObject(semsHouse : SemsHouse): Promise<SemsObject> {
+    createSemsObject(semsHouse : SemsHouse): Promise<SemsObjectImpl> {
         return undefined;
     }
 }

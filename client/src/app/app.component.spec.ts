@@ -1,16 +1,19 @@
 import {SemsHouse} from "./SemsHouse";
-import {SemsObject} from "./SemsObject";
+import {SemsObjectImpl} from "./SemsObjectImpl";
 import {WebAdapter} from "./WebAdapter";
 import {SemsLocation} from "./SemsLocation";
 import {lastValueFrom, of} from "rxjs";
 import {SemsAddress} from "./SemsAddress";
+import {SemsObject} from "./SemsObject";
 
 describe('app', () => {
 
   it('can create SemsObject from json', () => {
+    let addressString = "1-cmcCvfEhP2";
+    let detailAddressString = "1-frfjr456";
     let jsonSemsObject = {
-      "id":"1-cmcCvfEhP2",
-      "details":[],
+      "id":addressString,
+      "details":[detailAddressString],
       "properties":
         {
           "text":"Beispiel",
@@ -20,12 +23,14 @@ describe('app', () => {
         }
     };
     let webAdapter : WebAdapter = new WebAdapter();
+
     let semsObject : SemsObject = webAdapter.createSemsObjectFromJson(jsonSemsObject);
+
     expect(semsObject).toBeTruthy();
   });
 
   it('can add detail', async () => {
-    let semsObject = new SemsObject();
+    let semsObject : SemsObject = new SemsObjectImpl();
     let addressOfDetail = new SemsAddress();
 
     await semsObject.addDetail(addressOfDetail);
@@ -34,7 +39,7 @@ describe('app', () => {
   });
 
   it('can create remote SemsObject', async () => {
-    let createdSemsObject = new SemsObject();
+    let createdSemsObject : SemsObject = new SemsObjectImpl();
     let semsLocationMock = {} as SemsLocation;
     semsLocationMock.createSemsObject = jest.fn().mockImplementation(
         (semsHouse : SemsHouse) => {
@@ -49,7 +54,7 @@ describe('app', () => {
   });
 
   it('can observe SemsObject', done  => {
-    let semsObject = new SemsObject();
+    let semsObject : SemsObject = new SemsObjectImpl();
     semsObject.subscribe({
       next: value => {
         try {

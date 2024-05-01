@@ -1,5 +1,6 @@
-import {SemsObject} from "./SemsObject";
+import {SemsObjectImpl} from "./SemsObjectImpl";
 import {SemsLocation} from "./SemsLocation";
+import {SemsObject} from "./SemsObject";
 
 export class SemsHouse {
     
