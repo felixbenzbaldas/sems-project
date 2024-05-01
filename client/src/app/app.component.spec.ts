@@ -28,6 +28,7 @@ describe('app', () => {
         expect(semsObject.getText().getValue()).toEqual("Beispiel");
     });
 
+    // TODO Details-Klasse einführen (analog SemsText)
     it('can add detail', async () => {
         let semsObject: SemsObject = new SemsObjectImpl();
         let addressOfDetail = new SemsAddress();
