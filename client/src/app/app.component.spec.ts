@@ -9,18 +9,13 @@ import {SemsObject} from "./SemsObject";
 describe('app', () => {
 
   it('can create SemsObject from json', () => {
-    let addressString = "1-cmcCvfEhP2";
-    let detailAddressString = "1-frfjr456";
     let jsonSemsObject = {
-      "id":addressString,
-      "details":[detailAddressString],
-      "properties":
-        {
-          "text":"Beispiel",
-          "context":null,
-          "isPrivate":false,
-          "defaultExpanded":true
-        }
+      "id":"1-abc",
+      "details":["1-345"],
+      "text":"Beispiel",
+      "context":null,
+      "isPrivate":false,
+      "defaultExpanded":true
     };
     let webAdapter : WebAdapter = new WebAdapter();
 
