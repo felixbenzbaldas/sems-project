@@ -6,6 +6,7 @@ import {lastValueFrom, of} from "rxjs";
 import {SemsAddress} from "./SemsAddress";
 import {SemsObject} from "./SemsObject";
 import {SemsObjectType} from "./SemsObjectType";
+import {ObjectProvider} from "./objectProvider";
 
 describe('app', () => {
 
@@ -75,6 +76,24 @@ describe('app', () => {
 
         expect(semsAddress.getHouse()).toEqual("1");
         expect(semsAddress.getName()).toEqual("abc");
+    });
+
+    it('can get object by address from ObjectProvider', async () => {
+        let semsAddress = SemsAddress.parse("1-abc");
+        let semsHouseMock = {} as SemsHouse;
+        semsHouseMock.getObjectByName = jest.fn().mockImplementation(name => {
+            return lastValueFrom(of(new SemsObjectImpl()));
+        });
+        let housesMap = new Map<string, SemsHouse>([
+            ["1", semsHouseMock]
+        ]);
+        let objectProvider = new ObjectProvider(housesMap);
+
+        let semsObject = await objectProvider.get(semsAddress);
+
+        expect(semsObject).toBeTruthy();
+        expect(semsHouseMock.getObjectByName).toHaveBeenCalledWith("abc");
+
     });
 
 });

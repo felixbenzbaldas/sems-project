@@ -11,4 +11,8 @@ export class SemsHouse {
     createSemsObject(): Promise<SemsObject> {
         return this.semsLocation.createSemsObject(this);
     }
+
+    getObjectByName(name : string) : Promise<SemsObject> {
+        return undefined;
+    }
 }
