@@ -12,9 +12,9 @@ export class SemsObjectImpl implements SemsObject {
     private semsText: SemsText;
 
 
-    static create(semsAddressString : string) : SemsObjectImpl {
+    static create(semsAddress : SemsAddress) : SemsObjectImpl {
         let semsObjectImpl = new SemsObjectImpl();
-        semsObjectImpl.semsAddress = SemsAddress.parse(semsAddressString);
+        semsObjectImpl.semsAddress = semsAddress;
         return semsObjectImpl;
     }
 

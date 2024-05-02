@@ -40,7 +40,7 @@ describe('app', () => {
     });
 
     it('can create remote SemsObject', async () => {
-        let createdSemsObject: SemsObject = new SemsObjectImpl();
+        let createdSemsObject: SemsObject = SemsObjectImpl.create(SemsAddress.parse("1-abc"));
         let semsLocationMock = {} as SemsLocation;
         semsLocationMock.createSemsObject = jest.fn().mockImplementation(
             (semsHouse: SemsHouse) => {
@@ -93,7 +93,41 @@ describe('app', () => {
 
         expect(semsObject).toBeTruthy();
         expect(semsHouseMock.getObjectByName).toHaveBeenCalledWith("abc");
-
     });
+
+    it('can get unloaded object by name from SemsHouse', async () => {
+        let semsObject: SemsObject = new SemsObjectImpl();
+        let semsLocationMock = {} as SemsLocation;
+        semsLocationMock.getSemsObject = jest.fn().mockImplementation(
+            (semsHouse: SemsHouse, name : string) => {
+                return lastValueFrom(of(semsObject));
+            });
+        let semsHouse = new SemsHouse(semsLocationMock);
+
+        let received = await semsHouse.getObjectByName("abc");
+
+        expect(received).toEqual(semsObject);
+        expect(semsLocationMock.getSemsObject).toHaveBeenCalledWith(semsHouse, "abc");
+    });
+
+    it('should store remote object after creation', async () => {
+        let semsObjectStub: SemsObject = {} as SemsObject;
+        semsObjectStub.getSemsAddress = jest.fn().mockImplementation(() => SemsAddress.parse("1-abc"));
+        let semsLocationMock = {} as SemsLocation;
+        semsLocationMock.createSemsObject = jest.fn().mockImplementation(
+            (semsHouse: SemsHouse) => {
+                return lastValueFrom(of(semsObjectStub));
+            });
+        semsLocationMock.getSemsObject = jest.fn().mockImplementation();
+        let semsHouse = new SemsHouse(semsLocationMock);
+        await semsHouse.createSemsObject();
+
+        let received = await semsHouse.getObjectByName("abc");
+
+        expect(received).toEqual(semsObjectStub);
+        expect(semsLocationMock.getSemsObject).not.toHaveBeenCalled();
+    });
+
+
 
 });
