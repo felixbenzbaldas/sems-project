@@ -128,6 +128,24 @@ describe('app', () => {
         expect(locationMock.getObject).not.toHaveBeenCalled();
     });
 
+    it('should store remote object after loading', async () => {
+        let objectStub: Object = {} as Object;
+        objectStub.getAddress = jest.fn().mockImplementation(() => Address.parse("1-abc"));
+        let locationMock = {} as Location;
+        locationMock.getObject = jest.fn().mockImplementation(
+            (house : House, name : string) => {
+                return lastValueFrom(of(objectStub));
+            }
+        );
+        let house = new House(locationMock);
+        await house.getObjectByName("abc"); // loading
+
+        let received = await house.getObjectByName("abc");
+
+        expect(received).toEqual(objectStub);
+        expect(locationMock.getObject).toHaveBeenCalledTimes(1);
+    });
+
 
     // it('can change text of remote object', async () => {
     //     expect(locationMock.setPropertyOfObject).toHaveBeenCalledWith("1", "abc", 1, "text", "changed");
