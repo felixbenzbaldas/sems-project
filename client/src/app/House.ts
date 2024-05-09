@@ -7,24 +7,24 @@ export class House {
     private loadedObjects : Map<string, Object> = new Map();
 
 
-    constructor(private location: Location) {
+    constructor(private name : string, private location: Location) {
 
     }
 
     createObject(): Promise<Object> {
-        return this.location.createObject(this).then(object => {
+        return this.location.createObject(this.name).then(object => {
             this.loadedObjects.set(object.getAddress().getName(), object);
             return object;
         });
     }
 
-    getObjectByName(name: string): Promise<Object> {
-        if (this.loadedObjects.has(name)) {
-            return lastValueFrom(of(this.loadedObjects.get(name)));
+    getObjectByName(objectName: string): Promise<Object> {
+        if (this.loadedObjects.has(objectName)) {
+            return lastValueFrom(of(this.loadedObjects.get(objectName)));
         } else {
-            return this.location.getObject(this, name).then(
+            return this.location.getObject(this.name, objectName).then(
                 object => {
-                    this.loadedObjects.set(name, object);
+                    this.loadedObjects.set(objectName, object);
                     return object;
                 }
             );

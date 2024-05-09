@@ -3,11 +3,11 @@ import {Object} from "./Object";
 
 export class Location {
 
-    createObject(house: House): Promise<Object> {
+    createObject(houseName : string): Promise<Object> {
         return undefined;
     }
 
-    getObject(house : House, name : string) : Promise<Object> {
+    getObject(houseName : string, name : string) : Promise<Object> {
         return undefined;
     }
 }

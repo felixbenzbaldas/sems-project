@@ -43,15 +43,15 @@ describe('app', () => {
         let createdObject: Object = ObjectImpl.create(Address.parse("1-abc"));
         let locationMock = {} as Location;
         locationMock.createObject = jest.fn().mockImplementation(
-            (house: House) => {
+            (houseName : string) => {
                 return lastValueFrom(of(createdObject));
             });
-        let house = new House(locationMock);
+        let house = new House('1', locationMock);
 
         let object = await house.createObject();
 
         expect(object).toBeTruthy();
-        expect(locationMock.createObject).toHaveBeenCalledWith(house);
+        expect(locationMock.createObject).toHaveBeenCalledWith('1');
     });
 
     it('can observe Object', done => {
@@ -99,15 +99,15 @@ describe('app', () => {
         let object: Object = new ObjectImpl();
         let locationMock = {} as Location;
         locationMock.getObject = jest.fn().mockImplementation(
-            (house: House, name : string) => {
+            (houseName : string, name : string) => {
                 return lastValueFrom(of(object));
             });
-        let house = new House(locationMock);
+        let house = new House('1', locationMock);
 
         let received = await house.getObjectByName("abc");
 
         expect(received).toEqual(object);
-        expect(locationMock.getObject).toHaveBeenCalledWith(house, "abc");
+        expect(locationMock.getObject).toHaveBeenCalledWith('1', "abc");
     });
 
     it('should store remote object after creation', async () => {
@@ -115,11 +115,11 @@ describe('app', () => {
         objectStub.getAddress = jest.fn().mockImplementation(() => Address.parse("1-abc"));
         let locationMock = {} as Location;
         locationMock.createObject = jest.fn().mockImplementation(
-            (house: House) => {
+            (houseName : string) => {
                 return lastValueFrom(of(objectStub));
             });
         locationMock.getObject = jest.fn().mockImplementation();
-        let house = new House(locationMock);
+        let house = new House('1', locationMock);
         await house.createObject();
 
         let received = await house.getObjectByName("abc");
@@ -133,11 +133,11 @@ describe('app', () => {
         objectStub.getAddress = jest.fn().mockImplementation(() => Address.parse("1-abc"));
         let locationMock = {} as Location;
         locationMock.getObject = jest.fn().mockImplementation(
-            (house : House, name : string) => {
+            (houseName : string, name : string) => {
                 return lastValueFrom(of(objectStub));
             }
         );
-        let house = new House(locationMock);
+        let house = new House('1', locationMock);
         await house.getObjectByName("abc"); // loading
 
         let received = await house.getObjectByName("abc");
