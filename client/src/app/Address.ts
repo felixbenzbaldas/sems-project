@@ -1,4 +1,4 @@
-export class SemsAddress {
+export class Address {
 
     private house: string;
     private name: string;
@@ -12,12 +12,12 @@ export class SemsAddress {
     }
 
     static parse(addressString: string) {
-        let semsAddress = new SemsAddress();
+        let address = new Address();
         let splitted = addressString.split('-');
-        semsAddress.name = splitted[splitted.length - 1];
+        address.name = splitted[splitted.length - 1];
         if (splitted.length > 1) {
-            semsAddress.house = splitted[splitted.length - 2];
+            address.house = splitted[splitted.length - 2];
         }
-        return semsAddress;
+        return address;
     }
 }

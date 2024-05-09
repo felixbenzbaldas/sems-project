@@ -1,13 +1,13 @@
-import {SemsObjectImpl} from "./SemsObjectImpl";
-import {SemsObject} from "./SemsObject";
-import {SemsText} from "./SemsText";
-import {SemsAddress} from "./SemsAddress";
+import {ObjectImpl} from "./ObjectImpl";
+import {Object} from "./Object";
+import {Text} from "./Text";
+import {Address} from "./Address";
 
 export class WebAdapter {
-    createSemsObjectFromJson(json): SemsObject {
-        let semsObject = SemsObjectImpl.create(SemsAddress.parse(json.id));
-        semsObject.setText(new SemsText(json.text))
-        return semsObject;
+    createObjectFromJson(json): Object {
+        let object = ObjectImpl.create(Address.parse(json.id));
+        object.setText(new Text(json.text))
+        return object;
     }
 
 }

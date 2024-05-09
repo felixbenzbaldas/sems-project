@@ -1,17 +1,17 @@
-import {SemsHouse} from "./SemsHouse";
-import {SemsObjectImpl} from "./SemsObjectImpl";
+import {House} from "./House";
+import {ObjectImpl} from "./ObjectImpl";
 import {WebAdapter} from "./WebAdapter";
-import {SemsLocation} from "./SemsLocation";
+import {Location} from "./Location";
 import {lastValueFrom, of} from "rxjs";
-import {SemsAddress} from "./SemsAddress";
-import {SemsObject} from "./SemsObject";
-import {SemsObjectType} from "./SemsObjectType";
-import {ObjectProvider} from "./objectProvider";
+import {Address} from "./Address";
+import {Object} from "./Object";
+import {ObjectType} from "./ObjectType";
+import {ObjectProvider} from "./ObjectProvider";
 
 describe('app', () => {
 
-    it('can create SemsObject from json', () => {
-        let jsonSemsObject = {
+    it('can create Object from json', () => {
+        let jsonObject = {
             "id": "1-abc",
             "details": ["1-345"],
             "text": "Beispiel",
@@ -21,42 +21,42 @@ describe('app', () => {
         };
         let webAdapter: WebAdapter = new WebAdapter();
 
-        let semsObject: SemsObject = webAdapter.createSemsObjectFromJson(jsonSemsObject);
+        let object: Object = webAdapter.createObjectFromJson(jsonObject);
 
-        expect(semsObject.getSemsAddress()).toEqual(SemsAddress.parse("1-abc"));
-        expect(semsObject.getType()).toBe(SemsObjectType.TEXT_WITH_DETAILS);
+        expect(object.getAddress()).toEqual(Address.parse("1-abc"));
+        expect(object.getType()).toBe(ObjectType.TEXT_WITH_DETAILS);
 
-        expect(semsObject.getText().getValue()).toEqual("Beispiel");
+        expect(object.getText().getValue()).toEqual("Beispiel");
     });
 
-    // TODO Details-Klasse einführen (analog SemsText)
+    // TODO Details-Klasse einführen (analog Text)
     it('can add detail', async () => {
-        let semsObject: SemsObject = new SemsObjectImpl();
-        let addressOfDetail = new SemsAddress();
+        let object: Object = new ObjectImpl();
+        let addressOfDetail = new Address();
 
-        await semsObject.addDetail(addressOfDetail);
+        await object.addDetail(addressOfDetail);
 
-        expect(semsObject.getDetails()[0]).toBe(addressOfDetail);
+        expect(object.getDetails()[0]).toBe(addressOfDetail);
     });
 
-    it('can create remote SemsObject', async () => {
-        let createdSemsObject: SemsObject = SemsObjectImpl.create(SemsAddress.parse("1-abc"));
-        let semsLocationMock = {} as SemsLocation;
-        semsLocationMock.createSemsObject = jest.fn().mockImplementation(
-            (semsHouse: SemsHouse) => {
-                return lastValueFrom(of(createdSemsObject));
+    it('can create remote Object', async () => {
+        let createdObject: Object = ObjectImpl.create(Address.parse("1-abc"));
+        let locationMock = {} as Location;
+        locationMock.createObject = jest.fn().mockImplementation(
+            (house: House) => {
+                return lastValueFrom(of(createdObject));
             });
-        let semsHouse = new SemsHouse(semsLocationMock);
+        let house = new House(locationMock);
 
-        let semsObject = await semsHouse.createSemsObject();
+        let object = await house.createObject();
 
-        expect(semsObject).toBeTruthy();
-        expect(semsLocationMock.createSemsObject).toHaveBeenCalledWith(semsHouse);
+        expect(object).toBeTruthy();
+        expect(locationMock.createObject).toHaveBeenCalledWith(house);
     });
 
-    it('can observe SemsObject', done => {
-        let semsObject: SemsObject = new SemsObjectImpl();
-        semsObject.subscribe({
+    it('can observe Object', done => {
+        let object: Object = new ObjectImpl();
+        object.subscribe({
             next: value => {
                 try {
                     expect(value).toEqual("addedDetail");
@@ -66,68 +66,71 @@ describe('app', () => {
                 }
             }
         });
-        semsObject.addDetail(new SemsAddress());
+        object.addDetail(new Address());
     });
 
-    it('can parse SemsAddress', () => {
+    it('can parse Address', () => {
         let addressString = "1-abc";
 
-        let semsAddress = SemsAddress.parse(addressString);
+        let address = Address.parse(addressString);
 
-        expect(semsAddress.getHouse()).toEqual("1");
-        expect(semsAddress.getName()).toEqual("abc");
+        expect(address.getHouse()).toEqual("1");
+        expect(address.getName()).toEqual("abc");
     });
 
     it('can get object by address from ObjectProvider', async () => {
-        let semsAddress = SemsAddress.parse("1-abc");
-        let semsHouseMock = {} as SemsHouse;
-        semsHouseMock.getObjectByName = jest.fn().mockImplementation(name => {
-            return lastValueFrom(of(new SemsObjectImpl()));
+        let address = Address.parse("1-abc");
+        let houseMock = {} as House;
+        houseMock.getObjectByName = jest.fn().mockImplementation(name => {
+            return lastValueFrom(of(new ObjectImpl()));
         });
-        let housesMap = new Map<string, SemsHouse>([
-            ["1", semsHouseMock]
+        let housesMap = new Map<string, House>([
+            ["1", houseMock]
         ]);
         let objectProvider = new ObjectProvider(housesMap);
 
-        let semsObject = await objectProvider.get(semsAddress);
+        let object = await objectProvider.get(address);
 
-        expect(semsObject).toBeTruthy();
-        expect(semsHouseMock.getObjectByName).toHaveBeenCalledWith("abc");
+        expect(object).toBeTruthy();
+        expect(houseMock.getObjectByName).toHaveBeenCalledWith("abc");
     });
 
-    it('can get unloaded object by name from SemsHouse', async () => {
-        let semsObject: SemsObject = new SemsObjectImpl();
-        let semsLocationMock = {} as SemsLocation;
-        semsLocationMock.getSemsObject = jest.fn().mockImplementation(
-            (semsHouse: SemsHouse, name : string) => {
-                return lastValueFrom(of(semsObject));
+    it('can get unloaded object by name from House', async () => {
+        let object: Object = new ObjectImpl();
+        let locationMock = {} as Location;
+        locationMock.getObject = jest.fn().mockImplementation(
+            (house: House, name : string) => {
+                return lastValueFrom(of(object));
             });
-        let semsHouse = new SemsHouse(semsLocationMock);
+        let house = new House(locationMock);
 
-        let received = await semsHouse.getObjectByName("abc");
+        let received = await house.getObjectByName("abc");
 
-        expect(received).toEqual(semsObject);
-        expect(semsLocationMock.getSemsObject).toHaveBeenCalledWith(semsHouse, "abc");
+        expect(received).toEqual(object);
+        expect(locationMock.getObject).toHaveBeenCalledWith(house, "abc");
     });
 
     it('should store remote object after creation', async () => {
-        let semsObjectStub: SemsObject = {} as SemsObject;
-        semsObjectStub.getSemsAddress = jest.fn().mockImplementation(() => SemsAddress.parse("1-abc"));
-        let semsLocationMock = {} as SemsLocation;
-        semsLocationMock.createSemsObject = jest.fn().mockImplementation(
-            (semsHouse: SemsHouse) => {
-                return lastValueFrom(of(semsObjectStub));
+        let objectStub: Object = {} as Object;
+        objectStub.getAddress = jest.fn().mockImplementation(() => Address.parse("1-abc"));
+        let locationMock = {} as Location;
+        locationMock.createObject = jest.fn().mockImplementation(
+            (house: House) => {
+                return lastValueFrom(of(objectStub));
             });
-        semsLocationMock.getSemsObject = jest.fn().mockImplementation();
-        let semsHouse = new SemsHouse(semsLocationMock);
-        await semsHouse.createSemsObject();
+        locationMock.getObject = jest.fn().mockImplementation();
+        let house = new House(locationMock);
+        await house.createObject();
 
-        let received = await semsHouse.getObjectByName("abc");
+        let received = await house.getObjectByName("abc");
 
-        expect(received).toEqual(semsObjectStub);
-        expect(semsLocationMock.getSemsObject).not.toHaveBeenCalled();
+        expect(received).toEqual(objectStub);
+        expect(locationMock.getObject).not.toHaveBeenCalled();
     });
 
 
+    // it('can change text of remote object', async () => {
+    //     expect(locationMock.setPropertyOfObject).toHaveBeenCalledWith("1", "abc", 1, "text", "changed");
+    // });
 
 });

@@ -1,4 +1,4 @@
-export class SemsText {
+export class Text {
 
     private value : string;
 
