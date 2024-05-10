@@ -1,6 +1,9 @@
 import {Object} from "./Object";
 import {Http} from "./Http";
 import {HttpRequest, Method} from "./HttpRequest";
+import {lastValueFrom, of} from "rxjs";
+import {Address} from "./Address";
+import {ObjectImpl} from "./ObjectImpl";
 
 export class Location {
 
@@ -18,7 +21,7 @@ export class Location {
         ]);
         httpRequest.method = Method.POST;
         this.http.request(httpRequest);
-        return undefined;
+        return lastValueFrom(of(ObjectImpl.create(Address.parse('1-abc'))));
     }
 
     getObject(houseName : string, name : string) : Promise<Object> {
