@@ -1,10 +1,12 @@
 
 export enum Method {
     POST,
-    GET
+    GET,
+    PUT,
 }
 export class HttpRequest {
     url: string;
     queryParams: Map<string, string>;
     method: Method;
+    body: string;
 }

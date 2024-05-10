@@ -4,6 +4,8 @@ import {ObjectType} from "./ObjectType";
 import {Text} from "./Text";
 
 export interface Object extends Subscribable<any> {
+    setStringPropertyValue(propertyName: string, value: string): Promise<void>;
+
     addDetail(detail: Address): Promise<void>;
 
     getDetails(): Array<Address>;
@@ -11,6 +13,8 @@ export interface Object extends Subscribable<any> {
     subscribe(observer: Partial<Observer<any>>): Unsubscribable;
 
     getAddress(): Address;
+
+    getName() : string;
 
     getType(): ObjectType;
 

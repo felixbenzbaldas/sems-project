@@ -2,6 +2,7 @@ import {Address} from "./Address";
 import {Object} from "./Object";
 import {House} from "./House";
 import {HouseProvider} from "./HouseProvider";
+import {AddressUtil} from "./AddressUtil";
 
 export class ObjectProvider {
 
@@ -9,6 +10,6 @@ export class ObjectProvider {
     }
 
     get(address: Address) : Promise<Object> {
-        return this.houseProvider.get(address.getHouse()).getObjectByName(address.getName());
+        return this.houseProvider.get(address.withoutLastPart()).getObjectByName(address.getLastPart());
     }
 }
