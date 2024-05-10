@@ -1,9 +1,8 @@
 import {Object} from "./Object";
 import {Http} from "./Http";
 import {HttpRequest, Method} from "./HttpRequest";
-import {lastValueFrom, of} from "rxjs";
-import {Address} from "./Address";
 import {ObjectImpl} from "./ObjectImpl";
+import {Address} from "./Address";
 
 export class Location {
 
@@ -12,7 +11,6 @@ export class Location {
     constructor(private http: Http) {
     }
 
-
     createObject(houseName : string): Promise<Object> {
         let httpRequest = new HttpRequest();
         httpRequest.url = this.httpAddress + '/objects';
@@ -20,8 +18,9 @@ export class Location {
             ['house', houseName]
         ]);
         httpRequest.method = Method.POST;
-        this.http.request(httpRequest);
-        return lastValueFrom(of(ObjectImpl.create(Address.parse('1-abc'))));
+        return this.http.request(httpRequest).then(json => {
+           return ObjectImpl.create(Address.parse(json.id));
+        });
     }
 
     getObject(houseName : string, name : string) : Promise<Object> {
