@@ -3,29 +3,24 @@ import {Address} from "./Address";
 import {Object} from "./Object";
 import {ObjectType} from "./ObjectType";
 import {Text} from "./Text";
+import {Http} from "./Http";
+import {House} from "./House";
 
 export class ObjectImpl implements Object {
 
-    private address : Address;
     private details: Array<Address> = [];
     private subject: Subject<any> = new Subject<any>();
     private text: Text;
 
-
-    static create(address : Address) : ObjectImpl {
-        let objectImpl = new ObjectImpl();
-        objectImpl.address = address;
-        return objectImpl;
+    constructor(private house : House, private name : string) {
     }
 
     setText(text : Text) {
         this.text = text;
     }
 
-    // implementations of SemsObject interface
-
     getAddress(): Address {
-        return this.address;
+        return this.house.getAddress().append(this.name);
     }
 
     getType(): ObjectType {
@@ -37,8 +32,12 @@ export class ObjectImpl implements Object {
     }
 
     getText() : Text {
+        if (!this.text) {
+            this.text = new Text(this,undefined);
+        }
         return this.text;
     }
+
     addDetail(detail: Address): Promise<void> {
         return new Promise<void>(resolve => {
             this.details.push(detail);
@@ -53,6 +52,14 @@ export class ObjectImpl implements Object {
 
     subscribe(observer: Partial<Observer<any>>): Unsubscribable {
         return this.subject.subscribe(observer);
+    }
+
+    setStringPropertyValue(propertyName: string, value: string): Promise<void> {
+        return this.house.setStringProperty(this.getName(), propertyName, value);
+    }
+
+    getName() : string {
+        return this.name;
     }
 
 }
