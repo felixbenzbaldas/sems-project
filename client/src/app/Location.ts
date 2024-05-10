@@ -24,7 +24,15 @@ export class Location {
     }
 
     getObject(houseName : string, name : string) : Promise<Object> {
-        return undefined;
+        let httpRequest = new HttpRequest();
+        httpRequest.url = this.httpAddress + '/objects';
+        httpRequest.queryParams = new Map<string, string>([
+            ['address', houseName + '-' + name]
+        ]);
+        httpRequest.method = Method.GET;
+        return this.http.request(httpRequest).then(json => {
+            return ObjectImpl.create(Address.parse(json.id));
+        });
     }
 
     setHttpAddress(httpAddress: string) {

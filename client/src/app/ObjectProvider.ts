@@ -1,13 +1,14 @@
 import {Address} from "./Address";
 import {Object} from "./Object";
 import {House} from "./House";
+import {HouseProvider} from "./HouseProvider";
 
 export class ObjectProvider {
 
-    constructor(private housesMap : Map<string, House>) {
+    constructor(private houseProvider : HouseProvider) {
     }
 
     get(address: Address) : Promise<Object> {
-        return this.housesMap.get(address.getHouse()).getObjectByName(address.getName());
+        return this.houseProvider.get(address.getHouse()).getObjectByName(address.getName());
     }
 }
