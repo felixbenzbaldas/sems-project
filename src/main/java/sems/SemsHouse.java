@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import sems.general.JsonUtil;
-import sems.general.RandomString;
+import sems.core.RandomString;
 
 public class SemsHouse {
 	private SemsObject rootObject;

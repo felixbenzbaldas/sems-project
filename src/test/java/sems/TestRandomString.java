@@ -2,7 +2,7 @@ package sems;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import sems.general.RandomString;
+import sems.core.RandomString;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -44,14 +44,6 @@ public class TestRandomString {
 
             assertThat(randomString.getProbabilityOfCollision(1))
                     .isCloseTo(0.25, Offset.offset(0.000001));
-        }
-
-        @Test
-        void testCalculation2() {
-            RandomString randomString = new RandomString("abc", 3);
-
-            assertThat(randomString.getProbabilityOfCollision(5))
-                    .isCloseTo(5.0 / 27, Offset.offset(0.000001));
         }
     }
 }

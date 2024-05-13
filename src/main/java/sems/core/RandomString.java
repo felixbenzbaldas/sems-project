@@ -1,4 +1,4 @@
-package sems.general;
+package sems.core;
 
 import java.util.Random;
 
