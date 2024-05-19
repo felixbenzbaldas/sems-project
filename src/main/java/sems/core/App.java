@@ -23,7 +23,6 @@ public class App {
                 return null;
             case "get" :
                 return get((String) parameters.get("house"), (String) parameters.get("name"));
-
         }
         throw new RuntimeException("method not implemented");
     }

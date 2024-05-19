@@ -1,1 +1,0 @@
-export function getMacro() : any {};

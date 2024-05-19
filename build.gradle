@@ -1,3 +1,5 @@
+// TODO: deprecated - do not use Tomcat anymore
+
 plugins {
     id 'java'
 }
