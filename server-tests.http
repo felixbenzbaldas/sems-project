@@ -3,8 +3,9 @@ POST http://localhost:8081/
 Content-Type: application/json
 
 {
-  "id": 999,
-  "value": "content"
+  "method": "createObjectWithText",
+  "house": "1",
+  "text": "foo"
 }
 
 ###
