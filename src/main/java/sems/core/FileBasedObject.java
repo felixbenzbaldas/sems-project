@@ -12,11 +12,22 @@ public class FileBasedObject implements SemsObject {
     public static final String EXTENSION = ".txt";
 
     private File file;
-    private Map<String, Object> jsonMap = new HashMap<>();
+    private Map<String, Object> jsonMap;
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public FileBasedObject(File file) {
         this.file = file;
+        if (file.exists()) {
+            Object json = null;
+            try {
+                json = objectMapper.readValue(file, Object.class);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            jsonMap = (Map<String, Object>) json;
+        } else {
+            jsonMap = new HashMap<>();
+        }
     }
 
     @Override
@@ -42,7 +53,7 @@ public class FileBasedObject implements SemsObject {
 
     @Override
     public Object get(String property) {
-        return jsonMap.get(property); // TODO: ensure object is loaded
+        return jsonMap.get(property);
     }
 
 }

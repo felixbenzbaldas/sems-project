@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,21 +37,28 @@ public class TestApp {
 
     @Test
     void canCreateUser() {
-        sems.core.App app = new App(new File(PATH_FOR_TMP_FILES));
+        App app = new App(new File(PATH_FOR_TMP_FILES));
         String userName = "aUserName";
         String password = "pw";
 
-        Object response = app.handle("createUser", Map.of(
-                "user", userName,
-                "password", password));
+        Object response = app.handle("createUser", List.of(userName, password));
 
-        Object json = app.handle("get", Map.of(
-                "house", "users",
-                "name", userName));
+        Object json = app.handle("get", List.of(List.of("users", userName)));
         Map<String, Object> jsonMap = (Map<String, Object>) json;
         assertThat((String) jsonMap.get("hash")).hasSizeGreaterThan(10);
         assertThat((String) jsonMap.get("hash")).isNotEqualTo(password);
         assertThat(response).isNull();
+    }
+
+    @Test
+    void test_path() {
+        Path path = Path.of("aStreet", "aHouse", "anObject");
+        assertThat(path.subpath(0, 2)).isEqualTo(Path.of("aStreet", "aHouse"));
+        assertThat(path.getName(1)).isEqualTo(Path.of("aHouse"));
+
+        Path path2 = path.resolve("aDetail");
+        assertThat(path2).isEqualTo(Path.of("aStreet", "aHouse", "anObject", "aDetail"));
+        assertThat(path2.getParent()).isEqualTo(path);
     }
 
 

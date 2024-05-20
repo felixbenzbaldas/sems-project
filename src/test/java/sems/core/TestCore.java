@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -73,9 +74,7 @@ public class TestCore {
     void can_create_object_with_text() throws IOException {
         App app = new App(new File(PATH_FOR_TMP_FILES));
 
-        String response = (String) app.handle("createObjectWithText", Map.of(
-                "house", "1",
-                "text", "bar"));
+        String response = (String) app.handle("createObjectWithText", List.of(List.of("1"), "bar"));
 
         File file = new File(PATH_FOR_TMP_FILES + "/1").listFiles()[0];
         assertThat(file).exists();
@@ -84,6 +83,14 @@ public class TestCore {
         Object json = objectMapper.readValue(file, Object.class);
         Map<String, Object> jsonMap = (Map<String, Object>) json;
         assertThat(jsonMap.get("text")).isEqualTo("bar");
+    }
+
+    @Test
+    void can_transform_list_to_path() {
+        List<String> list = List.of("aStreet", "aHouse", "anObject");
+        Path path = Path.of("aStreet", "aHouse", "anObject");
+
+        assertThat(PathUtil.fromList(list)).isEqualTo(path);
     }
 
     @AfterEach
