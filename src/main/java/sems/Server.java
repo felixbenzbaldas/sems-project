@@ -1,65 +1,33 @@
 package sems;
 
 
-import java.net.*;
-import java.io.*;
-import java.util.*;
+import com.sun.net.httpserver.HttpServer;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
 
 public class Server {
     static final int port = 8081;
-    static final String newLine = "\r\n";
 
-    public static void main(String[] args) {
-        try {
-            ServerSocket socket = new ServerSocket(port);
-            while (true) {
-                Socket connection = socket.accept();
-                try {
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    OutputStream outputStream = new BufferedOutputStream(connection.getOutputStream());
-                    PrintStream printStream = new PrintStream(outputStream);
+    public static void main(String[] args) throws IOException {
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
-                    // read first line of request
-                    String request = bufferedReader.readLine();
-                    System.out.println("request = " + request);
-                    if (request == null) continue;
+        server.createContext("/", httpExchange -> {
+            int contentLength = Integer.parseInt(httpExchange.getRequestHeaders().getFirst("Content-Length"));
+            String body = new String(httpExchange.getRequestBody().readNBytes(contentLength), StandardCharsets.UTF_8);
+            System.out.println("body = " + body);
 
-                    while (true) {
-                        String currentLine = bufferedReader.readLine();
-                        System.out.println("currentLine = " + currentLine);
+            byte[] response = "Hello, World!".getBytes(StandardCharsets.UTF_8);
+            httpExchange.getResponseHeaders().add("Content-Type", "text/plain; charset=UTF-8");
+            httpExchange.sendResponseHeaders(200, response.length);
 
-                        if (currentLine == null || currentLine.isEmpty()) break;
-                    }
-//
-//                    while (true) {
-//                        String currentLine = bufferedReader.readLine();
-//                        System.out.println("currentLine = " + currentLine);
-//
-//                        if (currentLine == null || currentLine.isEmpty()) break;
-//                    }
-
-
-                    if (!request.startsWith("POST ") ||
-                            !(request.endsWith(" HTTP/1.0") || request.endsWith(" HTTP/1.1"))) {
-                        // bad request
-                        printStream.print("HTTP/1.0 400 Bad Request" + newLine + newLine);
-                    } else {
-                        String response = "Hello, World!";
-                        printStream.print(
-                                "HTTP/1.0 200 OK" + newLine +
-                                        "Content-Type: text/plain" + newLine +
-                                        "Date: " + new Date() + newLine +
-                                        "Content-length: " + response.length() + newLine + newLine +
-                                        response
-                        );
-                    }
-                    printStream.close();
-                } catch (Throwable throwable) {
-                    System.err.println("Error handling request: " + throwable);
-                }
-            }
-        } catch (Throwable throwable) {
-            System.err.println("Could not start server: " + throwable);
-        }
+            OutputStream out = httpExchange.getResponseBody();
+            out.write(response);
+            out.close();
+        });
+        server.start();
     }
+
 }
