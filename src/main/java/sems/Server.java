@@ -15,9 +15,12 @@ public class Server {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
         server.createContext("/", httpExchange -> {
-            int contentLength = Integer.parseInt(httpExchange.getRequestHeaders().getFirst("Content-Length"));
-            String body = new String(httpExchange.getRequestBody().readNBytes(contentLength), StandardCharsets.UTF_8);
-            System.out.println("body = " + body);
+            String method = httpExchange.getRequestMethod();
+            if ("POST".equals(method)) {
+                int contentLength = Integer.parseInt(httpExchange.getRequestHeaders().getFirst("Content-Length"));
+                String body = new String(httpExchange.getRequestBody().readNBytes(contentLength), StandardCharsets.UTF_8);
+                System.out.println("body = " + body);
+            }
 
             byte[] response = "Hello, World!".getBytes(StandardCharsets.UTF_8);
             httpExchange.getResponseHeaders().add("Content-Type", "text/plain; charset=UTF-8");
