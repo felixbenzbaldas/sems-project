@@ -42,7 +42,7 @@ public class FileBasedObject implements SemsObject {
 
     @Override
     public Object get(String property) {
-        return jsonMap.get(property);
+        return jsonMap.get(property); // TODO: ensure object is loaded
     }
 
 }

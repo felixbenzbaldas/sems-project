@@ -10,7 +10,6 @@ public class Server {
     static final String newLine = "\r\n";
 
     public static void main(String[] args) {
-        System.out.println("hello world!!! :-)");
         try {
             ServerSocket socket = new ServerSocket(port);
             while (true) {
