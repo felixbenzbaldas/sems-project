@@ -1,1 +1,1 @@
-This folder contains protocolls. A protocoll file is like an Architecture Decision Record, but simplified. The file name of a protocoll starts with the date (as a sortable number). This is the only rule.
+This folder contains protocols. A protocol file is like an Architecture Decision Record, but simplified. The file name of a protocol starts with the date (as a sortable number). This is the only rule.
