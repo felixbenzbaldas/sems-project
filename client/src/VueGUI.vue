@@ -1,39 +1,32 @@
 <script setup lang="ts">
-import Heading from './components/Heading.vue'
-import {type Ref, ref} from "vue";
-import Item from "@/components/Item.vue";
+import Heading from './components/Heading.vue';
+import HeadBody from './components/HeadBody.vue';
 import type {RemoteObject} from "@/core/RemoteObject";
 import {App} from "@/core/App";
 import {configuration} from "@/core/configuration";
-import VueGUIForSemsObject from "@/components/VueGUIForSemsObject.vue";
+import {ref} from "vue";
 
 
 let app = new App(configuration);
-const mySemsObjects : Ref<Array<RemoteObject>> = ref([]);
+app.setFocused('workingPlace');
+const workingPlace = ref(undefined);
 
-getObjectsInWorkingPlace();
-
-async function getObjectsInWorkingPlace() {
-  await app.getObjectsInWorkingPlace().then(listOfObjects => {
-    listOfObjects.forEach(object => {
-      mySemsObjects.value.push(object);
-    });
-  });
+async function init() {
+  workingPlace.value = await app.getObjectsInWorkingPlace();
 }
 
-function createObjectInWorkingPlace() : Promise<RemoteObject> {
-  return app.createObjectInWorkingPlace();
-}
-
- async function clearWorkingSpace() {
-  await app.clearWorkingSpace();
-  mySemsObjects.value = [];
-}
+init();
 
 async function newSubitem() {
-  await createObjectInWorkingPlace().then(object => {
-    mySemsObjects.value.push(object);
-  });
+  if (app.getFocused() === 'workingPlace') {
+    await app.createObjectInWorkingPlace().then(object => {
+      app.setFocused(object);
+    });
+  } else {
+    let object : RemoteObject = await app.createObject();
+    app.getFocused().addDetail(object);
+    app.setFocused(object);
+  }
 }
 
 </script>
@@ -42,17 +35,27 @@ async function newSubitem() {
   <div>
     <a href="https://github.com/felixbenzbaldas/sems-project" target="_blank" rel="noopener"><Heading msg="Sems"/></a>
   </div>
-  <Item>
+  <HeadBody>
     <template #head>commands</template>
-    <template #details>
-      <button @click="newSubitem">new subitem</button>
-      <button @click="clearWorkingSpace">clear working space</button>
+    <template #body>
+      <div class="flow">
+        <button @click="newSubitem">new subitem</button>
+        <button v-if="workingPlace" @click="app.clearWorkingPlace()">clear working place</button>
+      </div>
     </template>
-  </Item>
+  </HeadBody>
   <div style="border: solid; min-height: 25rem; margin: 0.2rem; padding: 1rem">
-    <VueGUIForSemsObject v-for="obj in mySemsObjects" :object="obj" /><!-- TODO: :key verwenden  -->
+    <div v-if="workingPlace">
+      <ListOfSemsObjects :list="workingPlace"/>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+  row-gap: 1rem;
+}
 </style>

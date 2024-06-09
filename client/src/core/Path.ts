@@ -17,4 +17,12 @@ export class Path {
     append(name: string) : Path {
         return new Path([...this.listOfNames, name]);
     }
+
+    getLast() {
+        return this.listOfNames.at(this.listOfNames.length - 1);
+    }
+
+    withoutLast() : Path {
+        return new Path(this.listOfNames.slice(0, this.listOfNames.length - 1));
+    }
 }

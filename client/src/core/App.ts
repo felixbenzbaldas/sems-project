@@ -2,13 +2,15 @@ import {Http} from "@/core/Http";
 import {Location} from "@/core/Location";
 import {Path} from "@/core/Path";
 import type {RemoteObject} from "@/core/RemoteObject";
+import {ObservableList} from "@/core/ObservableList";
 
 export class App {
 
     private http : Http = new Http();
     private location : Location;
     private currentWritingPosition : Path;
-    private workingSpace : Array<RemoteObject>;
+    private workingPlace : ObservableList<RemoteObject>;
+    private focused : any;
 
     constructor(configuration : any) {
         let server = configuration.server;
@@ -20,28 +22,48 @@ export class App {
     async createObjectInWorkingPlace() : Promise<RemoteObject> {
         return this.location.createObjectWithText(this.currentWritingPosition, '').then(object => {
             return this.addObjectToWorkingSpace(object).then(() => object);
-        })
+        });
     }
 
     async addObjectToWorkingSpace(object : RemoteObject) : Promise<void> {
-        if (!this.workingSpace) {
+        if (!this.workingPlace) {
             await this.getObjectsInWorkingPlace();
         }
         return this.location.addObjectToWorkingSpace(object).then(() => {
-            this.workingSpace.push(object);
+            this.workingPlace.add(object);
         });
     }
 
-    async getObjectsInWorkingPlace() : Promise<Array<RemoteObject>> {
+    async getObjectsInWorkingPlace() : Promise<ObservableList<RemoteObject>> {
         return this.location.getObjectsInWorkingPlace().then(listOfObjects => {
-            this.workingSpace = listOfObjects;
-            return listOfObjects;
+            this.workingPlace = new ObservableList<RemoteObject>();
+            listOfObjects.forEach(value => {
+                this.workingPlace.add(value);
+            });
+            return this.workingPlace;
         });
     }
 
-    async clearWorkingSpace() : Promise<void> {
-        return this.location.clearWorkingSpace().then(() => {
-            this.workingSpace = [];
+    async clearWorkingPlace() : Promise<void> {
+        return this.location.clearWorkingPlace().then(() => {
+            this.workingPlace.clear();
+            this.focused = 'workingPlace';
         });
+    }
+
+    async createObject() : Promise<RemoteObject> {
+        return this.location.createObjectWithText(this.currentWritingPosition, '');
+    }
+
+    setFocused(object : any) {
+        this.focused = object;
+    }
+
+    getFocused() : any {
+        return this.focused;
+    }
+
+    getLocation() : Location {
+        return this.location;
     }
 }

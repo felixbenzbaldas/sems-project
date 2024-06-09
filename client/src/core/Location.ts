@@ -60,18 +60,25 @@ export class Location {
     async getObjectsInWorkingPlace() : Promise<Array<RemoteObject>> {
         let listOfPaths = await this.request('getObjectsInWorkingPlace', []);
         let listOfObjects: Array<RemoteObject> = [];
-        for await (let path of listOfPaths) {
-            let data = await this.request('get', [path]);
-            listOfObjects.push(new RemoteObject(this, path.at(1), data.text));
+        for (let path of listOfPaths) {
+            let object = await this.getObject(new Path(path));
+            listOfObjects.push(object);
         }
         return listOfObjects;
     }
 
-    async clearWorkingSpace() : Promise<any> {
+    async clearWorkingPlace() : Promise<any> {
         return this.request('clearWorkingSpace', []);
     }
 
     async request(method: string, args: Array<Object>) : Promise<any>{
         return this.http.request(this.httpAddress, method, args);
+    }
+
+    async getObject(path: Path) : Promise<RemoteObject> {
+        let data = await this.request('get', [path.toList()]);
+        let object = new RemoteObject(this, path.getLast(), data.text);
+        object.setContainer(this.getHouse(path.withoutLast()))
+        return object;
     }
 }

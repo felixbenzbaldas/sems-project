@@ -29,6 +29,19 @@ describe('app', () => {
 
         expect(object.getText()).toEqual('new text');
     });
+
+    it('can get object by path', async () => {
+        let app = new App(configuration);
+        let object = await app.createObject();
+        let path : Path = app.getLocation().getPath(object);
+
+        let app2 = new App(configuration);
+        let object2 = await app2.getLocation().getObject(path);
+
+        expect(object2).toBeTruthy();
+        let path2 =  app2.getLocation().getPath(object2);
+        expect(path2.toList()).toEqual(path.toList());
+    });
 });
 
 describe('location', () => {

@@ -1,11 +1,23 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {RemoteObject} from "@/core/RemoteObject";
+import ListOfSemsObjects from "@/components/ListOfSemsObjects.vue";
+import HeadBody from "@/components/HeadBody.vue";
 const props = defineProps<{
   object: RemoteObject
 }>();
+
 const hasBody = ref(false);
-const showBody = ref(false);
+
+function updateHasBody() {
+  hasBody.value = !props.object.getDetails().isEmpty();
+}
+
+updateHasBody();
+
+props.object.getDetails().subject.subscribe(next => {
+  updateHasBody();
+});
 
 function saveChanges(event : any) {
   props.object.setText(event.target.innerText.trim());
@@ -14,14 +26,16 @@ function saveChanges(event : any) {
 </script>
 
 <template>
-  <div class="semsObject">
-    <div style="display: inline-block ; max-width: 20rem">
-      <div class="contentEditableDiv" contenteditable @blur="saveChanges">{{ props.object.getText() }}</div>
-    </div>
-    <span v-if="hasBody && !showBody"> [...]</span>
-    <div v-if="showBody" class="details">
-    </div>
-  </div>
+  <HeadBody>
+    <template #head>
+      <div style="display: inline-block ; max-width: 20rem">
+        <div @click="$event.stopPropagation()" class="contentEditableDiv" contenteditable @blur="saveChanges">{{ props.object.getText() }}</div>
+      </div>
+    </template>
+    <template v-if="hasBody" #body>
+      <ListOfSemsObjects :list="props.object.getDetails()"/>
+    </template>
+  </HeadBody>
 </template>
 
 <style scoped>
@@ -30,10 +44,6 @@ function saveChanges(event : any) {
   min-height: 1rem;
   min-width: 1rem;
   background-color: antiquewhite;
-}
-
-.details {
-  margin-left: 1rem;
 }
 
 </style>
