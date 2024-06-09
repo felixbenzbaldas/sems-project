@@ -1,7 +1,11 @@
-// TODO: deprecated - do not use Tomcat anymore
-
 plugins {
     id 'java'
+    id 'application'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 group = 'org.example'
@@ -15,15 +19,21 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.assertj:assertj-core:3.25.3'
-    testImplementation("com.tngtech.jgiven:jgiven-junit5:1.3.1")
     testImplementation 'org.mockito:mockito-core:3.12.4'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
-    implementation fileTree(dir: 'tomcat/lib', include: '*.jar')
+}
+
+
+application {
+    mainClass = 'nodomain.sems.OnlyLocalhostServer'
 }
 
 test {
     useJUnitPlatform()
 }
+
+// the following is NOT TESTED!
+
 
 task buildClient {
     doLast {
@@ -33,11 +43,11 @@ task buildClient {
         }
         copy {
             from macroFolder
-            into buildClientPath + '/src/app/sems-client-src/macro/'
+            into buildClientPath + '/src/macro/'
         }
         exec {
             workingDir buildClientPath
-            commandLine 'cmd', '/c', 'ng build'
+            commandLine 'cmd', '/c', 'npm run build'
         }
     }
 }
@@ -45,7 +55,7 @@ task buildClient {
 
 task copyClient_excludeNodeModules(type: Copy) {
     from ('client') {
-        exclude '/node_modules/*', '/.angular/'
+        exclude '/node_modules/*'
     }
     into buildClientPath
 }
@@ -55,11 +65,11 @@ task buildClient_excludeNodeModules {
     doLast {
         copy {
             from macroFolder
-            into buildClientPath + '/src/app/sems-client-src/macro/'
+            into buildClientPath + '/src/macro/'
         }
         exec {
             workingDir buildClientPath
-            commandLine 'cmd', '/c', 'ng build'
+            commandLine 'cmd', '/c', 'npm run build'
         }
     }
 }
@@ -67,33 +77,23 @@ task buildClient_excludeNodeModules {
 task localDeployNoClientBuild {
     dependsOn(build)
     doLast {
-        delete deploymentPath + '/tomcat-app'
-        copy {
-            from 'tomcat'
-            into deploymentPath + '/tomcat-app'
-        }
+        delete deploymentPath + '/app'
         copy {
             from 'build/classes/java/main'
-            into deploymentPath +  '/tomcat-app/webapps/server/WEB-INF/classes'
+            into deploymentPath +  '/app/classes'
         }
         copy {
-            from buildClientPath + '/dist/client/browser'
-            into deploymentPath + '/tomcat-app/webapps/ROOT'
+            from buildClientPath + '/dist/'
+            into deploymentPath + '/app/client'
         }
     }
 }
 
 task copyClientResources(type: Copy) {
     from clientResources
-    into deploymentPath + '/tomcat-app/webapps/ROOT/resources'
+    into deploymentPath + '/app/client/resources'
 }
 
 task localDeploy_excludeNodeModules {
-    dependsOn(buildClient_excludeNodeModules, localDeployNoClientBuild, copyClientResources)
-    doLast {
-        copy {
-            from clientResources
-            into deploymentPath + '/tomcat-app/webapps/ROOT/resources/'
-        }
-    }
+    dependsOn(buildClient_excludeNodeModules, localDeployNoClientBuild, copyClientResources, copyClientResources)
 }

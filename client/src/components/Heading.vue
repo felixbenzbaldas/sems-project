@@ -20,7 +20,4 @@ h1 {
   top: -10px;
 }
 
-.greetings h1 {
-  text-align: center;
-}
 </style>

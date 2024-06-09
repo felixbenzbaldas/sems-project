@@ -6,3 +6,4 @@ build/
 gradle/
 tomcat/bin/setenv.bat
 gradle.properties
+/installDevelopmentEnvironment.bat
