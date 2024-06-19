@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class App {
 
-    public static final String WORKING_SPACE = "workingSpace";
+    public static final String WORKING_PLACE = "workingPlace";
     private File file;
 
     private Map<String, House> houses = new HashMap<>();
@@ -21,8 +20,8 @@ public class App {
     public App(File file) {
         this.file = file;
         this.properties = new FileBasedObject(new File(this.file, "properties.json"));
-        if (!this.properties.has(WORKING_SPACE)) {
-            this.properties.set(WORKING_SPACE, new ArrayList<String>());
+        if (!this.properties.has(WORKING_PLACE)) {
+            this.properties.set(WORKING_PLACE, new ArrayList<String>());
         }
     }
 
@@ -34,8 +33,8 @@ public class App {
                 yield null;
             }
             case "get" -> get((List<String>) args.get(0));
-            case "addObjectToWorkingSpace" -> {
-                this.addObjectToWorkingSpace((List<String>) args.get(0));
+            case "addObjectToWorkingPlace" -> {
+                this.addObjectToWorkingPlace((List<String>) args.get(0));
                 yield null;
             }
             case "getObjectsInWorkingPlace" -> getObjectsInWorkingPlace();
@@ -43,8 +42,12 @@ public class App {
                 setText((List<String>) args.get(0), (String) args.get(1));
                 yield null;
             }
-            case "clearWorkingSpace" -> {
-                this.clearWorkingSpace();
+            case "clearWorkingPlace" -> {
+                this.clearWorkingPlace();
+                yield null;
+            }
+            case "set" -> {
+                this.set((List<String>) args.get(0), (String) args.get(1), args.get(2));
                 yield null;
             }
             default -> throw new RuntimeException("method not implemented");
@@ -55,25 +58,34 @@ public class App {
         getSemsObject(new Path(object)).set("text", text);
     }
 
+    public void set(List<String> object, String property, Object value) {
+        getSemsObject(new Path(object)).set(property, value);
+    }
+
     public String createObjectWithText(List<String> house, String text) {
         return getHouse(new Path(house)).createObjectWithText(text).getName();
     }
-    public void addObjectToWorkingSpace(List<String> object) {
-        List<List<String>> objectsInWorkingSpace = (List<List<String>>) this.properties.get(WORKING_SPACE);
-        objectsInWorkingSpace.add(object);
-        this.properties.set(WORKING_SPACE, objectsInWorkingSpace);
+    public void addObjectToWorkingPlace(List<String> object) {
+        List<List<String>> objectsInWorkingPlace = (List<List<String>>) this.properties.get(WORKING_PLACE);
+        objectsInWorkingPlace.add(object);
+        this.properties.set(WORKING_PLACE, objectsInWorkingPlace);
     }
 
     public List<List<String>> getObjectsInWorkingPlace() {
-        return (List<List<String>>) this.properties.get(WORKING_SPACE);
+        return (List<List<String>>) this.properties.get(WORKING_PLACE);
     }
 
     public Map<String, Object> get(List<String> path) {
         return getSemsObject(new Path(path)).getData();
     }
 
+
     private SemsObject getSemsObject(Path path) {
-        return getHouse(path.withoutLastPart()).get(path.getLastPart());
+        if (path.getLength() == 0) {
+            return this.properties;
+        } else {
+            return getHouse(path.withoutLastPart()).get(path.getLastPart());
+        }
     }
 
     public void createUser(String user, String password) {
@@ -91,7 +103,7 @@ public class App {
         }
     }
 
-    public void clearWorkingSpace() {
-        this.properties.set(WORKING_SPACE, new ArrayList<String>());
+    public void clearWorkingPlace() {
+        this.properties.set(WORKING_PLACE, new ArrayList<String>());
     }
 }

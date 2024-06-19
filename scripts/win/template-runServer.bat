@@ -1,0 +1,1 @@
+start cmd.exe /k ".\gradlew.bat run --args C:\...\config.txt"

@@ -25,4 +25,8 @@ export class Path {
     withoutLast() : Path {
         return new Path(this.listOfNames.slice(0, this.listOfNames.length - 1));
     }
+
+    withoutFirst() {
+        return new Path(this.listOfNames.slice(1, this.listOfNames.length));
+    }
 }

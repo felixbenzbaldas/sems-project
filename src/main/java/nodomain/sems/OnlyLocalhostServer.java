@@ -24,13 +24,18 @@ public class OnlyLocalhostServer {
     static private ObjectMapper objectMapper = new ObjectMapper();
 
     public static void main(String[] args) throws IOException {
-        installApp(new File(args[0]));
+        File configFile = new File(args[0]);
+        System.out.println("configFile = " + configFile);
+        HashMap<String, Object> jsonConfiguration = (HashMap<String, Object>) new ObjectMapper()
+                .readValue(configFile, Object.class);
+        File file = new File((String) jsonConfiguration.get("file"));
+        installApp(file);
         installServer();
     }
 
-    private static void installApp(File file) {
+    private static void installApp(File file) throws IOException {
         app = new App(file);
-        System.out.println("filepath of test-server: " + file);
+        System.out.println("Filepath of data of only-localhost-server: " + file);
     }
 
     private static void installServer() throws IOException {

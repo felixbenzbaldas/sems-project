@@ -85,6 +85,19 @@ public class TestCore {
         assertThat(jsonMap.get("text")).isEqualTo("bar");
     }
 
+    @Test
+    void can_set_property_at_empty_path() throws IOException {
+        App app = new App(new File(PATH_FOR_TMP_FILES));
+
+        app.handle("set", List.of(List.of(), "property", "value"));
+
+        File file = new File(PATH_FOR_TMP_FILES + "/properties.json");
+        assertThat(file).exists();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Object json = objectMapper.readValue(file, Object.class);
+        Map<String, Object> jsonMap = (Map<String, Object>) json;
+        assertThat(jsonMap.get("property")).isEqualTo("value");
+    }
     @AfterEach
     void afterEach() throws IOException {
         deleteDirectory(new File(PATH_FOR_TMP_FILES));

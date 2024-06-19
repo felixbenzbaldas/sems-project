@@ -18,12 +18,7 @@ public class ObjectFilesHouse implements House {
 
     @Override
     public SemsObject createObjectWithText(String text) {
-        RandomString randomString = new RandomString();
-        File file = new File(directoryFile, randomString.next() + FileBasedObject.EXTENSION);
-        FileBasedObject fileBasedObject = new FileBasedObject(file);
-        fileBasedObject.set("text", text);
-        loadedObjects.put(fileBasedObject.getName(), fileBasedObject);
-        return fileBasedObject;
+        return createObject(new RandomString().next(), Map.of("text", text));
     }
 
     @Override
@@ -39,9 +34,12 @@ public class ObjectFilesHouse implements House {
 
     @Override
     public SemsObject createUser(String userName, String password) {
-        File file = new File(directoryFile, userName + FileBasedObject.EXTENSION);
-        FileBasedObject fileBasedObject = new FileBasedObject(file);
-        fileBasedObject.set("hash", new Security().createSecurityHash(password));
+        return createObject(userName, Map.of("hash", new Security().createSecurityHash(password)));
+    }
+
+    public FileBasedObject createObject(String name, Map<String, Object> data) {
+        File file = new File(directoryFile, name + FileBasedObject.EXTENSION);
+        FileBasedObject fileBasedObject = new FileBasedObject(file, data);
         loadedObjects.put(fileBasedObject.getName(), fileBasedObject);
         return fileBasedObject;
     }

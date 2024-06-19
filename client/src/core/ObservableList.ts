@@ -8,12 +8,11 @@ export class ObservableList<T> {
     constructor() {
     }
 
-    /// It is guaranteed that always a fresh copy is returned. This can be important for change detection in UI-Frameworks.
     createCopyOfList() : Array<T> {
         return [...this.list];
     }
 
-    add(item: any) {
+    add(item: T) {
         this.list.push(item);
         this.subject.next('addedItem');
     }

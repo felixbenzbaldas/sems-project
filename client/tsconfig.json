@@ -1,18 +1,18 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    },
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.vitest.json"
+    "files": [],
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        },
+        {
+            "path": "./tsconfig.app.json"
+        },
+        {
+            "path": "./tsconfig.vitest.json"
+        }
+    ],
+    "compilerOptions": {
+        "module": "NodeNext",
+        "strictNullChecks": false
     }
-  ],
-  "compilerOptions": {
-    "module": "NodeNext",
-    "strictNullChecks": false,
-  }
 }

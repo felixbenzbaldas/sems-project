@@ -1,0 +1,16 @@
+{
+	"idCounter":3,
+	"rootObject":"0-0",
+	"objects":[
+		{
+			"details":["AHouse-567", "AnotherHouse-789"],
+			"id":"AHouse-123",
+			"properties":{
+				"context":"AHouse-345",
+				"isPrivate":false,
+				"text":"foo bar",
+				"defaultExpanded":true
+			}
+		}
+	]
+}

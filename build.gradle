@@ -28,6 +28,12 @@ application {
     mainClass = 'nodomain.sems.OnlyLocalhostServer'
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+}
+
 test {
     useJUnitPlatform()
 }
@@ -83,7 +89,7 @@ task localDeployNoClientBuild {
             into deploymentPath +  '/app/classes'
         }
         copy {
-            from buildClientPath + '/dist/'
+            from 'client/dist/'
             into deploymentPath + '/app/client'
         }
     }

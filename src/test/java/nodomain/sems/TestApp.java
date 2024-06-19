@@ -1,7 +1,6 @@
 package nodomain.sems;
 
 import nodomain.sems.core.App;
-import nodomain.sems.core.SemsObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,7 +64,7 @@ public class TestApp {
         App app = new App(new File(PATH_FOR_TMP_FILES));
         String object = app.createObjectWithText(List.of("house1"), "an object");
 
-        app.addObjectToWorkingSpace(List.of("house1", object));
+        app.addObjectToWorkingPlace(List.of("house1", object));
 
         App app2 = new App(new File(PATH_FOR_TMP_FILES));
         assertThat(app2.getObjectsInWorkingPlace()).hasSize(1);

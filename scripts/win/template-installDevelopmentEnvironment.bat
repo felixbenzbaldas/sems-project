@@ -6,6 +6,6 @@ cd ..
 cd e2e-tests/
 start cmd.exe /k "npx cypress open --e2e --browser firefox"
 cd ..
-start cmd.exe /k "C:\...\gradlew.bat run --args C:\...\sems-test-server"
+call ./runServer.bat
 echo installation script finished
 timeout /T 10

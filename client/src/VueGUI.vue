@@ -1,61 +1,61 @@
 <script setup lang="ts">
-import Heading from './components/Heading.vue';
-import HeadBody from './components/HeadBody.vue';
+import HeaderBody from './components/HeaderBody.vue';
 import type {RemoteObject} from "@/core/RemoteObject";
 import {App} from "@/core/App";
 import {configuration} from "@/core/configuration";
-import {ref} from "vue";
+import {type Ref, ref} from "vue";
+import {UserInterface} from "@/user-interface/UserInterface";
+import type {ObservableList} from "@/core/ObservableList";
+import type {UserInterfaceObject} from "@/user-interface/UserInterfaceObject";
+import DisplayForListOfUIOs from "@/components/DisplayForListOfUIOs.vue";
 
 
 let app = new App(configuration);
-app.setFocused('workingPlace');
-const workingPlace = ref(undefined);
+let userInterface = new UserInterface(app);
+
+const workingPlace : Ref<ObservableList<UserInterfaceObject>> = ref(undefined);
 
 async function init() {
-  workingPlace.value = await app.getObjectsInWorkingPlace();
+    let workingPlaceUIO = await userInterface.getWorkingPlace();
+    userInterface.setFocused(workingPlaceUIO);
+    workingPlace.value = workingPlaceUIO.getListOfUIOs();
 }
 
 init();
 
 async function newSubitem() {
-  if (app.getFocused() === 'workingPlace') {
-    await app.createObjectInWorkingPlace().then(object => {
-      app.setFocused(object);
-    });
-  } else {
-    let object : RemoteObject = await app.createObject();
-    app.getFocused().addDetail(object);
-    app.setFocused(object);
-  }
+    await userInterface.newSubitem();
+}
+
+async function clearWorkingPlace() {
+    userInterface.setFocused(await userInterface.getWorkingPlace());
+    app.clearWorkingPlace();
 }
 
 </script>
 
 <template>
-  <div>
-    <a href="https://github.com/felixbenzbaldas/sems-project" target="_blank" rel="noopener"><Heading msg="Sems"/></a>
-  </div>
-  <HeadBody>
-    <template #head>commands</template>
-    <template #body>
-      <div class="flow">
-        <button @click="newSubitem">new subitem</button>
-        <button v-if="workingPlace" @click="app.clearWorkingPlace()">clear working place</button>
-      </div>
-    </template>
-  </HeadBody>
-  <div style="border: solid; min-height: 25rem; margin: 0.2rem; padding: 1rem">
-    <div v-if="workingPlace">
-      <ListOfSemsObjects :list="workingPlace"/>
+    <HeaderBody expanded>
+        <template #head>commands</template>
+        <template #body>
+            <div class="flow">
+                <button @click="newSubitem">new subitem</button>
+                <button v-if="workingPlace" @click="clearWorkingPlace()">clear working place</button>
+            </div>
+        </template>
+    </HeaderBody>
+    <div style="border: solid; min-height: 25rem; margin: 0.2rem; padding: 1rem">
+        <div v-if="workingPlace">
+            <DisplayForListOfUIOs :list="workingPlace" :app="app" :userInterface="userInterface"/>
+        </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
 .flow {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 1rem;
-  row-gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    row-gap: 1rem;
 }
 </style>

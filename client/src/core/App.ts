@@ -3,6 +3,7 @@ import {Location} from "@/core/Location";
 import {Path} from "@/core/Path";
 import type {RemoteObject} from "@/core/RemoteObject";
 import {ObservableList} from "@/core/ObservableList";
+import type {House} from "@/core/House";
 
 export class App {
 
@@ -10,7 +11,6 @@ export class App {
     private location : Location;
     private currentWritingPosition : Path;
     private workingPlace : ObservableList<RemoteObject>;
-    private focused : any;
 
     constructor(configuration : any) {
         let server = configuration.server;
@@ -20,47 +20,42 @@ export class App {
     }
 
     async createObjectInWorkingPlace() : Promise<RemoteObject> {
-        return this.location.createObjectWithText(this.currentWritingPosition, '').then(object => {
-            return this.addObjectToWorkingSpace(object).then(() => object);
-        });
+        let object = await this.createObject();
+        await this.addObjectToWorkingPlace(object);
+        return object;
     }
 
-    async addObjectToWorkingSpace(object : RemoteObject) : Promise<void> {
+    async addObjectToWorkingPlace(object : RemoteObject) : Promise<void> {
         if (!this.workingPlace) {
             await this.getObjectsInWorkingPlace();
         }
-        return this.location.addObjectToWorkingSpace(object).then(() => {
-            this.workingPlace.add(object);
-        });
+        await this.location.addObjectToWorkingPlace(object);
+        this.workingPlace.add(object);
     }
 
+    // TODO make lazy
     async getObjectsInWorkingPlace() : Promise<ObservableList<RemoteObject>> {
-        return this.location.getObjectsInWorkingPlace().then(listOfObjects => {
-            this.workingPlace = new ObservableList<RemoteObject>();
-            listOfObjects.forEach(value => {
-                this.workingPlace.add(value);
-            });
-            return this.workingPlace;
+        let listOfObjects = await this.location.getObjectsInWorkingPlace();
+        this.workingPlace = new ObservableList<RemoteObject>();
+        listOfObjects.forEach(value => {
+            this.workingPlace.add(value);
         });
+        return this.workingPlace;
     }
 
     async clearWorkingPlace() : Promise<void> {
-        return this.location.clearWorkingPlace().then(() => {
+        await this.location.clearWorkingPlace();
+        if (this.workingPlace) {
             this.workingPlace.clear();
-            this.focused = 'workingPlace';
-        });
+        }
     }
 
     async createObject() : Promise<RemoteObject> {
-        return this.location.createObjectWithText(this.currentWritingPosition, '');
+        return (await this.getCurrentHouse()).createObjectWithText('');
     }
 
-    setFocused(object : any) {
-        this.focused = object;
-    }
-
-    getFocused() : any {
-        return this.focused;
+    private async getCurrentHouse() : Promise<House> {
+        return this.location.getHouse(this.currentWritingPosition);
     }
 
     getLocation() : Location {

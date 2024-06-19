@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class FileBasedObject implements SemsObject {
 
-    public static final String EXTENSION = ".txt";
+    public static final String EXTENSION = ".json";
 
     private File file;
     private Map<String, Object> jsonMap;
@@ -30,6 +30,11 @@ public class FileBasedObject implements SemsObject {
         }
     }
 
+    public FileBasedObject(File file, Map<String, Object> data) {
+        this.file = file;
+        setData(data);
+    }
+
     @Override
     public String getName() {
         return file.getName().replace(EXTENSION, "");
@@ -48,17 +53,20 @@ public class FileBasedObject implements SemsObject {
     public void set(String property, Object value) {
         Map<String, Object> newData = new HashMap<>(jsonMap); // copy
         newData.put(property, value);
+        setData(newData);
+    }
+
+    private void setData(Map<String, Object> data) {
         try {
-            objectMapper.writeValue(file, newData);
+            objectMapper.writeValue(file, data);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        jsonMap = newData;
+        jsonMap = data;
     }
 
     @Override
     public Object get(String property) {
         return jsonMap.get(property);
     }
-
 }

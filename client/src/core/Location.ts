@@ -16,25 +16,9 @@ export class Location {
         this.httpAddress = httpAddress;
     }
 
-    async createObjectWithText(housePath: Path, text : string) : Promise<RemoteObject> {
-        return this.request('createObjectWithText', [housePath.toList(), text])
-            .then(json => {
-                let name : string = json as string;
-                let object = new RemoteObject(this, name, text);
-                let house = this.getHouse(housePath);
-                object.setContainer(house);
-                return object;
-            });
-    }
-
-    getHouse(path: Path) : House {
+    async getHouse(path: Path) : Promise<House> {
         if (path.getLength() == 1) {
-            let name = path.getFirst();
-            if (!this.objects.has(name)) {
-                // TODO maybe check if it really is a house
-                this.objects.set(name, new House(this.http, this, name));
-            }
-            return this.objects.get(name);
+            return this.getObjectByName(path.getFirst());
         } else {
             throw new Error('not implemented yet');
         }
@@ -44,8 +28,8 @@ export class Location {
         return this.httpAddress;
     }
 
-    async addObjectToWorkingSpace(object: RemoteObject) : Promise<void> {
-        return this.request('addObjectToWorkingSpace', [this.getPath(object).toList()]);
+    async addObjectToWorkingPlace(object: RemoteObject) : Promise<void> {
+        return this.request('addObjectToWorkingPlace', [this.getPath(object).toList()]);
     }
 
     getPath(object: any) : Path {
@@ -68,7 +52,7 @@ export class Location {
     }
 
     async clearWorkingPlace() : Promise<any> {
-        return this.request('clearWorkingSpace', []);
+        return this.request('clearWorkingPlace', []);
     }
 
     async request(method: string, args: Array<Object>) : Promise<any>{
@@ -76,9 +60,24 @@ export class Location {
     }
 
     async getObject(path: Path) : Promise<RemoteObject> {
-        let data = await this.request('get', [path.toList()]);
-        let object = new RemoteObject(this, path.getLast(), data.text);
-        object.setContainer(this.getHouse(path.withoutLast()))
-        return object;
+        if (path.getLength() == 0) {
+            throw new Error('not implemented yet');
+        } else {
+            let house = await this.getObjectByName(path.getFirst());
+            let withoutFirst = path.withoutFirst();
+            if (withoutFirst.getLength() == 0) {
+                throw new Error('not implemented yet');
+            } else {
+                return await house.getObject(withoutFirst);
+            }
+        }
+    }
+
+    async getObjectByName(name : string) : Promise<House> {
+        if (!this.objects.has(name)) {
+            // TODO maybe check if it really is a house
+            this.objects.set(name, new House(this.http, this, name));
+        }
+        return this.objects.get(name);
     }
 }

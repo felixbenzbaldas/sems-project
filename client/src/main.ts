@@ -1,13 +1,15 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
-import VueApp from "@/VueGUI.vue";
-import ListOfSemsObjects from "@/components/ListOfSemsObjects.vue";
-import VueGUIForSemsObject from "@/components/VueGUIForSemsObject.vue";
-import HeadBody from "@/components/HeadBody.vue";
+import VueApp from "@/VueApp.vue";
+import DisplayForListOfUIOs from "@/components/DisplayForListOfUIOs.vue";
+import GUIForUIO from "@/components/GUIForUIO.vue";
+import HeaderBody from "@/components/HeaderBody.vue";
+import VueGUI from "@/VueGUI.vue";
 
 const app = createApp(VueApp);
-app.component('ListOfSemsObjects', ListOfSemsObjects);
-app.component('VueGUIForSemsObject', VueGUIForSemsObject);
-app.component('HeadBody', HeadBody);
+app.component('VueGUI', VueGUI);
+app.component('DisplayForListOfUIOs', DisplayForListOfUIOs);
+app.component('GUIForUIO', GUIForUIO);
+app.component('HeaderBody', HeaderBody);
 app.mount('#app');

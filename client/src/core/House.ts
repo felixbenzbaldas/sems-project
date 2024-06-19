@@ -4,14 +4,20 @@ import {Http} from "@/core/Http";
 import {Location} from "@/core/Location";
 
 export class House {
+
+    private objects : Map<string, any> = new Map();
+
     constructor(private http : Http, private location : Location, private name : string) {
     }
     async createObjectWithText(text: string) : Promise<RemoteObject> {
-        return this.http.request(this.location.getHttpAddress(), 'createObjectWithText', [this.getPath().toList(), text])
-            .then(json => {
-                let name : string = json as string;
-                return new RemoteObject(this.location, name, text);
-            });
+        let json = await this.request('createObjectWithText', [this.getPath().toList(), text]);
+        let name : string = json as string;
+        if (!this.objects.has(name)) { // there could be a race condition with get
+            let object = new RemoteObject(this.location, name, { text: text });
+            object.setContainer(this);
+            this.objects.set(name, object);
+        }
+        return this.objects.get(name);
     }
 
     private getPath() : Path {
@@ -24,5 +30,33 @@ export class House {
 
     getName() : string {
         return this.name;
+    }
+
+    async getObject(path: Path) : Promise<RemoteObject> {
+        if (path.getLength() == 0) {
+            throw new Error('not implemented yet');
+        } else {
+            let object = await this.getObjectByName(path.getFirst());
+            let withoutFirst = path.withoutFirst();
+            if (withoutFirst.getLength() == 0) {
+                return object;
+            } else {
+                throw new Error('not implemented yet!');
+            }
+        }
+    }
+
+    async getObjectByName(name: string) {
+        if (!this.objects.has(name)) {
+            let data = await this.request('get', [[this.name, name]]); // TODO this.getPath().append(name)
+            let object = new RemoteObject(this.location, name, data);
+            object.setContainer(this);
+            this.objects.set(name, object);
+        }
+        return this.objects.get(name);
+    }
+
+    async request(method: string, args: Array<Object>) : Promise<any>{
+        return this.http.request(this.location.getHttpAddress(), method, args);
     }
 }
