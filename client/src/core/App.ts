@@ -1,7 +1,7 @@
 import {Http} from "@/core/Http";
 import {Location} from "@/core/Location";
 import {Path} from "@/core/Path";
-import type {RemoteObject} from "@/core/RemoteObject";
+import type {SemsObject} from "@/core/SemsObject";
 import {ObservableList} from "@/core/ObservableList";
 import type {House} from "@/core/House";
 
@@ -10,7 +10,7 @@ export class App {
     private http : Http = new Http();
     private location : Location;
     private currentWritingPosition : Path;
-    private workingPlace : ObservableList<RemoteObject>;
+    private workingPlace : ObservableList<SemsObject>;
 
     constructor(configuration : any) {
         let server = configuration.server;
@@ -19,13 +19,13 @@ export class App {
         this.currentWritingPosition = new Path(configuration.writingPosition);
     }
 
-    async createObjectInWorkingPlace() : Promise<RemoteObject> {
+    async createObjectInWorkingPlace() : Promise<SemsObject> {
         let object = await this.createObject();
         await this.addObjectToWorkingPlace(object);
         return object;
     }
 
-    async addObjectToWorkingPlace(object : RemoteObject) : Promise<void> {
+    async addObjectToWorkingPlace(object : SemsObject) : Promise<void> {
         if (!this.workingPlace) {
             await this.getObjectsInWorkingPlace();
         }
@@ -34,9 +34,9 @@ export class App {
     }
 
     // TODO make lazy
-    async getObjectsInWorkingPlace() : Promise<ObservableList<RemoteObject>> {
+    async getObjectsInWorkingPlace() : Promise<ObservableList<SemsObject>> {
         let listOfObjects = await this.location.getObjectsInWorkingPlace();
-        this.workingPlace = new ObservableList<RemoteObject>();
+        this.workingPlace = new ObservableList<SemsObject>();
         listOfObjects.forEach(value => {
             this.workingPlace.add(value);
         });
@@ -50,7 +50,7 @@ export class App {
         }
     }
 
-    async createObject() : Promise<RemoteObject> {
+    async createObject() : Promise<SemsObject> {
         return (await this.getCurrentHouse()).createObjectWithText('');
     }
 

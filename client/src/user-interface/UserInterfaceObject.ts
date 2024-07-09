@@ -1,13 +1,13 @@
 import {ObservableList} from "@/core/ObservableList";
 import type {UserInterface} from "@/user-interface/UserInterface";
-import type {RemoteObject} from "@/core/RemoteObject";
+import type {SemsObject} from "@/core/SemsObject";
+import {ListAspectForUIO} from "@/user-interface/ListAspectForUIO";
 
 export class UserInterfaceObject {
 
-    private semsObject : RemoteObject;
-    
-    private listOfSemsObjects : ObservableList<RemoteObject>;
-    private listOfUIOs : ObservableList<UserInterfaceObject>;
+    private semsObject : SemsObject;
+
+    listAspect: ListAspectForUIO;
 
     constructor(private userInteface : UserInterface) {
     }
@@ -20,40 +20,11 @@ export class UserInterfaceObject {
         this.userInteface.setFocused(this);
     }
 
-    setListOfSemsObjects(list : ObservableList<RemoteObject>) {
-        this.listOfSemsObjects = list;
-    }
-
-    getListOfUIOs() : ObservableList<UserInterfaceObject>{
-        if (!this.listOfUIOs) {
-            this.createListOfUIOs();
-        }
-        return this.listOfUIOs;
-    }
-
-    private createListOfUIOs() {
-        this.listOfUIOs = new ObservableList<UserInterfaceObject>();
-        this.updateListOfUIOs();
-        this.listOfSemsObjects.subject.subscribe(next => {
-            this.updateListOfUIOs();
-        });
-        return this.listOfUIOs;
-    }
-
-    private updateListOfUIOs() {
-        this.listOfUIOs.clear();
-        this.listOfSemsObjects.createCopyOfList().forEach(object => {
-            let uio = new UserInterfaceObject(this.userInteface);
-            uio.semsObject = object;
-            this.listOfUIOs.add(uio);
-        });
-    }
-
-    getSemsObject() : RemoteObject {
+    getSemsObject() : SemsObject {
         return this.semsObject;
     }
 
-    setSemsObject(semsObject: RemoteObject) {
+    setSemsObject(semsObject: SemsObject) {
         this.semsObject = semsObject;
     }
 }

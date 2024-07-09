@@ -36,9 +36,9 @@ init();
 async function updateDetails() {
     list.value.clear();
     for (let detailPath of props.uio.getSemsObject().getDetails().createCopyOfList()) {
-        let remoteObject = await props.app.getLocation().getObject(detailPath);
+        let semsObject = await props.app.getLocation().getObject(detailPath);
         let uio = new UserInterfaceObject(props.userInterface);
-        uio.setSemsObject(remoteObject);
+        uio.setSemsObject(semsObject);
         list.value.add(uio);
     }
 }

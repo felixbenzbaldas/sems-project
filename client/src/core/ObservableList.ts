@@ -25,4 +25,8 @@ export class ObservableList<T> {
     isEmpty() {
         return this.list.length == 0;
     }
+
+    length() {
+        return this.list.length;
+    }
 }

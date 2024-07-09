@@ -2,7 +2,7 @@ import type {Location} from "@/core/Location";
 import {ObservableList} from "@/core/ObservableList";
 import {Path} from "@/core/Path";
 
-export class RemoteObject {
+export class SemsObject {
 
     private container: any;
     private details: ObservableList<Path>;

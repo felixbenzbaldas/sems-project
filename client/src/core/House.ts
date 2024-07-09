@@ -1,4 +1,4 @@
-import {RemoteObject} from "@/core/RemoteObject";
+import {SemsObject} from "@/core/SemsObject";
 import {Path} from "@/core/Path";
 import {Http} from "@/core/Http";
 import {Location} from "@/core/Location";
@@ -9,11 +9,11 @@ export class House {
 
     constructor(private http : Http, private location : Location, private name : string) {
     }
-    async createObjectWithText(text: string) : Promise<RemoteObject> {
+    async createObjectWithText(text: string) : Promise<SemsObject> {
         let json = await this.request('createObjectWithText', [this.getPath().toList(), text]);
         let name : string = json as string;
         if (!this.objects.has(name)) { // there could be a race condition with get
-            let object = new RemoteObject(this.location, name, { text: text });
+            let object = new SemsObject(this.location, name, { text: text });
             object.setContainer(this);
             this.objects.set(name, object);
         }
@@ -32,7 +32,7 @@ export class House {
         return this.name;
     }
 
-    async getObject(path: Path) : Promise<RemoteObject> {
+    async getObject(path: Path) : Promise<SemsObject> {
         if (path.getLength() == 0) {
             throw new Error('not implemented yet');
         } else {
@@ -49,7 +49,7 @@ export class House {
     async getObjectByName(name: string) {
         if (!this.objects.has(name)) {
             let data = await this.request('get', [[this.name, name]]); // TODO this.getPath().append(name)
-            let object = new RemoteObject(this.location, name, data);
+            let object = new SemsObject(this.location, name, data);
             object.setContainer(this);
             this.objects.set(name, object);
         }

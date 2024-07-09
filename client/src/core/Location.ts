@@ -1,5 +1,5 @@
 import {Path} from "@/core/Path";
-import {RemoteObject} from "@/core/RemoteObject";
+import {SemsObject} from "@/core/SemsObject";
 import {Http} from "@/core/Http";
 import {House} from "@/core/House";
 
@@ -28,7 +28,7 @@ export class Location {
         return this.httpAddress;
     }
 
-    async addObjectToWorkingPlace(object: RemoteObject) : Promise<void> {
+    async addObjectToWorkingPlace(object: SemsObject) : Promise<void> {
         return this.request('addObjectToWorkingPlace', [this.getPath(object).toList()]);
     }
 
@@ -41,9 +41,9 @@ export class Location {
         }
     }
 
-    async getObjectsInWorkingPlace() : Promise<Array<RemoteObject>> {
+    async getObjectsInWorkingPlace() : Promise<Array<SemsObject>> {
         let listOfPaths = await this.request('getObjectsInWorkingPlace', []);
-        let listOfObjects: Array<RemoteObject> = [];
+        let listOfObjects: Array<SemsObject> = [];
         for (let path of listOfPaths) {
             let object = await this.getObject(new Path(path));
             listOfObjects.push(object);
@@ -59,7 +59,7 @@ export class Location {
         return this.http.request(this.httpAddress, method, args);
     }
 
-    async getObject(path: Path) : Promise<RemoteObject> {
+    async getObject(path: Path) : Promise<SemsObject> {
         if (path.getLength() == 0) {
             throw new Error('not implemented yet');
         } else {

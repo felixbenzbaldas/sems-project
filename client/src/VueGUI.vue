@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HeaderBody from './components/HeaderBody.vue';
-import type {RemoteObject} from "@/core/RemoteObject";
+import type {SemsObject} from "@/core/SemsObject";
 import {App} from "@/core/App";
 import {configuration} from "@/core/configuration";
 import {type Ref, ref} from "vue";
@@ -16,9 +16,9 @@ let userInterface = new UserInterface(app);
 const workingPlace : Ref<ObservableList<UserInterfaceObject>> = ref(undefined);
 
 async function init() {
+    await userInterface.load();
     let workingPlaceUIO = await userInterface.getWorkingPlace();
-    userInterface.setFocused(workingPlaceUIO);
-    workingPlace.value = workingPlaceUIO.getListOfUIOs();
+    workingPlace.value = workingPlaceUIO.listAspect.getListOfUIOs();
 }
 
 init();

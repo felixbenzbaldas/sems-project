@@ -1,11 +1,14 @@
 import {UserInterfaceObject} from "@/user-interface/UserInterfaceObject";
 import type {App} from "@/core/App";
-import type {RemoteObject} from "@/core/RemoteObject";
+import type {SemsObject} from "@/core/SemsObject";
+import {ListAspectForUIO} from "@/user-interface/ListAspectForUIO";
 
 export class UserInterface {
 
     private focused : any;
     private workingPlace : UserInterfaceObject;
+
+    private focusedUIO : UserInterfaceObject;
 
     constructor(private app : App) {
     }
@@ -14,21 +17,18 @@ export class UserInterface {
         this.focused = object;
     }
 
-    // TODO refactor
     getFocused() : any {
-        if (this.focused) {
-            return this.focused;
-        } else {
-            return this.workingPlace;
-        }
+        return this.focused;
     }
 
     async newSubitem() {
-        if (this.getFocused() === this.workingPlace) {
+        if (this.getFocused() === (await this.getWorkingPlace())
+                || this.focused === undefined) {
             let object = await this.app.createObjectInWorkingPlace();
             this.focused = object;
+            this.focusedUIO = (await this.getWorkingPlace()).listAspect.get(0);
         } else {
-            let object: RemoteObject = await this.app.createObject();
+            let object: SemsObject = await this.app.createObject();
             await this.focused.addDetail(this.app.getLocation().getPath(object));
             this.focused = object;
         }
@@ -37,8 +37,21 @@ export class UserInterface {
     async getWorkingPlace() : Promise<UserInterfaceObject> {
         if (!this.workingPlace) {
             this.workingPlace = new UserInterfaceObject(this);
-            this.workingPlace.setListOfSemsObjects(await this.app.getObjectsInWorkingPlace());
+            this.workingPlace.listAspect = new ListAspectForUIO(this, await this.app.getObjectsInWorkingPlace());
         }
         return this.workingPlace;
+    }
+
+    async clearWorkingPlace() {
+        this.app.clearWorkingPlace();
+        return;
+    }
+
+    getFocusedUIO() : UserInterfaceObject {
+        return this.focusedUIO;
+    }
+
+    async load() {
+        this.setFocused(await this.getWorkingPlace());
     }
 }
