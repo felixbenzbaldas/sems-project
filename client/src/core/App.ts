@@ -7,12 +7,13 @@ import type {House} from "@/core/House";
 
 export class App {
 
-    private http : Http = new Http();
+    private http : Http;
     private location : Location;
     private currentWritingPosition : Path;
     private workingPlace : ObservableList<SemsObject>;
 
-    constructor(configuration : any) {
+    constructor(configuration : any, http? : Http) {
+        this.http = http ? http : new Http();
         let server = configuration.server;
         this.location = new Location(this.http);
         this.location.setHttpAddress(server);

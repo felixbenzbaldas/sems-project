@@ -8,6 +8,7 @@ export class Location {
     private httpAddress : string;
 
     private objects : Map<string, any> = new Map();
+    private semsObject: SemsObject;
 
     constructor(private http: Http) {
     }
@@ -33,6 +34,11 @@ export class Location {
     }
 
     getPath(object: any) : Path {
+        if (object.getName) {
+            if (object.getName() === null) {
+                return new Path([]);
+            }
+        }
         let container = object.getContainer();
         if (container === this) {
             return new Path([object.getName()]);
@@ -55,13 +61,17 @@ export class Location {
         return this.request('clearWorkingPlace', []);
     }
 
-    async request(method: string, args: Array<Object>) : Promise<any>{
+    async request(method: string, args: Array<any>) : Promise<any>{
         return this.http.request(this.httpAddress, method, args);
     }
 
     async getObject(path: Path) : Promise<SemsObject> {
         if (path.getLength() == 0) {
-            throw new Error('not implemented yet');
+            if (!this.semsObject) {
+                let data = await this.request('get',[[]]);
+                this.semsObject = new SemsObject(this, null, data);
+            }
+            return this.semsObject;
         } else {
             let house = await this.getObjectByName(path.getFirst());
             let withoutFirst = path.withoutFirst();

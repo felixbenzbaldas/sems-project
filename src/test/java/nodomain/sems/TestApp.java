@@ -60,7 +60,7 @@ public class TestApp {
 
 
     @Test
-    void can_store_working_space() {
+    void can_store_working_place() {
         App app = new App(new File(PATH_FOR_TMP_FILES));
         String object = app.createObjectWithText(List.of("house1"), "an object");
 

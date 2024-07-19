@@ -1,19 +1,23 @@
 import type {Location} from "@/core/Location";
 import {ObservableList} from "@/core/ObservableList";
 import {Path} from "@/core/Path";
+import {ListProperty} from "@/core/ListProperty";
 
 export class SemsObject {
 
     private container: any;
-    private details: ObservableList<Path>;
+    // private details: ObservableList<Path>;
+    private listProperties : Map<string, ListProperty>;
 
     constructor(private location : Location, private name : string, private data : any) {
-        this.details = new ObservableList<Path>();
-        if (data.details) {
-            (data.details as Array<Array<string>>).forEach(listPath => {
-                this.details.add(new Path(listPath));
-            });
-        }
+        this.listProperties = new Map();
+        Object.keys(data).forEach(propertyName => {
+            if (data[propertyName] instanceof Array) {
+                let list = data[propertyName].map((pathList : Array<string>) => new Path(pathList));
+                let listProperty = new ListProperty(this.location, this, propertyName, list);
+                this.listProperties.set(propertyName, listProperty);
+            }
+        });
     }
 
     getName() : string {
@@ -30,18 +34,18 @@ export class SemsObject {
         this.data.text = text;
     }
 
-    async addDetail(path : Path) : Promise<void> {
-        let newDetailsList : Array<Path> = this.details.createCopyOfList();
-        newDetailsList.push(path);
-        let detailsListForRequest : Array<Array<string>> = newDetailsList.map(detailsPath => detailsPath.toList());
-        let pathOfThis = this.location.getPath(this);
-        await this.location.request('set', [pathOfThis.toList(), 'details', detailsListForRequest]);
-        this.details.add(path);
-    }
+    // async addDetail(path : Path) : Promise<void> {
+    //     let newDetailsList : Array<Path> = this.details.createCopyOfList();
+    //     newDetailsList.push(path);
+    //     let detailsListForRequest : Array<Array<string>> = newDetailsList.map(detailsPath => detailsPath.toList());
+    //     let pathOfThis = this.location.getPath(this);
+    //     await this.location.request('set', [pathOfThis.toList(), 'details', detailsListForRequest]);
+    //     this.details.add(path);
+    // }
 
-    getDetails() : ObservableList<Path> {
-        return this.details;
-    }
+    // getDetails() : ObservableList<Path> {
+    //     return this.details;
+    // }
 
     setContainer(container : any) {
         this.container = container;
@@ -49,5 +53,12 @@ export class SemsObject {
 
     getContainer() : any {
         return this.container;
+    }
+
+    getListProperty(propertyName: string) : ListProperty {
+        if (!this.listProperties.has(propertyName)) {
+            this.listProperties.set(propertyName, new ListProperty(this.location, this, propertyName, []));
+        }
+        return this.listProperties.get(propertyName);
     }
 }

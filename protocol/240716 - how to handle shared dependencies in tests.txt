@@ -1,0 +1,10 @@
+What is a shared dependency? A shared dependency in unit-testing, is a dependency, which is used by multiple tests and can cause inconsistencies.
+
+The client tests use a test server, which is shared between multiple tests. To avoid side effects, you have to be careful. Only test on freshly created objects. Other methods for avoiding interaction between tests are:
+- run tests sequential (use at the moment)
+- create a unique url for each test
+- test-doubles
+
+It is good to avoid test-doubles. Without test-doubles you can write a better specification. It is more readable and the danger of 'speculative generality' is lower.
+
+(The book 'Unit Testing' by Vladimir Khorikov is recommended.)
