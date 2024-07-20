@@ -6,7 +6,6 @@ import {ListProperty} from "@/core/ListProperty";
 export class SemsObject {
 
     private container: any;
-    // private details: ObservableList<Path>;
     private listProperties : Map<string, ListProperty>;
 
     constructor(private location : Location, private name : string, private data : any) {
@@ -33,19 +32,6 @@ export class SemsObject {
         await this.location.request('setText', [path.toList(), text]);
         this.data.text = text;
     }
-
-    // async addDetail(path : Path) : Promise<void> {
-    //     let newDetailsList : Array<Path> = this.details.createCopyOfList();
-    //     newDetailsList.push(path);
-    //     let detailsListForRequest : Array<Array<string>> = newDetailsList.map(detailsPath => detailsPath.toList());
-    //     let pathOfThis = this.location.getPath(this);
-    //     await this.location.request('set', [pathOfThis.toList(), 'details', detailsListForRequest]);
-    //     this.details.add(path);
-    // }
-
-    // getDetails() : ObservableList<Path> {
-    //     return this.details;
-    // }
 
     setContainer(container : any) {
         this.container = container;

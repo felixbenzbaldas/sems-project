@@ -22,7 +22,6 @@ export class ListProperty {
             [pathOfObject.toList(), this.name, newList.map(p => p.toList())]);
         this.list.push(path);
         this.subject.next('addedItem');
-        await new Promise(resolve => setTimeout(resolve)); // wait for observers
     }
 
     getItem(index: number) : Path {

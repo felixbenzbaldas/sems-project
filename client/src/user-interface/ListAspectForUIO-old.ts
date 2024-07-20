@@ -1,12 +1,12 @@
 import {UserInterfaceObject} from "@/user-interface/UserInterfaceObject";
 import type {UserInterface} from "@/user-interface/UserInterface";
-import type {ViewOnObjects} from "@/user-interface/ViewOnObjects";
+import type {ViewOnObjectsOld} from "@/user-interface/ViewOnObjects-old";
 
-export class ListAspectForUIO2 {
+export class ListAspectForUIOOld {
 
     private listOfUIOs : Array<UserInterfaceObject>;
 
-    constructor(private userInterface : UserInterface, private list : ViewOnObjects) {
+    constructor(private userInterface : UserInterface, private list : ViewOnObjectsOld) {
         this.createListOfUIOs();
     }
 

@@ -57,6 +57,6 @@ export class House {
     }
 
     async request(method: string, args: Array<Object>) : Promise<any>{
-        return this.http.request(this.location.getHttpAddress(), method, args);
+        return await this.location.request(method, args);
     }
 }

@@ -4,7 +4,7 @@ import {Subject, Subscription} from "rxjs";
 import {SemsObject} from "@/core/SemsObject";
 import type {Location} from "@/core/Location";
 
-export class ViewOnObjects {
+export class ViewOnObjectsOld {
 
     private objects = Array<SemsObject>();
     private subject : Subject<string> = new Subject<string>();

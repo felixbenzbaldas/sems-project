@@ -5,16 +5,10 @@ import {House} from "@/core/House";
 
 export class Location {
 
-    private httpAddress : string;
-
     private objects : Map<string, any> = new Map();
     private semsObject: SemsObject;
 
-    constructor(private http: Http) {
-    }
-
-    setHttpAddress(httpAddress: string) {
-        this.httpAddress = httpAddress;
+    constructor(private httpAddress : string, private http: Http) {
     }
 
     async getHouse(path: Path) : Promise<House> {
@@ -23,14 +17,6 @@ export class Location {
         } else {
             throw new Error('not implemented yet');
         }
-    }
-
-    getHttpAddress() : string {
-        return this.httpAddress;
-    }
-
-    async addObjectToWorkingPlace(object: SemsObject) : Promise<void> {
-        return this.request('addObjectToWorkingPlace', [this.getPath(object).toList()]);
     }
 
     getPath(object: any) : Path {
@@ -45,20 +31,6 @@ export class Location {
         } else {
             return this.getPath(container).append(object.getName());
         }
-    }
-
-    async getObjectsInWorkingPlace() : Promise<Array<SemsObject>> {
-        let listOfPaths = await this.request('getObjectsInWorkingPlace', []);
-        let listOfObjects: Array<SemsObject> = [];
-        for (let path of listOfPaths) {
-            let object = await this.getObject(new Path(path));
-            listOfObjects.push(object);
-        }
-        return listOfObjects;
-    }
-
-    async clearWorkingPlace() : Promise<any> {
-        return this.request('clearWorkingPlace', []);
     }
 
     async request(method: string, args: Array<any>) : Promise<any>{

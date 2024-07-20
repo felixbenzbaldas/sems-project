@@ -2,7 +2,7 @@
 import HeaderBody from './components/HeaderBody.vue';
 import type {SemsObject} from "@/core/SemsObject";
 import {App} from "@/core/App";
-import {configuration} from "@/core/configuration";
+import {defaultConfiguration} from "@/core/defaultConfiguration";
 import {type Ref, ref} from "vue";
 import {UserInterface} from "@/user-interface/UserInterface";
 import type {ObservableList} from "@/core/ObservableList";
@@ -10,7 +10,7 @@ import type {UserInterfaceObject} from "@/user-interface/UserInterfaceObject";
 import DisplayForListOfUIOs from "@/components/DisplayForListOfUIOs.vue";
 
 
-let app = new App(configuration);
+let app = new App(defaultConfiguration);
 let userInterface = new UserInterface(app);
 
 const workingPlace : Ref<ObservableList<UserInterfaceObject>> = ref(undefined);
