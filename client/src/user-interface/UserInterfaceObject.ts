@@ -1,16 +1,14 @@
 import type {UserInterface} from "@/user-interface/UserInterface";
 import type {SemsObject} from "@/core/SemsObject";
-// import {ListAspectForUIO} from "@/user-interface/ListAspectForUIO";
-import type {ListAspectForUIO} from "@/user-interface/ListAspectForUIO";
-import {DetailsAspect} from "@/user-interface/DetailsAspect";
+import {ListAspect} from "@/user-interface/ListAspect";
 
 export class UserInterfaceObject {
 
     private semsObject : SemsObject;
 
-    listAspect : ListAspectForUIO;
+    listAspect : ListAspect;
     propertyName: string;
-    detailsAspect: DetailsAspect;
+    detailsAspect: ListAspect;
 
     constructor(private userInteface : UserInterface) {
     }
@@ -39,7 +37,7 @@ export class UserInterfaceObject {
         if (this.listAspect) {
             await this.listAspect.newSubitem();
         } else {
-            this.ensureDetailsAspect().newSubitem();
+            await this.ensureDetailsAspect().newSubitem();
         }
     }
 
@@ -47,9 +45,9 @@ export class UserInterfaceObject {
         return this.userInteface;
     }
 
-    private ensureDetailsAspect() : DetailsAspect {
+    private ensureDetailsAspect() : ListAspect {
         if (!this.detailsAspect) {
-            this.detailsAspect = new DetailsAspect();
+            this.detailsAspect = new ListAspect(this.userInteface, this.semsObject, 'details');
         }
         return this.detailsAspect;
     }

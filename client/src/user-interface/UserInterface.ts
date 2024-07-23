@@ -2,7 +2,7 @@ import {UserInterfaceObject} from "@/user-interface/UserInterfaceObject";
 import type {App} from "@/core/App";
 import type {SemsObject} from "@/core/SemsObject";
 import {Path} from "@/core/Path";
-import {ListAspectForUIO} from "@/user-interface/ListAspectForUIO";
+import {ListAspect} from "@/user-interface/ListAspect";
 
 export class UserInterface {
 
@@ -60,7 +60,7 @@ export class UserInterface {
         let uio = new UserInterfaceObject(this);
         uio.setSemsObject(object);
         uio.propertyName = propertyName;
-        uio.listAspect = new ListAspectForUIO(uio);
+        uio.listAspect = new ListAspect(this, object, propertyName);
         return uio;
     }
 }
