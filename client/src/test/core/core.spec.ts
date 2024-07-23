@@ -98,16 +98,20 @@ describe('core', () => {
     });
 
     it('can load list property from server', async () => {
+        let propertyName = 'aListProp';
+        let pathOfListItem = new Path(['123']);
+        let path = await createObjetWithListProperty(propertyName, pathOfListItem);
+        let app = new App(testConfiguration);
+
+        let object = await app.getLocation().getObject(path);
+
+        expect(object.getListProperty(propertyName).getItem(0)).toEqual(pathOfListItem);
+    });
+
+    async function createObjetWithListProperty(propertyName: string, pathOfListItem: Path) : Promise<Path> {
         let app = new App(testConfiguration);
         let object = await app.createObject();
-        let pathOfListItem = new Path(['123']);
-        let propertyName = 'aListProp';
         await object.getListProperty(propertyName).addItem(pathOfListItem);
-        let path = app.getLocation().getPath(object);
-        let app2 = new App(testConfiguration);
-
-        let object2 = await app2.getLocation().getObject(path);
-
-        expect(object2.getListProperty(propertyName).getItem(0)).toEqual(pathOfListItem);
-    });
+        return app.getLocation().getPath(object);
+    }
 });
