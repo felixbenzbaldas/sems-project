@@ -51,17 +51,16 @@ describe('user-interface', () => {
         expect(focused).toBe((await userInterface.getWorkingPlace()).listAspect.get(0));
     });
 
-    // // TODO
-    // it('can create detail of object', async () => {
-    //     let app = new App(testConfiguration);
-    //     let userInterface = await UserInterface.load(app);
-    //     await userInterface.newSubitem();
-    //     let objectUIO = userInterface.getFocusedUIO();
-    //
-    //     await userInterface.newSubitem();
-    //
-    //     expect(objectUIO.detailsAspect.getLength()).toBe(1);
-    // });
+    it('can create detail of object', async () => {
+        let app = new App(testConfiguration);
+        let userInterface = await UserInterface.load(app);
+        await userInterface.newSubitem();
+        let objectUIO = userInterface.getFocusedUIO();
+
+        await userInterface.newSubitem();
+
+        expect(objectUIO.detailsAspect.getLength()).toBe(1);
+    });
 
     // test('UIO of empty object has no body', async () => {
     //     let app = new App(testConfiguration);
