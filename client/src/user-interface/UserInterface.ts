@@ -35,7 +35,7 @@ export class UserInterface {
     async getWorkingPlace() : Promise<UserInterfaceObject> {
         if (!this.workingPlace) {
             let locationObject = await this.app.getLocation().getObject(new Path([]));
-            this.workingPlace = this.createListUIO(locationObject, 'workingPlace');
+            this.workingPlace = await this.createListUIO(locationObject, 'workingPlace');
         }
         return this.workingPlace;
     }
@@ -56,11 +56,11 @@ export class UserInterface {
         return this.app;
     }
 
-    private createListUIO(object: SemsObject, propertyName: string) : UserInterfaceObject {
+    private async createListUIO(object: SemsObject, propertyName: string) : Promise<UserInterfaceObject> {
         let uio = new UserInterfaceObject(this);
         uio.setSemsObject(object);
         uio.propertyName = propertyName;
-        uio.listAspect = new ListAspect(this, object, propertyName);
+        uio.listAspect = await ListAspect.load(this, object, propertyName);
         return uio;
     }
 }

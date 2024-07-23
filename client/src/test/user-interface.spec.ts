@@ -44,6 +44,7 @@ describe('user-interface', () => {
     it('focuses created object', async () => {
         let app = new App(testConfiguration);
         let userInterface = await UserInterface.load(app);
+        await userInterface.clearWorkingPlace();
 
         await userInterface.newSubitem();
 
@@ -61,6 +62,24 @@ describe('user-interface', () => {
 
         expect(objectUIO.detailsAspect.getLength()).toBe(1);
     });
+
+
+    it('can load working place from server', async () => {
+        await createObjectInWorkingPlace();
+        let app = new App(testConfiguration);
+        let userInterface = await UserInterface.load(app);
+
+        let workingPlace = await userInterface.getWorkingPlace();
+
+        expect(workingPlace.listAspect.getLength()).toBe(1);
+    });
+
+    async function createObjectInWorkingPlace() {
+        let app = new App(testConfiguration);
+        let userInterface = await UserInterface.load(app);
+        await userInterface.clearWorkingPlace();
+        await userInterface.newSubitem();
+    }
 
     // test('UIO of empty object has no body', async () => {
     //     let app = new App(testConfiguration);

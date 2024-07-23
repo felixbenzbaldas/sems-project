@@ -37,7 +37,7 @@ export class UserInterfaceObject {
         if (this.listAspect) {
             await this.listAspect.newSubitem();
         } else {
-            await this.ensureDetailsAspect().newSubitem();
+            await (await this.ensureDetailsAspect()).newSubitem();
         }
     }
 
@@ -45,9 +45,9 @@ export class UserInterfaceObject {
         return this.userInteface;
     }
 
-    private ensureDetailsAspect() : ListAspect {
+    private async ensureDetailsAspect() : Promise<ListAspect> {
         if (!this.detailsAspect) {
-            this.detailsAspect = new ListAspect(this.userInteface, this.semsObject, 'details');
+            this.detailsAspect = await ListAspect.load(this.userInteface, this.semsObject, 'details');
         }
         return this.detailsAspect;
     }
