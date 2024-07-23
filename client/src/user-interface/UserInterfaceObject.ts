@@ -8,7 +8,7 @@ export class UserInterfaceObject {
 
     listAspect : ListAspect;
     propertyName: string;
-    detailsAspect: ListAspect;
+    detailsAspectPromise: Promise<ListAspect>; // TODO should not be asynchronous
 
     constructor(private userInteface : UserInterface) {
     }
@@ -46,9 +46,9 @@ export class UserInterfaceObject {
     }
 
     private async ensureDetailsAspect() : Promise<ListAspect> {
-        if (!this.detailsAspect) {
-            this.detailsAspect = await ListAspect.load(this.userInteface, this.semsObject, 'details');
+        if (!this.detailsAspectPromise) {
+            this.detailsAspectPromise = ListAspect.load(this.userInteface, this.semsObject, 'details');
         }
-        return this.detailsAspect;
+        return this.detailsAspectPromise;
     }
 }

@@ -60,7 +60,7 @@ describe('user-interface', () => {
 
         await userInterface.newSubitem();
 
-        expect(objectUIO.detailsAspect.getLength()).toBe(1);
+        expect((await objectUIO.detailsAspectPromise).getLength()).toBe(1);
     });
 
 
