@@ -56,7 +56,7 @@ public class OnlyLocalhostServer {
         if (httpHandler.getRemoteAddress().getAddress().isLoopbackAddress()) {
             String httpMethod = httpHandler.getRequestMethod();
             System.out.println("httpMethod = " + httpMethod);
-            if ("POST".equals(httpMethod)) {
+            if ("POST".equals(httpMethod)) {// all requests have httpMethod "POST"
                 int contentLength = Integer.parseInt(httpHandler.getRequestHeaders().getFirst("Content-Length"));
                 String receivedBody = new String(httpHandler.getRequestBody().readNBytes(contentLength), StandardCharsets.UTF_8);
                 HashMap<String, Object> receivedJsonBody = objectMapper.readValue(receivedBody, HashMap.class);

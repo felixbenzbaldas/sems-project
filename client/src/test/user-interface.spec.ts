@@ -17,7 +17,7 @@ describe('user-interface', () => {
         await userInterface.clearWorkingPlace();
 
         let workingPlace: UserInterfaceObject = await userInterface.getWorkingPlace();
-        expect(workingPlace.listAspect.isEmpty()).toBeTruthy();
+        expect(workingPlace.atList.isEmpty()).toBeTruthy();
     });
 
     test('Working place is focused after loading', async () => {
@@ -38,7 +38,7 @@ describe('user-interface', () => {
         await userInterface.newSubitem();
 
         let workingPlace: UserInterfaceObject = await userInterface.getWorkingPlace();
-        expect(workingPlace.listAspect.getLength()).toBe(1);
+        expect(workingPlace.atList.getLength()).toBe(1);
     });
 
     it('focuses created object', async () => {
@@ -49,7 +49,7 @@ describe('user-interface', () => {
         await userInterface.newSubitem();
 
         let focused : UserInterfaceObject = userInterface.getFocusedUIO();
-        expect(focused).toBe((await userInterface.getWorkingPlace()).listAspect.get(0));
+        expect(focused).toBe((await userInterface.getWorkingPlace()).atList.get(0));
     });
 
     it('can create detail of object', async () => {
@@ -60,9 +60,8 @@ describe('user-interface', () => {
 
         await userInterface.newSubitem();
 
-        expect((await objectUIO.detailsAspectPromise).getLength()).toBe(1);
+        expect(objectUIO.atDetails.getLength()).toBe(1);
     });
-
 
     it('can load working place from server', async () => {
         await createObjectInWorkingPlace();
@@ -71,7 +70,7 @@ describe('user-interface', () => {
 
         let workingPlace = await userInterface.getWorkingPlace();
 
-        expect(workingPlace.listAspect.getLength()).toBe(1);
+        expect(workingPlace.atList.getLength()).toBe(1);
     });
 
     async function createObjectInWorkingPlace() {

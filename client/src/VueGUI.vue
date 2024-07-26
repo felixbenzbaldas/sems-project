@@ -18,7 +18,7 @@ const workingPlace : Ref<ObservableList<UserInterfaceObject>> = ref(undefined);
 async function init() {
     await userInterface.load();
     let workingPlaceUIO = await userInterface.getWorkingPlace();
-    workingPlace.value = workingPlaceUIO.listAspect.getListOfUIOs();
+    workingPlace.value = workingPlaceUIO.atList.getListOfUIOs();
 }
 
 init();

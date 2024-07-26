@@ -21,9 +21,7 @@ export class ListAspect {
         for (let i = 0; i < listProperty.length(); i++) {
             let path = listProperty.getItem(i)
             let object = await this.ui.getApp().getLocation().getObject(path);
-            let uio = new UserInterfaceObject(this.ui);
-            uio.setSemsObject(object);
-            this.listOfUIOs.push(uio);
+            this.listOfUIOs.push(await this.ui.createUIO(object));
         }
     }
 
@@ -45,8 +43,7 @@ export class ListAspect {
         let path = app.getLocation().getPath(object);
         // TODO lock and update this.object
         await this.object.getListProperty(this.propertyName).addItem(path);
-        let uio = new UserInterfaceObject(this.ui);
-        uio.setSemsObject(object);
+        let uio = await this.ui.createUIO(object);
         this.listOfUIOs.push(uio);
         uio.focus();
     }

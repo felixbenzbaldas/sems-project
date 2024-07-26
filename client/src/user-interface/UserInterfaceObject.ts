@@ -2,53 +2,39 @@ import type {UserInterface} from "@/user-interface/UserInterface";
 import type {SemsObject} from "@/core/SemsObject";
 import {ListAspect} from "@/user-interface/ListAspect";
 
+// danger: fields with prefix 'at' may be null/undefined and are public
 export class UserInterfaceObject {
 
-    private semsObject : SemsObject;
+    atSemsObject : SemsObject;
+    atProperty: string;
+    atList : ListAspect;
+    atDetails: ListAspect;
 
-    listAspect : ListAspect;
-    propertyName: string;
-    detailsAspectPromise: Promise<ListAspect>; // TODO should not be asynchronous
-
-    constructor(private userInteface : UserInterface) {
+    constructor(private userInterface : UserInterface) {
     }
 
     hasFocus() : boolean {
-        return this.userInteface.getFocused() === this;
+        return this.userInterface.getFocused() === this;
     }
 
     focus() {
-        this.userInteface.setFocused(this);
-    }
-
-    getSemsObject() : SemsObject {
-        return this.semsObject;
-    }
-
-    setSemsObject(semsObject: SemsObject) {
-        this.semsObject = semsObject;
+        this.userInterface.setFocused(this);
     }
 
     hasBody() : boolean {
-        return this.semsObject.getListProperty('details').length() > 0;
+        return this.atSemsObject.getListProperty('details').length() > 0;
     }
 
     async newSubitem() {
-        if (this.listAspect) {
-            await this.listAspect.newSubitem();
+        if (this.atList) {
+            await this.atList.newSubitem();
         } else {
-            await (await this.ensureDetailsAspect()).newSubitem();
+            await this.atDetails.newSubitem();
         }
     }
 
     getUI() : UserInterface {
-        return this.userInteface;
+        return this.userInterface;
     }
 
-    private async ensureDetailsAspect() : Promise<ListAspect> {
-        if (!this.detailsAspectPromise) {
-            this.detailsAspectPromise = ListAspect.load(this.userInteface, this.semsObject, 'details');
-        }
-        return this.detailsAspectPromise;
-    }
 }

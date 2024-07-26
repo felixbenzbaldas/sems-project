@@ -41,7 +41,7 @@ export class UserInterface {
     }
 
     async clearWorkingPlace() : Promise<void> {
-        await (await this.getWorkingPlace()).listAspect.removeAllItems();
+        await (await this.getWorkingPlace()).atList.removeAllItems();
     }
 
     getFocusedUIO() : UserInterfaceObject {
@@ -56,11 +56,18 @@ export class UserInterface {
         return this.app;
     }
 
-    private async createListUIO(object: SemsObject, propertyName: string) : Promise<UserInterfaceObject> {
+    public async createListUIO(object: SemsObject, propertyName: string) : Promise<UserInterfaceObject> {
         let uio = new UserInterfaceObject(this);
-        uio.setSemsObject(object);
-        uio.propertyName = propertyName;
-        uio.listAspect = await ListAspect.load(this, object, propertyName);
+        uio.atSemsObject = object;
+        uio.atProperty = propertyName;
+        uio.atList = await ListAspect.load(this, object, propertyName);
+        return uio;
+    }
+
+    public async createUIO(object: SemsObject) : Promise<UserInterfaceObject> {
+        let uio = new UserInterfaceObject(this);
+        uio.atSemsObject = object;
+        uio.atDetails = await ListAspect.load(this, object, 'details');
         return uio;
     }
 }
