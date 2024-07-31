@@ -48,8 +48,28 @@ task buildClient {
     }
 }
 
+// login to heroku at first
 task deployClient {
+    dependsOn(buildClient)
     doLast {
-        delete 'todo'
+        delete deploymentPath + '/heroku/sems/assets'
+        delete deploymentPath + '/heroku/sems/icon.png'
+        delete deploymentPath + '/heroku/sems/index.html'
+        copy {
+            from 'client/dist'
+            into deploymentPath + '/heroku/sems'
+        }
+        exec {
+            workingDir deploymentPath + '/heroku/sems'
+            commandLine 'cmd', '/c', 'git add .'
+        }
+        exec {
+            workingDir deploymentPath + '/heroku/sems'
+            commandLine 'cmd', '/c', 'git commit -am "deployment"'
+        }
+        exec {
+            workingDir deploymentPath + '/heroku/sems'
+            commandLine 'cmd', '/c', 'git push heroku main'
+        }
     }
 }

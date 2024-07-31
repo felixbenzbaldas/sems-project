@@ -1,14 +1,15 @@
-describe: ui {
-    it: shows text {
+describe: website {
+    beforeEach {
         visit http://localhost:5173/
+    }
 
+    it: shows text {
         a text appears
     }
 
     it: explains itself {
-        visit http://localhost:5173/
-
         an informative text is provided
     }
 
+    it: can show a list of objects
 }

@@ -2,13 +2,14 @@ import type {Identity} from "@/restart-with-aspects/Identity";
 
 export class ListAspect {
 
-    private list : Array<Identity> = [];
+    jsList : Array<Identity>;
 
-    getLength() : number {
-        return this.list.length;
+    constructor(private identity : Identity, ...jsList : Array<Identity>) {
+        this.jsList = jsList;
     }
 
-    addIdentity(object: Identity) {
-        this.list.push(object);
+    add(...items : Array<Identity>) {
+        this.jsList.push(...items);
+        this.identity.subject.next('addedItems');
     }
 }

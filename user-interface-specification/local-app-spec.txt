@@ -1,0 +1,9 @@
+describe: local app {
+    beforeEach {
+        visit http://localhost:5173/?local
+    }
+
+    it: contains button for object creation
+
+    it: can create new object
+}

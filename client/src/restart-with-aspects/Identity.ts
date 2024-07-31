@@ -1,20 +1,52 @@
 import {ListAspect} from "@/restart-with-aspects/aspects/ListAspect";
+import {Subject} from "rxjs";
+import type {UI} from "@/restart-with-aspects/aspects/UI";
 
-/// An identity is an object without members. It only consists of its object address.
+/// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
 /// On the logical level they do not belong to this class.
 export class Identity {
 
-    text: string;
-    list: ListAspect;
+    text : string;
+    list : ListAspect;
+    action: Function;
+    subject: Subject<any>;
+    ui: UI;
+    server: string;
 
     createIdentity() {
         return new Identity();
     }
 
-    createList() : Identity {
+    createList(...jsList : Array<Identity>) : Identity {
         let list = this.createIdentity();
-        list.list = new ListAspect();
+        list.subject = new Subject<any>();
+        list.list = new ListAspect(list, ...jsList);
         return list;
+    }
+
+    createText(text: string) : Identity {
+        let identity = this.createIdentity();
+        identity.text = text;
+        return identity;
+    }
+
+    createTextWithList(text : string, ...jsList : Array<Identity>) : Identity {
+        let identity = this.createIdentity();
+        identity.text = text;
+        identity.subject = new Subject<any>();
+        identity.list = new ListAspect(identity, ...jsList);
+        return identity;
+    }
+
+    createButton(label : string, func : Function) : Identity {
+        let button = this.createIdentity();
+        button.text = label;
+        button.action = func;
+        return button;
+    }
+
+    async remote_createText(text: string) : Promise<Identity> {
+        return Promise.resolve(this.createText(text));
     }
 }

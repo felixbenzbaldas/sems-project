@@ -1,4 +1,4 @@
-import {describe, expect, it, test} from "vitest";
+import {describe, expect, it} from "vitest";
 import {Identity} from "@/restart-with-aspects/Identity";
 import {Starter} from "@/restart-with-aspects/Starter";
 
@@ -31,15 +31,36 @@ describe('app', () => {
 
         let list : Identity = app.createList();
 
-        expect(list.list.getLength()).toBe(0);
+        expect(list.list.jsList.length).toBe(0);
     });
 
-    test('can add identity to list', async () => {
+    it('can add identity to list', async () => {
         let app : Identity = Starter.createApp();
         let list : Identity = app.createList();
 
-        list.list.addIdentity(app.createIdentity());
+        list.list.add(app.createIdentity());
 
-        expect(list.list.getLength()).toBe(1);
+        expect(list.list.jsList.length).toBe(1);
     });
+
+    it('can create remote text', async () => {
+        let app : Identity = Starter.createApp();
+        app.server = 'http://localhost:8081/';
+
+        let object = await app.remote_createText('foo');
+
+        expect(object.text).toEqual('foo');
+    });
+});
+
+describe('user-interface', () => {
+
+    it('can create object', async () => {
+        let app : Identity = Starter.createAppWithUI();
+
+        await app.ui.newSubitem();
+
+        expect(app.ui.content.list.jsList.length).toBe(1);
+    });
+
 });

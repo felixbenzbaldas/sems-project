@@ -1,0 +1,11 @@
+All big objects are realized with the Identity class. An Identity is an object without members. It consists only of its memory address. You can assign aspects to an Identity.
+
+Fields are public not private, it there is no obvious benefit of privacy.
+
+Maybe this is a violation of OOP-principles. The identity class is more a data struct than a normal OOP-class.
+
+These ideas are part of the aspect concept.
+
+Further information for the aspect concept will be provided.
+
+(The aspect concept is not the same as aspect-oriented programming.)
