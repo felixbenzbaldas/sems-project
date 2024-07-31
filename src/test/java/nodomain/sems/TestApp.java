@@ -59,17 +59,6 @@ public class TestApp {
     }
 
 
-    @Test
-    void can_store_working_place() {
-        App app = new App(new File(PATH_FOR_TMP_FILES));
-        String object = app.createObjectWithText(List.of("house1"), "an object");
-
-        app.addObjectToWorkingPlace(List.of("house1", object));
-
-        App app2 = new App(new File(PATH_FOR_TMP_FILES));
-        assertThat(app2.getObjectsInWorkingPlace()).hasSize(1);
-    }
-
     @AfterEach
     void afterEach() throws IOException {
         deleteDirectory(new File(PATH_FOR_TMP_FILES));

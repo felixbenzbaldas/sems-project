@@ -1,10 +1,31 @@
+
+/// test the graphical-user-interface (gui)
 /// caution: uses the working place of the server! Do not run in parallel with other tests, that use it.
-describe('sems', () => {
+describe('gui', () => {
     // let url = 'http://localhost:5173/?local';
     //
     // beforeEach(() => {
     //     cy.visit(url);
     //     cy.contains('clear working place').click();
+    // });
+    //
+    // it('can collapse commands', () => {
+    //     cy.contains('new subitem');
+    //     cy.contains('commands').click();
+    //     cy.contains('new subitem').should('not.exist');
+    // });
+    //
+    // it('can create object', () => {
+    //     cy.get('.semsObject .contentEditableDiv').should('not.exist');
+    //     cy.contains('new subitem').click();
+    //     typeInFirstTextObject('Hello World!');
+    //     cy.get('.semsObject .contentEditableDiv').should("contain.text", 'Hello World!');
+    // });
+    //
+    // it('can adapt cursor style of clickable element', () => {
+    //     cy.contains('commands').should('have.css', 'cursor', 'pointer');
+    //     cy.contains('commands').click();
+    //     cy.contains('[...]').should('have.css', 'cursor', 'pointer');
     // });
     //
     // it('can create detail of object', () => {
@@ -20,19 +41,8 @@ describe('sems', () => {
     //     cy.get(' .semsObject .head').eq(1).click();
     //     cy.contains('child');
     // });
-    //
-    // it('at first object is collapsed', () => {
-    //     cy.contains('new subitem').click();
-    //     typeInFirstTextObject('parent');
-    //     cy.contains('new subitem').click();
-    //     cy.get(' .semsObject .head').eq(1).click();
-    //     typeInTextObject(1, 'child');
-    //     cy.wait(100);
-    //     cy.visit(url);
-    //     cy.wait(100);
-    //     cy.contains('child').should('not.exist');
-    // });
 });
+
 
 async function typeInFirstTextObject(text) {
     cy.get('.semsObject .contentEditableDiv').type(text);

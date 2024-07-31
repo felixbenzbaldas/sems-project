@@ -6,7 +6,6 @@ import {ListAspect} from "@/user-interface/ListAspect";
 
 export class UserInterface {
 
-    // private workingPlace2: UserInterfaceObject;
     private workingPlace: UserInterfaceObject;
 
     private focused : UserInterfaceObject;

@@ -7,6 +7,7 @@ import {TestUtil} from "@/test/TestUtil";
 const testConfiguration = TestUtil.getTestConfiguration();
 
 describe('core', () => {
+
     test('Created object has valid name', async () => {
         let app = new App(testConfiguration);
 
@@ -26,37 +27,43 @@ describe('core', () => {
 
     it('stores created object in cache', async () => {
         let app : App = new App(testConfiguration);
+        let location = app.getLocation();
 
         let createdObject : SemsObject = await app.createObject();
 
-        let path : Path = app.getLocation().getPath(createdObject);
-        expect(createdObject).toBe(await app.getLocation().getObject(path));
+        let path : Path = location.getPath(createdObject);
+        expect(createdObject).toBe(await location.getObject(path));
     });
 
     it('can get object for empty path', async () => {
         let app = new App(testConfiguration);
+        let location = app.getLocation();
 
-        let object : SemsObject = await app.getLocation().getObject(new Path([]));
+        let object : SemsObject = await location.getObject(Path.empty());
 
         expect(object).toBeTruthy();
-        expect(app.getLocation().getPath(object)).toEqual(new Path([]));
+        expect(location.getPath(object)).toEqual(Path.empty());
 
         // object has to be stored in cache
-        expect(object).toBe(await app.getLocation().getObject(new Path([])));
+        expect(object).toBe(await location.getObject(Path.empty()));
     });
 
     it('can get object for path (with two parts)', async () => {
+        let path = await createObject();
+        let app = new App(testConfiguration);
+        let location = app.getLocation();
+
+        let object = await location.getObject(path);
+
+        expect(object).toBeTruthy();
+        expect(location.getPath(object).toList()).toEqual(path.toList());
+    });
+
+    async function createObject() : Promise<Path> {
         let app = new App(testConfiguration);
         let object = await app.createObject();
-        let path : Path = app.getLocation().getPath(object);
-
-        let app2 = new App(testConfiguration);
-        let object2 = await app2.getLocation().getObject(path);
-
-        expect(object2).toBeTruthy();
-        let path2 =  app2.getLocation().getPath(object2);
-        expect(path2.toList()).toEqual(path.toList());
-    });
+        return app.getLocation().getPath(object);
+    }
 
     it('can add detail to empty object', async () => {
         let app = new App(testConfiguration);

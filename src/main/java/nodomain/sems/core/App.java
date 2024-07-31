@@ -28,34 +28,17 @@ public class App {
     public Object handle(String method, List<Object> args) {
         return switch (method) {
             case "createObjectWithText" -> createObjectWithText((List<String>) args.get(0), (String) args.get(1));
-            case "createUser" -> {
-                createUser((String) args.get(0), (String) args.get(1));
-                yield null;
-            }
             case "get" -> get((List<String>) args.get(0));
-            case "addObjectToWorkingPlace" -> {
-                this.addObjectToWorkingPlace((List<String>) args.get(0));
-                yield null;
-            }
-            case "getObjectsInWorkingPlace" -> getObjectsInWorkingPlace();
-            case "setText" -> {
-                setText((List<String>) args.get(0), (String) args.get(1));
-                yield null;
-            }
-            case "clearWorkingPlace" -> {
-                this.clearWorkingPlace();
-                yield null;
-            }
             case "set" -> {
                 this.set((List<String>) args.get(0), (String) args.get(1), args.get(2));
                 yield null;
             }
+            case "createUser" -> {
+                createUser((String) args.get(0), (String) args.get(1));
+                yield null;
+            }
             default -> throw new RuntimeException("method not implemented");
         };
-    }
-
-    public void setText(List<String> object, String text) {
-        getSemsObject(new Path(object)).set("text", text);
     }
 
     public void set(List<String> object, String property, Object value) {
@@ -64,15 +47,6 @@ public class App {
 
     public String createObjectWithText(List<String> house, String text) {
         return getHouse(new Path(house)).createObjectWithText(text).getName();
-    }
-    public void addObjectToWorkingPlace(List<String> object) {
-        List<List<String>> objectsInWorkingPlace = (List<List<String>>) this.properties.get(WORKING_PLACE);
-        objectsInWorkingPlace.add(object);
-        this.properties.set(WORKING_PLACE, objectsInWorkingPlace);
-    }
-
-    public List<List<String>> getObjectsInWorkingPlace() {
-        return (List<List<String>>) this.properties.get(WORKING_PLACE);
     }
 
     public Map<String, Object> get(List<String> path) {
@@ -101,9 +75,5 @@ public class App {
         } else {
             throw new RuntimeException("not implemented yet");
         }
-    }
-
-    public void clearWorkingPlace() {
-        this.properties.set(WORKING_PLACE, new ArrayList<String>());
     }
 }

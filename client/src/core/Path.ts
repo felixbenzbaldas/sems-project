@@ -2,6 +2,10 @@ export class Path {
     constructor(private listOfNames : Array<string>) {
     }
 
+    static empty() : Path {
+        return new Path([]);
+    }
+
     toList() : Array<string> {
         return this.listOfNames;
     }

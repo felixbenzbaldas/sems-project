@@ -4,11 +4,11 @@ Sems could be described as an outliner tool.
 The goal of Sems is a convenient way to work with notes,
 images and structured data.
 
-In this project the code quality should be good. The following books about are recommended:
+The code quality in this project should be good. The following books about are recommended:
 
-- Clean Code by Robert C. Martin
-- Test-Driven Development by Kent Beck
-- Unit Testing by Vladimir Khorikov
+- *Clean Code* by Robert C. Martin
+- *Test-Driven Development* by Kent Beck
+- *Unit Testing* by Vladimir Khorikov
 
 #### What can you do with Sems?
 

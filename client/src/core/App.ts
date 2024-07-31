@@ -2,7 +2,6 @@ import {Http} from "@/core/Http";
 import {Location} from "@/core/Location";
 import {Path} from "@/core/Path";
 import type {SemsObject} from "@/core/SemsObject";
-import type {House} from "@/core/House";
 
 export class App {
 
@@ -17,11 +16,11 @@ export class App {
     }
 
     async createObject() : Promise<SemsObject> {
-        return (await this.getCurrentHouse()).createObjectWithText('');
+        return (await this.getCurrentContainer()).containerAspect.createObjectWithText('');
     }
 
-    private async getCurrentHouse() : Promise<House> {
-        return this.location.getHouse(this.currentWritingPosition);
+    private async getCurrentContainer() : Promise<SemsObject> {
+        return this.location.getObject(this.currentWritingPosition);
     }
 
     getLocation() : Location {

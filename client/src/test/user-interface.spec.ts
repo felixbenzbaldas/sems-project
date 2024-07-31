@@ -29,7 +29,6 @@ describe('user-interface', () => {
         expect(workingPlace.hasFocus()).toBeTruthy();
     });
 
-
     it('can create object in working place', async () => {
         let app = new App(testConfiguration);
         let userInterface = await UserInterface.load(app);

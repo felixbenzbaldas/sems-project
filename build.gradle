@@ -38,68 +38,18 @@ test {
     useJUnitPlatform()
 }
 
-// the following is NOT TESTED!
-
 
 task buildClient {
     doLast {
-        copy {
-            from 'client'
-            into buildClientPath
-        }
-        copy {
-            from macroFolder
-            into buildClientPath + '/src/macro/'
-        }
         exec {
-            workingDir buildClientPath
+            workingDir 'client'
             commandLine 'cmd', '/c', 'npm run build'
         }
     }
 }
 
-
-task copyClient_excludeNodeModules(type: Copy) {
-    from ('client') {
-        exclude '/node_modules/*'
-    }
-    into buildClientPath
-}
-
-task buildClient_excludeNodeModules {
-    dependsOn(copyClient_excludeNodeModules)
+task deployClient {
     doLast {
-        copy {
-            from macroFolder
-            into buildClientPath + '/src/macro/'
-        }
-        exec {
-            workingDir buildClientPath
-            commandLine 'cmd', '/c', 'npm run build'
-        }
+        delete 'todo'
     }
-}
-
-task localDeployNoClientBuild {
-    dependsOn(build)
-    doLast {
-        delete deploymentPath + '/app'
-        copy {
-            from 'build/classes/java/main'
-            into deploymentPath +  '/app/classes'
-        }
-        copy {
-            from 'client/dist/'
-            into deploymentPath + '/app/client'
-        }
-    }
-}
-
-task copyClientResources(type: Copy) {
-    from clientResources
-    into deploymentPath + '/app/client/resources'
-}
-
-task localDeploy_excludeNodeModules {
-    dependsOn(buildClient_excludeNodeModules, localDeployNoClientBuild, copyClientResources, copyClientResources)
 }
