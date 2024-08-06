@@ -51,8 +51,8 @@ export class Starter {
     static createAppWithUIWithCommands() : Identity {
         let app = this.createAppWithUI();
         app.ui.commands = app.createTextWithList('commands',
-            app.createButton('new subitem', async () => {
-                await app.ui.newSubitem();
+            app.createButton('default action', async () => {
+                await app.ui.defaultAction();
             }));
         return app;
     }

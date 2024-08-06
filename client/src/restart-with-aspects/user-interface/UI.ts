@@ -9,7 +9,7 @@ export class UI {
         this.content = app.createList();
     }
 
-    async newSubitem() {
+    async defaultAction() {
         this.content.list.add(await this.app.remote_createText('new item'));
     }
 }

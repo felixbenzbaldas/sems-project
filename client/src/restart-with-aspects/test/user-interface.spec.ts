@@ -7,7 +7,7 @@ describe('user-interface', () => {
     it('can create object', async () => {
         let app : Identity = Starter.createAppWithUI();
 
-        await app.ui.newSubitem();
+        await app.ui.defaultAction();
 
         expect(app.ui.content.list.jsList.length).toBe(1);
     });
