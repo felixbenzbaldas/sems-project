@@ -50,7 +50,7 @@ function updateList() {
         <div style="min-height: 1rem">
             {{identity.text}}
         </div>
-        <div v-if="identity.list && hasListItem" style="margin-left: 0.8rem; margin-top: 0.2rem">
+        <div v-if="identity.list && hasListItem" style="margin-left: 0.8rem; margin-top: 0.2rem; margin-bottom: 0.2rem">
             <VueUI v-for="current in list" :identity="current"/>
         </div>
     </div>
