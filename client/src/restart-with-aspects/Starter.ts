@@ -1,5 +1,5 @@
 import {Identity} from "@/restart-with-aspects/Identity";
-import {UI} from "@/restart-with-aspects/aspects/UI";
+import {UI} from "@/restart-with-aspects/user-interface/UI";
 
 export class Starter {
 

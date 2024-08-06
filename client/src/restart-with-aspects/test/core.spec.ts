@@ -52,15 +52,3 @@ describe('app', () => {
         expect(object.text).toEqual('foo');
     });
 });
-
-describe('user-interface', () => {
-
-    it('can create object', async () => {
-        let app : Identity = Starter.createAppWithUI();
-
-        await app.ui.newSubitem();
-
-        expect(app.ui.content.list.jsList.length).toBe(1);
-    });
-
-});
