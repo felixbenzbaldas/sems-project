@@ -47,7 +47,7 @@ function updateList() {
         {{identity.text}}
     </button>
     <div v-else-if="identity.text != undefined">
-        <div style="min-height: 1rem; margin: 0.2rem">
+        <div style="min-height: 1rem">
             {{identity.text}}
         </div>
         <div v-if="identity.list && hasListItem" style="margin-left: 0.8rem; margin-top: 0.2rem">
