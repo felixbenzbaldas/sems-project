@@ -6,4 +6,8 @@ describe: local app {
     it: contains button for object creation
 
     it: can create new object
+
+    test: content is editable
+
+    test: commands are readonly
 }

@@ -4,6 +4,7 @@ export class UI {
 
     readonly content: Identity;
     commands: Identity;
+    isWebsite: boolean;
 
     constructor(private app: Identity) {
         this.content = app.createList();

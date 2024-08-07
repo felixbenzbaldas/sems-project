@@ -11,6 +11,7 @@ export class Starter {
 
     static createWebsite() : Identity {
         let app = Starter.createAppWithUI();
+        app.ui.isWebsite = true;
         app.ui.content.list.add(
             app.createText('This is the Sems software. It is being developed. New features will be added.'),
             // app.createText(''),

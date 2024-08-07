@@ -5,6 +5,7 @@ import {type Ref, ref} from "vue";
 
 const props = defineProps<{
     identity: Identity,
+    isView? : boolean,
 }>();
 
 const hasListItem : Ref<boolean> = ref();
@@ -40,21 +41,21 @@ function updateList() {
 
 <template>
     <div v-if="identity.ui?.commands" style="margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: dashed">
-        <VueUI :identity="identity.ui.commands" />
+        <VueUI :identity="identity.ui.commands" :is-view="true"/>
     </div>
-    <VueUI v-if="identity.ui" :identity="identity.ui.content"/>
+    <VueUI v-if="identity.ui" :identity="identity.ui.content" :is-view="identity.ui.isWebsite"/>
     <button v-else-if="identity.action" @click="identity.action()">
         {{identity.text}}
     </button>
     <div v-else-if="identity.text != undefined">
-        <div style="min-height: 1rem">
+        <div style="min-height: 1rem" :contenteditable="!props.isView">
             {{identity.text}}
         </div>
         <div v-if="identity.list && hasListItem" style="margin-left: 0.8rem; margin-top: 0.2rem; margin-bottom: 0.2rem">
-            <VueUI v-for="current in list" :identity="current"/>
+            <VueUI v-for="current in list" :identity="current" :is-view="props.isView"/>
         </div>
     </div>
-    <VueUI v-else-if="identity.list" v-for="current in list" :identity="current"/>
+    <VueUI v-else-if="identity.list" v-for="current in list" :identity="current" :is-view="props.isView"/>
 </template>
 
 <style scoped>

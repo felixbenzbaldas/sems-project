@@ -12,4 +12,6 @@ describe: website {
     }
 
     it: can show a list of objects
+
+    test: content is readonly
 }
