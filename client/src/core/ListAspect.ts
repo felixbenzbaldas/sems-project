@@ -1,4 +1,4 @@
-import type {Identity} from "@/restart-with-aspects/Identity";
+import type {Identity} from "@/Identity";
 
 export class ListAspect {
 

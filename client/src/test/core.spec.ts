@@ -1,6 +1,6 @@
 import {describe, expect, it} from "vitest";
-import {Identity} from "@/restart-with-aspects/Identity";
-import {Starter} from "@/restart-with-aspects/Starter";
+import {Identity} from "@/Identity";
+import {Starter} from "@/Starter";
 
 describe('app', () => {
 

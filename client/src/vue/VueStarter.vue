@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-import type {Identity} from "@/restart-with-aspects/Identity";
-import {Starter} from "@/restart-with-aspects/Starter";
+import type {Identity} from "@/Identity";
+import {Starter} from "@/Starter";
 
 let queryParams = new URLSearchParams(window.location.search);
 let app : Identity;

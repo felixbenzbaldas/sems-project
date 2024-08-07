@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import type {Identity} from "@/restart-with-aspects/Identity";
+import type {Identity} from "@/Identity";
 import {type Ref, ref} from "vue";
 
 const props = defineProps<{

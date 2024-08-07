@@ -1,6 +1,6 @@
-import {ListAspect} from "@/restart-with-aspects/core/ListAspect";
+import {ListAspect} from "@/core/ListAspect";
 import {Subject} from "rxjs";
-import type {UI} from "@/restart-with-aspects/user-interface/UI";
+import type {UI} from "@/user-interface/UI";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.

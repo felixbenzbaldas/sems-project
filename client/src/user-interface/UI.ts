@@ -1,4 +1,4 @@
-import {Identity} from "@/restart-with-aspects/Identity";
+import {Identity} from "@/Identity";
 
 export class UI {
 
