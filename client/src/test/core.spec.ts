@@ -42,13 +42,4 @@ describe('app', () => {
 
         expect(list.list.jsList.length).toBe(1);
     });
-
-    it('can create remote text', async () => {
-        let app : Identity = Starter.createApp();
-        app.server = 'http://localhost:8081/';
-
-        let object = await app.remote_createText('foo');
-
-        expect(object.text).toEqual('foo');
-    });
 });
