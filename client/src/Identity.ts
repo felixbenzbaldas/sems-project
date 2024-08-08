@@ -11,9 +11,13 @@ export class Identity {
     list : ListAspect;
     action: Function;
     subject: Subject<any>;
+
+    /////////////////////////////////////////////////////////////////
+    // app aspect
+
     ui: UI;
     server: string;
-
+    
     createIdentity() {
         return new Identity();
     }
@@ -49,4 +53,5 @@ export class Identity {
     async remote_createText(text: string) : Promise<Identity> {
         return Promise.resolve(this.createText(text));
     }
+    /////////////////////////////////////////////////////////////////
 }
