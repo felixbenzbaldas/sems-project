@@ -2,7 +2,7 @@ import {describe, expect, it} from "vitest";
 import {Identity} from "@/Identity";
 import {Starter} from "@/Starter";
 
-describe('user-interface', () => {
+describe('user-interface for local app', () => {
 
     it('can create object', async () => {
         let app : Identity = Starter.createAppWithUI();
