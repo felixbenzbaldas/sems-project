@@ -1,0 +1,7 @@
+At the moment a web application is implemented.
+
+In the future also a native application should be implemented.
+
+The big advantage of a web application is, that users can try it in the browser. They do not need to install a software on their computer.
+
+There will also be a localhost variant. That means that you can run a server and a client on your computer. On that way almost all features of a native app can be provided. This saves programming effort compared to a true native application. However, this is only a temporary solution, until the native application is implemented.
