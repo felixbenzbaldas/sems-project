@@ -19,18 +19,11 @@ public class Identity {
     public ListAspect list;
 
     public Map<String, Object> data = new HashMap<>();
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     public void set(String property, Object value) {
         Map<String, Object> newData = new HashMap<>(data); // copy
         newData.put(property, value);
-        if (file != null) {
-            try {
-                objectMapper.writeValue(getPropertiesFile(), newData);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        persist(newData);
         data = newData;
         if (property.equals("text")) {
             text = (String) value;
@@ -38,19 +31,38 @@ public class Identity {
     }
 
     public void update() {
-        if (file != null && file.exists()) {
-            Object json = null;
+        data = getDataFromPersistence();
+        if (data.containsKey("text")) {
+            text = (String) data.get("text");
+        } else {
+            text = null;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    // persistence aspect
+
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+    private void persist(Map<String, Object> data) {
+        if (file != null) {
             try {
-                json = objectMapper.readValue(getPropertiesFile(), Object.class);
+                objectMapper.writeValue(getPropertiesFile(), data);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            data = (Map<String, Object>) json;
-            if (data.containsKey("text")) {
-                text = (String) data.get("text");
-            }
+        }
+    }
+
+    private Map<String, Object> getDataFromPersistence() {
+        if (file == null) {
+            return data;
         } else {
-            System.out.println("warning: cannot update because no file available");
+            try {
+                return (Map<String, Object>) objectMapper.readValue(getPropertiesFile(), Object.class);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -62,7 +74,7 @@ public class Identity {
     // app aspect
 
     public File file;
-    
+
     public Identity createList() {
         Identity identity = this.createIdentitiy();
         identity.list = new ListAspect();
