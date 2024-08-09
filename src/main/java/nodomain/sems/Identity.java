@@ -1,8 +1,12 @@
 package nodomain.sems;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.sems.core.ListAspect;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An identity is an object without members. It only consists of its memory address.
@@ -12,18 +16,29 @@ import java.io.File;
 public class Identity {
     public String text;
     public ListAspect list;
+    public File file;
+
+    public Map<String, Object> data = new HashMap<>();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
 
-    public void set(String propertyName, Object value) {
-        if (propertyName.equals("text")) {
+    public void set(String property, Object value) {
+        Map<String, Object> newData = new HashMap<>(data); // copy
+        newData.put(property, value);
+        try {
+            File propertiesFile = new File(file, "properties.json");
+            objectMapper.writeValue(propertiesFile, newData);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        data = newData;
+        if (property.equals("text")) {
             text = (String) value;
         }
     }
 
     ////////////////////////////////////////////////////////////////////////
     // app aspect
-
-    public File file;
 
     public Identity createList() {
         Identity identity = this.createIdentitiy();

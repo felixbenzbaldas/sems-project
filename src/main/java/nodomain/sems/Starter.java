@@ -23,8 +23,9 @@ public class Starter {
     }
 
     public static Identity createApp(File file) {
-        Identity app = Starter.createApp();
+        Identity app = new Identity();
         app.file = file;
+        app.set("text", "Sems application (with file)");
         return app;
     }
 

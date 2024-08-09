@@ -24,12 +24,13 @@ public class TestApp {
     }
 
     @Test
-    void can_create_app() {
+    void can_create_app_with_file() {
         File file = new File(PATH_FOR_TMP_FILES);
 
         Identity app = Starter.createApp(file);
 
         assertThat(app.file).isSameAs(file);
+        assertThat(new File(file, "properties.json")).exists();
     }
 
     @Test
