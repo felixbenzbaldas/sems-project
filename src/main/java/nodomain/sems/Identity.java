@@ -67,6 +67,7 @@ public class Identity {
     }
 
     private File getPropertiesFile() {
+        if (file == null) throw new RuntimeException();
         return new File(file, "properties.json");
     }
 
