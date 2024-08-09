@@ -2,6 +2,8 @@ package nodomain.sems;
 
 import nodomain.sems.core.ListAspect;
 
+import java.io.File;
+
 /**
  * An identity is an object without members. It only consists of its memory address.
  * The members of this class should be interpreted as aspects which can be assigned to the identity.
@@ -11,9 +13,11 @@ public class Identity {
     public String text;
     public ListAspect list;
 
-
     ////////////////////////////////////////////////////////////////////////
     // app aspect
+
+    public File file;
+
     public Identity createList() {
         Identity identity = this.createIdentitiy();
         identity.list = new ListAspect();

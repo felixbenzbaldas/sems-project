@@ -3,6 +3,7 @@ package nodomain.sems;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import nodomain.sems.deprecated.OnlyLocalhostServer;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Starter {
@@ -18,6 +19,12 @@ public class Starter {
     public static Identity createApp() {
         Identity app = new Identity();
         app.text = "Sems application";
+        return app;
+    }
+
+    public static Identity createApp(File file) {
+        Identity app = Starter.createApp();
+        app.file = file;
         return app;
     }
 }

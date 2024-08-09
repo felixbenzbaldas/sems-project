@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,6 +21,15 @@ public class TestApp {
     @BeforeEach
     void beforeEach() {
         new File(PATH_FOR_TMP_FILES).mkdirs();
+    }
+
+    @Test
+    void can_create_app() {
+        File file = new File(PATH_FOR_TMP_FILES);
+
+        Identity app = Starter.createApp(file);
+
+        assertThat(app.file).isSameAs(file);
     }
 
     @AfterEach
