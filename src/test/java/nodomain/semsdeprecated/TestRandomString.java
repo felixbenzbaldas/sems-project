@@ -1,4 +1,4 @@
-package nodomain.sems.deprecated;
+package nodomain.semsdeprecated;
 import nodomain.sems.deprecated.core.RandomString;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Nested;

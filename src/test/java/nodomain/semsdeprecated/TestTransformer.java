@@ -1,5 +1,6 @@
-package nodomain.sems.deprecated;
+package nodomain.semsdeprecated;
 
+import nodomain.sems.deprecated.Transformer;
 import nodomain.sems.deprecated.core.House;
 import nodomain.sems.deprecated.core.ObjectFilesHouse;
 import nodomain.sems.deprecated.core.SemsObject;

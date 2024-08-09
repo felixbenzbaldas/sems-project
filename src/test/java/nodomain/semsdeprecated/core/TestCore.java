@@ -1,6 +1,10 @@
-package nodomain.sems.deprecated.core;
+package nodomain.semsdeprecated.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nodomain.sems.deprecated.core.App;
+import nodomain.sems.deprecated.core.House;
+import nodomain.sems.deprecated.core.ObjectFilesHouse;
+import nodomain.sems.deprecated.core.SemsObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

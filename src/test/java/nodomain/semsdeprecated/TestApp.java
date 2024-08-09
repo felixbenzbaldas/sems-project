@@ -1,5 +1,7 @@
-package nodomain.sems.deprecated;
+package nodomain.semsdeprecated;
 
+import nodomain.sems.deprecated.Path;
+import nodomain.sems.deprecated.Security;
 import nodomain.sems.deprecated.core.App;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
