@@ -17,25 +17,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestCore {
 
-    private static final String TEST_RESOURCES_PATH = "./src/test/resources";
-    private static final String PATH_FOR_TMP_FILES = TEST_RESOURCES_PATH + "/tmp";
-
-    @BeforeEach
-    void beforeEach() {
-        new File(PATH_FOR_TMP_FILES).mkdirs();
-    }
-
     @Test
-    void test() throws IOException {
-        assertThat(true).isTrue();
+    void can_create_core_app() throws IOException {
+        Identity app = Starter.createApp();
+
+        assertThat(app.text).isEqualTo("Sems application");
     }
 
-    @AfterEach
-    void afterEach() throws IOException {
-        deleteDirectory(new File(PATH_FOR_TMP_FILES));
-    }
-
-    static private void deleteDirectory(File file) throws IOException {
-        Files.walk(file.toPath()).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
-    }
 }

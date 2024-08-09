@@ -1,5 +1,6 @@
 package nodomain.sems;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import nodomain.sems.deprecated.OnlyLocalhostServer;
 
 import java.io.IOException;
@@ -12,5 +13,9 @@ public class Starter {
 
     private static void runDeprecatedServer(String[] args) throws IOException {
         OnlyLocalhostServer.main(args);
+    }
+
+    public static Identity createApp() {
+        return null;
     }
 }
