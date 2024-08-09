@@ -52,6 +52,7 @@ public class TestApp {
         Identity loadedApp = Starter.loadApp(file);
 
         assertThat(loadedApp.text).isEqualTo("my application");
+        assertThat(loadedApp.file).isSameAs(file);
     }
 
     @AfterEach
