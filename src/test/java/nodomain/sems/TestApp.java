@@ -32,6 +32,16 @@ public class TestApp {
         assertThat(app.file).isSameAs(file);
     }
 
+    @Test
+    void can_set_text() {
+        File file = new File(PATH_FOR_TMP_FILES);
+        Identity app = Starter.createApp(file);
+
+        app.set("text", "my application");
+
+        assertThat(app.text).isEqualTo("my application");
+    }
+
     @AfterEach
     void afterEach() throws IOException {
         deleteDirectory(new File(PATH_FOR_TMP_FILES));

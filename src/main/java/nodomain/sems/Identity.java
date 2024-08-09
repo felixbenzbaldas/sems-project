@@ -13,6 +13,13 @@ public class Identity {
     public String text;
     public ListAspect list;
 
+
+    public void set(String propertyName, Object value) {
+        if (propertyName.equals("text")) {
+            text = (String) value;
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////
     // app aspect
 
