@@ -16,6 +16,8 @@ public class Starter {
     }
 
     public static Identity createApp() {
-        return null;
+        Identity app = new Identity();
+        app.text = "Sems application";
+        return app;
     }
 }
