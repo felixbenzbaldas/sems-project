@@ -1,5 +1,5 @@
 import {Identity} from "@/Identity";
-import {UI} from "@/user-interface/UI";
+import {AbstractUi} from "@/abstract-ui/AbstractUi";
 
 export class Starter {
 
@@ -11,8 +11,8 @@ export class Starter {
 
     static createWebsite() : Identity {
         let app = Starter.createAppWithUI();
-        app.ui.isWebsite = true;
-        app.ui.content.list.add(
+        app.abstractUi.isWebsite = true;
+        app.abstractUi.content.list.add(
             app.createText('This is the Sems software. It is being developed. New features will be added.'),
             // app.createText(''),
             // app.createTextWithList('Software tests', app.createText('subitem')),
@@ -45,15 +45,15 @@ export class Starter {
 
     static createAppWithUI() : Identity {
         let app = Starter.createApp();
-        app.ui = new UI(app);
+        app.abstractUi = new AbstractUi(app);
         return app;
     }
 
     static createAppWithUIWithCommands() : Identity {
         let app = this.createAppWithUI();
-        app.ui.commands = app.createTextWithList('commands',
+        app.abstractUi.commands = app.createTextWithList('commands',
             app.createButton('default action', async () => {
-                await app.ui.defaultAction();
+                await app.abstractUi.defaultAction();
             }));
         return app;
     }

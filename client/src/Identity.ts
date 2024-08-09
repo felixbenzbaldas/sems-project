@@ -1,6 +1,6 @@
 import {ListAspect} from "@/core/ListAspect";
 import {Subject} from "rxjs";
-import type {UI} from "@/user-interface/UI";
+import type {AbstractUi} from "@/abstract-ui/AbstractUi";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
@@ -15,7 +15,7 @@ export class Identity {
     /////////////////////////////////////////////////////////////////
     // app aspect
 
-    ui: UI;
+    abstractUi: AbstractUi;
     server: string;
     
     createIdentity() {

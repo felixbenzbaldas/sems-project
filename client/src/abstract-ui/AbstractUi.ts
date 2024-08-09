@@ -1,6 +1,6 @@
 import {Identity} from "@/Identity";
 
-export class UI {
+export class AbstractUi {
 
     readonly content: Identity;
     commands: Identity;

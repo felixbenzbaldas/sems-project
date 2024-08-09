@@ -40,10 +40,10 @@ function updateList() {
 </script>
 
 <template>
-    <div v-if="identity.ui?.commands" style="margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: dashed">
-        <VueUI :identity="identity.ui.commands" :is-view="true"/>
+    <div v-if="identity.abstractUi?.commands" style="margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: dashed">
+        <VueUI :identity="identity.abstractUi.commands" :is-view="true"/>
     </div>
-    <VueUI v-if="identity.ui" :identity="identity.ui.content" :is-view="identity.ui.isWebsite"/>
+    <VueUI v-if="identity.abstractUi" :identity="identity.abstractUi.content" :is-view="identity.abstractUi.isWebsite"/>
     <button v-else-if="identity.action" @click="identity.action()">
         {{identity.text}}
     </button>

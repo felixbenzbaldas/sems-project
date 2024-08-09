@@ -2,14 +2,14 @@ import {describe, expect, it} from "vitest";
 import {Identity} from "@/Identity";
 import {Starter} from "@/Starter";
 
-describe('user-interface for local app', () => {
+describe('abstract ui for local app', () => {
 
     it('can create object', async () => {
         let app : Identity = Starter.createAppWithUI();
 
-        await app.ui.defaultAction();
+        await app.abstractUi.defaultAction();
 
-        expect(app.ui.content.list.jsList.length).toBe(1);
+        expect(app.abstractUi.content.list.jsList.length).toBe(1);
     });
 
 });
