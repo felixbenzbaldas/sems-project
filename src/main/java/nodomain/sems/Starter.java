@@ -27,4 +27,11 @@ public class Starter {
         app.file = file;
         return app;
     }
+
+    public static Identity loadApp(File file) {
+        Identity app = new Identity();
+        app.text = "my application";
+        app.file = file;
+        return app;
+    }
 }

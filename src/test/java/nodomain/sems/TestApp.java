@@ -42,6 +42,17 @@ public class TestApp {
         assertThat(app.text).isEqualTo("my application");
     }
 
+    @Test
+    void can_load_app() {
+        File file = new File(PATH_FOR_TMP_FILES);
+        Identity createdApp = Starter.createApp(file);
+        createdApp.set("text", "my application");
+
+        Identity loadedApp = Starter.loadApp(file);
+
+        assertThat(loadedApp.text).isEqualTo("my application");
+    }
+
     @AfterEach
     void afterEach() throws IOException {
         deleteDirectory(new File(PATH_FOR_TMP_FILES));
