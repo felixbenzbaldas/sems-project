@@ -17,7 +17,6 @@ import java.util.Map;
 public class Identity {
     public String text;
     public ListAspect list;
-    public File file;
 
     public Map<String, Object> data = new HashMap<>();
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -62,6 +61,8 @@ public class Identity {
     ////////////////////////////////////////////////////////////////////////
     // app aspect
 
+    public File file;
+    
     public Identity createList() {
         Identity identity = this.createIdentitiy();
         identity.list = new ListAspect();
