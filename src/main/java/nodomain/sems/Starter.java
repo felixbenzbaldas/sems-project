@@ -5,6 +5,8 @@ import nodomain.sems.deprecated.OnlyLocalhostServer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Starter {
 
@@ -31,8 +33,8 @@ public class Starter {
 
     public static Identity loadApp(File file) {
         Identity app = new Identity();
-        app.text = "my application";
         app.file = file;
+        app.update();
         return app;
     }
 }
