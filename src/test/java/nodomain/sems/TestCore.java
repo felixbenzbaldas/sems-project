@@ -24,4 +24,13 @@ public class TestCore {
         assertThat(identity.list.jList).isNotNull();
     }
 
+    @Test
+    void test_created_text_has_no_name() {
+        Identity app = Starter.createApp();
+
+        Identity identity = app.createText("foo");
+
+        assertThat(identity.name).isNull();
+    }
+
 }

@@ -90,8 +90,14 @@ public class Identity {
     public Identity createText(String text) {
         Identity identity = this.createIdentitiy();
         identity.text = text;
-        identity.name = "dfetf24t"; // TODO only when has persistence aspect
+        if (hasPersistence()) {
+            identity.name = "dfetf24t";
+        }
         return identity;
+    }
+
+    public boolean hasPersistence() {
+        return file != null;
     }
 
     public Identity get(String name) {
