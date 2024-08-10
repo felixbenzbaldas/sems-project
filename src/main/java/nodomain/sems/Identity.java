@@ -44,7 +44,7 @@ public class Identity {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    private void persist(Map<String, Object> data) {
+    public void persist(Map<String, Object> data) {
         if (file != null) {
             try {
                 objectMapper.writeValue(getPropertiesFile(), data);
@@ -54,7 +54,7 @@ public class Identity {
         }
     }
 
-    private Map<String, Object> getDataFromPersistence() {
+    public Map<String, Object> getDataFromPersistence() {
         if (file == null) {
             return data;
         } else {
