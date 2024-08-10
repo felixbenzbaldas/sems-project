@@ -66,17 +66,19 @@ public class TestApp {
 
     @Test
     void can_load_object_with_text() {
-        String name;
-        {
-            Identity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
-            Identity identity = app.createText("bar");
-            name = identity.name;
-        }
+        String name = createObjectWithText("bar");
         Identity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
 
         Identity loaded = app.get(name);
 
         assertThat(loaded.text).isEqualTo("bar");
+    }
+
+    // returns the name of the created object
+    private String createObjectWithText(String text) {
+        Identity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
+        Identity identity = app.createText(text);
+        return identity.name;
     }
 
     @AfterEach
