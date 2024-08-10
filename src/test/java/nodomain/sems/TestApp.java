@@ -55,6 +55,30 @@ public class TestApp {
         assertThat(loadedApp.file).isSameAs(file);
     }
 
+    @Test
+    void can_create_object_with_text() {
+        Identity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
+
+        Identity identity = app.createText("bar");
+
+        assertThat(identity.text).isEqualTo("bar");
+    }
+
+    @Test
+    void can_load_object_with_text() {
+        String name;
+        {
+            Identity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
+            Identity identity = app.createText("bar");
+            name = identity.name;
+        }
+        Identity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
+
+        Identity loaded = app.get(name);
+
+        assertThat(loaded.text).isEqualTo("bar");
+    }
+
     @AfterEach
     void afterEach() throws IOException {
         deleteDirectory(new File(PATH_FOR_TMP_FILES));

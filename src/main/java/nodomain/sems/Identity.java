@@ -14,10 +14,12 @@ import java.util.Map;
  * On the logical level they do not belong to this class.
  **/
 public class Identity {
+
+    public String name;
     public String text;
     public ListAspect list;
-
     public Map<String, Object> data = new HashMap<>();
+
 
     public void set(String property, Object value) {
         Map<String, Object> newData = new HashMap<>(data); // copy
@@ -83,6 +85,16 @@ public class Identity {
 
     private Identity createIdentitiy() {
         return new Identity();
+    }
+
+    public Identity createText(String text) {
+        Identity identity = this.createIdentitiy();
+        identity.text = text;
+        return identity;
+    }
+
+    public Identity get(String name) {
+        return null;
     }
     ////////////////////////////////////////////////////////////////////////
 
