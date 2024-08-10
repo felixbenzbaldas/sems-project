@@ -2,6 +2,7 @@ package nodomain.sems;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.sems.core.ListAspect;
+import nodomain.sems.deprecated.core.RandomString;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,12 +20,15 @@ public class Identity {
     public String text;
     public ListAspect list;
     public Map<String, Object> data = new HashMap<>();
+    public Identity container;
 
 
     public void set(String property, Object value) {
         Map<String, Object> newData = new HashMap<>(data); // copy
         newData.put(property, value);
-        persist(newData);
+        if (hasPersistence()) {
+            persist(newData);
+        }
         data = newData;
         if (property.equals("text")) {
             text = (String) value;
@@ -32,76 +36,86 @@ public class Identity {
     }
 
     public void update() {
-        data = getDataFromPersistence();
-        if (data.containsKey("text")) {
-            text = (String) data.get("text");
-        } else {
-            text = null;
+        if (hasPersistence()) {
+            data = getDataFromPersistence();
+            if (data.containsKey("text")) {
+                text = (String) data.get("text");
+            } else {
+                text = null;
+            }
         }
+    }
+
+    public boolean hasPersistence() {
+        return file != null || container != null && container.hasPersistence();
     }
 
     ////////////////////////////////////////////////////////////////////////
     // persistence aspect
 
+    public File file;
+
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public void persist(Map<String, Object> data) {
-        if (file != null) {
-            try {
-                objectMapper.writeValue(getPropertiesFile(), data);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        File propertiesFile = getPropertiesFile();
+        propertiesFile.getParentFile().mkdirs();
+        try {
+            objectMapper.writeValue(propertiesFile, data);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public Map<String, Object> getDataFromPersistence() {
-        if (file == null) {
-            return data;
-        } else {
-            try {
-                return (Map<String, Object>) objectMapper.readValue(getPropertiesFile(), Object.class);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            return (Map<String, Object>) objectMapper.readValue(getPropertiesFile(), Object.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private File getPropertiesFile() {
-        if (file == null) throw new RuntimeException();
-        return new File(file, "properties.json");
+    public File getPropertiesFile() {
+        return new File(getFile(), "properties.json");
+    }
+
+    public File getFile() {
+        if (file == null) {
+            return new File(container.getFile(), "objects/" + name);
+        } else {
+            return file;
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////
     // app aspect
 
-    public File file;
-
     public Identity createList() {
-        Identity identity = this.createIdentitiy();
+        Identity identity = this.createIdentity();
         identity.list = new ListAspect();
         return identity;
     }
 
-    private Identity createIdentitiy() {
+    public Identity createIdentity() {
         return new Identity();
     }
 
     public Identity createText(String text) {
-        Identity identity = this.createIdentitiy();
+        Identity identity = this.createIdentity();
         identity.text = text;
         if (hasPersistence()) {
-            identity.name = "dfetf24t";
+            identity.name = new RandomString().next();
+            identity.container = this;
+            identity.set("text", text);
         }
         return identity;
     }
 
-    public boolean hasPersistence() {
-        return file != null;
-    }
-
     public Identity get(String name) {
-        Identity identity = createText("bar");
+        Identity identity = this.createIdentity();
+        identity.name = name;
+        identity.container = this;
+        identity.update();
         return identity;
     }
     ////////////////////////////////////////////////////////////////////////
