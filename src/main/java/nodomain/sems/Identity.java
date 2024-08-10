@@ -102,22 +102,31 @@ public class Identity {
 
     public Identity createText(String text) {
         Identity identity = this.createIdentity();
-        identity.text = text;
         if (hasPersistence()) {
             identity.name = new RandomString().next();
             identity.container = this;
+            loadedObjects.put(identity.name, identity);
             identity.set("text", text);
+        } else {
+            identity.text = text;
         }
         return identity;
     }
 
     public Identity get(String name) {
-        Identity identity = this.createIdentity();
-        identity.name = name;
-        identity.container = this;
-        identity.update();
-        return identity;
+        if (!loadedObjects.containsKey(name)) {
+            Identity identity = this.createIdentity();
+            identity.name = name;
+            identity.container = this;
+            loadedObjects.put(name, identity);
+            identity.update();
+        }
+        return loadedObjects.get(name);
     }
     ////////////////////////////////////////////////////////////////////////
+    // container aspect
 
+    public Map<String, Identity> loadedObjects = new HashMap<>();
+
+    ////////////////////////////////////////////////////////////////////////
 }
