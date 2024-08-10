@@ -31,12 +31,12 @@ export class Starter {
                 app.createTextWithList('Rotes Rennrad',
                     app.createText('Marke: Bernd Herkelmann. Shimano DURA ACE Gangschaltung und Bremsen. ' +
                         'Mit Gepäckträger, kann auch als Tourenrad verwendet werden. ' +
-                        'Der Lack ist leider etwas beschädigt. Der Rahmen ist relativ klein, daher für kleine Menschen geeignet.'),
-                    app.createText('Preis: 170 € VB')
+                        'Der Lack ist leider etwas beschädigt. Der Rahmen ist relativ klein, daher für kleine Menschen geeignet. Inklusive ABUS-Zahlenschloss'),
+                    app.createText('Preis: 120 € VB')
                 ),
                 app.createTextWithList('hochwertiger Minikühlschrank - geräuschlos',
                     app.createText('Marke: Dometic, Modell: DS 400 weiß miniCool Absorbertechnik'),
-                    app.createText('Preis: 150 € (Neupreis im Jahr 2013: 449 €)')
+                    app.createText('Preis: 100 € (Neupreis im Jahr 2013: 449 €)')
                 )
             )
         );
