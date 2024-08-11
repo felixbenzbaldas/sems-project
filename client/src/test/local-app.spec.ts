@@ -8,8 +8,14 @@ let testServer = 'http://localhost:8081/';
 /// We do not use mocks here, because the local server is seen as part of the application.
 describe('local app', () => {
 
+    it('can be loaded', async () => {
+        let app : Identity = await Starter.loadRemoteApp(testServer);
+
+        expect(app.server).toBe(testServer);
+    });
+
     it('can create remote text', async () => {
-        let app : Identity = Starter.loadRemoteApp(testServer);
+        let app : Identity = await Starter.loadRemoteApp(testServer);
 
         let object = await app.remote_createText('foo');
 
