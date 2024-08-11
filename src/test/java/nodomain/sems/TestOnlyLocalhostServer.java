@@ -1,6 +1,5 @@
 package nodomain.sems;
 
-import org.assertj.core.api.InstanceOfAssertFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,7 +55,7 @@ public class TestOnlyLocalhostServer {
         app.set("content", List.of(List.of("dft75jft")));
         assertThat((List<List<String>>) app.data.get("content")).isNotEmpty();
 
-        app.reset();
+        app.onlyLocalhostServerAspect_reset();
 
         assertThat((List<List<String>>) app.data.get("content")).isEmpty();
         Identity reloaded = Starter.loadApp(file);

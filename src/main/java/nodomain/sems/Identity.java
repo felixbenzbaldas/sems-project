@@ -127,7 +127,7 @@ public class Identity {
         return identity;
     }
 
-    public void reset() {
+    public void onlyLocalhostServerAspect_reset() {
         set("content", List.of());
     }
     ////////////////////////////////////////////////////////////////////////
