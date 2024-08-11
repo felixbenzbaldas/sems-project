@@ -55,7 +55,7 @@ public class TestOnlyLocalhostServer {
         app.set("content", List.of(List.of("dft75jft")));
         assertThat((List<List<String>>) app.data.get("content")).isNotEmpty();
 
-        app.onlyLocalhostServerAspect_reset();
+        app.olsAspect_reset();
 
         assertThat((List<List<String>>) app.data.get("content")).isEmpty();
         Identity reloaded = Starter.loadApp(file);

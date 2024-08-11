@@ -127,7 +127,8 @@ public class Identity {
         return identity;
     }
 
-    public void onlyLocalhostServerAspect_reset() {
+    // ols = OnlyLocalhostServer
+    public void olsAspect_reset() {
         set("content", List.of());
     }
     ////////////////////////////////////////////////////////////////////////
