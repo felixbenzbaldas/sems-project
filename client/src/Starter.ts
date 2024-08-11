@@ -58,7 +58,7 @@ export class Starter {
         return app;
     }
 
-    static async loadRemoteApp(testServer: string) {
+    static async loadLocalhostApp(testServer: string) {
         let app = new Identity();
         app.text = 'todo: load from server';
         app.server = testServer;
