@@ -74,6 +74,8 @@ public class TestApp {
         Identity loaded = app.get(name);
 
         assertThat(loaded.text).isEqualTo("bar");
+        // there should be only one identity for an object
+        assertThat(loaded).isSameAs(app.get(loaded.name));
     }
 
     // returns the name of the created object
