@@ -7,6 +7,7 @@ import type {AbstractUi} from "@/abstract-ui/AbstractUi";
 /// On the logical level they do not belong to this class.
 export class Identity {
 
+    name: string;
     text : string;
     list : ListAspect;
     action: Function;
@@ -17,7 +18,7 @@ export class Identity {
 
     abstractUi: AbstractUi;
     server: string;
-    
+
     createIdentity() {
         return new Identity();
     }
@@ -54,4 +55,10 @@ export class Identity {
         return Promise.resolve(this.createText(text));
     }
     /////////////////////////////////////////////////////////////////
+
+    async containerAspect_getByName(name: string) : Promise<Identity> {
+        let identity = this.createIdentity();
+        identity.text = '42';
+        return Promise.resolve(identity);
+    }
 }

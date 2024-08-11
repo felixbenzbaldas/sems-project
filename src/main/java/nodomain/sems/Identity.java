@@ -51,17 +51,6 @@ public class Identity {
         return file != null || container != null && container.hasPersistence();
     }
 
-    public Identity containerAspect_getByName(String name) {
-        if (!loadedObjects.containsKey(name)) {
-            Identity identity = this.createIdentity();
-            identity.name = name;
-            identity.container = this;
-            loadedObjects.put(name, identity);
-            identity.update();
-        }
-        return loadedObjects.get(name);
-    }
-
     ////////////////////////////////////////////////////////////////////////
     // persistence aspect
 
@@ -135,6 +124,17 @@ public class Identity {
     // container aspect
 
     public Map<String, Identity> loadedObjects = new HashMap<>();
+
+    public Identity containerAspect_getByName(String name) {
+        if (!loadedObjects.containsKey(name)) {
+            Identity identity = this.createIdentity();
+            identity.name = name;
+            identity.container = this;
+            loadedObjects.put(name, identity);
+            identity.update();
+        }
+        return loadedObjects.get(name);
+    }
 
     ////////////////////////////////////////////////////////////////////////
 }
