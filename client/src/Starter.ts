@@ -58,10 +58,10 @@ export class Starter {
         return app;
     }
 
-    static async loadLocalhostApp(testServer: string) {
+    static async loadLocalhostApp(port: number) {
         let app = new Identity();
         app.text = 'todo: load from server';
-        app.server = testServer;
+        app.server = 'http://localhost:' + port + '/';
         return app;
     }
 }

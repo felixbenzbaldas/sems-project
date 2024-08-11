@@ -10,13 +10,13 @@ let testServer = 'http://localhost:' + testPort + '/';
 describe('local app', () => {
 
     it('can be loaded', async () => {
-        let app : Identity = await Starter.loadLocalhostApp(testServer);
+        let app : Identity = await Starter.loadLocalhostApp(testPort);
 
         expect(app.server).toBe(testServer);
     });
 
     it('can create remote text', async () => {
-        let app : Identity = await Starter.loadLocalhostApp(testServer);
+        let app : Identity = await Starter.loadLocalhostApp(testPort);
 
         let object = await app.remote_createText('foo');
 
@@ -25,7 +25,7 @@ describe('local app', () => {
 
     it('can load text', async () => {
         let name = await createObjectWithText('42');
-        let app : Identity = await Starter.loadLocalhostApp(testServer);
+        let app : Identity = await Starter.loadLocalhostApp(testPort);
 
         let object = await app.containerAspect_getByName(name);
 
@@ -34,7 +34,7 @@ describe('local app', () => {
 
     // returns the name of the created object
     async function createObjectWithText(text: string) : Promise<string> {
-        let app : Identity = await Starter.loadLocalhostApp(testServer);
+        let app : Identity = await Starter.loadLocalhostApp(testPort);
         return (await app.remote_createText(text)).name;
     }
 
