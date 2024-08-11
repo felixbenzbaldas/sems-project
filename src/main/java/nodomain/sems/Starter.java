@@ -6,6 +6,7 @@ import nodomain.sems.deprecated.OnlyLocalhostServer;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Starter {
@@ -35,6 +36,15 @@ public class Starter {
         Identity app = new Identity();
         app.file = file;
         app.update();
+        return app;
+    }
+
+    public static Identity createOnlyLocalhostServer(File file, int port) {
+        Identity app = new Identity();
+        app.file = file;
+        app.set("text", "Sems application (with file and OnlyLocalhostServer)");
+        app.set("content", List.of());
+        app.set("port", port);
         return app;
     }
 }

@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Comparator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,7 +62,7 @@ public class TestApp {
 
         assertThat(identity.text).isEqualTo("bar");
         // there should be only one identity for an object
-        assertThat(identity).isSameAs(app.get(identity.name));
+        assertThat(identity).isSameAs(app.containerAspect_getByName(identity.name));
     }
 
     @Test
@@ -71,11 +70,11 @@ public class TestApp {
         String name = createObjectWithText("bar");
         Identity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
 
-        Identity loaded = app.get(name);
+        Identity loaded = app.containerAspect_getByName(name);
 
         assertThat(loaded.text).isEqualTo("bar");
         // there should be only one identity for an object
-        assertThat(loaded).isSameAs(app.get(loaded.name));
+        assertThat(loaded).isSameAs(app.containerAspect_getByName(loaded.name));
     }
 
     // returns the name of the created object

@@ -61,6 +61,7 @@ public class Identity {
         File propertiesFile = getPropertiesFile();
         propertiesFile.getParentFile().mkdirs();
         try {
+            System.out.println("persist " + propertiesFile + ", data = " + data);
             objectMapper.writeValue(propertiesFile, data);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -90,6 +91,8 @@ public class Identity {
     ////////////////////////////////////////////////////////////////////////
     // app aspect
 
+    public int port;
+
     public Identity createList() {
         Identity identity = this.createIdentity();
         identity.list = new ListAspect();
@@ -113,7 +116,7 @@ public class Identity {
         return identity;
     }
 
-    public Identity get(String name) {
+    public Identity containerAspect_getByName(String name) {
         if (!loadedObjects.containsKey(name)) {
             Identity identity = this.createIdentity();
             identity.name = name;
