@@ -26,7 +26,7 @@ public class TestOnlyLocalhostServer {
     }
 
     @Test
-    void can_create_onlyLocalhostServer_for_local_app() {
+    void can_create_onlyLocalhostServer() {
         File file = new File(PATH_FOR_TMP_FILES);
 
         Identity onlyLocalhostServer = Starter.createOnlyLocalhostServer(file, 8085);
@@ -34,6 +34,18 @@ public class TestOnlyLocalhostServer {
         assertThat(onlyLocalhostServer.data.get("port")).isEqualTo(8085);
         assertThat((List<List<String>>) onlyLocalhostServer.data.get("content")).isEmpty();
         assertThat(onlyLocalhostServer.file).isSameAs(file);
+    }
+
+    @Test
+    void can_load_onlyLocalhostServer() {
+        File file = new File(PATH_FOR_TMP_FILES);
+        Starter.createOnlyLocalhostServer(file, 8087);
+
+        Identity loaded = Starter.loadApp(file);
+
+        assertThat(loaded.data.get("port")).isEqualTo(8087);
+        assertThat((List<List<String>>) loaded.data.get("content")).isEmpty();
+        assertThat(loaded.file).isSameAs(file);
     }
 
     @AfterEach
