@@ -57,4 +57,10 @@ export class Starter {
             }));
         return app;
     }
+
+    static loadRemoteApp(testServer: string) {
+        let app = new Identity();
+        app.text = 'todo: load from server';
+        return app;
+    }
 }

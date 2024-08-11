@@ -9,8 +9,7 @@ let testServer = 'http://localhost:8081/';
 describe('local app', () => {
 
     it('can create remote text', async () => {
-        let app : Identity = Starter.createApp();
-        app.server = testServer;
+        let app : Identity = Starter.loadRemoteApp(testServer);
 
         let object = await app.remote_createText('foo');
 
