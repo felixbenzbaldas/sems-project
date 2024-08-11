@@ -7,6 +7,7 @@ import nodomain.sems.deprecated.core.RandomString;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,6 +51,17 @@ public class Identity {
         return file != null || container != null && container.hasPersistence();
     }
 
+    public Identity containerAspect_getByName(String name) {
+        if (!loadedObjects.containsKey(name)) {
+            Identity identity = this.createIdentity();
+            identity.name = name;
+            identity.container = this;
+            loadedObjects.put(name, identity);
+            identity.update();
+        }
+        return loadedObjects.get(name);
+    }
+
     ////////////////////////////////////////////////////////////////////////
     // persistence aspect
 
@@ -61,7 +73,6 @@ public class Identity {
         File propertiesFile = getPropertiesFile();
         propertiesFile.getParentFile().mkdirs();
         try {
-            System.out.println("persist " + propertiesFile + ", data = " + data);
             objectMapper.writeValue(propertiesFile, data);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -116,15 +127,8 @@ public class Identity {
         return identity;
     }
 
-    public Identity containerAspect_getByName(String name) {
-        if (!loadedObjects.containsKey(name)) {
-            Identity identity = this.createIdentity();
-            identity.name = name;
-            identity.container = this;
-            loadedObjects.put(name, identity);
-            identity.update();
-        }
-        return loadedObjects.get(name);
+    public void reset() {
+        set("content", List.of());
     }
     ////////////////////////////////////////////////////////////////////////
     // container aspect

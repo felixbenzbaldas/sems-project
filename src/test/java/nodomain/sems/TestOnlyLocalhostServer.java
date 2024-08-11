@@ -48,6 +48,20 @@ public class TestOnlyLocalhostServer {
         assertThat(loaded.file).isSameAs(file);
     }
 
+    @Test
+    void can_reset() {
+        File file = new File(PATH_FOR_TMP_FILES);
+        Identity app = Starter.createOnlyLocalhostServer(file, 8087);
+        app.set("content", List.of(List.of("dft75jft")));
+        assertThat((List<List<String>>) app.data.get("content")).isNotEmpty();
+
+        app.reset();
+
+        assertThat((List<List<String>>) app.data.get("content")).isEmpty();
+        Identity reloaded = Starter.loadApp(file);
+        assertThat((List<List<String>>) reloaded.data.get("content")).isEmpty();
+    }
+
     @AfterEach
     void afterEach() throws IOException {
         deleteDirectory(new File(PATH_FOR_TMP_FILES));
