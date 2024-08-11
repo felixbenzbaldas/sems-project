@@ -39,12 +39,13 @@ public class TestOnlyLocalhostServer {
     @Test
     void can_load_onlyLocalhostServer() {
         File file = new File(PATH_FOR_TMP_FILES);
-        Starter.createOnlyLocalhostServer(file, 8087);
+        Identity app = Starter.createOnlyLocalhostServer(file, 8087);
+        app.set("content", List.of(List.of("dft75jft")));
 
         Identity loaded = Starter.loadApp(file);
 
         assertThat(loaded.data.get("port")).isEqualTo(8087);
-        assertThat((List<List<String>>) loaded.data.get("content")).isEmpty();
+        assertThat((List<List<String>>) loaded.data.get("content")).hasSize(1);
         assertThat(loaded.file).isSameAs(file);
     }
 
