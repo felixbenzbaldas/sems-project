@@ -39,12 +39,12 @@ public class TestOnlyLocalhostServer {
     void can_load_onlyLocalhostServer() {
         File file = new File(PATH_FOR_TMP_FILES);
         Identity app = Starter.createOnlyLocalhostServer(file, 8087);
-        app.set("content", List.of(List.of("dft75jft")));
+        app.set("content", "some content");
 
         Identity loaded = Starter.loadApp(file);
 
         assertThat(loaded.data.get("port")).isEqualTo(8087);
-        assertThat((List<List<String>>) loaded.data.get("content")).hasSize(1);
+        assertThat(loaded.data.get("content")).isEqualTo("some content");
         assertThat(loaded.file).isSameAs(file);
     }
 
@@ -52,8 +52,8 @@ public class TestOnlyLocalhostServer {
     void can_reset() {
         File file = new File(PATH_FOR_TMP_FILES);
         Identity app = Starter.createOnlyLocalhostServer(file, 8087);
-        app.set("content", List.of(List.of("dft75jft")));
-        assertThat((List<List<String>>) app.data.get("content")).isNotEmpty();
+        app.set("content", "bar");
+        assertThat(app.data.get("content")).isEqualTo("bar");
 
         app.olsAspect_reset();
 
