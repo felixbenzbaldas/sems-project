@@ -52,13 +52,29 @@ export class Identity {
     }
 
     async remote_createText(text: string) : Promise<Identity> {
+        await this.httpRequest('http://localhost:8081/', 'set', ['my-text', text]);
         return Promise.resolve(this.createText(text));
     }
     /////////////////////////////////////////////////////////////////
 
     async containerAspect_getByName(name: string) : Promise<Identity> {
         let identity = this.createIdentity();
-        identity.text = '42';
+        identity.text = await this.httpRequest('http://localhost:8081/', 'get', ['my-text']);;
         return Promise.resolve(identity);
+    }
+
+    async httpRequest(url : string, method : string, args : Array<any>) : Promise<any> {
+        return fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                'method': method,
+                'args' : args
+            }),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'charset' : 'UTF-8'
+            },
+        }).then(response => response.json());
     }
 }
