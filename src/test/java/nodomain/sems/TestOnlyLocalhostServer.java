@@ -62,6 +62,15 @@ public class TestOnlyLocalhostServer {
         assertThat((List<List<String>>) reloaded.data.get("content")).isEmpty();
     }
 
+    @Test
+    void can_create_text() {
+        Identity app = Starter.createOnlyLocalhostServer(new File(PATH_FOR_TMP_FILES), 8087);
+
+        String name = app.olsAspect_createText(List.of(), "foo");
+
+        assertThat(name).isNotEmpty();
+    }
+    
     @AfterEach
     void afterEach() throws IOException {
         deleteDirectory(new File(PATH_FOR_TMP_FILES));

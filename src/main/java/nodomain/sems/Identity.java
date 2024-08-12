@@ -120,6 +120,16 @@ public class Identity {
     public void olsAspect_reset() {
         set("content", List.of());
     }
+
+    // returns the name
+    public String olsAspect_createText(List<String> pathOfContainer, String text) {
+        if (pathOfContainer.isEmpty()) {
+            Identity identity = this.createText(text);
+            return identity.name;
+        } else {
+            throw new RuntimeException("not implemented yet");
+        }
+    }
     ////////////////////////////////////////////////////////////////////////
     // container aspect
 
