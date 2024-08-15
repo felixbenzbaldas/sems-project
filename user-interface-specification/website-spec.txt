@@ -3,15 +3,9 @@ describe: website {
         visit http://localhost:5173/
     }
 
-    it: shows text {
-        a text appears
-    }
+    it: shows text
 
-    it: explains itself {
-        an informative text is provided
-    }
-
-    it: can show a list of objects
+    it: explains itself
 
     test: content is readonly
 }

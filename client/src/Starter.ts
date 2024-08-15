@@ -18,11 +18,9 @@ export class Starter {
             // app.createTextWithList('Software tests', app.createText('subitem')),
             app.createText(''),
             app.createTextWithList('Zu Verschenken',
-                app.createTextWithList('Clean Code Poster, Armbänder, Postkarten, Flyer',
-                    app.createText('Beschreibung siehe hier: https://shop.generic.de/products/clean-code-set')),
-                app.createTextWithList('Spielpistole 0,08 Joule (mit Plastikkugeln als Munition)'),
-                app.createText('Wasserkaraffe mit Deckel'),
                 app.createText('Virtual Reality Brille für Android-Smartphone'),
+                app.createText('Wasserkaraffe mit Deckel'),
+                app.createTextWithList('Spielpistole 0,08 Joule (mit Plastikkugeln als Munition)'),
                 app.createText('Poker Set (z. B. für Texas Holdem)'),
                 app.createText('Geschenk-Gutschein 20 € bei Wilkendorf\'s Teehaus in Karlsruhe')
             ),
