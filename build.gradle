@@ -48,9 +48,21 @@ task buildClient {
     }
 }
 
+task replace {
+    doLast {
+        String charset = "UTF-8";
+        String replacement = new File(deployReplacement).getText(charset);
+        String marker = "marker-dr53hifhh4";
+        String toReplace = "t.createText(\"" + marker + "\")";
+        for (File file : new File("client/dist/assets").listFiles()) {
+            file.write(file.getText(charset).replace(toReplace, replacement), charset);
+        }
+    }
+}
+
 // login to heroku at first
 task deployClient {
-    dependsOn(buildClient)
+    dependsOn(buildClient, replace)
     doLast {
         delete deploymentPath + '/heroku/sems/assets'
         delete deploymentPath + '/heroku/sems/icon.png'
