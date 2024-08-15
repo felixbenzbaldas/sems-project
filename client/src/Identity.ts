@@ -9,6 +9,7 @@ export class Identity {
 
     name: string;
     text : string;
+    link : string;
     list : ListAspect;
     action: Function;
     subject: Subject<any>;
@@ -32,6 +33,13 @@ export class Identity {
 
     createText(text: string) : Identity {
         let identity = this.createIdentity();
+        identity.text = text;
+        return identity;
+    }
+
+    createLink(href: string, text?: string) {
+        let identity = this.createIdentity();
+        identity.link = href;
         identity.text = text;
         return identity;
     }

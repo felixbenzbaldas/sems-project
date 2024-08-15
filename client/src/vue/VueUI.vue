@@ -47,6 +47,9 @@ function updateList() {
     <button v-else-if="identity.action" @click="identity.action()">
         {{identity.text}}
     </button>
+    <a v-else-if="identity.link != undefined" :href="identity.link">
+        {{identity.text != undefined ? identity.text : identity.link }}
+    </a>
     <div v-else-if="identity.text != undefined">
         <div style="min-height: 1rem" :contenteditable="!props.isView">
             {{identity.text}}

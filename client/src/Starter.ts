@@ -18,8 +18,9 @@ export class Starter {
             app.createTextWithList('Sems-Client-App',
                 app.createText('The Sems-Client-App is a Sems application, which runs in your browser (e. g. Firefox / Edge). ' +
                     'On this way you can use Sems without creating an account or install the software.'),
-                app.createText(window.location.href + '?client-app')
+                app.createLink(window.location.href + '?client-app', 'Open')
             ),
+            app.createText(''),
             app.createText(''),
             app.createTextWithList('Zu Verschenken',
                 app.createText('Virtual Reality Brille für Android-Smartphone'),
