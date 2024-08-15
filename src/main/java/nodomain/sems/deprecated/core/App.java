@@ -30,22 +30,10 @@ public class App {
     public Object handle(String method, List<Object> args) {
         return switch (method) {
             case "createObjectWithText" -> createObjectWithText((List<String>) args.get(0), (String) args.get(1));
-            case "get" -> {
-                if ("my-text".equals(args.get(0))) {
-                    yield myText;
-                } else {
-                    yield get((List<String>) args.get(0));
-                }
-            }
+            case "get" -> get((List<String>) args.get(0));
             case "set" -> {
-                if ("my-text".equals(args.get(0))) {
-                    myText = (String) args.get(1);
-                    System.out.println("set myText = " + myText);
-                    yield null;
-                } else {
-                    this.set((List<String>) args.get(0), (String) args.get(1), args.get(2));
-                    yield null;
-                }
+                this.set((List<String>) args.get(0), (String) args.get(1), args.get(2));
+                yield null;
             }
             case "createUser" -> {
                 createUser((String) args.get(0), (String) args.get(1));
