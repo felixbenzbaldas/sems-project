@@ -8,4 +8,6 @@ describe: website {
     it: explains itself
 
     test: content is readonly
+
+    it: can open Sems-Client-App
 }

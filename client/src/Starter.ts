@@ -14,8 +14,12 @@ export class Starter {
         app.abstractUi.isWebsite = true;
         app.abstractUi.content.list.add(
             app.createText('This is the Sems software. It is being developed. New features will be added.'),
-            // app.createText(''),
-            // app.createTextWithList('Software tests', app.createText('subitem')),
+            app.createText(''),
+            app.createTextWithList('Sems-Client-App',
+                app.createText('The Sems-Client-App is a Sems application, which runs in your browser (e. g. Firefox / Edge). ' +
+                    'On this way you can use Sems without creating an account or install the software.'),
+                app.createText(window.location.href + '?client-app')
+            ),
             app.createText(''),
             app.createTextWithList('Zu Verschenken',
                 app.createText('Virtual Reality Brille für Android-Smartphone'),
