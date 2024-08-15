@@ -37,6 +37,10 @@ function updateList() {
     }
 }
 
+function neitherNullNorUndefined(toCheck : any) {
+    return toCheck != null && toCheck != undefined;
+}
+
 </script>
 
 <template>
@@ -47,10 +51,10 @@ function updateList() {
     <button v-else-if="identity.action" @click="identity.action()">
         {{identity.text}}
     </button>
-    <a v-else-if="identity.link != undefined" :href="identity.link">
-        {{identity.text != undefined ? identity.text : identity.link }}
+    <a v-else-if="neitherNullNorUndefined(identity.link)" :href="identity.link">
+        {{neitherNullNorUndefined(identity.text) ? identity.text : identity.link }}
     </a>
-    <div v-else-if="identity.text != undefined">
+    <div v-else-if="neitherNullNorUndefined(identity.text)">
         <div style="min-height: 1rem" :contenteditable="!props.isView">
             {{identity.text}}
         </div>
