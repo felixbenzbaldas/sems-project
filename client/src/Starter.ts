@@ -41,7 +41,9 @@ export class Starter {
                     app.createText('Marke: Dometic, Modell: DS 400 weiß miniCool Absorbertechnik'),
                     app.createText('Preis: 100 € (Neupreis im Jahr 2013: 449 €)')
                 )
-            )
+            ),
+            app.createText(''),
+            app.createText('marker-a1a'),
         );
         return app;
     }
