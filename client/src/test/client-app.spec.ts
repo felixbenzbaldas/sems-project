@@ -13,4 +13,12 @@ describe('client app', () => {
         expect(json.content.list).toEqual([]);
     });
 
+    it('can export', async () => {
+        let app : Identity = Starter.createAppWithUI();
+
+        app.abstractUi.export();
+
+        expect(app.abstractUi.output).toBeTruthy();
+    });
+
 });
