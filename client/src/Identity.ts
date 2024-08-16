@@ -18,6 +18,7 @@ export class Identity {
         return {
             'text': this.text,
             'list': this.list?.json(),
+            'content': this.abstractUi?.content.json(),
         }
     }
 
