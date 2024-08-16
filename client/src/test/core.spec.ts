@@ -45,10 +45,19 @@ describe('app', () => {
 
     it('can get json', async () => {
         let app : Identity = Starter.createApp();
-        app.text = 'my app'
+        app.text = 'my app';
 
         let json = app.json();
 
-        expect(json.text).toBe('my app');
+        expect(json.text).toEqual('my app');
+    });
+
+    it('can get json of list', async () => {
+        let app : Identity = Starter.createApp();
+        let list : Identity = app.createList();
+
+        let json = list.json();
+
+        expect(json.list).toEqual([]);
     });
 });

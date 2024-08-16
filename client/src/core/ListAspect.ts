@@ -12,4 +12,8 @@ export class ListAspect {
         this.jsList.push(...items);
         this.identity.subject.next('addedItems');
     }
+
+    json() {
+        return this.jsList.map(identity => identity.json());
+    }
 }

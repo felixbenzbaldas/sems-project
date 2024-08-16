@@ -17,6 +17,7 @@ export class Identity {
     json() : any {
         return {
             'text': this.text,
+            'list': this.list?.json(),
         }
     }
 
