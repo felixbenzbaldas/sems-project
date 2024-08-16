@@ -1,11 +1,13 @@
 import {Identity} from "@/Identity";
 import {AbstractUi} from "@/abstract-ui/AbstractUi";
+import {Subject} from "rxjs";
 
 export class Starter {
 
     static createApp() : Identity {
         let app = new Identity();
         app.text = 'Sems application';
+        app.subject = new Subject<any>();
         return app;
     }
 
@@ -59,7 +61,11 @@ export class Starter {
         app.abstractUi.commands = app.createTextWithList('commands',
             app.createButton('default action', async () => {
                 await app.abstractUi.defaultAction();
-            }));
+            }),
+            app.createButton('export', async () => {
+                app.abstractUi.export();
+            }),
+        );
         return app;
     }
 

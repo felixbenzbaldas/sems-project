@@ -17,5 +17,6 @@ export class AbstractUi {
 
     export() {
         this.output = JSON.stringify(this.app.json());
+        this.app.subject.next('new output');
     }
 }

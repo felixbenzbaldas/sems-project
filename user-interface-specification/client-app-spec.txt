@@ -10,4 +10,6 @@ describe: client app {
     test: content is editable
 
     test: commands are readonly
+
+    it: can export
 }
