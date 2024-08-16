@@ -14,6 +14,12 @@ export class Identity {
     action: Function;
     subject: Subject<any>;
 
+    json() : any {
+        return {
+            'text': this.text,
+        }
+    }
+
     /////////////////////////////////////////////////////////////////
     // app aspect
 

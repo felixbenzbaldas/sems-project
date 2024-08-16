@@ -42,4 +42,13 @@ describe('app', () => {
 
         expect(list.list.jsList.length).toBe(1);
     });
+
+    it('can get json', async () => {
+        let app : Identity = Starter.createApp();
+        app.text = 'my app'
+
+        let json = app.json();
+
+        expect(json.text).toBe('my app');
+    });
 });
