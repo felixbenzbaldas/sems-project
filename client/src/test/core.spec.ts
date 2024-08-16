@@ -52,12 +52,22 @@ describe('app', () => {
         expect(json.text).toEqual('my app');
     });
 
-    it('can get json of list', async () => {
+    it('can get json of empty list', async () => {
         let app : Identity = Starter.createApp();
         let list : Identity = app.createList();
 
         let json = list.json();
 
         expect(json.list).toEqual([]);
+    });
+
+    it('can get json of list (with item)', async () => {
+        let app : Identity = Starter.createApp();
+        let list : Identity = app.createList();
+        list.list.add(app.createText('foo'));
+
+        let json = list.json();
+
+        expect(json.list).toEqual([{'text':'foo'}]);
     });
 });
