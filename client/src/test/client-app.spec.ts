@@ -15,11 +15,11 @@ describe('client app', () => {
 
     it('can export', async () => {
         let app : Identity = Starter.createAppWithUI();
-        expect(app.abstractUi.output_exists()).toBe(false);
+        expect(app.abstractUi.output.getUi().hidden).toBe(true);
 
         app.abstractUi.export();
 
-        expect(app.abstractUi.output_exists()).toBe(true);
+        expect(app.abstractUi.output.getUi().hidden).toBe(false);
     });
 
 });

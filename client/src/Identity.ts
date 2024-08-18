@@ -13,6 +13,7 @@ export class Identity {
     list : ListAspect;
     action: Function;
     subject: Subject<any>;
+    hidden: boolean = false;
 
     json() : any {
         return {
@@ -42,6 +43,7 @@ export class Identity {
     createText(text: string) : Identity {
         let identity = this.createIdentity();
         identity.text = text;
+        identity.subject = new Subject<any>();
         return identity;
     }
 
