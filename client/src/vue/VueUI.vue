@@ -10,19 +10,19 @@ const props = defineProps<{
 
 const hasListItem : Ref<boolean> = ref();
 const list : Ref<Array<Identity>> = ref();
-const output : Ref<Identity> = ref();
+const hasOutput : Ref<boolean> = ref();
 
 if (props.identity.subject) {
     props.identity.subject.subscribe(event => {
         updateList();
         updateHasListItem();
-        updateOutput();
+        updateHasOutput();
     });
 }
 
 updateList();
 updateHasListItem();
-updateOutput();
+updateHasOutput();
 
 function updateHasListItem() {
     if (props.identity.list) {
@@ -40,12 +40,11 @@ function updateList() {
     }
 }
 
-function updateOutput() {
-    if (props.identity.abstractUi?.output) {
-        output.value = props.identity.createTextWithList('output', props.identity.createText(props.identity.abstractUi.output));
-        console.log("output = " + JSON.stringify(output.value.json()));
+function updateHasOutput() {
+    if (props.identity.abstractUi) {
+        hasOutput.value = props.identity.abstractUi.output_exists();
     } else {
-        output.value = undefined;
+        hasOutput.value = false;
     }
 }
 
@@ -59,7 +58,7 @@ function neitherNullNorUndefined(toCheck : any) {
     <div v-if="identity.abstractUi?.commands" style="margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: dashed">
         <VueUI :identity="identity.abstractUi.commands" :is-view="true"/>
     </div>
-    <VueUI v-if="output" :identity="output"></VueUI>
+    <VueUI v-if="hasOutput" :identity="props.identity.abstractUi.output_getAbstractUi()"></VueUI>
     <VueUI v-if="identity.abstractUi" :identity="identity.abstractUi.content" :is-view="identity.abstractUi.isWebsite"/>
     <button v-else-if="identity.action" @click="identity.action()" style="margin: 0.3rem">
         {{identity.text}}

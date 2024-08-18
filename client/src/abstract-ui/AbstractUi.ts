@@ -5,10 +5,10 @@ export class AbstractUi {
     readonly content: Identity;
     commands: Identity;
     isWebsite: boolean;
-    output: string;
 
     constructor(private app: Identity) {
         this.content = app.createList();
+        this.output_abstractUi = app.createTextWithList('output');
     }
 
     async defaultAction() {
@@ -16,7 +16,24 @@ export class AbstractUi {
     }
 
     export() {
-        this.output = JSON.stringify(this.app.json());
+        this.output_setString(JSON.stringify(this.app.json()));
         this.app.subject.next('new output');
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    // output aspect
+    private readonly output_abstractUi: Identity;
+
+    output_exists() : boolean {
+        return this.output_abstractUi.list.jsList.length > 0;
+    }
+
+    output_setString(string : string) {
+        this.output_abstractUi.list.jsList = [this.app.createText(string)];
+        this.output_abstractUi.subject.next('changed');
+    }
+
+    output_getAbstractUi() : Identity {
+        return this.output_abstractUi;
     }
 }
