@@ -7,7 +7,6 @@ export class Starter {
     static createApp() : Identity {
         let app = new Identity();
         app.text = 'Sems application';
-        app.subject = new Subject<any>();
         return app;
     }
 

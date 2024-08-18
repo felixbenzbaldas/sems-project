@@ -12,7 +12,7 @@ export class Identity {
     link : string;
     list : ListAspect;
     action: Function;
-    subject: Subject<any>;
+    readonly subject: Subject<any> = new Subject<any>();
     hidden: boolean = false;
 
     json() : any {
@@ -35,7 +35,6 @@ export class Identity {
 
     createList(...jsList : Array<Identity>) : Identity {
         let list = this.createIdentity();
-        list.subject = new Subject<any>();
         list.list = new ListAspect(list, ...jsList);
         return list;
     }
@@ -43,7 +42,6 @@ export class Identity {
     createText(text: string) : Identity {
         let identity = this.createIdentity();
         identity.text = text;
-        identity.subject = new Subject<any>();
         return identity;
     }
 
@@ -57,7 +55,6 @@ export class Identity {
     createTextWithList(text : string, ...jsList : Array<Identity>) : Identity {
         let identity = this.createIdentity();
         identity.text = text;
-        identity.subject = new Subject<any>();
         identity.list = new ListAspect(identity, ...jsList);
         return identity;
     }
