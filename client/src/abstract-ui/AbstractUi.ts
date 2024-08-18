@@ -29,7 +29,10 @@ export class AbstractUi {
     }
 
     output_setString(string : string) {
-        this.output_abstractUi.list.jsList = [this.app.createText(string)];
+        this.output_abstractUi.list.jsList = [this.app.createText(string), this.app.createButton('hide output', () => {
+            this.output_abstractUi.list.jsList = [];
+            this.app.subject.next('clicked hide output');
+        })];
         this.output_abstractUi.subject.next('changed');
     }
 
