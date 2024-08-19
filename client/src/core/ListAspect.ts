@@ -10,7 +10,7 @@ export class ListAspect {
 
     add(...items : Array<Identity>) {
         this.jsList.push(...items);
-        this.identity.subject.next('addedItems');
+        this.identity.notify();
     }
 
     json() {

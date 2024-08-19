@@ -23,6 +23,20 @@ export class Identity {
         }
     }
 
+    setText(string: string) {
+        this.text = string;
+        this.notify();
+    }
+
+    setHidden(value : boolean) {
+        this.hidden = value;
+        this.notify();
+    }
+
+    public notify() {
+        this.subject.next(null);
+    }
+
     /////////////////////////////////////////////////////////////////
     // app aspect
 
