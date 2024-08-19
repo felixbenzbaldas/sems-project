@@ -75,7 +75,7 @@ function saveText(event: any) {
             {{neitherNullNorUndefined(text) ? text : identity.link }}
         </a>
         <div v-else-if="neitherNullNorUndefined(text)">
-            <div style="min-height: 1rem" :contenteditable="!props.isView" @blur="saveText">
+            <div style="min-height: 1rem; white-space: pre-wrap;" :contenteditable="!props.isView" @blur="saveText">
                 {{text}}
             </div>
             <div v-if="identity.list && hasListItem" style="margin-left: 0.8rem; margin-top: 0.2rem; margin-bottom: 0.2rem">
