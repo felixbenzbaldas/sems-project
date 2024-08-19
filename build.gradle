@@ -53,9 +53,17 @@ task replace {
         String charset = "UTF-8";
         String replacement = new File(deployReplacement).getText(charset);
         String marker = "marker-dr53hifhh4";
-        String toReplace = "t.createText(\"" + marker + "\")";
+        String toReplace = "e.createText(\"" + marker + "\")";
+        boolean found = false;
         for (File file : new File("client/dist/assets").listFiles()) {
-            file.write(file.getText(charset).replace(toReplace, replacement), charset);
+            String oldText = file.getText(charset);
+            if (oldText.contains(toReplace)) {
+                found = true;
+            }
+            file.write(oldText.replace(toReplace, replacement), charset);
+        }
+        if (!found) {
+            throw new RuntimeException("replace was not successful!");
         }
     }
 }
