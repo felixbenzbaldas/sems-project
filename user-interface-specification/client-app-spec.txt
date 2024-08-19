@@ -14,4 +14,6 @@ describe: client app {
     it: can export
     
     it: can hide output
+
+    test: saves text on blur
 }

@@ -55,6 +55,10 @@ function neitherNullNorUndefined(toCheck : any) {
     return toCheck != null && toCheck != undefined;
 }
 
+function saveText(event: any) {
+    props.identity.setText(event.target.innerText.trim());
+}
+
 </script>
 
 <template>
@@ -71,7 +75,7 @@ function neitherNullNorUndefined(toCheck : any) {
             {{neitherNullNorUndefined(text) ? text : identity.link }}
         </a>
         <div v-else-if="neitherNullNorUndefined(text)">
-            <div style="min-height: 1rem" :contenteditable="!props.isView">
+            <div style="min-height: 1rem" :contenteditable="!props.isView" @blur="saveText">
                 {{text}}
             </div>
             <div v-if="identity.list && hasListItem" style="margin-left: 0.8rem; margin-top: 0.2rem; margin-bottom: 0.2rem">
