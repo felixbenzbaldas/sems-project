@@ -7,7 +7,7 @@ Content means notes, texts, structured data, images and more.
 
 Sems is being developed. The first useful features probably are available in october 2024.
 
-#### Architecture / Code design
+#### Architecture / Code Design
 
 In order to provide a high degree of flexibility, a special concept is used. It is called *aspect concept*.
 
