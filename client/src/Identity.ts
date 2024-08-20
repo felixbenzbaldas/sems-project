@@ -8,6 +8,7 @@ import type {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
 export class Identity {
 
     name: string;
+    container: Identity;
     text : string;
     link : string;
     list : ListAspect;
@@ -82,16 +83,32 @@ export class Identity {
     }
 
     async appA_createText(text: string) : Promise<Identity> {
-        let textObject = this.appA_simple_createText(text);
-        // TODO: assign textObject to container and give it a name
-        return Promise.resolve(textObject);
+        return this.appA_getCurrentContainer().containerA_createText(text);
+    }
+
+    appA_getCurrentContainer() : Identity {
+        return this;
     }
     /////////////////////////////////////////////////////////////////
+
+    private containerA_nameCounter : number = 0;
+    containerA_mapNameIdentity: Map<string, Identity>;
+
+    containerA_getUniqueRandomName() : string {
+        return '' + this.containerA_nameCounter++;
+    }
 
     async containerAspect_getByName(name: string) : Promise<Identity> {
         let identity = this.appA_createIdentity();
         identity.text = '42'; // TODO http-request
         return Promise.resolve(identity);
+    }
+
+    async containerA_createText(text: string) : Promise<Identity> {
+        let textObject = this.appA_simple_createText(text);
+        textObject.name = this.containerA_getUniqueRandomName();
+        textObject.container = this;
+        return Promise.resolve(textObject);
     }
 
     async httpRequest(url : string, method : string, args : Array<any>) : Promise<any> {

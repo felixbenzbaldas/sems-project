@@ -60,4 +60,16 @@ describe('app', () => {
 
         expect(json.list).toEqual([]);
     });
+
+    it('can create text', async () => {
+        let app = Starter.createApp();
+
+        let text = await app.appA_createText('foo');
+
+        expect(text.name).toBeTruthy();
+        expect(text.container).toBe(app);
+        expect(text.text).toEqual('foo');
+        // expect(app.containerA_mapNameIdentity).has(text.name);
+        // expect(app.containerA_mapNameIdentity.get(text.name)).toBe(text);
+    });
 });
