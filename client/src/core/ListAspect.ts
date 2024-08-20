@@ -9,8 +9,13 @@ export class ListAspect {
     }
 
     add(...items : Array<Identity>) {
-        // TODO: only add path (if possible)
-        this.jsList.push(...items);
+        items.forEach(item => {
+           if (item.name && item.container) {
+               this.jsList.push(this.identity.getPath(item));
+           } else {
+               this.jsList.push(item);
+           }
+        });
         this.identity.notify();
     }
 

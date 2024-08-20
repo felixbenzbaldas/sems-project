@@ -87,4 +87,15 @@ describe('app', () => {
 
         expect(path.pathA.toList()).toEqual([text.name]);
     });
+
+    it('can add object to list', async () => {
+        let app : Identity = Starter.createApp();
+        let list : Identity = app.appA_simple_createList();
+
+        list.list.add(await app.appA_createText('bar'));
+
+        expect(list.list.jsList.length).toBe(1);
+        expect(list.list.jsList.at(0).pathA.getLength()).toBe(1);
+    });
+
 });
