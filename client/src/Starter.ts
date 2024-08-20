@@ -72,6 +72,7 @@ export class Starter {
     static async loadLocalhostApp(port: number) {
         let app = new Identity();
         app.text = 'todo: load from server';
+        app.containerA_mapNameIdentity = new Map();
         app.appA_server = 'http://localhost:' + port + '/';
         return app;
     }

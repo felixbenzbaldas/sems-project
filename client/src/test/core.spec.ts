@@ -78,4 +78,13 @@ describe('app', () => {
         expect(text.container).toBe(app);
         expect(app.containerA_mapNameIdentity.get(text.name)).toBe(text);
     });
+
+    it('can get path', async () => {
+        let app = Starter.createApp();
+        let text = await app.appA_createText('');
+
+        let path : Identity = app.getPath(text);
+
+        expect(path.pathA.toList()).toEqual([text.name]);
+    });
 });

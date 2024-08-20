@@ -1,6 +1,7 @@
 import {ListAspect} from "@/core/ListAspect";
 import {Subject} from "rxjs";
 import type {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
+import {Path} from "@/core/Path";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
@@ -15,6 +16,7 @@ export class Identity {
     action: Function;
     readonly subject: Subject<any> = new Subject<any>();
     hidden: boolean = false;
+    pathA: Path;
 
     json() : any {
         return {
@@ -133,5 +135,11 @@ export class Identity {
         } else {
             throw 'not implemented yet';
         }
+    }
+
+    getPath(object: Identity) : Identity {
+        let path = this.appA_createIdentity();
+        path.pathA = new Path([object.name]);
+        return path;
     }
 }
