@@ -59,10 +59,10 @@ export class Starter {
         let app = this.createAppWithUI();
         app.abstractUi.commands = app.createTextWithList('commands',
             app.createButton('default action', async () => {
-                await app.abstractUi.defaultAction();
+                await app.abstractUi.globalEvent_defaultAction();
             }),
             app.createButton('export', async () => {
-                app.abstractUi.export();
+                app.abstractUi.globalEvent_export();
             }),
         );
         return app;

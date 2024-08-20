@@ -106,4 +106,12 @@ export class Identity {
             },
         }).then(response => response.json());
     }
+
+    async defaultAction() {
+        if (this.abstractUi) {
+            await this.abstractUi.defaultAction();
+        } else {
+            throw 'not implemented yet';
+        }
+    }
 }
