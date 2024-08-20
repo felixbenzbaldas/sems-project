@@ -1,16 +1,25 @@
 ### Sems
 
-Sems could be described as an outliner tool.
-The goal of Sems is a convenient way to work with notes,
-images and structured data.
+With Sems you can maintain *content* in a flexible and systematic way.
+Content means notes, texts, structured data, images and more.
 
-The code quality in this project should be good. The following books about are recommended:
+#### Project Status
 
+Sems is being developed. The first useful features probably are available in october 2024.
+
+#### Architecture / Code design
+
+In order to provide a high degree of flexibility, a special concept is used. It is called *aspect concept*.
+
+The code is mainly developed with TDD. The code design is influenced by these books:
 - *Clean Code* by Robert C. Martin
 - *Test-Driven Development* by Kent Beck
 - *Unit Testing* by Vladimir Khorikov
 
-#### What can you do with Sems?
+#### Predecessor
+
+There is already a previous version of Sems. The last changes to the old version were made in April 2024.
+The following describes the features of the old version.
 
 Mit Sems kann man Gliederungen erstellen:
 
@@ -43,4 +52,4 @@ Punkte können hinzugefügt und editiert werden.
 
 #### Visual design principle
 
-The visual design principle of sems is described and analyzed in this [thesis](https://www.dropbox.com/scl/fi/didrs41osq94s3agbclxn/Details-im-Kontext-anzeigen.pdf?rlkey=c374hlvzoskz4fbkevfdgfzsj&dl=0).
+The visual design principle of Sems is described and analyzed in this [thesis](https://www.dropbox.com/scl/fi/didrs41osq94s3agbclxn/Details-im-Kontext-anzeigen.pdf?rlkey=c374hlvzoskz4fbkevfdgfzsj&dl=0).
