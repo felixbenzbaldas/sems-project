@@ -47,33 +47,33 @@ export class Identity {
         return new Identity();
     }
 
-    appA_createList(...jsList : Array<Identity>) : Identity {
+    appA_simple_createList(...jsList : Array<Identity>) : Identity {
         let list = this.appA_createIdentity();
         list.list = new ListAspect(list, ...jsList);
         return list;
     }
 
-    appA_createText(text: string) : Identity {
+    appA_simple_createText(text: string) : Identity {
         let identity = this.appA_createIdentity();
         identity.text = text;
         return identity;
     }
 
-    appA_createLink(href: string, text?: string) {
+    appA_simple_createLink(href: string, text?: string) {
         let identity = this.appA_createIdentity();
         identity.link = href;
         identity.text = text;
         return identity;
     }
 
-    appA_createTextWithList(text : string, ...jsList : Array<Identity>) : Identity {
+    appA_simple_createTextWithList(text : string, ...jsList : Array<Identity>) : Identity {
         let identity = this.appA_createIdentity();
         identity.text = text;
         identity.list = new ListAspect(identity, ...jsList);
         return identity;
     }
 
-    appA_createButton(label : string, func : Function) : Identity {
+    appA_simple_createButton(label : string, func : Function) : Identity {
         let button = this.appA_createIdentity();
         button.text = label;
         button.action = func;
@@ -82,7 +82,7 @@ export class Identity {
 
     async appA_remote_createText(text: string) : Promise<Identity> {
         // TODO httpRequest
-        return Promise.resolve(this.appA_createText(text));
+        return Promise.resolve(this.appA_simple_createText(text));
     }
     /////////////////////////////////////////////////////////////////
 

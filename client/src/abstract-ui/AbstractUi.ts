@@ -11,7 +11,7 @@ export class AbstractUi {
     private focused : Identity;
 
     constructor(private identity: Identity) {
-        this.content = identity.appA_createList();
+        this.content = identity.appA_simple_createList();
         this.output = new Output(identity);
         this.focused = identity;
     }
