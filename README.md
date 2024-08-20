@@ -5,16 +5,11 @@ Content means notes, texts, structured data, images and more.
 
 #### Project Status
 
-Sems is being developed. The first useful features probably are available in october 2024.
+Sems is being developed. The first useful features will probably be available in october 2024.
 
-#### Architecture / Code Design
+#### Aspect Concept
 
-In order to provide a high degree of flexibility, a special concept is used. It is called *aspect concept*.
-
-The code is mainly developed with TDD. The code design is influenced by these books:
-- *Clean Code* by Robert C. Martin
-- *Test-Driven Development* by Kent Beck
-- *Unit Testing* by Vladimir Khorikov
+In order to provide a high degree of flexibility, I'm trying out a new concept. It is called *aspect concept*. (see *protocol/240805 - aspect concept.txt*)
 
 #### Predecessor
 
