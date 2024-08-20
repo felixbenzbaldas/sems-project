@@ -108,6 +108,7 @@ export class Identity {
         let textObject = this.appA_simple_createText(text);
         textObject.name = this.containerA_getUniqueRandomName();
         textObject.container = this;
+        this.containerA_mapNameIdentity.set(textObject.name, textObject);
         return Promise.resolve(textObject);
     }
 

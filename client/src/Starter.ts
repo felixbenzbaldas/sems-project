@@ -7,6 +7,7 @@ export class Starter {
     static createApp() : Identity {
         let app = new Identity();
         app.text = 'Sems application';
+        app.containerA_mapNameIdentity = new Map();
         return app;
     }
 

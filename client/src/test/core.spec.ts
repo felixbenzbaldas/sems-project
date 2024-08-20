@@ -66,10 +66,16 @@ describe('app', () => {
 
         let text = await app.appA_createText('foo');
 
+        expect(text.text).toEqual('foo');
+    });
+
+    it('assigns created object to container', async () => {
+        let app = Starter.createApp();
+
+        let text = await app.appA_createText('');
+
         expect(text.name).toBeTruthy();
         expect(text.container).toBe(app);
-        expect(text.text).toEqual('foo');
-        // expect(app.containerA_mapNameIdentity).has(text.name);
-        // expect(app.containerA_mapNameIdentity.get(text.name)).toBe(text);
+        expect(app.containerA_mapNameIdentity.get(text.name)).toBe(text);
     });
 });
