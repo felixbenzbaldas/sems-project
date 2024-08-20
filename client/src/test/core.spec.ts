@@ -26,7 +26,7 @@ describe('app', () => {
         expect(app.text).toBe('my application');
     });
 
-    it('can create a list', async () => {
+    it('can create a simple list', async () => {
         let app : Identity = Starter.createApp();
 
         let list : Identity = app.appA_simple_createList();
@@ -52,7 +52,7 @@ describe('app', () => {
         expect(json.text).toEqual('my app');
     });
 
-    it('can get json of empty list', async () => {
+    it('can get json of empty simple list', async () => {
         let app : Identity = Starter.createApp();
         let list : Identity = app.appA_simple_createList();
 
@@ -60,5 +60,4 @@ describe('app', () => {
 
         expect(json.list).toEqual([]);
     });
-    
 });

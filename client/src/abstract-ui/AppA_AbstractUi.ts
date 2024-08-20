@@ -1,7 +1,7 @@
 import {Identity} from "@/Identity";
 import {Output} from "@/abstract-ui/Output";
 
-export class AbstractUi {
+export class AppA_AbstractUi {
 
     readonly content: Identity;
     commands: Identity;
@@ -21,10 +21,11 @@ export class AbstractUi {
     }
 
     globalEvent_export() {
+        // TODO: include objects of containerAspect
         this.output.set(JSON.stringify(this.identity.json()));
     }
 
     async defaultAction() {
-        this.content.list.add(await this.identity.appA_remote_createText('new item'));
+        this.content.list.add(await this.identity.appA_createText('new item'));
     }
 }

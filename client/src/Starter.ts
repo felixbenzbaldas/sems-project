@@ -1,5 +1,5 @@
 import {Identity} from "@/Identity";
-import {AbstractUi} from "@/abstract-ui/AbstractUi";
+import {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
 import {Subject} from "rxjs";
 
 export class Starter {
@@ -51,7 +51,7 @@ export class Starter {
 
     static createAppWithUI() : Identity {
         let app = Starter.createApp();
-        app.appA_abstractUi = new AbstractUi(app);
+        app.appA_abstractUi = new AppA_AbstractUi(app);
         return app;
     }
 

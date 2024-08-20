@@ -9,11 +9,12 @@ export class ListAspect {
     }
 
     add(...items : Array<Identity>) {
+        // TODO: only add path (if possible)
         this.jsList.push(...items);
         this.identity.notify();
     }
 
     json() {
-        return this.jsList.map(identity => identity.json());
+        return this.jsList.map(identity => 'a list item (todo: calculate path)');
     }
 }

@@ -18,7 +18,7 @@ describe('local app', () => {
     it('can create remote text', async () => {
         let app : Identity = await Starter.loadLocalhostApp(testPort);
 
-        let object = await app.appA_remote_createText('foo');
+        let object = await app.appA_createText('foo');
 
         expect(object.text).toEqual('foo');
     });
@@ -35,7 +35,7 @@ describe('local app', () => {
     // returns the name of the created object
     async function createObjectWithText(text: string) : Promise<string> {
         let app : Identity = await Starter.loadLocalhostApp(testPort);
-        return (await app.appA_remote_createText(text)).name;
+        return (await app.appA_createText(text)).name;
     }
 
 });

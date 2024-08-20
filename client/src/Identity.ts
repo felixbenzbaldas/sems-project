@@ -1,6 +1,6 @@
 import {ListAspect} from "@/core/ListAspect";
 import {Subject} from "rxjs";
-import type {AbstractUi} from "@/abstract-ui/AbstractUi";
+import type {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
@@ -19,7 +19,7 @@ export class Identity {
         return {
             'text': this.text,
             'list': this.list?.json(),
-            'content': this.appA_abstractUi?.content.json(),
+            'content': this.appA_abstractUi?.content.json(), // hoping that there will not be an endless recursion
         }
     }
 
@@ -40,13 +40,14 @@ export class Identity {
     /////////////////////////////////////////////////////////////////
     // app aspect
 
-    appA_abstractUi: AbstractUi;
+    appA_abstractUi: AppA_AbstractUi;
     appA_server: string;
 
     appA_createIdentity() {
         return new Identity();
     }
 
+    // 'simple' means that the created object has no container and no name. It is simply an object in the memory.
     appA_simple_createList(...jsList : Array<Identity>) : Identity {
         let list = this.appA_createIdentity();
         list.list = new ListAspect(list, ...jsList);
@@ -80,9 +81,10 @@ export class Identity {
         return button;
     }
 
-    async appA_remote_createText(text: string) : Promise<Identity> {
-        // TODO httpRequest
-        return Promise.resolve(this.appA_simple_createText(text));
+    async appA_createText(text: string) : Promise<Identity> {
+        let textObject = this.appA_simple_createText(text);
+        // TODO: assign textObject to container and give it a name
+        return Promise.resolve(textObject);
     }
     /////////////////////////////////////////////////////////////////
 
