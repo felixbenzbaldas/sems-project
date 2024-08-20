@@ -7,9 +7,9 @@ describe('abstract ui', () => {
     it('can create object', async () => {
         let app : Identity = Starter.createAppWithUI();
 
-        await app.abstractUi.globalEvent_defaultAction();
+        await app.appA_abstractUi.globalEvent_defaultAction();
 
-        expect(app.abstractUi.content.list.jsList.length).toBe(1);
+        expect(app.appA_abstractUi.content.list.jsList.length).toBe(1);
     });
 
     it('can get json', async () => {
@@ -22,11 +22,11 @@ describe('abstract ui', () => {
 
     it('can export', async () => {
         let app : Identity = Starter.createAppWithUI();
-        expect(app.abstractUi.output.getUi().hidden).toBe(true);
+        expect(app.appA_abstractUi.output.getUi().hidden).toBe(true);
 
-        app.abstractUi.globalEvent_export();
+        app.appA_abstractUi.globalEvent_export();
 
-        expect(app.abstractUi.output.getUi().hidden).toBe(false);
+        expect(app.appA_abstractUi.output.getUi().hidden).toBe(false);
     });
 
 });

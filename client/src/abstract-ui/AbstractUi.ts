@@ -11,7 +11,7 @@ export class AbstractUi {
     private focused : Identity;
 
     constructor(private identity: Identity) {
-        this.content = identity.createList();
+        this.content = identity.appA_createList();
         this.output = new Output(identity);
         this.focused = identity;
     }
@@ -25,6 +25,6 @@ export class AbstractUi {
     }
 
     async defaultAction() {
-        this.content.list.add(await this.identity.remote_createText('new item'));
+        this.content.list.add(await this.identity.appA_remote_createText('new item'));
     }
 }

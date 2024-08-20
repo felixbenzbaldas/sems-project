@@ -6,8 +6,8 @@ export class Output {
     private readonly output : Identity;
 
     constructor(private identity : Identity) {
-        this.output = this.identity.createText('');
-        this.ui = this.identity.createTextWithList('output', this.output, this.identity.createButton('hide output', () => {
+        this.output = this.identity.appA_createText('');
+        this.ui = this.identity.appA_createTextWithList('output', this.output, this.identity.appA_createButton('hide output', () => {
             this.ui.setHidden(true);
         }));
         this.ui.hidden = true;

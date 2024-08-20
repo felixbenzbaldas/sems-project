@@ -19,7 +19,7 @@ export class Identity {
         return {
             'text': this.text,
             'list': this.list?.json(),
-            'content': this.abstractUi?.content.json(),
+            'content': this.appA_abstractUi?.content.json(),
         }
     }
 
@@ -40,54 +40,54 @@ export class Identity {
     /////////////////////////////////////////////////////////////////
     // app aspect
 
-    abstractUi: AbstractUi;
-    server: string;
+    appA_abstractUi: AbstractUi;
+    appA_server: string;
 
-    createIdentity() {
+    appA_createIdentity() {
         return new Identity();
     }
 
-    createList(...jsList : Array<Identity>) : Identity {
-        let list = this.createIdentity();
+    appA_createList(...jsList : Array<Identity>) : Identity {
+        let list = this.appA_createIdentity();
         list.list = new ListAspect(list, ...jsList);
         return list;
     }
 
-    createText(text: string) : Identity {
-        let identity = this.createIdentity();
+    appA_createText(text: string) : Identity {
+        let identity = this.appA_createIdentity();
         identity.text = text;
         return identity;
     }
 
-    createLink(href: string, text?: string) {
-        let identity = this.createIdentity();
+    appA_createLink(href: string, text?: string) {
+        let identity = this.appA_createIdentity();
         identity.link = href;
         identity.text = text;
         return identity;
     }
 
-    createTextWithList(text : string, ...jsList : Array<Identity>) : Identity {
-        let identity = this.createIdentity();
+    appA_createTextWithList(text : string, ...jsList : Array<Identity>) : Identity {
+        let identity = this.appA_createIdentity();
         identity.text = text;
         identity.list = new ListAspect(identity, ...jsList);
         return identity;
     }
 
-    createButton(label : string, func : Function) : Identity {
-        let button = this.createIdentity();
+    appA_createButton(label : string, func : Function) : Identity {
+        let button = this.appA_createIdentity();
         button.text = label;
         button.action = func;
         return button;
     }
 
-    async remote_createText(text: string) : Promise<Identity> {
+    async appA_remote_createText(text: string) : Promise<Identity> {
         // TODO httpRequest
-        return Promise.resolve(this.createText(text));
+        return Promise.resolve(this.appA_createText(text));
     }
     /////////////////////////////////////////////////////////////////
 
     async containerAspect_getByName(name: string) : Promise<Identity> {
-        let identity = this.createIdentity();
+        let identity = this.appA_createIdentity();
         identity.text = '42'; // TODO http-request
         return Promise.resolve(identity);
     }
@@ -108,8 +108,8 @@ export class Identity {
     }
 
     async defaultAction() {
-        if (this.abstractUi) {
-            await this.abstractUi.defaultAction();
+        if (this.appA_abstractUi) {
+            await this.appA_abstractUi.defaultAction();
         } else {
             throw 'not implemented yet';
         }

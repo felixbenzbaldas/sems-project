@@ -13,7 +13,7 @@ describe('app', () => {
     it('can create an identity', async () => {
         let app : Identity = Starter.createApp();
 
-        let identity : Identity = app.createIdentity();
+        let identity : Identity = app.appA_createIdentity();
 
         expect(identity).toBeTruthy();
     });
@@ -29,16 +29,16 @@ describe('app', () => {
     it('can create a list', async () => {
         let app : Identity = Starter.createApp();
 
-        let list : Identity = app.createList();
+        let list : Identity = app.appA_createList();
 
         expect(list.list.jsList.length).toBe(0);
     });
 
     it('can add identity to list', async () => {
         let app : Identity = Starter.createApp();
-        let list : Identity = app.createList();
+        let list : Identity = app.appA_createList();
 
-        list.list.add(app.createIdentity());
+        list.list.add(app.appA_createIdentity());
 
         expect(list.list.jsList.length).toBe(1);
     });
@@ -54,7 +54,7 @@ describe('app', () => {
 
     it('can get json of empty list', async () => {
         let app : Identity = Starter.createApp();
-        let list : Identity = app.createList();
+        let list : Identity = app.appA_createList();
 
         let json = list.json();
 
@@ -63,8 +63,8 @@ describe('app', () => {
 
     it('can get json of list (with item)', async () => {
         let app : Identity = Starter.createApp();
-        let list : Identity = app.createList();
-        list.list.add(app.createText('foo'));
+        let list : Identity = app.appA_createList();
+        list.list.add(app.appA_createText('foo'));
 
         let json = list.json();
 
