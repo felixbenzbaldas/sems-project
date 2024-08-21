@@ -106,4 +106,15 @@ describe('app', () => {
         expect(path.pathA.listOfNames).toEqual(['..', otherObject.name]);
     });
 
+    test('List can add object of same container', async () => {
+        let app : Identity = Starter.createApp();
+        let list : Identity = await app.appA_createList();
+        let object : Identity = await app.appA_createText('bar');
+
+        list.list.add(object);
+
+        expect(list.list.jsList.length).toBe(1);
+        expect(list.list.jsList.at(0).pathA.listOfNames).toEqual(list.getPath(object).pathA.listOfNames);
+    });
+
 });
