@@ -182,12 +182,35 @@ export class Identity {
 
     async export() {
         let exported = this.json();
-        exported.objects = {};
         if(this.containerA_mapNameIdentity) {
+            exported.objects = {};
             this.containerA_mapNameIdentity.forEach((identity: Identity, name : string) => {
                 exported.objects[name] = identity.json();
             });
         }
+        let dependencies = this.getDependencies();
+        if (dependencies.size > 0) {
+            exported.dependencies = [];
+            for (let dependency of dependencies) {
+                exported.dependencies.push({
+                    path: dependency.pathA.listOfNames,
+                    value: (await this.resolve(dependency)).json()
+                });
+            }
+        }
         return exported;
+    }
+
+    getDependencies() : Set<Identity> {
+        let set = new Set<Identity>();
+        if (this.list) {
+            this.list.jsList.forEach((identity : Identity) => {
+                if (identity.pathA) {
+                    set.add(identity);
+                }
+            });
+        }
+        // TODO get recursive dependencies
+        return set;
     }
 }

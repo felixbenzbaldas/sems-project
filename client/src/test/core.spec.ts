@@ -150,4 +150,17 @@ describe('app', () => {
         expect(json.list.length).toBe(1);
         expect(json.list[0]).toEqual(['..', item.name]);
     });
+
+    it('can export list with one item', async () => {
+        let app = Starter.createApp();
+        let list = await app.appA_createList();
+        let item = await app.appA_createText('bar');
+        list.list.add(item);
+
+        let exported : any = await list.export();
+
+        expect(exported.dependencies).toBeTruthy();
+        expect(exported.dependencies[0].path).toEqual(['..', item.name]);
+        expect(exported.dependencies[0].value.text).toEqual('bar');
+    });
 });
