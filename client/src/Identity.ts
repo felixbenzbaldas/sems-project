@@ -152,18 +152,20 @@ export class Identity {
     }
 
     getPath(object: Identity) : Identity {
-        let path = this.appA_createIdentity();
+        let listOfNames : Array<string>;
         if (this.containerA_mapNameIdentity) {
             if (object.container === this) {
-                path.pathA = new Path([object.name]);
+                listOfNames = [object.name];
             }
         } else {
             if (this.container) {
-                path.pathA = new Path(['..', ...this.container.getPath(object).pathA.listOfNames]);
+                listOfNames= ['..', ...this.container.getPath(object).pathA.listOfNames];
             } else {
                 throw 'not implemented yet';
             }
         }
-        return path;
+        let toReturn = this.appA_createIdentity();
+        toReturn.pathA = new Path(listOfNames);
+        return toReturn;
     }
 }

@@ -71,7 +71,7 @@ function saveText(event: any) {
         <button v-else-if="identity.action" @click="identity.action()" style="margin: 0.3rem">
             {{text}}
         </button>
-        <div v-else-if="identity.pathA"><i>a path starting with {{identity.pathA.getFirst()}}</i></div>
+        <div v-else-if="identity.pathA"><i>a path starting with {{identity.pathA.listOfNames[0]}}</i></div>
         <a v-else-if="neitherNullNorUndefined(identity.link)" :href="identity.link">
             {{neitherNullNorUndefined(text) ? text : identity.link }}
         </a>
