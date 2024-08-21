@@ -63,7 +63,7 @@ export class Starter {
                 await app.appA_abstractUi.globalEvent_defaultAction();
             }),
             app.appA_simple_createButton('export', async () => {
-                app.appA_abstractUi.globalEvent_export();
+                await app.appA_abstractUi.globalEvent_export();
             }),
         );
         return app;

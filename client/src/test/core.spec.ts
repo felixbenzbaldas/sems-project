@@ -128,4 +128,14 @@ describe('app', () => {
         expect(resolved).toBe(otherObject);
     });
 
+    test('can export app with one object', async () => {
+        let app = Starter.createApp();
+        let object = await app.appA_createText('foo');
+
+        let exported : any = await app.export();
+
+        expect(exported.objects).toBeTruthy();
+        expect(exported.objects[object.name]).toBeTruthy();
+        expect(exported.objects[object.name].text).toEqual('foo');
+    });
 });

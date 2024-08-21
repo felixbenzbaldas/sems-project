@@ -24,9 +24,8 @@ describe('abstract ui', () => {
         let app : Identity = Starter.createAppWithUI();
         expect(app.appA_abstractUi.output.getUi().hidden).toBe(true);
 
-        app.appA_abstractUi.globalEvent_export();
+        await app.appA_abstractUi.globalEvent_export();
 
         expect(app.appA_abstractUi.output.getUi().hidden).toBe(false);
     });
-
 });

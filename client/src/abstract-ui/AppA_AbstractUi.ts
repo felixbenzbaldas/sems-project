@@ -21,9 +21,8 @@ export class AppA_AbstractUi {
         await this.focused.defaultAction();
     }
 
-    globalEvent_export() {
-        // TODO: include objects of containerAspect
-        this.output.set(JSON.stringify(this.identity.json()));
+    async globalEvent_export() {
+        this.output.set(JSON.stringify(await this.identity.export()));
     }
 
     async defaultAction() {

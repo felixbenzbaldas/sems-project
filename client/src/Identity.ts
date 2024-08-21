@@ -179,4 +179,15 @@ export class Identity {
             return this.containerA_mapNameIdentity.get(path.pathA.listOfNames[0]);
         }
     }
+
+    async export() {
+        let exported = this.json();
+        exported.objects = {};
+        if(this.containerA_mapNameIdentity) {
+            this.containerA_mapNameIdentity.forEach((identity: Identity, name : string) => {
+                exported.objects[name] = identity.json();
+            });
+        }
+        return exported;
+    }
 }
