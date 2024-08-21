@@ -88,6 +88,10 @@ export class Identity {
         return this.appA_getCurrentContainer().containerA_createText(text);
     }
 
+    async appA_createList() : Promise<Identity> {
+        return this.appA_getCurrentContainer().containerA_createList();
+    }
+
     appA_getCurrentContainer() : Identity {
         return this;
     }
@@ -108,10 +112,20 @@ export class Identity {
 
     async containerA_createText(text: string) : Promise<Identity> {
         let textObject = this.appA_simple_createText(text);
-        textObject.name = this.containerA_getUniqueRandomName();
-        textObject.container = this;
-        this.containerA_mapNameIdentity.set(textObject.name, textObject);
+        this.containerA_take(textObject);
         return Promise.resolve(textObject);
+    }
+
+    async containerA_createList() : Promise<Identity> {
+        let list = this.appA_simple_createList();
+        this.containerA_take(list);
+        return Promise.resolve(list);
+    }
+
+    private containerA_take(identity: Identity) {
+        identity.name = this.containerA_getUniqueRandomName();
+        identity.container = this;
+        this.containerA_mapNameIdentity.set(identity.name, identity);
     }
 
     async httpRequest(url : string, method : string, args : Array<any>) : Promise<any> {

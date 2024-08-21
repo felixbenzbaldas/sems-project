@@ -69,6 +69,14 @@ describe('app', () => {
         expect(text.text).toEqual('foo');
     });
 
+    it('can create list', async () => {
+        let app = Starter.createApp();
+
+        let list = await app.appA_createList();
+
+        expect(list.list.jsList.length).toBe(0);
+    });
+
     it('assigns created object to container', async () => {
         let app = Starter.createApp();
 
