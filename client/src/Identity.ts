@@ -153,7 +153,17 @@ export class Identity {
 
     getPath(object: Identity) : Identity {
         let path = this.appA_createIdentity();
-        path.pathA = new Path([object.name]);
+        if (this.containerA_mapNameIdentity) {
+            if (object.container === this) {
+                path.pathA = new Path([object.name]);
+            }
+        } else {
+            if (this.container) {
+                path.pathA = new Path(['..', ...this.container.getPath(object).pathA.listOfNames]);
+            } else {
+                throw 'not implemented yet';
+            }
+        }
         return path;
     }
 }

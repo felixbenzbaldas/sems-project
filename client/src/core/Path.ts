@@ -1,5 +1,9 @@
 export class Path {
-    constructor(private listOfNames : Array<string>) {
+
+    listOfNames : Array<string>
+
+    constructor(listOfNames : Array<string>) {
+        this.listOfNames = listOfNames;
     }
 
     static empty() : Path {

@@ -1,4 +1,4 @@
-import {describe, expect, it} from "vitest";
+import {describe, expect, it, test} from "vitest";
 import {Identity} from "@/Identity";
 import {Starter} from "@/Starter";
 
@@ -93,7 +93,17 @@ describe('app', () => {
 
         let path : Identity = app.getPath(text);
 
-        expect(path.pathA.toList()).toEqual([text.name]);
+        expect(path.pathA.listOfNames).toEqual([text.name]);
+    });
+
+    test('Object can get path of other object in same container', async () => {
+        let app = Starter.createApp();
+        let object = await app.appA_createText('foo');
+        let otherObject = await app.appA_createText('bar');
+
+        let path : Identity = object.getPath(otherObject);
+
+        expect(path.pathA.listOfNames).toEqual(['..', otherObject.name]);
     });
 
 });
