@@ -117,4 +117,15 @@ describe('app', () => {
         expect(list.list.jsList.at(0).pathA.listOfNames).toEqual(list.getPath(object).pathA.listOfNames);
     });
 
+    test('Object can resolve path of other object in same container', async () => {
+        let app : Identity = Starter.createApp();
+        let object : Identity = await app.appA_createText('bar');
+        let otherObject : Identity = await app.appA_createText('foo');
+        let pathOfOther : Identity = object.getPath(otherObject);
+
+        let resolved : Identity = await object.resolve(pathOfOther);
+
+        expect(resolved).toBe(otherObject);
+    });
+
 });

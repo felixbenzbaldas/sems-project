@@ -35,15 +35,17 @@ function updateHasListItem() {
     }
 }
 
-function updateList() {
+async function updateList() {
     if (props.identity.list) {
-        list.value = props.identity.list.jsList.map(identity => {
-            if (identity.pathA) {
-                return props.identity.container.containerA_mapNameIdentity.get(identity.pathA.listOfNames[1]);
+        let newList = [];
+        for (let listItem of props.identity.list.jsList) {
+            if (listItem.pathA) {
+                newList.push(await props.identity.resolve(listItem));
             } else {
-                return identity;
+                newList.push(listItem);
             }
-        });
+        }
+        list.value = newList;
     } else {
         list.value = undefined;
     }
