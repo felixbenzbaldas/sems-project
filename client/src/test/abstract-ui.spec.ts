@@ -20,11 +20,20 @@ describe('abstract ui', () => {
         expect(json.content.list).toEqual([]);
     });
 
-    it('can export', async () => {
+    it('can export app', async () => {
         let app : Identity = Starter.createAppWithUI();
         expect(app.appA_abstractUi.output.getUi().hidden).toBe(true);
 
-        await app.appA_abstractUi.globalEvent_export();
+        await app.appA_abstractUi.globalEvent_exportApp();
+
+        expect(app.appA_abstractUi.output.getUi().hidden).toBe(false);
+    });
+
+    it('can export content', async () => {
+        let app : Identity = Starter.createAppWithUI();
+        expect(app.appA_abstractUi.output.getUi().hidden).toBe(true);
+
+        await app.appA_abstractUi.globalEvent_exportContent();
 
         expect(app.appA_abstractUi.output.getUi().hidden).toBe(false);
     });

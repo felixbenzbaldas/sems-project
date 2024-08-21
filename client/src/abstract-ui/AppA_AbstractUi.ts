@@ -21,8 +21,12 @@ export class AppA_AbstractUi {
         await this.focused.defaultAction();
     }
 
-    async globalEvent_export() {
+    async globalEvent_exportApp() {
         this.output.set(JSON.stringify(await this.identity.export()));
+    }
+
+    async globalEvent_exportContent() {
+        this.output.set(JSON.stringify(await this.identity.appA_abstractUi.content.export()));
     }
 
     async defaultAction() {

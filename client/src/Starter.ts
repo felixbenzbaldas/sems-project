@@ -62,8 +62,11 @@ export class Starter {
             app.appA_simple_createButton('default action', async () => {
                 await app.appA_abstractUi.globalEvent_defaultAction();
             }),
-            app.appA_simple_createButton('export', async () => {
-                await app.appA_abstractUi.globalEvent_export();
+            app.appA_simple_createButton('export app', async () => {
+                await app.appA_abstractUi.globalEvent_exportApp();
+            }),
+            app.appA_simple_createButton('export content', async () => {
+                await app.appA_abstractUi.globalEvent_exportContent();
             }),
         );
         return app;
