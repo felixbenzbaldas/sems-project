@@ -34,7 +34,7 @@ describe('app', () => {
         expect(list.list.jsList.length).toBe(0);
     });
 
-    it('can add identity to list', async () => {
+    it('can add identity to simple list', async () => {
         let app : Identity = Starter.createApp();
         let list : Identity = app.appA_simple_createList();
 
