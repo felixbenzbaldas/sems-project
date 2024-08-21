@@ -1,7 +1,7 @@
 import {ListAspect} from "@/core/ListAspect";
 import {Subject} from "rxjs";
 import type {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
-import {Path} from "@/core/Path";
+import {PathAspect} from "@/core/PathAspect";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
@@ -16,7 +16,7 @@ export class Identity {
     action: Function;
     readonly subject: Subject<any> = new Subject<any>();
     hidden: boolean = false;
-    pathA: Path;
+    pathA: PathAspect;
 
     json() : any {
         return {
@@ -95,6 +95,13 @@ export class Identity {
     appA_getCurrentContainer() : Identity {
         return this;
     }
+
+    appA_createPath(listOfNames: Array<string>) {
+        let path = this.appA_createIdentity();
+        path.pathA = new PathAspect(listOfNames);
+        return path;
+    }
+
     /////////////////////////////////////////////////////////////////
 
     private containerA_nameCounter : number = 0;
@@ -152,20 +159,16 @@ export class Identity {
     }
 
     getPath(object: Identity) : Identity {
-        let listOfNames : Array<string>;
         if (this.containerA_mapNameIdentity) {
             if (object.container === this) {
-                listOfNames = [object.name];
+                return this.appA_createPath([object.name]);
             }
         } else {
             if (this.container) {
-                listOfNames= ['..', ...this.container.getPath(object).pathA.listOfNames];
+                return this.appA_createPath(['..', ...this.container.getPath(object).pathA.listOfNames]);
             } else {
                 throw 'not implemented yet';
             }
         }
-        let toReturn = this.appA_createIdentity();
-        toReturn.pathA = new Path(listOfNames);
-        return toReturn;
     }
 }

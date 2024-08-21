@@ -1,4 +1,4 @@
-export class Path {
+export class PathAspect {
 
     listOfNames : Array<string>
 
