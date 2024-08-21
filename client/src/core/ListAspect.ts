@@ -20,6 +20,12 @@ export class ListAspect {
     }
 
     json() {
-        return this.jsList.map(identity => 'a list item (todo: calculate path)');
+        return this.jsList.map(identity => {
+            if (identity.pathA) {
+                return identity.pathA.listOfNames;
+            } else {
+                return identity.json();
+            }
+        });
     }
 }

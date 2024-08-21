@@ -11,7 +11,9 @@ describe: client app {
 
     test: commands are readonly
 
-    it: can export
+    it: can export {
+        assert: output contains paths for the objects in the content
+    }
     
     it: can hide output
 

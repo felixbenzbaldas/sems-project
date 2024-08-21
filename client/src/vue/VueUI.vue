@@ -37,7 +37,13 @@ function updateHasListItem() {
 
 function updateList() {
     if (props.identity.list) {
-        list.value = [...props.identity.list.jsList];
+        list.value = props.identity.list.jsList.map(identity => {
+            if (identity.pathA) {
+                return props.identity.container.containerA_mapNameIdentity.get(identity.pathA.listOfNames[1]);
+            } else {
+                return identity;
+            }
+        });
     } else {
         list.value = undefined;
     }
