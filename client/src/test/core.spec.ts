@@ -128,7 +128,7 @@ describe('app', () => {
         expect(resolved).toBe(otherObject);
     });
 
-    test('can export app with one object', async () => {
+    it('can export app with one object', async () => {
         let app = Starter.createApp();
         let object = await app.appA_createText('foo');
 
@@ -137,5 +137,17 @@ describe('app', () => {
         expect(exported.objects).toBeTruthy();
         expect(exported.objects[object.name]).toBeTruthy();
         expect(exported.objects[object.name].text).toEqual('foo');
+    });
+
+    it('can get json of list with one item', async () => {
+        let app = Starter.createApp();
+        let list = await app.appA_createList();
+        let item = await app.appA_createText('bar');
+        list.list.add(item);
+
+        let json : any = list.json();
+
+        expect(json.list.length).toBe(1);
+        expect(json.list[0]).toEqual(['..', item.name]);
     });
 });
