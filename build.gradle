@@ -53,7 +53,7 @@ task replace {
         String charset = "UTF-8";
         String replacement = new File(deployReplacement).getText(charset);
         String marker = "marker-dr53hifhh4";
-        String toReplace = "e.createText(\"" + marker + "\")";
+        String toReplace = "e.appA_simple_createText(\"" + marker + "\")";
         boolean found = false;
         for (File file : new File("client/dist/assets").listFiles()) {
             String oldText = file.getText(charset);
