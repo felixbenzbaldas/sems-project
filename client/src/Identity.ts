@@ -102,8 +102,10 @@ export class Identity {
         return path;
     }
 
-    appA_addAllToListFromRawData(list: Identity, rawData: any) {
-
+    async appA_addAllToListFromRawData(list: Identity, rawData: any) {
+        for (let item of rawData.list) {
+            list.list.add(await this.appA_createText('foo'));
+        }
     }
 
     /////////////////////////////////////////////////////////////////

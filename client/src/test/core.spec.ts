@@ -169,8 +169,26 @@ describe('app', () => {
         let list = await app.appA_createList();
         let rawData : any = {list:[]};
 
-        app.appA_addAllToListFromRawData(list, rawData);
+        await app.appA_addAllToListFromRawData(list, rawData);
 
         expect(list.list.jsList.length).toBe(0);
+    });
+
+    test('List can add all from raw data (one item)', async () => {
+        let app = Starter.createApp();
+        let list = await app.appA_createList();
+        let rawData : any = {
+            list:[['..','0']],
+            dependencies:[
+                {
+                    path:['..','0'],
+                    value:{text:'new item'}
+                }
+            ]
+        };
+
+        await app.appA_addAllToListFromRawData(list, rawData);
+
+        expect(list.list.jsList.length).toBe(1);
     });
 });
