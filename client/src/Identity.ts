@@ -105,8 +105,8 @@ export class Identity {
     async appA_addAllToListFromRawData(list: Identity, rawData: any) {
         for (let path of rawData.list) {
             let dependencyValue = (rawData.dependencies as Array<any>).find((dependency : any) =>
-                dependency.path.at(0) === path.at(0) && dependency.path.at(1) === path.at(1)
-            ).value;
+                dependency.name === path.at(1)
+            );
             list.list.add(await this.appA_createText(dependencyValue.text));
         }
     }
@@ -202,8 +202,8 @@ export class Identity {
             exported.dependencies = [];
             for (let dependency of dependencies) {
                 exported.dependencies.push({
-                    path: dependency.pathA.listOfNames,
-                    value: (await this.resolve(dependency)).json()
+                    name: dependency.pathA.listOfNames.at(1),
+                    ... (await this.resolve(dependency)).json()
                 });
             }
         }

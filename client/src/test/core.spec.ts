@@ -160,8 +160,8 @@ describe('app', () => {
         let exported : any = await list.export();
 
         expect(exported.dependencies).toBeTruthy();
-        expect(exported.dependencies[0].path).toEqual(['..', item.name]);
-        expect(exported.dependencies[0].value.text).toEqual('bar');
+        expect(exported.dependencies[0].name).toEqual(item.name);
+        expect(exported.dependencies[0].text).toEqual('bar');
     });
 
     test('List can add all from raw data (empty)', async () => {
@@ -181,8 +181,8 @@ describe('app', () => {
             list:[['..','0']],
             dependencies:[
                 {
-                    path:['..','0'],
-                    value:{text:'new item'}
+                    name: '0',
+                    text:'new item'
                 }
             ]
         };
