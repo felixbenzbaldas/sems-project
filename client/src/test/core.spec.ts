@@ -190,5 +190,6 @@ describe('app', () => {
         await app.appA_addAllToListFromRawData(list, rawData);
 
         expect(list.list.jsList.length).toBe(1);
+        expect((await list.resolve(list.list.jsList.at(0))).text).toEqual('new item');
     });
 });

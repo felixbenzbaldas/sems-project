@@ -103,8 +103,11 @@ export class Identity {
     }
 
     async appA_addAllToListFromRawData(list: Identity, rawData: any) {
-        for (let item of rawData.list) {
-            list.list.add(await this.appA_createText('foo'));
+        for (let path of rawData.list) {
+            let dependencyValue = (rawData.dependencies as Array<any>).find((dependency : any) =>
+                dependency.path.at(0) === path.at(0) && dependency.path.at(1) === path.at(1)
+            ).value;
+            list.list.add(await this.appA_createText(dependencyValue.text));
         }
     }
 
