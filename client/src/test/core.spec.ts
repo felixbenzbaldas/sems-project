@@ -163,4 +163,14 @@ describe('app', () => {
         expect(exported.dependencies[0].path).toEqual(['..', item.name]);
         expect(exported.dependencies[0].value.text).toEqual('bar');
     });
+
+    test('List can add all from raw data (empty)', async () => {
+        let app = Starter.createApp();
+        let list = await app.appA_createList();
+        let rawData : any = {list:[]};
+
+        app.appA_addAllToListFromRawData(list, rawData);
+
+        expect(list.list.jsList.length).toBe(0);
+    });
 });

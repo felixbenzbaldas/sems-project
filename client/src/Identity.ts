@@ -102,6 +102,10 @@ export class Identity {
         return path;
     }
 
+    appA_addAllToListFromRawData(list: Identity, rawData: any) {
+
+    }
+
     /////////////////////////////////////////////////////////////////
 
     private containerA_nameCounter : number = 0;
