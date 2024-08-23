@@ -78,7 +78,6 @@ describe('app', () => {
         expect(path.pathA.listOfNames).toEqual([text.name]);
     });
 
-
     it('can export app with one object', async () => {
         let app = Starter.createApp();
         let object = await app.appA.createText('foo');
