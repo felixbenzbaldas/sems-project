@@ -11,7 +11,7 @@ export class AppA_AbstractUi {
     private focused : Identity;
 
     constructor(private identity: Identity) {
-        this.content = identity.appA_simple_createList();
+        this.content = identity.appA.simple_createList();
         this.content.container = identity;
         this.output = new Output(identity);
         this.focused = identity;
@@ -26,10 +26,10 @@ export class AppA_AbstractUi {
     }
 
     async globalEvent_exportContent() {
-        this.output.set(JSON.stringify(await this.identity.appA_abstractUi.content.export()));
+        this.output.set(JSON.stringify(await this.content.export()));
     }
 
     async defaultAction() {
-        this.content.list.add(await this.identity.appA_createText('new item'));
+        this.content.list.add(await this.identity.appA.createText('new item'));
     }
 }

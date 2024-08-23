@@ -7,9 +7,9 @@ describe('abstract ui', () => {
     it('can create object', async () => {
         let app : Identity = Starter.createAppWithUI();
 
-        await app.appA_abstractUi.globalEvent_defaultAction();
+        await app.appA.abstractUi.globalEvent_defaultAction();
 
-        expect(app.appA_abstractUi.content.list.jsList.length).toBe(1);
+        expect(app.appA.abstractUi.content.list.jsList.length).toBe(1);
     });
 
     it('can get json', async () => {
@@ -22,19 +22,19 @@ describe('abstract ui', () => {
 
     it('can export app', async () => {
         let app : Identity = Starter.createAppWithUI();
-        expect(app.appA_abstractUi.output.getUi().hidden).toBe(true);
+        expect(app.appA.abstractUi.output.getUi().hidden).toBe(true);
 
-        await app.appA_abstractUi.globalEvent_exportApp();
+        await app.appA.abstractUi.globalEvent_exportApp();
 
-        expect(app.appA_abstractUi.output.getUi().hidden).toBe(false);
+        expect(app.appA.abstractUi.output.getUi().hidden).toBe(false);
     });
 
     it('can export content', async () => {
         let app : Identity = Starter.createAppWithUI();
-        expect(app.appA_abstractUi.output.getUi().hidden).toBe(true);
+        expect(app.appA.abstractUi.output.getUi().hidden).toBe(true);
 
-        await app.appA_abstractUi.globalEvent_exportContent();
+        await app.appA.abstractUi.globalEvent_exportContent();
 
-        expect(app.appA_abstractUi.output.getUi().hidden).toBe(false);
+        expect(app.appA.abstractUi.output.getUi().hidden).toBe(false);
     });
 });

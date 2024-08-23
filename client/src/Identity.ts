@@ -2,6 +2,8 @@ import {ListAspect} from "@/core/ListAspect";
 import {Subject} from "rxjs";
 import type {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
 import {PathAspect} from "@/core/PathAspect";
+import {AppA} from "@/core/AppA";
+import {App} from "@/deprecated/core/App";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
@@ -17,12 +19,13 @@ export class Identity {
     readonly subject: Subject<any> = new Subject<any>();
     hidden: boolean = false;
     pathA: PathAspect;
+    readonly appA: AppA = new AppA(this);
 
     json() : any {
         return {
             'text': this.text,
             'list': this.list?.json(),
-            'content': this.appA_abstractUi?.content.json(), // hoping that there will not be an endless recursion
+            'content': this.appA.abstractUi?.content.json(), // hoping that there will not be an endless recursion
         }
     }
 
@@ -40,79 +43,6 @@ export class Identity {
         this.subject.next(null);
     }
 
-    /////////////////////////////////////////////////////////////////
-    // app aspect
-
-    appA_abstractUi: AppA_AbstractUi;
-    appA_server: string;
-
-    appA_createIdentity() {
-        return new Identity();
-    }
-
-    // 'simple' means that the created object has no container and no name. It is simply an object in the memory.
-    appA_simple_createList(...jsList : Array<Identity>) : Identity {
-        let list = this.appA_createIdentity();
-        list.list = new ListAspect(list, ...jsList);
-        return list;
-    }
-
-    appA_simple_createText(text: string) : Identity {
-        let identity = this.appA_createIdentity();
-        identity.text = text;
-        return identity;
-    }
-
-    appA_simple_createLink(href: string, text?: string) {
-        let identity = this.appA_createIdentity();
-        identity.link = href;
-        identity.text = text;
-        return identity;
-    }
-
-    appA_simple_createTextWithList(text : string, ...jsList : Array<Identity>) : Identity {
-        let identity = this.appA_createIdentity();
-        identity.text = text;
-        identity.list = new ListAspect(identity, ...jsList);
-        return identity;
-    }
-
-    appA_simple_createButton(label : string, func : Function) : Identity {
-        let button = this.appA_createIdentity();
-        button.text = label;
-        button.action = func;
-        return button;
-    }
-
-    async appA_createText(text: string) : Promise<Identity> {
-        return this.appA_getCurrentContainer().containerA_createText(text);
-    }
-
-    async appA_createList() : Promise<Identity> {
-        return this.appA_getCurrentContainer().containerA_createList();
-    }
-
-    appA_getCurrentContainer() : Identity {
-        return this;
-    }
-
-    appA_createPath(listOfNames: Array<string>) {
-        let path = this.appA_createIdentity();
-        path.pathA = new PathAspect(listOfNames);
-        return path;
-    }
-
-    async appA_addAllToListFromRawData(list: Identity, rawData: any) {
-        for (let path of rawData.list) {
-            let dependencyValue = (rawData.dependencies as Array<any>).find((dependency : any) =>
-                dependency.name === path.at(1)
-            );
-            list.list.add(await this.appA_createText(dependencyValue.text));
-        }
-    }
-
-    /////////////////////////////////////////////////////////////////
-
     private containerA_nameCounter : number = 0;
     containerA_mapNameIdentity: Map<string, Identity>;
 
@@ -121,19 +51,19 @@ export class Identity {
     }
 
     async containerAspect_getByName(name: string) : Promise<Identity> {
-        let identity = this.appA_createIdentity();
+        let identity = this.appA.createIdentity();
         identity.text = '42'; // TODO http-request
         return Promise.resolve(identity);
     }
 
     async containerA_createText(text: string) : Promise<Identity> {
-        let textObject = this.appA_simple_createText(text);
+        let textObject = this.appA.simple_createText(text);
         this.containerA_take(textObject);
         return Promise.resolve(textObject);
     }
 
     async containerA_createList() : Promise<Identity> {
-        let list = this.appA_simple_createList();
+        let list = this.appA.simple_createList();
         this.containerA_take(list);
         return Promise.resolve(list);
     }
@@ -160,8 +90,8 @@ export class Identity {
     }
 
     async defaultAction() {
-        if (this.appA_abstractUi) {
-            await this.appA_abstractUi.defaultAction();
+        if (this.appA.abstractUi) {
+            await this.appA.abstractUi.defaultAction();
         } else {
             throw 'not implemented yet';
         }
@@ -170,11 +100,11 @@ export class Identity {
     getPath(object: Identity) : Identity {
         if (this.containerA_mapNameIdentity) {
             if (object.container === this) {
-                return this.appA_createPath([object.name]);
+                return this.appA.createPath([object.name]);
             }
         } else {
             if (this.container) {
-                return this.appA_createPath(['..', ...this.container.getPath(object).pathA.listOfNames]);
+                return this.appA.createPath(['..', ...this.container.getPath(object).pathA.listOfNames]);
             } else {
                 throw 'not implemented yet';
             }
