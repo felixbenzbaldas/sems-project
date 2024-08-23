@@ -1,9 +1,7 @@
 import {ListA} from "@/core/ListA";
 import {Subject} from "rxjs";
-import type {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
 import {PathA} from "@/core/PathA";
 import {AppA} from "@/core/AppA";
-import {App} from "@/deprecated/core/App";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
