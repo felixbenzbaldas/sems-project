@@ -1,7 +1,7 @@
-import {ListAspect} from "@/core/ListAspect";
+import {ListA} from "@/core/ListA";
 import {Subject} from "rxjs";
 import type {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
-import {PathAspect} from "@/core/PathAspect";
+import {PathA} from "@/core/PathA";
 import {AppA} from "@/core/AppA";
 import {App} from "@/deprecated/core/App";
 
@@ -14,11 +14,11 @@ export class Identity {
     container: Identity;
     text : string;
     link : string;
-    list : ListAspect;
+    list : ListA;
     action: Function;
     readonly subject: Subject<any> = new Subject<any>();
     hidden: boolean = false;
-    pathA: PathAspect;
+    pathA: PathA;
     readonly appA: AppA = new AppA(this);
 
     json() : any {

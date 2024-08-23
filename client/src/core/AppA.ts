@@ -1,6 +1,6 @@
 import type {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
-import {ListAspect} from "@/core/ListAspect";
-import {PathAspect} from "@/core/PathAspect";
+import {ListA} from "@/core/ListA";
+import {PathA} from "@/core/PathA";
 import {Identity} from "@/Identity";
 
 export class AppA {
@@ -18,7 +18,7 @@ export class AppA {
     // 'simple' means that the created object has no container and no name. It is simply an object in the memory.
     simple_createList(...jsList : Array<Identity>) : Identity {
         let list = this.createIdentity();
-        list.list = new ListAspect(list, ...jsList);
+        list.list = new ListA(list, ...jsList);
         return list;
     }
 
@@ -38,7 +38,7 @@ export class AppA {
     simple_createTextWithList(text : string, ...jsList : Array<Identity>) : Identity {
         let identity = this.createIdentity();
         identity.text = text;
-        identity.list = new ListAspect(identity, ...jsList);
+        identity.list = new ListA(identity, ...jsList);
         return identity;
     }
 
@@ -63,7 +63,7 @@ export class AppA {
 
     createPath(listOfNames: Array<string>) {
         let path = this.createIdentity();
-        path.pathA = new PathAspect(listOfNames);
+        path.pathA = new PathA(listOfNames);
         return path;
     }
 

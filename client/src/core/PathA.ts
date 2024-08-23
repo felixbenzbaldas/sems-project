@@ -1,6 +1,6 @@
 import {Identity} from "@/Identity";
 
-export class PathAspect {
+export class PathA {
 
     listOfNames : Array<string>
 
@@ -10,7 +10,7 @@ export class PathAspect {
 
     withoutFirst() {
         let identity = new Identity();
-        identity.pathA = new PathAspect(this.listOfNames.slice(1, this.listOfNames.length));
+        identity.pathA = new PathA(this.listOfNames.slice(1, this.listOfNames.length));
         return identity;
     }
 }

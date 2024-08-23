@@ -1,6 +1,6 @@
 import type {Identity} from "@/Identity";
 
-export class ListAspect {
+export class ListA {
 
     jsList : Array<Identity>;
 
