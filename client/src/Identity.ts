@@ -25,7 +25,7 @@ export class Identity {
         return {
             'text': this.text,
             'list': this.list?.json(),
-            'content': this.appA.abstractUi?.content.json(), // hoping that there will not be an endless recursion
+            'content': this.appA.abstractUi?.content.json(),
         }
     }
 
