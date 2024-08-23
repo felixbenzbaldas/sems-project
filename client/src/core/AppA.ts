@@ -50,11 +50,11 @@ export class AppA {
     }
 
     async createText(text: string) : Promise<Identity> {
-        return this.getCurrentContainer().containerA_createText(text);
+        return this.getCurrentContainer().containerA.createText(text);
     }
 
     async createList() : Promise<Identity> {
-        return this.getCurrentContainer().containerA_createList();
+        return this.getCurrentContainer().containerA.createList();
     }
 
     getCurrentContainer() : Identity {

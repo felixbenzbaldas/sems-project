@@ -6,7 +6,7 @@ export class Starter {
     static createApp() : Identity {
         let app = new Identity();
         app.text = 'Sems application';
-        app.containerA_mapNameIdentity = new Map();
+        app.containerA.mapNameIdentity = new Map();
         return app;
     }
 
@@ -74,7 +74,7 @@ export class Starter {
     static async loadLocalhostApp(port: number) {
         let app = new Identity();
         app.text = 'todo: load from server';
-        app.containerA_mapNameIdentity = new Map();
+        app.containerA.mapNameIdentity = new Map();
         app.appA.server = 'http://localhost:' + port + '/';
         return app;
     }

@@ -2,6 +2,7 @@ import {ListA} from "@/core/ListA";
 import {Subject} from "rxjs";
 import {PathA} from "@/core/PathA";
 import {AppA} from "@/core/AppA";
+import {ContainerA} from "@/core/ContainerA";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
@@ -18,6 +19,7 @@ export class Identity {
     hidden: boolean = false;
     pathA: PathA;
     readonly appA: AppA = new AppA(this);
+    readonly containerA : ContainerA = new ContainerA(this);
 
     json() : any {
         return {
@@ -39,37 +41,6 @@ export class Identity {
 
     public notify() {
         this.subject.next(null);
-    }
-
-    private containerA_nameCounter : number = 0;
-    containerA_mapNameIdentity: Map<string, Identity>;
-
-    containerA_getUniqueRandomName() : string {
-        return '' + this.containerA_nameCounter++;
-    }
-
-    async containerAspect_getByName(name: string) : Promise<Identity> {
-        let identity = this.appA.createIdentity();
-        identity.text = '42'; // TODO http-request
-        return Promise.resolve(identity);
-    }
-
-    async containerA_createText(text: string) : Promise<Identity> {
-        let textObject = this.appA.simple_createText(text);
-        this.containerA_take(textObject);
-        return Promise.resolve(textObject);
-    }
-
-    async containerA_createList() : Promise<Identity> {
-        let list = this.appA.simple_createList();
-        this.containerA_take(list);
-        return Promise.resolve(list);
-    }
-
-    private containerA_take(identity: Identity) {
-        identity.name = this.containerA_getUniqueRandomName();
-        identity.container = this;
-        this.containerA_mapNameIdentity.set(identity.name, identity);
     }
 
     async httpRequest(url : string, method : string, args : Array<any>) : Promise<any> {
@@ -96,7 +67,7 @@ export class Identity {
     }
 
     getPath(object: Identity) : Identity {
-        if (this.containerA_mapNameIdentity) {
+        if (this.containerA.mapNameIdentity) {
             if (object.container === this) {
                 return this.appA.createPath([object.name]);
             }
@@ -113,15 +84,15 @@ export class Identity {
         if (path.pathA.listOfNames.at(0) === '..') {
             return this.container.resolve(path.pathA.withoutFirst());
         } else {
-            return this.containerA_mapNameIdentity.get(path.pathA.listOfNames[0]);
+            return this.containerA.mapNameIdentity.get(path.pathA.listOfNames[0]);
         }
     }
 
     async export() {
         let exported = this.json();
-        if(this.containerA_mapNameIdentity) {
+        if(this.containerA.mapNameIdentity) {
             exported.objects = {};
-            this.containerA_mapNameIdentity.forEach((identity: Identity, name : string) => {
+            this.containerA.mapNameIdentity.forEach((identity: Identity, name : string) => {
                 exported.objects[name] = identity.json();
             });
         }

@@ -84,7 +84,7 @@ describe('app', () => {
 
         expect(text.name).toBeTruthy();
         expect(text.container).toBe(app);
-        expect(app.containerA_mapNameIdentity.get(text.name)).toBe(text);
+        expect(app.containerA.mapNameIdentity.get(text.name)).toBe(text);
     });
 
     it('can get path', async () => {

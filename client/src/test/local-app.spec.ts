@@ -27,7 +27,7 @@ describe('local app', () => {
         let name = await createObjectWithText('42');
         let app : Identity = await Starter.loadLocalhostApp(testPort);
 
-        let object = await app.containerAspect_getByName(name);
+        let object = await app.containerA.getByName(name);
 
         expect(object.text).toEqual('42');
     });
