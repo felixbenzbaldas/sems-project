@@ -39,7 +39,7 @@ export class Identity {
         this.notify();
     }
 
-    public notify() {
+    notify() {
         this.subject.next(null);
     }
 
