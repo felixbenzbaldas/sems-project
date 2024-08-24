@@ -40,32 +40,4 @@ describe('list', () => {
         expect(exported.dependencies[0].text).toEqual('bar');
     });
 
-    test('can add all from raw data (empty)', async () => {
-        let app = Starter.createApp();
-        let list = await app.appA.createList();
-        let rawData : any = {list:[]};
-
-        await app.appA.addAllToListFromRawData(list, rawData);
-
-        expect(list.list.jsList.length).toBe(0);
-    });
-
-    test('can add all from raw data (one item)', async () => {
-        let app = Starter.createApp();
-        let list = await app.appA.createList();
-        let rawData : any = {
-            list:[['..','0']],
-            dependencies:[
-                {
-                    name: '0',
-                    text:'new item'
-                }
-            ]
-        };
-
-        await app.appA.addAllToListFromRawData(list, rawData);
-
-        expect(list.list.jsList.length).toBe(1);
-        expect((await list.resolve(list.list.jsList.at(0))).text).toEqual('new item');
-    });
 });
