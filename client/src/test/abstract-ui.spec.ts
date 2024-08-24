@@ -37,4 +37,13 @@ describe('abstract ui', () => {
 
         expect(app.appA.abstractUi.output.getUi().hidden).toBe(false);
     });
+
+    it('can import to content', async () => {
+        let app = Starter.createAppWithUI();
+        app.appA.abstractUi.input.set('{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}');
+
+        await app.appA.abstractUi.globalEvent_importToContent();
+
+        expect(app.containerA.mapNameIdentity.size).toBe(1);
+    });
 });

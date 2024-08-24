@@ -27,4 +27,12 @@ export class Input {
     getUi() : Identity {
         return this.ui;
     }
+
+    set(string: string) {
+        this.input.setText(string);
+    }
+
+    get() : string {
+        return this.input.text;
+    }
 }

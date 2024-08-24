@@ -32,6 +32,10 @@ export class AppA_AbstractUi {
         this.output.set(JSON.stringify(await this.content.export()));
     }
 
+    async globalEvent_importToContent() {
+        await this.identity.appA.addAllToListFromRawData(this.content, JSON.parse(this.input.get()));
+    }
+
     async defaultAction() {
         this.content.list.add(await this.identity.appA.createText('new item'));
     }
