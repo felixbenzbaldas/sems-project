@@ -76,6 +76,9 @@ export class Starter {
             app.appA.simple_createButton('export content', async () => {
                 await app.appA.abstractUi.globalEvent_exportContent();
             }),
+            app.appA.simple_createButton('import to content', async () => {
+                await app.appA.abstractUi.globalEvent_importToContent();
+            }),
         );
         return app;
     }

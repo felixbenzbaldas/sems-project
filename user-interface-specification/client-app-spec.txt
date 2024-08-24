@@ -22,4 +22,6 @@ describe: client app {
     test: saves text on blur
 
     it: can show and hide input
+
+    it: can import to content
 }
