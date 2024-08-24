@@ -20,6 +20,7 @@ export class Identity {
     pathA: PathA;
     readonly appA: AppA = new AppA(this);
     readonly containerA : ContainerA = new ContainerA(this);
+    editable: boolean;
 
     json() : any {
         return {

@@ -20,4 +20,6 @@ describe: client app {
     it: can hide output
 
     test: saves text on blur
+
+    it: can show and hide input
 }
