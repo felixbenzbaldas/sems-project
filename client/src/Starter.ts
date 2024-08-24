@@ -10,9 +10,18 @@ export class Starter {
         return app;
     }
 
-    static createWebsite() : Identity {
+    static async createWebsite() : Promise<Identity> {
         let app = Starter.createAppWithUI();
         app.appA.abstractUi.isWebsite = true;
+        let toReplaceDuringDeployment : Identity;
+        let markerBody = 'marker-dr53hifhh4-body';
+        if (markerBody.startsWith('marker')) {
+            toReplaceDuringDeployment = app.appA.simple_createText('[ to replace during deployment ]');
+        } else {
+            toReplaceDuringDeployment = await app.appA.createList();
+            toReplaceDuringDeployment.text = 'marker-dr53hifhh4-header';
+            await app.appA.addAllToListFromRawData(toReplaceDuringDeployment, JSON.parse(markerBody));
+        }
         app.appA.abstractUi.content.list.add(
             app.appA.simple_createText('This is the Sems software. It is being developed. New features will be added.'),
             app.appA.simple_createText(''),
@@ -44,7 +53,7 @@ export class Starter {
                 )
             ),
             app.appA.simple_createText(''),
-            app.appA.simple_createText('marker-dr53hifhh4'),
+            toReplaceDuringDeployment,
         );
         return app;
     }
