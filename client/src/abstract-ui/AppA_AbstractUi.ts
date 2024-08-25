@@ -25,11 +25,11 @@ export class AppA_AbstractUi {
     }
 
     async globalEvent_exportApp() {
-        this.output.set(JSON.stringify(await this.identity.export()));
+        this.output.set(JSON.stringify(await this.identity.export_keepContainerStructure_ignoreExternalDependencies()));
     }
 
     async globalEvent_exportContent() {
-        this.output.set(JSON.stringify(await this.content.export()));
+        this.output.set(JSON.stringify(await this.content.export_allDependenciesInOneContainer()));
     }
 
     async globalEvent_importToContent() {

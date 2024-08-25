@@ -33,7 +33,7 @@ describe('list', () => {
         let item = await app.appA.createText('bar');
         list.list.add(item);
 
-        let exported : any = await list.export();
+        let exported : any = await list.export_allDependenciesInOneContainer();
 
         expect(exported.dependencies).toBeTruthy();
         expect(exported.dependencies[0].name).toEqual(item.name);

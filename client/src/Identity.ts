@@ -89,7 +89,7 @@ export class Identity {
         }
     }
 
-    async export() {
+    async export_keepContainerStructure_ignoreExternalDependencies() {
         let exported = this.json();
         if(this.containerA.mapNameIdentity) {
             exported.objects = {};
@@ -97,6 +97,11 @@ export class Identity {
                 exported.objects[name] = identity.json();
             });
         }
+        return exported;
+    }
+
+    async export_allDependenciesInOneContainer() {
+        let exported = this.json();
         let dependencies = this.getDependencies();
         if (dependencies.size > 0) {
             exported.dependencies = [];
