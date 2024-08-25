@@ -75,13 +75,13 @@ function isEditable() : boolean {
 
 <template>
     <div v-if="!hidden" style="display: inline">
-        <div v-if="identity.appA.abstractUi?.commands">
-            <VueUI :identity="identity.appA.abstractUi.commands" :is-view="true"/>
+        <div v-if="identity.appA?.abstractUi?.commands">
+            <VueUI :identity="identity.appA?.abstractUi.commands" :is-view="true"/>
         </div>
-        <VueUI v-if="identity.appA.abstractUi" :identity="props.identity.appA.abstractUi.output.getUi()" :is-view="true"></VueUI>
-        <VueUI v-if="identity.appA.abstractUi && !identity.appA.abstractUi.isWebsite" :identity="props.identity.appA.abstractUi.input.getUi()" :is-view="true"></VueUI>
-        <div v-if="identity.appA.abstractUi && !identity.appA.abstractUi.isWebsite" style="margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: dashed"></div>
-        <VueUI v-if="identity.appA.abstractUi" :identity="identity.appA.abstractUi.content" :is-view="identity.appA.abstractUi.isWebsite"/>
+        <VueUI v-if="identity.appA?.abstractUi" :identity="props.identity.appA.abstractUi.output.getUi()" :is-view="true"></VueUI>
+        <VueUI v-if="identity.appA?.abstractUi && !identity.appA.abstractUi.isWebsite" :identity="props.identity.appA.abstractUi.input.getUi()" :is-view="true"></VueUI>
+        <div v-if="identity.appA?.abstractUi && !identity.appA.abstractUi.isWebsite" style="margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: dashed"></div>
+        <VueUI v-if="identity.appA?.abstractUi" :identity="identity.appA.abstractUi.content" :is-view="identity.appA.abstractUi.isWebsite"/>
         <button v-else-if="identity.action" @click="identity.action()" style="margin: 0.3rem 0.3rem 0.3rem 0rem">
             {{text}}
         </button>

@@ -1,11 +1,13 @@
 import {Identity} from "@/Identity";
 import {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
+import {AppA} from "@/core/AppA";
 
 export class Starter {
 
     static createApp() : Identity {
         let app = new Identity();
         app.text = 'Sems application';
+        app.appA = new AppA(app);
         app.containerA.mapNameIdentity = new Map();
         return app;
     }
@@ -87,6 +89,7 @@ export class Starter {
         let app = new Identity();
         app.text = 'todo: load from server';
         app.containerA.mapNameIdentity = new Map();
+        app.appA = new AppA(app);
         app.appA.server = 'http://localhost:' + port + '/';
         return app;
     }

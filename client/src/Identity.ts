@@ -14,19 +14,21 @@ export class Identity {
     text : string;
     link : string;
     list : ListA;
+    app: Identity;
     action: Function;
     readonly subject: Subject<any> = new Subject<any>();
     hidden: boolean = false;
     pathA: PathA;
-    readonly appA: AppA = new AppA(this);
+    appA: AppA;
     readonly containerA : ContainerA = new ContainerA(this);
     editable: boolean;
+
 
     json() : any {
         return {
             'text': this.text,
             'list': this.list?.json(),
-            'content': this.appA.abstractUi?.content.json(),
+            'content': this.appA?.abstractUi?.content.json(),
         }
     }
 
@@ -70,11 +72,11 @@ export class Identity {
     getPath(object: Identity) : Identity {
         if (this.containerA.mapNameIdentity) {
             if (object.container === this) {
-                return this.appA.createPath([object.name]);
+                return this.getApp().appA.createPath([object.name]);
             }
         } else {
             if (this.container) {
-                return this.appA.createPath(['..', ...this.container.getPath(object).pathA.listOfNames]);
+                return this.getApp().appA.createPath(['..', ...this.container.getPath(object).pathA.listOfNames]);
             } else {
                 throw 'not implemented yet';
             }
@@ -130,5 +132,13 @@ export class Identity {
 
     ui_hasFocus() {
         return this.appA.abstractUi.focused == this;
+    }
+
+    getApp() {
+        if (this.appA) {
+            return this;
+        } else {
+            return this.app;
+        }
     }
 }

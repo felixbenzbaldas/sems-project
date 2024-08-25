@@ -13,7 +13,7 @@ describe('app', () => {
     it('can create an identity', async () => {
         let app : Identity = Starter.createApp();
 
-        let identity : Identity = app.appA.createIdentity();
+        let identity : Identity = app.appA.createIdentityWithApp();
 
         expect(identity).toBeTruthy();
     });

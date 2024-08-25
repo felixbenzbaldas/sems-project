@@ -11,39 +11,45 @@ export class AppA {
     constructor(private identity : Identity) {
     }
 
+    createIdentityWithApp() {
+        let identity = this.createIdentity();
+        identity.app = this.identity;
+        return identity;
+    }
+
     createIdentity() {
         return new Identity();
     }
 
-    // 'simple' means that the created object has no container and no name. It is simply an object in the memory.
+// 'simple' means that the created object has no container and no name. It is simply an object in the memory.
     simple_createList(...jsList : Array<Identity>) : Identity {
-        let list = this.createIdentity();
+        let list = this.createIdentityWithApp();
         list.list = new ListA(list, ...jsList);
         return list;
     }
 
     simple_createText(text: string) : Identity {
-        let identity = this.createIdentity();
+        let identity = this.createIdentityWithApp();
         identity.text = text;
         return identity;
     }
 
     simple_createLink(href: string, text?: string) {
-        let identity = this.createIdentity();
+        let identity = this.createIdentityWithApp();
         identity.link = href;
         identity.text = text;
         return identity;
     }
 
     simple_createTextWithList(text : string, ...jsList : Array<Identity>) : Identity {
-        let identity = this.createIdentity();
+        let identity = this.createIdentityWithApp();
         identity.text = text;
         identity.list = new ListA(identity, ...jsList);
         return identity;
     }
 
     simple_createButton(label : string, func : Function) : Identity {
-        let button = this.createIdentity();
+        let button = this.createIdentityWithApp();
         button.text = label;
         button.action = func;
         return button;
@@ -62,7 +68,7 @@ export class AppA {
     }
 
     createPath(listOfNames: Array<string>) {
-        let path = this.createIdentity();
+        let path = this.createIdentityWithApp();
         path.pathA = new PathA(listOfNames);
         return path;
     }

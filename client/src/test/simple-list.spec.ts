@@ -8,7 +8,7 @@ describe('simple list', () => {
         let app : Identity = Starter.createApp();
         let list : Identity = app.appA.simple_createList();
 
-        list.list.add(app.appA.createIdentity());
+        list.list.add(app.appA.createIdentityWithApp());
 
         expect(list.list.jsList.length).toBe(1);
     });

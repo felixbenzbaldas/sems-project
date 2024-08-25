@@ -12,7 +12,7 @@ export class ContainerA {
     }
 
     async getByName(name: string) : Promise<Identity> {
-        let identity = this.identity.appA.createIdentity();
+        let identity = this.identity.appA.createIdentityWithApp();
         identity.text = '42'; // TODO http-request
         return Promise.resolve(identity);
     }
