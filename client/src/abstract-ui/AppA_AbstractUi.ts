@@ -38,6 +38,6 @@ export class AppA_AbstractUi {
     }
 
     async defaultAction() {
-        this.content.list.add(await this.identity.appA.createText('new item'));
+        this.content.list.add(await this.identity.appA.createText(''));
     }
 }

@@ -24,4 +24,6 @@ describe: client app {
     it: can show and hide input
 
     it: can import to content
+
+    test: empty, editable objects are not invisible
 }

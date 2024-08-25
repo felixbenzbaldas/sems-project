@@ -67,6 +67,10 @@ function saveText(event: any) {
     props.identity.setText(event.target.innerText.trim());
 }
 
+function isEditable() : boolean {
+    return !props.isView || props.identity.editable;
+}
+
 </script>
 
 <template>
@@ -86,7 +90,7 @@ function saveText(event: any) {
             {{neitherNullNorUndefined(text) ? text : identity.link }}
         </a>
         <div v-else-if="neitherNullNorUndefined(text)">
-            <div style="min-height: 1rem; white-space: pre-wrap;" :contenteditable="!props.isView || identity.editable" @blur="saveText">
+            <div :class="{empty: !text && isEditable()}" style="min-height: 1rem; white-space: pre-wrap;" :contenteditable="isEditable()" @blur="saveText">
                 {{text}}
             </div>
             <div v-if="identity.list && hasListItem" style="margin-left: 0.8rem; margin-top: 0.2rem; margin-bottom: 0.2rem">
@@ -98,4 +102,9 @@ function saveText(event: any) {
 </template>
 
 <style scoped>
+
+.empty {
+    border-left: solid;
+}
+
 </style>
