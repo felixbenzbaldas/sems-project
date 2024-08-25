@@ -62,7 +62,7 @@ export class Identity {
     }
 
     async defaultAction() {
-        if (this.appA.abstractUi) {
+        if (this.appA?.abstractUi) {
             await this.appA.abstractUi.defaultAction();
         } else {
             throw 'not implemented yet';

@@ -53,4 +53,12 @@ describe('abstract ui', () => {
         expect(app.appA.abstractUi.focused).toBe(app);
         expect(app.ui_hasFocus()).toBeTruthy();
     });
+
+    test('Created object has focus', async () => {
+        let app = Starter.createAppWithUI();
+
+        await app.appA.abstractUi.globalEvent_defaultAction();
+
+        expect((await app.appA.abstractUi.content.list.getObject(0)).ui_hasFocus()).toBeTruthy();
+    });
 });

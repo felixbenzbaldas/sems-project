@@ -28,4 +28,8 @@ export class ListA {
             }
         });
     }
+
+    async getObject(index : number) : Promise<Identity> {
+        return this.identity.resolve(this.jsList.at(index));
+    }
 }

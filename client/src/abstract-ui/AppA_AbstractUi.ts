@@ -37,6 +37,8 @@ export class AppA_AbstractUi {
     }
 
     async defaultAction() {
-        this.content.list.add(await this.identity.appA.createText(''));
+        let created = await this.identity.appA.createText('');
+        this.content.list.add(created);
+        this.focused = created;
     }
 }
