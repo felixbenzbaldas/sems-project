@@ -131,7 +131,7 @@ export class Identity {
     }
 
     ui_hasFocus() {
-        return this.appA.abstractUi.focused == this;
+        return this.getApp().appA.abstractUi.focused == this;
     }
 
     getApp() {
