@@ -33,6 +33,7 @@ export class AppA_AbstractUi {
     }
 
     async globalEvent_importToContent() {
+        this.input.showInput();
         await this.identity.appA.addAllToListFromRawData(this.content, JSON.parse(this.input.get()));
     }
 
