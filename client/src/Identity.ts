@@ -127,4 +127,8 @@ export class Identity {
         // TODO get recursive dependencies
         return set;
     }
+
+    ui_hasFocus() {
+        return this.appA.abstractUi.focused == this;
+    }
 }

@@ -9,8 +9,7 @@ export class AppA_AbstractUi {
     isWebsite: boolean;
     readonly output : Output;
     readonly input : Input;
-
-    private focused : Identity;
+    focused : Identity;
 
     constructor(private identity: Identity) {
         this.content = identity.appA.simple_createList();

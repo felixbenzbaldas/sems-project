@@ -1,4 +1,4 @@
-import {describe, expect, it} from "vitest";
+import {describe, expect, it, test} from "vitest";
 import {Identity} from "@/Identity";
 import {Starter} from "@/Starter";
 
@@ -45,5 +45,12 @@ describe('abstract ui', () => {
         await app.appA.abstractUi.globalEvent_importToContent();
 
         expect(app.containerA.mapNameIdentity.size).toBe(1);
+    });
+
+    test('At beginning the app object has the focus', async () => {
+        let app = Starter.createAppWithUI();
+
+        expect(app.appA.abstractUi.focused).toBe(app);
+        expect(app.ui_hasFocus()).toBeTruthy();
     });
 });
