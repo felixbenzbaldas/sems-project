@@ -1,0 +1,12 @@
+In this project the user-interface should be implemented with plain JavaScript. No ui-Framework will be used for coding the ui. The existing Vue.js code will be replaced.
+
+There will only be a Vue.js wrapper to use the hotdeployment feature of Vue.js.
+
+This will have the following benefits:
+- the aspect concept can be used for building the ui. The architecture becomes clear and consistent.
+- the code becomes simpler: no need for knowing a specific ui-framework. All you need to understand the client code is plain JavaScript, HTML and CSS.
+- it will be possible to test ui-features without a special ui-testing-framework.
+- the old Sems application is also implemtented without a ui-framework. Therefore some code can be reused.
+- it will be easy to reuse Sems-code in other projects. There is no dependency to a specific ui-framework.
+
+(Maybe in the future a ui-framework will be used for special use cases.)
