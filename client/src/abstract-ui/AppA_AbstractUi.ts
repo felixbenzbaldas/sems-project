@@ -1,6 +1,7 @@
 import {Identity} from "@/Identity";
 import {Output} from "@/abstract-ui/Output";
 import {Input} from "@/abstract-ui/Input";
+import {AppA_AbstractUi_JS} from "@/ui/AppA_AbstractUi_JS";
 
 export class AppA_AbstractUi {
 
@@ -10,12 +11,14 @@ export class AppA_AbstractUi {
     readonly output : Output;
     readonly input : Input;
     focused : Identity;
+    readonly js: AppA_AbstractUi_JS;
 
     constructor(private identity: Identity) {
         this.content = identity.appA.simple_createList();
         this.content.container = identity;
         this.output = new Output(identity);
         this.input = new Input(identity);
+        this.js = new AppA_AbstractUi_JS(identity);
         this.focused = identity;
     }
 
