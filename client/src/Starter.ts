@@ -1,5 +1,5 @@
 import {Identity} from "@/Identity";
-import {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
+import {AppA_Ui} from "@/ui/AppA_Ui";
 import {AppA} from "@/core/AppA";
 
 export class Starter {
@@ -14,7 +14,7 @@ export class Starter {
 
     static async createWebsite() : Promise<Identity> {
         let app = Starter.createAppWithUI();
-        app.appA.abstractUi.isWebsite = true;
+        app.appA.ui.isWebsite = true;
         let toReplaceDuringDeployment : Identity;
         let markerBody = 'marker-dr53hifhh4-body';
         if (markerBody.startsWith('marker')) {
@@ -24,7 +24,7 @@ export class Starter {
             toReplaceDuringDeployment.text = 'marker-dr53hifhh4-header';
             await app.appA.addAllToListFromRawData(toReplaceDuringDeployment, JSON.parse(markerBody));
         }
-        app.appA.abstractUi.content.list.add(
+        app.appA.ui.content.list.add(
             app.appA.simple_createText('This is the Sems software. It is being developed. New features will be added.'),
             app.appA.simple_createText(''),
             app.appA.simple_createTextWithList('Sems-Client-App',
@@ -62,24 +62,24 @@ export class Starter {
 
     static createAppWithUI() : Identity {
         let app = Starter.createApp();
-        app.appA.abstractUi = new AppA_AbstractUi(app);
+        app.appA.ui = new AppA_Ui(app);
         return app;
     }
 
     static createAppWithUIWithCommands() : Identity {
         let app = this.createAppWithUI();
-        app.appA.abstractUi.commands = app.appA.simple_createTextWithList('commands',
+        app.appA.ui.commands = app.appA.simple_createTextWithList('commands',
             app.appA.simple_createButton('default action', async () => {
-                await app.appA.abstractUi.globalEvent_defaultAction();
+                await app.appA.ui.globalEvent_defaultAction();
             }),
             app.appA.simple_createButton('export app', async () => {
-                await app.appA.abstractUi.globalEvent_exportApp();
+                await app.appA.ui.globalEvent_exportApp();
             }),
             app.appA.simple_createButton('export content', async () => {
-                await app.appA.abstractUi.globalEvent_exportContent();
+                await app.appA.ui.globalEvent_exportContent();
             }),
             app.appA.simple_createButton('import to content', async () => {
-                await app.appA.abstractUi.globalEvent_importToContent();
+                await app.appA.ui.globalEvent_importToContent();
             }),
         );
         return app;

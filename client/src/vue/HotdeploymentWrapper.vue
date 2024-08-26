@@ -6,7 +6,7 @@ import {type Ref, ref} from "vue";
 import vue from "@vitejs/plugin-vue";
 
 let app : Identity = await Starter.createFromUrl();
-let html = app.appA.abstractUi.js.getHtmlElement();
+let html = app.appA.ui.js.getHtmlElement();
 
 while (document.body.children.length > 0) {
     document.body.removeChild(document.body.children.item(0));

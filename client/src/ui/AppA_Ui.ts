@@ -1,9 +1,9 @@
 import {Identity} from "@/Identity";
-import {Output} from "@/abstract-ui/Output";
-import {Input} from "@/abstract-ui/Input";
-import {AppA_AbstractUi_JS} from "@/ui/AppA_AbstractUi_JS";
+import {Output} from "@/ui/Output";
+import {Input} from "@/ui/Input";
+import {AppA_Ui_JS} from "@/ui/AppA_Ui_JS";
 
-export class AppA_AbstractUi {
+export class AppA_Ui {
 
     readonly content: Identity;
     commands: Identity;
@@ -11,14 +11,14 @@ export class AppA_AbstractUi {
     readonly output : Output;
     readonly input : Input;
     focused : Identity;
-    readonly js: AppA_AbstractUi_JS;
+    readonly js: AppA_Ui_JS;
 
     constructor(private identity: Identity) {
         this.content = identity.appA.simple_createList();
         this.content.container = identity;
         this.output = new Output(identity);
         this.input = new Input(identity);
-        this.js = new AppA_AbstractUi_JS(identity);
+        this.js = new AppA_Ui_JS(identity);
         this.focused = identity;
     }
 

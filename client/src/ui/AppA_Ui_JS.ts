@@ -1,7 +1,6 @@
-import {Starter} from "@/Starter";
 import type {Identity} from "@/Identity";
 
-export class AppA_AbstractUi_JS {
+export class AppA_Ui_JS {
 
     constructor(private identity : Identity) {
     }

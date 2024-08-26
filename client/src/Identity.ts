@@ -28,7 +28,7 @@ export class Identity {
         return {
             'text': this.text,
             'list': this.list?.json(),
-            'content': this.appA?.abstractUi?.content.json(),
+            'content': this.appA?.ui?.content.json(),
         }
     }
 
@@ -62,8 +62,8 @@ export class Identity {
     }
 
     async defaultAction() {
-        if (this.appA?.abstractUi) {
-            await this.appA.abstractUi.defaultAction();
+        if (this.appA?.ui) {
+            await this.appA.ui.defaultAction();
         } else {
             throw 'not implemented yet';
         }
@@ -131,7 +131,7 @@ export class Identity {
     }
 
     ui_hasFocus() {
-        return this.getApp().appA.abstractUi.focused == this;
+        return this.getApp().appA.ui.focused == this;
     }
 
     getApp() {

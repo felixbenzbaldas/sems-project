@@ -1,11 +1,11 @@
-import type {AppA_AbstractUi} from "@/abstract-ui/AppA_AbstractUi";
+import type {AppA_Ui} from "@/ui/AppA_Ui";
 import {ListA} from "@/core/ListA";
 import {PathA} from "@/core/PathA";
 import {Identity} from "@/Identity";
 
 export class AppA {
 
-    abstractUi: AppA_AbstractUi;
+    ui: AppA_Ui;
     server: string;
 
     constructor(private identity : Identity) {
