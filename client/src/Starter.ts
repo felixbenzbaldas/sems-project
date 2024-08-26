@@ -64,7 +64,6 @@ export class Starter {
     static createAppWithUI() : Identity {
         let app = Starter.createApp();
         app.appA.ui = new AppA_Ui(app);
-        app.ui_js = new Ui_JS(app);
         return app;
     }
 

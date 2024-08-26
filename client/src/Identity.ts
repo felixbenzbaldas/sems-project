@@ -3,7 +3,7 @@ import {Subject} from "rxjs";
 import {PathA} from "@/core/PathA";
 import {AppA} from "@/core/AppA";
 import {ContainerA} from "@/core/ContainerA";
-import type {Ui_JS} from "@/ui/Ui_JS";
+import {Ui_JS} from "@/ui/Ui_JS";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
@@ -23,7 +23,7 @@ export class Identity {
     appA: AppA;
     readonly containerA : ContainerA = new ContainerA(this);
     editable: boolean;
-    ui_js: Ui_JS;
+    readonly ui_js: Ui_JS = new Ui_JS(this);
 
 
     json() : any {
