@@ -4,4 +4,12 @@ describe: website {
     }
 
     it: shows text
+
+    it: explains itself
+
+    test: content is readonly
+
+    it: can open Sems-Client-App
+
+    test: link is clickable
 }
