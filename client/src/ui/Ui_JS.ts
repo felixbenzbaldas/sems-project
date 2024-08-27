@@ -2,12 +2,25 @@ import type {Identity} from "@/Identity";
 
 export class Ui_JS {
 
-    readonly div : HTMLDivElement = document.createElement('div');
+    private _uiElement : HTMLDivElement;
 
     constructor(private identity : Identity) {
     }
 
-    getUiElement(): HTMLElement {
+
+    uiElement(): HTMLElement {
+        if (!this._uiElement) {
+            this._uiElement = document.createElement('div')
+            this.update();
+            this.identity.subject.subscribe(event => {
+                this.update();
+            });
+        }
+        return this._uiElement;
+    }
+
+    private update() {
+        this._uiElement.innerHTML = null;
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 if (this.identity.appA.ui.commands) {
@@ -22,12 +35,12 @@ export class Ui_JS {
             } else if (this.identity.action) {
                 let button = document.createElement('button');
                 button.innerText = this.identity.text;
-                button.onclick = this.identity.action();
+                button.onclick = (event) => { this.identity.action(); };
                 button.style.margin = '0.3rem 0.3rem 0.3rem 0rem';
-                this.div.style.display = 'inline';
+                this._uiElement.style.display = 'inline';
                 this.addHtml(button);
             } else if (this.identity.pathA) {
-                this.div.innerText = 'a path starting with ' + this.identity.pathA.listOfNames.at(0);
+                this._uiElement.innerText = 'a path starting with ' + this.identity.pathA.listOfNames.at(0);
             } else if (this.neitherNullNorUndefined(this.identity.link)) {
                 let link = document.createElement('a');
                 link.href = this.identity.link;
@@ -48,7 +61,7 @@ export class Ui_JS {
                     list.style.marginTop = '0.2rem';
                     list.style.marginBottom = '0.2rem';
                     for (let current of this.identity.list.jsList) {
-                        list.appendChild(current.ui_js.getUiElement());
+                        list.appendChild(current.ui_js.uiElement());
                     }
                     this.addHtml(list);
                 }
@@ -58,7 +71,6 @@ export class Ui_JS {
                 });
             }
         }
-        return this.div;
     }
 
     private separatorLine() {
@@ -74,10 +86,10 @@ export class Ui_JS {
     }
 
     private addObject(identity : Identity) {
-        this.addHtml(identity.ui_js.getUiElement());
+        this.addHtml(identity.ui_js.uiElement());
     }
 
     private addHtml(htmlElement : HTMLElement) {
-        this.div.appendChild(htmlElement);
+        this._uiElement.appendChild(htmlElement);
     }
 }
