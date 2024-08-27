@@ -3,6 +3,7 @@ import type {Identity} from "@/Identity";
 export class Ui_JS {
 
     private _uiElement : HTMLDivElement;
+    editable: boolean = false;
 
     constructor(private identity : Identity) {
     }
@@ -29,6 +30,7 @@ export class Ui_JS {
                     this.addObject(this.identity.appA.ui.output.getUi());
                     this.addObject(this.identity.appA.ui.input.getUi());
                     this.addHtml(this.separatorLine());
+                    this.identity.appA.ui.content.ui_js.editable = true;
                 }
                 this.addObject(this.identity.appA.ui.content);
             } else if (this.identity.action) {
@@ -53,34 +55,33 @@ export class Ui_JS {
                 textElement.onblur = (event : any) => {
                     this.identity.setText(event.target.innerText.trim())
                 }
-                if (this.identity.text.length === 0) {
+                textElement.contentEditable = (this.isEditable()) ? 'true' : 'false';
+                if (this.identity.ui_js.isEditable() && this.identity.text.length === 0) {
                     textElement.style.borderLeft = 'solid';
                 }
                 this.addHtml(textElement);
                 if (this.identity.list && this.identity.list.jsList.length > 0) {
-                    let list = document.createElement('div');
-                    list.style.marginLeft = '0.8rem';
-                    list.style.marginTop = '0.2rem';
-                    list.style.marginBottom = '0.2rem';
-                    for (let current of this.identity.list.jsList) {
-                        if (current.pathA) {
-                            list.appendChild((await this.identity.resolve(current)).ui_js.uiElement());
-                        } else {
-                            list.appendChild(current.ui_js.uiElement());
-                        }
-                    };
-                    this.addHtml(list);
+                    let listWrapper = document.createElement('div');
+                    listWrapper.style.marginLeft = '0.8rem';
+                    listWrapper.style.marginTop = '0.2rem';
+                    listWrapper.style.marginBottom = '0.2rem';
+                    listWrapper.appendChild(await this.createListElement());
+                    this.addHtml(listWrapper);
                 }
             } else if (this.identity.list) {
-                for (let current of this.identity.list.jsList) {
-                    if (current.pathA) {
-                        this.addObject(await this.identity.resolve(current));
-                    } else {
-                        this.addObject(current);
-                    }
-                };
+                this.addHtml(await this.createListElement());
             }
         }
+    }
+
+    private async createListElement() : Promise<HTMLElement> {
+        let div = document.createElement('div');
+        for (let current of this.identity.list.jsList) {
+            let resolved = current.pathA ? await this.identity.resolve(current) : current;
+            resolved.ui_js.editable = this.identity.ui_js.isEditable();
+            div.appendChild(resolved.ui_js.uiElement());
+        }
+        return div;
     }
 
     private separatorLine() {
@@ -101,5 +102,9 @@ export class Ui_JS {
 
     private addHtml(htmlElement : HTMLElement) {
         this._uiElement.appendChild(htmlElement);
+    }
+
+    isEditable() {
+        return this.editable || this.identity.editable;
     }
 }
