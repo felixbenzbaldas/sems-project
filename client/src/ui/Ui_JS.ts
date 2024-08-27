@@ -7,19 +7,18 @@ export class Ui_JS {
     constructor(private identity : Identity) {
     }
 
-
     uiElement(): HTMLElement {
         if (!this._uiElement) {
             this._uiElement = document.createElement('div')
-            this.update();
+            this.asyncUpdate();
             this.identity.subject.subscribe(event => {
-                this.update();
+                this.asyncUpdate();
             });
         }
         return this._uiElement;
     }
 
-    private update() {
+    private async asyncUpdate() {
         this._uiElement.innerHTML = null;
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
@@ -54,6 +53,9 @@ export class Ui_JS {
                 textElement.onblur = (event : any) => {
                     this.identity.setText(event.target.innerText.trim())
                 }
+                if (this.identity.text.length === 0) {
+                    textElement.style.borderLeft = 'solid';
+                }
                 this.addHtml(textElement);
                 if (this.identity.list && this.identity.list.jsList.length > 0) {
                     let list = document.createElement('div');
@@ -61,14 +63,22 @@ export class Ui_JS {
                     list.style.marginTop = '0.2rem';
                     list.style.marginBottom = '0.2rem';
                     for (let current of this.identity.list.jsList) {
-                        list.appendChild(current.ui_js.uiElement());
-                    }
+                        if (current.pathA) {
+                            list.appendChild((await this.identity.resolve(current)).ui_js.uiElement());
+                        } else {
+                            list.appendChild(current.ui_js.uiElement());
+                        }
+                    };
                     this.addHtml(list);
                 }
             } else if (this.identity.list) {
-                this.identity.list.jsList.forEach((current) => {
-                    this.addObject(current);
-                });
+                for (let current of this.identity.list.jsList) {
+                    if (current.pathA) {
+                        this.addObject(await this.identity.resolve(current));
+                    } else {
+                        this.addObject(current);
+                    }
+                };
             }
         }
     }
