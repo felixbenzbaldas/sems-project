@@ -10,13 +10,20 @@ describe('client-app_ui_js', () => {
 
     beforeEach(async () => {
         app = Starter.createAppWithUIWithCommands()
-        app.ui_js.uiElement();
-        await app.ui_js.waitForUpdate();
+        await app.ui_js.asyncUpdate();
         userPerspective = app.appA.ui.js.userPerspectiveG;
     });
 
     it('contains button for object creation', async () => {
         expect(userPerspective.getRawText()).contains('default action');
+    });
+
+    it('can create new object', async () => {
+        let numberOfEditableTexts_before = userPerspective.numberOfEditableTexts();
+
+        await userPerspective.click('default action');
+
+        expect(userPerspective.numberOfEditableTexts()).greaterThan(numberOfEditableTexts_before);
     });
 
 });

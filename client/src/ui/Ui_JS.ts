@@ -12,10 +12,9 @@ export class Ui_JS {
     constructor(private identity : Identity) {
     }
 
-    uiElement(): HTMLElement {
+    lazy_uiElement(): HTMLElement {
         if (!this._uiElement) {
-            this._uiElement = document.createElement('div')
-            this.updatePromise = this.asyncUpdate();
+            this._uiElement = document.createElement('div');
             this.identity.subject.subscribe(event => {
                 this.updatePromise = this.asyncUpdate();
             });
@@ -23,20 +22,25 @@ export class Ui_JS {
         return this._uiElement;
     }
 
-    private async asyncUpdate() {
-        this._uiElement.innerHTML = null;
+    async getUpdatedUiElement() : Promise<HTMLElement> {
+        await this.asyncUpdate();
+        return this.lazy_uiElement();
+    }
+
+    async asyncUpdate() {
+        this.lazy_uiElement().innerHTML = null;
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 if (this.identity.appA.ui.commands) {
-                    this.addObject(this.identity.appA.ui.commands);
+                    await this.addObject(this.identity.appA.ui.commands);
                 }
                 if (!this.identity.appA.ui.isWebsite) {
-                    this.addObject(this.identity.appA.ui.output.getUi());
-                    this.addObject(this.identity.appA.ui.input.getUi());
+                    await this.addObject(this.identity.appA.ui.output.getUi());
+                    await this.addObject(this.identity.appA.ui.input.getUi());
                     this.addHtml(this.separatorLine());
                     this.identity.appA.ui.content.ui_js.editable = true;
                 }
-                this.addObject(this.identity.appA.ui.content);
+                await this.addObject(this.identity.appA.ui.content);
             } else if (this.identity.action) {
                 let button = document.createElement('button');
                 button.innerText = this.identity.text;
@@ -85,7 +89,7 @@ export class Ui_JS {
             let resolved = current.pathA ? await this.identity.resolve(current) : current;
             this.resolvedListItems.push(resolved);
             resolved.ui_js.editable = this.identity.ui_js.isEditable();
-            div.appendChild(resolved.ui_js.uiElement());
+            div.appendChild(await resolved.ui_js.getUpdatedUiElement());
         }
         return div;
     }
@@ -102,20 +106,16 @@ export class Ui_JS {
         return toCheck != null && toCheck != undefined;
     }
 
-    private addObject(identity : Identity) {
-        this.addHtml(identity.ui_js.uiElement());
+    private async addObject(identity : Identity) {
+        this.addHtml(await identity.ui_js.getUpdatedUiElement());
     }
 
     private addHtml(htmlElement : HTMLElement) {
-        this._uiElement.appendChild(htmlElement);
+        this.lazy_uiElement().appendChild(htmlElement);
     }
 
     isEditable() {
         return this.editable || this.identity.editable;
-    }
-
-    async waitForUpdate() : Promise<void> {
-        return this.updatePromise;
     }
 
     getRawText() : string {
@@ -152,5 +152,53 @@ export class Ui_JS {
 
     private addRawText(text : string) {
         this.rawText += text;
+    }
+
+    async click(text : string) {
+        if (!this.identity.hidden) {
+            if (this.identity.appA?.ui) {
+                if (this.identity.appA.ui.commands) {
+                    await this.identity.appA.ui.commands.ui_js.click(text);
+                }
+                if (!this.identity.appA.ui.isWebsite) {
+                    await this.identity.appA.ui.output.getUi().ui_js.click(text);
+                    await this.identity.appA.ui.input.getUi().ui_js.click(text);
+                }
+                await this.identity.appA.ui.content.ui_js.click(text);
+            } else if (this.identity.action) {
+                if (this.identity.text.includes(text)) {
+                    await this.identity.action();
+                }
+            } else if (this.resolvedListItems) {
+                for (let current of this.resolvedListItems) {
+                    await current.ui_js.click(text);
+                }
+            }
+        }
+    }
+
+    numberOfEditableTexts() {
+        let counter = 0;
+        if (!this.identity.hidden) {
+            if (this.identity.appA?.ui) {
+                if (this.identity.appA.ui.commands) {
+                    counter += this.identity.appA.ui.commands.ui_js.numberOfEditableTexts();
+                }
+                if (!this.identity.appA.ui.isWebsite) {
+                    counter += this.identity.appA.ui.output.getUi().ui_js.numberOfEditableTexts();
+                    counter += this.identity.appA.ui.input.getUi().ui_js.numberOfEditableTexts();
+                }
+                counter += this.identity.appA.ui.content.ui_js.numberOfEditableTexts();
+            } else if (this.neitherNullNorUndefined(this.identity.text)) {
+                if (this.identity.ui_js.isEditable()) {
+                    counter++;
+                }
+            } else if (this.resolvedListItems) {
+                for (let current of this.resolvedListItems) {
+                    counter += current.ui_js.numberOfEditableTexts();
+                }
+            }
+        }
+        return counter;
     }
 }
