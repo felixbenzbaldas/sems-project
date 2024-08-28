@@ -3,8 +3,6 @@ describe: client app {
         visit http://localhost:5173/?client-app
     }
 
-    it: contains button for object creation
-
     it: can create new object
 
     test: content is editable
