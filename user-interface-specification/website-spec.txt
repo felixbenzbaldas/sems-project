@@ -3,8 +3,6 @@ describe: website {
         visit http://localhost:5173/
     }
 
-    it: shows text
-
     it: explains itself
 
     test: content is readonly

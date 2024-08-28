@@ -2,8 +2,12 @@ import type {Identity} from "@/Identity";
 
 export class Ui_JS {
 
-    private _uiElement : HTMLDivElement;
     editable: boolean = false;
+    private _uiElement : HTMLDivElement;
+    private rawText = '';
+    private updatePromise : Promise<void>;
+    private resolvedListItems : Array<Identity>;
+
 
     constructor(private identity : Identity) {
     }
@@ -11,9 +15,9 @@ export class Ui_JS {
     uiElement(): HTMLElement {
         if (!this._uiElement) {
             this._uiElement = document.createElement('div')
-            this.asyncUpdate();
+            this.updatePromise = this.asyncUpdate();
             this.identity.subject.subscribe(event => {
-                this.asyncUpdate();
+                this.updatePromise = this.asyncUpdate();
             });
         }
         return this._uiElement;
@@ -76,8 +80,10 @@ export class Ui_JS {
 
     private async createListElement() : Promise<HTMLElement> {
         let div = document.createElement('div');
+        this.resolvedListItems = [];
         for (let current of this.identity.list.jsList) {
             let resolved = current.pathA ? await this.identity.resolve(current) : current;
+            this.resolvedListItems.push(resolved);
             resolved.ui_js.editable = this.identity.ui_js.isEditable();
             div.appendChild(resolved.ui_js.uiElement());
         }
@@ -106,5 +112,45 @@ export class Ui_JS {
 
     isEditable() {
         return this.editable || this.identity.editable;
+    }
+
+    async waitForUpdate() : Promise<void> {
+        return this.updatePromise;
+    }
+
+    getRawText() : string {
+        this.rawText = '';
+        if (!this.identity.hidden) {
+            if (this.identity.appA?.ui) {
+                if (this.identity.appA.ui.commands) {
+                    this.addRawText(this.identity.appA.ui.commands.ui_js.getRawText());
+                }
+                if (!this.identity.appA.ui.isWebsite) {
+                    this.addRawText(this.identity.appA.ui.output.getUi().ui_js.getRawText());
+                    this.addRawText(this.identity.appA.ui.input.getUi().ui_js.getRawText());
+                }
+                this.addRawText(this.identity.appA.ui.content.ui_js.getRawText());
+            } else if (this.identity.action) {
+                this.addRawText(this.identity.text);
+            } else if (this.neitherNullNorUndefined(this.identity.link)) {
+                this.addRawText((this.identity.text) ? this.identity.text : this.identity.link);
+            } else if (this.neitherNullNorUndefined(this.identity.text)) {
+                this.addRawText(this.identity.text);
+                if (this.resolvedListItems) {
+                    for (let current of this.resolvedListItems) {
+                        this.addRawText(current.ui_js.getRawText());
+                    }
+                }
+            } else if (this.resolvedListItems) {
+                for (let current of this.resolvedListItems) {
+                    this.addRawText(current.ui_js.getRawText());
+                }
+            }
+        }
+        return this.rawText;
+    }
+
+    private addRawText(text : string) {
+        this.rawText += text;
     }
 }
