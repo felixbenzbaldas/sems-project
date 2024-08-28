@@ -5,9 +5,7 @@ export class Ui_JS {
     editable: boolean = false;
     private _uiElement : HTMLDivElement;
     private rawText = '';
-    private updatePromise : Promise<void>;
     private resolvedListItems : Array<Identity>;
-
 
     constructor(private identity : Identity) {
     }
@@ -16,31 +14,31 @@ export class Ui_JS {
         if (!this._uiElement) {
             this._uiElement = document.createElement('div');
             this.identity.subject.subscribe(event => {
-                this.updatePromise = this.asyncUpdate();
+                this.update();
             });
         }
         return this._uiElement;
     }
 
     async getUpdatedUiElement() : Promise<HTMLElement> {
-        await this.asyncUpdate();
+        await this.update();
         return this.lazy_uiElement();
     }
 
-    async asyncUpdate() {
+    async update() {
         this.lazy_uiElement().innerHTML = null;
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 if (this.identity.appA.ui.commands) {
-                    await this.addObject(this.identity.appA.ui.commands);
+                    await this.addUpdatedObject(this.identity.appA.ui.commands);
                 }
                 if (!this.identity.appA.ui.isWebsite) {
-                    await this.addObject(this.identity.appA.ui.output.getUi());
-                    await this.addObject(this.identity.appA.ui.input.getUi());
+                    await this.addUpdatedObject(this.identity.appA.ui.output.getUi());
+                    await this.addUpdatedObject(this.identity.appA.ui.input.getUi());
                     this.addHtml(this.separatorLine());
                     this.identity.appA.ui.content.ui_js.editable = true;
                 }
-                await this.addObject(this.identity.appA.ui.content);
+                await this.addUpdatedObject(this.identity.appA.ui.content);
             } else if (this.identity.action) {
                 let button = document.createElement('button');
                 button.innerText = this.identity.text;
@@ -106,7 +104,7 @@ export class Ui_JS {
         return toCheck != null && toCheck != undefined;
     }
 
-    private async addObject(identity : Identity) {
+    private async addUpdatedObject(identity : Identity) {
         this.addHtml(await identity.ui_js.getUpdatedUiElement());
     }
 

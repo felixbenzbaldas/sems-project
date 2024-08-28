@@ -12,7 +12,7 @@ async function init() {
     }
     document.body.appendChild(html);
 
-    await app.ui_js.asyncUpdate();
+    await app.ui_js.update();
 }
 
 init();
