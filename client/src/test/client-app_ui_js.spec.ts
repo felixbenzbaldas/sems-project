@@ -19,11 +19,11 @@ describe('client-app_ui_js', () => {
     });
 
     it('can create new object', async () => {
-        let numberOfEditableTexts_before = userPerspective.numberOfEditableTexts();
+        let before = userPerspective.countEditableTexts();
 
         await userPerspective.click('default action');
 
-        expect(userPerspective.numberOfEditableTexts()).greaterThan(numberOfEditableTexts_before);
+        expect(userPerspective.countEditableTexts()).greaterThan(before);
     });
 
 });

@@ -177,25 +177,25 @@ export class Ui_JS {
         }
     }
 
-    numberOfEditableTexts() {
+    countEditableTexts() : number {
         let counter = 0;
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 if (this.identity.appA.ui.commands) {
-                    counter += this.identity.appA.ui.commands.ui_js.numberOfEditableTexts();
+                    counter += this.identity.appA.ui.commands.ui_js.countEditableTexts();
                 }
                 if (!this.identity.appA.ui.isWebsite) {
-                    counter += this.identity.appA.ui.output.getUi().ui_js.numberOfEditableTexts();
-                    counter += this.identity.appA.ui.input.getUi().ui_js.numberOfEditableTexts();
+                    counter += this.identity.appA.ui.output.getUi().ui_js.countEditableTexts();
+                    counter += this.identity.appA.ui.input.getUi().ui_js.countEditableTexts();
                 }
-                counter += this.identity.appA.ui.content.ui_js.numberOfEditableTexts();
+                counter += this.identity.appA.ui.content.ui_js.countEditableTexts();
             } else if (this.neitherNullNorUndefined(this.identity.text)) {
                 if (this.identity.ui_js.isEditable()) {
                     counter++;
                 }
             } else if (this.resolvedListItems) {
                 for (let current of this.resolvedListItems) {
-                    counter += current.ui_js.numberOfEditableTexts();
+                    counter += current.ui_js.countEditableTexts();
                 }
             }
         }

@@ -9,8 +9,8 @@ export class AppA_Ui_JS_UserPerspectiveG {
         return this.identity.ui_js.getRawText();
     }
 
-    numberOfEditableTexts() : number {
-        return this.identity.ui_js.numberOfEditableTexts();
+    countEditableTexts() : number {
+        return this.identity.ui_js.countEditableTexts();
     }
 
     async click(text: string) {
