@@ -143,4 +143,8 @@ export class Identity {
             return this.app;
         }
     }
+
+    log(log: string) {
+        this.getApp().appA.logG.log(this, log);
+    }
 }

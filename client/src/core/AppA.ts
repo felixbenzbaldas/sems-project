@@ -2,13 +2,16 @@ import type {AppA_Ui} from "@/ui/AppA_Ui";
 import {ListA} from "@/core/ListA";
 import {PathA} from "@/core/PathA";
 import {Identity} from "@/Identity";
+import {LogG} from "@/LogG";
 
 export class AppA {
 
     ui: AppA_Ui;
     server: string;
+    readonly logG: LogG;
 
     constructor(private identity : Identity) {
+        this.logG = new LogG(identity);
     }
 
     createIdentityWithApp() {
@@ -81,5 +84,4 @@ export class AppA {
             list.list.add(await this.createText(dependencyValue.text));
         }
     }
-
 }

@@ -118,4 +118,15 @@ describe('app', () => {
         expect((await list.resolve(list.list.jsList.at(0))).text).toEqual('new item');
     });
 
+    it('can log', async () => {
+        let app = Starter.createApp();
+        app.text = 'my app';
+        app.appA.logG.toConsole = true;
+        app.appA.logG.toListOfStrings = true;
+
+        app.log('Good morning!');
+
+        expect(app.appA.logG.listOfStrings).contains('my app /// Good morning!');
+    });
+
 });
