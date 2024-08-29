@@ -5,6 +5,19 @@ import {Ui_JS} from "@/ui/Ui_JS";
 
 export class Starter {
 
+    static async createFromUrl() : Promise<Identity> {
+        let app : Identity;
+        let queryParams = new URLSearchParams(window.location.search);
+        if (queryParams.has('local')) {
+            app = Starter.createAppWithUIWithCommands();
+        } else if (queryParams.has('client-app')) {
+            app = Starter.createAppWithUIWithCommands();
+        } else {
+            app = await Starter.createWebsite();
+        }
+        return app;
+    }
+
     static createApp() : Identity {
         let app = new Identity();
         app.text = 'Sems application';
@@ -92,19 +105,6 @@ export class Starter {
         app.containerA.mapNameIdentity = new Map();
         app.appA = new AppA(app);
         app.appA.server = 'http://localhost:' + port + '/';
-        return app;
-    }
-
-    static async createFromUrl() : Promise<Identity> {
-        let app : Identity;
-        let queryParams = new URLSearchParams(window.location.search);
-        if (queryParams.has('local')) {
-            app = Starter.createAppWithUIWithCommands();
-        } else if (queryParams.has('client-app')) {
-            app = Starter.createAppWithUIWithCommands();
-        } else {
-            app = await Starter.createWebsite();
-        }
         return app;
     }
 }
