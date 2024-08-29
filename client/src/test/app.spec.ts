@@ -121,7 +121,7 @@ describe('app', () => {
     it('can log', async () => {
         let app = Starter.createApp();
         app.text = 'my app';
-        app.appA.logG.toConsole = true;
+        // app.appA.logG.toConsole = true;
         app.appA.logG.toListOfStrings = true;
 
         app.log('Good morning!');
