@@ -10,16 +10,15 @@ export class LogG {
     }
 
     log(logger : Identity, log : string) {
-        let loggerDescription;
-        if (logger.text) {
-            loggerDescription = logger.text.substring(0, Math.min(logger.text.length, 20));
-        }
-        if (this.toListOfStrings) {
-            this.listOfStrings.push(loggerDescription + ' /// ' + log);
-        }
-        if (this.toConsole) { // Note: logging to console could lead to a data leak. You should be careful, when using it.
-            if (devtools.enabled) {
-                console.log(loggerDescription + ' /// ' + log);
+        if (this.toListOfStrings || this.toConsole) {
+            let description_short = logger.getDescription_short();
+            if (this.toListOfStrings) {
+                this.listOfStrings.push(description_short + ' /// ' + log);
+            }
+            if (this.toConsole) { // Note: logging to console could lead to a data leak. You should be careful, when using it.
+                if (devtools.enabled) {
+                    console.log(description_short + ' /// ' + log);
+                }
             }
         }
     }

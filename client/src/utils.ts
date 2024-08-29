@@ -3,3 +3,7 @@ export async function wait(milliseconds : number) {
         setTimeout(resolve, milliseconds);
     });
 }
+
+export function notNullUndefined(toCheck : any) {
+    return toCheck != null && toCheck != undefined;
+}

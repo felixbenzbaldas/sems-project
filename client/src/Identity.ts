@@ -4,6 +4,8 @@ import {PathA} from "@/core/PathA";
 import {AppA} from "@/core/AppA";
 import {ContainerA} from "@/core/ContainerA";
 import {Ui_JS} from "@/ui/Ui_JS";
+import {notNullUndefined} from "@/utils";
+import {devtools} from "vue";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
@@ -146,5 +148,21 @@ export class Identity {
 
     log(log: string) {
         this.getApp().appA.logG.log(this, log);
+    }
+
+    getDescription() : string {
+        if(notNullUndefined(this.text)) {
+            return this.text ? this.text : '[empty text]';
+        } else if (this.list) {
+            return 'list (' + this.list.jsList.length + ')';
+        } else if (this.pathA) {
+            return 'path (' + this.pathA.listOfNames + ')';
+        }
+        return '';
+    }
+
+    getDescription_short() {
+        let description = this.getDescription();
+        return description.substring(0, Math.min(description.length, 20));
     }
 }

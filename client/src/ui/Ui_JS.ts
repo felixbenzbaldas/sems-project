@@ -1,4 +1,5 @@
 import type {Identity} from "@/Identity";
+import {notNullUndefined} from "@/utils";
 
 export class Ui_JS {
 
@@ -48,12 +49,12 @@ export class Ui_JS {
                 this.addHtml(button);
             } else if (this.identity.pathA) {
                 this._uiElement.innerText = 'a path starting with ' + this.identity.pathA.listOfNames.at(0);
-            } else if (this.neitherNullNorUndefined(this.identity.link)) {
+            } else if (notNullUndefined(this.identity.link)) {
                 let link = document.createElement('a');
                 link.href = this.identity.link;
-                link.innerText = this.neitherNullNorUndefined(this.identity.text) ? this.identity.text : this.identity.link;
+                link.innerText = notNullUndefined(this.identity.text) ? this.identity.text : this.identity.link;
                 this.addHtml(link);
-            } else if (this.neitherNullNorUndefined(this.identity.text)) {
+            } else if (notNullUndefined(this.identity.text)) {
                 let textElement = document.createElement('div');
                 textElement.innerText = this.identity.text;
                 textElement.style.minHeight = '1rem';
@@ -100,10 +101,6 @@ export class Ui_JS {
         return line;
     }
 
-    neitherNullNorUndefined(toCheck : any) {
-        return toCheck != null && toCheck != undefined;
-    }
-
     private async addUpdatedObject(identity : Identity) {
         this.addHtml(await identity.ui_js.getUpdatedUiElement());
     }
@@ -130,9 +127,9 @@ export class Ui_JS {
                 this.addRawText(this.identity.appA.ui.content.ui_js.getRawText());
             } else if (this.identity.action) {
                 this.addRawText(this.identity.text);
-            } else if (this.neitherNullNorUndefined(this.identity.link)) {
+            } else if (notNullUndefined(this.identity.link)) {
                 this.addRawText((this.identity.text) ? this.identity.text : this.identity.link);
-            } else if (this.neitherNullNorUndefined(this.identity.text)) {
+            } else if (notNullUndefined(this.identity.text)) {
                 this.addRawText(this.identity.text);
                 if (this.resolvedListItems) {
                     for (let current of this.resolvedListItems) {
@@ -187,7 +184,7 @@ export class Ui_JS {
                     counter += this.identity.appA.ui.input.getUi().ui_js.countEditableTexts();
                 }
                 counter += this.identity.appA.ui.content.ui_js.countEditableTexts();
-            } else if (this.neitherNullNorUndefined(this.identity.text)) {
+            } else if (notNullUndefined(this.identity.text)) {
                 if (this.identity.ui_js.isEditable()) {
                     counter++;
                 }
