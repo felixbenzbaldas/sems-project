@@ -1,7 +1,8 @@
 import type {Identity} from "@/Identity";
 import {notNullUndefined} from "@/utils";
 
-export class Ui_JS {
+// TODO: should be an aspect (suffix 'A'), not a group (suffix 'G')
+export class GuiG {
 
     editable: boolean = false;
     private _uiElement : HTMLDivElement;
@@ -37,7 +38,7 @@ export class Ui_JS {
                     await this.addUpdatedObject(this.identity.appA.ui.output.getUi());
                     await this.addUpdatedObject(this.identity.appA.ui.input.getUi());
                     this.addHtml(this.separatorLine());
-                    this.identity.appA.ui.content.ui_js.editable = true;
+                    this.identity.appA.ui.content.guiG.editable = true;
                 }
                 await this.addUpdatedObject(this.identity.appA.ui.content);
             } else if (this.identity.action) {
@@ -63,7 +64,7 @@ export class Ui_JS {
                     this.identity.setText(event.target.innerText.trim())
                 }
                 textElement.contentEditable = (this.isEditable()) ? 'true' : 'false';
-                if (this.identity.ui_js.isEditable() && this.identity.text.length === 0) {
+                if (this.identity.guiG.isEditable() && this.identity.text.length === 0) {
                     textElement.style.borderLeft = 'solid';
                 }
                 this.addHtml(textElement);
@@ -87,8 +88,8 @@ export class Ui_JS {
         for (let current of this.identity.list.jsList) {
             let resolved = current.pathA ? await this.identity.resolve(current) : current;
             this.resolvedListItems.push(resolved);
-            resolved.ui_js.editable = this.identity.ui_js.isEditable();
-            div.appendChild(await resolved.ui_js.getUpdatedUiElement());
+            resolved.guiG.editable = this.identity.guiG.isEditable();
+            div.appendChild(await resolved.guiG.getUpdatedUiElement());
         }
         return div;
     }
@@ -102,7 +103,7 @@ export class Ui_JS {
     }
 
     private async addUpdatedObject(identity : Identity) {
-        this.addHtml(await identity.ui_js.getUpdatedUiElement());
+        this.addHtml(await identity.guiG.getUpdatedUiElement());
     }
 
     private addHtml(htmlElement : HTMLElement) {
@@ -118,13 +119,13 @@ export class Ui_JS {
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 if (this.identity.appA.ui.commands) {
-                    this.addRawText(this.identity.appA.ui.commands.ui_js.getRawText());
+                    this.addRawText(this.identity.appA.ui.commands.guiG.getRawText());
                 }
                 if (!this.identity.appA.ui.isWebsite) {
-                    this.addRawText(this.identity.appA.ui.output.getUi().ui_js.getRawText());
-                    this.addRawText(this.identity.appA.ui.input.getUi().ui_js.getRawText());
+                    this.addRawText(this.identity.appA.ui.output.getUi().guiG.getRawText());
+                    this.addRawText(this.identity.appA.ui.input.getUi().guiG.getRawText());
                 }
-                this.addRawText(this.identity.appA.ui.content.ui_js.getRawText());
+                this.addRawText(this.identity.appA.ui.content.guiG.getRawText());
             } else if (this.identity.action) {
                 this.addRawText(this.identity.text);
             } else if (notNullUndefined(this.identity.link)) {
@@ -133,12 +134,12 @@ export class Ui_JS {
                 this.addRawText(this.identity.text);
                 if (this.resolvedListItems) {
                     for (let current of this.resolvedListItems) {
-                        this.addRawText(current.ui_js.getRawText());
+                        this.addRawText(current.guiG.getRawText());
                     }
                 }
             } else if (this.resolvedListItems) {
                 for (let current of this.resolvedListItems) {
-                    this.addRawText(current.ui_js.getRawText());
+                    this.addRawText(current.guiG.getRawText());
                 }
             }
         }
@@ -153,20 +154,20 @@ export class Ui_JS {
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 if (this.identity.appA.ui.commands) {
-                    await this.identity.appA.ui.commands.ui_js.click(text);
+                    await this.identity.appA.ui.commands.guiG.click(text);
                 }
                 if (!this.identity.appA.ui.isWebsite) {
-                    await this.identity.appA.ui.output.getUi().ui_js.click(text);
-                    await this.identity.appA.ui.input.getUi().ui_js.click(text);
+                    await this.identity.appA.ui.output.getUi().guiG.click(text);
+                    await this.identity.appA.ui.input.getUi().guiG.click(text);
                 }
-                await this.identity.appA.ui.content.ui_js.click(text);
+                await this.identity.appA.ui.content.guiG.click(text);
             } else if (this.identity.action) {
                 if (this.identity.text.includes(text)) {
                     await this.identity.action();
                 }
             } else if (this.resolvedListItems) {
                 for (let current of this.resolvedListItems) {
-                    await current.ui_js.click(text);
+                    await current.guiG.click(text);
                 }
             }
         }
@@ -177,20 +178,20 @@ export class Ui_JS {
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 if (this.identity.appA.ui.commands) {
-                    counter += this.identity.appA.ui.commands.ui_js.countEditableTexts();
+                    counter += this.identity.appA.ui.commands.guiG.countEditableTexts();
                 }
                 if (!this.identity.appA.ui.isWebsite) {
-                    counter += this.identity.appA.ui.output.getUi().ui_js.countEditableTexts();
-                    counter += this.identity.appA.ui.input.getUi().ui_js.countEditableTexts();
+                    counter += this.identity.appA.ui.output.getUi().guiG.countEditableTexts();
+                    counter += this.identity.appA.ui.input.getUi().guiG.countEditableTexts();
                 }
-                counter += this.identity.appA.ui.content.ui_js.countEditableTexts();
+                counter += this.identity.appA.ui.content.guiG.countEditableTexts();
             } else if (notNullUndefined(this.identity.text)) {
-                if (this.identity.ui_js.isEditable()) {
+                if (this.identity.guiG.isEditable()) {
                     counter++;
                 }
             } else if (this.resolvedListItems) {
                 for (let current of this.resolvedListItems) {
-                    counter += current.ui_js.countEditableTexts();
+                    counter += current.guiG.countEditableTexts();
                 }
             }
         }

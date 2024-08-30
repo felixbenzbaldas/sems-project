@@ -6,14 +6,14 @@ export class AppA_Ui_JS_UserPerspectiveG {
     }
 
     getRawText() : string {
-        return this.identity.ui_js.getRawText();
+        return this.identity.guiG.getRawText();
     }
 
     countEditableTexts() : number {
-        return this.identity.ui_js.countEditableTexts();
+        return this.identity.guiG.countEditableTexts();
     }
 
     async click(text: string) {
-        await this.identity.ui_js.click(text);
+        await this.identity.guiG.click(text);
     }
 }

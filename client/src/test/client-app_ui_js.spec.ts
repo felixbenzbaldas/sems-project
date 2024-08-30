@@ -10,7 +10,7 @@ describe('client-app_ui_js', () => {
 
     beforeEach(async () => {
         app = Starter.createAppWithUIWithCommands()
-        await app.ui_js.update();
+        await app.guiG.update();
         userPerspective = app.appA.ui.js.userPerspectiveG;
     });
 

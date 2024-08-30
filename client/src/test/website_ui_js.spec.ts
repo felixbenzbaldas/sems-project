@@ -10,7 +10,7 @@ describe('website_ui_js', () => {
 
     beforeEach(async () => {
         app = await Starter.createWebsite();
-        await app.ui_js.update();
+        await app.guiG.update();
         userPerspective = app.appA.ui.js.userPerspectiveG;
     });
 

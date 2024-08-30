@@ -5,12 +5,12 @@ import {Starter} from "@/Starter";
 
 async function init() {
     let app : Identity = await Starter.createFromUrl();
-    let html = app.ui_js.lazy_uiElement();
+    let html = app.guiG.lazy_uiElement();
     while (document.body.children.length > 0) {
         document.body.removeChild(document.body.children.item(0));
     }
     document.body.appendChild(html);
-    await app.ui_js.update();
+    await app.guiG.update();
 }
 
 init();

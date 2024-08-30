@@ -1,7 +1,7 @@
 import {Identity} from "@/Identity";
 import {AppA_Ui} from "@/ui/AppA_Ui";
 import {AppA} from "@/core/AppA";
-import {Ui_JS} from "@/ui/Ui_JS";
+import {GuiG} from "@/ui/GuiG";
 
 export class Starter {
 

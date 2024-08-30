@@ -3,7 +3,7 @@ import {Subject} from "rxjs";
 import {PathA} from "@/core/PathA";
 import {AppA} from "@/core/AppA";
 import {ContainerA} from "@/core/ContainerA";
-import {Ui_JS} from "@/ui/Ui_JS";
+import {GuiG} from "@/ui/GuiG";
 import {notNullUndefined} from "@/utils";
 import {devtools} from "vue";
 
@@ -25,7 +25,7 @@ export class Identity {
     appA: AppA;
     readonly containerA : ContainerA = new ContainerA(this);
     editable: boolean;
-    readonly ui_js: Ui_JS = new Ui_JS(this);
+    readonly guiG: GuiG = new GuiG(this);
 
 
     json() : any {
