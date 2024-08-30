@@ -37,18 +37,7 @@ export class GuiG {
                 link.innerText = notNullUndefined(this.identity.text) ? this.identity.text : this.identity.link;
                 this.addHtml(link);
             } else if (notNullUndefined(this.identity.text)) {
-                let textElement = document.createElement('div');
-                textElement.innerText = this.identity.text;
-                textElement.style.minHeight = '1rem';
-                textElement.style.whiteSpace = 'pre-wrap';
-                textElement.onblur = (event : any) => {
-                    this.identity.setText(event.target.innerText.trim())
-                }
-                textElement.contentEditable = (this.isEditable()) ? 'true' : 'false';
-                if (this.identity.guiG.isEditable() && this.identity.text.length === 0) {
-                    textElement.style.borderLeft = 'solid';
-                }
-                this.addHtml(textElement);
+                this.addHtml(this.textG_getUiElement());
                 if (this.identity.list && this.identity.list.jsList.length > 0) {
                     let listWrapper = document.createElement('div');
                     listWrapper.style.marginLeft = '0.8rem';
@@ -65,6 +54,21 @@ export class GuiG {
                 return div;
             }
         }
+    }
+
+    textG_getUiElement() {
+        let uiElement = document.createElement('div');
+        uiElement.innerText = this.identity.text;
+        uiElement.style.minHeight = '1rem';
+        uiElement.style.whiteSpace = 'pre-wrap';
+        uiElement.onblur = (event : any) => {
+            this.identity.setText(event.target.innerText.trim())
+        }
+        uiElement.contentEditable = (this.isEditable()) ? 'true' : 'false';
+        if (this.identity.guiG.isEditable() && this.identity.text.length === 0) {
+            uiElement.style.borderLeft = 'solid';
+        }
+        return uiElement;
     }
 
     actionG_getUiElement() {
