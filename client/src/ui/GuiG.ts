@@ -1,5 +1,6 @@
 import type {Identity} from "@/Identity";
 import {notNullUndefined} from "@/utils";
+import {GuiG_AppG} from "@/ui/GuiG_AppG";
 
 // TODO: should be an aspect (suffix 'A'), not a group (suffix 'G')
 export class GuiG {
@@ -8,8 +9,10 @@ export class GuiG {
     uiElement : HTMLDivElement = document.createElement('div');
     private rawText = '';
     private resolvedListItems : Array<Identity>;
+    private appG: GuiG_AppG;
 
     constructor(private identity : Identity) {
+        this.appG = new GuiG_AppG(identity);
         this.identity.subject.subscribe(event => {
             this.update();
         });
@@ -24,16 +27,8 @@ export class GuiG {
         this.uiElement.innerHTML = null;
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
-                if (this.identity.appA.ui.commands) {
-                    await this.addUpdatedObject(this.identity.appA.ui.commands);
-                }
-                if (!this.identity.appA.ui.isWebsite) {
-                    await this.addUpdatedObject(this.identity.appA.ui.output.getUi());
-                    await this.addUpdatedObject(this.identity.appA.ui.input.getUi());
-                    this.addHtml(this.separatorLine());
-                    this.identity.appA.ui.content.guiG.editable = true;
-                }
-                await this.addUpdatedObject(this.identity.appA.ui.content);
+                await this.appG.update();
+                this.addHtml(this.appG.uiElement);
             } else if (this.identity.action) {
                 let button = document.createElement('button');
                 button.innerText = this.identity.text;
@@ -87,18 +82,6 @@ export class GuiG {
         return div;
     }
 
-    private separatorLine() {
-        let line: HTMLDivElement = document.createElement('div');
-        line.style.marginBottom = '0.5rem';
-        line.style.paddingBottom = '0.5rem';
-        line.style.borderBottom = 'dashed';
-        return line;
-    }
-
-    private async addUpdatedObject(identity : Identity) {
-        this.addHtml(await identity.guiG.getUpdatedUiElement());
-    }
-
     private addHtml(htmlElement : HTMLElement) {
         this.uiElement.appendChild(htmlElement);
     }
@@ -111,14 +94,7 @@ export class GuiG {
         this.rawText = '';
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
-                if (this.identity.appA.ui.commands) {
-                    this.addRawText(this.identity.appA.ui.commands.guiG.getRawText());
-                }
-                if (!this.identity.appA.ui.isWebsite) {
-                    this.addRawText(this.identity.appA.ui.output.getUi().guiG.getRawText());
-                    this.addRawText(this.identity.appA.ui.input.getUi().guiG.getRawText());
-                }
-                this.addRawText(this.identity.appA.ui.content.guiG.getRawText());
+                this.addRawText(this.appG.getRawText());
             } else if (this.identity.action) {
                 this.addRawText(this.identity.text);
             } else if (notNullUndefined(this.identity.link)) {
@@ -146,14 +122,7 @@ export class GuiG {
     async click(text : string) {
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
-                if (this.identity.appA.ui.commands) {
-                    await this.identity.appA.ui.commands.guiG.click(text);
-                }
-                if (!this.identity.appA.ui.isWebsite) {
-                    await this.identity.appA.ui.output.getUi().guiG.click(text);
-                    await this.identity.appA.ui.input.getUi().guiG.click(text);
-                }
-                await this.identity.appA.ui.content.guiG.click(text);
+                await this.appG.click(text);
             } else if (this.identity.action) {
                 if (this.identity.text.includes(text)) {
                     await this.identity.action();
@@ -167,27 +136,28 @@ export class GuiG {
     }
 
     countEditableTexts() : number {
-        let counter = 0;
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
-                if (this.identity.appA.ui.commands) {
-                    counter += this.identity.appA.ui.commands.guiG.countEditableTexts();
-                }
-                if (!this.identity.appA.ui.isWebsite) {
-                    counter += this.identity.appA.ui.output.getUi().guiG.countEditableTexts();
-                    counter += this.identity.appA.ui.input.getUi().guiG.countEditableTexts();
-                }
-                counter += this.identity.appA.ui.content.guiG.countEditableTexts();
+                return this.appG.countEditableTexts();
             } else if (notNullUndefined(this.identity.text)) {
+                let counter = 0;
                 if (this.identity.guiG.isEditable()) {
                     counter++;
                 }
+                if (this.resolvedListItems) {
+                    for (let current of this.resolvedListItems) {
+                        counter += current.guiG.countEditableTexts();
+                    }
+                }
+                return counter;
             } else if (this.resolvedListItems) {
+                let counter = 0;
                 for (let current of this.resolvedListItems) {
                     counter += current.guiG.countEditableTexts();
                 }
+                return counter;
             }
         }
-        return counter;
+        return 0;
     }
 }
