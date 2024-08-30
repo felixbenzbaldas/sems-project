@@ -1,21 +1,21 @@
 import {beforeEach, describe, expect, it} from "vitest";
 import {Identity} from "@/Identity";
 import {Starter} from "@/Starter";
-import type {AppA_Ui_JS_UserPerspectiveG} from "@/ui/AppA_Ui_JS_UserPerspectiveG";
+import type {GuiG} from "@/ui/GuiG";
 
-describe('website_ui_js', () => {
+describe('website gui', () => {
 
     let app : Identity;
-    let userPerspective : AppA_Ui_JS_UserPerspectiveG;
+    let gui : GuiG;
 
     beforeEach(async () => {
         app = await Starter.createWebsite();
         await app.guiG.update();
-        userPerspective = app.appA.ui.js.userPerspectiveG;
+        gui = app.guiG;
     });
 
     it('shows text', async () => {
-        expect(userPerspective.getRawText()).length.above(5);
+        expect(gui.getRawText()).length.above(5);
     });
 
 });
