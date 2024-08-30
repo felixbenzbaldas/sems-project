@@ -5,7 +5,7 @@ import {Starter} from "@/Starter";
 
 async function init() {
     let app : Identity = await Starter.createFromUrl();
-    let html = app.guiG.lazy_uiElement();
+    let html = app.guiG.uiElement;
     while (document.body.children.length > 0) {
         document.body.removeChild(document.body.children.item(0));
     }

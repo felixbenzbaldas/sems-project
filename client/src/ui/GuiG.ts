@@ -5,30 +5,23 @@ import {notNullUndefined} from "@/utils";
 export class GuiG {
 
     editable: boolean = false;
-    private _uiElement : HTMLDivElement;
+    uiElement : HTMLDivElement = document.createElement('div');
     private rawText = '';
     private resolvedListItems : Array<Identity>;
 
     constructor(private identity : Identity) {
-    }
-
-    lazy_uiElement(): HTMLElement {
-        if (!this._uiElement) {
-            this._uiElement = document.createElement('div');
-            this.identity.subject.subscribe(event => {
-                this.update();
-            });
-        }
-        return this._uiElement;
+        this.identity.subject.subscribe(event => {
+            this.update();
+        });
     }
 
     async getUpdatedUiElement() : Promise<HTMLElement> {
         await this.update();
-        return this.lazy_uiElement();
+        return this.uiElement;
     }
 
     async update() {
-        this.lazy_uiElement().innerHTML = null;
+        this.uiElement.innerHTML = null;
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 if (this.identity.appA.ui.commands) {
@@ -46,10 +39,10 @@ export class GuiG {
                 button.innerText = this.identity.text;
                 button.onclick = (event) => { this.identity.action(); };
                 button.style.margin = '0.3rem 0.3rem 0.3rem 0rem';
-                this._uiElement.style.display = 'inline';
+                this.uiElement.style.display = 'inline';
                 this.addHtml(button);
             } else if (this.identity.pathA) {
-                this._uiElement.innerText = 'a path starting with ' + this.identity.pathA.listOfNames.at(0);
+                this.uiElement.innerText = 'a path starting with ' + this.identity.pathA.listOfNames.at(0);
             } else if (notNullUndefined(this.identity.link)) {
                 let link = document.createElement('a');
                 link.href = this.identity.link;
@@ -107,7 +100,7 @@ export class GuiG {
     }
 
     private addHtml(htmlElement : HTMLElement) {
-        this.lazy_uiElement().appendChild(htmlElement);
+        this.uiElement.appendChild(htmlElement);
     }
 
     isEditable() {
