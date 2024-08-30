@@ -1,18 +1,19 @@
 import type {Identity} from "@/Identity";
 import {notNullUndefined} from "@/utils";
 import {GuiG_AppG} from "@/ui/GuiG_AppG";
+import {GuiG_ListG} from "@/ui/GuiG_ListG";
 
 // TODO: should be an aspect (suffix 'A'), not a group (suffix 'G')
 export class GuiG {
 
     editable: boolean = false;
     uiElement : HTMLDivElement = document.createElement('div');
-    private rawText = '';
-    private resolvedListItems : Array<Identity>;
-    private appG: GuiG_AppG;
+    appG: GuiG_AppG;
+    listG: GuiG_ListG;
 
     constructor(private identity : Identity) {
         this.appG = new GuiG_AppG(identity);
+        this.listG = new GuiG_ListG(identity);
         this.identity.subject.subscribe(event => {
             this.update();
         });
@@ -30,24 +31,26 @@ export class GuiG {
                 await this.appG.update();
                 this.addHtml(this.appG.uiElement);
             } else if (this.identity.action) {
-                this.addHtml(this.actionG_getUiElement());
+                this.addHtml(this.action_getUiElement());
             } else if (notNullUndefined(this.identity.link)) {
                 let link = document.createElement('a');
                 link.href = this.identity.link;
                 link.innerText = notNullUndefined(this.identity.text) ? this.identity.text : this.identity.link;
                 this.addHtml(link);
             } else if (notNullUndefined(this.identity.text)) {
-                this.addHtml(this.textG_getUiElement());
+                this.addHtml(this.text_getUiElement());
                 if (this.identity.list && this.identity.list.jsList.length > 0) {
                     let listWrapper = document.createElement('div');
                     listWrapper.style.marginLeft = '0.8rem';
                     listWrapper.style.marginTop = '0.2rem';
                     listWrapper.style.marginBottom = '0.2rem';
-                    listWrapper.appendChild(await this.createListElement());
+                    await this.listG.update();
+                    listWrapper.appendChild(this.listG.uiElement);
                     this.addHtml(listWrapper);
                 }
             } else if (this.identity.list) {
-                this.addHtml(await this.createListElement());
+                await this.listG.update();
+                this.addHtml(this.listG.uiElement);
             } else {
                 let div = document.createElement('div');
                 div.innerText = this.identity.getDescription();
@@ -56,7 +59,7 @@ export class GuiG {
         }
     }
 
-    textG_getUiElement() {
+    text_getUiElement() {
         let uiElement = document.createElement('div');
         uiElement.innerText = this.identity.text;
         uiElement.style.minHeight = '1rem';
@@ -71,25 +74,13 @@ export class GuiG {
         return uiElement;
     }
 
-    actionG_getUiElement() {
+    action_getUiElement() {
         let button = document.createElement('button');
         button.innerText = this.identity.text;
         button.onclick = (event) => { this.identity.action(); };
         button.style.margin = '0.3rem 0.3rem 0.3rem 0rem';
         this.uiElement.style.display = 'inline';
         return button;
-    }
-
-    private async createListElement() : Promise<HTMLElement> {
-        let div = document.createElement('div');
-        this.resolvedListItems = [];
-        for (let current of this.identity.list.jsList) {
-            let resolved = current.pathA ? await this.identity.resolve(current) : current;
-            this.resolvedListItems.push(resolved);
-            resolved.guiG.editable = this.identity.guiG.isEditable();
-            div.appendChild(await resolved.guiG.getUpdatedUiElement());
-        }
-        return div;
     }
 
     private addHtml(htmlElement : HTMLElement) {
@@ -101,32 +92,14 @@ export class GuiG {
     }
 
     getRawText() : string {
-        this.rawText = '';
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
-                this.addRawText(this.appG.getRawText());
-            } else if (this.identity.action) {
-                this.addRawText(this.identity.text);
-            } else if (notNullUndefined(this.identity.link)) {
-                this.addRawText((this.identity.text) ? this.identity.text : this.identity.link);
-            } else if (notNullUndefined(this.identity.text)) {
-                this.addRawText(this.identity.text);
-                if (this.resolvedListItems) {
-                    for (let current of this.resolvedListItems) {
-                        this.addRawText(current.guiG.getRawText());
-                    }
-                }
-            } else if (this.resolvedListItems) {
-                for (let current of this.resolvedListItems) {
-                    this.addRawText(current.guiG.getRawText());
-                }
+                return this.appG.getRawText();
+            } else {
+                return this.identity.text + this.identity.link + this.listG.getRawText();
             }
         }
-        return this.rawText;
-    }
-
-    private addRawText(text : string) {
-        this.rawText += text;
+        return '';
     }
 
     async click(text : string) {
@@ -137,10 +110,8 @@ export class GuiG {
                 if (this.identity.text.includes(text)) {
                     await this.identity.action();
                 }
-            } else if (this.resolvedListItems) {
-                for (let current of this.resolvedListItems) {
-                    await current.guiG.click(text);
-                }
+            } else if (this.identity.list) {
+                await this.listG.click(text);
             }
         }
     }
@@ -149,21 +120,15 @@ export class GuiG {
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 return this.appG.countEditableTexts();
-            } else if (notNullUndefined(this.identity.text)) {
+            } else {
                 let counter = 0;
-                if (this.identity.guiG.isEditable()) {
-                    counter++;
-                }
-                if (this.resolvedListItems) {
-                    for (let current of this.resolvedListItems) {
-                        counter += current.guiG.countEditableTexts();
+                if (notNullUndefined(this.identity.text)) {
+                    if (this.identity.guiG.isEditable()) {
+                        counter++;
                     }
                 }
-                return counter;
-            } else if (this.resolvedListItems) {
-                let counter = 0;
-                for (let current of this.resolvedListItems) {
-                    counter += current.guiG.countEditableTexts();
+                if (this.identity.list) {
+                    counter += this.listG.countEditableTexts();
                 }
                 return counter;
             }
