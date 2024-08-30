@@ -30,14 +30,7 @@ export class GuiG {
                 await this.appG.update();
                 this.addHtml(this.appG.uiElement);
             } else if (this.identity.action) {
-                let button = document.createElement('button');
-                button.innerText = this.identity.text;
-                button.onclick = (event) => { this.identity.action(); };
-                button.style.margin = '0.3rem 0.3rem 0.3rem 0rem';
-                this.uiElement.style.display = 'inline';
-                this.addHtml(button);
-            } else if (this.identity.pathA) {
-                this.uiElement.innerText = 'a path starting with ' + this.identity.pathA.listOfNames.at(0);
+                this.addHtml(this.actionG_getUiElement());
             } else if (notNullUndefined(this.identity.link)) {
                 let link = document.createElement('a');
                 link.href = this.identity.link;
@@ -66,8 +59,21 @@ export class GuiG {
                 }
             } else if (this.identity.list) {
                 this.addHtml(await this.createListElement());
+            } else {
+                let div = document.createElement('div');
+                div.innerText = this.identity.getDescription();
+                return div;
             }
         }
+    }
+
+    actionG_getUiElement() {
+        let button = document.createElement('button');
+        button.innerText = this.identity.text;
+        button.onclick = (event) => { this.identity.action(); };
+        button.style.margin = '0.3rem 0.3rem 0.3rem 0rem';
+        this.uiElement.style.display = 'inline';
+        return button;
     }
 
     private async createListElement() : Promise<HTMLElement> {
