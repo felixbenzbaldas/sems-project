@@ -34,26 +34,26 @@ export class GuiG {
         this.uiElement.innerHTML = null;
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
-                this.addHtml(this.appG.uiElement);
+                this.uiElement.appendChild(this.appG.uiElement);
             } else if (this.identity.action) {
-                this.addHtml(this.action_getUiElement());
+                this.uiElement.appendChild(this.action_getUiElement());
             } else if (notNullUndefined(this.identity.link)) {
                 let link = document.createElement('a');
                 link.href = this.identity.link;
                 link.innerText = this.link_getText();
-                this.addHtml(link);
+                this.uiElement.appendChild(link);
             } else if (notNullUndefined(this.identity.text)) {
-                this.addHtml(this.text_getUiElement());
+                this.uiElement.appendChild(this.text_getUiElement());
                 if (this.identity.list && this.identity.list.jsList.length > 0) {
                     let listWrapper = document.createElement('div');
                     listWrapper.style.marginLeft = '0.8rem';
                     listWrapper.style.marginTop = '0.2rem';
                     listWrapper.style.marginBottom = '0.2rem';
                     listWrapper.appendChild(this.listG.uiElement);
-                    this.addHtml(listWrapper);
+                    this.uiElement.appendChild(listWrapper);
                 }
             } else if (this.identity.list) {
-                this.addHtml(this.listG.uiElement);
+                this.uiElement.appendChild(this.listG.uiElement);
             } else {
                 let div = document.createElement('div');
                 div.innerText = this.identity.getDescription();
@@ -89,11 +89,6 @@ export class GuiG {
         this.uiElement.style.display = 'inline';
         return button;
     }
-
-    private addHtml(htmlElement : HTMLElement) {
-        this.uiElement.appendChild(htmlElement);
-    }
-
     isEditable() {
         return this.editable || this.identity.editable;
     }
