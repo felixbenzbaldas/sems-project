@@ -9,28 +9,32 @@ export class GuiG_AppG {
     }
 
     async update() : Promise<void> {
-        this.uiElement.innerHTML = null;
         if (this.identity.appA.ui.commands) {
-            await this.addUpdatedObject(this.identity.appA.ui.commands);
+            await this.identity.appA.ui.commands.guiG.update();
         }
         if (!this.identity.appA.ui.isWebsite) {
-            await this.addUpdatedObject(this.identity.appA.ui.output.getUi());
-            await this.addUpdatedObject(this.identity.appA.ui.input.getUi());
-            this.addHtml(this.separatorLine());
+            await this.identity.appA.ui.output.getUi().guiG.update();
+            await this.identity.appA.ui.input.getUi().guiG.update();
             this.identity.appA.ui.content.guiG.editable = true;
         }
-        await this.addUpdatedObject(this.identity.appA.ui.content);
+        await this.identity.appA.ui.content.guiG.update();
+        this.updateUiElement();
     }
 
-    private async addUpdatedObject(identity : Identity) {
-        this.addHtml(await identity.guiG.getUpdatedUiElement());
+    private updateUiElement() {
+        this.uiElement.innerHTML = null;
+        if (this.identity.appA.ui.commands) {
+            this.uiElement.appendChild(this.identity.appA.ui.commands.guiG.uiElement);
+        }
+        if (!this.identity.appA.ui.isWebsite) {
+            this.uiElement.appendChild(this.identity.appA.ui.output.getUi().guiG.uiElement);
+            this.uiElement.appendChild(this.identity.appA.ui.input.getUi().guiG.uiElement);
+            this.uiElement.appendChild(this.separatorLine());
+        }
+        this.uiElement.appendChild(this.identity.appA.ui.content.guiG.uiElement);
     }
 
-    private addHtml(htmlElement : HTMLElement) {
-        this.uiElement.appendChild(htmlElement);
-    }
-
-    private separatorLine() {
+    private separatorLine() : HTMLElement {
         let line: HTMLDivElement = document.createElement('div');
         line.style.marginBottom = '0.5rem';
         line.style.paddingBottom = '0.5rem';
