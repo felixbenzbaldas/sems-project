@@ -40,7 +40,7 @@ export class GuiG {
             } else if (notNullUndefined(this.identity.link)) {
                 let link = document.createElement('a');
                 link.href = this.identity.link;
-                link.innerText = notNullUndefined(this.identity.text) ? this.identity.text : this.identity.link;
+                link.innerText = this.link_getText();
                 this.addHtml(link);
             } else if (notNullUndefined(this.identity.text)) {
                 this.addHtml(this.text_getUiElement());
@@ -60,6 +60,10 @@ export class GuiG {
                 return div;
             }
         }
+    }
+
+    link_getText() {
+        return notNullUndefined(this.identity.text) ? this.identity.text : this.identity.link;
     }
 
     text_getUiElement() {
@@ -99,7 +103,7 @@ export class GuiG {
             if (this.identity.appA?.ui) {
                 return this.appG.getRawText();
             } else if (notNullUndefined(this.identity.link)) {
-                return notNullUndefined(this.identity.text) ? this.identity.text : this.identity.link;
+                return this.link_getText();
             } else {
                 let rawText = '';
                 if (notNullUndefined(this.identity.text)) {
