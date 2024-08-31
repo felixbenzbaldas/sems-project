@@ -5,7 +5,6 @@ import {AppA} from "@/core/AppA";
 import {ContainerA} from "@/core/ContainerA";
 import {GuiG} from "@/ui/GuiG";
 import {notNullUndefined} from "@/utils";
-import {devtools} from "vue";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
