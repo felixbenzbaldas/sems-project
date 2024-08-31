@@ -98,8 +98,17 @@ export class GuiG {
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 return this.appG.getRawText();
+            } else if (notNullUndefined(this.identity.link)) {
+                return notNullUndefined(this.identity.text) ? this.identity.text : this.identity.link;
             } else {
-                return this.identity.text + this.identity.link + this.listG.getRawText();
+                let rawText = '';
+                if (notNullUndefined(this.identity.text)) {
+                    rawText += this.identity.text;
+                }
+                if (this.identity.list) {
+                    rawText += this.listG.getRawText();
+                }
+                return rawText;
             }
         }
         return '';
