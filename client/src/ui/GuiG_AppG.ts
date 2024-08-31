@@ -9,6 +9,7 @@ export class GuiG_AppG {
     }
 
     async update() : Promise<void> {
+        this.uiElement.innerHTML = null;
         if (this.identity.appA.ui.commands) {
             await this.addUpdatedObject(this.identity.appA.ui.commands);
         }

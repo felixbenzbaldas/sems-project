@@ -89,6 +89,7 @@ export class GuiG {
         this.uiElement.style.display = 'inline';
         return button;
     }
+
     isEditable() {
         return this.editable || this.identity.editable;
     }
