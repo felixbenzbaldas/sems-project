@@ -4,25 +4,44 @@ import {notNullUndefined} from "@/utils";
 export class GuiG_ListG {
 
     private resolvedListItems : Array<Identity>;
+    private guisOfListItems : Array<Identity>;
     uiElement : HTMLDivElement = document.createElement('div');
 
     constructor(private identity : Identity) {
     }
 
     async update() {
+        await this.resolveListItems();
+        await this.updateGuisOfListItems();
         this.uiElement.innerHTML = null;
+        for (let gui of this.guisOfListItems) {
+            this.uiElement.appendChild(gui.guiG.uiElement);
+        }
+    }
+
+    private async resolveListItems() {
         this.resolvedListItems = [];
         for (let current of this.identity.list.jsList) {
             let resolved = current.pathA ? await this.identity.resolve(current) : current;
             this.resolvedListItems.push(resolved);
-            resolved.guiG.editable = this.identity.guiG.isEditable();
-            this.uiElement.appendChild(await resolved.guiG.getUpdatedUiElement());
+        }
+    }
+
+    private async updateGuisOfListItems() {
+        this.guisOfListItems = []; // TODO: do not always dismiss old guis
+        for (let resolved of this.resolvedListItems) {
+            let gui = resolved; // TODO: create extra object for gui
+            if (resolved.editable != false) {
+                gui.guiG.editable = this.identity.guiG.isEditable();
+            }
+            await gui.guiG.update();
+            this.guisOfListItems.push(gui);
         }
     }
 
     getRawText() : string {
         if (notNullUndefined(this.identity.list)) {
-            return this.resolvedListItems.map(current => current.guiG.getRawText()).reduce((a, b) => a + b, '');
+            return this.guisOfListItems.map(current => current.guiG.getRawText()).reduce((a, b) => a + b, '');
         } else {
             return '';
         }
@@ -30,7 +49,7 @@ export class GuiG_ListG {
 
     async click(text : string) {
         if (this.identity.list) {
-            for (let current of this.resolvedListItems) {
+            for (let current of this.guisOfListItems) {
                 await current.guiG.click(text);
             }
         }
@@ -38,7 +57,7 @@ export class GuiG_ListG {
 
     countEditableTexts() : number {
         if (this.identity.list) {
-            return this.resolvedListItems.map(current => current.guiG.countEditableTexts()).reduce((a, b) => a + b, 0);
+            return this.guisOfListItems.map(current => current.guiG.countEditableTexts()).reduce((a, b) => a + b, 0);
         }
     }
 }
