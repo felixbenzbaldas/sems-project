@@ -19,16 +19,21 @@ export class GuiG {
         });
     }
 
-    async getUpdatedUiElement() : Promise<HTMLElement> {
-        await this.update();
-        return this.uiElement;
-    }
-
     async update() {
-        this.uiElement.innerHTML = null;
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 await this.appG.update();
+            } else if (this.identity.list) {
+                await this.listG.update();
+            }
+        }
+        await this.updateUiElement();
+    }
+
+    private async updateUiElement() {
+        this.uiElement.innerHTML = null;
+        if (!this.identity.hidden) {
+            if (this.identity.appA?.ui) {
                 this.addHtml(this.appG.uiElement);
             } else if (this.identity.action) {
                 this.addHtml(this.action_getUiElement());
@@ -44,12 +49,10 @@ export class GuiG {
                     listWrapper.style.marginLeft = '0.8rem';
                     listWrapper.style.marginTop = '0.2rem';
                     listWrapper.style.marginBottom = '0.2rem';
-                    await this.listG.update();
                     listWrapper.appendChild(this.listG.uiElement);
                     this.addHtml(listWrapper);
                 }
             } else if (this.identity.list) {
-                await this.listG.update();
                 this.addHtml(this.listG.uiElement);
             } else {
                 let div = document.createElement('div');
@@ -135,4 +138,10 @@ export class GuiG {
         }
         return 0;
     }
+
+    async getUpdatedUiElement() : Promise<HTMLElement> {
+        await this.update();
+        return this.uiElement;
+    }
+
 }
