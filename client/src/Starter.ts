@@ -96,6 +96,7 @@ export class Starter {
                 await app.appA.ui.globalEvent_importToContent();
             }),
         );
+        app.update();
         return app;
     }
 

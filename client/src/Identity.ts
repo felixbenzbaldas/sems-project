@@ -23,10 +23,14 @@ export class Identity {
     appA: AppA;
     readonly containerA : ContainerA = new ContainerA(this);
     editable: boolean;
-    readonly guiG: GuiG = new GuiG(this);
+    readonly guiG: GuiG;
     test_update: Function;
 
     private promiseUpdate : Promise<void> = Promise.resolve();
+
+    constructor() {
+        this.guiG = new GuiG(this);
+    }
 
     json() : any {
         return {
@@ -143,7 +147,7 @@ export class Identity {
     }
 
     log(log: string) {
-        this.getApp().appA.logG.log(this, log);
+        this.getApp()?.appA?.logG.log(this, log);
     }
 
     getDescription() : string {

@@ -10,7 +10,7 @@ describe('client-app gui', () => {
 
     beforeEach(async () => {
         app = Starter.createAppWithUIWithCommands();
-        await app.guiG.unsafeUpdate();
+        await app.update();
         gui = app.guiG;
     });
 

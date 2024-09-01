@@ -14,6 +14,7 @@ export class GuiG {
     constructor(private identity : Identity) {
         this.appG = new GuiG_AppG(identity);
         this.listG = new GuiG_ListG(identity);
+        identity.update();
     }
 
     async unsafeUpdate() {
@@ -113,6 +114,7 @@ export class GuiG {
     }
 
     async click(text : string) {
+        this.identity.log('click ' + text);
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 await this.appG.click(text);
@@ -127,6 +129,7 @@ export class GuiG {
     }
 
     countEditableTexts() : number {
+        this.identity.log('countEditableTexts');
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 return this.appG.countEditableTexts();
