@@ -10,7 +10,7 @@ export class GuiG_ListG {
     constructor(private identity : Identity) {
     }
 
-    async update() {
+    async unsafeUpdate() {
         await this.resolveListItems();
         await this.updateGuisOfListItems();
         this.uiElement.innerHTML = null;

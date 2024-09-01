@@ -22,9 +22,9 @@ export class GuiG {
     async update() {
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
-                await this.appG.update();
+                await this.appG.unsafeUpdate();
             } else if (this.identity.list) {
-                await this.listG.update();
+                await this.listG.unsafeUpdate();
             }
         }
         await this.updateUiElement();

@@ -8,7 +8,7 @@ export class GuiG_AppG {
     constructor(private identity : Identity) {
     }
 
-    async update() : Promise<void> {
+    async unsafeUpdate() : Promise<void> {
         if (this.identity.appA.ui.commands) {
             await this.identity.appA.ui.commands.guiG.update();
         }

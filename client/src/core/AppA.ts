@@ -24,7 +24,7 @@ export class AppA {
         return new Identity();
     }
 
-// 'simple' means that the created object has no container and no name. It is simply an object in the memory.
+    // 'simple' means that the created object has no container and no name. It is simply an object in the memory.
     simple_createList(...jsList : Array<Identity>) : Identity {
         let list = this.createIdentityWithApp();
         list.list = new ListA(list, ...jsList);
