@@ -10,14 +10,14 @@ export class GuiG_AppG {
 
     async unsafeUpdate() : Promise<void> {
         if (this.identity.appA.ui.commands) {
-            await this.identity.appA.ui.commands.guiG.update();
+            await this.identity.appA.ui.commands.guiG.unsafeUpdate();
         }
         if (!this.identity.appA.ui.isWebsite) {
-            await this.identity.appA.ui.output.getUi().guiG.update();
-            await this.identity.appA.ui.input.getUi().guiG.update();
+            await this.identity.appA.ui.output.getUi().guiG.unsafeUpdate();
+            await this.identity.appA.ui.input.getUi().guiG.unsafeUpdate();
             this.identity.appA.ui.content.guiG.editable = true;
         }
-        await this.identity.appA.ui.content.guiG.update();
+        await this.identity.appA.ui.content.guiG.unsafeUpdate();
         this.updateUiElement();
     }
 

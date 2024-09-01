@@ -10,7 +10,7 @@ describe('website gui', () => {
 
     beforeEach(async () => {
         app = await Starter.createWebsite();
-        await app.guiG.update();
+        await app.guiG.unsafeUpdate();
         gui = app.guiG;
     });
 

@@ -14,12 +14,9 @@ export class GuiG {
     constructor(private identity : Identity) {
         this.appG = new GuiG_AppG(identity);
         this.listG = new GuiG_ListG(identity);
-        this.identity.subject.subscribe(event => {
-            this.update();
-        });
     }
 
-    async update() {
+    async unsafeUpdate() {
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 await this.appG.unsafeUpdate();
@@ -28,6 +25,7 @@ export class GuiG {
             }
         }
         await this.updateUiElement();
+        this.identity.log('gui_updated');
     }
 
     private async updateUiElement() {
@@ -149,7 +147,7 @@ export class GuiG {
     }
 
     async getUpdatedUiElement() : Promise<HTMLElement> {
-        await this.update();
+        await this.unsafeUpdate();
         return this.uiElement;
     }
 

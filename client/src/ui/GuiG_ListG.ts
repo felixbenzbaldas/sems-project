@@ -34,7 +34,7 @@ export class GuiG_ListG {
             if (resolved.editable != false) {
                 gui.guiG.editable = this.identity.guiG.isEditable();
             }
-            await gui.guiG.update();
+            await gui.guiG.unsafeUpdate();
             this.guisOfListItems.push(gui);
         }
     }

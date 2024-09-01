@@ -16,7 +16,7 @@ export class ListA {
                this.jsList.push(item);
            }
         });
-        this.identity.notify();
+        this.identity.update();
     }
 
     json() {

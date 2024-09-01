@@ -18,13 +18,13 @@ export class Identity {
     list : ListA;
     app: Identity;
     action: Function;
-    readonly subject: Subject<any> = new Subject<any>();
     hidden: boolean = false;
     pathA: PathA;
     appA: AppA;
     readonly containerA : ContainerA = new ContainerA(this);
     editable: boolean;
     readonly guiG: GuiG = new GuiG(this);
+    test_update: Function;
 
 
     json() : any {
@@ -37,16 +37,12 @@ export class Identity {
 
     setText(string: string) {
         this.text = string;
-        this.notify();
+        this.update();
     }
 
     setHidden(value : boolean) {
         this.hidden = value;
-        this.notify();
-    }
-
-    notify() {
-        this.subject.next(null);
+        this.update();
     }
 
     async httpRequest(url : string, method : string, args : Array<any>) : Promise<any> {
@@ -163,5 +159,12 @@ export class Identity {
     getDescription_short() {
         let description = this.getDescription();
         return description.substring(0, Math.min(description.length, 20));
+    }
+
+    async update() {
+        if (this.test_update) {
+            this.test_update();
+        }
+        await this.guiG.unsafeUpdate();
     }
 }
