@@ -3,6 +3,7 @@ import {ListA} from "@/core/ListA";
 import {PathA} from "@/core/PathA";
 import {Identity} from "@/Identity";
 import {LogG} from "@/LogG";
+import {getPromiseAndResolver} from "@/utils";
 
 export class AppA {
 
@@ -83,5 +84,19 @@ export class AppA {
             );
             list.list.add(await this.createText(dependencyValue.text));
         }
+    }
+
+    getBlocker() : {resolve : () => void, block : () => Promise<void>} {
+        let promiseAndResolver = getPromiseAndResolver();
+        let block = (async () => {
+            this.identity.log('start blocking');
+            await promiseAndResolver.promise.then(() => {
+                this.identity.log('end blocking');
+            });
+        });
+        return {
+            resolve: promiseAndResolver.resolve,
+            block: block
+        };
     }
 }

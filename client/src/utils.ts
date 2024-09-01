@@ -7,3 +7,14 @@ export async function wait(milliseconds : number) {
 export function notNullUndefined(toCheck : any) {
     return toCheck != null && toCheck != undefined;
 }
+
+export function getPromiseAndResolver() : {resolve : () => void, promise : Promise<void>} {
+    let resolve : () => void;
+    let promise = new Promise<void>(_resolve => {
+        resolve = _resolve;
+    });
+    return {
+        resolve: resolve,
+        promise: promise
+    };
+}

@@ -26,6 +26,7 @@ export class Identity {
     readonly guiG: GuiG = new GuiG(this);
     test_update: Function;
 
+    private promiseUpdate : Promise<void> = Promise.resolve();
 
     json() : any {
         return {
@@ -162,9 +163,18 @@ export class Identity {
     }
 
     async update() {
+        this.promiseUpdate = this.promiseUpdate.then(async () => {
+            await this._update();
+        });
+        await this.promiseUpdate;
+    }
+
+    private async _update() {
+        this.log('start _update');
         if (this.test_update) {
-            this.test_update();
+            await this.test_update();
         }
         await this.guiG.unsafeUpdate();
+        this.log('end _update');
     }
 }
