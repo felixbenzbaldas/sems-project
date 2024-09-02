@@ -32,4 +32,13 @@ export class ListA {
     async getObject(index : number) : Promise<Identity> {
         return this.identity.resolve(this.jsList.at(index));
     }
+
+    async getResolvedList() : Promise<Array<Identity>> {
+        let resolvedListItems = [];
+        for (let current of this.jsList) {
+            let currentResolved = current.pathA ? await this.identity.resolve(current) : current;
+            resolvedListItems.push(currentResolved);
+        }
+        return resolvedListItems;
+    }
 }
