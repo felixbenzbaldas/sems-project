@@ -181,4 +181,8 @@ export class Identity {
         await this.guiG.unsafeUpdate();
         this.log('end _update');
     }
+
+    async jobPipeline_runLater(job: Function) {
+        await job();
+    }
 }
