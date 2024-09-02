@@ -129,13 +129,13 @@ describe('app', () => {
         expect(app.appA.logG.listOfStrings).contains('my app /// Good morning!');
     });
 
-    test('Can get description_short of text', async () => {
+    test('Can get shortDescription of text', async () => {
         let app : Identity = Starter.createApp();
         let text : Identity = app.appA.simple_createText('12345678901234567890123456789012');
 
-        let description = text.getDescription_short();
+        let shortDescription = text.getShortDescription();
 
-        expect(description).toEqual('12345678901234567890');
+        expect(shortDescription).toEqual('12345678901234567890');
     });
 
     test('Can get description of path', async () => {

@@ -163,7 +163,7 @@ export class Identity {
         return '';
     }
 
-    getDescription_short() {
+    getShortDescription() {
         let description = this.getDescription();
         return description.substring(0, Math.min(description.length, 20));
     }

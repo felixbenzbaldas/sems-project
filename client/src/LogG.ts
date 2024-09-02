@@ -11,13 +11,13 @@ export class LogG {
 
     log(logger : Identity, log : string) {
         if (this.toListOfStrings || this.toConsole) {
-            let description_short = logger.getDescription_short();
+            let shortDescription = logger.getShortDescription();
             if (this.toListOfStrings) {
-                this.listOfStrings.push(description_short + ' /// ' + log);
+                this.listOfStrings.push(shortDescription + ' /// ' + log);
             }
             if (this.toConsole) { // Note: logging to console could lead to a data leak. You should be careful, when using it.
                 if (devtools?.enabled || location?.hostname == 'localhost') {
-                    console.log(description_short + ' /// ' + log);
+                    console.log(shortDescription + ' /// ' + log);
                 }
             }
         }
