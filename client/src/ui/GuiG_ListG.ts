@@ -31,9 +31,7 @@ export class GuiG_ListG {
         this.guisOfListItems = []; // TODO: do not always dismiss old guis
         for (let resolved of this.resolvedListItems) {
             let gui = resolved; // TODO: create extra object for gui
-            if (resolved.editable != false) {
-                gui.guiG.editable = this.identity.guiG.isEditable();
-            }
+            gui.guiG.editable = this.identity.guiG.editable;
             await gui.guiG.unsafeUpdate();
             this.guisOfListItems.push(gui);
         }

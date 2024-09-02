@@ -6,7 +6,7 @@ import {GuiG_ListG} from "@/ui/GuiG_ListG";
 // TODO: should be an aspect (suffix 'A'), not a group (suffix 'G')
 export class GuiG {
 
-    editable: boolean = false;
+    editable: boolean;
     uiElement : HTMLDivElement = document.createElement('div');
     appG: GuiG_AppG;
     listG: GuiG_ListG;
@@ -90,7 +90,23 @@ export class GuiG {
     }
 
     isEditable() {
-        return this.editable || this.identity.editable;
+        if (notNullUndefined(this.editable)) {
+            if (notNullUndefined(this.identity.editable)) {
+                if (this.editable == true) {
+                    return this.identity.editable;
+                } else {
+                    return false;
+                }
+            } else {
+                return this.editable;
+            }
+        } else {
+            if (notNullUndefined(this.identity.editable)) {
+                return this.identity.editable;
+            } else {
+                return false;
+            }
+        }
     }
 
     getRawText() : string {
