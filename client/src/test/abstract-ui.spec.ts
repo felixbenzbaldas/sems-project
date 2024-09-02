@@ -1,6 +1,7 @@
 import {describe, expect, it, test} from "vitest";
 import {Identity} from "@/Identity";
 import {Starter} from "@/Starter";
+import {wait} from "@/utils";
 
 describe('abstract ui', () => {
 
@@ -65,9 +66,15 @@ describe('abstract ui', () => {
     test('can create object after created object', async () => {
         let app = Starter.createAppWithUI();
         await app.appA.ui.globalEvent_defaultAction();
+        await wait(10);
 
         await app.appA.ui.globalEvent_defaultAction();
+        await wait(10);
 
-        expect(app.appA.ui.content.list.jsList.length).toBe(2);
+        let content = app.appA.ui.content;
+        expect(content.list.jsList.length).toBe(2);
+        app.appA.ui.focused.setText('foo');
+        await wait(10);
+        expect((await content.resolve(content.list.jsList.at(1))).text).toEqual('foo');
     });
 });

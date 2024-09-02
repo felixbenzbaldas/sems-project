@@ -44,7 +44,7 @@ export class AppA_Ui {
 
     async defaultActionOnSubitem(subitem: Identity) {
         let created = await this.identity.appA.createText('');
-        let position : number = this.content.guiG.listG.guisOfListItems.indexOf(subitem);
+        let position : number = this.content.guiG.listG.guisOfListItems.indexOf(subitem) + 1;
         this.content.list.jsList.splice(position, 0, this.content.getPath(created));
         await this.content.update();
         this.focused = this.content.guiG.listG.guisOfListItems.at(position);
