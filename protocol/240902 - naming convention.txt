@@ -1,0 +1,14 @@
+1.
+In field and class names you will find the suffixes 'A' and 'G' (for exampel: LogG, appA).
+
+Suffix 'A':
+This refers to an aspect. The field may be null/undefinend.
+
+Suffix 'G':
+This refers to a group of aspects. The group itself can also be seen as an aspect. However, a group exists right from the beginning. It is created with the constructor. It is a 'final' or 'readonly' field and should never be null/undefinend.
+
+Not all aspects are marked with a suffixe.
+
+2.
+In field and class names you will find underscores (for example: AppA_Ui, GuiG_ListG).
+This refers to an aspect of an sspect. For example AppA_Ui is the ui-aspect of the app-aspect. In other words it is the user-interface of the app.
