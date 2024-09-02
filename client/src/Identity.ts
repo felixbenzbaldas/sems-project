@@ -5,6 +5,7 @@ import {AppA} from "@/core/AppA";
 import {ContainerA} from "@/core/ContainerA";
 import {GuiG} from "@/ui/GuiG";
 import {notNullUndefined} from "@/utils";
+import {JobPipelineG} from "@/core/JobPipelineG";
 
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
@@ -25,6 +26,7 @@ export class Identity {
     editable: boolean;
     readonly guiG: GuiG;
     test_update: Function;
+    jobPipelineG : JobPipelineG = new JobPipelineG();
 
     private promiseUpdate : Promise<void> = Promise.resolve();
 
@@ -167,22 +169,13 @@ export class Identity {
     }
 
     async update() {
-        this.promiseUpdate = this.promiseUpdate.then(async () => {
-            await this._update();
+        await this.jobPipelineG.runLater(async () => {
+            this.log('start update');
+            if (this.test_update) {
+                await this.test_update();
+            }
+            await this.guiG.unsafeUpdate();
+            this.log('end update');
         });
-        await this.promiseUpdate;
-    }
-
-    private async _update() {
-        this.log('start _update');
-        if (this.test_update) {
-            await this.test_update();
-        }
-        await this.guiG.unsafeUpdate();
-        this.log('end _update');
-    }
-
-    async jobPipeline_runLater(job: Function) {
-        await job();
     }
 }
