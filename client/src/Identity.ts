@@ -70,8 +70,25 @@ export class Identity {
     async defaultAction() {
         if (this.appA?.ui) {
             await this.appA.ui.defaultAction();
-        } else {
+        } else if (this.action) {
             throw 'not implemented yet';
+        } else {
+            await this.ui_getContext().defaultActionOnSubitem(this);
+        }
+    }
+
+    ui_getContext() : Identity {
+        return this.getApp();
+    }
+
+    async defaultActionOnSubitem(subitem : Identity) {
+        this.log('defaultActionOnSubitem');
+        if (this.appA?.ui) {
+            await this.appA.ui.defaultActionOnSubitem(subitem);
+        } else {
+            let error = 'not implemented yet';
+            this.log(error);
+            throw error;
         }
     }
 

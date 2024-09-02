@@ -4,7 +4,7 @@ import {notNullUndefined} from "@/utils";
 export class GuiG_ListG {
 
     private resolvedListItems : Array<Identity>;
-    private guisOfListItems : Array<Identity>;
+    guisOfListItems : Array<Identity>;
     uiElement : HTMLDivElement = document.createElement('div');
 
     constructor(private identity : Identity) {

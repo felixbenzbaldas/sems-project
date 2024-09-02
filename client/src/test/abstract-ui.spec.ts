@@ -61,4 +61,13 @@ describe('abstract ui', () => {
 
         expect((await app.appA.ui.content.list.getObject(0)).ui_hasFocus()).toBeTruthy();
     });
+
+    test('can create object after created object', async () => {
+        let app = Starter.createAppWithUI();
+        await app.appA.ui.globalEvent_defaultAction();
+
+        await app.appA.ui.globalEvent_defaultAction();
+
+        expect(app.appA.ui.content.list.jsList.length).toBe(2);
+    });
 });
