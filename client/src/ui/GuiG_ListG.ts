@@ -22,18 +22,18 @@ export class GuiG_ListG {
     private async resolveListItems() {
         this.resolvedListItems = [];
         for (let current of this.identity.list.jsList) {
-            let resolved = current.pathA ? await this.identity.resolve(current) : current;
-            this.resolvedListItems.push(resolved);
+            let currentResolved = current.pathA ? await this.identity.resolve(current) : current;
+            this.resolvedListItems.push(currentResolved);
         }
     }
 
     private async updateGuisOfListItems() {
         this.guisOfListItems = []; // TODO: do not always dismiss old guis
-        for (let resolved of this.resolvedListItems) {
-            let gui = resolved; // TODO: create extra object for gui
-            gui.guiG.editable = this.identity.guiG.editable;
-            await gui.guiG.unsafeUpdate();
-            this.guisOfListItems.push(gui);
+        for (let currentResolved of this.resolvedListItems) {
+            let currentGui = currentResolved; // TODO: create extra object for currentGui
+            currentGui.guiG.editable = this.identity.guiG.editable;
+            await currentGui.update();
+            this.guisOfListItems.push(currentGui);
         }
     }
 
