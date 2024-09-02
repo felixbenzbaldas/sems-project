@@ -140,6 +140,11 @@ export class GuiG {
                 }
             } else if (this.identity.list) {
                 await this.listG.click(text);
+            } else if (notNullUndefined(this.identity.text)) {
+                if (this.identity.text.includes(text)) {
+                    this.identity.getApp().appA.ui.focused = this.identity;
+                    await this.identity.getApp().update();
+                }
             }
         }
     }
