@@ -73,6 +73,9 @@ export class GuiG {
         uiElement.onblur = (event : any) => {
             this.identity.setText(event.target.innerText.trim())
         }
+        uiElement.onfocus = () => {
+            this.identity.getApp().appA.ui.focus(this.identity);
+        };
         uiElement.contentEditable = (this.isEditable()) ? 'true' : 'false';
         if (this.identity.guiG.isEditable() && this.identity.text.length === 0) {
             uiElement.style.borderLeft = 'solid';
@@ -142,8 +145,7 @@ export class GuiG {
                 await this.listG.click(text);
             } else if (notNullUndefined(this.identity.text)) {
                 if (this.identity.text.includes(text)) {
-                    this.identity.getApp().appA.ui.focused = this.identity;
-                    await this.identity.getApp().update();
+                    await this.identity.getApp().appA.ui.focus(this.identity);
                 }
             }
         }

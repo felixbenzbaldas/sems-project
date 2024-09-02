@@ -49,4 +49,8 @@ export class AppA_Ui {
         await this.content.update();
         this.focused = this.content.guiG.listG.guisOfListItems.at(position);
     }
+
+    async focus(identity: Identity) {
+        this.focused = identity;
+    }
 }
