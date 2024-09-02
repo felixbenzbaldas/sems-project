@@ -72,9 +72,7 @@ describe('abstract ui', () => {
         await wait(10);
 
         expect(app.appA.ui.content.list.jsList.length).toBe(2);
-        app.appA.ui.focused.setText('foo');
-        await wait(10);
         let resolvedContent = await app.appA.ui.content.list.getResolvedList();
-        expect(resolvedContent.at(1).text).toEqual('foo');
+        expect(app.appA.ui.focused).toBe(resolvedContent.at(1));
     });
 });
