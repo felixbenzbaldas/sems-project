@@ -66,10 +66,8 @@ describe('abstract ui', () => {
     test('can create object after created object', async () => {
         let app = Starter.createAppWithUI();
         await app.appA.ui.globalEvent_defaultAction();
-        await wait(10);
 
         await app.appA.ui.globalEvent_defaultAction();
-        await wait(10);
 
         expect(app.appA.ui.content.list.jsList.length).toBe(2);
         let resolvedContent = await app.appA.ui.content.list.getResolvedList();

@@ -39,6 +39,7 @@ export class AppA_Ui {
     async defaultAction() {
         let created = await this.identity.appA.createText('');
         this.content.list.add(created);
+        await this.content.update();
         this.focused = created;
     }
 
