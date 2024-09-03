@@ -9,7 +9,7 @@ export class Input {
 
 
     constructor(private identity : Identity) {
-        this.input = identity.appA.simple_createText('[enter input here]');
+        this.input = identity.appA.simple_createText('');
         this.input.editable = true;
         this.button = identity.appA.simple_createButton('show input', () => {
             this.showInput();
