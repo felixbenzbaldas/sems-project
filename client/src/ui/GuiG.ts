@@ -72,11 +72,13 @@ export class GuiG {
         uiElement.innerText = this.identity.text;
         uiElement.style.minHeight = '1rem';
         uiElement.style.whiteSpace = 'pre-wrap';
+        uiElement.style.outline = "0px solid transparent"; // prevent JS focus
         uiElement.onblur = (event : any) => {
             this.identity.setText(event.target.innerText.trim())
         }
         uiElement.onfocus = () => {
             this.identity.getApp().appA.ui.focus(this.identity);
+            uiElement.style.borderLeft = 'none';
         };
         uiElement.contentEditable = (this.isEditable()) ? 'true' : 'false';
         if (this.identity.guiG.isEditable() && this.identity.text.length === 0) {
