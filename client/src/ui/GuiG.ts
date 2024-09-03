@@ -31,6 +31,7 @@ export class GuiG {
 
     private async updateUiElement() {
         this.uiElement.innerHTML = null;
+        this.uiElement.style.all = 'revert';
         if (!this.identity.hidden) {
             if (this.identity.appA?.ui) {
                 this.uiElement.appendChild(this.appG.uiElement);
@@ -43,6 +44,7 @@ export class GuiG {
                 this.uiElement.appendChild(link);
             } else if (notNullUndefined(this.identity.text)) {
                 this.uiElement.appendChild(this.text_getUiElement());
+                this.uiElement.style.minWidth = '100%';
                 if (this.identity.list && this.identity.list.jsList.length > 0) {
                     let listWrapper = document.createElement('div');
                     listWrapper.style.marginLeft = '0.8rem';

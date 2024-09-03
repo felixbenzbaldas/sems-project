@@ -12,6 +12,9 @@ export class GuiG_ListG {
     async unsafeUpdate() {
         await this.updateGuisOfListItems();
         this.uiElement.innerHTML = null;
+        this.uiElement.style.display = 'flex';
+        this.uiElement.style.flexWrap = 'wrap';
+        this.uiElement.style.rowGap = '0.25rem';
         for (let gui of this.guisOfListItems) {
             this.uiElement.appendChild(gui.guiG.uiElement);
         }
