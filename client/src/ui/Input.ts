@@ -15,8 +15,8 @@ export class Input {
             this.showInput();
         });
         this.button.hidden = false;
-        this.inputWrapper = identity.appA.simple_createTextWithList('input', identity.appA.simple_createButton('hide input', () => {
-            this.showButton();
+        this.inputWrapper = identity.appA.simple_createTextWithList('input', identity.appA.simple_createButton('hide input', async () => {
+            await this.showButton();
         }), this.input);
         this.inputWrapper.hidden = true;
         this.ui = identity.appA.simple_createList(this.button, this.inputWrapper);
@@ -26,21 +26,21 @@ export class Input {
         return this.ui;
     }
 
-    set(string: string) {
-        this.input.setText(string);
+    async set(string: string) {
+        await this.input.setText(string);
     }
 
     get() : string {
         return this.input.text;
     }
 
-    showInput() {
-        this.inputWrapper.setHidden(false);
-        this.button.setHidden(true);
+    async showInput() {
+        await this.inputWrapper.setHidden(false);
+        await this.button.setHidden(true);
     }
 
-    showButton() {
-        this.inputWrapper.setHidden(true);
-        this.button.setHidden(false);
+    async showButton() {
+        await this.inputWrapper.setHidden(true);
+        await this.button.setHidden(false);
     }
 }

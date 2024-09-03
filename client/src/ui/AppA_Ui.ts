@@ -24,11 +24,11 @@ export class AppA_Ui {
     }
 
     async globalEvent_exportApp() {
-        this.output.set(JSON.stringify(await this.identity.export_keepContainerStructure_ignoreExternalDependencies()));
+        await this.output.set(JSON.stringify(await this.identity.export_keepContainerStructure_ignoreExternalDependencies()));
     }
 
     async globalEvent_exportContent() {
-        this.output.set(JSON.stringify(await this.content.export_allDependenciesInOneContainer()));
+        await this.output.set(JSON.stringify(await this.content.export_allDependenciesInOneContainer()));
     }
 
     async globalEvent_importToContent() {

@@ -41,7 +41,7 @@ describe('abstract ui', () => {
 
     it('can import to content', async () => {
         let app = Starter.createAppWithUI();
-        app.appA.ui.input.set('{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}');
+        await app.appA.ui.input.set('{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}');
 
         await app.appA.ui.globalEvent_importToContent();
 

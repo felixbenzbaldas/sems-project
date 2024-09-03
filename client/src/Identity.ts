@@ -42,14 +42,14 @@ export class Identity {
         }
     }
 
-    setText(string: string) {
+    async setText(string: string) {
         this.text = string;
-        this.update();
+        await this.update();
     }
 
-    setHidden(value : boolean) {
+    async setHidden(value : boolean) {
         this.hidden = value;
-        this.update();
+        await this.update();
     }
 
     async httpRequest(url : string, method : string, args : Array<any>) : Promise<any> {
