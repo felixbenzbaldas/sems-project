@@ -8,7 +8,7 @@ describe('simple list', () => {
         let app : Identity = Starter.createApp();
         let list : Identity = app.appA.simple_createList();
 
-        list.list.add(app.appA.createIdentityWithApp());
+        await list.list.add(app.appA.createIdentityWithApp());
 
         expect(list.list.jsList.length).toBe(1);
     });
@@ -25,7 +25,7 @@ describe('simple list', () => {
     it('can get description', async () => {
         let app : Identity = Starter.createApp();
         let list : Identity = app.appA.simple_createList();
-        list.list.add(app.appA.createIdentityWithApp());
+        await list.list.add(app.appA.createIdentityWithApp());
 
         let description = list.getDescription();
 

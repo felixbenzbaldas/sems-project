@@ -38,7 +38,7 @@ export class Starter {
             toReplaceDuringDeployment.text = 'marker-dr53hifhh4-header';
             await app.appA.addAllToListFromRawData(toReplaceDuringDeployment, JSON.parse(markerBody));
         }
-        app.appA.ui.content.list.add(
+        await app.appA.ui.content.list.add(
             app.appA.simple_createText('This is the Sems software. It is being developed. New features will be added.'),
             app.appA.simple_createText(''),
             app.appA.simple_createTextWithList('Sems-Client-App',

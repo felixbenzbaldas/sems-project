@@ -8,7 +8,7 @@ export class ListA {
         this.jsList = jsList;
     }
 
-    add(...items : Array<Identity>) {
+    async add(...items : Array<Identity>) {
         items.forEach(item => {
            if (item.name && item.container) {
                this.jsList.push(this.identity.getPath(item));
@@ -16,7 +16,7 @@ export class ListA {
                this.jsList.push(item);
            }
         });
-        this.identity.update();
+        await this.identity.update();
     }
 
     json() {
