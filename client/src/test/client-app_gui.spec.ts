@@ -31,11 +31,9 @@ describe('client-app gui', () => {
         await app.appA.ui.globalEvent_defaultAction();
         app.appA.ui.focused.setText('marker-foo');
         app.appA.ui.focused = undefined;
-        await wait(10);
 
         await gui.click('marker-foo');
 
-        await wait(10);
         expect(app.appA.ui.focused.text).toEqual('marker-foo');
     });
 
