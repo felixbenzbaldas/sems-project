@@ -6,7 +6,7 @@ export class GuiG_ListG {
     guisOfListItems : Array<Entity>;
     uiElement : HTMLDivElement = document.createElement('div');
 
-    constructor(private identity : Entity) {
+    constructor(private entity : Entity) {
     }
 
     async unsafeUpdate() {
@@ -22,16 +22,16 @@ export class GuiG_ListG {
 
     private async updateGuisOfListItems() {
         this.guisOfListItems = []; // TODO: do not always dismiss old guis
-        for (let currentResolved of await this.identity.list.getResolvedList()) {
+        for (let currentResolved of await this.entity.list.getResolvedList()) {
             let currentGui = currentResolved; // TODO: create extra object for currentGui
-            currentGui.guiG.editable = this.identity.guiG.editable;
+            currentGui.guiG.editable = this.entity.guiG.editable;
             await currentGui.update();
             this.guisOfListItems.push(currentGui);
         }
     }
 
     getRawText() : string {
-        if (notNullUndefined(this.identity.list)) {
+        if (notNullUndefined(this.entity.list)) {
             return this.guisOfListItems.map(current => current.guiG.getRawText()).reduce((a, b) => a + b, '');
         } else {
             return '';
@@ -39,7 +39,7 @@ export class GuiG_ListG {
     }
 
     async click(text : string) {
-        if (this.identity.list) {
+        if (this.entity.list) {
             for (let current of this.guisOfListItems) {
                 await current.guiG.click(text);
             }
@@ -47,7 +47,7 @@ export class GuiG_ListG {
     }
 
     countEditableTexts() : number {
-        if (this.identity.list) {
+        if (this.entity.list) {
             return this.guisOfListItems.map(current => current.guiG.countEditableTexts()).reduce((a, b) => a + b, 0);
         }
     }

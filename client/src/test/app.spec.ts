@@ -10,12 +10,12 @@ describe('app', () => {
         expect(app.text).toEqual('Sems application');
     });
 
-    it('can create an identity', async () => {
+    it('can create an entity', async () => {
         let app : Entity = Starter.createApp();
 
-        let identity : Entity = app.appA.createEntityWithApp();
+        let entity : Entity = app.appA.createEntityWithApp();
 
-        expect(identity).toBeTruthy();
+        expect(entity).toBeTruthy();
     });
 
     it('can set text', async () => {

@@ -11,17 +11,17 @@ export class AppA {
     server: string;
     readonly logG: LogG;
 
-    constructor(private identity : Entity) {
-        this.logG = new LogG(identity);
+    constructor(private entity : Entity) {
+        this.logG = new LogG(entity);
     }
 
     createEntityWithApp() {
-        let identity = this.createIdentity();
-        identity.app = this.identity;
-        return identity;
+        let entity = this.createEntity();
+        entity.app = this.entity;
+        return entity;
     }
 
-    createIdentity() {
+    createEntity() {
         return new Entity();
     }
 
@@ -33,9 +33,9 @@ export class AppA {
     }
 
     simple_createText(text: string) : Entity {
-        let identity = this.createEntityWithApp();
-        identity.text = text;
-        return identity;
+        let entity = this.createEntityWithApp();
+        entity.text = text;
+        return entity;
     }
 
     simple_createLink(href: string, text?: string) {
@@ -46,10 +46,10 @@ export class AppA {
     }
 
     simple_createTextWithList(text : string, ...jsList : Array<Entity>) : Entity {
-        let identity = this.createEntityWithApp();
-        identity.text = text;
-        identity.list = new ListA(identity, ...jsList);
-        return identity;
+        let entity = this.createEntityWithApp();
+        entity.text = text;
+        entity.list = new ListA(entity, ...jsList);
+        return entity;
     }
 
     simple_createButton(label : string, func : Function) : Entity {
@@ -68,7 +68,7 @@ export class AppA {
     }
 
     getCurrentContainer() : Entity {
-        return this.identity;
+        return this.entity;
     }
 
     createPath(listOfNames: Array<string>) {
@@ -89,9 +89,9 @@ export class AppA {
     getBlocker() : {resolve : () => void, block : () => Promise<void>} {
         let promiseAndResolver = getPromiseAndResolver();
         let block = (async () => {
-            this.identity.log('start blocking');
+            this.entity.log('start blocking');
             await promiseAndResolver.promise.then(() => {
-                this.identity.log('end blocking');
+                this.entity.log('end blocking');
             });
         });
         return {

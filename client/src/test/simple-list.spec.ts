@@ -4,7 +4,7 @@ import {Starter} from "@/Starter";
 
 describe('simple list', () => {
     
-    it('can add identity', async () => {
+    it('can add entity', async () => {
         let app : Entity = Starter.createApp();
         let list : Entity = app.appA.simple_createList();
 

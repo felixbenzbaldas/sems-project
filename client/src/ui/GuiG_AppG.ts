@@ -5,28 +5,28 @@ export class GuiG_AppG {
     readonly uiElement = document.createElement('div');
     private rawText: string;
 
-    constructor(private identity : Entity) {
+    constructor(private entity : Entity) {
     }
 
     async unsafeUpdate() : Promise<void> {
-        if (!this.identity.appA.ui.isWebsite) {
-            this.identity.appA.ui.content.guiG.editable = true;
-            this.identity.appA.ui.content.update();
+        if (!this.entity.appA.ui.isWebsite) {
+            this.entity.appA.ui.content.guiG.editable = true;
+            this.entity.appA.ui.content.update();
         }
         this.updateUiElement();
     }
 
     private updateUiElement() {
         this.uiElement.innerHTML = null;
-        if (this.identity.appA.ui.commands) {
-            this.uiElement.appendChild(this.identity.appA.ui.commands.guiG.uiElement);
+        if (this.entity.appA.ui.commands) {
+            this.uiElement.appendChild(this.entity.appA.ui.commands.guiG.uiElement);
         }
-        if (!this.identity.appA.ui.isWebsite) {
-            this.uiElement.appendChild(this.identity.appA.ui.output.getUi().guiG.uiElement);
-            this.uiElement.appendChild(this.identity.appA.ui.input.getUi().guiG.uiElement);
+        if (!this.entity.appA.ui.isWebsite) {
+            this.uiElement.appendChild(this.entity.appA.ui.output.getUi().guiG.uiElement);
+            this.uiElement.appendChild(this.entity.appA.ui.input.getUi().guiG.uiElement);
             this.uiElement.appendChild(this.separatorLine());
         }
-        this.uiElement.appendChild(this.identity.appA.ui.content.guiG.uiElement);
+        this.uiElement.appendChild(this.entity.appA.ui.content.guiG.uiElement);
     }
 
     private separatorLine() : HTMLElement {
@@ -39,14 +39,14 @@ export class GuiG_AppG {
 
     getRawText() : string {
         this.rawText = '';
-        if (this.identity.appA.ui.commands) {
-            this.addRawText(this.identity.appA.ui.commands.guiG.getRawText());
+        if (this.entity.appA.ui.commands) {
+            this.addRawText(this.entity.appA.ui.commands.guiG.getRawText());
         }
-        if (!this.identity.appA.ui.isWebsite) {
-            this.addRawText(this.identity.appA.ui.output.getUi().guiG.getRawText());
-            this.addRawText(this.identity.appA.ui.input.getUi().guiG.getRawText());
+        if (!this.entity.appA.ui.isWebsite) {
+            this.addRawText(this.entity.appA.ui.output.getUi().guiG.getRawText());
+            this.addRawText(this.entity.appA.ui.input.getUi().guiG.getRawText());
         }
-        this.addRawText(this.identity.appA.ui.content.guiG.getRawText());
+        this.addRawText(this.entity.appA.ui.content.guiG.getRawText());
         return this.rawText;
     }
 
@@ -55,26 +55,26 @@ export class GuiG_AppG {
     }
 
     async click(text : string) {
-        if (this.identity.appA.ui.commands) {
-            await this.identity.appA.ui.commands.guiG.click(text);
+        if (this.entity.appA.ui.commands) {
+            await this.entity.appA.ui.commands.guiG.click(text);
         }
-        if (!this.identity.appA.ui.isWebsite) {
-            await this.identity.appA.ui.output.getUi().guiG.click(text);
-            await this.identity.appA.ui.input.getUi().guiG.click(text);
+        if (!this.entity.appA.ui.isWebsite) {
+            await this.entity.appA.ui.output.getUi().guiG.click(text);
+            await this.entity.appA.ui.input.getUi().guiG.click(text);
         }
-        await this.identity.appA.ui.content.guiG.click(text);
+        await this.entity.appA.ui.content.guiG.click(text);
     }
 
     countEditableTexts() : number {
         let counter = 0;
-        if (this.identity.appA.ui.commands) {
-            counter += this.identity.appA.ui.commands.guiG.countEditableTexts();
+        if (this.entity.appA.ui.commands) {
+            counter += this.entity.appA.ui.commands.guiG.countEditableTexts();
         }
-        if (!this.identity.appA.ui.isWebsite) {
-            counter += this.identity.appA.ui.output.getUi().guiG.countEditableTexts();
-            counter += this.identity.appA.ui.input.getUi().guiG.countEditableTexts();
+        if (!this.entity.appA.ui.isWebsite) {
+            counter += this.entity.appA.ui.output.getUi().guiG.countEditableTexts();
+            counter += this.entity.appA.ui.input.getUi().guiG.countEditableTexts();
         }
-        counter += this.identity.appA.ui.content.guiG.countEditableTexts();
+        counter += this.entity.appA.ui.content.guiG.countEditableTexts();
         return counter;
     }
 }

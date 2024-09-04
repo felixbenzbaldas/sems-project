@@ -11,41 +11,41 @@ export class GuiG {
     appG: GuiG_AppG;
     listG: GuiG_ListG;
 
-    constructor(private identity : Entity) {
-        this.appG = new GuiG_AppG(identity);
-        this.listG = new GuiG_ListG(identity);
-        identity.update();
+    constructor(private entity : Entity) {
+        this.appG = new GuiG_AppG(entity);
+        this.listG = new GuiG_ListG(entity);
+        entity.update();
     }
 
     async unsafeUpdate() {
-        if (!this.identity.hidden) {
-            if (this.identity.appA?.ui) {
+        if (!this.entity.hidden) {
+            if (this.entity.appA?.ui) {
                 await this.appG.unsafeUpdate();
-            } else if (this.identity.list) {
+            } else if (this.entity.list) {
                 await this.listG.unsafeUpdate();
             }
         }
         await this.updateUiElement();
-        this.identity.log('gui_updated');
+        this.entity.log('gui_updated');
     }
 
     private async updateUiElement() {
         this.uiElement.innerHTML = null;
         this.uiElement.style.all = 'revert';
-        if (!this.identity.hidden) {
-            if (this.identity.appA?.ui) {
+        if (!this.entity.hidden) {
+            if (this.entity.appA?.ui) {
                 this.uiElement.appendChild(this.appG.uiElement);
-            } else if (this.identity.action) {
+            } else if (this.entity.action) {
                 this.uiElement.appendChild(this.action_getUiElement());
-            } else if (notNullUndefined(this.identity.link)) {
+            } else if (notNullUndefined(this.entity.link)) {
                 let link = document.createElement('a');
-                link.href = this.identity.link;
+                link.href = this.entity.link;
                 link.innerText = this.link_getText();
                 this.uiElement.appendChild(link);
-            } else if (notNullUndefined(this.identity.text)) {
+            } else if (notNullUndefined(this.entity.text)) {
                 this.uiElement.appendChild(this.text_getUiElement());
                 this.uiElement.style.minWidth = '100%';
-                if (this.identity.list && this.identity.list.jsList.length > 0) {
+                if (this.entity.list && this.entity.list.jsList.length > 0) {
                     let listWrapper = document.createElement('div');
                     listWrapper.style.marginLeft = '0.8rem';
                     listWrapper.style.marginTop = '0.2rem';
@@ -53,35 +53,35 @@ export class GuiG {
                     listWrapper.appendChild(this.listG.uiElement);
                     this.uiElement.appendChild(listWrapper);
                 }
-            } else if (this.identity.list) {
+            } else if (this.entity.list) {
                 this.uiElement.appendChild(this.listG.uiElement);
             } else {
                 let div = document.createElement('div');
-                div.innerText = this.identity.getDescription();
+                div.innerText = this.entity.getDescription();
                 return div;
             }
         }
     }
 
     link_getText() {
-        return notNullUndefined(this.identity.text) ? this.identity.text : this.identity.link;
+        return notNullUndefined(this.entity.text) ? this.entity.text : this.entity.link;
     }
 
     text_getUiElement() {
         let uiElement = document.createElement('div');
-        uiElement.innerText = this.identity.text;
+        uiElement.innerText = this.entity.text;
         uiElement.style.minHeight = '1rem';
         uiElement.style.whiteSpace = 'pre-wrap';
         uiElement.style.outline = "0px solid transparent"; // prevent JS focus
         uiElement.onblur = (event : any) => {
-            this.identity.setText(event.target.innerText.trim())
+            this.entity.setText(event.target.innerText.trim())
         }
         uiElement.onfocus = () => {
-            this.identity.getApp().appA.ui.focus(this.identity);
+            this.entity.getApp().appA.ui.focus(this.entity);
             uiElement.style.borderLeft = 'none';
         };
         uiElement.contentEditable = (this.isEditable()) ? 'true' : 'false';
-        if (this.identity.guiG.isEditable() && this.identity.text.length === 0) {
+        if (this.entity.guiG.isEditable() && this.entity.text.length === 0) {
             uiElement.style.borderLeft = 'solid';
         }
         return uiElement;
@@ -89,8 +89,8 @@ export class GuiG {
 
     action_getUiElement() {
         let button = document.createElement('button');
-        button.innerText = this.identity.text;
-        button.onclick = (event) => { this.identity.action(); };
+        button.innerText = this.entity.text;
+        button.onclick = (event) => { this.entity.action(); };
         button.style.margin = '0.3rem 0.3rem 0.3rem 0rem';
         this.uiElement.style.display = 'inline';
         return button;
@@ -98,9 +98,9 @@ export class GuiG {
 
     isEditable() {
         if (notNullUndefined(this.editable)) {
-            if (notNullUndefined(this.identity.editable)) {
+            if (notNullUndefined(this.entity.editable)) {
                 if (this.editable == true) {
-                    return this.identity.editable;
+                    return this.entity.editable;
                 } else {
                     return false;
                 }
@@ -108,8 +108,8 @@ export class GuiG {
                 return this.editable;
             }
         } else {
-            if (notNullUndefined(this.identity.editable)) {
-                return this.identity.editable;
+            if (notNullUndefined(this.entity.editable)) {
+                return this.entity.editable;
             } else {
                 return false;
             }
@@ -117,17 +117,17 @@ export class GuiG {
     }
 
     getRawText() : string {
-        if (!this.identity.hidden) {
-            if (this.identity.appA?.ui) {
+        if (!this.entity.hidden) {
+            if (this.entity.appA?.ui) {
                 return this.appG.getRawText();
-            } else if (notNullUndefined(this.identity.link)) {
+            } else if (notNullUndefined(this.entity.link)) {
                 return this.link_getText();
             } else {
                 let rawText = '';
-                if (notNullUndefined(this.identity.text)) {
-                    rawText += this.identity.text;
+                if (notNullUndefined(this.entity.text)) {
+                    rawText += this.entity.text;
                 }
-                if (this.identity.list) {
+                if (this.entity.list) {
                     rawText += this.listG.getRawText();
                 }
                 return rawText;
@@ -137,37 +137,37 @@ export class GuiG {
     }
 
     async click(text : string) {
-        this.identity.log('click ' + text);
-        if (!this.identity.hidden) {
-            if (this.identity.appA?.ui) {
+        this.entity.log('click ' + text);
+        if (!this.entity.hidden) {
+            if (this.entity.appA?.ui) {
                 await this.appG.click(text);
-            } else if (this.identity.action) {
-                if (this.identity.text.includes(text)) {
-                    await this.identity.action();
+            } else if (this.entity.action) {
+                if (this.entity.text.includes(text)) {
+                    await this.entity.action();
                 }
-            } else if (this.identity.list) {
+            } else if (this.entity.list) {
                 await this.listG.click(text);
-            } else if (notNullUndefined(this.identity.text)) {
-                if (this.identity.text.includes(text)) {
-                    await this.identity.getApp().appA.ui.focus(this.identity);
+            } else if (notNullUndefined(this.entity.text)) {
+                if (this.entity.text.includes(text)) {
+                    await this.entity.getApp().appA.ui.focus(this.entity);
                 }
             }
         }
     }
 
     countEditableTexts() : number {
-        this.identity.log('countEditableTexts');
-        if (!this.identity.hidden) {
-            if (this.identity.appA?.ui) {
+        this.entity.log('countEditableTexts');
+        if (!this.entity.hidden) {
+            if (this.entity.appA?.ui) {
                 return this.appG.countEditableTexts();
             } else {
                 let counter = 0;
-                if (notNullUndefined(this.identity.text)) {
-                    if (this.identity.guiG.isEditable()) {
+                if (notNullUndefined(this.entity.text)) {
+                    if (this.entity.guiG.isEditable()) {
                         counter++;
                     }
                 }
-                if (this.identity.list) {
+                if (this.entity.list) {
                     counter += this.listG.countEditableTexts();
                 }
                 return counter;

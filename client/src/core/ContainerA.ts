@@ -12,9 +12,9 @@ export class ContainerA {
     }
 
     async getByName(name: string) : Promise<Entity> {
-        let identity = this.entity.appA.createEntityWithApp();
-        identity.text = '42'; // TODO http-request
-        return Promise.resolve(identity);
+        let entity = this.entity.appA.createEntityWithApp();
+        entity.text = '42'; // TODO http-request
+        return Promise.resolve(entity);
     }
 
     async createText(text: string) : Promise<Entity> {
@@ -29,10 +29,10 @@ export class ContainerA {
         return Promise.resolve(list);
     }
 
-    private take(identity: Entity) {
-        identity.name = this.getUniqueRandomName();
-        identity.container = this.entity;
-        this.mapNameEntity.set(identity.name, identity);
+    private take(entity: Entity) {
+        entity.name = this.getUniqueRandomName();
+        entity.container = this.entity;
+        this.mapNameEntity.set(entity.name, entity);
     }
 
 }

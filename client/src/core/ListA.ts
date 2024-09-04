@@ -20,11 +20,11 @@ export class ListA {
     }
 
     json() {
-        return this.jsList.map(identity => {
-            if (identity.pathA) {
-                return identity.pathA.listOfNames;
+        return this.jsList.map(entity => {
+            if (entity.pathA) {
+                return entity.pathA.listOfNames;
             } else {
-                return identity.json();
+                return entity.json();
             }
         });
     }

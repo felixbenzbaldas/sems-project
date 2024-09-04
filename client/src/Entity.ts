@@ -7,8 +7,8 @@ import {GuiG} from "@/ui/GuiG";
 import {notNullUndefined} from "@/utils";
 import {JobPipelineG} from "@/core/JobPipelineG";
 
-/// An identity is an object without members. It only consists of its memory address.
-/// The members of this class should be interpreted as aspects which can be assigned to the identity.
+/// An entity is an object without members. It only consists of its memory address.
+/// The members of this class should be interpreted as aspects which can be assigned to the entity.
 /// On the logical level they do not belong to this class.
 export class Entity {
 
@@ -118,8 +118,8 @@ export class Entity {
         let exported = this.json();
         if(this.containerA.mapNameEntity) {
             exported.objects = {};
-            this.containerA.mapNameEntity.forEach((identity: Entity, name : string) => {
-                exported.objects[name] = identity.json();
+            this.containerA.mapNameEntity.forEach((entity: Entity, name : string) => {
+                exported.objects[name] = entity.json();
             });
         }
         return exported;
@@ -143,9 +143,9 @@ export class Entity {
     getDependencies() : Set<Entity> {
         let set = new Set<Entity>();
         if (this.list) {
-            this.list.jsList.forEach((identity : Entity) => {
-                if (identity.pathA) {
-                    set.add(identity);
+            this.list.jsList.forEach((entity : Entity) => {
+                if (entity.pathA) {
+                    set.add(entity);
                 }
             });
         }
