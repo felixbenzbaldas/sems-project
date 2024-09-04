@@ -1,13 +1,13 @@
 import {describe, expect, it, test} from "vitest";
-import {Identity} from "@/Identity";
+import {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 
 describe('list', () => {
 
     it('can add object of same container', async () => {
-        let app : Identity = Starter.createApp();
-        let list : Identity = await app.appA.createList();
-        let object : Identity = await app.appA.createText('bar');
+        let app : Entity = Starter.createApp();
+        let list : Entity = await app.appA.createList();
+        let object : Entity = await app.appA.createText('bar');
 
         await list.list.add(object);
 

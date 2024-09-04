@@ -1,11 +1,11 @@
 import {beforeEach, describe, expect, it} from "vitest";
-import {Identity} from "@/Identity";
+import {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 import type {GuiG} from "@/ui/GuiG";
 
 describe('website gui', () => {
 
-    let app : Identity;
+    let app : Entity;
     let gui : GuiG;
 
     beforeEach(async () => {

@@ -1,11 +1,11 @@
-import type {Identity} from "@/Identity";
+import type {Entity} from "@/Entity";
 
 export class Output {
 
-    private readonly ui : Identity;
-    private readonly output : Identity;
+    private readonly ui : Entity;
+    private readonly output : Entity;
 
-    constructor(private identity : Identity) {
+    constructor(private identity : Entity) {
         this.output = this.identity.appA.simple_createText('');
         this.ui = this.identity.appA.simple_createTextWithList('output', this.output, this.identity.appA.simple_createButton('hide output', async () => {
             await this.ui.setHidden(true);
@@ -18,7 +18,7 @@ export class Output {
         this.ui.setHidden(false);
     }
 
-    getUi() : Identity {
+    getUi() : Entity {
         return this.ui;
     }
 

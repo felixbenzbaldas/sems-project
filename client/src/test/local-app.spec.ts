@@ -1,5 +1,5 @@
 import {describe, expect, it, test} from "vitest";
-import {Identity} from "@/Identity";
+import {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 
 let testPort = 8081;
@@ -10,13 +10,13 @@ let testServer = 'http://localhost:' + testPort + '/';
 describe('local app', () => {
 
     it('can be loaded', async () => {
-        let app : Identity = await Starter.loadLocalhostApp(testPort);
+        let app : Entity = await Starter.loadLocalhostApp(testPort);
 
         expect(app.appA.server).toBe(testServer);
     });
 
     it('can create remote text', async () => {
-        let app : Identity = await Starter.loadLocalhostApp(testPort);
+        let app : Entity = await Starter.loadLocalhostApp(testPort);
 
         let object = await app.appA.createText('foo');
 
@@ -25,7 +25,7 @@ describe('local app', () => {
 
     it('can load text', async () => {
         let name = await createObjectWithText('42');
-        let app : Identity = await Starter.loadLocalhostApp(testPort);
+        let app : Entity = await Starter.loadLocalhostApp(testPort);
 
         let object = await app.containerA.getByName(name);
 
@@ -34,7 +34,7 @@ describe('local app', () => {
 
     // returns the name of the created object
     async function createObjectWithText(text: string) : Promise<string> {
-        let app : Identity = await Starter.loadLocalhostApp(testPort);
+        let app : Entity = await Starter.loadLocalhostApp(testPort);
         return (await app.appA.createText(text)).name;
     }
 

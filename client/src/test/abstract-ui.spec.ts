@@ -1,12 +1,12 @@
 import {describe, expect, it, test} from "vitest";
-import {Identity} from "@/Identity";
+import {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 import {wait} from "@/utils";
 
 describe('abstract ui', () => {
 
     it('can create object', async () => {
-        let app : Identity = Starter.createAppWithUI();
+        let app : Entity = Starter.createAppWithUI();
 
         await app.appA.ui.globalEvent_defaultAction();
 
@@ -14,7 +14,7 @@ describe('abstract ui', () => {
     });
 
     it('can get json', async () => {
-        let app : Identity = Starter.createAppWithUI();
+        let app : Entity = Starter.createAppWithUI();
 
         let json = app.json();
 
@@ -22,7 +22,7 @@ describe('abstract ui', () => {
     });
 
     it('can export app', async () => {
-        let app : Identity = Starter.createAppWithUI();
+        let app : Entity = Starter.createAppWithUI();
         expect(app.appA.ui.output.getUi().hidden).toBe(true);
 
         await app.appA.ui.globalEvent_exportApp();
@@ -31,7 +31,7 @@ describe('abstract ui', () => {
     });
 
     it('can export content', async () => {
-        let app : Identity = Starter.createAppWithUI();
+        let app : Entity = Starter.createAppWithUI();
         expect(app.appA.ui.output.getUi().hidden).toBe(true);
 
         await app.appA.ui.globalEvent_exportContent();
@@ -45,7 +45,7 @@ describe('abstract ui', () => {
 
         await app.appA.ui.globalEvent_importToContent();
 
-        expect(app.containerA.mapNameIdentity.size).toBe(1);
+        expect(app.containerA.mapNameEntity.size).toBe(1);
     });
 
     test('At beginning the app object has the focus', async () => {

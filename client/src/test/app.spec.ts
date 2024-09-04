@@ -1,25 +1,25 @@
 import {describe, expect, it, test} from "vitest";
-import {Identity} from "@/Identity";
+import {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 
 describe('app', () => {
 
     it('can be created', async () => {
-        let app : Identity = Starter.createApp();
+        let app : Entity = Starter.createApp();
 
         expect(app.text).toEqual('Sems application');
     });
 
     it('can create an identity', async () => {
-        let app : Identity = Starter.createApp();
+        let app : Entity = Starter.createApp();
 
-        let identity : Identity = app.appA.createIdentityWithApp();
+        let identity : Entity = app.appA.createEntityWithApp();
 
         expect(identity).toBeTruthy();
     });
 
     it('can set text', async () => {
-        let app : Identity = Starter.createApp();
+        let app : Entity = Starter.createApp();
 
         app.text = 'my application';
 
@@ -27,15 +27,15 @@ describe('app', () => {
     });
 
     it('can create a simple list', async () => {
-        let app : Identity = Starter.createApp();
+        let app : Entity = Starter.createApp();
 
-        let list : Identity = app.appA.simple_createList();
+        let list : Entity = app.appA.simple_createList();
 
         expect(list.list.jsList.length).toBe(0);
     });
 
     it('can get json', async () => {
-        let app : Identity = Starter.createApp();
+        let app : Entity = Starter.createApp();
         app.text = 'my app';
 
         let json = app.json();
@@ -66,14 +66,14 @@ describe('app', () => {
 
         expect(text.name).toBeTruthy();
         expect(text.container).toBe(app);
-        expect(app.containerA.mapNameIdentity.get(text.name)).toBe(text);
+        expect(app.containerA.mapNameEntity.get(text.name)).toBe(text);
     });
 
     it('can get path', async () => {
         let app = Starter.createApp();
         let text = await app.appA.createText('');
 
-        let path : Identity = app.getPath(text);
+        let path : Entity = app.getPath(text);
 
         expect(path.pathA.listOfNames).toEqual([text.name]);
     });
@@ -130,8 +130,8 @@ describe('app', () => {
     });
 
     test('Can get shortDescription of text', async () => {
-        let app : Identity = Starter.createApp();
-        let text : Identity = app.appA.simple_createText('12345678901234567890123456789012');
+        let app : Entity = Starter.createApp();
+        let text : Entity = app.appA.simple_createText('12345678901234567890123456789012');
 
         let shortDescription = text.getShortDescription();
 
@@ -139,8 +139,8 @@ describe('app', () => {
     });
 
     test('Can get description of path', async () => {
-        let app : Identity = Starter.createApp();
-        let path : Identity = app.appA.createPath(['a', 'b']);
+        let app : Entity = Starter.createApp();
+        let path : Entity = app.appA.createPath(['a', 'b']);
 
         let description = path.getDescription();
 

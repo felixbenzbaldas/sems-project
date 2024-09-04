@@ -1,4 +1,4 @@
-import {Identity} from "@/Identity";
+import {Entity} from "@/Entity";
 
 export class PathA {
 
@@ -9,8 +9,8 @@ export class PathA {
     }
 
     withoutFirst() {
-        let identity = new Identity();
-        identity.pathA = new PathA(this.listOfNames.slice(1, this.listOfNames.length));
-        return identity;
+        let entity = new Entity();
+        entity.pathA = new PathA(this.listOfNames.slice(1, this.listOfNames.length));
+        return entity;
     }
 }

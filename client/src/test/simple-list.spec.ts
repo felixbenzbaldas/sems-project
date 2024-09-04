@@ -1,21 +1,21 @@
 import {describe, expect, it} from "vitest";
-import {Identity} from "@/Identity";
+import {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 
 describe('simple list', () => {
     
     it('can add identity', async () => {
-        let app : Identity = Starter.createApp();
-        let list : Identity = app.appA.simple_createList();
+        let app : Entity = Starter.createApp();
+        let list : Entity = app.appA.simple_createList();
 
-        await list.list.add(app.appA.createIdentityWithApp());
+        await list.list.add(app.appA.createEntityWithApp());
 
         expect(list.list.jsList.length).toBe(1);
     });
 
     it('can get json (empty)', async () => {
-        let app : Identity = Starter.createApp();
-        let list : Identity = app.appA.simple_createList();
+        let app : Entity = Starter.createApp();
+        let list : Entity = app.appA.simple_createList();
 
         let json = list.json();
 
@@ -23,9 +23,9 @@ describe('simple list', () => {
     });
 
     it('can get description', async () => {
-        let app : Identity = Starter.createApp();
-        let list : Identity = app.appA.simple_createList();
-        await list.list.add(app.appA.createIdentityWithApp());
+        let app : Entity = Starter.createApp();
+        let list : Entity = app.appA.simple_createList();
+        await list.list.add(app.appA.createEntityWithApp());
 
         let description = list.getDescription();
 

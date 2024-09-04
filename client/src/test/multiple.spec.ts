@@ -1,5 +1,5 @@
 import {describe, expect, it} from "vitest";
-import {Identity} from "@/Identity";
+import {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 import {wait} from "@/utils";
 
@@ -7,7 +7,7 @@ import {wait} from "@/utils";
 describe('jobPipeline', () => {
 
     it('can run job', async () => {
-        let app : Identity = Starter.createApp();
+        let app : Entity = Starter.createApp();
         app.appA.logG.toListOfStrings = true;
 
         await app.jobPipelineG.runLater(() => {
@@ -18,7 +18,7 @@ describe('jobPipeline', () => {
     });
 
     it('runs job not before previous job finished', async () => {
-        let app : Identity = Starter.createApp();
+        let app : Entity = Starter.createApp();
         app.appA.logG.toListOfStrings = true;
         app.jobPipelineG.runLater(async () => {
             await wait(20);
@@ -39,7 +39,7 @@ describe('jobPipeline', () => {
 describe('updater', () => {
 
     it('can update', async () => {
-        let app : Identity = Starter.createApp();
+        let app : Entity = Starter.createApp();
         app.appA.logG.toListOfStrings = true;
         app.test_update = () => {
             app.log('test_updated');

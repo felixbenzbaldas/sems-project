@@ -1,11 +1,11 @@
-import type {Identity} from "@/Identity";
+import type {Entity} from "@/Entity";
 
 export class GuiG_AppG {
 
     readonly uiElement = document.createElement('div');
     private rawText: string;
 
-    constructor(private identity : Identity) {
+    constructor(private identity : Entity) {
     }
 
     async unsafeUpdate() : Promise<void> {

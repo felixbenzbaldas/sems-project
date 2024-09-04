@@ -1,28 +1,28 @@
-import type {Identity} from "@/Identity";
+import type {Entity} from "@/Entity";
 
 export class Input {
 
-    private readonly ui : Identity;
-    private readonly input : Identity;
-    private readonly button : Identity;
-    private readonly inputWrapper : Identity;
+    private readonly ui : Entity;
+    private readonly input : Entity;
+    private readonly button : Entity;
+    private readonly inputWrapper : Entity;
 
 
-    constructor(private identity : Identity) {
-        this.input = identity.appA.simple_createText('');
+    constructor(private entity : Entity) {
+        this.input = entity.appA.simple_createText('');
         this.input.editable = true;
-        this.button = identity.appA.simple_createButton('show input', () => {
+        this.button = entity.appA.simple_createButton('show input', () => {
             this.showInput();
         });
         this.button.hidden = false;
-        this.inputWrapper = identity.appA.simple_createTextWithList('input', identity.appA.simple_createButton('hide input', async () => {
+        this.inputWrapper = entity.appA.simple_createTextWithList('input', entity.appA.simple_createButton('hide input', async () => {
             await this.showButton();
         }), this.input);
         this.inputWrapper.hidden = true;
-        this.ui = identity.appA.simple_createList(this.button, this.inputWrapper);
+        this.ui = entity.appA.simple_createList(this.button, this.inputWrapper);
     }
 
-    getUi() : Identity {
+    getUi() : Entity {
         return this.ui;
     }
 

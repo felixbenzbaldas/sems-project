@@ -1,4 +1,4 @@
-import type {Identity} from "@/Identity";
+import type {Entity} from "@/Entity";
 import {devtools} from "vue";
 
 export class LogG {
@@ -6,10 +6,10 @@ export class LogG {
     toListOfStrings: boolean;
     listOfStrings: Array<string> = [];
 
-    constructor(private identity : Identity) {
+    constructor(private entity : Entity) {
     }
 
-    log(logger : Identity, log : string) {
+    log(logger : Entity, log : string) {
         if (this.toListOfStrings || this.toConsole) {
             let shortDescription = logger.getShortDescription();
             if (this.toListOfStrings) {

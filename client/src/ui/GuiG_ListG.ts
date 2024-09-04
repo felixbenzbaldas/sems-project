@@ -1,12 +1,12 @@
-import type {Identity} from "@/Identity";
+import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 
 export class GuiG_ListG {
 
-    guisOfListItems : Array<Identity>;
+    guisOfListItems : Array<Entity>;
     uiElement : HTMLDivElement = document.createElement('div');
 
-    constructor(private identity : Identity) {
+    constructor(private identity : Entity) {
     }
 
     async unsafeUpdate() {

@@ -10,14 +10,14 @@ import {JobPipelineG} from "@/core/JobPipelineG";
 /// An identity is an object without members. It only consists of its memory address.
 /// The members of this class should be interpreted as aspects which can be assigned to the identity.
 /// On the logical level they do not belong to this class.
-export class Identity {
+export class Entity {
 
     name: string;
-    container: Identity;
+    container: Entity;
     text : string;
     link : string;
     list : ListA;
-    app: Identity;
+    app: Entity;
     action: Function;
     hidden: boolean = false;
     pathA: PathA;
@@ -77,11 +77,11 @@ export class Identity {
         }
     }
 
-    ui_getContext() : Identity {
+    ui_getContext() : Entity {
         return this.getApp();
     }
 
-    async defaultActionOnSubitem(subitem : Identity) {
+    async defaultActionOnSubitem(subitem : Entity) {
         this.log('defaultActionOnSubitem');
         if (this.appA?.ui) {
             await this.appA.ui.defaultActionOnSubitem(subitem);
@@ -92,8 +92,8 @@ export class Identity {
         }
     }
 
-    getPath(object: Identity) : Identity {
-        if (this.containerA.mapNameIdentity) {
+    getPath(object: Entity) : Entity {
+        if (this.containerA.mapNameEntity) {
             if (object.container === this) {
                 return this.getApp().appA.createPath([object.name]);
             }
@@ -106,19 +106,19 @@ export class Identity {
         }
     }
 
-    async resolve(path: Identity) : Promise<Identity> {
+    async resolve(path: Entity) : Promise<Entity> {
         if (path.pathA.listOfNames.at(0) === '..') {
             return this.container.resolve(path.pathA.withoutFirst());
         } else {
-            return this.containerA.mapNameIdentity.get(path.pathA.listOfNames[0]);
+            return this.containerA.mapNameEntity.get(path.pathA.listOfNames[0]);
         }
     }
 
     async export_keepContainerStructure_ignoreExternalDependencies() {
         let exported = this.json();
-        if(this.containerA.mapNameIdentity) {
+        if(this.containerA.mapNameEntity) {
             exported.objects = {};
-            this.containerA.mapNameIdentity.forEach((identity: Identity, name : string) => {
+            this.containerA.mapNameEntity.forEach((identity: Entity, name : string) => {
                 exported.objects[name] = identity.json();
             });
         }
@@ -140,10 +140,10 @@ export class Identity {
         return exported;
     }
 
-    getDependencies() : Set<Identity> {
-        let set = new Set<Identity>();
+    getDependencies() : Set<Entity> {
+        let set = new Set<Entity>();
         if (this.list) {
-            this.list.jsList.forEach((identity : Identity) => {
+            this.list.jsList.forEach((identity : Entity) => {
                 if (identity.pathA) {
                     set.add(identity);
                 }

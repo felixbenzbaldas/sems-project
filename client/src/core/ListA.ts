@@ -1,22 +1,22 @@
-import type {Identity} from "@/Identity";
+import type {Entity} from "@/Entity";
 
 export class ListA {
 
-    jsList : Array<Identity>;
+    jsList : Array<Entity>;
 
-    constructor(private identity : Identity, ...jsList : Array<Identity>) {
+    constructor(private entity : Entity, ...jsList : Array<Entity>) {
         this.jsList = jsList;
     }
 
-    async add(...items : Array<Identity>) {
+    async add(...items : Array<Entity>) {
         items.forEach(item => {
            if (item.name && item.container) {
-               this.jsList.push(this.identity.getPath(item));
+               this.jsList.push(this.entity.getPath(item));
            } else {
                this.jsList.push(item);
            }
         });
-        await this.identity.update();
+        await this.entity.update();
     }
 
     json() {
@@ -29,14 +29,14 @@ export class ListA {
         });
     }
 
-    async getObject(index : number) : Promise<Identity> {
-        return this.identity.resolve(this.jsList.at(index));
+    async getObject(index : number) : Promise<Entity> {
+        return this.entity.resolve(this.jsList.at(index));
     }
 
-    async getResolvedList() : Promise<Array<Identity>> {
+    async getResolvedList() : Promise<Array<Entity>> {
         let resolvedListItems = [];
         for (let current of this.jsList) {
-            let currentResolved = current.pathA ? await this.identity.resolve(current) : current;
+            let currentResolved = current.pathA ? await this.entity.resolve(current) : current;
             resolvedListItems.push(currentResolved);
         }
         return resolvedListItems;

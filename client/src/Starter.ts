@@ -1,12 +1,12 @@
-import {Identity} from "@/Identity";
+import {Entity} from "@/Entity";
 import {AppA_Ui} from "@/ui/AppA_Ui";
 import {AppA} from "@/core/AppA";
 import {GuiG} from "@/ui/GuiG";
 
 export class Starter {
 
-    static async createFromUrl() : Promise<Identity> {
-        let app : Identity;
+    static async createFromUrl() : Promise<Entity> {
+        let app : Entity;
         let queryParams = new URLSearchParams(window.location.search);
         if (queryParams.has('local')) {
             app = Starter.createAppWithUIWithCommands();
@@ -18,18 +18,18 @@ export class Starter {
         return app;
     }
 
-    static createApp() : Identity {
-        let app = new Identity();
+    static createApp() : Entity {
+        let app = new Entity();
         app.text = 'Sems application';
         app.appA = new AppA(app);
-        app.containerA.mapNameIdentity = new Map();
+        app.containerA.mapNameEntity = new Map();
         return app;
     }
 
-    static async createWebsite() : Promise<Identity> {
+    static async createWebsite() : Promise<Entity> {
         let app = Starter.createAppWithUI();
         app.appA.ui.isWebsite = true;
-        let toReplaceDuringDeployment : Identity;
+        let toReplaceDuringDeployment : Entity;
         let markerBody = 'marker-dr53hifhh4-body';
         if (markerBody.startsWith('marker')) {
             toReplaceDuringDeployment = app.appA.simple_createText('[ to replace during deployment ]');
@@ -74,13 +74,13 @@ export class Starter {
         return app;
     }
 
-    static createAppWithUI() : Identity {
+    static createAppWithUI() : Entity {
         let app = Starter.createApp();
         app.appA.ui = new AppA_Ui(app);
         return app;
     }
 
-    static createAppWithUIWithCommands() : Identity {
+    static createAppWithUIWithCommands() : Entity {
         let app = this.createAppWithUI();
         app.appA.ui.commands = app.appA.simple_createTextWithList('commands',
             app.appA.simple_createButton('default action', async () => {
@@ -101,9 +101,9 @@ export class Starter {
     }
 
     static async loadLocalhostApp(port: number) {
-        let app = new Identity();
+        let app = new Entity();
         app.text = 'todo: load from server';
-        app.containerA.mapNameIdentity = new Map();
+        app.containerA.mapNameEntity = new Map();
         app.appA = new AppA(app);
         app.appA.server = 'http://localhost:' + port + '/';
         return app;

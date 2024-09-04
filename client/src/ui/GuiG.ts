@@ -1,4 +1,4 @@
-import type {Identity} from "@/Identity";
+import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 import {GuiG_AppG} from "@/ui/GuiG_AppG";
 import {GuiG_ListG} from "@/ui/GuiG_ListG";
@@ -11,7 +11,7 @@ export class GuiG {
     appG: GuiG_AppG;
     listG: GuiG_ListG;
 
-    constructor(private identity : Identity) {
+    constructor(private identity : Entity) {
         this.appG = new GuiG_AppG(identity);
         this.listG = new GuiG_ListG(identity);
         identity.update();
