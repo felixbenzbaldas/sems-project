@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * An identity is an object without members. It only consists of its memory address.
- * The members of this class should be interpreted as aspects which can be assigned to the identity.
+ * An entity is an object without members. It only consists of its memory address.
+ * The members of this class should be interpreted as aspects which can be assigned to the entity.
  * On the logical level they do not belong to this class.
  **/
-public class Identity {
+public class Entity {
 
     public String name;
     public String text;
     public ListAspect list;
     public Map<String, Object> data = new HashMap<>();
-    public Identity container;
+    public Entity container;
 
 
     public void set(String property, Object value) {
@@ -93,27 +93,27 @@ public class Identity {
 
     public int port;
 
-    public Identity createList() {
-        Identity identity = this.createIdentity();
-        identity.list = new ListAspect();
-        return identity;
+    public Entity createList() {
+        Entity entity = this.createEntity();
+        entity.list = new ListAspect();
+        return entity;
     }
 
-    public Identity createIdentity() {
-        return new Identity();
+    public Entity createEntity() {
+        return new Entity();
     }
 
-    public Identity createText(String text) {
-        Identity identity = this.createIdentity();
+    public Entity createText(String text) {
+        Entity entity = this.createEntity();
         if (hasPersistence()) {
-            identity.name = new RandomString().next();
-            identity.container = this;
-            loadedObjects.put(identity.name, identity);
-            identity.set("text", text);
+            entity.name = new RandomString().next();
+            entity.container = this;
+            loadedObjects.put(entity.name, entity);
+            entity.set("text", text);
         } else {
-            identity.text = text;
+            entity.text = text;
         }
-        return identity;
+        return entity;
     }
 
     // ols = OnlyLocalhostServer
@@ -124,8 +124,8 @@ public class Identity {
     // returns the name
     public String olsAspect_createText(List<String> pathOfContainer, String text) {
         if (pathOfContainer.isEmpty()) {
-            Identity identity = this.createText(text);
-            return identity.name;
+            Entity entity = this.createText(text);
+            return entity.name;
         } else {
             throw new RuntimeException("not implemented yet");
         }
@@ -133,15 +133,15 @@ public class Identity {
     ////////////////////////////////////////////////////////////////////////
     // container aspect
 
-    public Map<String, Identity> loadedObjects = new HashMap<>();
+    public Map<String, Entity> loadedObjects = new HashMap<>();
 
-    public Identity containerAspect_getByName(String name) {
+    public Entity containerAspect_getByName(String name) {
         if (!loadedObjects.containsKey(name)) {
-            Identity identity = this.createIdentity();
-            identity.name = name;
-            identity.container = this;
-            loadedObjects.put(name, identity);
-            identity.update();
+            Entity entity = this.createEntity();
+            entity.name = name;
+            entity.container = this;
+            loadedObjects.put(name, entity);
+            entity.update();
         }
         return loadedObjects.get(name);
     }

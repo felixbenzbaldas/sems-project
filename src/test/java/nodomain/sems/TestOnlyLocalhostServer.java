@@ -28,7 +28,7 @@ public class TestOnlyLocalhostServer {
     void can_create_onlyLocalhostServer() {
         File file = new File(PATH_FOR_TMP_FILES);
 
-        Identity onlyLocalhostServer = Starter.createOnlyLocalhostServer(file, 8085);
+        Entity onlyLocalhostServer = Starter.createOnlyLocalhostServer(file, 8085);
 
         assertThat(onlyLocalhostServer.data.get("port")).isEqualTo(8085);
         assertThat((List<List<String>>) onlyLocalhostServer.data.get("content")).isEmpty();
@@ -38,10 +38,10 @@ public class TestOnlyLocalhostServer {
     @Test
     void can_load_onlyLocalhostServer() {
         File file = new File(PATH_FOR_TMP_FILES);
-        Identity app = Starter.createOnlyLocalhostServer(file, 8087);
+        Entity app = Starter.createOnlyLocalhostServer(file, 8087);
         app.set("content", "some content");
 
-        Identity loaded = Starter.loadApp(file);
+        Entity loaded = Starter.loadApp(file);
 
         assertThat(loaded.data.get("port")).isEqualTo(8087);
         assertThat(loaded.data.get("content")).isEqualTo("some content");
@@ -51,20 +51,20 @@ public class TestOnlyLocalhostServer {
     @Test
     void can_reset() {
         File file = new File(PATH_FOR_TMP_FILES);
-        Identity app = Starter.createOnlyLocalhostServer(file, 8087);
+        Entity app = Starter.createOnlyLocalhostServer(file, 8087);
         app.set("content", "bar");
         assertThat(app.data.get("content")).isEqualTo("bar");
 
         app.olsAspect_reset();
 
         assertThat((List<List<String>>) app.data.get("content")).isEmpty();
-        Identity reloaded = Starter.loadApp(file);
+        Entity reloaded = Starter.loadApp(file);
         assertThat((List<List<String>>) reloaded.data.get("content")).isEmpty();
     }
 
     @Test
     void can_create_text() {
-        Identity app = Starter.createOnlyLocalhostServer(new File(PATH_FOR_TMP_FILES), 8087);
+        Entity app = Starter.createOnlyLocalhostServer(new File(PATH_FOR_TMP_FILES), 8087);
 
         String name = app.olsAspect_createText(List.of(), "foo");
 

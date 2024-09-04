@@ -26,7 +26,7 @@ public class TestApp {
     void can_create_app_with_file() {
         File file = new File(PATH_FOR_TMP_FILES);
 
-        Identity app = Starter.createApp(file);
+        Entity app = Starter.createApp(file);
 
         assertThat(app.file).isSameAs(file);
         assertThat(new File(file, "properties.json")).exists();
@@ -35,7 +35,7 @@ public class TestApp {
     @Test
     void can_set_text() {
         File file = new File(PATH_FOR_TMP_FILES);
-        Identity app = Starter.createApp(file);
+        Entity app = Starter.createApp(file);
 
         app.set("text", "my application");
 
@@ -45,10 +45,10 @@ public class TestApp {
     @Test
     void can_load_app() {
         File file = new File(PATH_FOR_TMP_FILES);
-        Identity createdApp = Starter.createApp(file);
+        Entity createdApp = Starter.createApp(file);
         createdApp.set("text", "my application");
 
-        Identity loadedApp = Starter.loadApp(file);
+        Entity loadedApp = Starter.loadApp(file);
 
         assertThat(loadedApp.text).isEqualTo("my application");
         assertThat(loadedApp.file).isSameAs(file);
@@ -56,32 +56,32 @@ public class TestApp {
 
     @Test
     void can_create_object_with_text() {
-        Identity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
+        Entity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
 
-        Identity identity = app.createText("bar");
+        Entity entity = app.createText("bar");
 
-        assertThat(identity.text).isEqualTo("bar");
-        // there should be only one identity for an object
-        assertThat(identity).isSameAs(app.containerAspect_getByName(identity.name));
+        assertThat(entity.text).isEqualTo("bar");
+        // there should be only one entity for an object
+        assertThat(entity).isSameAs(app.containerAspect_getByName(entity.name));
     }
 
     @Test
     void can_load_object_with_text() {
         String name = createObjectWithText("bar");
-        Identity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
+        Entity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
 
-        Identity loaded = app.containerAspect_getByName(name);
+        Entity loaded = app.containerAspect_getByName(name);
 
         assertThat(loaded.text).isEqualTo("bar");
-        // there should be only one identity for an object
+        // there should be only one entity for an object
         assertThat(loaded).isSameAs(app.containerAspect_getByName(loaded.name));
     }
 
     // returns the name of the created object
     private String createObjectWithText(String text) {
-        Identity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
-        Identity identity = app.createText(text);
-        return identity.name;
+        Entity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
+        Entity entity = app.createText(text);
+        return entity.name;
     }
 
     @AfterEach
