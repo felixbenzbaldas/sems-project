@@ -7,9 +7,6 @@ import {GuiG} from "@/ui/GuiG";
 import {notNullUndefined} from "@/utils";
 import {JobPipelineG} from "@/core/JobPipelineG";
 
-/// An entity is an object without members. It only consists of its memory address.
-/// The members of this class should be interpreted as aspects which can be assigned to the entity.
-/// On the logical level they do not belong to this class.
 export class Entity {
 
     name: string;

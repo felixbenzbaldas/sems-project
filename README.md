@@ -7,9 +7,9 @@ Content means notes, texts, structured data, images and more.
 
 Sems is being developed. The first useful features will probably be available in october 2024.
 
-#### Aspect Concept
+#### Entity Aspects
 
-In order to provide a high degree of flexibility, I'm trying out a new concept. It is called *aspect concept*. (see *protocol/240805 - aspect concept.txt*)
+In order to provide a high degree of flexibility, I'm trying out a new concept. It is called *Entity Aspects*. (see *protocol/240805 - Entity Aspects.txt*)
 
 #### Predecessor
 

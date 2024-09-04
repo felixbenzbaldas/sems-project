@@ -10,11 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * An entity is an object without members. It only consists of its memory address.
- * The members of this class should be interpreted as aspects which can be assigned to the entity.
- * On the logical level they do not belong to this class.
- **/
 public class Entity {
 
     public String name;
