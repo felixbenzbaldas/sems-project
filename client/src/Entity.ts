@@ -1,5 +1,4 @@
 import {ListA} from "@/core/ListA";
-import {Subject} from "rxjs";
 import {PathA} from "@/core/PathA";
 import {AppA} from "@/core/AppA";
 import {ContainerA} from "@/core/ContainerA";
@@ -24,8 +23,6 @@ export class Entity {
     readonly guiG: GuiG;
     test_update: Function;
     jobPipelineG : JobPipelineG = new JobPipelineG();
-
-    private promiseUpdate : Promise<void> = Promise.resolve();
 
     constructor() {
         this.guiG = new GuiG(this);
