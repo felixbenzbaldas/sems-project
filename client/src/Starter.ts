@@ -8,15 +8,20 @@ export class Starter {
 
     static async createFromUrl() : Promise<Entity> {
         let queryParams = new URLSearchParams(window.location.search);
+        let app : Entity;
         if (queryParams.has('local')) {
-            return Starter.createAppWithUIWithCommands();
+            app = Starter.createAppWithUIWithCommands();
         } else if (queryParams.has('client-app')) {
-            return Starter.createAppWithUIWithCommands();
+            app = Starter.createAppWithUIWithCommands();
         } else if (queryParams.has('test')) {
-            return Starter.createTest();
+            app = Starter.createTest();
         } else {
-            return await Starter.createWebsite();
+            app = await Starter.createWebsite();
         }
+        if (queryParams.has('testMode')) {
+            app.appA.logG.toConsole = true;
+        }
+        return app;
     }
 
     static createApp() : Entity {
