@@ -22,6 +22,7 @@ export class Entity {
     editable: boolean;
     readonly guiG: GuiG;
     test_update: Function;
+    test_successful: boolean;
     jobPipelineG : JobPipelineG = new JobPipelineG();
 
     constructor() {
