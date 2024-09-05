@@ -9,9 +9,9 @@ export class GuiG_AppG {
     }
 
     async unsafeUpdate() : Promise<void> {
-        if (!this.entity.appA.ui.isWebsite) {
+        if (!this.entity.appA.ui.isWebsite && !this.entity.appA.testA) {
             this.entity.appA.ui.content.guiG.editable = true;
-            this.entity.appA.ui.content.update();
+            await this.entity.appA.ui.content.update();
         }
         this.updateUiElement();
     }
