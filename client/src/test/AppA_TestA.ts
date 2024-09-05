@@ -5,24 +5,25 @@ import type {AppA} from "@/core/AppA";
 export class AppA_TestA {
 
     private readonly appA : AppA;
+    withFailingDemoTest: boolean;
 
-    constructor(private entity : Entity, private withFailingDemoTest: boolean) {
+    constructor(private entity : Entity) {
         this.appA = entity.appA;
-        this.createResults();
     }
 
-    createResults() {
+    async run() {
+        this.appA.ui.content.list.jsList = [];
         let successCounter = 0;
-        for (let test of this.getTests()) {
+        for (let test of this.createTests()) {
             test.action();
             if (test.test_successful) {
                 successCounter++;
             } else {
-                this.appA.ui.content.list.add(this.appA.simple_createTextWithList('FAILED',
+                await this.appA.ui.content.list.add(this.appA.simple_createTextWithList('FAILED',
                     this.appA.simple_createText(test.text)));
             }
         }
-        this.appA.ui.content.list.add(
+        await this.appA.ui.content.list.add(
             this.appA.simple_createTextWithList('successful tests: ' + successCounter),
             this.appA.simple_createText(''),
             this.appA.simple_createTextWithList('specifications',
@@ -30,7 +31,7 @@ export class AppA_TestA {
                 this.appA.simple_createText('Can show failing demo test.')));
     }
 
-    getTests() : Array<Entity> {
+    createTests() : Array<Entity> {
         let testList : Array<Entity> = [];
         {
             let testName = 'create application';
