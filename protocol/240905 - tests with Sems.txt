@@ -1,0 +1,12 @@
+The Sems software will be used to test itself.
+
+The tests can be executed over the GUI.
+
+This idea is partly inspired by the book 'Test-Driven Development' by Kent Beck. In this book the author develops a test framework which tests itself.
+
+The advantages will be:
+- Sems-Logging can be used within the tests
+- Sems-GUI can be used to display the test results
+- the tests become a feature of the software
+- consistent architecture - also for the tests
+- no external test-framework is required
