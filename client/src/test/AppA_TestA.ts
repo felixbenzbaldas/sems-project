@@ -1,9 +1,13 @@
 import type {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
+import type {AppA} from "@/core/AppA";
 
 export class AppA_TestA {
 
+    private readonly appA : AppA;
+
     constructor(private entity : Entity) {
+        this.appA = entity.appA;
         this.createResults();
     }
 
@@ -14,18 +18,22 @@ export class AppA_TestA {
             if (test.test_successful) {
                 successCounter++;
             } else {
-                this.entity.appA.ui.content.list.add(this.entity.appA.simple_createTextWithList('FAILED', this.entity.appA.simple_createText(test.text)));
+                this.appA.ui.content.list.add(this.appA.simple_createTextWithList('FAILED',
+                    this.appA.simple_createText(test.text)));
             }
         }
-        this.entity.appA.ui.content.list.add(this.entity.appA.simple_createTextWithList('successful tests: '
-            + successCounter));
+        this.appA.ui.content.list.add(
+            this.appA.simple_createTextWithList('successful tests: ' + successCounter),
+            this.appA.simple_createText(''),
+            this.appA.simple_createTextWithList('specifications',
+                this.appA.simple_createText('The tester shows this specification.')));
     }
 
     getTests() : Array<Entity> {
         let testList : Array<Entity> = [];
         {
             let testName = 'create application';
-            let test = this.entity.appA.simple_createText(testName);
+            let test = this.appA.simple_createText(testName);
             test.action = () => {
                 let app = Starter.createApp();
 
