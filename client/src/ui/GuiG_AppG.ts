@@ -21,7 +21,7 @@ export class GuiG_AppG {
         if (this.entity.appA.ui.commands) {
             this.uiElement.appendChild(this.entity.appA.ui.commands.guiG.uiElement);
         }
-        if (!this.entity.appA.ui.isWebsite) {
+        if (!this.entity.appA.ui.isWebsite && !this.entity.appA.testA) {
             this.uiElement.appendChild(this.entity.appA.ui.output.getUi().guiG.uiElement);
             this.uiElement.appendChild(this.entity.appA.ui.input.getUi().guiG.uiElement);
             this.uiElement.appendChild(this.separatorLine());

@@ -2,20 +2,21 @@ import {Entity} from "@/Entity";
 import {AppA_Ui} from "@/ui/AppA_Ui";
 import {AppA} from "@/core/AppA";
 import {GuiG} from "@/ui/GuiG";
+import {AppA_TestA} from "@/test/AppA_TestA";
 
 export class Starter {
 
     static async createFromUrl() : Promise<Entity> {
-        let app : Entity;
         let queryParams = new URLSearchParams(window.location.search);
         if (queryParams.has('local')) {
-            app = Starter.createAppWithUIWithCommands();
+            return Starter.createAppWithUIWithCommands();
         } else if (queryParams.has('client-app')) {
-            app = Starter.createAppWithUIWithCommands();
+            return Starter.createAppWithUIWithCommands();
+        } else if (queryParams.has('test')) {
+            return Starter.createTest();
         } else {
-            app = await Starter.createWebsite();
+            return await Starter.createWebsite();
         }
-        return app;
     }
 
     static createApp() : Entity {
@@ -107,5 +108,12 @@ export class Starter {
         app.appA = new AppA(app);
         app.appA.server = 'http://localhost:' + port + '/';
         return app;
+    }
+
+    private static createTest() : Entity {
+        let tester = this.createAppWithUI();
+        tester.text = 'Tester';
+        tester.appA.testA = new AppA_TestA(tester);
+        return tester;
     }
 }

@@ -4,12 +4,14 @@ import {PathA} from "@/core/PathA";
 import {Entity} from "@/Entity";
 import {LogG} from "@/LogG";
 import {getPromiseAndResolver} from "@/utils";
+import type {AppA_TestA} from "@/test/AppA_TestA";
 
 export class AppA {
 
     ui: AppA_Ui;
     server: string;
     readonly logG: LogG;
+    testA : AppA_TestA;
 
     constructor(private entity : Entity) {
         this.logG = new LogG(entity);
