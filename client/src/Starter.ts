@@ -14,7 +14,7 @@ export class Starter {
         } else if (queryParams.has('client-app')) {
             app = Starter.createAppWithUIWithCommands();
         } else if (queryParams.has('test')) {
-            app = Starter.createTest();
+            app = Starter.createTest(queryParams.has('withFailingDemoTest'));
         } else {
             app = await Starter.createWebsite();
         }
@@ -115,10 +115,10 @@ export class Starter {
         return app;
     }
 
-    private static createTest() : Entity {
+    private static createTest(withFailingDemoTest : boolean) : Entity {
         let tester = this.createAppWithUI();
         tester.text = 'Tester';
-        tester.appA.testA = new AppA_TestA(tester);
+        tester.appA.testA = new AppA_TestA(tester, withFailingDemoTest);
         return tester;
     }
 }

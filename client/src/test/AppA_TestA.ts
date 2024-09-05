@@ -6,7 +6,7 @@ export class AppA_TestA {
 
     private readonly appA : AppA;
 
-    constructor(private entity : Entity) {
+    constructor(private entity : Entity, private withFailingDemoTest: boolean) {
         this.appA = entity.appA;
         this.createResults();
     }
@@ -26,7 +26,8 @@ export class AppA_TestA {
             this.appA.simple_createTextWithList('successful tests: ' + successCounter),
             this.appA.simple_createText(''),
             this.appA.simple_createTextWithList('specifications',
-                this.appA.simple_createText('The tester shows this specification.')));
+                this.appA.simple_createText('The tester shows this specification.'),
+                this.appA.simple_createText('Can show failing demo test.')));
     }
 
     getTests() : Array<Entity> {
@@ -38,6 +39,14 @@ export class AppA_TestA {
                 let app = Starter.createApp();
 
                 test.test_successful = app.text === 'Sems application';
+            };
+            testList.push(test);
+        }
+        if (this.withFailingDemoTest) {
+            let testName = 'failing demo test (don\'t worry - this test always fails)';
+            let test = this.appA.simple_createText(testName);
+            test.action = () => {
+                test.test_successful = false;
             };
             testList.push(test);
         }
