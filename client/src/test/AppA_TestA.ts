@@ -15,8 +15,7 @@ export class AppA_TestA {
         this.appA.ui.content.list.jsList = [];
         let successCounter = 0;
         for (let test of this.createTests()) {
-            test.action();
-            if (test.test_successful) {
+            if (await test.action()) {
                 successCounter++;
             } else {
                 await this.appA.ui.content.list.add(this.appA.simple_createTextWithList('FAILED',
@@ -32,25 +31,26 @@ export class AppA_TestA {
     }
 
     createTests() : Array<Entity> {
-        let testList : Array<Entity> = [];
-        {
-            let testName = 'create application';
-            let test = this.appA.simple_createText(testName);
-            test.action = () => {
+        let tests = [
+            this.test('create application', async test => {
                 let app = Starter.createApp();
 
-                test.test_successful = app.text === 'Sems application';
-            };
-            testList.push(test);
-        }
+                return app.text === 'Sems application';
+            })
+        ];
         if (this.withFailingDemoTest) {
-            let testName = 'failing demo test (don\'t worry - this test always fails)';
-            let test = this.appA.simple_createText(testName);
-            test.action = () => {
-                test.test_successful = false;
-            };
-            testList.push(test);
+            tests.push(this.test('failing demo test (don\'t worry - this test always fails)', async test => {
+                return false;
+            }));
         }
-        return testList;
+        return tests;
+    }
+
+    private test(name: string, action: (test: Entity) => Promise<any>) : Entity {
+        let test = this.appA.simple_createText(name);
+        test.action = async () => {
+            return await action(test);
+        }
+        return test;
     }
 }
