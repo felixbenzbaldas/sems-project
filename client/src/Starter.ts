@@ -57,6 +57,11 @@ export class Starter {
                 app.appA.simple_createLink(window.location.href + '?client-app', 'Open')
             ),
             app.appA.simple_createText(''),
+            app.appA.simple_createTextWithList('Sems-Tester',
+                app.appA.simple_createText('The Sems software is able to test itself. The Sems-Tester can run tests directly in the browser.'),
+                app.appA.simple_createLink(window.location.href + '?test&withFailingDemoTest', 'Open')
+            ),
+            app.appA.simple_createText(''),
             app.appA.simple_createText(''),
             app.appA.simple_createTextWithList('Zu Verschenken',
                 app.appA.simple_createText('Virtual Reality Brille für Android-Smartphone'),
