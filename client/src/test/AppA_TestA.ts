@@ -46,6 +46,12 @@ export class AppA_TestA {
                 await app.appA.ui.globalEvent_makeCollapsible();
 
                 return (await app.appA.ui.content.list.getObject(0)).collapsible;
+            }),
+            this.test('clientApp_gui_objectCreation', async test => {
+                let app = Starter.createAppWithUIWithCommands();
+                await app.update();
+
+                return app.guiG.getRawText().includes('default action');
             })
         ];
         if (this.withFailingDemoTest) {

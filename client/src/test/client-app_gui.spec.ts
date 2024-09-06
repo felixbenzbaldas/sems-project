@@ -15,10 +15,6 @@ describe('client-app gui', () => {
         gui = app.guiG;
     });
 
-    it('contains button for object creation', async () => {
-        expect(gui.getRawText()).contains('default action');
-    });
-
     it('can create new object', async () => {
         let before = gui.countEditableTexts();
 
