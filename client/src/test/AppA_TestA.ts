@@ -81,6 +81,14 @@ export class AppA_TestA {
 
                 let firstObject = await app.appA.ui.content.list.getObject(0);
                 return firstObject.list.jsList.length == 1;
+            }),
+            this.test('gui_makeCollapsible', async test => {
+                let app = Starter.createAppWithUIWithCommands();
+                await app.appA.ui.globalEvent_defaultAction();
+
+                await app.guiG.click('make collapsible');
+
+                return (await app.appA.ui.content.list.getObject(0)).collapsible;
             })
         ];
         if (this.withFailingDemoTest) {
