@@ -14,14 +14,16 @@ export class AppA_TestA {
     async run() {
         this.appA.ui.content.list.jsList = [];
         let successCounter = 0;
+        let failedTests = [];
         for (let test of this.createTests()) {
             if (await test.action()) {
                 successCounter++;
             } else {
-                await this.appA.ui.content.list.add(this.appA.simple_createTextWithList('FAILED',
-                    this.appA.simple_createText(test.text)));
+                failedTests.push(test);
             }
         }
+        await this.appA.ui.content.list.add(this.appA.simple_createTextWithList('FAILED',
+            ...failedTests.map(test => this.appA.simple_createText(test.text))));
         await this.appA.ui.content.list.add(
             this.appA.simple_createTextWithList('successful tests: ' + successCounter),
             this.appA.simple_createText(''),
