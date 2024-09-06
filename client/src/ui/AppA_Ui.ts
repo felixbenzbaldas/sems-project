@@ -57,6 +57,7 @@ export class AppA_Ui {
     async globalEvent_makeCollapsible() {
         this.entity.log('globalEvent_makeCollapsible');
         this.focused.collapsible = true;
+        await this.focused.update();
     }
 
     async globalEvent_newSubitem() {

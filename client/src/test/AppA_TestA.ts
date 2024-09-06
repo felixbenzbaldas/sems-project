@@ -89,6 +89,18 @@ export class AppA_TestA {
                 await app.guiG.click('make collapsible');
 
                 return (await app.appA.ui.content.list.getObject(0)).collapsible;
+            }),
+            this.test('gui_collapsed', async test => {
+                let app = Starter.createAppWithUIWithCommands();
+                await app.appA.ui.globalEvent_defaultAction();
+                await app.appA.ui.globalEvent_makeCollapsible();
+                await app.appA.ui.globalEvent_newSubitem();
+                await (await (await app.appA.ui.content.list.getObject(0)).list.getObject(0))
+                    .setText('do-not-show-me');
+
+                let rawText = app.guiG.getRawText();
+
+                return !rawText.includes('do-not-show-me');
             })
         ];
         if (this.withFailingDemoTest) {
