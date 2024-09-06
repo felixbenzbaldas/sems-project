@@ -62,7 +62,9 @@ export class AppA_TestA {
 
                 await app.appA.ui.globalEvent_newSubitem();
 
-                return (await app.appA.ui.content.list.getObject(0)).list.jsList.length == 1;
+                let firstObject = await app.appA.ui.content.list.getObject(0);
+                return firstObject.list.jsList.length == 1
+                    && (await firstObject.list.getObject(0)).text === '';
             }),
             this.test('clientApp_gui_objectCreation', async test => {
                 let app = Starter.createAppWithUIWithCommands();
