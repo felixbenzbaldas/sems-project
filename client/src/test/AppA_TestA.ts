@@ -22,8 +22,10 @@ export class AppA_TestA {
                 failedTests.push(test);
             }
         }
-        await this.appA.ui.content.list.add(this.appA.simple_createTextWithList('FAILED',
-            ...failedTests.map(test => this.appA.simple_createText(test.text))));
+        if (failedTests.length > 0) {
+            await this.appA.ui.content.list.add(this.appA.simple_createTextWithList('FAILED',
+                ...failedTests.map(test => this.appA.simple_createText(test.text))));
+        }
         await this.appA.ui.content.list.add(
             this.appA.simple_createTextWithList('successful tests: ' + successCounter),
             this.appA.simple_createText(''),
