@@ -190,4 +190,14 @@ export class Entity {
             this.log('end update');
         });
     }
+
+    async newSubitem() {
+        if (!this.list) {
+            this.list = new ListA(this);
+        }
+        let created = await this.getApp().appA.createText('');
+        await this.list.add(created);
+        this.getApp().appA.ui.focused = created;
+        await this.update();
+    }
 }

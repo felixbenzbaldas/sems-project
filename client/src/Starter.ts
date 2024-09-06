@@ -18,12 +18,14 @@ export class Starter {
             if (queryParams.has('withFailingDemoTest')) {
                 app.appA.testA.withFailingDemoTest = true;
             }
-            await app.appA.testA.run();
         } else {
             app = await Starter.createWebsite();
         }
         if (queryParams.has('testMode')) {
             app.appA.logG.toConsole = true;
+        }
+        if (queryParams.has('test')) {
+            await app.appA.testA.run();
         }
         return app;
     }

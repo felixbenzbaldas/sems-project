@@ -16,7 +16,14 @@ export class AppA_TestA {
         let successCounter = 0;
         let failedTests = [];
         for (let test of this.createTests()) {
-            if (await test.action()) {
+            let testResult;
+            try {
+                testResult = await test.action();
+            } catch (error) {
+                testResult = false;
+                this.entity.log('error in test: ' + error);
+            }
+            if (testResult) {
                 successCounter++;
             } else {
                 failedTests.push(test);
@@ -49,6 +56,14 @@ export class AppA_TestA {
 
                 return (await app.appA.ui.content.list.getObject(0)).collapsible;
             }),
+            this.test('ui_newSubitem', async test => {
+                let app = Starter.createAppWithUI();
+                await app.appA.ui.globalEvent_defaultAction();
+
+                await app.appA.ui.globalEvent_newSubitem();
+
+                return (await app.appA.ui.content.list.getObject(0)).list.jsList.length == 1;
+            }),
             this.test('clientApp_gui_objectCreation', async test => {
                 let app = Starter.createAppWithUIWithCommands();
                 await app.update();
@@ -58,7 +73,7 @@ export class AppA_TestA {
         ];
         if (this.withFailingDemoTest) {
             tests.push(this.test('failing demo test (don\'t worry - this test always fails)', async test => {
-                return false;
+                throw 'demo error in test';
             }));
         }
         return tests;
