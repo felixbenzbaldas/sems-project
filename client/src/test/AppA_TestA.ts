@@ -36,6 +36,14 @@ export class AppA_TestA {
                 let app = Starter.createApp();
 
                 return app.text === 'Sems application';
+            }),
+            this.test('ui_makeCollapsible', async test => {
+                let app = Starter.createAppWithUI();
+                await app.appA.ui.globalEvent_defaultAction();
+
+                await app.appA.ui.globalEvent_makeCollapsible();
+
+                return (await app.appA.ui.content.list.getObject(0)).collapsible;
             })
         ];
         if (this.withFailingDemoTest) {

@@ -23,6 +23,7 @@ export class Entity {
     readonly guiG: GuiG;
     test_update: Function;
     jobPipelineG : JobPipelineG = new JobPipelineG();
+    collapsible: boolean;
 
     constructor() {
         this.guiG = new GuiG(this);

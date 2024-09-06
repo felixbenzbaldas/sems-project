@@ -32,7 +32,7 @@ export class AppA_Ui {
     }
 
     async globalEvent_importToContent() {
-        this.input.showInput();
+        await this.input.showInput();
         await this.entity.appA.addAllToListFromRawData(this.content, JSON.parse(this.input.get()));
     }
 
@@ -52,5 +52,10 @@ export class AppA_Ui {
 
     async focus(entity: Entity) {
         this.focused = entity;
+    }
+
+    async globalEvent_makeCollapsible() {
+        this.entity.log('globalEvent_makeCollapsible');
+        this.focused.collapsible = true;
     }
 }
