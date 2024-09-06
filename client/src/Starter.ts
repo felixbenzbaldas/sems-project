@@ -103,6 +103,9 @@ export class Starter {
             app.appA.simple_createButton('default action', async () => {
                 await app.appA.ui.globalEvent_defaultAction();
             }),
+            app.appA.simple_createButton('new subitem', async () => {
+                await app.appA.ui.globalEvent_newSubitem();
+            }),
             app.appA.simple_createButton('export app', async () => {
                 await app.appA.ui.globalEvent_exportApp();
             }),

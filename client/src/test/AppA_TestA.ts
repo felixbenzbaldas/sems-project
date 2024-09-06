@@ -71,6 +71,16 @@ export class AppA_TestA {
                 await app.update();
 
                 return app.guiG.getRawText().includes('default action');
+            }),
+            this.test('clientApp_gui_newSubitem', async test => {
+                let app = Starter.createAppWithUIWithCommands();
+                await app.update();
+                await app.appA.ui.globalEvent_defaultAction();
+
+                await app.guiG.click('new subitem');
+
+                let firstObject = await app.appA.ui.content.list.getObject(0);
+                return firstObject.list.jsList.length == 1;
             })
         ];
         if (this.withFailingDemoTest) {
