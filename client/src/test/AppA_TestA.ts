@@ -66,13 +66,13 @@ export class AppA_TestA {
                 return firstObject.list.jsList.length == 1
                     && (await firstObject.list.getObject(0)).text === '';
             }),
-            this.test('clientApp_gui_objectCreation', async test => {
+            this.test('gui_objectCreation', async test => {
                 let app = Starter.createAppWithUIWithCommands();
                 await app.update();
 
                 return app.guiG.getRawText().includes('default action');
             }),
-            this.test('clientApp_gui_newSubitem', async test => {
+            this.test('gui_newSubitem', async test => {
                 let app = Starter.createAppWithUIWithCommands();
                 await app.update();
                 await app.appA.ui.globalEvent_defaultAction();
