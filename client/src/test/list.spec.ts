@@ -35,7 +35,7 @@ describe('list', () => {
 
         let exported : any = await list.export_allDependenciesInOneContainer();
 
-        expect(exported.dependencies).toBeTruthy();
+        expect(exported.dependencies.length).toBe(1);
         expect(exported.dependencies[0].name).toEqual(item.name);
         expect(exported.dependencies[0].text).toEqual('bar');
     });

@@ -127,15 +127,24 @@ export class Entity {
 
     async getDependencies() : Promise<Set<Entity>> {
         let set = new Set<Entity>();
-        if (this.list) {
-            for (let entity of this.list.jsList) {
-                if (entity.pathA) {
-                    set.add(await this.resolve(entity));
+        set.add(this);
+        await this.addDependencies(set, this);
+        set.delete(this);
+        return set;
+    }
+
+    private async addDependencies(set: Set<Entity>, entity: Entity) {
+        if (entity.list) {
+            for (let current of entity.list.jsList) {
+                if (current.pathA) {
+                    let currentObject = await this.resolve(current);
+                    if (!set.has(currentObject)) {
+                        set.add(currentObject);
+                        await this.addDependencies(set, currentObject);
+                    }
                 }
             };
         }
-        // TODO get recursive dependencies
-        return set;
     }
 
     ui_hasFocus() {
