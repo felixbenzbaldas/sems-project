@@ -42,14 +42,6 @@ export class AppA_Ui {
         this.focused = created;
     }
 
-    async defaultActionOnSubitem(subitem: Entity) {
-        let created = await this.entity.appA.createText('');
-        let position : number = this.content.guiG.listG.guisOfListItems.indexOf(subitem) + 1;
-        this.content.list.jsList.splice(position, 0, this.content.getPath(created));
-        await this.content.update();
-        this.focused = this.content.guiG.listG.guisOfListItems.at(position);
-    }
-
     async focus(entity: Entity) {
         this.focused = entity;
     }

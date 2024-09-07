@@ -24,6 +24,7 @@ export class Entity {
     test_update: Function;
     jobPipelineG : JobPipelineG = new JobPipelineG();
     collapsible: boolean;
+    ui_context: Entity;
 
     constructor() {
         this.guiG = new GuiG(this);
@@ -68,23 +69,12 @@ export class Entity {
         } else if (this.action) {
             throw 'not implemented yet';
         } else {
-            await this.ui_getContext().defaultActionOnSubitem(this);
+            await this.ui_context.defaultActionOnSubitem(this);
         }
-    }
-
-    ui_getContext() : Entity {
-        return this.getApp();
     }
 
     async defaultActionOnSubitem(subitem : Entity) {
-        this.log('defaultActionOnSubitem');
-        if (this.appA?.ui) {
-            await this.appA.ui.defaultActionOnSubitem(subitem);
-        } else {
-            let error = 'not implemented yet';
-            this.log(error);
-            throw error;
-        }
+        await this.guiG.listG.defaultActionOnSubitem(subitem);
     }
 
     getPath(object: Entity) : Entity {
@@ -182,12 +172,10 @@ export class Entity {
 
     async update() {
         await this.jobPipelineG.runLater(async () => {
-            this.log('start update');
             if (this.test_update) {
                 await this.test_update();
             }
             await this.guiG.unsafeUpdate();
-            this.log('end update');
         });
     }
 

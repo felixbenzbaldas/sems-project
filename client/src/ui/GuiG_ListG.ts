@@ -25,6 +25,7 @@ export class GuiG_ListG {
         for (let currentResolved of await this.entity.list.getResolvedList()) {
             let currentGui = currentResolved; // TODO: create extra object for currentGui
             currentGui.guiG.editable = this.entity.guiG.editable;
+            currentGui.ui_context = this.entity;
             await currentGui.update();
             this.guisOfListItems.push(currentGui);
         }
@@ -50,5 +51,13 @@ export class GuiG_ListG {
         if (this.entity.list) {
             return this.guisOfListItems.map(current => current.guiG.countEditableTexts()).reduce((a, b) => a + b, 0);
         }
+    }
+
+    async defaultActionOnSubitem(subitem: Entity) {
+        let created = await this.entity.getApp().appA.createText('');
+        let position : number = this.guisOfListItems.indexOf(subitem) + 1;
+        this.entity.list.jsList.splice(position, 0, this.entity.getPath(created));
+        await this.entity.update();
+        this.entity.getApp().appA.ui.focused = this.guisOfListItems.at(position);
     }
 }
