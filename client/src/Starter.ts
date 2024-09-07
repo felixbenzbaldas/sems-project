@@ -56,12 +56,12 @@ export class Starter {
             app.appA.simple_createTextWithList('Sems-Client-App',
                 app.appA.simple_createText('The Sems-Client-App is a Sems application, which runs in your browser (e. g. Firefox / Edge). ' +
                     'On this way you can use Sems without creating an account or install the software.'),
-                app.appA.simple_createLink(window.location.href + '?client-app', 'Open')
+                app.appA.simple_createLink(window.location.host + '?client-app', 'Open')
             ),
             app.appA.simple_createText(''),
             app.appA.simple_createTextWithList('Sems-Tester',
                 app.appA.simple_createText('The Sems software is able to test itself. The Sems-Tester can run tests directly in the browser.'),
-                app.appA.simple_createLink(window.location.href + '?test&withFailingDemoTest', 'Open')
+                app.appA.simple_createLink(window.location.host + '?test&withFailingDemoTest', 'Open')
             ),
             app.appA.simple_createText(''),
             app.appA.simple_createText(''),
