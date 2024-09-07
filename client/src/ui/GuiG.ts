@@ -26,6 +26,7 @@ export class GuiG {
             }
         }
         await this.updateUiElement();
+        this.entity.log('gui_updated');
     }
 
     private async updateUiElement() {
