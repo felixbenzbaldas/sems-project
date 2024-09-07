@@ -112,27 +112,27 @@ export class Entity {
 
     async export_allDependenciesInOneContainer() {
         let exported = this.json();
-        let dependencies = this.getDependencies();
+        let dependencies = await this.getDependencies();
         if (dependencies.size > 0) {
             exported.dependencies = [];
             for (let dependency of dependencies) {
                 exported.dependencies.push({
-                    name: dependency.pathA.listOfNames.at(1),
-                    ... (await this.resolve(dependency)).json()
+                    name: dependency.name,
+                    ... dependency.json()
                 });
             }
         }
         return exported;
     }
 
-    getDependencies() : Set<Entity> {
+    async getDependencies() : Promise<Set<Entity>> {
         let set = new Set<Entity>();
         if (this.list) {
-            this.list.jsList.forEach((entity : Entity) => {
+            for (let entity of this.list.jsList) {
                 if (entity.pathA) {
-                    set.add(entity);
+                    set.add(await this.resolve(entity));
                 }
-            });
+            };
         }
         // TODO get recursive dependencies
         return set;
