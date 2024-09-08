@@ -128,6 +128,9 @@ export class Starter {
             app.appA.simple_createButton('toggle collapsible', async () => {
                 await app.appA.ui.globalEvent_toggleCollapsible();
             }),
+            app.appA.simple_createButton('toggle collapsed', async () => {
+                await app.appA.ui.globalEvent_toggleCollapsed();
+            }),
             app.appA.simple_createButton('export app', async () => {
                 await app.appA.ui.globalEvent_exportApp();
             }),
