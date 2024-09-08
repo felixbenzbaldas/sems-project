@@ -25,6 +25,7 @@ export class Entity {
     jobPipelineG : JobPipelineG = new JobPipelineG();
     collapsible: boolean;
     ui_context: Entity;
+    collapsed: boolean;
 
     constructor() {
         this.guiG = new GuiG(this);

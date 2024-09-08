@@ -93,10 +93,13 @@ export class AppA_TestA {
             this.test('gui_collapsed', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.appA.ui.globalEvent_defaultAction();
-                await app.appA.ui.globalEvent_makeCollapsible();
                 await app.appA.ui.globalEvent_newSubitem();
-                await (await (await app.appA.ui.content.list.getObject(0)).list.getObject(0))
+                let firstObject = await app.appA.ui.content.list.getObject(0);
+                await (await firstObject.list.getObject(0))
                     .setText('do-not-show-me');
+                firstObject.collapsible = true;
+                firstObject.collapsed = true;
+                await firstObject.update();
 
                 let rawText = app.guiG.getRawText();
 
