@@ -1,6 +1,7 @@
 import {Entity} from "@/Entity";
 import {Output} from "@/ui/Output";
 import {Input} from "@/ui/Input";
+import {notNullUndefined} from "@/utils";
 
 export class AppA_Ui {
 
@@ -50,6 +51,9 @@ export class AppA_Ui {
     async globalEvent_makeCollapsible() {
         this.entity.log('globalEvent_makeCollapsible');
         this.focused.collapsible = true;
+        if (!this.focused.collapsed) {
+            this.focused.collapsed = false;
+        }
         await this.focused.update();
     }
 
