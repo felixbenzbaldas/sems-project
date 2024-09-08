@@ -13,11 +13,17 @@ export class GuiG_AppG {
             this.entity.appA.ui.content.guiG.editable = true;
             await this.entity.appA.ui.content.update();
         }
+        if (this.entity.appA.ui.topImpressum) {
+            await this.entity.appA.ui.topImpressum.update();
+        }
         this.updateUiElement();
     }
 
     private updateUiElement() {
         this.uiElement.innerHTML = null;
+        if (this.entity.appA.ui.topImpressum) {
+            this.uiElement.appendChild(this.entity.appA.ui.topImpressum.guiG.uiElement);
+        }
         if (this.entity.appA.ui.commands) {
             this.uiElement.appendChild(this.entity.appA.ui.commands.guiG.uiElement);
         }

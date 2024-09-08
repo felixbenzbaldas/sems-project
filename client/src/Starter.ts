@@ -6,15 +6,22 @@ import {AppA_TestA} from "@/test/AppA_TestA";
 
 export class Starter {
 
+    static placeholderAboutHeader = 'marker-dr53hifhh4-about-header';
+    static placeholderAboutBody = 'marker-dr53hifhh4-about-body';
+    static placeholderImpressumHeader = 'marker-dr53hifhh4-impressum-header';
+    static placeholderImpressumBody = 'marker-dr53hifhh4-impressum-body';
+
     static async createFromUrl() : Promise<Entity> {
         let queryParams = new URLSearchParams(window.location.search);
         let app : Entity;
         if (queryParams.has('local')) {
-            app = Starter.createAppWithUIWithCommands();
+            app = await Starter.createAppWithUIWithCommands();
         } else if (queryParams.has('client-app')) {
-            app = Starter.createAppWithUIWithCommands();
+            app = await Starter.createAppWithUIWithCommands();
+            app.appA.ui.topImpressum = await Starter.getPlaceholderImpressum(app);
         } else if (queryParams.has('test')) {
-            app = Starter.createTest();
+            app = await Starter.createTest();
+            app.appA.ui.topImpressum = await Starter.getPlaceholderImpressum(app);
             if (queryParams.has('withFailingDemoTest')) {
                 app.appA.testA.withFailingDemoTest = true;
             }
@@ -41,15 +48,6 @@ export class Starter {
     static async createWebsite() : Promise<Entity> {
         let app = Starter.createAppWithUI();
         app.appA.ui.isWebsite = true;
-        let toReplaceDuringDeployment : Entity;
-        let markerBody = 'marker-dr53hifhh4-body';
-        if (markerBody.startsWith('marker')) {
-            toReplaceDuringDeployment = app.appA.simple_createText('[ to replace during deployment ]');
-        } else {
-            toReplaceDuringDeployment = await app.appA.createList();
-            toReplaceDuringDeployment.text = 'marker-dr53hifhh4-header';
-            await app.appA.addAllToListFromRawData(toReplaceDuringDeployment, JSON.parse(markerBody));
-        }
         await app.appA.ui.content.list.add(
             app.appA.simple_createText('This is the Sems software. It is being developed. New features will be added.'),
             app.appA.simple_createText(''),
@@ -86,9 +84,30 @@ export class Starter {
                 )
             ),
             app.appA.simple_createText(''),
-            toReplaceDuringDeployment,
+            await Starter.getPlaceholderAbout(app),
+            await Starter.getPlaceholderImpressum(app),
         );
         return app;
+    }
+
+    private static async getPlaceholderImpressum(app: Entity) {
+        return Starter.getPlaceholder(app, Starter.placeholderImpressumHeader, Starter.placeholderImpressumBody);
+    }
+
+    private static async getPlaceholderAbout(app: Entity) {
+        return Starter.getPlaceholder(app, Starter.placeholderAboutHeader, Starter.placeholderAboutBody);
+    }
+
+    private static async getPlaceholder(app : Entity, placeholderHeader : string, placeholderBody : string) : Promise<Entity> {
+        let placeholder : Entity;
+        if (placeholderBody.startsWith('marker')) {
+            placeholder = app.appA.simple_createText('[ to replace during deployment ]');
+        } else {
+            placeholder = await app.appA.createList();
+            placeholder.text = placeholderHeader;
+            await app.appA.addAllToListFromRawData(placeholder, JSON.parse(placeholderBody));
+        }
+        return placeholder;
     }
 
     static createAppWithUI() : Entity {
@@ -97,7 +116,7 @@ export class Starter {
         return app;
     }
 
-    static createAppWithUIWithCommands() : Entity {
+    static async createAppWithUIWithCommands() : Promise<Entity> {
         let app = this.createAppWithUI();
         app.appA.ui.commands = app.appA.simple_createTextWithList('commands',
             app.appA.simple_createButton('default action', async () => {
@@ -132,10 +151,11 @@ export class Starter {
         return app;
     }
 
-    private static createTest() : Entity {
+    private static async createTest() : Promise<Entity> {
         let tester = this.createAppWithUI();
         tester.text = 'Tester';
         tester.appA.testA = new AppA_TestA(tester);
+        tester.appA.ui.topImpressum = await Starter.getPlaceholderImpressum(tester);
         return tester;
     }
 }

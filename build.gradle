@@ -75,8 +75,10 @@ task deployClient {
             from 'client/dist'
             into deploymentPath + '/heroku/sems'
         }
-        replace(deployReplacementHeader, "marker-dr53hifhh4-header");
-        replace(deployReplacementBody, "marker-dr53hifhh4-body");
+        replace(deployReplacementAboutHeader, "marker-dr53hifhh4-about-header");
+        replace(deployReplacementAboutBody, "marker-dr53hifhh4-about-body");
+        replace(deployReplacementImpressumHeader, "marker-dr53hifhh4-impressum-header");
+        replace(deployReplacementImpressumBody, "marker-dr53hifhh4-impressum-body");
         exec {
             workingDir deploymentPath + '/heroku/sems'
             commandLine 'cmd', '/c', 'git add .'

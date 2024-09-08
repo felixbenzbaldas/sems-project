@@ -10,6 +10,7 @@ export class AppA_Ui {
     readonly output : Output;
     readonly input : Input;
     focused : Entity;
+    topImpressum: Entity;
 
     constructor(private entity: Entity) {
         this.content = entity.appA.simple_createList();

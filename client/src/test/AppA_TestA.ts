@@ -67,13 +67,13 @@ export class AppA_TestA {
                     && (await firstObject.list.getObject(0)).text === '';
             }),
             this.test('gui_objectCreation', async test => {
-                let app = Starter.createAppWithUIWithCommands();
+                let app = await Starter.createAppWithUIWithCommands();
                 await app.update();
 
                 return app.guiG.getRawText().includes('default action');
             }),
             this.test('gui_newSubitem', async test => {
-                let app = Starter.createAppWithUIWithCommands();
+                let app = await Starter.createAppWithUIWithCommands();
                 await app.update();
                 await app.appA.ui.globalEvent_defaultAction();
 
@@ -83,7 +83,7 @@ export class AppA_TestA {
                 return firstObject.list.jsList.length == 1;
             }),
             this.test('gui_makeCollapsible', async test => {
-                let app = Starter.createAppWithUIWithCommands();
+                let app = await Starter.createAppWithUIWithCommands();
                 await app.appA.ui.globalEvent_defaultAction();
 
                 await app.guiG.click('make collapsible');
@@ -91,7 +91,7 @@ export class AppA_TestA {
                 return (await app.appA.ui.content.list.getObject(0)).collapsible;
             }),
             this.test('gui_collapsed', async test => {
-                let app = Starter.createAppWithUIWithCommands();
+                let app = await Starter.createAppWithUIWithCommands();
                 await app.appA.ui.globalEvent_defaultAction();
                 await app.appA.ui.globalEvent_makeCollapsible();
                 await app.appA.ui.globalEvent_newSubitem();
