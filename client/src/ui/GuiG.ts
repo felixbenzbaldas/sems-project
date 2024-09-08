@@ -45,12 +45,22 @@ export class GuiG {
             } else if (notNullUndefined(this.entity.text)) {
                 this.uiElement.appendChild(this.text_getUiElement());
                 this.uiElement.style.minWidth = '100%';
+                this.uiElement.style.display = 'flex';
+                this.uiElement.style.flexWrap = 'wrap';
+                if (this.entity.collapsed) {
+                    let icon = document.createElement('div');
+                    icon.innerText = '[...]';
+                    icon.style.display = 'inline-block';
+                    icon.style.marginLeft = '0.2rem';
+                    this.uiElement.appendChild(icon);
+                }
                 if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
                     let listWrapper = document.createElement('div');
                     listWrapper.style.marginLeft = '0.8rem';
                     listWrapper.style.marginTop = '0.2rem';
                     listWrapper.style.marginBottom = '0.2rem';
                     listWrapper.appendChild(this.listG.uiElement);
+                    listWrapper.style.minWidth = '100%';
                     this.uiElement.appendChild(listWrapper);
                 }
             } else if (this.entity.list && this.entity.collapsed != true) {
@@ -84,6 +94,8 @@ export class GuiG {
         if (this.entity.guiG.isEditable() && this.entity.text.length === 0) {
             uiElement.style.borderLeft = 'solid';
         }
+        uiElement.style.display = 'inline-block';
+        uiElement.style.minWidth = '1rem';
         return uiElement;
     }
 
