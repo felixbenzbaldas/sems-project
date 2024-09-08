@@ -56,6 +56,18 @@ export class AppA_TestA {
 
                 return (await app.appA.ui.content.list.getObject(0)).collapsible;
             }),
+            this.test('ui_collapse', async test => {
+                let app = Starter.createAppWithUI();
+                await app.appA.ui.globalEvent_defaultAction();
+                await app.appA.ui.globalEvent_toggleCollapsible();
+                await app.appA.ui.globalEvent_newSubitem();
+                let firstObject = await app.appA.ui.content.list.getObject(0);
+                app.appA.ui.focused = firstObject;
+
+                await app.appA.ui.globalEvent_toggleCollapsed();
+
+                return firstObject.collapsed;
+            }),
             this.test('ui_newSubitem', async test => {
                 let app = Starter.createAppWithUI();
                 await app.appA.ui.globalEvent_defaultAction();

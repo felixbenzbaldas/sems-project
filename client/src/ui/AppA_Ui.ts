@@ -56,4 +56,8 @@ export class AppA_Ui {
         console.log('globalEvent_newSubitem');
         await this.focused.newSubitem();
     }
+
+    async globalEvent_toggleCollapsed() {
+        await this.focused.toggleCollapsed();
+    }
 }

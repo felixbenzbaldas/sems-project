@@ -204,4 +204,13 @@ export class Entity {
         this.collapsed = false;
         await this.update();
     }
+
+    async toggleCollapsed() {
+        if (this.collapsible) {
+            this.collapsed = !this.collapsed;
+            await this.update();
+        } else {
+            throw 'not collapsible!';
+        }
+    }
 }
