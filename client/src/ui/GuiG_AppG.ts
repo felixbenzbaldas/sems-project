@@ -23,6 +23,7 @@ export class GuiG_AppG {
         this.uiElement.innerHTML = null;
         if (this.entity.appA.ui.topImpressum) {
             this.uiElement.appendChild(this.entity.appA.ui.topImpressum.guiG.uiElement);
+            this.uiElement.appendChild(this.separatorLine());
         }
         if (this.entity.appA.ui.commands) {
             this.uiElement.appendChild(this.entity.appA.ui.commands.guiG.uiElement);
