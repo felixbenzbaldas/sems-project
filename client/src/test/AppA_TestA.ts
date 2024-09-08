@@ -118,7 +118,23 @@ export class AppA_TestA {
                 let rawText = app.guiG.getRawText();
 
                 return !rawText.includes('do-not-show-me');
-            })
+            }),
+            this.test('gui_clickOnStaticText', async test => {
+                let app = await Starter.createAppWithUIWithCommands();
+                await app.appA.ui.globalEvent_defaultAction();
+                await app.appA.ui.globalEvent_newSubitem();
+                let firstObject = await app.appA.ui.content.list.getObject(0);
+                firstObject.text = 'clickMe';
+                firstObject.editable = false;
+                firstObject.collapsible = true;
+                firstObject.collapsed = true;
+                await firstObject.update();
+
+                await app.guiG.click('clickMe');
+
+                return !firstObject.collapsed;
+            }),
+
         ];
         if (this.withFailingDemoTest) {
             tests.push(this.test('failing demo test (don\'t worry - this test always fails)', async test => {

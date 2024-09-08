@@ -43,17 +43,25 @@ export class GuiG {
                 link.innerText = this.link_getText();
                 this.uiElement.appendChild(link);
             } else if (notNullUndefined(this.entity.text)) {
-                this.uiElement.appendChild(this.text_getUiElement());
                 this.uiElement.style.minWidth = '100%';
-                this.uiElement.style.display = 'flex';
-                this.uiElement.style.flexWrap = 'wrap';
+                let header = document.createElement('div');
+                this.uiElement.appendChild(header);
+                header.style.minWidth = '100%';
+                header.style.display = 'flex';
+                header.style.flexWrap = 'wrap';
+                header.appendChild(this.text_getUiElement());
                 if (this.entity.collapsed) {
                     let icon = document.createElement('div');
                     icon.innerText = '[...]';
                     icon.style.display = 'inline-block';
                     icon.style.marginLeft = '0.2rem';
-                    this.uiElement.appendChild(icon);
+                    header.appendChild(icon);
                 }
+                header.onclick = (event) => {
+                    if (!event.ctrlKey) {
+                        this.entity.toggleCollapsed();
+                    }
+                };
                 if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
                     let listWrapper = document.createElement('div');
                     listWrapper.style.marginLeft = '0.8rem';
@@ -90,6 +98,11 @@ export class GuiG {
             this.entity.getApp().appA.ui.focus(this.entity);
             uiElement.style.borderLeft = 'none';
         };
+        uiElement.onclick = (event) => {
+            if (this.isEditable()) {
+                event.stopPropagation();
+            }
+        }
         uiElement.contentEditable = (this.isEditable()) ? 'true' : 'false';
         if (this.entity.guiG.isEditable() && this.entity.text.length === 0) {
             uiElement.style.borderLeft = 'solid';
@@ -157,12 +170,18 @@ export class GuiG {
                 if (this.entity.text.includes(text)) {
                     await this.entity.action();
                 }
-            } else if (this.entity.list) {
-                await this.listG.click(text);
             } else if (notNullUndefined(this.entity.text)) {
                 if (this.entity.text.includes(text)) {
                     await this.entity.getApp().appA.ui.focus(this.entity);
+                    if (!this.isEditable() && this.entity.collapsible) {
+                        await this.entity.toggleCollapsed();
+                    }
                 }
+                if (this.entity.list) {
+                    await this.listG.click(text);
+                }
+            } else if (this.entity.list) {
+                await this.listG.click(text);
             }
         }
     }
