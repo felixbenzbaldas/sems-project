@@ -68,7 +68,6 @@ export class GuiG {
                     listWrapper.style.marginTop = '0.2rem';
                     listWrapper.style.marginBottom = '0.2rem';
                     listWrapper.appendChild(this.listG.uiElement);
-                    listWrapper.style.minWidth = '100%';
                     this.uiElement.appendChild(listWrapper);
                 }
             } else if (this.entity.list && this.entity.collapsed != true) {

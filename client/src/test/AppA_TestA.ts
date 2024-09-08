@@ -38,7 +38,6 @@ export class AppA_TestA {
             this.appA.simple_createTextWithList('successful tests: ' + successCounter),
             this.appA.simple_createText(''),
             this.appA.simple_createTextWithList('specifications',
-                this.appA.simple_createText('The tester shows this specification.'),
                 this.appA.simple_createText('Can show failing demo test.'),
                 this.appA.simple_createText('A collapsed item has the icon [...].'),
                 ));
