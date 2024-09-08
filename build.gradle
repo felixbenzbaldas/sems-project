@@ -79,17 +79,17 @@ task deployClient {
         replace(deployReplacementAboutBody, "marker-dr53hifhh4-about-body");
         replace(deployReplacementImpressumHeader, "marker-dr53hifhh4-impressum-header");
         replace(deployReplacementImpressumBody, "marker-dr53hifhh4-impressum-body");
-        exec {
-            workingDir deploymentPath + '/heroku/sems'
-            commandLine 'cmd', '/c', 'git add .'
-        }
-        exec {
-            workingDir deploymentPath + '/heroku/sems'
-            commandLine 'cmd', '/c', 'git commit -am "deployment"'
-        }
-        exec {
-            workingDir deploymentPath + '/heroku/sems'
-            commandLine 'cmd', '/c', 'git push heroku main'
-        }
+//        exec {
+//            workingDir deploymentPath + '/heroku/sems'
+//            commandLine 'cmd', '/c', 'git add .'
+//        }
+//        exec {
+//            workingDir deploymentPath + '/heroku/sems'
+//            commandLine 'cmd', '/c', 'git commit -am "deployment"'
+//        }
+//        exec {
+//            workingDir deploymentPath + '/heroku/sems'
+//            commandLine 'cmd', '/c', 'git push heroku main'
+//        }
     }
 }
