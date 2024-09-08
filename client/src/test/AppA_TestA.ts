@@ -52,7 +52,7 @@ export class AppA_TestA {
                 let app = Starter.createAppWithUI();
                 await app.appA.ui.globalEvent_defaultAction();
 
-                await app.appA.ui.globalEvent_makeCollapsible();
+                await app.appA.ui.globalEvent_toggleCollapsible();
 
                 return (await app.appA.ui.content.list.getObject(0)).collapsible;
             }),
@@ -86,7 +86,7 @@ export class AppA_TestA {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.appA.ui.globalEvent_defaultAction();
 
-                await app.guiG.click('make collapsible');
+                await app.guiG.click('toggle collapsible');
 
                 return (await app.appA.ui.content.list.getObject(0)).collapsible;
             }),

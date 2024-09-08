@@ -48,13 +48,8 @@ export class AppA_Ui {
         this.focused = entity;
     }
 
-    async globalEvent_makeCollapsible() {
-        this.entity.log('globalEvent_makeCollapsible');
-        this.focused.collapsible = true;
-        if (!this.focused.collapsed) {
-            this.focused.collapsed = false;
-        }
-        await this.focused.update();
+    async globalEvent_toggleCollapsible() {
+        await this.focused.toggleCollapsible();
     }
 
     async globalEvent_newSubitem() {

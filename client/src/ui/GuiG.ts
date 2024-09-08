@@ -45,7 +45,7 @@ export class GuiG {
             } else if (notNullUndefined(this.entity.text)) {
                 this.uiElement.appendChild(this.text_getUiElement());
                 this.uiElement.style.minWidth = '100%';
-                if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsible != true) {
+                if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
                     let listWrapper = document.createElement('div');
                     listWrapper.style.marginLeft = '0.8rem';
                     listWrapper.style.marginTop = '0.2rem';
@@ -53,7 +53,7 @@ export class GuiG {
                     listWrapper.appendChild(this.listG.uiElement);
                     this.uiElement.appendChild(listWrapper);
                 }
-            } else if (this.entity.list && this.entity.collapsible != true) {
+            } else if (this.entity.list && this.entity.collapsed != true) {
                 this.uiElement.appendChild(this.listG.uiElement);
             } else {
                 let div = document.createElement('div');
@@ -127,7 +127,7 @@ export class GuiG {
                 if (notNullUndefined(this.entity.text)) {
                     rawText += this.entity.text;
                 }
-                if (this.entity.list && this.entity.collapsible != true) {
+                if (this.entity.list && this.entity.collapsed != true) {
                     rawText += this.listG.getRawText();
                 }
                 return rawText;

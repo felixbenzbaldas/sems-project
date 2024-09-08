@@ -125,8 +125,8 @@ export class Starter {
             app.appA.simple_createButton('new subitem', async () => {
                 await app.appA.ui.globalEvent_newSubitem();
             }),
-            app.appA.simple_createButton('make collapsible', async () => {
-                await app.appA.ui.globalEvent_makeCollapsible();
+            app.appA.simple_createButton('toggle collapsible', async () => {
+                await app.appA.ui.globalEvent_toggleCollapsible();
             }),
             app.appA.simple_createButton('export app', async () => {
                 await app.appA.ui.globalEvent_exportApp();

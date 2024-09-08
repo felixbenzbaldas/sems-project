@@ -198,4 +198,10 @@ export class Entity {
         this.getApp().appA.ui.focused = created;
         await this.update();
     }
+
+    async toggleCollapsible() {
+        this.collapsible = !this.collapsible;
+        this.collapsed = false;
+        await this.update();
+    }
 }
