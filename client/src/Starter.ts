@@ -51,34 +51,34 @@ export class Starter {
         await app.appA.ui.content.list.add(
             app.appA.simple_createText('This is the Sems software. It is being developed. New features will be added.'),
             app.appA.simple_createText(''),
-            app.appA.simple_createTextWithList('Sems-Client-App',
+            app.appA.simple_createCollapsible('Sems-Client-App',
                 app.appA.simple_createText('The Sems-Client-App is a Sems application, which runs in your browser (e. g. Firefox / Edge). ' +
                     'On this way you can use Sems without creating an account or install the software.'),
                 app.appA.simple_createLink(window.location.host + '?client-app', 'Open')
             ),
             app.appA.simple_createText(''),
-            app.appA.simple_createTextWithList('Sems-Tester',
+            app.appA.simple_createCollapsible('Sems-Tester',
                 app.appA.simple_createText('The Sems software is able to test itself. The Sems-Tester can run tests directly in the browser.'),
                 app.appA.simple_createLink(window.location.host + '?test&withFailingDemoTest', 'Open')
             ),
             app.appA.simple_createText(''),
             app.appA.simple_createText(''),
-            app.appA.simple_createTextWithList('Zu Verschenken',
+            app.appA.simple_createCollapsible('Zu Verschenken',
                 app.appA.simple_createText('Virtual Reality Brille für Android-Smartphone'),
                 app.appA.simple_createText('Wasserkaraffe mit Deckel'),
-                app.appA.simple_createTextWithList('Spielpistole 0,08 Joule (mit Plastikkugeln als Munition)'),
+                app.appA.simple_createText('Spielpistole 0,08 Joule (mit Plastikkugeln als Munition)'),
                 app.appA.simple_createText('Poker Set (z. B. für Texas Holdem)'),
                 app.appA.simple_createText('Geschenk-Gutschein 20 € bei Wilkendorf\'s Teehaus in Karlsruhe')
             ),
             app.appA.simple_createText(''),
-            app.appA.simple_createTextWithList('Zu Verkaufen',
-                app.appA.simple_createTextWithList('Rotes Rennrad',
+            app.appA.simple_createCollapsible('Zu Verkaufen',
+                app.appA.simple_createCollapsible('Rotes Rennrad',
                     app.appA.simple_createText('Marke: Bernd Herkelmann. Shimano DURA ACE Gangschaltung und Bremsen. ' +
                         'Mit Gepäckträger, kann auch als Tourenrad verwendet werden. ' +
                         'Der Lack ist leider etwas beschädigt. Der Rahmen ist relativ klein, daher für kleine Menschen geeignet. Inklusive ABUS-Zahlenschloss'),
                     app.appA.simple_createText('Preis: 120 € VB')
                 ),
-                app.appA.simple_createTextWithList('hochwertiger Minikühlschrank - geräuschlos',
+                app.appA.simple_createCollapsible('hochwertiger Minikühlschrank - geräuschlos',
                     app.appA.simple_createText('Marke: Dometic, Modell: DS 400 weiß miniCool Absorbertechnik'),
                     app.appA.simple_createText('Preis: 100 € (Neupreis im Jahr 2013: 449 €)')
                 )
@@ -105,6 +105,7 @@ export class Starter {
         } else {
             placeholder = await app.appA.createList();
             placeholder.text = placeholderHeader;
+            placeholder.collapsible = true;
             await app.appA.addAllToListFromRawData(placeholder, JSON.parse(placeholderBody));
         }
         return placeholder;
