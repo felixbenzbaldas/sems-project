@@ -54,6 +54,12 @@ export class AppA {
         return entity;
     }
 
+    simple_createCollapsible(text: string, ...jsList : Array<Entity>) {
+        let entity = this.simple_createTextWithList(text, ...jsList);
+        entity.collapsible = true;
+        return entity;
+    }
+
     simple_createButton(label : string, func : Function) : Entity {
         let button = this.createEntityWithApp();
         button.text = label;

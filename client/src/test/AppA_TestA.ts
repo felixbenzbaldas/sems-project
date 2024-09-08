@@ -1,6 +1,7 @@
 import type {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 import type {AppA} from "@/core/AppA";
+import {ListA} from "@/core/ListA";
 
 export class AppA_TestA {
 
@@ -69,6 +70,14 @@ export class AppA_TestA {
                 await app.appA.ui.globalEvent_toggleCollapsed();
 
                 return firstObject.collapsed;
+            }),
+            this.test('ui_collapsible', async test => {
+                let app = Starter.createAppWithUI();
+                let collapsible = app.appA.simple_createCollapsible('', app.appA.simple_createText(''));
+
+                await collapsible.update();
+
+                return collapsible.collapsed;
             }),
             this.test('ui_newSubitem', async test => {
                 let app = Starter.createAppWithUI();
