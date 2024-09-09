@@ -45,7 +45,7 @@ export class AppA_TestA {
                 success = await test.action();
             } catch (error) {
                 success = false;
-                this.entity.log('error in test: ' + error);
+                test.log('error: ' + error);
             }
             if (success) {
                 testResults.successful.push(test);
