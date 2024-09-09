@@ -22,6 +22,7 @@ export class Entity {
     editable: boolean;
     readonly guiG: GuiG;
     test_update: Function;
+    test_result_error : string;
     jobPipelineG : JobPipelineG = new JobPipelineG();
     collapsible: boolean;
     ui_context: Entity;

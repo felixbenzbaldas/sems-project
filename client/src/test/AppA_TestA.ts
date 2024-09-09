@@ -46,6 +46,7 @@ export class AppA_TestA {
             } catch (error) {
                 success = false;
                 test.log('error: ' + error);
+                test.test_result_error = error.toString();
             }
             if (success) {
                 testResults.successful.push(test);
@@ -62,6 +63,15 @@ export class AppA_TestA {
                 let app = Starter.createApp();
 
                 return app.text === 'Sems application';
+            }),
+            this.test('test_errorInTest', async test => {
+                let tester = await Starter.createTest();
+
+                let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.test('dummyTestWithError', async () => {
+                    throw 'testError';
+                })]);
+
+                return testResults.failed.at(0).test_result_error === 'testError';
             }),
             this.test('ui_makeCollapsible', async test => {
                 let app = Starter.createAppWithUI();
@@ -155,7 +165,6 @@ export class AppA_TestA {
 
                 return !firstObject.collapsed;
             }),
-
         ];
         if (this.withFailingDemoTest) {
             tests.push(this.test('failing demo test (don\'t worry - this test always fails)', async test => {
@@ -165,7 +174,7 @@ export class AppA_TestA {
         return tests;
     }
 
-    private test(name: string, action: (test: Entity) => Promise<any>) : Entity {
+    test(name: string, action: (test: Entity) => Promise<any>) : Entity {
         let test = this.appA.simple_createText(name);
         test.action = async () => {
             return await action(test);

@@ -159,11 +159,10 @@ export class Starter {
         return app;
     }
 
-    private static async createTest() : Promise<Entity> {
+    static async createTest() : Promise<Entity> {
         let tester = this.createAppWithUI();
         tester.text = 'Tester';
         tester.appA.testA = new AppA_TestA(tester);
-        tester.appA.ui.topImpressum = await Starter.getPlaceholderImpressum(tester);
         return tester;
     }
 }
