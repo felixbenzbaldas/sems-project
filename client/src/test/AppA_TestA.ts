@@ -1,7 +1,6 @@
 import type {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 import type {AppA} from "@/core/AppA";
-import {ListA} from "@/core/ListA";
 
 class TestResults {
     successful : Array<Entity> = [];
