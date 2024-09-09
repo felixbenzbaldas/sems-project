@@ -73,6 +73,27 @@ export class AppA_TestA {
 
                 return testResults.failed.at(0).test_result_error === 'testError';
             }),
+            ...this.createUiTests(),
+            ...this.createGuiTests()
+        ];
+        if (this.withFailingDemoTest) {
+            tests.push(this.test('failing demo test (don\'t worry - this test always fails)', async test => {
+                throw 'demo error in test';
+            }));
+        }
+        return tests;
+    }
+
+    test(name: string, action: (test: Entity) => Promise<any>) : Entity {
+        let test = this.appA.simple_createText(name);
+        test.action = async () => {
+            return await action(test);
+        }
+        return test;
+    }
+
+    createUiTests() {
+        return [
             this.test('ui_makeCollapsible', async test => {
                 let app = Starter.createAppWithUI();
                 await app.appA.ui.globalEvent_defaultAction();
@@ -110,7 +131,11 @@ export class AppA_TestA {
                 let firstObject = await app.appA.ui.content.list.getObject(0);
                 return firstObject.list.jsList.length == 1
                     && (await firstObject.list.getObject(0)).text === '';
-            }),
+            })]
+    }
+
+    createGuiTests() {
+        return [
             this.test('gui_objectCreation', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.update();
@@ -164,21 +189,7 @@ export class AppA_TestA {
                 await app.guiG.click('clickMe');
 
                 return !firstObject.collapsed;
-            }),
+            })
         ];
-        if (this.withFailingDemoTest) {
-            tests.push(this.test('failing demo test (don\'t worry - this test always fails)', async test => {
-                throw 'demo error in test';
-            }));
-        }
-        return tests;
-    }
-
-    test(name: string, action: (test: Entity) => Promise<any>) : Entity {
-        let test = this.appA.simple_createText(name);
-        test.action = async () => {
-            return await action(test);
-        }
-        return test;
     }
 }
