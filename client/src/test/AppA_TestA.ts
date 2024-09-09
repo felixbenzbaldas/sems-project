@@ -63,14 +63,15 @@ export class AppA_TestA {
 
                 return app.text === 'Sems application';
             }),
-            this.test('test_errorInTest', async test => {
+            this.test('test', async test => {
                 let tester = await Starter.createTest();
 
                 let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.test('dummyTestWithError', async () => {
                     throw 'testError';
                 })]);
 
-                return testResults.failed.at(0).test_result_error === 'testError';
+                return testResults.failed.at(0).test_result_error === 'testError' &&
+                    testResults.successful.length == 0;
             }),
             ...this.createUiTests(),
             ...this.createGuiTests()
