@@ -27,6 +27,7 @@ export class Entity {
     collapsible: boolean;
     ui_context: Entity;
     collapsed: boolean;
+    test_result: boolean;
 
     constructor() {
         this.guiG = new GuiG(this);

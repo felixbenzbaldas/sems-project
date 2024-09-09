@@ -35,6 +35,44 @@ export class GuiG {
         if (!this.entity.hidden) {
             if (this.entity.appA?.ui) {
                 this.uiElement.appendChild(this.appG.uiElement);
+            } else if (notNullUndefined(this.entity.test_result)) {
+                let color;
+                if (this.entity.test_result) {
+                    color = 'green';
+                } else {
+                    color = 'red';
+                }
+                let textElem = this.text_getUiElement();
+                textElem.style.color = color;
+                this.uiElement.style.minWidth = '100%';
+                let header = document.createElement('div');
+                this.uiElement.appendChild(header);
+                header.style.minWidth = '100%';
+                header.style.display = 'flex';
+                header.style.flexWrap = 'wrap';
+                header.appendChild(textElem);
+                if (this.entity.collapsed) {
+                    let icon = document.createElement('div');
+                    icon.innerText = '[...]';
+                    icon.style.display = 'inline-block';
+                    icon.style.marginLeft = '0.2rem';
+                    header.appendChild(icon);
+                }
+                header.onclick = (event) => {
+                    if (!event.ctrlKey) {
+                        this.entity.toggleCollapsed();
+                    }
+                };
+                if (this.entity.test_result_error) {
+                    let subitemsWrapper = document.createElement('div');
+                    subitemsWrapper.style.marginLeft = '0.8rem';
+                    subitemsWrapper.style.marginTop = '0.2rem';
+                    subitemsWrapper.style.marginBottom = '0.2rem';
+                    let subitems = document.createElement('div');
+                    subitems.innerText = 'failed with error: ' + this.entity.test_result_error;
+                    subitemsWrapper.appendChild(subitems);
+                    this.uiElement.appendChild(subitemsWrapper);
+                }
             } else if (this.entity.action) {
                 this.uiElement.appendChild(this.action_getUiElement());
             } else if (notNullUndefined(this.entity.link)) {
@@ -153,6 +191,9 @@ export class GuiG {
                 }
                 if (this.entity.list && this.entity.collapsed != true) {
                     rawText += this.listG.getRawText();
+                }
+                if (this.entity.test_result_error) {
+                    rawText += this.entity.test_result_error;
                 }
                 return rawText;
             }

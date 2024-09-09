@@ -25,7 +25,7 @@ export class AppA_TestA {
         let testResults : TestResults = await this.run(tests);
         if (testResults.failed.length > 0) {
             await this.appA.ui.content.list.add(this.appA.simple_createTextWithList('FAILED',
-                ...testResults.failed.map(test => this.appA.simple_createText(test.text))));
+                ...testResults.failed));
         }
         await this.appA.ui.content.list.add(
             this.appA.simple_createTextWithList('successful tests: ' + testResults.successful.length),
@@ -46,6 +46,7 @@ export class AppA_TestA {
                 success = false;
                 test.log('error: ' + error);
                 test.test_result_error = error.toString();
+                test.test_result = false;
             }
             if (success) {
                 testResults.successful.push(test);
@@ -87,7 +88,8 @@ export class AppA_TestA {
     test(name: string, action: (test: Entity) => Promise<any>) : Entity {
         let test = this.appA.simple_createText(name);
         test.action = async () => {
-            return await action(test);
+            test.test_result = await action(test);
+            return test.test_result;
         }
         return test;
     }
@@ -202,6 +204,7 @@ export class AppA_TestA {
                 let rawText = tester.guiG.getRawText();
                 return rawText.includes('FAILED') &&
                     rawText.includes('dummyTestWithError') &&
+                    rawText.includes('testError') &&
                     rawText.includes('successful tests:') &&
                     rawText.includes('0');
             })
