@@ -3,6 +3,11 @@ import {Starter} from "@/Starter";
 import type {AppA} from "@/core/AppA";
 import {ListA} from "@/core/ListA";
 
+class TestResults {
+    successful : Array<Entity> = [];
+    failed : Array<Entity> = [];
+}
+
 export class AppA_TestA {
 
     private readonly appA : AppA;
@@ -12,35 +17,43 @@ export class AppA_TestA {
         this.appA = entity.appA;
     }
 
-    async run() {
+    async createRunAndDisplay() {
+        return this.runAndDisplay(this.createTests());
+    }
+
+    async runAndDisplay(tests : Array<Entity>) {
         this.appA.ui.content.list.jsList = [];
-        let successCounter = 0;
-        let failedTests = [];
-        for (let test of this.createTests()) {
-            let testResult;
-            try {
-                testResult = await test.action();
-            } catch (error) {
-                testResult = false;
-                this.entity.log('error in test: ' + error);
-            }
-            if (testResult) {
-                successCounter++;
-            } else {
-                failedTests.push(test);
-            }
-        }
-        if (failedTests.length > 0) {
+        let testResults : TestResults = await this.run(tests);
+        if (testResults.failed.length > 0) {
             await this.appA.ui.content.list.add(this.appA.simple_createTextWithList('FAILED',
-                ...failedTests.map(test => this.appA.simple_createText(test.text))));
+                ...testResults.failed.map(test => this.appA.simple_createText(test.text))));
         }
         await this.appA.ui.content.list.add(
-            this.appA.simple_createTextWithList('successful tests: ' + successCounter),
+            this.appA.simple_createTextWithList('successful tests: ' + testResults.successful.length),
             this.appA.simple_createText(''),
             this.appA.simple_createTextWithList('specifications',
                 this.appA.simple_createText('Can show failing demo test.'),
                 this.appA.simple_createText('A collapsed item has the icon [...].'),
-                ));
+            ));
+    }
+
+    async run(tests : Array<Entity>) : Promise<TestResults> {
+        let testResults = new TestResults();
+        for (let test of tests) {
+            let success;
+            try {
+                success = await test.action();
+            } catch (error) {
+                success = false;
+                this.entity.log('error in test: ' + error);
+            }
+            if (success) {
+                testResults.successful.push(test);
+            } else {
+                testResults.failed.push(test);
+            }
+        }
+        return testResults;
     }
 
     createTests() : Array<Entity> {

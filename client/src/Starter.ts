@@ -32,7 +32,7 @@ export class Starter {
             app.appA.logG.toConsole = true;
         }
         if (queryParams.has('test')) {
-            await app.appA.testA.run();
+            await app.appA.testA.createRunAndDisplay();
         }
         return app;
     }
