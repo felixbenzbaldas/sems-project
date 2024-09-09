@@ -189,6 +189,21 @@ export class AppA_TestA {
                 await app.guiG.click('clickMe');
 
                 return !firstObject.collapsed;
+            }),
+            this.test('gui_test', async test => {
+                let tester = await Starter.createTest();
+
+                await tester.appA.testA.runAndDisplay([
+                    tester.appA.testA.test('dummyTestWithError', async ()=> {
+                        throw 'testError';
+                    })
+                ]);
+
+                let rawText = tester.guiG.getRawText();
+                return rawText.includes('FAILED') &&
+                    rawText.includes('dummyTestWithError') &&
+                    rawText.includes('successful tests:') &&
+                    rawText.includes('0');
             })
         ];
     }
