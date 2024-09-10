@@ -62,7 +62,7 @@ export class AppA_TestA {
             this.createTest('create application', async test => {
                 let app = Starter.createApp();
 
-                return app.text === 'ES application';
+                return app.text === 'easy application';
             }),
             this.createTest('tester', async test => {
                 let tester = await Starter.createTest();

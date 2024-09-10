@@ -39,7 +39,7 @@ export class Starter {
 
     static createApp() : Entity {
         let app = new Entity();
-        app.text = 'ES application';
+        app.text = 'easy application';
         app.appA = new AppA(app);
         app.containerA.mapNameEntity = new Map();
         return app;
