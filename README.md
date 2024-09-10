@@ -1,11 +1,11 @@
-### Sems
+### Einfache Software
 
-With Sems you can maintain *content* in a flexible and systematic way.
+With ES you can maintain *content* in a flexible and systematic way.
 Content means notes, texts, structured data, images and more.
 
 #### Project Status
 
-Sems is being developed. The first useful features will probably be available in october 2024.
+ES is being developed. The first useful features will probably be available in october 2024.
 
 #### Entity Aspects
 
@@ -13,10 +13,10 @@ In order to provide a high degree of flexibility, I'm trying out a new concept. 
 
 #### Predecessor
 
-There is already a previous version of Sems. The last changes to the old version were made in April 2024.
+There is already a previous version of ES. The last changes to the old version were made in April 2024.
 The following describes the features of the old version.
 
-Mit Sems kann man Gliederungen erstellen:
+Mit ES kann man Gliederungen erstellen:
 
 ![](documentation/images/outline.png)
 
@@ -41,10 +41,10 @@ Bilder können innerhalb der Gliederung angezeigt werden:
 
 ![](documentation/images/img.png)
 
-Sems kann komplett per Tastatur bedient werden. Beispiel: Um zwischen Punkten zu navigieren werden die Buchstaben "i" und "k" verwendet (vorwärts und rückwärts).
+ES kann komplett per Tastatur bedient werden. Beispiel: Um zwischen Punkten zu navigieren werden die Buchstaben "i" und "k" verwendet (vorwärts und rückwärts).
 
 Punkte können hinzugefügt und editiert werden.
 
 #### Visual design principle
 
-The visual design principle of Sems is described and analyzed in this [thesis](https://www.dropbox.com/scl/fi/didrs41osq94s3agbclxn/Details-im-Kontext-anzeigen.pdf?rlkey=c374hlvzoskz4fbkevfdgfzsj&dl=0).
+The visual design principle of ES is described and analyzed in this [thesis](https://www.dropbox.com/scl/fi/didrs41osq94s3agbclxn/Details-im-Kontext-anzeigen.pdf?rlkey=c374hlvzoskz4fbkevfdgfzsj&dl=0).

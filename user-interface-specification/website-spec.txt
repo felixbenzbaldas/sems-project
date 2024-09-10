@@ -7,7 +7,7 @@ describe: website {
 
     test: content is readonly
 
-    it: can open Sems-Client-App
+    it: can open ES-Client-App
 
     test: link is clickable
 }

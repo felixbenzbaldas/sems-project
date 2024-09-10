@@ -39,7 +39,7 @@ export class Starter {
 
     static createApp() : Entity {
         let app = new Entity();
-        app.text = 'Sems application';
+        app.text = 'ES application';
         app.appA = new AppA(app);
         app.containerA.mapNameEntity = new Map();
         return app;
@@ -49,16 +49,16 @@ export class Starter {
         let app = Starter.createAppWithUI();
         app.appA.ui.isWebsite = true;
         await app.appA.ui.content.list.add(
-            app.appA.simple_createText('This is the Sems software. It is being developed. New features will be added.'),
+            app.appA.simple_createText('This is easy software. It is being developed. New features will be added.'),
             app.appA.simple_createText(''),
-            app.appA.simple_createCollapsible('Sems-Client-App',
-                app.appA.simple_createText('The Sems-Client-App is a Sems application, which runs in your browser (e. g. Firefox / Edge). ' +
-                    'On this way you can use Sems without creating an account or install the software.'),
+            app.appA.simple_createCollapsible('easy client-app',
+                app.appA.simple_createText('The easy client-app is an ES application, which runs in your browser (e. g. Firefox / Edge). ' +
+                    'On this way you can use ES without creating an account or install the software.'),
                 app.appA.simple_createLink(Starter.getBaseUrl() + '?client-app', 'Open')
             ),
             app.appA.simple_createText(''),
-            app.appA.simple_createCollapsible('Sems-Tester',
-                app.appA.simple_createText('The Sems software is able to test itself. The Sems-Tester can run tests directly in the browser.'),
+            app.appA.simple_createCollapsible('easy tester',
+                app.appA.simple_createText('The easy software is able to test itself. The easy tester can run tests directly in the browser.'),
                 app.appA.simple_createLink(Starter.getBaseUrl() + '?test&withFailingDemoTest', 'Open')
             ),
             app.appA.simple_createText(''),

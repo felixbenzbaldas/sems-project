@@ -6,7 +6,7 @@ This will have the following benefits:
 - Entity Aspects can be used for building the ui. The architecture becomes clear and consistent.
 - the code becomes simpler: no need for knowing a specific ui-framework. All you need to understand the client code is plain JavaScript, HTML and CSS.
 - it will be possible to test ui-features without a special ui-testing-framework.
-- the old Sems application is also implemtented without a ui-framework. Therefore some code can be reused.
-- it will be easy to reuse Sems-code in other projects. There is no dependency to a specific ui-framework.
+- the old ES application is also implemtented without a ui-framework. Therefore some code can be reused.
+- it will be easy to reuse ES-code in other projects. There is no dependency to a specific ui-framework.
 
 (Maybe in the future a ui-framework will be used for special use cases.)

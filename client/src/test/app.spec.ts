@@ -7,7 +7,7 @@ describe('app', () => {
     it('can be created', async () => {
         let app : Entity = Starter.createApp();
 
-        expect(app.text).toEqual('Sems application');
+        expect(app.text).toEqual('ES application');
     });
 
     it('can create an entity', async () => {
