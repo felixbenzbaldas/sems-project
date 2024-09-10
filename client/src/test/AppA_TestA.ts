@@ -1,6 +1,7 @@
 import type {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 import type {AppA} from "@/core/AppA";
+import {raceWith} from "rxjs";
 
 class TestResults {
     successful : Array<Entity> = [];
@@ -83,6 +84,9 @@ export class AppA_TestA {
         ];
         if (this.withFailingDemoTest) {
             tests.push(this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
+                test.test_app = Starter.createApp();
+                test.test_app.appA.logG.toListOfStrings = true;
+                test.test_app.log('a dummy log');
                 throw 'demo error in test';
             }));
         }
@@ -196,11 +200,14 @@ export class AppA_TestA {
 
                 return !firstObject.collapsed;
             }),
-            this.createTest('gui_test', async test => {
+            this.createTest('gui_tester', async test => {
                 let tester = await Starter.createTest();
 
                 await tester.appA.testA.runAndDisplay([
-                    tester.appA.testA.createTest('dummyTestWithError', async ()=> {
+                    tester.appA.testA.createTest('dummyTestWithError', async dummyTest => {
+                        dummyTest.test_app = Starter.createApp();
+                        dummyTest.test_app.appA.logG.toListOfStrings = true;
+                        dummyTest.test_app.log('dummyLog');
                         throw 'testError';
                     })
                 ]);
@@ -209,9 +216,10 @@ export class AppA_TestA {
                 return rawText.includes('FAILED') &&
                     rawText.includes('dummyTestWithError') &&
                     rawText.includes('testError') &&
+                    rawText.includes('dummyLog') &&
                     rawText.includes('successful tests:') &&
                     rawText.includes('0');
-            })
+            }),
         ];
     }
 }

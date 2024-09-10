@@ -29,7 +29,7 @@ export class GuiG {
                     await this.listG.unsafeUpdate();
                 }
                 this.headerContent_unsafeUpdate();
-                this.bodyContent_unsafeUpdate();
+                await this.bodyContent_unsafeUpdate();
             }
         }
         await this.updateUiElement();
@@ -58,10 +58,19 @@ export class GuiG {
         }
     }
 
-    bodyContent_unsafeUpdate() {
-        if (this.entity.test_result_error) {
+    async bodyContent_unsafeUpdate() {
+        if (notNullUndefined(this.entity.test_result)) {
             this.bodyContent = document.createElement('div');
-            this.bodyContent.innerText = 'failed with error: ' + this.entity.test_result_error;
+            let appA = this.entity.getApp().appA;
+            let list = appA.simple_createList();
+            if (this.entity.test_result_error) {
+                await list.list.add(appA.simple_createText('failed with error: ' + this.entity.test_result_error));
+            }
+            if (this.entity.test_app) {
+                await list.list.add(appA.simple_createCollapsible('log',
+                    appA.simple_createText(this.entity.test_app.appA.logG.listOfStrings.join('\n'))));
+            }
+            this.bodyContent.appendChild(list.guiG.uiElement);
         } else if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
             this.bodyContent = this.listG.uiElement;
         } else {
@@ -198,6 +207,9 @@ export class GuiG {
                 }
                 if (this.entity.test_result_error) {
                     rawText += this.entity.test_result_error;
+                }
+                if (this.entity.test_app) {
+                    rawText += this.entity.test_app.appA.logG.listOfStrings.join('\n');
                 }
                 return rawText;
             }
