@@ -59,15 +59,15 @@ export class AppA_TestA {
 
     createTests() : Array<Entity> {
         let tests = [
-            this.test('create application', async test => {
+            this.createTest('create application', async test => {
                 let app = Starter.createApp();
 
                 return app.text === 'ES application';
             }),
-            this.test('tester', async test => {
+            this.createTest('tester', async test => {
                 let tester = await Starter.createTest();
 
-                let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.test('dummyTestWithError', async dummyTest => {
+                let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.createTest('dummyTestWithError', async dummyTest => {
                     dummyTest.test_app = Starter.createApp();
                     dummyTest.test_app.appA.logG.toListOfStrings = true;
                     dummyTest.test_app.log('dummyLog');
@@ -83,14 +83,14 @@ export class AppA_TestA {
             ...this.createGuiTests()
         ];
         if (this.withFailingDemoTest) {
-            tests.push(this.test('failing demo test (don\'t worry - this test always fails)', async test => {
+            tests.push(this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
                 throw 'demo error in test';
             }));
         }
         return tests;
     }
 
-    test(name: string, action: (test: Entity) => Promise<any>) : Entity {
+    createTest(name: string, action: (test: Entity) => Promise<any>) : Entity {
         let test = this.appA.simple_createText(name);
         test.action = async () => {
             test.test_result = await action(test);
@@ -101,7 +101,7 @@ export class AppA_TestA {
 
     createUiTests() {
         return [
-            this.test('ui_makeCollapsible', async test => {
+            this.createTest('ui_makeCollapsible', async test => {
                 let app = Starter.createAppWithUI();
                 await app.appA.ui.globalEvent_defaultAction();
 
@@ -109,7 +109,7 @@ export class AppA_TestA {
 
                 return (await app.appA.ui.content.list.getObject(0)).collapsible;
             }),
-            this.test('ui_collapse', async test => {
+            this.createTest('ui_collapse', async test => {
                 let app = Starter.createAppWithUI();
                 await app.appA.ui.globalEvent_defaultAction();
                 await app.appA.ui.globalEvent_toggleCollapsible();
@@ -121,7 +121,7 @@ export class AppA_TestA {
 
                 return firstObject.collapsed;
             }),
-            this.test('ui_collapsible', async test => {
+            this.createTest('ui_collapsible', async test => {
                 let app = Starter.createAppWithUI();
                 let collapsible = app.appA.simple_createCollapsible('', app.appA.simple_createText(''));
 
@@ -129,7 +129,7 @@ export class AppA_TestA {
 
                 return collapsible.collapsed;
             }),
-            this.test('ui_newSubitem', async test => {
+            this.createTest('ui_newSubitem', async test => {
                 let app = Starter.createAppWithUI();
                 await app.appA.ui.globalEvent_defaultAction();
 
@@ -143,13 +143,13 @@ export class AppA_TestA {
 
     createGuiTests() {
         return [
-            this.test('gui_objectCreation', async test => {
+            this.createTest('gui_objectCreation', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.update();
 
                 return app.guiG.getRawText().includes('default action');
             }),
-            this.test('gui_newSubitem', async test => {
+            this.createTest('gui_newSubitem', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.update();
                 await app.appA.ui.globalEvent_defaultAction();
@@ -159,7 +159,7 @@ export class AppA_TestA {
                 let firstObject = await app.appA.ui.content.list.getObject(0);
                 return firstObject.list.jsList.length == 1;
             }),
-            this.test('gui_makeCollapsible', async test => {
+            this.createTest('gui_makeCollapsible', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.appA.ui.globalEvent_defaultAction();
 
@@ -167,7 +167,7 @@ export class AppA_TestA {
 
                 return (await app.appA.ui.content.list.getObject(0)).collapsible;
             }),
-            this.test('gui_collapsed', async test => {
+            this.createTest('gui_collapsed', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.appA.ui.globalEvent_defaultAction();
                 await app.appA.ui.globalEvent_newSubitem();
@@ -182,7 +182,7 @@ export class AppA_TestA {
 
                 return !rawText.includes('do-not-show-me');
             }),
-            this.test('gui_clickOnStaticText', async test => {
+            this.createTest('gui_clickOnStaticText', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.appA.ui.globalEvent_defaultAction();
                 await app.appA.ui.globalEvent_newSubitem();
@@ -197,11 +197,11 @@ export class AppA_TestA {
 
                 return !firstObject.collapsed;
             }),
-            this.test('gui_test', async test => {
+            this.createTest('gui_test', async test => {
                 let tester = await Starter.createTest();
 
                 await tester.appA.testA.runAndDisplay([
-                    tester.appA.testA.test('dummyTestWithError', async ()=> {
+                    tester.appA.testA.createTest('dummyTestWithError', async ()=> {
                         throw 'testError';
                     })
                 ]);
