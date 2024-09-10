@@ -10,24 +10,25 @@ export class Entity {
 
     name: string;
     container: Entity;
-    text : string;
-    link : string;
-    list : ListA;
+    text: string;
+    link: string;
+    list: ListA;
     app: Entity;
     action: Function;
     hidden: boolean = false;
     pathA: PathA;
     appA: AppA;
-    readonly containerA : ContainerA = new ContainerA(this);
+    readonly containerA: ContainerA = new ContainerA(this);
     editable: boolean;
     readonly guiG: GuiG;
     test_update: Function;
-    test_result_error : string;
-    jobPipelineG : JobPipelineG = new JobPipelineG();
+    test_result_error: string;
+    jobPipelineG: JobPipelineG = new JobPipelineG();
     collapsible: boolean;
     ui_context: Entity;
     collapsed: boolean;
     test_result: boolean;
+    test_app: Entity;
 
     constructor() {
         this.guiG = new GuiG(this);

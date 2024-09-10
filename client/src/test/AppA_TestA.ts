@@ -64,14 +64,19 @@ export class AppA_TestA {
 
                 return app.text === 'ES application';
             }),
-            this.test('test', async test => {
+            this.test('tester', async test => {
                 let tester = await Starter.createTest();
 
-                let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.test('dummyTestWithError', async () => {
+                let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.test('dummyTestWithError', async dummyTest => {
+                    dummyTest.test_app = Starter.createApp();
+                    dummyTest.test_app.appA.logG.toListOfStrings = true;
+                    dummyTest.test_app.log('dummyLog');
                     throw 'testError';
                 })]);
 
-                return testResults.failed.at(0).test_result_error === 'testError' &&
+                let dummyTestRun = testResults.failed.at(0);
+                return dummyTestRun.test_result_error === 'testError' &&
+                    dummyTestRun.test_app.appA.logG.listOfStrings.join().includes('dummyLog') &&
                     testResults.successful.length == 0;
             }),
             ...this.createUiTests(),
