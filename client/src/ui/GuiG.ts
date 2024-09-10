@@ -10,9 +10,9 @@ export class GuiG {
     uiElement : HTMLDivElement = document.createElement('div');
     appG: GuiG_AppG;
     listG: GuiG_ListG;
-
     headerContent : HTMLElement;
-    fullWidthHeader : boolean;
+    headerContent_fullWidth : boolean;
+    bodyContent : HTMLElement;
 
     constructor(private entity : Entity) {
         this.appG = new GuiG_AppG(entity);
@@ -28,23 +28,24 @@ export class GuiG {
                 if (this.entity.list) {
                     await this.listG.unsafeUpdate();
                 }
-                this.unsafeUpdateHeaderContent();
+                this.headerContent_unsafeUpdate();
+                this.bodyContent_unsafeUpdate();
             }
         }
         await this.updateUiElement();
         this.entity.log('gui_updated');
     }
 
-    unsafeUpdateHeaderContent() {
+    headerContent_unsafeUpdate() {
         this.headerContent = document.createElement('div');
-        this.fullWidthHeader = true;
+        this.headerContent_fullWidth = true;
         if (notNullUndefined(this.entity.test_result)) {
             let textElem = this.text_getUiElement();
             textElem.style.color = this.entity.test_result ? 'green' : 'red';
             this.headerContent.appendChild(textElem);
         } else if (this.entity.action) {
             this.headerContent.appendChild(this.action_getUiElement());
-            this.fullWidthHeader = false;
+            this.headerContent_fullWidth = false;
         } else if (notNullUndefined(this.entity.link)) {
             let link = document.createElement('a');
             link.href = this.entity.link;
@@ -57,6 +58,17 @@ export class GuiG {
         }
     }
 
+    bodyContent_unsafeUpdate() {
+        if (this.entity.test_result_error) {
+            this.bodyContent = document.createElement('div');
+            this.bodyContent.innerText = 'failed with error: ' + this.entity.test_result_error;
+        } else if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
+            this.bodyContent = this.listG.uiElement;
+        } else {
+            this.bodyContent = null;
+        }
+    }
+
     private async updateUiElement() {
         this.uiElement.innerHTML = null;
         this.uiElement.style.all = 'revert';
@@ -64,7 +76,7 @@ export class GuiG {
             if (this.entity.appA?.ui) {
                 this.uiElement.appendChild(this.appG.uiElement);
             } else if (this.headerContent) {
-                if (this.fullWidthHeader) {
+                if (this.headerContent_fullWidth) {
                     this.uiElement.style.minWidth = '100%';
                 }
                 let header = document.createElement('div');
@@ -84,22 +96,13 @@ export class GuiG {
                         this.entity.toggleCollapsed();
                     }
                 };
-                if (this.entity.test_result_error) {
-                    let subitemsWrapper = document.createElement('div');
-                    subitemsWrapper.style.marginLeft = '0.8rem';
-                    subitemsWrapper.style.marginTop = '0.2rem';
-                    subitemsWrapper.style.marginBottom = '0.2rem';
-                    let subitems = document.createElement('div');
-                    subitems.innerText = 'failed with error: ' + this.entity.test_result_error;
-                    subitemsWrapper.appendChild(subitems);
-                    this.uiElement.appendChild(subitemsWrapper);
-                } else if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
-                    let listWrapper = document.createElement('div');
-                    listWrapper.style.marginLeft = '0.8rem';
-                    listWrapper.style.marginTop = '0.2rem';
-                    listWrapper.style.marginBottom = '0.2rem';
-                    listWrapper.appendChild(this.listG.uiElement);
-                    this.uiElement.appendChild(listWrapper);
+                if (this.bodyContent) {
+                    let body = document.createElement('div');
+                    body.style.paddingLeft = '0.8rem';
+                    body.style.paddingTop = '0.2rem';
+                    body.style.paddingBottom = '0.2rem';
+                    body.appendChild(this.bodyContent);
+                    this.uiElement.appendChild(body);
                 }
             } else if (this.entity.list && this.entity.collapsed != true) {
                 this.uiElement.appendChild(this.listG.uiElement);
