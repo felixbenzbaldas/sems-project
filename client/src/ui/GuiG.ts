@@ -11,6 +11,9 @@ export class GuiG {
     appG: GuiG_AppG;
     listG: GuiG_ListG;
 
+    headerContent : HTMLElement;
+    fullWidthHeader : boolean;
+
     constructor(private entity : Entity) {
         this.appG = new GuiG_AppG(entity);
         this.listG = new GuiG_ListG(entity);
@@ -21,12 +24,37 @@ export class GuiG {
         if (!this.entity.hidden) {
             if (this.entity.appA?.ui) {
                 await this.appG.unsafeUpdate();
-            } else if (this.entity.list) {
-                await this.listG.unsafeUpdate();
+            } else {
+                if (this.entity.list) {
+                    await this.listG.unsafeUpdate();
+                }
+                this.unsafeUpdateHeaderContent();
             }
         }
         await this.updateUiElement();
         this.entity.log('gui_updated');
+    }
+
+    unsafeUpdateHeaderContent() {
+        this.headerContent = document.createElement('div');
+        this.fullWidthHeader = true;
+        if (notNullUndefined(this.entity.test_result)) {
+            let textElem = this.text_getUiElement();
+            textElem.style.color = this.entity.test_result ? 'green' : 'red';
+            this.headerContent.appendChild(textElem);
+        } else if (this.entity.action) {
+            this.headerContent.appendChild(this.action_getUiElement());
+            this.fullWidthHeader = false;
+        } else if (notNullUndefined(this.entity.link)) {
+            let link = document.createElement('a');
+            link.href = this.entity.link;
+            link.innerText = this.link_getText();
+            this.headerContent.appendChild(link);
+        } else if (notNullUndefined(this.entity.text)) {
+            this.headerContent.appendChild(this.text_getUiElement());
+        } else {
+            this.headerContent = null;
+        }
     }
 
     private async updateUiElement() {
@@ -35,22 +63,15 @@ export class GuiG {
         if (!this.entity.hidden) {
             if (this.entity.appA?.ui) {
                 this.uiElement.appendChild(this.appG.uiElement);
-            } else if (notNullUndefined(this.entity.test_result)) {
-                let color;
-                if (this.entity.test_result) {
-                    color = 'green';
-                } else {
-                    color = 'red';
+            } else if (this.headerContent) {
+                if (this.fullWidthHeader) {
+                    this.uiElement.style.minWidth = '100%';
                 }
-                let textElem = this.text_getUiElement();
-                textElem.style.color = color;
-                this.uiElement.style.minWidth = '100%';
                 let header = document.createElement('div');
                 this.uiElement.appendChild(header);
-                header.style.minWidth = '100%';
                 header.style.display = 'flex';
                 header.style.flexWrap = 'wrap';
-                header.appendChild(textElem);
+                header.appendChild(this.headerContent);
                 if (this.entity.collapsed) {
                     let icon = document.createElement('div');
                     icon.innerText = '[...]';
@@ -72,35 +93,7 @@ export class GuiG {
                     subitems.innerText = 'failed with error: ' + this.entity.test_result_error;
                     subitemsWrapper.appendChild(subitems);
                     this.uiElement.appendChild(subitemsWrapper);
-                }
-            } else if (this.entity.action) {
-                this.uiElement.appendChild(this.action_getUiElement());
-            } else if (notNullUndefined(this.entity.link)) {
-                let link = document.createElement('a');
-                link.href = this.entity.link;
-                link.innerText = this.link_getText();
-                this.uiElement.appendChild(link);
-            } else if (notNullUndefined(this.entity.text)) {
-                this.uiElement.style.minWidth = '100%';
-                let header = document.createElement('div');
-                this.uiElement.appendChild(header);
-                header.style.minWidth = '100%';
-                header.style.display = 'flex';
-                header.style.flexWrap = 'wrap';
-                header.appendChild(this.text_getUiElement());
-                if (this.entity.collapsed) {
-                    let icon = document.createElement('div');
-                    icon.innerText = '[...]';
-                    icon.style.display = 'inline-block';
-                    icon.style.marginLeft = '0.2rem';
-                    header.appendChild(icon);
-                }
-                header.onclick = (event) => {
-                    if (!event.ctrlKey) {
-                        this.entity.toggleCollapsed();
-                    }
-                };
-                if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
+                } else if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
                     let listWrapper = document.createElement('div');
                     listWrapper.style.marginLeft = '0.8rem';
                     listWrapper.style.marginTop = '0.2rem';
@@ -251,5 +244,4 @@ export class GuiG {
         await this.unsafeUpdate();
         return this.uiElement;
     }
-
 }
