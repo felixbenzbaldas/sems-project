@@ -262,9 +262,4 @@ export class GuiG {
         }
         return 0;
     }
-
-    async getUpdatedUiElement() : Promise<HTMLElement> {
-        await this.unsafeUpdate();
-        return this.uiElement;
-    }
 }
