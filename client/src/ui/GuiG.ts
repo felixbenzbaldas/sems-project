@@ -76,33 +76,9 @@ export class GuiG {
             if (this.entity.appA?.ui) {
                 this.uiElement.appendChild(this.appG.uiElement);
             } else if (this.headerContent) {
-                if (this.headerContent_fullWidth) {
-                    this.uiElement.style.minWidth = '100%';
-                }
-                let header = document.createElement('div');
-                this.uiElement.appendChild(header);
-                header.style.display = 'flex';
-                header.style.flexWrap = 'wrap';
-                header.appendChild(this.headerContent);
-                if (this.entity.collapsed) {
-                    let icon = document.createElement('div');
-                    icon.innerText = '[...]';
-                    icon.style.display = 'inline-block';
-                    icon.style.marginLeft = '0.2rem';
-                    header.appendChild(icon);
-                }
-                header.onclick = (event) => {
-                    if (!event.ctrlKey) {
-                        this.entity.toggleCollapsed();
-                    }
-                };
+                this.uiElement.appendChild(this.createHeader());
                 if (this.bodyContent) {
-                    let body = document.createElement('div');
-                    body.style.paddingLeft = '0.8rem';
-                    body.style.paddingTop = '0.2rem';
-                    body.style.paddingBottom = '0.2rem';
-                    body.appendChild(this.bodyContent);
-                    this.uiElement.appendChild(body);
+                    this.uiElement.appendChild(this.createBody());
                 }
             } else if (this.entity.list && this.entity.collapsed != true) {
                 this.uiElement.appendChild(this.listG.uiElement);
@@ -112,6 +88,38 @@ export class GuiG {
                 return div;
             }
         }
+    }
+
+    private createHeader() {
+        if (this.headerContent_fullWidth) {
+            this.uiElement.style.minWidth = '100%';
+        }
+        let header = document.createElement('div');
+        header.style.display = 'flex';
+        header.style.flexWrap = 'wrap';
+        header.appendChild(this.headerContent);
+        if (this.entity.collapsed) {
+            let icon = document.createElement('div');
+            icon.innerText = '[...]';
+            icon.style.display = 'inline-block';
+            icon.style.marginLeft = '0.2rem';
+            header.appendChild(icon);
+        }
+        header.onclick = (event) => {
+            if (!event.ctrlKey) {
+                this.entity.toggleCollapsed();
+            }
+        };
+        return header;
+    }
+
+    private createBody() {
+        let body = document.createElement('div');
+        body.style.paddingLeft = '0.8rem';
+        body.style.paddingTop = '0.2rem';
+        body.style.paddingBottom = '0.2rem';
+        body.appendChild(this.bodyContent);
+        return body;
     }
 
     link_getText() {
