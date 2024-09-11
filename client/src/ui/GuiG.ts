@@ -69,6 +69,8 @@ export class GuiG {
             if (this.entity.test_app) {
                 await list.list.add(appA.simple_createCollapsible('log',
                     appA.simple_createText(this.entity.test_app.appA.logG.listOfStrings.join('\n'))));
+                await list.list.add(appA.simple_createCollapsible('gui',
+                    this.entity.test_app));
             }
             this.bodyContent.appendChild(list.guiG.uiElement);
         } else if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
@@ -210,6 +212,7 @@ export class GuiG {
                 }
                 if (this.entity.test_app) {
                     rawText += this.entity.test_app.appA.logG.listOfStrings.join('\n');
+                    rawText += this.entity.test_app.guiG.getRawText();
                 }
                 return rawText;
             }

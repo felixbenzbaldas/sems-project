@@ -84,7 +84,7 @@ export class AppA_TestA {
         ];
         if (this.withFailingDemoTest) {
             tests.push(this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
-                test.test_app = Starter.createApp();
+                test.test_app = await Starter.createAppWithUIWithCommands();
                 test.test_app.appA.logG.toListOfStrings = true;
                 test.test_app.log('a dummy log');
                 throw 'demo error in test';
@@ -205,7 +205,7 @@ export class AppA_TestA {
 
                 await tester.appA.testA.runAndDisplay([
                     tester.appA.testA.createTest('dummyTestWithError', async dummyTest => {
-                        dummyTest.test_app = Starter.createApp();
+                        dummyTest.test_app = await Starter.createAppWithUIWithCommands();
                         dummyTest.test_app.appA.logG.toListOfStrings = true;
                         dummyTest.test_app.log('dummyLog');
                         throw 'testError';
@@ -217,6 +217,7 @@ export class AppA_TestA {
                     rawText.includes('dummyTestWithError') &&
                     rawText.includes('testError') &&
                     rawText.includes('dummyLog') &&
+                    rawText.includes('default action') &&
                     rawText.includes('successful tests:') &&
                     rawText.includes('0');
             }),
