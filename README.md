@@ -47,4 +47,4 @@ Punkte können hinzugefügt und editiert werden.
 
 #### Visual design principle
 
-The visual design principle of ES is described and analyzed in this [thesis](https://www.dropbox.com/scl/fi/didrs41osq94s3agbclxn/Details-im-Kontext-anzeigen.pdf?rlkey=c374hlvzoskz4fbkevfdgfzsj&dl=0).
+The visual design principle of ES is described and analyzed in this [thesis](https://einfaches-web.org/diko-thesis-2017.pdf).
