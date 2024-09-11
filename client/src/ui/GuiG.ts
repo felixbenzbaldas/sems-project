@@ -142,7 +142,7 @@ export class GuiG {
         uiElement.style.whiteSpace = 'pre-wrap';
         uiElement.style.outline = "0px solid transparent"; // prevent JS focus
         uiElement.onblur = (event : any) => {
-            this.entity.setText(event.target.innerText.trim())
+            this.entity.text = event.target.innerText.trim();
         }
         uiElement.onfocus = () => {
             this.entity.getApp().appA.ui.focus(this.entity);
