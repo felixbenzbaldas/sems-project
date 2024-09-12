@@ -2,6 +2,7 @@ import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 import {GuiG_AppG} from "@/ui/GuiG_AppG";
 import {GuiG_ListG} from "@/ui/GuiG_ListG";
+import {GuiG_TextG} from "@/ui/GuiG_TextG";
 
 // TODO: should be an aspect (suffix 'A'), not a group (suffix 'G')
 export class GuiG {
@@ -13,10 +14,12 @@ export class GuiG {
     headerContent : HTMLElement;
     headerContent_fullWidth : boolean;
     bodyContent : HTMLElement;
+    textG : GuiG_TextG;
 
     constructor(private entity : Entity) {
         this.appG = new GuiG_AppG(entity);
         this.listG = new GuiG_ListG(entity);
+        this.textG = new GuiG_TextG(entity);
         entity.update();
     }
 
@@ -27,6 +30,9 @@ export class GuiG {
             } else {
                 if (this.entity.list) {
                     await this.listG.unsafeUpdate();
+                }
+                if (notNullUndefined(this.entity.text)) {
+                    this.textG.unsafeUpdate();
                 }
                 this.headerContent_unsafeUpdate();
                 await this.bodyContent_unsafeUpdate();
@@ -40,7 +46,7 @@ export class GuiG {
         this.headerContent = document.createElement('div');
         this.headerContent_fullWidth = true;
         if (notNullUndefined(this.entity.test_result)) {
-            let textElem = this.text_getUiElement();
+            let textElem = this.textG.uiElement;
             textElem.style.color = this.entity.test_result ? 'green' : 'red';
             this.headerContent.appendChild(textElem);
         } else if (this.entity.action) {
@@ -52,7 +58,7 @@ export class GuiG {
             link.innerText = this.link_getText();
             this.headerContent.appendChild(link);
         } else if (notNullUndefined(this.entity.text)) {
-            this.headerContent.appendChild(this.text_getUiElement());
+            this.headerContent.appendChild(this.textG.uiElement);
         } else {
             this.headerContent = null;
         }
@@ -135,38 +141,6 @@ export class GuiG {
 
     link_getText() {
         return notNullUndefined(this.entity.text) ? this.entity.text : this.entity.link;
-    }
-
-    text_getUiElement() {
-        let uiElement = document.createElement('div');
-        uiElement.innerText = this.entity.text;
-        uiElement.style.minHeight = '1rem';
-        uiElement.style.whiteSpace = 'pre-wrap';
-        uiElement.style.outline = "0px solid transparent"; // prevent JS focus
-        uiElement.onblur = (event : any) => {
-            this.entity.text = event.target.innerText.trim();
-            this.text_updateEmptyMarker(uiElement);
-        }
-        uiElement.onfocus = () => {
-            this.entity.getApp().appA.ui.focus(this.entity);
-            uiElement.style.borderLeft = 'none';
-        };
-        uiElement.onclick = (event) => {
-            if (this.isEditable()) {
-                event.stopPropagation();
-            }
-        }
-        uiElement.contentEditable = (this.isEditable()) ? 'true' : 'false';
-        this.text_updateEmptyMarker(uiElement);
-        uiElement.style.display = 'inline-block';
-        uiElement.style.minWidth = '1rem';
-        return uiElement;
-    }
-
-    private text_updateEmptyMarker(uiElement: HTMLDivElement) {
-        if (this.entity.guiG.isEditable() && this.entity.text.length === 0) {
-            uiElement.style.borderLeft = 'solid';
-        }
     }
 
     action_getUiElement() {
