@@ -1,6 +1,6 @@
-package nodomain.sems.deprecated.core;
+package nodomain.easy.deprecated.core;
 
-import nodomain.sems.deprecated.Path;
+import nodomain.easy.deprecated.Path;
 
 import java.io.File;
 import java.util.ArrayList;

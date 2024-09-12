@@ -1,6 +1,6 @@
-package nodomain.sems;
+package nodomain.easy;
 
-import nodomain.sems.deprecated.OnlyLocalhostServer;
+import nodomain.easy.deprecated.OnlyLocalhostServer;
 
 import java.io.File;
 import java.io.IOException;

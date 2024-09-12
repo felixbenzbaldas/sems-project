@@ -1,8 +1,8 @@
-package nodomain.sems;
+package nodomain.easy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nodomain.sems.core.ListAspect;
-import nodomain.sems.deprecated.core.RandomString;
+import nodomain.easy.core.ListAspect;
+import nodomain.easy.deprecated.core.RandomString;
 
 import java.io.File;
 import java.io.IOException;

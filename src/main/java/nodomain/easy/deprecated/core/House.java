@@ -1,4 +1,4 @@
-package nodomain.sems.deprecated.core;
+package nodomain.easy.deprecated.core;
 
 public interface House {
     SemsObject createObjectWithText(String text);

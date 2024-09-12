@@ -1,9 +1,9 @@
-package nodomain.sems.deprecated;
+package nodomain.easy.deprecated;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import nodomain.sems.deprecated.core.App;
+import nodomain.easy.deprecated.core.App;
 
 import java.io.File;
 import java.io.IOException;

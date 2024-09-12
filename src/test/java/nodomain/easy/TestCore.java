@@ -1,4 +1,4 @@
-package nodomain.sems;
+package nodomain.easy;
 
 import org.junit.jupiter.api.Test;
 

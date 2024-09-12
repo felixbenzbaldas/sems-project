@@ -1,4 +1,4 @@
-package nodomain.sems.deprecated;
+package nodomain.easy.deprecated;
 
 import java.util.List;
 

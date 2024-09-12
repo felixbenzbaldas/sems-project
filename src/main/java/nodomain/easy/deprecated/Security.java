@@ -1,4 +1,4 @@
-package nodomain.sems.deprecated;
+package nodomain.easy.deprecated;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;

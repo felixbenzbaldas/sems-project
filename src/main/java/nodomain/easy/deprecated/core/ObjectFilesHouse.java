@@ -1,6 +1,6 @@
-package nodomain.sems.deprecated.core;
+package nodomain.easy.deprecated.core;
 
-import nodomain.sems.deprecated.Security;
+import nodomain.easy.deprecated.Security;
 
 import java.io.File;
 import java.util.HashMap;

@@ -1,5 +1,5 @@
-package nodomain.semsdeprecated;
-import nodomain.sems.deprecated.core.RandomString;
+package nodomain.easydeprecated;
+import nodomain.easy.deprecated.core.RandomString;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

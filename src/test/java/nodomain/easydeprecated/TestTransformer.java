@@ -1,9 +1,9 @@
-package nodomain.semsdeprecated;
+package nodomain.easydeprecated;
 
-import nodomain.sems.deprecated.Transformer;
-import nodomain.sems.deprecated.core.House;
-import nodomain.sems.deprecated.core.ObjectFilesHouse;
-import nodomain.sems.deprecated.core.SemsObject;
+import nodomain.easy.deprecated.Transformer;
+import nodomain.easy.deprecated.core.House;
+import nodomain.easy.deprecated.core.ObjectFilesHouse;
+import nodomain.easy.deprecated.core.SemsObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

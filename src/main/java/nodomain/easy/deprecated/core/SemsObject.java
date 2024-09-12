@@ -1,4 +1,4 @@
-package nodomain.sems.deprecated.core;
+package nodomain.easy.deprecated.core;
 
 import java.util.Map;
 

@@ -1,7 +1,7 @@
-package nodomain.sems.deprecated;
+package nodomain.easy.deprecated;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nodomain.sems.deprecated.core.ObjectFilesHouse;
+import nodomain.easy.deprecated.core.ObjectFilesHouse;
 
 import java.io.File;
 import java.io.IOException;
