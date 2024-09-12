@@ -57,7 +57,7 @@ export class AppA_Ui {
         await this.focused.newSubitem();
     }
 
-    async globalEvent_toggleCollapsed() {
-        await this.focused.toggleCollapsed();
+    async globalEvent_expandOrCollapse() {
+        await this.focused.expandOrCollapse();
     }
 }

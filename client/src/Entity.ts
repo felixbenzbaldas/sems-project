@@ -208,7 +208,7 @@ export class Entity {
         await this.update();
     }
 
-    async toggleCollapsed() {
+    async expandOrCollapse() {
         if (this.collapsible) {
             this.collapsed = !this.collapsed;
             await this.update();

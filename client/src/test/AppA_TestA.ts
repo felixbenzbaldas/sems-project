@@ -120,7 +120,7 @@ export class AppA_TestA {
                 let firstObject = await app.appA.ui.content.list.getObject(0);
                 app.appA.ui.focused = firstObject;
 
-                await app.appA.ui.globalEvent_toggleCollapsed();
+                await app.appA.ui.globalEvent_expandOrCollapse();
 
                 return firstObject.collapsed;
             }),

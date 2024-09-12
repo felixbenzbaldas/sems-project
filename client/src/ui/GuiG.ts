@@ -103,7 +103,7 @@ export class GuiG {
         }
         header.onclick = (event) => {
             if (!event.ctrlKey) {
-                this.entity.toggleCollapsed();
+                this.entity.expandOrCollapse();
             }
             if (notNullUndefined(this.entity.text)) {
                 this.textG.uiElement.focus();
@@ -185,7 +185,7 @@ export class GuiG {
                 if (this.entity.text.includes(text)) {
                     await this.entity.getApp().appA.ui.focus(this.entity);
                     if (!this.isEditable() && this.entity.collapsible) {
-                        await this.entity.toggleCollapsed();
+                        await this.entity.expandOrCollapse();
                     }
                 }
                 if (this.entity.list) {
