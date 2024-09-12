@@ -145,6 +145,7 @@ export class GuiG {
         uiElement.style.outline = "0px solid transparent"; // prevent JS focus
         uiElement.onblur = (event : any) => {
             this.entity.text = event.target.innerText.trim();
+            this.text_updateEmptyMarker(uiElement);
         }
         uiElement.onfocus = () => {
             this.entity.getApp().appA.ui.focus(this.entity);
@@ -156,12 +157,16 @@ export class GuiG {
             }
         }
         uiElement.contentEditable = (this.isEditable()) ? 'true' : 'false';
-        if (this.entity.guiG.isEditable() && this.entity.text.length === 0) {
-            uiElement.style.borderLeft = 'solid';
-        }
+        this.text_updateEmptyMarker(uiElement);
         uiElement.style.display = 'inline-block';
         uiElement.style.minWidth = '1rem';
         return uiElement;
+    }
+
+    private text_updateEmptyMarker(uiElement: HTMLDivElement) {
+        if (this.entity.guiG.isEditable() && this.entity.text.length === 0) {
+            uiElement.style.borderLeft = 'solid';
+        }
     }
 
     action_getUiElement() {
