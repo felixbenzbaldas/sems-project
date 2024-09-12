@@ -5,6 +5,7 @@ export class GuiG_TextG {
     uiElement : HTMLElement = document.createElement('div');
 
     constructor(private entity : Entity) {
+        this.uiElement.style.borderLeft = 'solid';
     }
 
     unsafeUpdate() {
@@ -33,9 +34,9 @@ export class GuiG_TextG {
 
     private updateEmptyMarker() {
         if (document.activeElement != this.uiElement && this.entity.guiG.isEditable() && this.entity.text.length === 0) {
-            this.uiElement.style.borderLeft = 'solid';
+            this.uiElement.style.borderLeftColor = 'black';
         } else {
-            this.uiElement.style.borderLeft = 'none';
+            this.uiElement.style.borderLeftColor = 'white';
         }
     }
 
