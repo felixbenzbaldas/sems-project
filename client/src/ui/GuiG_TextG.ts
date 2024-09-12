@@ -30,6 +30,7 @@ export class GuiG_TextG {
         this.updateEmptyMarker();
         this.uiElement.style.display = 'inline-block';
         this.uiElement.style.minWidth = '1rem';
+        this.uiElement.style.maxWidth = '42rem';
     }
 
     private updateEmptyMarker() {
