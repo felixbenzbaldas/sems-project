@@ -4,6 +4,7 @@ import {notNullUndefined} from "@/utils";
 export class GuiG_HeaderG {
     uiElement: HTMLElement = document.createElement('div');
     content: HTMLElement = document.createElement('div');
+    bodyIcon : HTMLElement = document.createElement('div');
 
     constructor(private entity: Entity) {
     }
@@ -11,19 +12,14 @@ export class GuiG_HeaderG {
     unsafeUpdate() {
         this.uiElement.innerHTML = null;
         this.updateContent();
+        this.updateBodyIcon();
         if (this.content_fullWidth()) {
             this.entity.guiG.uiElement.style.minWidth = '100%';
         }
         this.uiElement.style.display = 'flex';
         this.uiElement.style.flexWrap = 'wrap';
         this.uiElement.appendChild(this.content);
-        if (this.entity.collapsed) {
-            let icon = document.createElement('div');
-            icon.innerText = '[...]';
-            icon.style.display = 'inline-block';
-            icon.style.marginLeft = '0.2rem';
-            this.uiElement.appendChild(icon);
-        }
+        this.uiElement.appendChild(this.bodyIcon);
         this.uiElement.onclick = async (event) => {
             if (!event.ctrlKey) {
                 this.entity.expandOrCollapse();
@@ -32,6 +28,21 @@ export class GuiG_HeaderG {
                 this.entity.guiG.textG.uiElement.focus();
             }
         };
+    }
+
+    updateBodyIcon() {
+        this.bodyIcon.style.display = 'inline-block';
+        this.bodyIcon.style.marginLeft = '0.7rem';
+        if (this.entity.collapsible && this.entity.guiG.bodyG.bodyAvailable()) {
+            this.bodyIcon.hidden = false;
+            if (this.entity.collapsed) {
+                this.bodyIcon.innerText = '[...]';
+            } else {
+                this.bodyIcon.innerText = ' _';
+            }
+        } else {
+            this.bodyIcon.hidden = true;
+        }
     }
 
     private updateContent() {

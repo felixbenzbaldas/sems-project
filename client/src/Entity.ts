@@ -212,12 +212,12 @@ export class Entity {
         if (this.collapsible) {
             if (this.collapsed) {
                 this.collapsed = false;
-                // this.guiG.headerG.update_isExpanded();
+                this.guiG.headerG.updateBodyIcon();
                 await this.guiG.listG.unsafeUpdate();
                 this.guiG.bodyG.expand();
             } else {
                 this.collapsed = true;
-                // this.guiG.headerG.update_isCollapsed();
+                this.guiG.headerG.updateBodyIcon();
                 this.guiG.bodyG.collapse();
             }
         } else {
