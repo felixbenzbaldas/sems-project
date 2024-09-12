@@ -29,6 +29,7 @@ export class Entity {
     collapsed: boolean;
     test_result: boolean;
     test_app: Entity;
+    dangerous_html: HTMLElement;
 
     constructor() {
         this.guiG = new GuiG(this);
@@ -175,7 +176,7 @@ export class Entity {
         } else if (this.pathA) {
             return 'path (' + this.pathA.listOfNames + ')';
         }
-        return '';
+        return 'tbd';
     }
 
     getShortDescription() {

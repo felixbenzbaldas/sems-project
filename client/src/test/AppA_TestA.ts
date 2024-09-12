@@ -80,7 +80,8 @@ export class AppA_TestA {
                     testResults.successful.length == 0;
             }),
             ...this.createUiTests(),
-            ...this.createGuiTests()
+            ...this.createGuiTests(),
+            ...this.createSemiAutomatedTests()
         ];
         if (this.withFailingDemoTest) {
             tests.push(this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
@@ -221,6 +222,21 @@ export class AppA_TestA {
                     rawText.includes('successful tests:') &&
                     rawText.includes('0');
             }),
+        ];
+    }
+
+    createSemiAutomatedTests() {
+        return [
+            this.createTest('semiAutomatedTest_html', async test => {
+                test.test_app = await Starter.createAppWithUIWithCommands();
+                let html = test.test_app.appA.createEntityWithApp();
+                html.dangerous_html = document.createElement('div');
+                html.dangerous_html.innerText = 'show me';
+                await test.test_app.appA.ui.content.list.add(html);
+                test.test_app.appA.logG.toListOfStrings = true;
+                test.test_app.log('human-test: the text "show me" appears (click on "gui")');
+                return true;
+            })
         ];
     }
 }

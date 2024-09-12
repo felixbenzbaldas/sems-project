@@ -27,7 +27,7 @@ export class GuiG {
     }
 
     async unsafeUpdate() {
-        if (!this.entity.hidden) {
+        if (!this.entity.hidden && !this.entity.dangerous_html) {
             if (this.entity.appA?.ui) {
                 await this.appG.unsafeUpdate();
             } else {
@@ -55,10 +55,12 @@ export class GuiG {
                 this.uiElement.appendChild(this.bodyG.uiElement);
             } else if (this.entity.list && this.entity.collapsed != true) {
                 this.uiElement.appendChild(this.listG.uiElement);
+            } else if (this.entity.dangerous_html) {
+                this.uiElement.appendChild(this.entity.dangerous_html);
             } else {
                 let div = document.createElement('div');
                 div.innerText = this.entity.getDescription();
-                return div;
+                this.uiElement.appendChild(div);
             }
         }
     }
