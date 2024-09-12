@@ -2,6 +2,7 @@ import type {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 import type {AppA} from "@/core/AppA";
 import {raceWith} from "rxjs";
+import {setCaret} from "@/utils";
 
 class TestResults {
     successful : Array<Entity> = [];
@@ -235,6 +236,22 @@ export class AppA_TestA {
                 await test.test_app.appA.ui.content.list.add(html);
                 test.test_app.appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: the text "show me" appears (click on "gui")');
+                return true;
+            }),
+            this.createTest('semiAutomatedTest_setCaret', async test => {
+                test.test_app = await Starter.createAppWithUIWithCommands();
+                let html = test.test_app.appA.createEntityWithApp();
+                html.dangerous_html = document.createElement('div');
+                html.dangerous_html.innerText = 'test';
+                html.dangerous_html.contentEditable = 'true';
+                html.dangerous_html.style.margin = '1rem';
+                await test.test_app.appA.ui.content.list.add(html, test.test_app.appA.simple_createButton('setCaret', () => {
+
+                    setCaret(html.dangerous_html, 2);
+
+                }));
+                test.test_app.appA.logG.toListOfStrings = true;
+                test.test_app.log('human-test: when clicking the button, the caret is set to the middle of the word "test"');
                 return true;
             })
         ];

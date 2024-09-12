@@ -18,3 +18,15 @@ export function getPromiseAndResolver() : {resolve : () => void, promise : Promi
         promise: promise
     };
 }
+
+export function setCaret(htmlElement: HTMLElement, position: number) {
+    htmlElement.focus();
+    let range: Range = document.createRange();
+    if (htmlElement.childNodes.length > 0) {
+        range.setStart(htmlElement.childNodes[0], position);
+        range.collapse(true);
+        let selection: Selection = document.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+}
