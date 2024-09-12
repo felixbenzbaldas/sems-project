@@ -210,8 +210,16 @@ export class Entity {
 
     async expandOrCollapse() {
         if (this.collapsible) {
-            this.collapsed = !this.collapsed;
-            await this.update();
+            if (this.collapsed) {
+                this.collapsed = false;
+                // this.guiG.headerG.update_isExpanded();
+                await this.guiG.listG.unsafeUpdate();
+                this.guiG.bodyG.expand();
+            } else {
+                this.collapsed = true;
+                // this.guiG.headerG.update_isCollapsed();
+                this.guiG.bodyG.collapse();
+            }
         } else {
             throw 'not collapsible!';
         }

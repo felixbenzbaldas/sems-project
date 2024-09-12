@@ -47,4 +47,12 @@ export class GuiG_BodyG {
         return notNullUndefined(this.entity.test_result) ||
             this.entity.list && this.entity.list.jsList.length > 0;
     }
+
+    expand() {
+        this.unsafeUpdate();
+    }
+
+    collapse() {
+        this.unsafeUpdate();
+    }
 }
