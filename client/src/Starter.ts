@@ -52,8 +52,8 @@ export class Starter {
             app.appA.simple_createText('This is easy software. It is being developed. New features will be added.'),
             app.appA.simple_createText(''),
             app.appA.simple_createCollapsible('easy client-app',
-                app.appA.simple_createText('The easy client-app is an ES application, which runs in your browser (e. g. Firefox / Edge). ' +
-                    'On this way you can use ES without creating an account or install the software.'),
+                app.appA.simple_createText('The easy client-app is an easy application, which runs in your browser (e. g. Firefox / Edge). ' +
+                    'On this way you can use easy software without creating an account or installing it.'),
                 app.appA.simple_createLink(Starter.getBaseUrl() + '?client-app', 'Open')
             ),
             app.appA.simple_createText(''),
