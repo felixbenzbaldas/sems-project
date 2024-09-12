@@ -10,9 +10,9 @@ export class GuiG_BodyG {
     }
 
     async unsafeUpdate() {
-        if (this.bodyAvailable()) {
+        this.uiElement.innerHTML = null;
+        if (!this.entity.collapsed && this.bodyAvailable()) {
             this.uiElement.hidden = false;
-            this.uiElement.innerHTML = null;
             await this.content_unsafeUpdate();
             this.uiElement.appendChild(this.content_uiElement);
             this.uiElement.style.paddingLeft = '0.8rem';
@@ -38,17 +38,13 @@ export class GuiG_BodyG {
                     this.entity.test_app));
             }
             this.content_uiElement.appendChild(list.guiG.uiElement);
-        } else if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
+        } else if (this.entity.list && this.entity.list.jsList.length > 0) {
             this.content_uiElement = this.entity.guiG.listG.uiElement;
         }
     }
 
     bodyAvailable() : boolean {
-        if (notNullUndefined(this.entity.test_result)) {
-            return true;
-        } else if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
-            return true;
-        }
-        return false;
+        return notNullUndefined(this.entity.test_result) ||
+            this.entity.list && this.entity.list.jsList.length > 0;
     }
 }
