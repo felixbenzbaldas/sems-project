@@ -3,6 +3,7 @@ import {notNullUndefined} from "@/utils";
 import {GuiG_AppG} from "@/ui/GuiG_AppG";
 import {GuiG_ListG} from "@/ui/GuiG_ListG";
 import {GuiG_TextG} from "@/ui/GuiG_TextG";
+import {GuiG_BodyG} from "@/ui/GuiG_BodyG";
 
 // TODO: should be an aspect (suffix 'A'), not a group (suffix 'G')
 export class GuiG {
@@ -15,11 +16,13 @@ export class GuiG {
     headerContent_fullWidth : boolean;
     bodyContent : HTMLElement;
     textG : GuiG_TextG;
+    bodyG: GuiG_BodyG;
 
     constructor(private entity : Entity) {
         this.appG = new GuiG_AppG(entity);
         this.listG = new GuiG_ListG(entity);
         this.textG = new GuiG_TextG(entity);
+        this.bodyG = new GuiG_BodyG(entity);
         entity.update();
     }
 
@@ -35,7 +38,7 @@ export class GuiG {
                     this.textG.unsafeUpdate();
                 }
                 this.headerContent_unsafeUpdate();
-                await this.bodyContent_unsafeUpdate();
+                await this.bodyG.unsafeUpdate();
             }
         }
         await this.updateUiElement();
@@ -64,28 +67,6 @@ export class GuiG {
         }
     }
 
-    async bodyContent_unsafeUpdate() {
-        if (notNullUndefined(this.entity.test_result)) {
-            this.bodyContent = document.createElement('div');
-            let appA = this.entity.getApp().appA;
-            let list = appA.simple_createList();
-            if (this.entity.test_result_error) {
-                await list.list.add(appA.simple_createText('failed with error: ' + this.entity.test_result_error));
-            }
-            if (this.entity.test_app) {
-                await list.list.add(appA.simple_createCollapsible('log',
-                    appA.simple_createText(this.entity.test_app.appA.logG.listOfStrings.join('\n'))));
-                await list.list.add(appA.simple_createCollapsible('gui',
-                    this.entity.test_app));
-            }
-            this.bodyContent.appendChild(list.guiG.uiElement);
-        } else if (this.entity.list && this.entity.list.jsList.length > 0 && this.entity.collapsed != true) {
-            this.bodyContent = this.listG.uiElement;
-        } else {
-            this.bodyContent = null;
-        }
-    }
-
     private async updateUiElement() {
         this.uiElement.innerHTML = null;
         this.uiElement.style.all = 'revert';
@@ -94,9 +75,7 @@ export class GuiG {
                 this.uiElement.appendChild(this.appG.uiElement);
             } else if (this.headerContent) {
                 this.uiElement.appendChild(this.createHeader());
-                if (this.bodyContent) {
-                    this.uiElement.appendChild(this.createBody());
-                }
+                this.uiElement.appendChild(this.bodyG.uiElement);
             } else if (this.entity.list && this.entity.collapsed != true) {
                 this.uiElement.appendChild(this.listG.uiElement);
             } else {
@@ -131,15 +110,6 @@ export class GuiG {
             }
         };
         return header;
-    }
-
-    private createBody() {
-        let body = document.createElement('div');
-        body.style.paddingLeft = '0.8rem';
-        body.style.paddingTop = '0.2rem';
-        body.style.paddingBottom = '0.2rem';
-        body.appendChild(this.bodyContent);
-        return body;
     }
 
     link_getText() {
