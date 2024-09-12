@@ -126,6 +126,9 @@ export class GuiG {
             if (!event.ctrlKey) {
                 this.entity.toggleCollapsed();
             }
+            if (notNullUndefined(this.entity.text)) {
+                this.textG.uiElement.focus();
+            }
         };
         return header;
     }
