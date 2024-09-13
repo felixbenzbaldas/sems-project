@@ -9,12 +9,15 @@ export class GuiG_AppG {
     }
 
     async unsafeUpdate() : Promise<void> {
-        if (!this.entity.appA.ui.isWebsite && !this.entity.appA.testA) {
-            this.entity.appA.ui.content.guiG.editable = true;
-            await this.entity.appA.ui.content.update();
-        }
         if (this.entity.appA.ui.topImpressum) {
             await this.entity.appA.ui.topImpressum.update();
+        }
+        if (!this.entity.appA.ui.isWebsite && !this.entity.appA.testA) {
+            await this.entity.appA.ui.commands.update();
+            await this.entity.appA.ui.input.getUi().update();
+            await this.entity.appA.ui.output.getUi().update();
+            this.entity.appA.ui.content.guiG.editable = true;
+            await this.entity.appA.ui.content.update();
         }
         this.updateUiElement();
     }
@@ -29,8 +32,8 @@ export class GuiG_AppG {
             this.uiElement.appendChild(this.entity.appA.ui.commands.guiG.uiElement);
         }
         if (!this.entity.appA.ui.isWebsite && !this.entity.appA.testA) {
-            this.uiElement.appendChild(this.entity.appA.ui.output.getUi().guiG.uiElement);
             this.uiElement.appendChild(this.entity.appA.ui.input.getUi().guiG.uiElement);
+            this.uiElement.appendChild(this.entity.appA.ui.output.getUi().guiG.uiElement);
             this.uiElement.appendChild(this.separatorLine());
         }
         this.uiElement.appendChild(this.entity.appA.ui.content.guiG.uiElement);
@@ -46,19 +49,22 @@ export class GuiG_AppG {
 
     getRawText() : string {
         this.rawText = '';
-        if (this.entity.appA.ui.commands) {
-            this.addRawText(this.entity.appA.ui.commands.guiG.getRawText());
+        if (this.entity.appA.ui.topImpressum) {
+            this.rawText += this.entity.appA.ui.topImpressum.guiG.getRawText();
         }
-        if (!this.entity.appA.ui.isWebsite) {
-            this.addRawText(this.entity.appA.ui.output.getUi().guiG.getRawText());
-            this.addRawText(this.entity.appA.ui.input.getUi().guiG.getRawText());
+        if (this.entity.appA.testA) {
+            this.rawText += this.entity.appA.ui.content.guiG.getRawText();
+        } else {
+            if (this.entity.appA.ui.commands) {
+                this.rawText += this.entity.appA.ui.commands.guiG.getRawText();
+            }
+            if (!this.entity.appA.ui.isWebsite) {
+                this.rawText += this.entity.appA.ui.output.getUi().guiG.getRawText();
+                this.rawText += this.entity.appA.ui.input.getUi().guiG.getRawText();
+            }
+            this.rawText += this.entity.appA.ui.content.guiG.getRawText();
         }
-        this.addRawText(this.entity.appA.ui.content.guiG.getRawText());
         return this.rawText;
-    }
-
-    private addRawText(text : string) {
-        this.rawText += text;
     }
 
     async click(text : string) {

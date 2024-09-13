@@ -23,7 +23,6 @@ export class GuiG {
         this.textG = new GuiG_TextG(entity);
         this.headerG = new GuiG_HeaderG(entity);
         this.bodyG = new GuiG_BodyG(entity);
-        entity.update();
     }
 
     async unsafeUpdate() {
@@ -86,6 +85,7 @@ export class GuiG {
     }
 
     getRawText() : string {
+        this.entity.log('getRawText');
         if (!this.entity.hidden) {
             if (this.entity.appA?.ui) {
                 return this.appG.getRawText();

@@ -149,10 +149,9 @@ export class AppA_TestA {
     createGuiTests() {
         return [
             this.createTest('gui_objectCreation', async test => {
-                let app = await Starter.createAppWithUIWithCommands();
-                await app.update();
+                test.test_app = await Starter.createAppWithUIWithCommands();
 
-                return app.guiG.getRawText().includes('default action');
+                return test.test_app.guiG.getRawText().includes('default action');
             }),
             this.createTest('gui_newSubitem', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
@@ -204,6 +203,8 @@ export class AppA_TestA {
             }),
             this.createTest('gui_tester', async test => {
                 let tester = await Starter.createTest();
+                test.test_app = tester;
+                tester.appA.logG.toListOfStrings = true;
 
                 await tester.appA.testA.runAndDisplay([
                     tester.appA.testA.createTest('dummyTestWithError', async dummyTest => {
