@@ -48,11 +48,11 @@ export class GuiG_BodyG {
             this.entity.list && this.entity.list.jsList.length > 0;
     }
 
-    expand() {
-        this.unsafeUpdate();
+    async expand() {
+        await this.unsafeUpdate();
     }
 
-    collapse() {
-        this.unsafeUpdate();
+    async collapse() {
+        await this.unsafeUpdate();
     }
 }

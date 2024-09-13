@@ -215,11 +215,11 @@ export class Entity {
                 this.collapsed = false;
                 this.guiG.headerG.updateBodyIcon();
                 await this.guiG.listG.unsafeUpdate();
-                this.guiG.bodyG.expand();
+                await this.guiG.bodyG.expand();
             } else {
                 this.collapsed = true;
                 this.guiG.headerG.updateBodyIcon();
-                this.guiG.bodyG.collapse();
+                await this.guiG.bodyG.collapse();
             }
         } else {
             throw 'not collapsible!';

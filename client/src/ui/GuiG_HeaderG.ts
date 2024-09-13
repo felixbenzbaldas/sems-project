@@ -22,7 +22,7 @@ export class GuiG_HeaderG {
         this.uiElement.appendChild(this.bodyIcon);
         this.uiElement.onclick = async (event) => {
             if (!event.ctrlKey) {
-                this.entity.expandOrCollapse();
+                await this.entity.expandOrCollapse();
             }
             if (notNullUndefined(this.entity.text)) {
                 this.entity.guiG.textG.uiElement.focus();
