@@ -25,15 +25,15 @@ export class UiG {
     async update() {
         if (!this.entity.hidden && !this.entity.dangerous_html) {
             if (this.entity.appA?.uiA) {
-                await this.entity.appA.uiA.unsafeUpdate();
+                await this.entity.appA.uiA.update();
             } else {
                 if (this.entity.list) {
-                    await this.listG.unsafeUpdate();
+                    await this.listG.update();
                 }
                 if (notNullUndefined(this.entity.text)) {
-                    this.textG.unsafeUpdate();
+                    this.textG.update();
                 }
-                this.headerG.unsafeUpdate();
+                this.headerG.update();
                 await this.bodyG.update();
             }
         }

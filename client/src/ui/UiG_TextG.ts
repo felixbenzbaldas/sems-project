@@ -8,7 +8,7 @@ export class UiG_TextG {
         this.htmlElement.style.borderLeft = 'solid';
     }
 
-    unsafeUpdate() {
+    update() {
         this.htmlElement.innerText = this.entity.text;
         this.htmlElement.style.minHeight = '1rem';
         this.htmlElement.style.whiteSpace = 'pre-wrap';

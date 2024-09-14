@@ -9,7 +9,7 @@ export class UiG_HeaderG {
     constructor(private entity: Entity) {
     }
 
-    unsafeUpdate() {
+    update() {
         this.htmlElement.innerHTML = null;
         this.updateContent();
         this.updateBodyIcon();

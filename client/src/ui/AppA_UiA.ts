@@ -34,7 +34,7 @@ export class AppA_UiA {
         this.focused = entity;
     }
 
-    async unsafeUpdate() : Promise<void> {
+    async update() : Promise<void> {
         if (this.topImpressum) {
             await this.topImpressum.update();
         }

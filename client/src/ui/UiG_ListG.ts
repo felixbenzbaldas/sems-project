@@ -9,7 +9,7 @@ export class UiG_ListG {
     constructor(private entity : Entity) {
     }
 
-    async unsafeUpdate() {
+    async update() {
         if (this.entity.collapsible) {
             if (!notNullUndefined(this.entity.collapsed)) {
                 this.entity.collapsed = true;

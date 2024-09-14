@@ -205,7 +205,7 @@ export class Entity {
             if (this.collapsed) {
                 this.collapsed = false;
                 this.uiG.headerG.updateBodyIcon();
-                await this.uiG.listG.unsafeUpdate();
+                await this.uiG.listG.update();
                 await this.uiG.bodyG.expand();
             } else {
                 this.collapsed = true;
