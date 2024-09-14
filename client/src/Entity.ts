@@ -222,7 +222,7 @@ export class Entity {
                 await this.uiG.bodyG.collapse();
             }
         } else {
-            throw 'not collapsible!';
+            this.log('warning: not collapsible!');
         }
     }
 }
