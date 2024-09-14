@@ -81,7 +81,7 @@ export class AppA_TestA {
                     testResults.successful.length == 0;
             }),
             ...this.createUiTests(),
-            ...this.createGuiTests(),
+            ...this.createModelTests(),
             ...this.createSemiAutomatedTests()
         ];
         if (this.withFailingDemoTest) {
@@ -146,14 +146,14 @@ export class AppA_TestA {
             })]
     }
 
-    createGuiTests() {
+    createModelTests() {
         return [
-            this.createTest('gui_objectCreation', async test => {
+            this.createTest('modelTest_objectCreation', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands();
 
                 return test.test_app.uiG.getRawText().includes('default action');
             }),
-            this.createTest('gui_newSubitem', async test => {
+            this.createTest('modelTest_newSubitem', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.update();
                 await app.appA.ui.globalEvent_defaultAction();
@@ -163,7 +163,7 @@ export class AppA_TestA {
                 let firstObject = await app.appA.ui.content.list.getObject(0);
                 return firstObject.list.jsList.length == 1;
             }),
-            this.createTest('gui_makeCollapsible', async test => {
+            this.createTest('modelTest_makeCollapsible', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.appA.ui.globalEvent_defaultAction();
 
@@ -171,7 +171,7 @@ export class AppA_TestA {
 
                 return (await app.appA.ui.content.list.getObject(0)).collapsible;
             }),
-            this.createTest('gui_collapsed', async test => {
+            this.createTest('modelTest_collapsed', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.appA.ui.globalEvent_defaultAction();
                 await app.appA.ui.globalEvent_newSubitem();
@@ -186,7 +186,7 @@ export class AppA_TestA {
 
                 return !rawText.includes('do-not-show-me');
             }),
-            this.createTest('gui_clickOnStaticText', async test => {
+            this.createTest('modelTest_clickOnStaticText', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.appA.ui.globalEvent_defaultAction();
                 await app.appA.ui.globalEvent_newSubitem();
@@ -201,7 +201,7 @@ export class AppA_TestA {
 
                 return !firstObject.collapsed;
             }),
-            this.createTest('gui_tester', async test => {
+            this.createTest('modelTest_tester', async test => {
                 let tester = await Starter.createTest();
                 test.test_app = tester;
                 tester.appA.logG.toListOfStrings = true;
@@ -236,7 +236,7 @@ export class AppA_TestA {
                 html.dangerous_html.innerText = 'show me';
                 await test.test_app.appA.ui.content.list.add(html);
                 test.test_app.appA.logG.toListOfStrings = true;
-                test.test_app.log('human-test: the text "show me" appears (click on "gui")');
+                test.test_app.log('human-test: the text "show me" appears');
                 return true;
             }),
             this.createTest('semiAutomatedTest_setCaret', async test => {

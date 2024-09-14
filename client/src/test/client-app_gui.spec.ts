@@ -4,23 +4,23 @@ import {Starter} from "@/Starter";
 import type {UiG} from "@/ui/UiG";
 import {wait} from "@/utils";
 
-describe('client-app gui', () => {
+describe('client-app (modelTests)', () => {
 
     let app : Entity;
-    let gui : UiG;
+    let ui : UiG;
 
     beforeEach(async () => {
         app = await Starter.createAppWithUIWithCommands();
         await app.update();
-        gui = app.uiG;
+        ui = app.uiG;
     });
 
     it('can create new object', async () => {
-        let before = gui.countEditableTexts();
+        let before = ui.countEditableTexts();
 
-        await gui.click('default action');
+        await ui.click('default action');
 
-        expect(gui.countEditableTexts()).greaterThan(before);
+        expect(ui.countEditableTexts()).greaterThan(before);
     });
 
     it('focuses clicked object', async () => {
@@ -28,7 +28,7 @@ describe('client-app gui', () => {
         app.appA.ui.focused.setText('marker-foo');
         app.appA.ui.focused = undefined;
 
-        await gui.click('marker-foo');
+        await ui.click('marker-foo');
 
         expect(app.appA.ui.focused.text).toEqual('marker-foo');
     });

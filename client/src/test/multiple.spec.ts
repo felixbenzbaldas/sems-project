@@ -48,7 +48,7 @@ describe('updater', () => {
         await app.update();
 
         expect(app.appA.logG.listOfStrings.join()).contains('test_updated');
-        expect(app.appA.logG.listOfStrings.join()).contains('gui_updated');
+        expect(app.appA.logG.listOfStrings.join()).contains('ui_updated');
     });
 
 });

@@ -34,7 +34,7 @@ export class UiG_BodyG {
             if (this.entity.test_app) {
                 await list.list.add(appA.simple_createCollapsible('log',
                     appA.simple_createText(this.entity.test_app.appA.logG.listOfStrings.join('\n'))));
-                await list.list.add(appA.simple_createCollapsible('gui',
+                await list.list.add(appA.simple_createCollapsible('ui',
                     this.entity.test_app));
             }
             this.content_htmlElement.appendChild(list.uiG.htmlElement);
