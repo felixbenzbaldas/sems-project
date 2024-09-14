@@ -36,14 +36,14 @@ export class AppA_UiA {
 
     async update() : Promise<void> {
         if (this.topImpressum) {
-            await this.topImpressum.update();
+            await this.topImpressum.updateUi();
         }
         if (!this.isWebsite && !this.entity.appA.testA) {
-            await this.commands.update();
-            await this.input.getUi().update();
-            await this.output.getUi().update();
+            await this.commands.updateUi();
+            await this.input.getUi().updateUi();
+            await this.output.getUi().updateUi();
             this.content.uiG.editable = true;
-            await this.content.update();
+            await this.content.updateUi();
         }
         this.updateUiElement();
     }

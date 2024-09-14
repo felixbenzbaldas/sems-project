@@ -4,7 +4,6 @@ import {AppA} from "@/core/AppA";
 import {ContainerA} from "@/core/ContainerA";
 import {UiG} from "@/ui/UiG";
 import {notNullUndefined} from "@/utils";
-import {JobPipelineG} from "@/core/JobPipelineG";
 
 export class Entity {
 
@@ -23,7 +22,6 @@ export class Entity {
     readonly uiG: UiG;
     ui_context: Entity;
     test_result_error: string;
-    jobPipelineG: JobPipelineG = new JobPipelineG();
     collapsible: boolean;
     collapsed: boolean;
     test_result: boolean;
@@ -178,10 +176,8 @@ export class Entity {
         return description.substring(0, Math.min(description.length, 20));
     }
 
-    async update() {
-        await this.jobPipelineG.runLater(async () => {
-            await this.uiG.update();
-        });
+    async updateUi() {
+        await this.uiG.update();
     }
 
     async newSubitem() {

@@ -33,7 +33,7 @@ export class UiG_ListG {
             let currentUi = currentResolved; // TODO: create extra object for currentUi
             currentUi.uiG.editable = this.entity.uiG.editable;
             currentUi.ui_context = this.entity;
-            await currentUi.update();
+            await currentUi.updateUi();
             this.uisOfListItems.push(currentUi);
         }
     }
@@ -64,7 +64,7 @@ export class UiG_ListG {
         let created = await this.entity.getApp().appA.createText('');
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         this.entity.list.jsList.splice(position, 0, this.entity.getPath(created));
-        await this.entity.update();
+        await this.entity.updateUi();
         this.entity.getApp().appA.uiA.focused = this.uisOfListItems.at(position);
     }
 }

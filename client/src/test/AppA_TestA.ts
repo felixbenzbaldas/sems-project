@@ -129,7 +129,7 @@ export class AppA_TestA {
                 let app = Starter.createAppWithUI();
                 let collapsible = app.appA.simple_createCollapsible('', app.appA.simple_createText(''));
 
-                await collapsible.update();
+                await collapsible.updateUi();
 
                 return collapsible.collapsed;
             }),
@@ -154,7 +154,7 @@ export class AppA_TestA {
             }),
             this.createTest('modelTest_newSubitem', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
-                await app.update();
+                await app.updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.uiG.click('new subitem');
@@ -193,7 +193,7 @@ export class AppA_TestA {
                 firstObject.editable = false;
                 firstObject.collapsible = true;
                 firstObject.collapsed = true;
-                await firstObject.update();
+                await firstObject.updateUi();
 
                 await app.uiG.click('clickMe');
 

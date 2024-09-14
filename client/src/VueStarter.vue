@@ -10,7 +10,7 @@ async function init() {
         document.body.removeChild(document.body.children.item(0));
     }
     document.body.appendChild(html);
-    await app.update();
+    await app.uiG.update();
 }
 
 init();

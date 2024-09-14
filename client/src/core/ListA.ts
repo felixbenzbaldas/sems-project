@@ -16,7 +16,7 @@ export class ListA {
                this.jsList.push(item);
            }
         });
-        await this.entity.update();
+        await this.entity.updateUi();
     }
 
     json() {

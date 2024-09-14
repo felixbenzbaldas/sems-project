@@ -93,18 +93,4 @@ export class AppA {
             await list.list.addAndUpdateUi(await this.createText(dependencyValue.text));
         }
     }
-
-    getBlocker() : {resolve : () => void, block : () => Promise<void>} {
-        let promiseAndResolver = getPromiseAndResolver();
-        let block = (async () => {
-            this.entity.log('start blocking');
-            await promiseAndResolver.promise.then(() => {
-                this.entity.log('end blocking');
-            });
-        });
-        return {
-            resolve: promiseAndResolver.resolve,
-            block: block
-        };
-    }
 }

@@ -10,7 +10,7 @@ describe('client-app (modelTests)', () => {
 
     beforeEach(async () => {
         app = await Starter.createAppWithUIWithCommands();
-        await app.update();
+        await app.updateUi();
         ui = app.uiG;
     });
 
