@@ -2,7 +2,7 @@ import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 
 export class UiG_HeaderG {
-    uiElement: HTMLElement = document.createElement('div');
+    htmlElement: HTMLElement = document.createElement('div');
     content: HTMLElement = document.createElement('div');
     bodyIcon : HTMLElement = document.createElement('div');
 
@@ -10,22 +10,22 @@ export class UiG_HeaderG {
     }
 
     unsafeUpdate() {
-        this.uiElement.innerHTML = null;
+        this.htmlElement.innerHTML = null;
         this.updateContent();
         this.updateBodyIcon();
         if (this.content_fullWidth()) {
-            this.entity.uiG.uiElement.style.minWidth = '100%';
+            this.entity.uiG.htmlElement.style.minWidth = '100%';
         }
-        this.uiElement.style.display = 'flex';
-        this.uiElement.style.flexWrap = 'wrap';
-        this.uiElement.appendChild(this.content);
-        this.uiElement.appendChild(this.bodyIcon);
-        this.uiElement.onclick = async (event) => {
+        this.htmlElement.style.display = 'flex';
+        this.htmlElement.style.flexWrap = 'wrap';
+        this.htmlElement.appendChild(this.content);
+        this.htmlElement.appendChild(this.bodyIcon);
+        this.htmlElement.onclick = async (event) => {
             if (!event.ctrlKey) {
                 await this.entity.expandOrCollapse();
             }
             if (notNullUndefined(this.entity.text)) {
-                this.entity.uiG.textG.uiElement.focus();
+                this.entity.uiG.textG.htmlElement.focus();
             }
         };
     }
@@ -48,7 +48,7 @@ export class UiG_HeaderG {
     private updateContent() {
         this.content.innerHTML = null;
         if (notNullUndefined(this.entity.test_result)) {
-            let textElem = this.entity.uiG.textG.uiElement;
+            let textElem = this.entity.uiG.textG.htmlElement;
             textElem.style.color = this.entity.test_result ? 'green' : 'red';
             this.content.appendChild(textElem);
         } else if (this.entity.action) {
@@ -59,7 +59,7 @@ export class UiG_HeaderG {
             link.innerText = this.link_getText();
             this.content.appendChild(link);
         } else if (notNullUndefined(this.entity.text)) {
-            this.content.appendChild(this.entity.uiG.textG.uiElement);
+            this.content.appendChild(this.entity.uiG.textG.htmlElement);
         }
     }
 
@@ -72,7 +72,7 @@ export class UiG_HeaderG {
         button.innerText = this.entity.text;
         button.onclick = (event) => { this.entity.action(); };
         button.style.margin = '0.3rem 0.3rem 0.3rem 0rem';
-        this.uiElement.style.display = 'inline';
+        this.htmlElement.style.display = 'inline';
         return button;
     }
 

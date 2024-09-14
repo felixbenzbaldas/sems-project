@@ -4,7 +4,7 @@ import {notNullUndefined} from "@/utils";
 export class UiG_ListG {
 
     guisOfListItems : Array<Entity>;
-    uiElement : HTMLDivElement = document.createElement('div');
+    htmlElement : HTMLDivElement = document.createElement('div');
 
     constructor(private entity : Entity) {
     }
@@ -17,12 +17,12 @@ export class UiG_ListG {
         }
         if (!this.entity.collapsed) {
             await this.updateGuisOfListItems();
-            this.uiElement.innerHTML = null;
-            this.uiElement.style.display = 'flex';
-            this.uiElement.style.flexWrap = 'wrap';
-            this.uiElement.style.rowGap = '0.25rem';
+            this.htmlElement.innerHTML = null;
+            this.htmlElement.style.display = 'flex';
+            this.htmlElement.style.flexWrap = 'wrap';
+            this.htmlElement.style.rowGap = '0.25rem';
             for (let gui of this.guisOfListItems) {
-                this.uiElement.appendChild(gui.uiG.uiElement);
+                this.htmlElement.appendChild(gui.uiG.htmlElement);
             }
         }
     }

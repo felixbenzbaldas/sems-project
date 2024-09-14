@@ -5,7 +5,7 @@ import {Starter} from "@/Starter";
 
 async function init() {
     let app : Entity = await Starter.createFromUrl();
-    let html = app.uiG.uiElement;
+    let html = app.uiG.htmlElement;
     while (document.body.children.length > 0) {
         document.body.removeChild(document.body.children.item(0));
     }

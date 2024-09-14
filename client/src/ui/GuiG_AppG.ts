@@ -3,7 +3,7 @@ import type {Entity} from "@/Entity";
 // TODO: integrate in AppA_UiA
 export class GuiG_AppG {
 
-    readonly uiElement = document.createElement('div');
+    readonly htmlElement: HTMLElement = document.createElement('div');
     private rawText: string;
 
     constructor(private entity : Entity) {
@@ -24,20 +24,20 @@ export class GuiG_AppG {
     }
 
     private updateUiElement() {
-        this.uiElement.innerHTML = null;
+        this.htmlElement.innerHTML = null;
         if (this.entity.appA.ui.topImpressum) {
-            this.uiElement.appendChild(this.entity.appA.ui.topImpressum.uiG.uiElement);
-            this.uiElement.appendChild(this.separatorLine());
+            this.htmlElement.appendChild(this.entity.appA.ui.topImpressum.uiG.htmlElement);
+            this.htmlElement.appendChild(this.separatorLine());
         }
         if (this.entity.appA.ui.commands) {
-            this.uiElement.appendChild(this.entity.appA.ui.commands.uiG.uiElement);
+            this.htmlElement.appendChild(this.entity.appA.ui.commands.uiG.htmlElement);
         }
         if (!this.entity.appA.ui.isWebsite && !this.entity.appA.testA) {
-            this.uiElement.appendChild(this.entity.appA.ui.input.getUi().uiG.uiElement);
-            this.uiElement.appendChild(this.entity.appA.ui.output.getUi().uiG.uiElement);
-            this.uiElement.appendChild(this.separatorLine());
+            this.htmlElement.appendChild(this.entity.appA.ui.input.getUi().uiG.htmlElement);
+            this.htmlElement.appendChild(this.entity.appA.ui.output.getUi().uiG.htmlElement);
+            this.htmlElement.appendChild(this.separatorLine());
         }
-        this.uiElement.appendChild(this.entity.appA.ui.content.uiG.uiElement);
+        this.htmlElement.appendChild(this.entity.appA.ui.content.uiG.htmlElement);
     }
 
     private separatorLine() : HTMLElement {

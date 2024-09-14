@@ -3,28 +3,28 @@ import {notNullUndefined} from "@/utils";
 
 export class UiG_BodyG {
 
-    uiElement : HTMLElement = document.createElement('div');
-    content_uiElement : HTMLElement;
+    htmlElement : HTMLElement = document.createElement('div');
+    content_htmlElement : HTMLElement;
 
     constructor(private entity: Entity) {
     }
 
     async unsafeUpdate() {
-        this.uiElement.innerHTML = null;
+        this.htmlElement.innerHTML = null;
         if (!this.entity.collapsed && this.bodyAvailable()) {
-            this.uiElement.hidden = false;
+            this.htmlElement.hidden = false;
             await this.content_unsafeUpdate();
-            this.uiElement.appendChild(this.content_uiElement);
-            this.uiElement.style.paddingLeft = '0.8rem';
-            this.uiElement.style.paddingTop = '0.2rem';
-            this.uiElement.style.paddingBottom = '0.2rem';
+            this.htmlElement.appendChild(this.content_htmlElement);
+            this.htmlElement.style.paddingLeft = '0.8rem';
+            this.htmlElement.style.paddingTop = '0.2rem';
+            this.htmlElement.style.paddingBottom = '0.2rem';
         } else {
-            this.uiElement.hidden = true;
+            this.htmlElement.hidden = true;
         }
     }
 
     async content_unsafeUpdate() {
-        this.content_uiElement = document.createElement('div');
+        this.content_htmlElement = document.createElement('div');
         if (notNullUndefined(this.entity.test_result)) {
             let appA = this.entity.getApp().appA;
             let list = appA.simple_createList();
@@ -37,9 +37,9 @@ export class UiG_BodyG {
                 await list.list.add(appA.simple_createCollapsible('gui',
                     this.entity.test_app));
             }
-            this.content_uiElement.appendChild(list.uiG.uiElement);
+            this.content_htmlElement.appendChild(list.uiG.htmlElement);
         } else if (this.entity.list && this.entity.list.jsList.length > 0) {
-            this.content_uiElement = this.entity.uiG.listG.uiElement;
+            this.content_htmlElement = this.entity.uiG.listG.htmlElement;
         }
     }
 

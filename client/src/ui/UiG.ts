@@ -10,7 +10,7 @@ import {UiG_HeaderG} from "@/ui/UiG_HeaderG";
 export class UiG {
 
     editable: boolean;
-    uiElement : HTMLDivElement = document.createElement('div');
+    htmlElement : HTMLElement = document.createElement('div');
     appG: GuiG_AppG;
     listG: UiG_ListG;
     textG : UiG_TextG;
@@ -45,21 +45,21 @@ export class UiG {
     }
 
     private async updateUiElement() {
-        this.uiElement.innerHTML = null;
+        this.htmlElement.innerHTML = null;
         if (!this.entity.hidden) {
             if (this.entity.appA?.ui) {
-                this.uiElement.appendChild(this.appG.uiElement);
+                this.htmlElement.appendChild(this.appG.htmlElement);
             } else if (this.headerG.headerAvailable()) {
-                this.uiElement.appendChild(this.headerG.uiElement);
-                this.uiElement.appendChild(this.bodyG.uiElement);
+                this.htmlElement.appendChild(this.headerG.htmlElement);
+                this.htmlElement.appendChild(this.bodyG.htmlElement);
             } else if (this.entity.list && this.entity.collapsed != true) {
-                this.uiElement.appendChild(this.listG.uiElement);
+                this.htmlElement.appendChild(this.listG.htmlElement);
             } else if (this.entity.dangerous_html) {
-                this.uiElement.appendChild(this.entity.dangerous_html);
+                this.htmlElement.appendChild(this.entity.dangerous_html);
             } else {
                 let div = document.createElement('div');
                 div.innerText = this.entity.getDescription();
-                this.uiElement.appendChild(div);
+                this.htmlElement.appendChild(div);
             }
         }
     }

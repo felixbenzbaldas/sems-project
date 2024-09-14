@@ -2,42 +2,42 @@ import type {Entity} from "@/Entity";
 
 export class UiG_TextG {
 
-    uiElement : HTMLElement = document.createElement('div');
+    htmlElement : HTMLElement = document.createElement('div');
 
     constructor(private entity : Entity) {
-        this.uiElement.style.borderLeft = 'solid';
+        this.htmlElement.style.borderLeft = 'solid';
     }
 
     unsafeUpdate() {
-        this.uiElement.innerText = this.entity.text;
-        this.uiElement.style.minHeight = '1rem';
-        this.uiElement.style.whiteSpace = 'pre-wrap';
-        this.uiElement.style.outline = "0px solid transparent"; // prevent JS focus
-        this.uiElement.onblur = (event : any) => {
+        this.htmlElement.innerText = this.entity.text;
+        this.htmlElement.style.minHeight = '1rem';
+        this.htmlElement.style.whiteSpace = 'pre-wrap';
+        this.htmlElement.style.outline = "0px solid transparent"; // prevent JS focus
+        this.htmlElement.onblur = (event : any) => {
             this.entity.text = event.target.innerText.trim();
             this.updateEmptyMarker();
         }
-        this.uiElement.onfocus = () => {
+        this.htmlElement.onfocus = () => {
             this.entity.getApp().appA.ui.focus(this.entity);
             this.updateEmptyMarker();
         };
-        this.uiElement.onclick = (event) => {
+        this.htmlElement.onclick = (event) => {
             if (this.entity.uiG.isEditable()) {
                 event.stopPropagation();
             }
         }
-        this.uiElement.contentEditable = (this.entity.uiG.isEditable()) ? 'true' : 'false';
+        this.htmlElement.contentEditable = (this.entity.uiG.isEditable()) ? 'true' : 'false';
         this.updateEmptyMarker();
-        this.uiElement.style.display = 'inline-block';
-        this.uiElement.style.minWidth = '1rem';
-        this.uiElement.style.maxWidth = '42rem';
+        this.htmlElement.style.display = 'inline-block';
+        this.htmlElement.style.minWidth = '1rem';
+        this.htmlElement.style.maxWidth = '42rem';
     }
 
     private updateEmptyMarker() {
-        if (document.activeElement != this.uiElement && this.entity.uiG.isEditable() && this.entity.text.length === 0) {
-            this.uiElement.style.borderLeftColor = 'black';
+        if (document.activeElement != this.htmlElement && this.entity.uiG.isEditable() && this.entity.text.length === 0) {
+            this.htmlElement.style.borderLeftColor = 'black';
         } else {
-            this.uiElement.style.borderLeftColor = 'white';
+            this.htmlElement.style.borderLeftColor = 'white';
         }
     }
 
