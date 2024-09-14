@@ -1,7 +1,7 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 
-export class GuiG_BodyG {
+export class UiG_BodyG {
 
     uiElement : HTMLElement = document.createElement('div');
     content_uiElement : HTMLElement;
@@ -37,9 +37,9 @@ export class GuiG_BodyG {
                 await list.list.add(appA.simple_createCollapsible('gui',
                     this.entity.test_app));
             }
-            this.content_uiElement.appendChild(list.guiG.uiElement);
+            this.content_uiElement.appendChild(list.uiG.uiElement);
         } else if (this.entity.list && this.entity.list.jsList.length > 0) {
-            this.content_uiElement = this.entity.guiG.listG.uiElement;
+            this.content_uiElement = this.entity.uiG.listG.uiElement;
         }
     }
 

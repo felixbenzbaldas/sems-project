@@ -2,7 +2,7 @@ import {ListA} from "@/core/ListA";
 import {PathA} from "@/core/PathA";
 import {AppA} from "@/core/AppA";
 import {ContainerA} from "@/core/ContainerA";
-import {GuiG} from "@/ui/GuiG";
+import {UiG} from "@/ui/UiG";
 import {notNullUndefined} from "@/utils";
 import {JobPipelineG} from "@/core/JobPipelineG";
 
@@ -20,19 +20,19 @@ export class Entity {
     appA: AppA;
     readonly containerA: ContainerA = new ContainerA(this);
     editable: boolean;
-    readonly guiG: GuiG;
+    readonly uiG: UiG;
+    ui_context: Entity;
     test_update: Function;
     test_result_error: string;
     jobPipelineG: JobPipelineG = new JobPipelineG();
     collapsible: boolean;
-    ui_context: Entity;
     collapsed: boolean;
     test_result: boolean;
     test_app: Entity;
     dangerous_html: HTMLElement;
 
     constructor() {
-        this.guiG = new GuiG(this);
+        this.uiG = new UiG(this);
     }
 
     json() : any {
@@ -79,7 +79,7 @@ export class Entity {
     }
 
     async defaultActionOnSubitem(subitem : Entity) {
-        await this.guiG.listG.defaultActionOnSubitem(subitem);
+        await this.uiG.listG.defaultActionOnSubitem(subitem);
     }
 
     getPath(object: Entity) : Entity {
@@ -189,7 +189,7 @@ export class Entity {
             if (this.test_update) {
                 await this.test_update();
             }
-            await this.guiG.unsafeUpdate();
+            await this.uiG.unsafeUpdate();
         });
     }
 
@@ -213,13 +213,13 @@ export class Entity {
         if (this.collapsible) {
             if (this.collapsed) {
                 this.collapsed = false;
-                this.guiG.headerG.updateBodyIcon();
-                await this.guiG.listG.unsafeUpdate();
-                await this.guiG.bodyG.expand();
+                this.uiG.headerG.updateBodyIcon();
+                await this.uiG.listG.unsafeUpdate();
+                await this.uiG.bodyG.expand();
             } else {
                 this.collapsed = true;
-                this.guiG.headerG.updateBodyIcon();
-                await this.guiG.bodyG.collapse();
+                this.uiG.headerG.updateBodyIcon();
+                await this.uiG.bodyG.collapse();
             }
         } else {
             throw 'not collapsible!';

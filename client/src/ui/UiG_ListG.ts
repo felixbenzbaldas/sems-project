@@ -1,7 +1,7 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 
-export class GuiG_ListG {
+export class UiG_ListG {
 
     guisOfListItems : Array<Entity>;
     uiElement : HTMLDivElement = document.createElement('div');
@@ -22,7 +22,7 @@ export class GuiG_ListG {
             this.uiElement.style.flexWrap = 'wrap';
             this.uiElement.style.rowGap = '0.25rem';
             for (let gui of this.guisOfListItems) {
-                this.uiElement.appendChild(gui.guiG.uiElement);
+                this.uiElement.appendChild(gui.uiG.uiElement);
             }
         }
     }
@@ -31,7 +31,7 @@ export class GuiG_ListG {
         this.guisOfListItems = []; // TODO: do not always dismiss old guis
         for (let currentResolved of await this.entity.list.getResolvedList()) {
             let currentGui = currentResolved; // TODO: create extra object for currentGui
-            currentGui.guiG.editable = this.entity.guiG.editable;
+            currentGui.uiG.editable = this.entity.uiG.editable;
             currentGui.ui_context = this.entity;
             await currentGui.update();
             this.guisOfListItems.push(currentGui);
@@ -40,7 +40,7 @@ export class GuiG_ListG {
 
     getRawText() : string {
         if (notNullUndefined(this.entity.list)) {
-            return this.guisOfListItems.map(current => current.guiG.getRawText()).reduce((a, b) => a + b, '');
+            return this.guisOfListItems.map(current => current.uiG.getRawText()).reduce((a, b) => a + b, '');
         } else {
             return '';
         }
@@ -49,14 +49,14 @@ export class GuiG_ListG {
     async click(text : string) {
         if (this.entity.list) {
             for (let current of this.guisOfListItems) {
-                await current.guiG.click(text);
+                await current.uiG.click(text);
             }
         }
     }
 
     countEditableTexts() : number {
         if (this.entity.list) {
-            return this.guisOfListItems.map(current => current.guiG.countEditableTexts()).reduce((a, b) => a + b, 0);
+            return this.guisOfListItems.map(current => current.uiG.countEditableTexts()).reduce((a, b) => a + b, 0);
         }
     }
 

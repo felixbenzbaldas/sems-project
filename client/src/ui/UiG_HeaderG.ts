@@ -1,7 +1,7 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 
-export class GuiG_HeaderG {
+export class UiG_HeaderG {
     uiElement: HTMLElement = document.createElement('div');
     content: HTMLElement = document.createElement('div');
     bodyIcon : HTMLElement = document.createElement('div');
@@ -14,7 +14,7 @@ export class GuiG_HeaderG {
         this.updateContent();
         this.updateBodyIcon();
         if (this.content_fullWidth()) {
-            this.entity.guiG.uiElement.style.minWidth = '100%';
+            this.entity.uiG.uiElement.style.minWidth = '100%';
         }
         this.uiElement.style.display = 'flex';
         this.uiElement.style.flexWrap = 'wrap';
@@ -25,7 +25,7 @@ export class GuiG_HeaderG {
                 await this.entity.expandOrCollapse();
             }
             if (notNullUndefined(this.entity.text)) {
-                this.entity.guiG.textG.uiElement.focus();
+                this.entity.uiG.textG.uiElement.focus();
             }
         };
     }
@@ -33,7 +33,7 @@ export class GuiG_HeaderG {
     updateBodyIcon() {
         this.bodyIcon.style.display = 'inline-block';
         this.bodyIcon.style.marginLeft = '0.7rem';
-        if (this.entity.collapsible && this.entity.guiG.bodyG.bodyAvailable()) {
+        if (this.entity.collapsible && this.entity.uiG.bodyG.bodyAvailable()) {
             this.bodyIcon.hidden = false;
             if (this.entity.collapsed) {
                 this.bodyIcon.innerText = '[...]';
@@ -48,7 +48,7 @@ export class GuiG_HeaderG {
     private updateContent() {
         this.content.innerHTML = null;
         if (notNullUndefined(this.entity.test_result)) {
-            let textElem = this.entity.guiG.textG.uiElement;
+            let textElem = this.entity.uiG.textG.uiElement;
             textElem.style.color = this.entity.test_result ? 'green' : 'red';
             this.content.appendChild(textElem);
         } else if (this.entity.action) {
@@ -59,7 +59,7 @@ export class GuiG_HeaderG {
             link.innerText = this.link_getText();
             this.content.appendChild(link);
         } else if (notNullUndefined(this.entity.text)) {
-            this.content.appendChild(this.entity.guiG.textG.uiElement);
+            this.content.appendChild(this.entity.uiG.textG.uiElement);
         }
     }
 

@@ -1,28 +1,28 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 import {GuiG_AppG} from "@/ui/GuiG_AppG";
-import {GuiG_ListG} from "@/ui/GuiG_ListG";
-import {GuiG_TextG} from "@/ui/GuiG_TextG";
-import {GuiG_BodyG} from "@/ui/GuiG_BodyG";
-import {GuiG_HeaderG} from "@/ui/GuiG_HeaderG";
+import {UiG_ListG} from "@/ui/UiG_ListG";
+import {UiG_TextG} from "@/ui/UiG_TextG";
+import {UiG_BodyG} from "@/ui/UiG_BodyG";
+import {UiG_HeaderG} from "@/ui/UiG_HeaderG";
 
 // TODO: should be an aspect (suffix 'A'), not a group (suffix 'G')
-export class GuiG {
+export class UiG {
 
     editable: boolean;
     uiElement : HTMLDivElement = document.createElement('div');
     appG: GuiG_AppG;
-    listG: GuiG_ListG;
-    textG : GuiG_TextG;
-    headerG : GuiG_HeaderG;
-    bodyG: GuiG_BodyG;
+    listG: UiG_ListG;
+    textG : UiG_TextG;
+    headerG : UiG_HeaderG;
+    bodyG: UiG_BodyG;
 
     constructor(private entity : Entity) {
         this.appG = new GuiG_AppG(entity);
-        this.listG = new GuiG_ListG(entity);
-        this.textG = new GuiG_TextG(entity);
-        this.headerG = new GuiG_HeaderG(entity);
-        this.bodyG = new GuiG_BodyG(entity);
+        this.listG = new UiG_ListG(entity);
+        this.textG = new UiG_TextG(entity);
+        this.headerG = new UiG_HeaderG(entity);
+        this.bodyG = new UiG_BodyG(entity);
     }
 
     async unsafeUpdate() {
@@ -104,7 +104,7 @@ export class GuiG {
                 }
                 if (this.entity.test_app) {
                     rawText += this.entity.test_app.appA.logG.listOfStrings.join('\n');
-                    rawText += this.entity.test_app.guiG.getRawText();
+                    rawText += this.entity.test_app.uiG.getRawText();
                 }
                 return rawText;
             }
@@ -145,7 +145,7 @@ export class GuiG {
             } else {
                 let counter = 0;
                 if (notNullUndefined(this.entity.text)) {
-                    if (this.entity.guiG.isEditable()) {
+                    if (this.entity.uiG.isEditable()) {
                         counter++;
                     }
                 }

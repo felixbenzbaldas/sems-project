@@ -1,4 +1,4 @@
-import type {AppA_Ui} from "@/ui/AppA_Ui";
+import type {AppA_UiA} from "@/ui/AppA_UiA";
 import {ListA} from "@/core/ListA";
 import {PathA} from "@/core/PathA";
 import {Entity} from "@/Entity";
@@ -8,7 +8,7 @@ import type {AppA_TestA} from "@/test/AppA_TestA";
 
 export class AppA {
 
-    ui: AppA_Ui;
+    ui: AppA_UiA;
     server: string;
     readonly logG: LogG;
     testA : AppA_TestA;

@@ -1,6 +1,6 @@
 import type {Entity} from "@/Entity";
 
-export class GuiG_TextG {
+export class UiG_TextG {
 
     uiElement : HTMLElement = document.createElement('div');
 
@@ -22,11 +22,11 @@ export class GuiG_TextG {
             this.updateEmptyMarker();
         };
         this.uiElement.onclick = (event) => {
-            if (this.entity.guiG.isEditable()) {
+            if (this.entity.uiG.isEditable()) {
                 event.stopPropagation();
             }
         }
-        this.uiElement.contentEditable = (this.entity.guiG.isEditable()) ? 'true' : 'false';
+        this.uiElement.contentEditable = (this.entity.uiG.isEditable()) ? 'true' : 'false';
         this.updateEmptyMarker();
         this.uiElement.style.display = 'inline-block';
         this.uiElement.style.minWidth = '1rem';
@@ -34,7 +34,7 @@ export class GuiG_TextG {
     }
 
     private updateEmptyMarker() {
-        if (document.activeElement != this.uiElement && this.entity.guiG.isEditable() && this.entity.text.length === 0) {
+        if (document.activeElement != this.uiElement && this.entity.uiG.isEditable() && this.entity.text.length === 0) {
             this.uiElement.style.borderLeftColor = 'black';
         } else {
             this.uiElement.style.borderLeftColor = 'white';

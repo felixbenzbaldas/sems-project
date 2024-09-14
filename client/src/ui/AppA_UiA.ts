@@ -1,23 +1,23 @@
 import {Entity} from "@/Entity";
-import {Output} from "@/ui/Output";
-import {Input} from "@/ui/Input";
+import {OutputA} from "@/ui/OutputA";
+import {InputA} from "@/ui/InputA";
 import {notNullUndefined} from "@/utils";
 
-export class AppA_Ui {
+export class AppA_UiA {
 
     readonly content: Entity;
     commands: Entity;
     isWebsite: boolean;
-    readonly output : Output;
-    readonly input : Input;
+    readonly output : OutputA;
+    readonly input : InputA;
     focused : Entity;
     topImpressum: Entity;
 
     constructor(private entity: Entity) {
         this.content = entity.appA.simple_createList();
         this.content.container = entity;
-        this.output = new Output(entity);
-        this.input = new Input(entity);
+        this.output = new OutputA(entity);
+        this.input = new InputA(entity);
         this.focused = entity;
     }
 

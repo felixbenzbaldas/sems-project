@@ -1,7 +1,7 @@
 import {Entity} from "@/Entity";
-import {AppA_Ui} from "@/ui/AppA_Ui";
+import {AppA_UiA} from "@/ui/AppA_UiA";
 import {AppA} from "@/core/AppA";
-import {GuiG} from "@/ui/GuiG";
+import {UiG} from "@/ui/UiG";
 import {AppA_TestA} from "@/test/AppA_TestA";
 
 export class Starter {
@@ -117,7 +117,7 @@ export class Starter {
 
     static createAppWithUI() : Entity {
         let app = Starter.createApp();
-        app.appA.ui = new AppA_Ui(app);
+        app.appA.ui = new AppA_UiA(app);
         return app;
     }
 

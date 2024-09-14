@@ -1,6 +1,6 @@
 import type {Entity} from "@/Entity";
 
-export class Output {
+export class OutputA {
 
     private readonly ui : Entity;
     private readonly output : Entity;

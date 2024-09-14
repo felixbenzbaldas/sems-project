@@ -151,14 +151,14 @@ export class AppA_TestA {
             this.createTest('gui_objectCreation', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands();
 
-                return test.test_app.guiG.getRawText().includes('default action');
+                return test.test_app.uiG.getRawText().includes('default action');
             }),
             this.createTest('gui_newSubitem', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.update();
                 await app.appA.ui.globalEvent_defaultAction();
 
-                await app.guiG.click('new subitem');
+                await app.uiG.click('new subitem');
 
                 let firstObject = await app.appA.ui.content.list.getObject(0);
                 return firstObject.list.jsList.length == 1;
@@ -167,7 +167,7 @@ export class AppA_TestA {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.appA.ui.globalEvent_defaultAction();
 
-                await app.guiG.click('toggle collapsible');
+                await app.uiG.click('toggle collapsible');
 
                 return (await app.appA.ui.content.list.getObject(0)).collapsible;
             }),
@@ -182,7 +182,7 @@ export class AppA_TestA {
                 firstObject.collapsed = true;
                 await firstObject.update();
 
-                let rawText = app.guiG.getRawText();
+                let rawText = app.uiG.getRawText();
 
                 return !rawText.includes('do-not-show-me');
             }),
@@ -197,7 +197,7 @@ export class AppA_TestA {
                 firstObject.collapsed = true;
                 await firstObject.update();
 
-                await app.guiG.click('clickMe');
+                await app.uiG.click('clickMe');
 
                 return !firstObject.collapsed;
             }),
@@ -215,7 +215,7 @@ export class AppA_TestA {
                     })
                 ]);
 
-                let rawText = tester.guiG.getRawText();
+                let rawText = tester.uiG.getRawText();
                 return rawText.includes('FAILED') &&
                     rawText.includes('dummyTestWithError') &&
                     rawText.includes('testError') &&
