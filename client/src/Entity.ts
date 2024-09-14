@@ -27,6 +27,7 @@ export class Entity {
     test_result: boolean;
     test_app: Entity;
     dangerous_html: HTMLElement;
+    isTest: boolean;
 
     constructor() {
         this.uiG = new UiG(this);

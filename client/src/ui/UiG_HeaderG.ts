@@ -64,7 +64,11 @@ export class UiG_HeaderG {
     }
 
     private content_fullWidth() : boolean {
-        return !this.entity.action;
+        if (this.entity.isTest) {
+            return true;
+        } else {
+            return !this.entity.action;
+        }
     }
 
     action_getUiElement() {

@@ -96,6 +96,7 @@ export class AppA_TestA {
 
     createTest(name: string, action: (test: Entity) => Promise<any>) : Entity {
         let test = this.appA.simple_createText(name);
+        test.isTest = true;
         test.action = async () => {
             test.test_result = await action(test);
             return test.test_result;
