@@ -47,7 +47,7 @@ export class UiG_HeaderG {
 
     private updateContent() {
         this.content.innerHTML = null;
-        if (notNullUndefined(this.entity.test_result)) {
+        if (this.entity.isTest) {
             let textElem = this.entity.uiG.textG.htmlElement;
             textElem.style.color = this.entity.test_result ? 'green' : 'red';
             this.content.appendChild(textElem);
@@ -85,7 +85,7 @@ export class UiG_HeaderG {
     }
 
     headerAvailable(): boolean {
-        return notNullUndefined(this.entity.test_result) ||
+        return notNullUndefined(this.entity.isTest) ||
             notNullUndefined(this.entity.action) ||
             notNullUndefined(this.entity.link) ||
             notNullUndefined(this.entity.text);
