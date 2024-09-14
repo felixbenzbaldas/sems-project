@@ -145,7 +145,7 @@ export class Starter {
                 await app.appA.uiA.globalEventG.importToContent();
             }),
         );
-        await app.update();
+        await app.uiG.update();
         return app;
     }
 
