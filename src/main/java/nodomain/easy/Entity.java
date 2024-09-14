@@ -2,7 +2,7 @@ package nodomain.easy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.easy.core.ListAspect;
-import nodomain.easy.deprecated.core.RandomString;
+import nodomain.easy.core.RandomString;
 
 import java.io.File;
 import java.io.IOException;

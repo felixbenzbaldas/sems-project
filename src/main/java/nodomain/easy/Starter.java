@@ -1,6 +1,5 @@
 package nodomain.easy;
 
-import nodomain.easy.deprecated.OnlyLocalhostServer;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,11 +8,6 @@ import java.util.List;
 public class Starter {
 
     public static void main(String[] args) throws IOException {
-        runDeprecatedServer(args);
-    }
-
-    private static void runDeprecatedServer(String[] args) throws IOException {
-        OnlyLocalhostServer.main(args);
     }
 
     public static Entity createApp() {

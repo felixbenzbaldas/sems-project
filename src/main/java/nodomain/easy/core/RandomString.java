@@ -1,4 +1,4 @@
-package nodomain.easy.deprecated.core;
+package nodomain.easy.core;
 
 import java.util.Random;
 
