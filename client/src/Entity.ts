@@ -44,7 +44,7 @@ export class Entity {
 
     async setHiddenAndUpdateUi(value : boolean) {
         this.hidden = value;
-        await this.uiG.unsafeUpdate();
+        await this.uiG.update();
     }
 
     async httpRequest(url : string, method : string, args : Array<any>) : Promise<any> {
@@ -180,7 +180,7 @@ export class Entity {
 
     async update() {
         await this.jobPipelineG.runLater(async () => {
-            await this.uiG.unsafeUpdate();
+            await this.uiG.update();
         });
     }
 
@@ -191,13 +191,13 @@ export class Entity {
         let created = await this.getApp().appA.createText('');
         await this.list.add(created);
         this.getApp().appA.uiA.focused = created;
-        await this.uiG.unsafeUpdate();
+        await this.uiG.update();
     }
 
     async toggleCollapsible() {
         this.collapsible = !this.collapsible;
         this.collapsed = false;
-        await this.update();
+        await this.uiG.update();
     }
 
     async expandOrCollapse() {

@@ -178,7 +178,7 @@ export class AppA_TestA {
                 (await firstObject.list.getObject(0)).text = 'do-not-show-me';
                 firstObject.collapsible = true;
                 firstObject.collapsed = true;
-                await app.uiG.unsafeUpdate();
+                await app.uiG.update();
 
                 let rawText = app.uiG.getRawText();
 

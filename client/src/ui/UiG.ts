@@ -22,7 +22,7 @@ export class UiG {
         this.bodyG = new UiG_BodyG(entity);
     }
 
-    async unsafeUpdate() {
+    async update() {
         if (!this.entity.hidden && !this.entity.dangerous_html) {
             if (this.entity.appA?.uiA) {
                 await this.entity.appA.uiA.unsafeUpdate();
@@ -34,7 +34,7 @@ export class UiG {
                     this.textG.unsafeUpdate();
                 }
                 this.headerG.unsafeUpdate();
-                await this.bodyG.unsafeUpdate();
+                await this.bodyG.update();
             }
         }
         await this.updateUiElement();

@@ -9,11 +9,11 @@ export class UiG_BodyG {
     constructor(private entity: Entity) {
     }
 
-    async unsafeUpdate() {
+    async update() {
         this.htmlElement.innerHTML = null;
         if (!this.entity.collapsed && this.bodyAvailable()) {
             this.htmlElement.hidden = false;
-            await this.content_unsafeUpdate();
+            await this.content_update();
             this.htmlElement.appendChild(this.content_htmlElement);
             this.htmlElement.style.paddingLeft = '0.8rem';
             this.htmlElement.style.paddingTop = '0.2rem';
@@ -23,7 +23,7 @@ export class UiG_BodyG {
         }
     }
 
-    async content_unsafeUpdate() {
+    async content_update() {
         this.content_htmlElement = document.createElement('div');
         if (notNullUndefined(this.entity.test_result)) {
             let appA = this.entity.getApp().appA;
@@ -49,10 +49,10 @@ export class UiG_BodyG {
     }
 
     async expand() {
-        await this.unsafeUpdate();
+        await this.update();
     }
 
     async collapse() {
-        await this.unsafeUpdate();
+        await this.update();
     }
 }

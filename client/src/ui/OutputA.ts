@@ -16,7 +16,7 @@ export class OutputA {
     async setAndUpdateUi(string : string) {
         this.output.text = string;
         this.ui.hidden = false;
-        await this.ui.uiG.unsafeUpdate();
+        await this.ui.uiG.update();
     }
 
     getUi() : Entity {
