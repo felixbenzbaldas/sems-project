@@ -42,11 +42,6 @@ export class Entity {
         }
     }
 
-    async setText(string: string) {
-        this.text = string;
-        await this.update();
-    }
-
     async setHiddenAndUpdateUi(value : boolean) {
         this.hidden = value;
         await this.uiG.unsafeUpdate();
