@@ -3,7 +3,7 @@ import {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 import {wait} from "@/utils";
 
-describe('abstract ui', () => {
+describe('ui', () => {
 
     it('can create object', async () => {
         let app : Entity = Starter.createAppWithUI();
@@ -41,7 +41,7 @@ describe('abstract ui', () => {
 
     it('can import to content', async () => {
         let app = Starter.createAppWithUI();
-        await app.appA.uiA.input.set('{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}');
+        app.appA.uiA.input.set('{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}');
 
         await app.appA.uiA.globalEventG.importToContent();
 

@@ -24,8 +24,9 @@ describe('client-app (modelTests)', () => {
 
     it('focuses clicked object', async () => {
         await app.appA.uiA.globalEventG.defaultAction();
-        app.appA.uiA.focused.setText('marker-foo');
+        app.appA.uiA.focused.text = 'marker-foo';
         app.appA.uiA.focused = undefined;
+        await app.appA.uiA.unsafeUpdate();
 
         await ui.click('marker-foo');
 

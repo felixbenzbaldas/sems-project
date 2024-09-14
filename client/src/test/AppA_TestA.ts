@@ -175,11 +175,10 @@ export class AppA_TestA {
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.newSubitem();
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
-                await (await firstObject.list.getObject(0))
-                    .setText('do-not-show-me');
+                (await firstObject.list.getObject(0)).text = 'do-not-show-me';
                 firstObject.collapsible = true;
                 firstObject.collapsed = true;
-                await firstObject.update();
+                await app.uiG.unsafeUpdate();
 
                 let rawText = app.uiG.getRawText();
 

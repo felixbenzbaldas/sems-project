@@ -26,8 +26,8 @@ export class InputA {
         return this.ui;
     }
 
-    async set(string: string) {
-        await this.input.setText(string);
+    set(string: string) {
+        this.input.text = string;
     }
 
     get() : string {

@@ -11,11 +11,11 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async exportApp() {
-        await this.getUiA().output.set(JSON.stringify(await this.entity.export_keepContainerStructure_ignoreExternalDependencies()));
+        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await this.entity.export_keepContainerStructure_ignoreExternalDependencies()));
     }
 
     async exportContent() {
-        await this.getUiA().output.set(JSON.stringify(await this.getUiA().content.export_allDependenciesInOneContainer()));
+        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await this.getUiA().content.export_allDependenciesInOneContainer()));
     }
 
     async importToContent() {

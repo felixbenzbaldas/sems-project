@@ -13,9 +13,10 @@ export class OutputA {
         this.ui.hidden = true;
     }
 
-    async set(string : string) {
-        await this.output.setText(string);
-        this.ui.setHidden(false);
+    async setAndUpdateUi(string : string) {
+        this.output.text = string;
+        this.ui.hidden = false;
+        await this.ui.uiG.unsafeUpdate();
     }
 
     getUi() : Entity {
