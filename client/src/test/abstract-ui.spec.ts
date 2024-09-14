@@ -8,9 +8,9 @@ describe('abstract ui', () => {
     it('can create object', async () => {
         let app : Entity = Starter.createAppWithUI();
 
-        await app.appA.ui.globalEvent_defaultAction();
+        await app.appA.uiA.globalEvent_defaultAction();
 
-        expect(app.appA.ui.content.list.jsList.length).toBe(1);
+        expect(app.appA.uiA.content.list.jsList.length).toBe(1);
     });
 
     it('can get json', async () => {
@@ -23,27 +23,27 @@ describe('abstract ui', () => {
 
     it('can export app', async () => {
         let app : Entity = Starter.createAppWithUI();
-        expect(app.appA.ui.output.getUi().hidden).toBe(true);
+        expect(app.appA.uiA.output.getUi().hidden).toBe(true);
 
-        await app.appA.ui.globalEvent_exportApp();
+        await app.appA.uiA.globalEvent_exportApp();
 
-        expect(app.appA.ui.output.getUi().hidden).toBe(false);
+        expect(app.appA.uiA.output.getUi().hidden).toBe(false);
     });
 
     it('can export content', async () => {
         let app : Entity = Starter.createAppWithUI();
-        expect(app.appA.ui.output.getUi().hidden).toBe(true);
+        expect(app.appA.uiA.output.getUi().hidden).toBe(true);
 
-        await app.appA.ui.globalEvent_exportContent();
+        await app.appA.uiA.globalEvent_exportContent();
 
-        expect(app.appA.ui.output.getUi().hidden).toBe(false);
+        expect(app.appA.uiA.output.getUi().hidden).toBe(false);
     });
 
     it('can import to content', async () => {
         let app = Starter.createAppWithUI();
-        await app.appA.ui.input.set('{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}');
+        await app.appA.uiA.input.set('{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}');
 
-        await app.appA.ui.globalEvent_importToContent();
+        await app.appA.uiA.globalEvent_importToContent();
 
         expect(app.containerA.mapNameEntity.size).toBe(1);
     });
@@ -51,26 +51,26 @@ describe('abstract ui', () => {
     test('At beginning the app object has the focus', async () => {
         let app = Starter.createAppWithUI();
 
-        expect(app.appA.ui.focused).toBe(app);
+        expect(app.appA.uiA.focused).toBe(app);
         expect(app.ui_hasFocus()).toBeTruthy();
     });
 
     test('Created object has focus', async () => {
         let app = Starter.createAppWithUI();
 
-        await app.appA.ui.globalEvent_defaultAction();
+        await app.appA.uiA.globalEvent_defaultAction();
 
-        expect((await app.appA.ui.content.list.getObject(0)).ui_hasFocus()).toBeTruthy();
+        expect((await app.appA.uiA.content.list.getObject(0)).ui_hasFocus()).toBeTruthy();
     });
 
     test('can create object after created object', async () => {
         let app = Starter.createAppWithUI();
-        await app.appA.ui.globalEvent_defaultAction();
+        await app.appA.uiA.globalEvent_defaultAction();
 
-        await app.appA.ui.globalEvent_defaultAction();
+        await app.appA.uiA.globalEvent_defaultAction();
 
-        expect(app.appA.ui.content.list.jsList.length).toBe(2);
-        let resolvedContent = await app.appA.ui.content.list.getResolvedList();
-        expect(app.appA.ui.focused).toBe(resolvedContent.at(1));
+        expect(app.appA.uiA.content.list.jsList.length).toBe(2);
+        let resolvedContent = await app.appA.uiA.content.list.getResolvedList();
+        expect(app.appA.uiA.focused).toBe(resolvedContent.at(1));
     });
 });

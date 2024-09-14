@@ -1,7 +1,6 @@
 import type {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 import type {AppA} from "@/core/AppA";
-import {raceWith} from "rxjs";
 import {setCaret} from "@/utils";
 
 class TestResults {
@@ -23,13 +22,13 @@ export class AppA_TestA {
     }
 
     async runAndDisplay(tests : Array<Entity>) {
-        this.appA.ui.content.list.jsList = [];
+        this.appA.uiA.content.list.jsList = [];
         let testResults : TestResults = await this.run(tests);
         if (testResults.failed.length > 0) {
-            await this.appA.ui.content.list.add(this.appA.simple_createTextWithList('FAILED',
+            await this.appA.uiA.content.list.add(this.appA.simple_createTextWithList('FAILED',
                 ...testResults.failed));
         }
-        await this.appA.ui.content.list.add(
+        await this.appA.uiA.content.list.add(
             this.appA.simple_createTextWithList('successful tests: ' + testResults.successful.length),
             this.appA.simple_createText(''),
             this.appA.simple_createTextWithList('specifications',
@@ -108,21 +107,21 @@ export class AppA_TestA {
         return [
             this.createTest('ui_makeCollapsible', async test => {
                 let app = Starter.createAppWithUI();
-                await app.appA.ui.globalEvent_defaultAction();
+                await app.appA.uiA.globalEvent_defaultAction();
 
-                await app.appA.ui.globalEvent_toggleCollapsible();
+                await app.appA.uiA.globalEvent_toggleCollapsible();
 
-                return (await app.appA.ui.content.list.getObject(0)).collapsible;
+                return (await app.appA.uiA.content.list.getObject(0)).collapsible;
             }),
             this.createTest('ui_collapse', async test => {
                 let app = Starter.createAppWithUI();
-                await app.appA.ui.globalEvent_defaultAction();
-                await app.appA.ui.globalEvent_toggleCollapsible();
-                await app.appA.ui.globalEvent_newSubitem();
-                let firstObject = await app.appA.ui.content.list.getObject(0);
-                app.appA.ui.focused = firstObject;
+                await app.appA.uiA.globalEvent_defaultAction();
+                await app.appA.uiA.globalEvent_toggleCollapsible();
+                await app.appA.uiA.globalEvent_newSubitem();
+                let firstObject = await app.appA.uiA.content.list.getObject(0);
+                app.appA.uiA.focused = firstObject;
 
-                await app.appA.ui.globalEvent_expandOrCollapse();
+                await app.appA.uiA.globalEvent_expandOrCollapse();
 
                 return firstObject.collapsed;
             }),
@@ -136,11 +135,11 @@ export class AppA_TestA {
             }),
             this.createTest('ui_newSubitem', async test => {
                 let app = Starter.createAppWithUI();
-                await app.appA.ui.globalEvent_defaultAction();
+                await app.appA.uiA.globalEvent_defaultAction();
 
-                await app.appA.ui.globalEvent_newSubitem();
+                await app.appA.uiA.globalEvent_newSubitem();
 
-                let firstObject = await app.appA.ui.content.list.getObject(0);
+                let firstObject = await app.appA.uiA.content.list.getObject(0);
                 return firstObject.list.jsList.length == 1
                     && (await firstObject.list.getObject(0)).text === '';
             })]
@@ -156,26 +155,26 @@ export class AppA_TestA {
             this.createTest('modelTest_newSubitem', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.update();
-                await app.appA.ui.globalEvent_defaultAction();
+                await app.appA.uiA.globalEvent_defaultAction();
 
                 await app.uiG.click('new subitem');
 
-                let firstObject = await app.appA.ui.content.list.getObject(0);
+                let firstObject = await app.appA.uiA.content.list.getObject(0);
                 return firstObject.list.jsList.length == 1;
             }),
             this.createTest('modelTest_makeCollapsible', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
-                await app.appA.ui.globalEvent_defaultAction();
+                await app.appA.uiA.globalEvent_defaultAction();
 
                 await app.uiG.click('toggle collapsible');
 
-                return (await app.appA.ui.content.list.getObject(0)).collapsible;
+                return (await app.appA.uiA.content.list.getObject(0)).collapsible;
             }),
             this.createTest('modelTest_collapsed', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
-                await app.appA.ui.globalEvent_defaultAction();
-                await app.appA.ui.globalEvent_newSubitem();
-                let firstObject = await app.appA.ui.content.list.getObject(0);
+                await app.appA.uiA.globalEvent_defaultAction();
+                await app.appA.uiA.globalEvent_newSubitem();
+                let firstObject = await app.appA.uiA.content.list.getObject(0);
                 await (await firstObject.list.getObject(0))
                     .setText('do-not-show-me');
                 firstObject.collapsible = true;
@@ -188,9 +187,9 @@ export class AppA_TestA {
             }),
             this.createTest('modelTest_clickOnStaticText', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
-                await app.appA.ui.globalEvent_defaultAction();
-                await app.appA.ui.globalEvent_newSubitem();
-                let firstObject = await app.appA.ui.content.list.getObject(0);
+                await app.appA.uiA.globalEvent_defaultAction();
+                await app.appA.uiA.globalEvent_newSubitem();
+                let firstObject = await app.appA.uiA.content.list.getObject(0);
                 firstObject.text = 'clickMe';
                 firstObject.editable = false;
                 firstObject.collapsible = true;
@@ -234,7 +233,7 @@ export class AppA_TestA {
                 let html = test.test_app.appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
                 html.dangerous_html.innerText = 'show me';
-                await test.test_app.appA.ui.content.list.add(html);
+                await test.test_app.appA.uiA.content.list.add(html);
                 test.test_app.appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: the text "show me" appears');
                 return true;
@@ -246,7 +245,7 @@ export class AppA_TestA {
                 html.dangerous_html.innerText = 'test';
                 html.dangerous_html.contentEditable = 'true';
                 html.dangerous_html.style.margin = '1rem';
-                await test.test_app.appA.ui.content.list.add(html, test.test_app.appA.simple_createButton('setCaret', () => {
+                await test.test_app.appA.uiA.content.list.add(html, test.test_app.appA.simple_createButton('setCaret', () => {
 
                     setCaret(html.dangerous_html, 2);
 

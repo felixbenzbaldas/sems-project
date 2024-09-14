@@ -1,7 +1,6 @@
 import {Entity} from "@/Entity";
 import {AppA_UiA} from "@/ui/AppA_UiA";
 import {AppA} from "@/core/AppA";
-import {UiG} from "@/ui/UiG";
 import {AppA_TestA} from "@/test/AppA_TestA";
 
 export class Starter {
@@ -18,10 +17,10 @@ export class Starter {
             app = await Starter.createAppWithUIWithCommands();
         } else if (queryParams.has('client-app')) {
             app = await Starter.createAppWithUIWithCommands();
-            app.appA.ui.topImpressum = await Starter.getPlaceholderImpressum(app);
+            app.appA.uiA.topImpressum = await Starter.getPlaceholderImpressum(app);
         } else if (queryParams.has('test')) {
             app = await Starter.createTest();
-            app.appA.ui.topImpressum = await Starter.getPlaceholderImpressum(app);
+            app.appA.uiA.topImpressum = await Starter.getPlaceholderImpressum(app);
             if (queryParams.has('withFailingDemoTest')) {
                 app.appA.testA.withFailingDemoTest = true;
             }
@@ -47,8 +46,8 @@ export class Starter {
 
     static async createWebsite() : Promise<Entity> {
         let app = Starter.createAppWithUI();
-        app.appA.ui.isWebsite = true;
-        await app.appA.ui.content.list.add(
+        app.appA.uiA.isWebsite = true;
+        await app.appA.uiA.content.list.add(
             app.appA.simple_createText('This is easy software. It is being developed. New features will be added.'),
             app.appA.simple_createText(''),
             app.appA.simple_createCollapsible('easy client-app',
@@ -117,33 +116,33 @@ export class Starter {
 
     static createAppWithUI() : Entity {
         let app = Starter.createApp();
-        app.appA.ui = new AppA_UiA(app);
+        app.appA.uiA = new AppA_UiA(app);
         return app;
     }
 
     static async createAppWithUIWithCommands() : Promise<Entity> {
         let app = this.createAppWithUI();
-        app.appA.ui.commands = app.appA.simple_createTextWithList('commands',
+        app.appA.uiA.commands = app.appA.simple_createTextWithList('commands',
             app.appA.simple_createButton('default action', async () => {
-                await app.appA.ui.globalEvent_defaultAction();
+                await app.appA.uiA.globalEvent_defaultAction();
             }),
             app.appA.simple_createButton('new subitem', async () => {
-                await app.appA.ui.globalEvent_newSubitem();
+                await app.appA.uiA.globalEvent_newSubitem();
             }),
             app.appA.simple_createButton('toggle collapsible', async () => {
-                await app.appA.ui.globalEvent_toggleCollapsible();
+                await app.appA.uiA.globalEvent_toggleCollapsible();
             }),
             app.appA.simple_createButton('expand/collapse', async () => {
-                await app.appA.ui.globalEvent_expandOrCollapse();
+                await app.appA.uiA.globalEvent_expandOrCollapse();
             }),
             app.appA.simple_createButton('export app', async () => {
-                await app.appA.ui.globalEvent_exportApp();
+                await app.appA.uiA.globalEvent_exportApp();
             }),
             app.appA.simple_createButton('export content', async () => {
-                await app.appA.ui.globalEvent_exportContent();
+                await app.appA.uiA.globalEvent_exportContent();
             }),
             app.appA.simple_createButton('import to content', async () => {
-                await app.appA.ui.globalEvent_importToContent();
+                await app.appA.uiA.globalEvent_importToContent();
             }),
         );
         await app.update();

@@ -18,7 +18,7 @@ export class UiG_TextG {
             this.updateEmptyMarker();
         }
         this.htmlElement.onfocus = () => {
-            this.entity.getApp().appA.ui.focus(this.entity);
+            this.entity.getApp().appA.uiA.focus(this.entity);
             this.updateEmptyMarker();
         };
         this.htmlElement.onclick = (event) => {

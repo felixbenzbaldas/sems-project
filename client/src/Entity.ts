@@ -39,7 +39,7 @@ export class Entity {
         return {
             'text': this.text,
             'list': this.list?.json(),
-            'content': this.appA?.ui?.content.json(),
+            'content': this.appA?.uiA?.content.json(),
         }
     }
 
@@ -69,8 +69,8 @@ export class Entity {
     }
 
     async defaultAction() {
-        if (this.appA?.ui) {
-            await this.appA.ui.defaultAction();
+        if (this.appA?.uiA) {
+            await this.appA.uiA.defaultAction();
         } else if (this.action) {
             throw 'not implemented yet';
         } else {
@@ -153,7 +153,7 @@ export class Entity {
     }
 
     ui_hasFocus() {
-        return this.getApp().appA.ui.focused == this;
+        return this.getApp().appA.uiA.focused == this;
     }
 
     getApp() {
@@ -199,7 +199,7 @@ export class Entity {
         }
         let created = await this.getApp().appA.createText('');
         await this.list.add(created);
-        this.getApp().appA.ui.focused = created;
+        this.getApp().appA.uiA.focused = created;
         await this.update();
     }
 

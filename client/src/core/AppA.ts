@@ -8,7 +8,7 @@ import type {AppA_TestA} from "@/test/AppA_TestA";
 
 export class AppA {
 
-    ui: AppA_UiA;
+    uiA: AppA_UiA;
     server: string;
     readonly logG: LogG;
     testA : AppA_TestA;
