@@ -48,9 +48,9 @@ export class Entity {
         await this.update();
     }
 
-    async setHidden(value : boolean) {
+    async setHiddenAndUpdateUi(value : boolean) {
         this.hidden = value;
-        await this.update();
+        await this.uiG.unsafeUpdate();
     }
 
     async httpRequest(url : string, method : string, args : Array<any>) : Promise<any> {

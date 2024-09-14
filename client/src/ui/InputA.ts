@@ -35,12 +35,12 @@ export class InputA {
     }
 
     async showInput() {
-        await this.inputWrapper.setHidden(false);
-        await this.button.setHidden(true);
+        await this.inputWrapper.setHiddenAndUpdateUi(false);
+        await this.button.setHiddenAndUpdateUi(true);
     }
 
     async showButton() {
-        await this.inputWrapper.setHidden(true);
-        await this.button.setHidden(false);
+        await this.inputWrapper.setHiddenAndUpdateUi(true);
+        await this.button.setHiddenAndUpdateUi(false);
     }
 }

@@ -8,7 +8,7 @@ export class OutputA {
     constructor(private entity : Entity) {
         this.output = this.entity.appA.simple_createText('');
         this.ui = this.entity.appA.simple_createTextWithList('output', this.output, this.entity.appA.simple_createButton('hide output', async () => {
-            await this.ui.setHidden(true);
+            await this.ui.setHiddenAndUpdateUi(true);
         }));
         this.ui.hidden = true;
     }
@@ -22,5 +22,4 @@ export class OutputA {
     getUi() : Entity {
         return this.ui;
     }
-
 }
