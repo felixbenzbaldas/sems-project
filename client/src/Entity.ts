@@ -22,7 +22,6 @@ export class Entity {
     editable: boolean;
     readonly uiG: UiG;
     ui_context: Entity;
-    test_update: Function;
     test_result_error: string;
     jobPipelineG: JobPipelineG = new JobPipelineG();
     collapsible: boolean;
@@ -186,9 +185,6 @@ export class Entity {
 
     async update() {
         await this.jobPipelineG.runLater(async () => {
-            if (this.test_update) {
-                await this.test_update();
-            }
             await this.uiG.unsafeUpdate();
         });
     }

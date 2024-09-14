@@ -35,20 +35,3 @@ describe('jobPipeline', () => {
     });
 
 });
-
-describe('updater', () => {
-
-    it('can update', async () => {
-        let app : Entity = Starter.createApp();
-        app.appA.logG.toListOfStrings = true;
-        app.test_update = () => {
-            app.log('test_updated');
-        }
-
-        await app.update();
-
-        expect(app.appA.logG.listOfStrings.join()).contains('test_updated');
-        expect(app.appA.logG.listOfStrings.join()).contains('ui_updated');
-    });
-
-});
