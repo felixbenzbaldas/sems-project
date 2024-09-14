@@ -143,7 +143,8 @@ export class AppA_TestA {
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
                 return firstObject.list.jsList.length == 1
                     && (await firstObject.list.getObject(0)).text === '';
-            })]
+            })
+        ]
     }
 
     createModelTests() {
@@ -252,6 +253,20 @@ export class AppA_TestA {
                 }));
                 test.test_app.appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: when clicking the button, the caret is set to the middle of the word "test"');
+                return true;
+            }),
+            this.createTest('semiAutomatedTest_cursorStyle', async test => {
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                let appA = test.test_app.appA;
+                await appA.uiA.globalEventG.defaultAction();
+                await appA.uiA.globalEventG.toggleCollapsible();
+                await appA.uiA.globalEventG.newSubitem();
+                appA.logG.toListOfStrings = true;
+                test.test_app.log('human-test: cursor style on collapsible object (outside text): pointer');
+                test.test_app.log('human-test: cursor style on non-collapsible object (outside text): default');
+                test.test_app.log('human-test: cursor style on editable text: text');
+                test.test_app.log('human-test: cursor style on non-editable, non-collapsible text: default');
+                test.test_app.log('human-test: cursor style on non-editable, collapsible text: pointer');
                 return true;
             })
         ];

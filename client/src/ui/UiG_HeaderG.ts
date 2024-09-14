@@ -28,6 +28,7 @@ export class UiG_HeaderG {
                 this.entity.uiG.textG.htmlElement.focus();
             }
         };
+        this.updateCursorStyle();
     }
 
     updateBodyIcon() {
@@ -89,5 +90,13 @@ export class UiG_HeaderG {
             notNullUndefined(this.entity.action) ||
             notNullUndefined(this.entity.link) ||
             notNullUndefined(this.entity.text);
+    }
+
+    private updateCursorStyle() {
+        if (this.entity.collapsible && this.entity.uiG.bodyG.bodyAvailable()) {
+            this.htmlElement.style.cursor = 'pointer';
+        } else {
+            this.htmlElement.style.cursor = 'default';
+        }
     }
 }

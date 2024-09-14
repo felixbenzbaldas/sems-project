@@ -31,6 +31,7 @@ export class UiG_TextG {
         this.htmlElement.style.display = 'inline-block';
         this.htmlElement.style.minWidth = '1rem';
         this.htmlElement.style.maxWidth = '42rem';
+        this.updateCursorStyle();
     }
 
     private updateEmptyMarker() {
@@ -41,4 +42,15 @@ export class UiG_TextG {
         }
     }
 
+    private updateCursorStyle() {
+        if (this.entity.uiG.isEditable()) {
+            this.htmlElement.style.cursor = 'text';
+        } else {
+            if (this.entity.collapsible && this.entity.uiG.bodyG.bodyAvailable()) {
+                this.htmlElement.style.cursor = 'pointer';
+            } else {
+                this.htmlElement.style.cursor = 'default';
+            }
+        }
+    }
 }
