@@ -189,7 +189,7 @@ export class Entity {
             this.list = new ListA(this);
         }
         let created = await this.getApp().appA.createText('');
-        await this.list.add(created);
+        await this.list.addAndUpdateUi(created);
         this.getApp().appA.uiA.focused = created;
         await this.uiG.update();
     }

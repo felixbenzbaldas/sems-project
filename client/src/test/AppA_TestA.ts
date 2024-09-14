@@ -25,10 +25,10 @@ export class AppA_TestA {
         this.appA.uiA.content.list.jsList = [];
         let testResults : TestResults = await this.run(tests);
         if (testResults.failed.length > 0) {
-            await this.appA.uiA.content.list.add(this.appA.simple_createTextWithList('FAILED',
+            await this.appA.uiA.content.list.addAndUpdateUi(this.appA.simple_createTextWithList('FAILED',
                 ...testResults.failed));
         }
-        await this.appA.uiA.content.list.add(
+        await this.appA.uiA.content.list.addAndUpdateUi(
             this.appA.simple_createTextWithList('successful tests: ' + testResults.successful.length),
             this.appA.simple_createText(''),
             this.appA.simple_createTextWithList('specifications',
@@ -232,7 +232,7 @@ export class AppA_TestA {
                 let html = test.test_app.appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
                 html.dangerous_html.innerText = 'show me';
-                await test.test_app.appA.uiA.content.list.add(html);
+                await test.test_app.appA.uiA.content.list.addAndUpdateUi(html);
                 test.test_app.appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: the text "show me" appears');
                 return true;
@@ -244,7 +244,7 @@ export class AppA_TestA {
                 html.dangerous_html.innerText = 'test';
                 html.dangerous_html.contentEditable = 'true';
                 html.dangerous_html.style.margin = '1rem';
-                await test.test_app.appA.uiA.content.list.add(html, test.test_app.appA.simple_createButton('setCaret', () => {
+                await test.test_app.appA.uiA.content.list.addAndUpdateUi(html, test.test_app.appA.simple_createButton('setCaret', () => {
 
                     setCaret(html.dangerous_html, 2);
 

@@ -26,7 +26,7 @@ export class AppA_UiA {
 
     async defaultAction() {
         let created = await this.entity.appA.createText('');
-        await this.content.list.add(created);
+        await this.content.list.addAndUpdateUi(created);
         this.focused = created;
     }
 

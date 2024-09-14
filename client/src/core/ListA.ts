@@ -8,7 +8,7 @@ export class ListA {
         this.jsList = jsList;
     }
 
-    async add(...items : Array<Entity>) {
+    async addAndUpdateUi(...items : Array<Entity>) {
         items.forEach(item => {
            if (item.name && item.container) {
                this.jsList.push(this.entity.getPath(item));

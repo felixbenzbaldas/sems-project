@@ -47,7 +47,7 @@ export class Starter {
     static async createWebsite() : Promise<Entity> {
         let app = Starter.createAppWithUI();
         app.appA.uiA.isWebsite = true;
-        await app.appA.uiA.content.list.add(
+        await app.appA.uiA.content.list.addAndUpdateUi(
             app.appA.simple_createText('This is easy software. It is being developed. New features will be added.'),
             app.appA.simple_createText(''),
             app.appA.simple_createCollapsible('easy client-app',

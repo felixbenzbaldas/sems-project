@@ -9,7 +9,7 @@ describe('list', () => {
         let list : Entity = await app.appA.createList();
         let object : Entity = await app.appA.createText('bar');
 
-        await list.list.add(object);
+        await list.list.addAndUpdateUi(object);
 
         expect(list.list.jsList.length).toBe(1);
         expect(list.list.jsList.at(0).pathA.listOfNames).toEqual(list.getPath(object).pathA.listOfNames);
@@ -19,7 +19,7 @@ describe('list', () => {
         let app = Starter.createApp();
         let list = await app.appA.createList();
         let item = await app.appA.createText('bar');
-        await list.list.add(item);
+        await list.list.addAndUpdateUi(item);
 
         let json : any = list.json();
 
@@ -31,7 +31,7 @@ describe('list', () => {
         let app = Starter.createApp();
         let list = await app.appA.createList();
         let item = await app.appA.createText('bar');
-        await list.list.add(item);
+        await list.list.addAndUpdateUi(item);
 
         let exported : any = await list.export_allDependenciesInOneContainer();
 

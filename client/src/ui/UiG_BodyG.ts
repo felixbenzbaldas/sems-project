@@ -29,12 +29,12 @@ export class UiG_BodyG {
             let appA = this.entity.getApp().appA;
             let list = appA.simple_createList();
             if (this.entity.test_result_error) {
-                await list.list.add(appA.simple_createText('failed with error: ' + this.entity.test_result_error));
+                await list.list.addAndUpdateUi(appA.simple_createText('failed with error: ' + this.entity.test_result_error));
             }
             if (this.entity.test_app) {
-                await list.list.add(appA.simple_createCollapsible('log',
+                await list.list.addAndUpdateUi(appA.simple_createCollapsible('log',
                     appA.simple_createText(this.entity.test_app.appA.logG.listOfStrings.join('\n'))));
-                await list.list.add(appA.simple_createCollapsible('ui',
+                await list.list.addAndUpdateUi(appA.simple_createCollapsible('ui',
                     this.entity.test_app));
             }
             this.content_htmlElement.appendChild(list.uiG.htmlElement);
