@@ -124,25 +124,25 @@ export class Starter {
         let app = this.createAppWithUI();
         app.appA.uiA.commands = app.appA.simple_createTextWithList('commands',
             app.appA.simple_createButton('default action', async () => {
-                await app.appA.uiA.globalEvent_defaultAction();
+                await app.appA.uiA.globalEventG.defaultAction();
             }),
             app.appA.simple_createButton('new subitem', async () => {
-                await app.appA.uiA.globalEvent_newSubitem();
+                await app.appA.uiA.globalEventG.newSubitem();
             }),
             app.appA.simple_createButton('toggle collapsible', async () => {
-                await app.appA.uiA.globalEvent_toggleCollapsible();
+                await app.appA.uiA.globalEventG.toggleCollapsible();
             }),
             app.appA.simple_createButton('expand/collapse', async () => {
-                await app.appA.uiA.globalEvent_expandOrCollapse();
+                await app.appA.uiA.globalEventG.expandOrCollapse();
             }),
             app.appA.simple_createButton('export app', async () => {
-                await app.appA.uiA.globalEvent_exportApp();
+                await app.appA.uiA.globalEventG.exportApp();
             }),
             app.appA.simple_createButton('export content', async () => {
-                await app.appA.uiA.globalEvent_exportContent();
+                await app.appA.uiA.globalEventG.exportContent();
             }),
             app.appA.simple_createButton('import to content', async () => {
-                await app.appA.uiA.globalEvent_importToContent();
+                await app.appA.uiA.globalEventG.importToContent();
             }),
         );
         await app.update();

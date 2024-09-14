@@ -8,7 +8,7 @@ describe('abstract ui', () => {
     it('can create object', async () => {
         let app : Entity = Starter.createAppWithUI();
 
-        await app.appA.uiA.globalEvent_defaultAction();
+        await app.appA.uiA.globalEventG.defaultAction();
 
         expect(app.appA.uiA.content.list.jsList.length).toBe(1);
     });
@@ -25,7 +25,7 @@ describe('abstract ui', () => {
         let app : Entity = Starter.createAppWithUI();
         expect(app.appA.uiA.output.getUi().hidden).toBe(true);
 
-        await app.appA.uiA.globalEvent_exportApp();
+        await app.appA.uiA.globalEventG.exportApp();
 
         expect(app.appA.uiA.output.getUi().hidden).toBe(false);
     });
@@ -34,7 +34,7 @@ describe('abstract ui', () => {
         let app : Entity = Starter.createAppWithUI();
         expect(app.appA.uiA.output.getUi().hidden).toBe(true);
 
-        await app.appA.uiA.globalEvent_exportContent();
+        await app.appA.uiA.globalEventG.exportContent();
 
         expect(app.appA.uiA.output.getUi().hidden).toBe(false);
     });
@@ -43,7 +43,7 @@ describe('abstract ui', () => {
         let app = Starter.createAppWithUI();
         await app.appA.uiA.input.set('{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}');
 
-        await app.appA.uiA.globalEvent_importToContent();
+        await app.appA.uiA.globalEventG.importToContent();
 
         expect(app.containerA.mapNameEntity.size).toBe(1);
     });
@@ -58,16 +58,16 @@ describe('abstract ui', () => {
     test('Created object has focus', async () => {
         let app = Starter.createAppWithUI();
 
-        await app.appA.uiA.globalEvent_defaultAction();
+        await app.appA.uiA.globalEventG.defaultAction();
 
         expect((await app.appA.uiA.content.list.getObject(0)).ui_hasFocus()).toBeTruthy();
     });
 
     test('can create object after created object', async () => {
         let app = Starter.createAppWithUI();
-        await app.appA.uiA.globalEvent_defaultAction();
+        await app.appA.uiA.globalEventG.defaultAction();
 
-        await app.appA.uiA.globalEvent_defaultAction();
+        await app.appA.uiA.globalEventG.defaultAction();
 
         expect(app.appA.uiA.content.list.jsList.length).toBe(2);
         let resolvedContent = await app.appA.uiA.content.list.getResolvedList();

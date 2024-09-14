@@ -23,7 +23,7 @@ describe('client-app (modelTests)', () => {
     });
 
     it('focuses clicked object', async () => {
-        await app.appA.uiA.globalEvent_defaultAction();
+        await app.appA.uiA.globalEventG.defaultAction();
         app.appA.uiA.focused.setText('marker-foo');
         app.appA.uiA.focused = undefined;
 

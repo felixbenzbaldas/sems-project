@@ -107,21 +107,21 @@ export class AppA_TestA {
         return [
             this.createTest('ui_makeCollapsible', async test => {
                 let app = Starter.createAppWithUI();
-                await app.appA.uiA.globalEvent_defaultAction();
+                await app.appA.uiA.globalEventG.defaultAction();
 
-                await app.appA.uiA.globalEvent_toggleCollapsible();
+                await app.appA.uiA.globalEventG.toggleCollapsible();
 
                 return (await app.appA.uiA.content.list.getObject(0)).collapsible;
             }),
             this.createTest('ui_collapse', async test => {
                 let app = Starter.createAppWithUI();
-                await app.appA.uiA.globalEvent_defaultAction();
-                await app.appA.uiA.globalEvent_toggleCollapsible();
-                await app.appA.uiA.globalEvent_newSubitem();
+                await app.appA.uiA.globalEventG.defaultAction();
+                await app.appA.uiA.globalEventG.toggleCollapsible();
+                await app.appA.uiA.globalEventG.newSubitem();
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
                 app.appA.uiA.focused = firstObject;
 
-                await app.appA.uiA.globalEvent_expandOrCollapse();
+                await app.appA.uiA.globalEventG.expandOrCollapse();
 
                 return firstObject.collapsed;
             }),
@@ -135,9 +135,9 @@ export class AppA_TestA {
             }),
             this.createTest('ui_newSubitem', async test => {
                 let app = Starter.createAppWithUI();
-                await app.appA.uiA.globalEvent_defaultAction();
+                await app.appA.uiA.globalEventG.defaultAction();
 
-                await app.appA.uiA.globalEvent_newSubitem();
+                await app.appA.uiA.globalEventG.newSubitem();
 
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
                 return firstObject.list.jsList.length == 1
@@ -155,7 +155,7 @@ export class AppA_TestA {
             this.createTest('modelTest_newSubitem', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
                 await app.update();
-                await app.appA.uiA.globalEvent_defaultAction();
+                await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.uiG.click('new subitem');
 
@@ -164,7 +164,7 @@ export class AppA_TestA {
             }),
             this.createTest('modelTest_makeCollapsible', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
-                await app.appA.uiA.globalEvent_defaultAction();
+                await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.uiG.click('toggle collapsible');
 
@@ -172,8 +172,8 @@ export class AppA_TestA {
             }),
             this.createTest('modelTest_collapsed', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
-                await app.appA.uiA.globalEvent_defaultAction();
-                await app.appA.uiA.globalEvent_newSubitem();
+                await app.appA.uiA.globalEventG.defaultAction();
+                await app.appA.uiA.globalEventG.newSubitem();
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
                 await (await firstObject.list.getObject(0))
                     .setText('do-not-show-me');
@@ -187,8 +187,8 @@ export class AppA_TestA {
             }),
             this.createTest('modelTest_clickOnStaticText', async test => {
                 let app = await Starter.createAppWithUIWithCommands();
-                await app.appA.uiA.globalEvent_defaultAction();
-                await app.appA.uiA.globalEvent_newSubitem();
+                await app.appA.uiA.globalEventG.defaultAction();
+                await app.appA.uiA.globalEventG.newSubitem();
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
                 firstObject.text = 'clickMe';
                 firstObject.editable = false;
