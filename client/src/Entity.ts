@@ -191,7 +191,7 @@ export class Entity {
         let created = await this.getApp().appA.createText('');
         await this.list.add(created);
         this.getApp().appA.uiA.focused = created;
-        await this.update();
+        await this.uiG.unsafeUpdate();
     }
 
     async toggleCollapsible() {
