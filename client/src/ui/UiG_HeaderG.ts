@@ -34,14 +34,14 @@ export class UiG_HeaderG {
         this.bodyIcon.style.display = 'inline-block';
         this.bodyIcon.style.marginLeft = '0.7rem';
         if (this.entity.collapsible && this.entity.uiG.bodyG.bodyAvailable()) {
-            this.bodyIcon.hidden = false;
+            this.bodyIcon.style.display = 'default';
             if (this.entity.collapsed) {
                 this.bodyIcon.innerText = '[...]';
             } else {
                 this.bodyIcon.innerText = ' _';
             }
         } else {
-            this.bodyIcon.hidden = true;
+            this.bodyIcon.style.display = 'none';
         }
     }
 
