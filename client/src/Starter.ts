@@ -14,9 +14,9 @@ export class Starter {
         let queryParams = new URLSearchParams(window.location.search);
         let app : Entity;
         if (queryParams.has('local')) {
-            app = await Starter.createAppWithUIWithCommands();
+            app = await Starter.createAppWithUIWithCommands_updateUi();
         } else if (queryParams.has('client-app')) {
-            app = await Starter.createAppWithUIWithCommands();
+            app = await Starter.createAppWithUIWithCommands_updateUi();
             app.appA.uiA.topImpressum = await Starter.getPlaceholderImpressum(app);
         } else if (queryParams.has('test')) {
             app = await Starter.createTest();
@@ -120,7 +120,7 @@ export class Starter {
         return app;
     }
 
-    static async createAppWithUIWithCommands() : Promise<Entity> {
+    static async createAppWithUIWithCommands_updateUi() : Promise<Entity> {
         let app = this.createAppWithUI();
         app.appA.uiA.commands = app.appA.simple_createTextWithList('commands',
             app.appA.simple_createButton('default action', async () => {

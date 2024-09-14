@@ -3,7 +3,6 @@ import {ListA} from "@/core/ListA";
 import {PathA} from "@/core/PathA";
 import {Entity} from "@/Entity";
 import {LogG} from "@/LogG";
-import {getPromiseAndResolver} from "@/utils";
 import type {AppA_TestA} from "@/test/AppA_TestA";
 
 export class AppA {

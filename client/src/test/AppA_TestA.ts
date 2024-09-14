@@ -85,7 +85,7 @@ export class AppA_TestA {
         ];
         if (this.withFailingDemoTest) {
             tests.push(this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands();
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
                 test.test_app.appA.logG.toListOfStrings = true;
                 test.test_app.log('a dummy log');
                 throw 'demo error in test';
@@ -148,12 +148,12 @@ export class AppA_TestA {
     createModelTests() {
         return [
             this.createTest('modelTest_objectCreation', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands();
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
 
                 return test.test_app.uiG.getRawText().includes('default action');
             }),
             this.createTest('modelTest_newSubitem', async test => {
-                let app = await Starter.createAppWithUIWithCommands();
+                let app = await Starter.createAppWithUIWithCommands_updateUi();
                 await app.updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
 
@@ -163,7 +163,7 @@ export class AppA_TestA {
                 return firstObject.list.jsList.length == 1;
             }),
             this.createTest('modelTest_makeCollapsible', async test => {
-                let app = await Starter.createAppWithUIWithCommands();
+                let app = await Starter.createAppWithUIWithCommands_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.uiG.click('toggle collapsible');
@@ -171,7 +171,7 @@ export class AppA_TestA {
                 return (await app.appA.uiA.content.list.getObject(0)).collapsible;
             }),
             this.createTest('modelTest_collapsed', async test => {
-                let app = await Starter.createAppWithUIWithCommands();
+                let app = await Starter.createAppWithUIWithCommands_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.newSubitem();
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
@@ -185,7 +185,7 @@ export class AppA_TestA {
                 return !rawText.includes('do-not-show-me');
             }),
             this.createTest('modelTest_clickOnStaticText', async test => {
-                let app = await Starter.createAppWithUIWithCommands();
+                let app = await Starter.createAppWithUIWithCommands_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.newSubitem();
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
@@ -206,7 +206,7 @@ export class AppA_TestA {
 
                 await tester.appA.testA.runAndDisplay([
                     tester.appA.testA.createTest('dummyTestWithError', async dummyTest => {
-                        dummyTest.test_app = await Starter.createAppWithUIWithCommands();
+                        dummyTest.test_app = await Starter.createAppWithUIWithCommands_updateUi();
                         dummyTest.test_app.appA.logG.toListOfStrings = true;
                         dummyTest.test_app.log('dummyLog');
                         throw 'testError';
@@ -228,7 +228,7 @@ export class AppA_TestA {
     createSemiAutomatedTests() {
         return [
             this.createTest('semiAutomatedTest_html', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands();
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
                 let html = test.test_app.appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
                 html.dangerous_html.innerText = 'show me';
@@ -238,7 +238,7 @@ export class AppA_TestA {
                 return true;
             }),
             this.createTest('semiAutomatedTest_setCaret', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands();
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
                 let html = test.test_app.appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
                 html.dangerous_html.innerText = 'test';
