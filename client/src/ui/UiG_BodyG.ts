@@ -26,7 +26,7 @@ export class UiG_BodyG {
     async content_update() {
         this.content_htmlElement = document.createElement('div');
         if (this.entity.isTest) {
-            this.content_htmlElement.appendChild(this.entity.uiG.testG.bodyContent_htmlElement);
+            this.content_htmlElement.appendChild(this.entity.uiG.testG.bodyContent.uiG.htmlElement);
         } else if (this.entity.list && this.entity.list.jsList.length > 0) {
             this.content_htmlElement = this.entity.uiG.listG.htmlElement;
         }
