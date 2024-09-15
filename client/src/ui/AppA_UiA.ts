@@ -97,7 +97,7 @@ export class AppA_UiA {
         if (this.commands) {
             await this.commands.uiG.click(text);
         }
-        if (!this.isWebsite) {
+        if (!this.isWebsite && !this.entity.appA.testA) {
             await this.output.getUi().uiG.click(text);
             await this.input.getUi().uiG.click(text);
         }
