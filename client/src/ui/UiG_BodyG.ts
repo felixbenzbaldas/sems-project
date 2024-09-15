@@ -25,19 +25,8 @@ export class UiG_BodyG {
 
     async content_update() {
         this.content_htmlElement = document.createElement('div');
-        if (notNullUndefined(this.entity.test_result)) {
-            let appA = this.entity.getApp().appA;
-            let list = appA.simple_createList();
-            if (this.entity.test_result_error) {
-                await list.list.addAndUpdateUi(appA.simple_createText('failed with error: ' + this.entity.test_result_error));
-            }
-            if (this.entity.test_app) {
-                await list.list.addAndUpdateUi(appA.simple_createCollapsible('log',
-                    appA.simple_createText(this.entity.test_app.appA.logG.listOfStrings.join('\n'))));
-                await list.list.addAndUpdateUi(appA.simple_createCollapsible('ui',
-                    this.entity.test_app));
-            }
-            this.content_htmlElement.appendChild(list.uiG.htmlElement);
+        if (this.entity.isTest) {
+            this.content_htmlElement.appendChild(this.entity.uiG.testG.bodyContent_htmlElement);
         } else if (this.entity.list && this.entity.list.jsList.length > 0) {
             this.content_htmlElement = this.entity.uiG.listG.htmlElement;
         }

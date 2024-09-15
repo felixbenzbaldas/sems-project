@@ -49,9 +49,7 @@ export class UiG_HeaderG {
     private updateContent() {
         this.content.innerHTML = null;
         if (this.entity.isTest) {
-            let textElem = this.entity.uiG.textG.htmlElement;
-            textElem.style.color = this.entity.test_result ? 'green' : 'red';
-            this.content.appendChild(textElem);
+            this.content.appendChild(this.entity.uiG.testG.headerContent_htmlElement);
         } else if (this.entity.action) {
             this.content.appendChild(this.action_getUiElement());
         } else if (notNullUndefined(this.entity.link)) {

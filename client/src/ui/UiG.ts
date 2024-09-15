@@ -4,6 +4,7 @@ import {UiG_ListG} from "@/ui/UiG_ListG";
 import {UiG_TextG} from "@/ui/UiG_TextG";
 import {UiG_BodyG} from "@/ui/UiG_BodyG";
 import {UiG_HeaderG} from "@/ui/UiG_HeaderG";
+import {UiG_TestG} from "@/ui/UiG_TestG";
 
 // TODO: should be an aspect (suffix 'A'), not a group (suffix 'G')
 export class UiG {
@@ -14,12 +15,14 @@ export class UiG {
     textG : UiG_TextG;
     headerG : UiG_HeaderG;
     bodyG: UiG_BodyG;
+    testG: UiG_TestG;
 
     constructor(private entity : Entity) {
         this.listG = new UiG_ListG(entity);
         this.textG = new UiG_TextG(entity);
         this.headerG = new UiG_HeaderG(entity);
         this.bodyG = new UiG_BodyG(entity);
+        this.testG = new UiG_TestG(entity);
     }
 
     async update() {
@@ -27,6 +30,9 @@ export class UiG {
             if (this.entity.appA?.uiA) {
                 await this.entity.appA.uiA.update();
             } else {
+                if (this.entity.isTest) {
+                    await this.testG.update();
+                }
                 if (this.entity.list) {
                     await this.listG.update();
                 }
