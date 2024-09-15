@@ -215,6 +215,8 @@ export class AppA_TestA {
                     })
                 ]);
 
+                await tester.uiG.click('ui');
+                await tester.uiG.click('log');
                 let rawText = tester.uiG.getRawText();
                 return rawText.includes('FAILED') &&
                     rawText.includes('dummyTestWithError') &&

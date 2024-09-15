@@ -95,21 +95,18 @@ export class UiG {
             } else if (notNullUndefined(this.entity.link)) {
                 return this.headerG.link_getText();
             } else {
-                let rawText = '';
-                if (notNullUndefined(this.entity.text)) {
-                    rawText += this.entity.text;
+                if (this.entity.isTest) {
+                    return this.entity.uiG.testG.getRawText();
+                } else {
+                    let rawText = '';
+                    if (notNullUndefined(this.entity.text)) {
+                        rawText += this.entity.text;
+                    }
+                    if (this.entity.list && this.entity.collapsed != true) {
+                        rawText += this.listG.getRawText();
+                    }
+                    return rawText;
                 }
-                if (this.entity.list && this.entity.collapsed != true) {
-                    rawText += this.listG.getRawText();
-                }
-                if (this.entity.test_result_error) {
-                    rawText += this.entity.test_result_error;
-                }
-                if (this.entity.test_app) {
-                    rawText += this.entity.test_app.appA.logG.listOfStrings.join('\n');
-                    rawText += this.entity.test_app.uiG.getRawText();
-                }
-                return rawText;
             }
         }
         return '';
@@ -120,6 +117,8 @@ export class UiG {
         if (!this.entity.hidden) {
             if (this.entity.appA?.uiA) {
                 await this.entity.appA.uiA.click(text);
+            } else if (this.entity.isTest) {
+                await this.entity.uiG.testG.click(text);
             } else if (this.entity.action) {
                 if (this.entity.text.includes(text)) {
                     await this.entity.action();
@@ -131,7 +130,7 @@ export class UiG {
                         await this.entity.expandOrCollapse();
                     }
                 }
-                if (this.entity.list) {
+                if (!this.entity.collapsed && this.entity.uiG.bodyG.bodyAvailable()) {
                     await this.listG.click(text);
                 }
             } else if (this.entity.list) {

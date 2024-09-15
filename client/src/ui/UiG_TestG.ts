@@ -19,11 +19,15 @@ export class UiG_TestG {
         this.headerContent_htmlElement.appendChild(this.entity.uiG.textG.htmlElement);
     }
 
-    async click() {
-
+    async click(text : string) {
+        await this.bodyContent.uiG.click(text);
     }
+
     getRawText(): string {
-        return '';
+        let rawText = '';
+        rawText += this.entity.text;
+        rawText += this.bodyContent.uiG.getRawText();
+        return rawText;
     }
 
     private async updateBodyContent() {
