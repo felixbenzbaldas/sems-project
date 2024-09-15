@@ -44,7 +44,6 @@ export class AppA_TestA {
                 success = await test.action();
             } catch (error) {
                 success = false;
-                test.log('error: ' + error);
                 test.test_result_error = error.toString();
                 test.test_result = false;
             }
