@@ -8,7 +8,7 @@ export class ContainerA {
     constructor(private entity : Entity) {
     }
     getUniqueRandomName() : string {
-        return '' + this.nameCounter++;
+        return (this.nameCounter++).toString();
     }
 
     async getByName(name: string) : Promise<Entity> {
