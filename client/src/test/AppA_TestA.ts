@@ -268,6 +268,27 @@ export class AppA_TestA {
                 test.test_app.log('human-test: collapsed collapsible has the icon: [...]');
                 test.test_app.log('human-test: non-collapsible has no icon');
                 return true;
+            }),
+            this.createTest('semiAutomatedTest_placeholderArea', async test => {
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                let appA = test.test_app.appA;
+                let html = appA.createEntityWithApp();
+                html.dangerous_html = document.createElement('div');
+                html.dangerous_html.style.height = '15rem';
+                html.dangerous_html.style.backgroundColor = 'gold';
+                html.dangerous_html.style.width = '15rem';
+                let collapsible = appA.simple_createCollapsible('scroll down and then collapse me', html);
+                collapsible.collapsed = false;
+                collapsible.editable = false;
+                appA.uiA.content.list.jsList.push(collapsible);
+                appA.logG.toListOfStrings = true;
+                test.test_app.log('info: The placeholder-area is an area which is inserted at the bottom of the site. ' +
+                    'It is necessary to avoid unwanted movements when collapsing a big item.');
+
+                test.test_app.log('human-test: The content above the item never moves, when collapsing it.');
+                test.test_app.log('human-test: When scrolling to the bottom, you still see a rest of the application-content');
+                test.test_app.log('human-test: The placeholder-area adapts its size when resizing the window.');
+                return true;
             })
         ];
     }

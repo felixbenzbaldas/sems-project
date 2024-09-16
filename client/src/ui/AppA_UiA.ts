@@ -14,6 +14,7 @@ export class AppA_UiA {
     topImpressum: Entity;
     readonly htmlElement: HTMLElement = document.createElement('div');
     globalEventG: AppA_UiA_GlobalEventG;
+    withPlaceholderArea: boolean;
 
     constructor(private entity: Entity) {
         this.content = entity.appA.simple_createList();
@@ -63,6 +64,9 @@ export class AppA_UiA {
             this.htmlElement.appendChild(this.separatorLine());
         }
         this.htmlElement.appendChild(this.content.uiG.htmlElement);
+        if (this.withPlaceholderArea) {
+            this.htmlElement.appendChild(this.createPlaceholderArea());
+        }
     }
 
     private separatorLine() : HTMLElement {
@@ -115,5 +119,17 @@ export class AppA_UiA {
         }
         counter += this.content.uiG.countEditableTexts();
         return counter;
+    }
+
+    private createPlaceholderArea() : HTMLElement {
+        let placeholderAreaDiv = document.createElement('div');
+        let updatePlaceholderArea = () => {
+            placeholderAreaDiv.style.height = (window.innerHeight - window.innerHeight * 0.15) + 'px';
+        };
+        updatePlaceholderArea();
+        window.addEventListener('resize', event => {
+            updatePlaceholderArea();
+        });
+        return placeholderAreaDiv;
     }
 }

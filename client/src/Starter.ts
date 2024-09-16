@@ -33,6 +33,7 @@ export class Starter {
         if (queryParams.has('test')) {
             await app.appA.testA.createRunAndDisplay();
         }
+        app.appA.uiA.withPlaceholderArea = true;
         return app;
     }
 
