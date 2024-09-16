@@ -25,11 +25,11 @@ export class AppA_TestA {
         this.appA.uiA.content.list.jsList = [];
         let testResults : TestResults = await this.run(tests);
         if (testResults.failed.length > 0) {
-            await this.appA.uiA.content.list.addAndUpdateUi(this.appA.simple_createTextWithList('FAILED',
+            await this.appA.uiA.content.list.addAndUpdateUi(this.appA.simple_createTextWithList('failed tests (' + testResults.failed.length + ')',
                 ...testResults.failed));
         }
         await this.appA.uiA.content.list.addAndUpdateUi(
-            this.appA.simple_createCollapsible('successful tests: ' + testResults.successful.length,
+            this.appA.simple_createCollapsible('successful tests (' + testResults.successful.length + ')',
                 ...testResults.successful),
             this.appA.simple_createText(''),
             this.appA.simple_createTextWithList('specifications',
@@ -220,14 +220,14 @@ export class AppA_TestA {
 
                 await tester.uiG.click('ui');
                 await tester.uiG.click('log');
-                await tester.uiG.click('successful tests:')
+                await tester.uiG.click('successful tests')
                 let rawText = tester.uiG.getRawText();
-                return rawText.includes('FAILED') &&
+                return rawText.includes('failed tests') &&
                     rawText.includes('dummyTestWithError') &&
                     rawText.includes('testError') &&
                     rawText.includes('dummyLog') &&
                     rawText.includes('default action') &&
-                    rawText.includes('successful tests:') &&
+                    rawText.includes('successful tests') &&
                     rawText.includes('1') &&
                     rawText.includes('aSuccessfulTest');
             }),
