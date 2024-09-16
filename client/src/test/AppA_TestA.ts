@@ -129,6 +129,14 @@ export class AppA_TestA {
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
                 return firstObject.list.jsList.length == 1
                     && (await firstObject.list.getObject(0)).text === '';
+            }),
+            this.createTest('ui_switchCurrentContainer', async test => {
+                let app = Starter.createAppWithUI();
+                await app.appA.uiA.globalEventG.defaultAction();
+
+                await app.appA.uiA.globalEventG.switchCurrentContainer();
+
+                return app.appA.currentContainer === app.appA.uiA.focused;
             })
         ]
     }

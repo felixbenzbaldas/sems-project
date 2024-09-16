@@ -11,8 +11,10 @@ export class AppA {
     server: string;
     readonly logG: LogG;
     testA : AppA_TestA;
+    currentContainer: Entity;
 
     constructor(private entity : Entity) {
+        this.currentContainer = entity;
         this.logG = new LogG(entity);
     }
 
@@ -67,15 +69,11 @@ export class AppA {
     }
 
     async createText(text: string) : Promise<Entity> {
-        return this.getCurrentContainer().containerA.createText(text);
+        return this.currentContainer.containerA.createText(text);
     }
 
     async createList() : Promise<Entity> {
-        return this.getCurrentContainer().containerA.createList();
-    }
-
-    getCurrentContainer() : Entity {
-        return this.entity;
+        return this.currentContainer.containerA.createList();
     }
 
     createPath(listOfNames: Array<string>) {

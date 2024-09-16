@@ -36,6 +36,10 @@ export class AppA_UiA_GlobalEventG {
         await this.getUiA().focused.expandOrCollapse();
     }
 
+    async switchCurrentContainer() {
+        this.entity.appA.currentContainer = this.entity.appA.uiA.focused;
+    }
+
     private getUiA() {
         return this.entity.appA.uiA;
     }
