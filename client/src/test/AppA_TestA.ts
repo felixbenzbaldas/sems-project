@@ -63,16 +63,11 @@ export class AppA_TestA {
             this.createTest('tester', async test => {
                 let tester = await Starter.createTest();
 
-                let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.createTest('dummyTestWithError', async dummyTest => {
-                    dummyTest.test_app = Starter.createApp();
-                    dummyTest.test_app.appA.logG.toListOfStrings = true;
-                    dummyTest.test_app.log('dummyLog');
-                    throw 'testError';
-                })]);
+                let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.createFailingDemoTest()]);
 
                 let dummyTestRun = testResults.failed.at(0);
-                return dummyTestRun.test_result_error === 'testError' &&
-                    dummyTestRun.test_app.appA.logG.listOfStrings.join().includes('dummyLog') &&
+                return dummyTestRun.test_result_error === 'demo error in test' &&
+                    dummyTestRun.test_app.appA.logG.listOfStrings.join().includes('a dummy log') &&
                     testResults.successful.length == 0;
             }),
             ...this.createUiTests(),
@@ -80,12 +75,7 @@ export class AppA_TestA {
             ...this.createSemiAutomatedTests()
         ];
         if (this.withFailingDemoTest) {
-            tests.push(this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
-                test.test_app.appA.logG.toListOfStrings = true;
-                test.test_app.log('a dummy log');
-                throw 'demo error in test';
-            }));
+            tests.push(this.createFailingDemoTest());
         }
         return tests;
     }
@@ -203,12 +193,7 @@ export class AppA_TestA {
                 tester.appA.logG.toListOfStrings = true;
 
                 await tester.appA.testA.runAndDisplay([
-                    tester.appA.testA.createTest('dummyTestWithError', async dummyTest => {
-                        dummyTest.test_app = await Starter.createAppWithUIWithCommands_updateUi();
-                        dummyTest.test_app.appA.logG.toListOfStrings = true;
-                        dummyTest.test_app.log('dummyLog');
-                        throw 'testError';
-                    }),
+                    tester.appA.testA.createFailingDemoTest(),
                     tester.appA.testA.createTest('aSuccessfulTest', async () => {
                         return true;
                     })
@@ -219,9 +204,9 @@ export class AppA_TestA {
                 await tester.uiG.click('successful tests')
                 let rawText = tester.uiG.getRawText();
                 return rawText.includes('failed tests') &&
-                    rawText.includes('dummyTestWithError') &&
-                    rawText.includes('testError') &&
-                    rawText.includes('dummyLog') &&
+                    rawText.includes('failing demo test') &&
+                    rawText.includes('demo error in test') &&
+                    rawText.includes('a dummy log') &&
                     rawText.includes('default action') &&
                     rawText.includes('successful tests') &&
                     rawText.includes('1') &&
@@ -285,5 +270,14 @@ export class AppA_TestA {
                 return true;
             })
         ];
+    }
+
+    createFailingDemoTest(): Entity {
+        return this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
+            test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+            test.test_app.appA.logG.toListOfStrings = true;
+            test.test_app.log('a dummy log');
+            throw 'demo error in test';
+        });
     }
 }
