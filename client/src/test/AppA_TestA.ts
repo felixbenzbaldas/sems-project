@@ -29,7 +29,8 @@ export class AppA_TestA {
                 ...testResults.failed));
         }
         await this.appA.uiA.content.list.addAndUpdateUi(
-            this.appA.simple_createTextWithList('successful tests: ' + testResults.successful.length),
+            this.appA.simple_createCollapsible('successful tests: ' + testResults.successful.length,
+                ...testResults.successful),
             this.appA.simple_createText(''),
             this.appA.simple_createTextWithList('specifications',
                 this.appA.simple_createText('A collapsed item has the icon [...].'),
@@ -211,11 +212,15 @@ export class AppA_TestA {
                         dummyTest.test_app.appA.logG.toListOfStrings = true;
                         dummyTest.test_app.log('dummyLog');
                         throw 'testError';
+                    }),
+                    tester.appA.testA.createTest('aSuccessfulTest', async () => {
+                        return true;
                     })
                 ]);
 
                 await tester.uiG.click('ui');
                 await tester.uiG.click('log');
+                await tester.uiG.click('successful tests:')
                 let rawText = tester.uiG.getRawText();
                 return rawText.includes('FAILED') &&
                     rawText.includes('dummyTestWithError') &&
@@ -223,7 +228,8 @@ export class AppA_TestA {
                     rawText.includes('dummyLog') &&
                     rawText.includes('default action') &&
                     rawText.includes('successful tests:') &&
-                    rawText.includes('0');
+                    rawText.includes('1') &&
+                    rawText.includes('aSuccessfulTest');
             }),
         ];
     }

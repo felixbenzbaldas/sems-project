@@ -42,5 +42,6 @@ export class UiG_TestG {
             await this.bodyContent.list.addAndUpdateUi(appA.simple_createCollapsible('ui',
                 this.entity.test_app));
         }
+        await this.bodyContent.uiG.update();
     }
 }
