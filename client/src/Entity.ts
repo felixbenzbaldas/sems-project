@@ -17,7 +17,7 @@ export class Entity {
     hidden: boolean = false;
     pathA: PathA;
     appA: AppA;
-    readonly containerA: ContainerA = new ContainerA(this);
+    containerA: ContainerA;
     editable: boolean;
     readonly uiG: UiG;
     ui_context: Entity;
@@ -76,7 +76,7 @@ export class Entity {
     }
 
     getPath(object: Entity) : Entity {
-        if (this.containerA.mapNameEntity) {
+        if (this.containerA?.mapNameEntity) {
             if (object.container === this) {
                 return this.getApp().appA.createPath([object.name]);
             }

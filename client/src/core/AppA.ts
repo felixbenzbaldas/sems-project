@@ -4,6 +4,7 @@ import {PathA} from "@/core/PathA";
 import {Entity} from "@/Entity";
 import {LogG} from "@/LogG";
 import type {AppA_TestA} from "@/test/AppA_TestA";
+import {ContainerA} from "@/core/ContainerA";
 
 export class AppA {
 
@@ -14,6 +15,8 @@ export class AppA {
     currentContainer: Entity;
 
     constructor(private entity : Entity) {
+        entity.containerA = new ContainerA(entity);
+        entity.containerA.mapNameEntity = new Map();
         this.currentContainer = entity;
         this.logG = new LogG(entity);
     }

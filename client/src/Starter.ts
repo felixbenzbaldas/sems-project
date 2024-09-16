@@ -2,6 +2,7 @@ import {Entity} from "@/Entity";
 import {AppA_UiA} from "@/ui/AppA_UiA";
 import {AppA} from "@/core/AppA";
 import {AppA_TestA} from "@/test/AppA_TestA";
+import {ContainerA} from "@/core/ContainerA";
 
 export class Starter {
 
@@ -153,7 +154,6 @@ export class Starter {
     static async loadLocalhostApp(port: number) {
         let app = new Entity();
         app.text = 'todo: load from server';
-        app.containerA.mapNameEntity = new Map();
         app.appA = new AppA(app);
         app.appA.server = 'http://localhost:' + port + '/';
         return app;
