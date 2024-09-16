@@ -30,11 +30,7 @@ export class AppA_TestA {
         }
         await this.appA.uiA.content.list.addAndUpdateUi(
             this.appA.simple_createCollapsible('successful tests (' + testResults.successful.length + ')',
-                ...testResults.successful),
-            this.appA.simple_createText(''),
-            this.appA.simple_createTextWithList('specifications',
-                this.appA.simple_createText('A collapsed item has the icon [...].'),
-            ));
+                ...testResults.successful));
     }
 
     async run(tests : Array<Entity>) : Promise<TestResults> {
@@ -274,6 +270,18 @@ export class AppA_TestA {
                 test.test_app.log('human-test: cursor style on editable text: text');
                 test.test_app.log('human-test: cursor style on non-editable, non-collapsible text: default');
                 test.test_app.log('human-test: cursor style on non-editable, collapsible text: pointer');
+                return true;
+            }),
+            this.createTest('semiAutomatedTest_expand/collapse', async test => {
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                let appA = test.test_app.appA;
+                await appA.uiA.globalEventG.defaultAction();
+                await appA.uiA.globalEventG.toggleCollapsible();
+                await appA.uiA.globalEventG.newSubitem();
+                appA.logG.toListOfStrings = true;
+                test.test_app.log('human-test: expanded collapsible has the icon: _');
+                test.test_app.log('human-test: collapsed collapsible has the icon: [...]');
+                test.test_app.log('human-test: non-collapsible has no icon');
                 return true;
             })
         ];
