@@ -12,19 +12,19 @@ export class ContainerA {
     }
 
     async getByName(name: string) : Promise<Entity> {
-        let entity = this.entity.appA.createEntityWithApp();
+        let entity = this.entity.getApp().appA.createEntityWithApp();
         entity.text = '42'; // TODO http-request
         return Promise.resolve(entity);
     }
 
     async createText(text: string) : Promise<Entity> {
-        let textObject = this.entity.appA.simple_createText(text);
+        let textObject = this.entity.getApp().appA.simple_createText(text);
         this.take(textObject);
         return Promise.resolve(textObject);
     }
 
     async createList() : Promise<Entity> {
-        let list = this.entity.appA.simple_createList();
+        let list = this.entity.getApp().appA.simple_createList();
         this.take(list);
         return Promise.resolve(list);
     }
