@@ -47,4 +47,8 @@ export class AppA_UiA_GlobalEventG {
     private getUiA() {
         return this.entity.appA.uiA;
     }
+
+    async switchToAppContainer() {
+        this.entity.appA.currentContainer = this.entity;
+    }
 }

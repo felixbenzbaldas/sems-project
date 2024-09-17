@@ -148,6 +148,9 @@ export class Starter {
             app.appA.simple_createButton('switch current container', async () => {
                 await app.appA.uiA.globalEventG.switchCurrentContainer();
             }),
+            app.appA.simple_createButton('switch to app container', async () => {
+                await app.appA.uiA.globalEventG.switchToAppContainer();
+            }),
         );
         await app.uiG.update();
         return app;
