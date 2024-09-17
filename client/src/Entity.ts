@@ -21,7 +21,7 @@ export class Entity {
     editable: boolean;
     readonly uiG: UiG;
     ui_context: Entity;
-    test_result_error: string;
+    test_result_error: any;
     collapsible: boolean;
     collapsed: boolean;
     test_result: boolean;

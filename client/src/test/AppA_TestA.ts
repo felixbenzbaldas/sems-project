@@ -41,7 +41,7 @@ export class AppA_TestA {
                 success = await test.action();
             } catch (error) {
                 success = false;
-                test.test_result_error = error.toString();
+                test.test_result_error = error;
                 test.test_result = false;
             }
             if (success) {
@@ -66,7 +66,7 @@ export class AppA_TestA {
                 let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.createFailingDemoTest()]);
 
                 let dummyTestRun = testResults.failed.at(0);
-                return dummyTestRun.test_result_error === 'demo error in test' &&
+                return dummyTestRun.test_result_error.toString().includes('demo error in test') &&
                     dummyTestRun.test_app.appA.logG.listOfStrings.join().includes('a dummy log') &&
                     testResults.successful.length == 0;
             }),
@@ -207,12 +207,14 @@ export class AppA_TestA {
                     })
                 ]);
 
+                await tester.uiG.click('failed with');
                 await tester.uiG.click('ui');
                 await tester.uiG.click('log');
                 await tester.uiG.click('successful tests')
                 let rawText = tester.uiG.getRawText();
                 return rawText.includes('failed tests') &&
                     rawText.includes('failing demo test') &&
+                    rawText.includes('stacktrace') &&
                     rawText.includes('demo error in test') &&
                     rawText.includes('a dummy log') &&
                     rawText.includes('default action') &&
@@ -306,7 +308,7 @@ export class AppA_TestA {
             test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
             test.test_app.appA.logG.toListOfStrings = true;
             test.test_app.log('a dummy log');
-            throw 'demo error in test';
+            throw new Error('demo error in test');
         });
     }
 }

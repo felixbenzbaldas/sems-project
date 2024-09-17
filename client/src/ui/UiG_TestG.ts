@@ -34,7 +34,11 @@ export class UiG_TestG {
         let appA = this.entity.getApp().appA;
         this.bodyContent = appA.simple_createList();
         if (this.entity.test_result_error) {
-            await this.bodyContent.list.addAndUpdateUi(appA.simple_createText('failed with error: ' + this.entity.test_result_error));
+            let errorUi = appA.simple_createCollapsible('failed with ' + this.entity.test_result_error.toString());
+            if (this.entity.test_result_error.stack) {
+                errorUi.list.jsList.push(appA.simple_createTextWithList('stacktrace:', appA.simple_createText(this.entity.test_result_error.stack)));
+            }
+            this.bodyContent.list.jsList.push(errorUi);
         }
         if (this.entity.test_app) {
             await this.bodyContent.list.addAndUpdateUi(appA.simple_createCollapsible('log',
