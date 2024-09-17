@@ -51,4 +51,9 @@ export class AppA_UiA_GlobalEventG {
     async switchToAppContainer() {
         this.entity.appA.currentContainer = this.entity;
     }
+
+    async structureExport() {
+        let toExport = this.entity.appA.uiA.focused;
+        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await toExport.export_keepContainerStructure_ignoreExternalDependencies()));
+    }
 }

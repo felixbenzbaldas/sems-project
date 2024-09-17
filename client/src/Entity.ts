@@ -98,13 +98,15 @@ export class Entity {
         }
     }
 
-    async export_keepContainerStructure_ignoreExternalDependencies() {
+    async export_keepContainerStructure_ignoreExternalDependencies(): Promise<any> {
         let exported = this.json();
         if(this.containerA) {
             exported.objects = {};
-            this.containerA.mapNameEntity.forEach((entity: Entity, name : string) => {
-                exported.objects[name] = entity.json();
-            });
+            for (let entry of this.containerA.mapNameEntity.entries()) {
+                let name : string = entry[0];
+                let entity : Entity = entry[1];
+                exported.objects[name] = await entity.export_keepContainerStructure_ignoreExternalDependencies();
+            }
         }
         return exported;
     }
