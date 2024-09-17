@@ -76,6 +76,7 @@ export class Entity {
     }
 
     getPath(object: Entity) : Entity {
+        this.logInfo('getPath of ' + object.getShortDescription());
         if (this.containerA) {
             if (object.container === this) {
                 return this.getApp().appA.createPath([object.name]);
@@ -159,6 +160,10 @@ export class Entity {
 
     log(log: string) {
         this.getApp()?.appA?.logG.log(this, log);
+    }
+
+    logInfo(log: string) {
+        this.log('                                      (info)           ' + log);
     }
 
     getDescription() : string {
