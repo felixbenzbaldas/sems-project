@@ -146,6 +146,9 @@ export class Starter {
             app.appA.simple_createButton('import to content', async () => {
                 await app.appA.uiA.globalEventG.importToContent();
             }),
+            app.appA.simple_createButton('switch current container', async () => {
+                await app.appA.uiA.globalEventG.switchCurrentContainer();
+            }),
         );
         await app.uiG.update();
         return app;
