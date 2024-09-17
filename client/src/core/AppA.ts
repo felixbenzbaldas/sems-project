@@ -16,7 +16,6 @@ export class AppA {
 
     constructor(private entity : Entity) {
         entity.containerA = new ContainerA(entity);
-        entity.containerA.mapNameEntity = new Map();
         this.currentContainer = entity;
         this.logG = new LogG(entity);
     }

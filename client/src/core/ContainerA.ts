@@ -3,7 +3,7 @@ import type {Entity} from "@/Entity";
 export class ContainerA {
 
     private nameCounter : number = 0;
-    mapNameEntity: Map<string, Entity>;
+    mapNameEntity: Map<string, Entity> = new Map();
 
     constructor(private entity : Entity) {
     }

@@ -76,7 +76,7 @@ export class Entity {
     }
 
     getPath(object: Entity) : Entity {
-        if (this.containerA?.mapNameEntity) {
+        if (this.containerA) {
             if (object.container === this) {
                 return this.getApp().appA.createPath([object.name]);
             }
@@ -99,7 +99,7 @@ export class Entity {
 
     async export_keepContainerStructure_ignoreExternalDependencies() {
         let exported = this.json();
-        if(this.containerA.mapNameEntity) {
+        if(this.containerA) {
             exported.objects = {};
             this.containerA.mapNameEntity.forEach((entity: Entity, name : string) => {
                 exported.objects[name] = entity.json();

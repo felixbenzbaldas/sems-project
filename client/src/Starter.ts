@@ -42,7 +42,6 @@ export class Starter {
         let app = new Entity();
         app.text = 'easy application';
         app.appA = new AppA(app);
-        app.containerA.mapNameEntity = new Map();
         return app;
     }
 
