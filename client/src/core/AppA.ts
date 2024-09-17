@@ -2,7 +2,7 @@ import type {AppA_UiA} from "@/ui/AppA_UiA";
 import {ListA} from "@/core/ListA";
 import {PathA} from "@/core/PathA";
 import {Entity} from "@/Entity";
-import {LogG} from "@/LogG";
+import {LogG} from "@/core/LogG";
 import type {AppA_TestA} from "@/test/AppA_TestA";
 import {ContainerA} from "@/core/ContainerA";
 
