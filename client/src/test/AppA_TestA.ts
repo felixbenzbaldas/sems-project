@@ -136,7 +136,8 @@ export class AppA_TestA {
 
                 await app.appA.uiA.globalEventG.switchCurrentContainer();
 
-                return app.appA.currentContainer === app.appA.uiA.focused;
+                return app.appA.currentContainer === app.appA.uiA.focused &&
+                    app.appA.currentContainer.containerA;
             })
         ]
     }

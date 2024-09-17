@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import type {AppA_UiA} from "@/ui/AppA_UiA";
+import {ContainerA} from "@/core/ContainerA";
 
 export class AppA_UiA_GlobalEventG {
 
@@ -38,6 +39,9 @@ export class AppA_UiA_GlobalEventG {
 
     async switchCurrentContainer() {
         this.entity.appA.currentContainer = this.entity.appA.uiA.focused;
+        if (!this.entity.appA.currentContainer.containerA) {
+            this.entity.appA.currentContainer.containerA = new ContainerA(this.entity.appA.currentContainer);
+        }
     }
 
     private getUiA() {
