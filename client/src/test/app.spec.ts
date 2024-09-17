@@ -82,7 +82,7 @@ describe('app', () => {
         let app = Starter.createApp();
         let object = await app.appA.createText('foo');
 
-        let exported : any = await app.export_keepContainerStructure_ignoreExternalDependencies();
+        let exported : any = await app.export();
 
         expect(exported.objects).toBeTruthy();
         expect(exported.objects[object.name]).toBeTruthy();

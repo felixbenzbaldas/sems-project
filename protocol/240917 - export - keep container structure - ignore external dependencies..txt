@@ -1,0 +1,8 @@
+Exporting an entity means the following:
+- the fields of the entity get exported
+- If the entity is a container: the contained objects are exported
+- external dependencies will not be exported
+
+There is also another kind of export: the flat export. The flat export means:
+- the fields of the entity get exported
+- all dependencies will be included (in one container)

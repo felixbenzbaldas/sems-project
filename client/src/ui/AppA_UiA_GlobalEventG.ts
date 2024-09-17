@@ -12,14 +12,14 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async exportApp() {
-        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await this.entity.export_keepContainerStructure_ignoreExternalDependencies()));
+        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await this.entity.export()));
     }
 
-    async exportContent() {
+    async flatExportContent() {
         await this.getUiA().output.setAndUpdateUi(JSON.stringify(await this.getUiA().content.export_allDependenciesInOneContainer()));
     }
 
-    async importToContent() {
+    async flatImportToContent() {
         await this.getUiA().input.showInput();
         await this.entity.appA.addAllToListFromRawData(this.getUiA().content, JSON.parse(this.getUiA().input.get()));
     }
@@ -52,8 +52,8 @@ export class AppA_UiA_GlobalEventG {
         this.entity.appA.currentContainer = this.entity;
     }
 
-    async structureExport() {
+    async export() {
         let toExport = this.entity.appA.uiA.focused;
-        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await toExport.export_keepContainerStructure_ignoreExternalDependencies()));
+        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await toExport.export()));
     }
 }

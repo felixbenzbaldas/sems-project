@@ -30,20 +30,20 @@ describe('ui', () => {
         expect(app.appA.uiA.output.getUi().hidden).toBe(false);
     });
 
-    it('can export content', async () => {
+    it('can flat export content', async () => {
         let app : Entity = Starter.createAppWithUI();
         expect(app.appA.uiA.output.getUi().hidden).toBe(true);
 
-        await app.appA.uiA.globalEventG.exportContent();
+        await app.appA.uiA.globalEventG.flatExportContent();
 
         expect(app.appA.uiA.output.getUi().hidden).toBe(false);
     });
 
-    it('can import to content', async () => {
+    it('can flat import to content', async () => {
         let app = Starter.createAppWithUI();
         app.appA.uiA.input.set('{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}');
 
-        await app.appA.uiA.globalEventG.importToContent();
+        await app.appA.uiA.globalEventG.flatImportToContent();
 
         expect(app.containerA.mapNameEntity.size).toBe(1);
     });

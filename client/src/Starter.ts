@@ -136,24 +136,24 @@ export class Starter {
             app.appA.simple_createButton('expand/collapse', async () => {
                 await app.appA.uiA.globalEventG.expandOrCollapse();
             }),
-            app.appA.simple_createButton('export app', async () => {
-                await app.appA.uiA.globalEventG.exportApp();
-            }),
-            app.appA.simple_createButton('export content', async () => {
-                await app.appA.uiA.globalEventG.exportContent();
-            }),
-            app.appA.simple_createButton('import to content', async () => {
-                await app.appA.uiA.globalEventG.importToContent();
-            }),
             app.appA.simple_createButton('switch current container', async () => {
                 await app.appA.uiA.globalEventG.switchCurrentContainer();
             }),
             app.appA.simple_createButton('switch to app container', async () => {
                 await app.appA.uiA.globalEventG.switchToAppContainer();
             }),
-            app.appA.simple_createButton('structure export', async () => {
-                await app.appA.uiA.globalEventG.structureExport();
+            app.appA.simple_createButton('export', async () => {
+                await app.appA.uiA.globalEventG.export();
             }),
+            app.appA.simple_createButton('export app', async () => {
+                await app.appA.uiA.globalEventG.exportApp();
+            }),
+            // app.appA.simple_createButton('flat export content', async () => {
+            //     await app.appA.uiA.globalEventG.flatExportContent();
+            // }),
+            // app.appA.simple_createButton('flat import to content', async () => {
+            //     await app.appA.uiA.globalEventG.flatImportToContent();
+            // }),
         );
         await app.uiG.update();
         return app;
