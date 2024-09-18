@@ -148,6 +148,9 @@ export class Starter {
             app.appA.unboundG.createButton('export app', async () => {
                 await app.appA.uiA.globalEventG.exportApp();
             }),
+            app.appA.unboundG.createButton('import', async () => {
+                await app.appA.uiA.globalEventG.import();
+            }),
             // app.appA.unboundG.createButton('flat export content', async () => {
             //     await app.appA.uiA.globalEventG.flatExportContent();
             // }),

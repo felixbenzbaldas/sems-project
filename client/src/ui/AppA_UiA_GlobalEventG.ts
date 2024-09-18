@@ -1,6 +1,7 @@
 import type {Entity} from "@/Entity";
 import type {AppA_UiA} from "@/ui/AppA_UiA";
 import {ContainerA} from "@/core/ContainerA";
+import {ListA} from "@/core/ListA";
 
 export class AppA_UiA_GlobalEventG {
 
@@ -55,5 +56,16 @@ export class AppA_UiA_GlobalEventG {
     async export() {
         let toExport = this.entity.appA.uiA.focused;
         await this.getUiA().output.setAndUpdateUi(JSON.stringify(await toExport.export()));
+    }
+
+    async import() {
+        let focused = this.entity.appA.uiA.focused;
+        let created = this.entity.appA.unboundG.createFromJson(JSON.parse(this.entity.appA.uiA.input.get()));
+        this.entity.appA.currentContainer.containerA.take(created);
+        if (!focused.list) {
+            focused.list = new ListA(focused);
+        }
+        await focused.list.addAndUpdateUi(created);
+        this.entity.appA.uiA.focused = created;
     }
 }

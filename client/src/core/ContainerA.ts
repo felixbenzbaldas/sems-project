@@ -29,7 +29,7 @@ export class ContainerA {
         return Promise.resolve(list);
     }
 
-    private take(entity: Entity) {
+    take(entity: Entity) {
         entity.name = this.getUniqueRandomName();
         entity.container = this.entity;
         this.mapNameEntity.set(entity.name, entity);
