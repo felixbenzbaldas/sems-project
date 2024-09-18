@@ -5,6 +5,7 @@ import {Entity} from "@/Entity";
 import {LogG} from "@/core/LogG";
 import type {AppA_TestA} from "@/test/AppA_TestA";
 import {ContainerA} from "@/core/ContainerA";
+import {AppA_UnboundG} from "@/core/AppA_UnboundG";
 
 export class AppA {
 
@@ -13,8 +14,10 @@ export class AppA {
     readonly logG: LogG;
     testA : AppA_TestA;
     currentContainer: Entity;
+    unboundG : AppA_UnboundG;
 
     constructor(private entity : Entity) {
+        this.unboundG = new AppA_UnboundG(entity);
         entity.containerA = new ContainerA(entity);
         this.currentContainer = entity;
         this.logG = new LogG(entity);
@@ -28,46 +31,6 @@ export class AppA {
 
     createEntity() {
         return new Entity();
-    }
-
-    // 'simple' means that the created object has no container and no name. It is simply an object in the memory.
-    simple_createList(...jsList : Array<Entity>) : Entity {
-        let list = this.createEntityWithApp();
-        list.list = new ListA(list, ...jsList);
-        return list;
-    }
-
-    simple_createText(text: string) : Entity {
-        let entity = this.createEntityWithApp();
-        entity.text = text;
-        return entity;
-    }
-
-    simple_createLink(href: string, text?: string) {
-        let entity = this.createEntityWithApp();
-        entity.link = href;
-        entity.text = text;
-        return entity;
-    }
-
-    simple_createTextWithList(text : string, ...jsList : Array<Entity>) : Entity {
-        let entity = this.createEntityWithApp();
-        entity.text = text;
-        entity.list = new ListA(entity, ...jsList);
-        return entity;
-    }
-
-    simple_createCollapsible(text: string, ...jsList : Array<Entity>) {
-        let entity = this.simple_createTextWithList(text, ...jsList);
-        entity.collapsible = true;
-        return entity;
-    }
-
-    simple_createButton(label : string, func : Function) : Entity {
-        let button = this.createEntityWithApp();
-        button.text = label;
-        button.action = func;
-        return button;
     }
 
     async createText(text: string) : Promise<Entity> {

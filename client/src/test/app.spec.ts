@@ -29,7 +29,7 @@ describe('app', () => {
     it('can create a simple list', async () => {
         let app : Entity = Starter.createApp();
 
-        let list : Entity = app.appA.simple_createList();
+        let list : Entity = app.appA.unboundG.createList();
 
         expect(list.list.jsList.length).toBe(0);
     });
@@ -131,7 +131,7 @@ describe('app', () => {
 
     test('Can get shortDescription of text', async () => {
         let app : Entity = Starter.createApp();
-        let text : Entity = app.appA.simple_createText('12345678901234567890123456789012');
+        let text : Entity = app.appA.unboundG.createText('12345678901234567890123456789012');
 
         let shortDescription = text.getShortDescription();
 

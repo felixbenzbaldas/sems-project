@@ -6,7 +6,7 @@ describe('simple list', () => {
     
     it('can add entity', async () => {
         let app : Entity = Starter.createApp();
-        let list : Entity = app.appA.simple_createList();
+        let list : Entity = app.appA.unboundG.createList();
 
         await list.list.addAndUpdateUi(app.appA.createEntityWithApp());
 
@@ -15,7 +15,7 @@ describe('simple list', () => {
 
     it('can get json (empty)', async () => {
         let app : Entity = Starter.createApp();
-        let list : Entity = app.appA.simple_createList();
+        let list : Entity = app.appA.unboundG.createList();
 
         let json = list.json_withoutContainedObjects();
 
@@ -24,7 +24,7 @@ describe('simple list', () => {
 
     it('can get description', async () => {
         let app : Entity = Starter.createApp();
-        let list : Entity = app.appA.simple_createList();
+        let list : Entity = app.appA.unboundG.createList();
         await list.list.addAndUpdateUi(app.appA.createEntityWithApp());
 
         let description = list.getDescription();

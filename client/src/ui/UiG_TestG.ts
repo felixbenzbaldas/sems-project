@@ -32,18 +32,18 @@ export class UiG_TestG {
 
     private async updateBodyContent() {
         let appA = this.entity.getApp().appA;
-        this.bodyContent = appA.simple_createList();
+        this.bodyContent = appA.unboundG.createList();
         if (this.entity.test_result_error) {
-            let errorUi = appA.simple_createCollapsible('failed with ' + this.entity.test_result_error.toString());
+            let errorUi = appA.unboundG.createCollapsible('failed with ' + this.entity.test_result_error.toString());
             if (this.entity.test_result_error.stack) {
-                errorUi.list.jsList.push(appA.simple_createTextWithList('stacktrace:', appA.simple_createText(this.entity.test_result_error.stack)));
+                errorUi.list.jsList.push(appA.unboundG.createTextWithList('stacktrace:', appA.unboundG.createText(this.entity.test_result_error.stack)));
             }
             this.bodyContent.list.jsList.push(errorUi);
         }
         if (this.entity.test_app) {
-            await this.bodyContent.list.addAndUpdateUi(appA.simple_createCollapsible('log',
-                appA.simple_createText(this.entity.test_app.appA.logG.listOfStrings.join('\n'))));
-            await this.bodyContent.list.addAndUpdateUi(appA.simple_createCollapsible('ui',
+            await this.bodyContent.list.addAndUpdateUi(appA.unboundG.createCollapsible('log',
+                appA.unboundG.createText(this.entity.test_app.appA.logG.listOfStrings.join('\n'))));
+            await this.bodyContent.list.addAndUpdateUi(appA.unboundG.createCollapsible('ui',
                 this.entity.test_app));
         }
         await this.bodyContent.uiG.update();

@@ -18,13 +18,13 @@ export class ContainerA {
     }
 
     async createText(text: string) : Promise<Entity> {
-        let textObject = this.entity.getApp().appA.simple_createText(text);
+        let textObject = this.entity.getApp().appA.unboundG.createText(text);
         this.take(textObject);
         return Promise.resolve(textObject);
     }
 
     async createList() : Promise<Entity> {
-        let list = this.entity.getApp().appA.simple_createList();
+        let list = this.entity.getApp().appA.unboundG.createList();
         this.take(list);
         return Promise.resolve(list);
     }

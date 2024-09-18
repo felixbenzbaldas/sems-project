@@ -26,14 +26,14 @@ export class AppA_TestA {
         this.appA.uiA.content.list.jsList = [];
         let testResults : TestResults = await this.run(tests);
         if (testResults.failed.length > 0) {
-            await this.appA.uiA.content.list.addAndUpdateUi(this.appA.simple_createTextWithList('failed tests (' + testResults.failed.length + ')',
+            await this.appA.uiA.content.list.addAndUpdateUi(this.appA.unboundG.createTextWithList('failed tests (' + testResults.failed.length + ')',
                 ...testResults.failed));
         }
         await this.appA.uiA.content.list.addAndUpdateUi(
-            this.appA.simple_createCollapsible('successful tests (' + testResults.successful.length + ')',
+            this.appA.unboundG.createCollapsible('successful tests (' + testResults.successful.length + ')',
                 ...testResults.successful),
-            this.appA.simple_createText(''),
-            this.appA.simple_createText('Note: There are also (old) tests which can be run with JUnit/Vitest.'));
+            this.appA.unboundG.createText(''),
+            this.appA.unboundG.createText('Note: There are also (old) tests which can be run with JUnit/Vitest.'));
     }
 
     async run(tests : Array<Entity>) : Promise<TestResults> {
@@ -77,7 +77,7 @@ export class AppA_TestA {
                 let app = Starter.createApp();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
-                let container = app.appA.simple_createTextWithList('the container');
+                let container = app.appA.unboundG.createTextWithList('the container');
                 container.containerA = new ContainerA(container);
                 app.appA.currentContainer = container;
                 let subitemAndContained = await app.appA.createText('subitem + contained');
@@ -101,7 +101,7 @@ export class AppA_TestA {
     }
 
     createTest(name: string, action: (test: Entity) => Promise<any>) : Entity {
-        let test = this.appA.simple_createText(name);
+        let test = this.appA.unboundG.createText(name);
         test.isTest = true;
         test.action = async () => {
             test.test_result = await action(test);
@@ -134,7 +134,7 @@ export class AppA_TestA {
             }),
             this.createTest('ui_collapsible', async test => {
                 let app = Starter.createAppWithUI();
-                let collapsible = app.appA.simple_createCollapsible('', app.appA.simple_createText(''));
+                let collapsible = app.appA.unboundG.createCollapsible('', app.appA.unboundG.createText(''));
 
                 await collapsible.updateUi();
 
@@ -265,7 +265,7 @@ export class AppA_TestA {
                 html.dangerous_html.innerText = 'test';
                 html.dangerous_html.contentEditable = 'true';
                 html.dangerous_html.style.margin = '1rem';
-                await test.test_app.appA.uiA.content.list.addAndUpdateUi(html, test.test_app.appA.simple_createButton('setCaret', () => {
+                await test.test_app.appA.uiA.content.list.addAndUpdateUi(html, test.test_app.appA.unboundG.createButton('setCaret', () => {
 
                     setCaret(html.dangerous_html, 2);
 
@@ -308,7 +308,7 @@ export class AppA_TestA {
                 html.dangerous_html.style.height = '15rem';
                 html.dangerous_html.style.backgroundColor = 'gold';
                 html.dangerous_html.style.width = '15rem';
-                let collapsible = appA.simple_createCollapsible('scroll down and then collapse me', html);
+                let collapsible = appA.unboundG.createCollapsible('scroll down and then collapse me', html);
                 collapsible.collapsed = false;
                 collapsible.editable = false;
                 appA.uiA.content.list.jsList.push(collapsible);

@@ -9,17 +9,17 @@ export class InputA {
 
 
     constructor(private entity : Entity) {
-        this.input = entity.appA.simple_createText('');
+        this.input = entity.appA.unboundG.createText('');
         this.input.editable = true;
-        this.button = entity.appA.simple_createButton('show input', () => {
+        this.button = entity.appA.unboundG.createButton('show input', () => {
             this.showInput();
         });
         this.button.hidden = false;
-        this.inputWrapper = entity.appA.simple_createTextWithList('input', entity.appA.simple_createButton('hide input', async () => {
+        this.inputWrapper = entity.appA.unboundG.createTextWithList('input', entity.appA.unboundG.createButton('hide input', async () => {
             await this.showButton();
         }), this.input);
         this.inputWrapper.hidden = true;
-        this.ui = entity.appA.simple_createList(this.button, this.inputWrapper);
+        this.ui = entity.appA.unboundG.createList(this.button, this.inputWrapper);
     }
 
     getUi() : Entity {

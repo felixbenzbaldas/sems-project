@@ -17,7 +17,7 @@ export class AppA_UiA {
     withPlaceholderArea: boolean;
 
     constructor(private entity: Entity) {
-        this.content = entity.appA.simple_createList();
+        this.content = entity.appA.unboundG.createList();
         this.content.container = entity;
         this.output = new OutputA(entity);
         this.input = new InputA(entity);

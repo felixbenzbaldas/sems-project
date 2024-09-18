@@ -6,8 +6,8 @@ export class OutputA {
     private readonly output : Entity;
 
     constructor(private entity : Entity) {
-        this.output = this.entity.appA.simple_createText('');
-        this.ui = this.entity.appA.simple_createTextWithList('output', this.output, this.entity.appA.simple_createButton('hide output', async () => {
+        this.output = this.entity.appA.unboundG.createText('');
+        this.ui = this.entity.appA.unboundG.createTextWithList('output', this.output, this.entity.appA.unboundG.createButton('hide output', async () => {
             await this.ui.setHiddenAndUpdateUi(true);
         }));
         this.ui.hidden = true;
