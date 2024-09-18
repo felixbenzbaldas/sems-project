@@ -2,6 +2,7 @@ import type {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 import type {AppA} from "@/core/AppA";
 import {setCaret} from "@/utils";
+import {ContainerA} from "@/core/ContainerA";
 
 class TestResults {
     successful : Array<Entity> = [];
@@ -71,6 +72,23 @@ export class AppA_TestA {
                 return dummyTestRun.test_result_error.toString().includes('demo error in test') &&
                     dummyTestRun.test_app.appA.logG.listOfStrings.join().includes('a dummy log') &&
                     testResults.successful.length == 0;
+            }),
+            this.createTest('export', async test => {
+                let app = Starter.createApp();
+                test.test_app = app;
+                app.appA.logG.toListOfStrings = true;
+                let container = app.appA.simple_createTextWithList('the container');
+                container.containerA = new ContainerA(container);
+                app.appA.currentContainer = container;
+                let subitemAndContained = await app.appA.createText('subitem + contained');
+                await container.list.addAndUpdateUi(subitemAndContained);
+
+                let exported = await container.export();
+
+                app.log('exported: ' + JSON.stringify(exported, null, 4));
+                return exported.text === 'the container' &&
+                    exported.list.length === 1 &&
+                    exported.objects[exported.list[0][0].toString()].text === 'subitem + contained';
             }),
             ...this.createUiTests(),
             ...this.createModelTests(),
