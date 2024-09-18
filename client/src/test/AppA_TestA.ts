@@ -30,7 +30,9 @@ export class AppA_TestA {
         }
         await this.appA.uiA.content.list.addAndUpdateUi(
             this.appA.simple_createCollapsible('successful tests (' + testResults.successful.length + ')',
-                ...testResults.successful));
+                ...testResults.successful),
+            this.appA.simple_createText(''),
+            this.appA.simple_createText('Note: There are also (old) tests which can be run with JUnit/Vitest.'));
     }
 
     async run(tests : Array<Entity>) : Promise<TestResults> {
