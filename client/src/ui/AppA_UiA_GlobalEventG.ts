@@ -13,11 +13,11 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async exportApp() {
-        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await this.entity.export()));
+        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await this.entity.export(), null, 4));
     }
 
     async flatExportContent() {
-        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await this.getUiA().content.export_allDependenciesInOneContainer()));
+        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await this.getUiA().content.export_allDependenciesInOneContainer(), null, 4));
     }
 
     async flatImportToContent() {
@@ -55,7 +55,7 @@ export class AppA_UiA_GlobalEventG {
 
     async export() {
         let toExport = this.entity.appA.uiA.focused;
-        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await toExport.export()));
+        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await toExport.export(), null, 4));
     }
 
     async import() {
