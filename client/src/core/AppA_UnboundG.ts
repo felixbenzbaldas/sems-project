@@ -1,5 +1,7 @@
 import {Entity} from "@/Entity";
 import {ListA} from "@/core/ListA";
+import {notNullUndefined} from "@/utils";
+import {ContainerA} from "@/core/ContainerA";
 
 // / unbound means that the created object has no container and no name.
 export class AppA_UnboundG {
@@ -44,5 +46,29 @@ export class AppA_UnboundG {
         button.text = label;
         button.action = func;
         return button;
+    }
+
+    createFromJson(json: any) : Entity {
+        let entity : Entity = this.entity.appA.createEntityWithApp();
+        entity.text = json.text;
+        if (notNullUndefined(json.list)) {
+            entity.list = new ListA(entity);
+            entity.list.jsList = [];
+            for (let current of json.list) {
+                if (current instanceof Array) {
+                    entity.list.jsList.push(this.entity.appA.createPath(current));
+                } else {
+                    entity.list.jsList.push(this.createFromJson(current));
+                }
+            }
+        }
+        if (notNullUndefined(json.objects)) {
+            entity.containerA = new ContainerA(entity);
+            for (let key of Object.keys(json.objects)) {
+                let current : Entity = this.createFromJson(json.objects[key]);
+                entity.containerA.mapNameEntity.set(key, current);
+            }
+        }
+        return entity;
     }
 }

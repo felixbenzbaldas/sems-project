@@ -90,6 +90,18 @@ export class AppA_TestA {
                     exported.list.length === 1 &&
                     exported.objects[exported.list[0][0].toString()].text === 'subitem + contained';
             }),
+            this.createTest('createFromJson', async test => {
+                let app = Starter.createApp();
+                test.test_app = app;
+                app.appA.logG.toListOfStrings = true;
+                let json = {text: 'container + parent', list: [['0']], objects: {'0': {text: 'contained + subitem'}}};
+
+                let container = app.appA.unboundG.createFromJson(json);
+
+                return container.text === 'container + parent' &&
+                    (await container.list.getObject(0)).text === 'contained + subitem' &&
+                    container.list.jsList.at(0).pathA;
+            }),
             ...this.createUiTests(),
             ...this.createModelTests(),
             ...this.createSemiAutomatedTests()
