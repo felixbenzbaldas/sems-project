@@ -21,7 +21,7 @@ describe('list', () => {
         let item = await app.appA.createText('bar');
         await list.list.addAndUpdateUi(item);
 
-        let json : any = list.json();
+        let json : any = list.json_withoutContainedObjects();
 
         expect(json.list.length).toBe(1);
         expect(json.list[0]).toEqual(['..', item.name]);

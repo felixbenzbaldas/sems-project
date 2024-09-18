@@ -34,11 +34,11 @@ describe('app', () => {
         expect(list.list.jsList.length).toBe(0);
     });
 
-    it('can get json', async () => {
+    it('can get json (without contained objects)', async () => {
         let app : Entity = Starter.createApp();
         app.text = 'my app';
 
-        let json = app.json();
+        let json = app.json_withoutContainedObjects();
 
         expect(json.text).toEqual('my app');
     });

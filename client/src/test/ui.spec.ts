@@ -16,7 +16,7 @@ describe('ui', () => {
     it('can get json', async () => {
         let app : Entity = Starter.createAppWithUI();
 
-        let json = app.json();
+        let json = app.json_withoutContainedObjects();
 
         expect(json.content.list).toEqual([]);
     });

@@ -19,12 +19,12 @@ export class ListA {
         await this.entity.updateUi();
     }
 
-    json() {
+    json_withoutContainedObjects() {
         return this.jsList.map(entity => {
             if (entity.pathA) {
                 return entity.pathA.listOfNames;
             } else {
-                return entity.json();
+                return entity.json_withoutContainedObjects();
             }
         });
     }

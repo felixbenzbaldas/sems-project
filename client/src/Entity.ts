@@ -33,11 +33,11 @@ export class Entity {
         this.uiG = new UiG(this);
     }
 
-    json() : any {
+    json_withoutContainedObjects() : any {
         return {
             'text': this.text,
-            'list': this.list?.json(),
-            'content': this.appA?.uiA?.content.json(),
+            'list': this.list?.json_withoutContainedObjects(),
+            'content': this.appA?.uiA?.content.json_withoutContainedObjects(),
         }
     }
 
@@ -99,7 +99,7 @@ export class Entity {
     }
 
     async export(): Promise<any> {
-        let exported = this.json();
+        let exported = this.json_withoutContainedObjects();
         if(this.containerA) {
             exported.objects = {};
             for (let entry of this.containerA.mapNameEntity.entries()) {
@@ -112,14 +112,14 @@ export class Entity {
     }
 
     async export_allDependenciesInOneContainer() {
-        let exported = this.json();
+        let exported = this.json_withoutContainedObjects();
         let dependencies = await this.getDependencies();
         if (dependencies.size > 0) {
             exported.dependencies = [];
             for (let dependency of dependencies) {
                 exported.dependencies.push({
                     name: dependency.name,
-                    ... dependency.json()
+                    ... dependency.json_withoutContainedObjects()
                 });
             }
         }

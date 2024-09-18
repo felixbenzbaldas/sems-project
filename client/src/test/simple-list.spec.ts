@@ -17,7 +17,7 @@ describe('simple list', () => {
         let app : Entity = Starter.createApp();
         let list : Entity = app.appA.simple_createList();
 
-        let json = list.json();
+        let json = list.json_withoutContainedObjects();
 
         expect(json.list).toEqual([]);
     });
