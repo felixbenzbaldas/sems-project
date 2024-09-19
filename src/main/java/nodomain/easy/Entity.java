@@ -14,7 +14,7 @@ public class Entity {
 
     public String name;
     public String text;
-    public ListA list;
+    public ListA listA;
     public Map<String, Object> data = new HashMap<>();
     public Entity container;
 
@@ -90,7 +90,7 @@ public class Entity {
 
     public Entity createList() {
         Entity entity = this.createEntity();
-        entity.list = new ListA();
+        entity.listA = new ListA();
         return entity;
     }
 
@@ -103,7 +103,7 @@ public class Entity {
         if (hasPersistence()) {
             entity.name = new RandomString().next();
             entity.container = this;
-            loadedObjects.put(entity.name, entity);
+            mapStringEntity.put(entity.name, entity);
             entity.set("text", text);
         } else {
             entity.text = text;
@@ -128,17 +128,17 @@ public class Entity {
     ////////////////////////////////////////////////////////////////////////
     // container aspect
 
-    public Map<String, Entity> loadedObjects = new HashMap<>();
+    public Map<String, Entity> mapStringEntity = new HashMap<>();
 
     public Entity containerAspect_getByName(String name) {
-        if (!loadedObjects.containsKey(name)) {
+        if (!mapStringEntity.containsKey(name)) {
             Entity entity = this.createEntity();
             entity.name = name;
             entity.container = this;
-            loadedObjects.put(name, entity);
+            mapStringEntity.put(name, entity);
             entity.updateFromPersistence();
         }
-        return loadedObjects.get(name);
+        return mapStringEntity.get(name);
     }
 
     ////////////////////////////////////////////////////////////////////////

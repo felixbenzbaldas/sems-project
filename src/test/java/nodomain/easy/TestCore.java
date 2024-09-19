@@ -19,7 +19,7 @@ public class TestCore {
 
         Entity entity = app.createList();
 
-        assertThat(entity.list.jList).isNotNull();
+        assertThat(entity.listA.jList).isNotNull();
     }
 
     @Test
