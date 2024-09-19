@@ -30,7 +30,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async newSubitem() {
-        console.log('newSubitem');
+        this.entity.logInfo('newSubitem');
         await this.getUiA().focused.newSubitem();
     }
 
