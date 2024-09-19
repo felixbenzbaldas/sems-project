@@ -1,6 +1,7 @@
 package nodomain.simple;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nodomain.simple.core.AppG;
 import nodomain.simple.core.ListA;
 import nodomain.simple.core.RandomString;
 
@@ -17,6 +18,11 @@ public class Entity {
     public ListA listA;
     public Map<String, Object> data = new HashMap<>();
     public Entity container;
+    public AppG appG;
+
+    public Entity() {
+        this.appG = new AppG(this);
+    }
 
 
     public void set(String property, Object value) {
@@ -84,55 +90,13 @@ public class Entity {
     }
 
     ////////////////////////////////////////////////////////////////////////
-    // app aspect
-
-    public int port;
-
-    public Entity createList() {
-        Entity entity = this.createEntity();
-        entity.listA = new ListA();
-        return entity;
-    }
-
-    public Entity createEntity() {
-        return new Entity();
-    }
-
-    public Entity createText(String text) {
-        Entity entity = this.createEntity();
-        if (hasPersistence()) {
-            entity.name = new RandomString().next();
-            entity.container = this;
-            mapStringEntity.put(entity.name, entity);
-            entity.set("text", text);
-        } else {
-            entity.text = text;
-        }
-        return entity;
-    }
-
-    // ols = OnlyLocalhostServer
-    public void olsAspect_reset() {
-        set("content", List.of());
-    }
-
-    // returns the name
-    public String olsAspect_createText(List<String> pathOfContainer, String text) {
-        if (pathOfContainer.isEmpty()) {
-            Entity entity = this.createText(text);
-            return entity.name;
-        } else {
-            throw new RuntimeException("not implemented yet");
-        }
-    }
-    ////////////////////////////////////////////////////////////////////////
     // container aspect
 
     public Map<String, Entity> mapStringEntity = new HashMap<>();
 
     public Entity containerAspect_getByName(String name) {
         if (!mapStringEntity.containsKey(name)) {
-            Entity entity = this.createEntity();
+            Entity entity = this.appG.createEntity();
             entity.name = name;
             entity.container = this;
             mapStringEntity.put(name, entity);
@@ -140,6 +104,4 @@ public class Entity {
         }
         return mapStringEntity.get(name);
     }
-
-    ////////////////////////////////////////////////////////////////////////
 }

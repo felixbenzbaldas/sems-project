@@ -17,7 +17,7 @@ public class TestCore {
     void can_create_a_list() {
         Entity app = Starter.createApp();
 
-        Entity entity = app.createList();
+        Entity entity = app.appG.createList();
 
         assertThat(entity.listA.jList).isNotNull();
     }
@@ -26,7 +26,7 @@ public class TestCore {
     void test_created_text_has_no_name() {
         Entity app = Starter.createApp();
 
-        Entity entity = app.createText("foo");
+        Entity entity = app.appG.createText("foo");
 
         assertThat(entity.name).isNull();
     }
