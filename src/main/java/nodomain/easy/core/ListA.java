@@ -5,11 +5,11 @@ import nodomain.easy.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAspect {
+public class ListA {
 
     public List<Entity> jList;
 
-    public ListAspect() {
+    public ListA() {
         jList = new ArrayList<>();
     }
 }

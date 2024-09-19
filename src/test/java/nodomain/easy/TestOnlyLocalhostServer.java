@@ -32,7 +32,7 @@ public class TestOnlyLocalhostServer {
 
         assertThat(onlyLocalhostServer.data.get("port")).isEqualTo(8085);
         assertThat((List<List<String>>) onlyLocalhostServer.data.get("content")).isEmpty();
-        assertThat(onlyLocalhostServer.file).isSameAs(file);
+        assertThat(onlyLocalhostServer.persistence_file).isSameAs(file);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class TestOnlyLocalhostServer {
 
         assertThat(loaded.data.get("port")).isEqualTo(8087);
         assertThat(loaded.data.get("content")).isEqualTo("some content");
-        assertThat(loaded.file).isSameAs(file);
+        assertThat(loaded.persistence_file).isSameAs(file);
     }
 
     @Test

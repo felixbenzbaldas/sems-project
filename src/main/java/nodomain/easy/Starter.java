@@ -18,21 +18,21 @@ public class Starter {
 
     public static Entity createApp(File file) {
         Entity app = new Entity();
-        app.file = file;
+        app.persistence_file = file;
         app.set("text", "Sems application (with file)");
         return app;
     }
 
     public static Entity loadApp(File file) {
         Entity app = new Entity();
-        app.file = file;
-        app.update();
+        app.persistence_file = file;
+        app.updateFromPersistence();
         return app;
     }
 
     public static Entity createOnlyLocalhostServer(File file, int port) {
         Entity app = new Entity();
-        app.file = file;
+        app.persistence_file = file;
         app.set("text", "Sems application (with file and OnlyLocalhostServer)");
         app.set("content", List.of());
         app.set("port", port);

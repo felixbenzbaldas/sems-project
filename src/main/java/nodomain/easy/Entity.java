@@ -1,7 +1,7 @@
 package nodomain.easy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nodomain.easy.core.ListAspect;
+import nodomain.easy.core.ListA;
 import nodomain.easy.core.RandomString;
 
 import java.io.File;
@@ -14,7 +14,7 @@ public class Entity {
 
     public String name;
     public String text;
-    public ListAspect list;
+    public ListA list;
     public Map<String, Object> data = new HashMap<>();
     public Entity container;
 
@@ -23,7 +23,7 @@ public class Entity {
         Map<String, Object> newData = new HashMap<>(data); // copy
         newData.put(property, value);
         if (hasPersistence()) {
-            persist(newData);
+            persistence_persist(newData);
         }
         data = newData;
         if (property.equals("text")) {
@@ -31,9 +31,9 @@ public class Entity {
         }
     }
 
-    public void update() {
+    public void updateFromPersistence() {
         if (hasPersistence()) {
-            data = getDataFromPersistence();
+            data = persistence_getData();
             if (data.containsKey("text")) {
                 text = (String) data.get("text");
             } else {
@@ -43,18 +43,18 @@ public class Entity {
     }
 
     public boolean hasPersistence() {
-        return file != null || container != null && container.hasPersistence();
+        return persistence_file != null || container != null && container.hasPersistence();
     }
 
     ////////////////////////////////////////////////////////////////////////
     // persistence aspect
 
-    public File file;
+    public File persistence_file;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public void persist(Map<String, Object> data) {
-        File propertiesFile = getPropertiesFile();
+    public void persistence_persist(Map<String, Object> data) {
+        File propertiesFile = persistence_getPropertiesFile();
         propertiesFile.getParentFile().mkdirs();
         try {
             objectMapper.writeValue(propertiesFile, data);
@@ -63,23 +63,23 @@ public class Entity {
         }
     }
 
-    public Map<String, Object> getDataFromPersistence() {
+    public Map<String, Object> persistence_getData() {
         try {
-            return (Map<String, Object>) objectMapper.readValue(getPropertiesFile(), Object.class);
+            return (Map<String, Object>) objectMapper.readValue(persistence_getPropertiesFile(), Object.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public File getPropertiesFile() {
-        return new File(getFile(), "properties.json");
+    public File persistence_getPropertiesFile() {
+        return new File(persistence_getFile(), "properties.json");
     }
 
-    public File getFile() {
-        if (file == null) {
-            return new File(container.getFile(), "objects/" + name);
+    public File persistence_getFile() {
+        if (persistence_file == null) {
+            return new File(container.persistence_getFile(), "objects/" + name);
         } else {
-            return file;
+            return persistence_file;
         }
     }
 
@@ -90,7 +90,7 @@ public class Entity {
 
     public Entity createList() {
         Entity entity = this.createEntity();
-        entity.list = new ListAspect();
+        entity.list = new ListA();
         return entity;
     }
 
@@ -136,7 +136,7 @@ public class Entity {
             entity.name = name;
             entity.container = this;
             loadedObjects.put(name, entity);
-            entity.update();
+            entity.updateFromPersistence();
         }
         return loadedObjects.get(name);
     }
