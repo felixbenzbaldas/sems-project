@@ -49,6 +49,10 @@ export class AppA_UnboundG {
     }
 
     createFromJson(json: any) : Entity {
+        {
+            let jsonString = JSON.stringify(json);
+            this.entity.logInfo('createFromJson ' + jsonString.substring(0, Math.min(jsonString.length, 20)) + ' ...');
+        }
         let entity : Entity = this.entity.appA.createEntityWithApp();
         entity.text = json.text;
         if (notNullUndefined(json.list)) {
@@ -67,6 +71,8 @@ export class AppA_UnboundG {
             for (let key of Object.keys(json.objects)) {
                 let current : Entity = this.createFromJson(json.objects[key]);
                 entity.containerA.mapNameEntity.set(key, current);
+                current.name = key;
+                current.container = entity;
             }
         }
         return entity;

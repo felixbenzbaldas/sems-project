@@ -98,8 +98,11 @@ export class AppA_TestA {
 
                 let container = app.appA.unboundG.createFromJson(json);
 
+                let containedAndSub = await container.list.getObject(0);
                 return container.text === 'container + parent' &&
-                    (await container.list.getObject(0)).text === 'contained + subitem' &&
+                    containedAndSub.text === 'contained + subitem' &&
+                    containedAndSub.container === container &&
+                    containedAndSub.name === container.containerA.mapNameEntity.keys().next().value &&
                     container.list.jsList.at(0).pathA;
             }),
             ...this.createUiTests(),
