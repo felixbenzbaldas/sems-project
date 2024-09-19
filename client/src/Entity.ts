@@ -63,7 +63,7 @@ export class Entity {
 
     async defaultAction() {
         if (this.appA?.uiA) {
-            await this.appA.uiA.defaultAction();
+            await this.appA.uiA.newSubitem();
         } else if (this.action) {
             throw 'not implemented yet';
         } else {
@@ -189,13 +189,17 @@ export class Entity {
     }
 
     async newSubitem() {
-        if (!this.list) {
-            this.list = new ListA(this);
+        if (this.appA?.uiA) {
+            await this.appA.uiA.newSubitem();
+        } else {
+            if (!this.list) {
+                this.list = new ListA(this);
+            }
+            let created = await this.getApp().appA.createText('');
+            await this.list.addAndUpdateUi(created);
+            this.getApp().appA.uiA.focused = created;
+            await this.uiG.update();
         }
-        let created = await this.getApp().appA.createText('');
-        await this.list.addAndUpdateUi(created);
-        this.getApp().appA.uiA.focused = created;
-        await this.uiG.update();
     }
 
     async toggleCollapsible() {
