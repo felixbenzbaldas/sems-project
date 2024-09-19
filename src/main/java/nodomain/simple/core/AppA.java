@@ -4,11 +4,11 @@ import nodomain.simple.Entity;
 
 import java.util.List;
 
-public class AppG {
+public class AppA {
 
     private Entity entity;
 
-    public AppG(Entity entity) {
+    public AppA(Entity entity) {
         this.entity = entity;
     }
 

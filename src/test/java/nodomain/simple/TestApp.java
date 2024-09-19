@@ -58,7 +58,7 @@ public class TestApp {
     void can_create_object_with_text() {
         Entity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
 
-        Entity entity = app.appG.createText("bar");
+        Entity entity = app.appA.createText("bar");
 
         assertThat(entity.text).isEqualTo("bar");
         // there should be only one entity for an object
@@ -80,7 +80,7 @@ public class TestApp {
     // returns the name of the created object
     private String createObjectWithText(String text) {
         Entity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
-        Entity entity = app.appG.createText(text);
+        Entity entity = app.appA.createText(text);
         return entity.name;
     }
 

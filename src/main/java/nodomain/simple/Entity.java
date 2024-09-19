@@ -1,14 +1,12 @@
 package nodomain.simple;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nodomain.simple.core.AppG;
+import nodomain.simple.core.AppA;
 import nodomain.simple.core.ListA;
-import nodomain.simple.core.RandomString;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Entity {
@@ -18,10 +16,9 @@ public class Entity {
     public ListA listA;
     public Map<String, Object> data = new HashMap<>();
     public Entity container;
-    public AppG appG;
+    public AppA appA;
 
     public Entity() {
-        this.appG = new AppG(this);
     }
 
 
@@ -96,7 +93,7 @@ public class Entity {
 
     public Entity containerAspect_getByName(String name) {
         if (!mapStringEntity.containsKey(name)) {
-            Entity entity = this.appG.createEntity();
+            Entity entity = this.appA.createEntity();
             entity.name = name;
             entity.container = this;
             mapStringEntity.put(name, entity);
