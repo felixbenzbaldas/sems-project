@@ -1,8 +1,8 @@
-package nodomain.easy;
+package nodomain.simple;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nodomain.easy.core.ListA;
-import nodomain.easy.core.RandomString;
+import nodomain.simple.core.ListA;
+import nodomain.simple.core.RandomString;
 
 import java.io.File;
 import java.io.IOException;

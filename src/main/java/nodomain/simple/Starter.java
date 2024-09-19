@@ -1,4 +1,4 @@
-package nodomain.easy;
+package nodomain.simple;
 
 
 import java.io.File;

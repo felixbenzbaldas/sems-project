@@ -1,4 +1,4 @@
-package nodomain.easy;
+package nodomain.simple;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

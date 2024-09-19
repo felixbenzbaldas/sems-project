@@ -1,4 +1,4 @@
-package nodomain.easy.core;
+package nodomain.simple.core;
 
 import java.util.Random;
 

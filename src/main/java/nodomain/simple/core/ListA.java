@@ -1,6 +1,6 @@
-package nodomain.easy.core;
+package nodomain.simple.core;
 
-import nodomain.easy.Entity;
+import nodomain.simple.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
