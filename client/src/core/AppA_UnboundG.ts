@@ -55,6 +55,10 @@ export class AppA_UnboundG {
         }
         let entity : Entity = this.entity.appA.createEntityWithApp();
         entity.text = json.text;
+        entity.collapsible = json.collapsible;
+        entity.collapsed = json.collapsed;
+        entity.link = json.link;
+        entity.editable = json.editable;
         if (notNullUndefined(json.list)) {
             entity.list = new ListA(entity);
             entity.list.jsList = [];

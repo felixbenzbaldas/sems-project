@@ -35,9 +35,13 @@ export class Entity {
 
     json_withoutContainedObjects() : any {
         return {
-            'text': this.text,
-            'list': this.list?.json_withoutContainedObjects(),
-            'content': this.appA?.uiA?.content.json_withoutContainedObjects(),
+            text: this.text,
+            list: this.list?.json_withoutContainedObjects(),
+            collapsible: this.collapsible,
+            collapsed: this.collapsed,
+            link: this.link,
+            editable: this.editable,
+            content: this.appA?.uiA?.content.json_withoutContainedObjects(),
         }
     }
 
