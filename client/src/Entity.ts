@@ -89,7 +89,7 @@ export class Entity {
             if (this.container) {
                 return this.getApp().appA.createPath(['..', ...this.container.getPath(object).pathA.listOfNames]);
             } else {
-                throw 'not implemented yet';
+                throw new Error('not implemented yet');
             }
         }
     }

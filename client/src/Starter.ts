@@ -2,7 +2,6 @@ import {Entity} from "@/Entity";
 import {AppA_UiA} from "@/ui/AppA_UiA";
 import {AppA} from "@/core/AppA";
 import {AppA_TestA} from "@/test/AppA_TestA";
-import {ContainerA} from "@/core/ContainerA";
 
 export class Starter {
 
@@ -49,45 +48,51 @@ export class Starter {
         let app = Starter.createAppWithUI();
         app.appA.uiA.isWebsite = true;
         await app.appA.uiA.content.list.addAndUpdateUi(
-            app.appA.unboundG.createText('This is easy software. It is being developed. New features will be added.'),
-            app.appA.unboundG.createText(''),
-            app.appA.unboundG.createCollapsible('easy client-app',
-                app.appA.unboundG.createText('The easy client-app is an easy application, which runs in your browser (e. g. Firefox / Edge). ' +
-                    'On this way you can use easy software without creating an account or installing it.'),
-                app.appA.unboundG.createLink(Starter.getBaseUrl() + '?client-app', 'Open')
-            ),
-            app.appA.unboundG.createText(''),
-            app.appA.unboundG.createCollapsible('easy tester',
-                app.appA.unboundG.createText('The easy software is able to test itself. The easy tester can run tests directly in the browser.'),
-                app.appA.unboundG.createLink(Starter.getBaseUrl() + '?test&withFailingDemoTest', 'Open')
-            ),
-            app.appA.unboundG.createText(''),
-            app.appA.unboundG.createText(''),
-            app.appA.unboundG.createCollapsible('Zu Verschenken',
-                app.appA.unboundG.createText('Virtual Reality Brille für Android-Smartphone'),
-                app.appA.unboundG.createText('Wasserkaraffe mit Deckel'),
-                app.appA.unboundG.createText('Spielpistole 0,08 Joule (mit Plastikkugeln als Munition)'),
-                app.appA.unboundG.createText('Poker Set (z. B. für Texas Holdem)'),
-                app.appA.unboundG.createText('Geschenk-Gutschein 20 € bei Wilkendorf\'s Teehaus in Karlsruhe')
-            ),
-            app.appA.unboundG.createText(''),
-            app.appA.unboundG.createCollapsible('Zu Verkaufen',
-                app.appA.unboundG.createCollapsible('Rotes Rennrad',
-                    app.appA.unboundG.createText('Marke: Bernd Herkelmann. Shimano DURA ACE Gangschaltung und Bremsen. ' +
-                        'Mit Gepäckträger, kann auch als Tourenrad verwendet werden. ' +
-                        'Der Lack ist leider etwas beschädigt. Der Rahmen ist relativ klein, daher für kleine Menschen geeignet. Inklusive ABUS-Zahlenschloss'),
-                    app.appA.unboundG.createText('Preis: 120 € VB')
-                ),
-                app.appA.unboundG.createCollapsible('hochwertiger Minikühlschrank - geräuschlos',
-                    app.appA.unboundG.createText('Marke: Dometic, Modell: DS 400 weiß miniCool Absorbertechnik'),
-                    app.appA.unboundG.createText('Preis: 100 € (Neupreis im Jahr 2013: 449 €)')
-                )
-            ),
-            app.appA.unboundG.createText(''),
-            await Starter.getPlaceholderAbout(app),
-            await Starter.getPlaceholderImpressum(app),
+            ...(await Starter.createWebsiteContent(app))
         );
         return app;
+    }
+
+    static async createWebsiteContent(app : Entity) : Promise<Array<Entity>> {
+        return [
+            await app.appA.createText('This is easy software. It is being developed. New features will be added.'),
+            await app.appA.createText(''),
+            await app.appA.createCollapsible('easy client-app',
+                await app.appA.createText('The easy client-app is an easy application, which runs in your browser (e. g. Firefox / Edge). ' +
+                    'On this way you can use easy software without creating an account or installing it.'),
+                await app.appA.createLink(Starter.getBaseUrl() + '?client-app', 'Open')
+            ),
+            await app.appA.createText(''),
+            await app.appA.createCollapsible('easy tester',
+                await app.appA.createText('The easy software is able to test itself. The easy tester can run tests directly in the browser.'),
+                await app.appA.createLink(Starter.getBaseUrl() + '?test&withFailingDemoTest', 'Open')
+            ),
+            await app.appA.createText(''),
+            await app.appA.createText(''),
+            await app.appA.createCollapsible('Zu Verschenken',
+                await app.appA.createText('Virtual Reality Brille für Android-Smartphone'),
+                await app.appA.createText('Wasserkaraffe mit Deckel'),
+                await app.appA.createText('Spielpistole 0,08 Joule (mit Plastikkugeln als Munition)'),
+                await app.appA.createText('Poker Set (z. B. für Texas Holdem)'),
+                await app.appA.createText('Geschenk-Gutschein 20 € bei Wilkendorf\'s Teehaus in Karlsruhe')
+            ),
+            await app.appA.createText(''),
+            await app.appA.createCollapsible('Zu Verkaufen',
+                await app.appA.createCollapsible('Rotes Rennrad',
+                    await app.appA.createText('Marke: Bernd Herkelmann. Shimano DURA ACE Gangschaltung und Bremsen. ' +
+                        'Mit Gepäckträger, kann auch als Tourenrad verwendet werden. ' +
+                        'Der Lack ist leider etwas beschädigt. Der Rahmen ist relativ klein, daher für kleine Menschen geeignet. Inklusive ABUS-Zahlenschloss'),
+                    await app.appA.createText('Preis: 120 € VB')
+                ),
+                await app.appA.createCollapsible('hochwertiger Minikühlschrank - geräuschlos',
+                    await app.appA.createText('Marke: Dometic, Modell: DS 400 weiß miniCool Absorbertechnik'),
+                    await app.appA.createText('Preis: 100 € (Neupreis im Jahr 2013: 449 €)')
+                )
+            ),
+            await app.appA.createText(''),
+            await Starter.getPlaceholderAbout(app),
+            await Starter.getPlaceholderImpressum(app),
+        ];
     }
 
     private static getBaseUrl() : string {
@@ -105,7 +110,7 @@ export class Starter {
     private static async getPlaceholder(app : Entity, placeholderHeader : string, placeholderBody : string) : Promise<Entity> {
         let placeholder : Entity;
         if (placeholderBody.startsWith('marker')) {
-            placeholder = app.appA.unboundG.createText('[ to replace during deployment ]');
+            placeholder = await app.appA.createText('[ to replace during deployment ]');
         } else {
             placeholder = await app.appA.createList();
             placeholder.text = placeholderHeader;

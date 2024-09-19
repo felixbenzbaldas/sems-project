@@ -55,4 +55,13 @@ export class AppA {
             await list.list.addAndUpdateUi(await this.createText(dependencyValue.text));
         }
     }
+
+    async createCollapsible(text: string, ...jsList : Array<Entity>) {
+        return await this.currentContainer.containerA.createCollapsible(text, ...jsList);
+    }
+
+
+    async createLink(href: string, text?: string) {
+        return await this.currentContainer.containerA.createLink(href, text);
+    }
 }
