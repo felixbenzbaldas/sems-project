@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public class Entity {
 
@@ -18,10 +19,7 @@ public class Entity {
     public Entity container;
     public AppA appA;
     public File file;
-
-    public Entity() {
-    }
-
+    public Function<Entity, Boolean> test_action;
 
     public void set(String property, Object value) {
         Map<String, Object> newData = new HashMap<>(data); // copy

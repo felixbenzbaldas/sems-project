@@ -54,7 +54,7 @@ public class Starter {
         entity.appA = new AppA(entity);
         entity.appA.testA = new AppA_TestA(entity);
         entity.file = new File(Starter.PATH_FOR_TMP_FILES);
-        entity.appA.testA.run();
+        entity.appA.testA.createRunAndDisplayTests();
         return entity;
     }
 }
