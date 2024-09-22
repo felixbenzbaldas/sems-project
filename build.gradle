@@ -25,7 +25,7 @@ dependencies {
 
 
 application {
-    mainClass = 'nodomain.easy.Starter'
+    mainClass = 'nodomain.simple.Starter'
 }
 
 jar {
