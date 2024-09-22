@@ -24,7 +24,7 @@ public class TestApp {
 
         Entity app = Starter.createApp(file);
 
-        assertThat(app.persistence_file).isSameAs(file);
+        assertThat(app.file).isSameAs(file);
         assertThat(new File(file, "properties.json")).exists();
     }
 
@@ -47,7 +47,7 @@ public class TestApp {
         Entity loadedApp = Starter.loadApp(file);
 
         assertThat(loadedApp.text).isEqualTo("my application");
-        assertThat(loadedApp.persistence_file).isSameAs(file);
+        assertThat(loadedApp.file).isSameAs(file);
     }
 
     @Test

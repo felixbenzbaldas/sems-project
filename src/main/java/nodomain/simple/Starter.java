@@ -26,7 +26,7 @@ public class Starter {
     public static Entity createApp(File file) {
         Entity app = new Entity();
         app.appA = new AppA(app);
-        app.persistence_file = file;
+        app.file = file;
         app.set("text", "Sems application (with file)");
         return app;
     }
@@ -34,7 +34,7 @@ public class Starter {
     public static Entity loadApp(File file) {
         Entity app = new Entity();
         app.appA = new AppA(app);
-        app.persistence_file = file;
+        app.file = file;
         app.updateFromPersistence();
         return app;
     }
@@ -42,7 +42,7 @@ public class Starter {
     public static Entity createOnlyLocalhostServer(File file, int port) {
         Entity app = new Entity();
         app.appA = new AppA(app);
-        app.persistence_file = file;
+        app.file = file;
         app.set("text", "Sems application (with file and OnlyLocalhostServer)");
         app.set("content", List.of());
         app.set("port", port);
@@ -53,6 +53,7 @@ public class Starter {
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
         entity.appA.testA = new AppA_TestA(entity);
+        entity.file = new File(Starter.PATH_FOR_TMP_FILES);
         entity.appA.testA.run();
         return entity;
     }

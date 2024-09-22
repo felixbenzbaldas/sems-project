@@ -17,6 +17,7 @@ public class Entity {
     public Map<String, Object> data = new HashMap<>();
     public Entity container;
     public AppA appA;
+    public File file;
 
     public Entity() {
     }
@@ -46,13 +47,11 @@ public class Entity {
     }
 
     public boolean hasPersistence() {
-        return persistence_file != null || container != null && container.hasPersistence();
+        return file != null || container != null && container.hasPersistence();
     }
 
     ////////////////////////////////////////////////////////////////////////
     // persistence aspect
-
-    public File persistence_file;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -79,10 +78,10 @@ public class Entity {
     }
 
     public File persistence_getFile() {
-        if (persistence_file == null) {
+        if (file == null) {
             return new File(container.persistence_getFile(), "objects/" + name);
         } else {
-            return persistence_file;
+            return file;
         }
     }
 
