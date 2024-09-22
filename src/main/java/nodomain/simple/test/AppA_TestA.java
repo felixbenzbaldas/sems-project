@@ -5,6 +5,9 @@ import nodomain.simple.Utils;
 import nodomain.simple.core.RandomString;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,18 +46,37 @@ public class AppA_TestA {
     }
 
     public List<Entity> createTests() {
-        return Arrays.asList(this.createTest("run multiple platform commands", test -> {
-            test.file.mkdirs();
+        return Arrays.asList(
+            this.createTest("run multiple platform commands", test -> {
+                test.file.mkdirs();
 
-            Utils.runMultiplePlatformCommands("cd " + test.file, "mkdir test");
+                Utils.runMultiplePlatformCommands("cd " + test.file, "mkdir test");
 
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            return new File(test.file, "test").exists();
-        }));
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                return new File(test.file, "test").exists();
+            }),
+            this.createTest("read/write file", test -> {
+                try {
+                    test.file.mkdirs();
+                    File file = new File(test.file, "tmp");
+                    file.createNewFile();
+
+                    PrintWriter printWriter = new PrintWriter(file);
+                    printWriter.write("foo");
+                    printWriter.flush();
+
+                    String read = String.join("\n", Files.readAllLines(file.toPath()).get(0));
+
+                    return "foo".equals(read);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            })
+        );
     }
 
     private Entity createTest(String name, Function<Entity, Boolean> testAction) {
