@@ -2,6 +2,7 @@ package nodomain.simple;
 
 
 import nodomain.simple.core.AppA;
+import nodomain.simple.test.AppA_TestA;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.util.List;
 public class Starter {
 
     public static void main(String[] args) throws IOException {
+        createTester();
     }
 
     public static Entity createApp() {
@@ -43,5 +45,13 @@ public class Starter {
         app.set("content", List.of());
         app.set("port", port);
         return app;
+    }
+
+    public static Entity createTester() {
+        Entity entity = new Entity();
+        entity.appA = new AppA(entity);
+        entity.appA.testA = new AppA_TestA(entity);
+        entity.appA.testA.run();
+        return entity;
     }
 }

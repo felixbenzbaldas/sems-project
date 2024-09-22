@@ -1,11 +1,13 @@
 package nodomain.simple.core;
 
 import nodomain.simple.Entity;
+import nodomain.simple.test.AppA_TestA;
 
 import java.util.List;
 
 public class AppA {
 
+    public AppA_TestA testA;
     private Entity entity;
 
     public AppA(Entity entity) {
