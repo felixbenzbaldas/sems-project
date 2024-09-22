@@ -20,6 +20,7 @@ public class Entity {
     public AppA appA;
     public File file;
     public Function<Entity, Boolean> test_action;
+    public Exception test_result_error;
 
     public void set(String property, Object value) {
         Map<String, Object> newData = new HashMap<>(data); // copy

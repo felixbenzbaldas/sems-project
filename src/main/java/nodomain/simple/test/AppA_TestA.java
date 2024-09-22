@@ -25,7 +25,9 @@ public class AppA_TestA {
             try {
                 result = test.test_action.apply(test);
             } catch (Exception e) {
+                test.test_result_error = e;
                 result = false;
+                test.test_result_error.printStackTrace();
             }
             if (result) {
                 successful.add(test);
