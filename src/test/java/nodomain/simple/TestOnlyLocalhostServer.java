@@ -6,18 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Comparator;
 import java.util.List;
 
+import static nodomain.simple.Starter.PATH_FOR_TMP_FILES;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestOnlyLocalhostServer {
-
-
-    private static final String TEST_RESOURCES_PATH = "./src/test/resources";
-    private static final String PATH_FOR_TMP_FILES = TEST_RESOURCES_PATH + "/tmp";
 
     @BeforeEach
     void beforeEach() {
@@ -73,11 +67,7 @@ public class TestOnlyLocalhostServer {
     
     @AfterEach
     void afterEach() throws IOException {
-        deleteDirectory(new File(PATH_FOR_TMP_FILES));
-    }
-
-    static private void deleteDirectory(File file) throws IOException {
-        Files.walk(file.toPath()).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+        Utils.deleteDirectory(new File(PATH_FOR_TMP_FILES));
     }
 
 }

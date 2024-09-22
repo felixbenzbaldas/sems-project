@@ -5,6 +5,7 @@ import nodomain.simple.Entity;
 import java.io.IOException;
 
 public class AppA_TestA {
+
     private Entity entity;
     public AppA_TestA(Entity entity) {
         this.entity = entity;

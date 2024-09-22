@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class Starter {
+    public static final String TEST_RESOURCES_PATH = "./src/test/resources";
+    public static final String PATH_FOR_TMP_FILES = TEST_RESOURCES_PATH + "/tmp";
 
     public static void main(String[] args) throws IOException {
         createTester();
