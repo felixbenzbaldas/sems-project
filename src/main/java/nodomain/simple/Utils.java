@@ -41,7 +41,7 @@ public class Utils {
     static public void runMultiplePlatformCommands(String ...commands) {
         String joined = String.join(" &&", commands);
         try {
-            Runtime.getRuntime().exec(new String[]{"cmd", "/c", "start cmd.exe /K \"" + joined + " && echo done\""});
+            Runtime.getRuntime().exec(new String[]{"cmd", "/c", "start cmd.exe /K \"" + joined + " && exit\""});
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

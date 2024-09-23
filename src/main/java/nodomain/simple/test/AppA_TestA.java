@@ -37,6 +37,9 @@ public class AppA_TestA {
             }
         });
         System.out.println("failed: " + failed.size());
+        for (Entity failedTest : failed) {
+            System.out.println("   " + failedTest.text);
+        }
         System.out.println("successful: " + successful.size());
         if (!failed.isEmpty()) {
             throw new RuntimeException("failed");
@@ -78,10 +81,10 @@ public class AppA_TestA {
                     file.createNewFile();
                     Utils.writeToFile(file, "foo-toReplace-bar");
 
-                    Utils.replace(file, "toReplace", "replaced");
+                    Utils.replace(file, "toReplace", "replacement");
 
                     String read = Utils.readFromFile(file);
-                    return read.contains("replaced");
+                    return read.contains("replacement");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -91,7 +94,7 @@ public class AppA_TestA {
 
     private Entity createTest(String name, Function<Entity, Boolean> testAction) {
         Entity test = new Entity();
-        test.set("text", name);
+        test.text = name;
         test.file = new File(this.entity.file, new RandomString().next());
         test.test_action = testAction;
         return test;
