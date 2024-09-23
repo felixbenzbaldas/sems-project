@@ -1,7 +1,9 @@
 package nodomain.simple;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
@@ -19,5 +21,15 @@ public class Utils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void writeToFile(File file, String text) throws FileNotFoundException {
+        PrintWriter printWriter = new PrintWriter(file);
+        printWriter.write(text);
+        printWriter.flush();
+    }
+
+    public static String readFromFile(File file) throws IOException {
+        return String.join("\n", Files.readAllLines(file.toPath()));
     }
 }

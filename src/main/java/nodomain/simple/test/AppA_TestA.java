@@ -5,6 +5,7 @@ import nodomain.simple.Utils;
 import nodomain.simple.core.RandomString;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -65,11 +66,8 @@ public class AppA_TestA {
                     File file = new File(test.file, "tmp");
                     file.createNewFile();
 
-                    PrintWriter printWriter = new PrintWriter(file);
-                    printWriter.write("foo");
-                    printWriter.flush();
-
-                    String read = String.join("\n", Files.readAllLines(file.toPath()).get(0));
+                    Utils.writeToFile(file, "foo");
+                    String read = Utils.readFromFile(file);
 
                     return "foo".equals(read);
                 } catch (IOException e) {
