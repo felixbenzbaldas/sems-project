@@ -81,15 +81,25 @@ export class Entity {
 
     getPath(object: Entity) : Entity {
         this.logInfo('getPath of ' + object.getShortDescription());
+        if (this.contains(object)) {
+            if (this === object) {
+                return this.getApp().appA.createPath([]);
+            } else {
+                return this.getApp().appA.createPath([...this.getPath(object.container).pathA.listOfNames, object.name]);
+            }
+        } else {
+            return this.getApp().appA.createPath(['..', ...this.container.getPath(object).pathA.listOfNames]);
+        }
+    }
+
+    contains(object : Entity) : boolean {
         if (this === object) {
-            return this.getApp().appA.createPath([]);
+            return true;
         } else {
             if (object.container) {
-                return this.getApp().appA.createPath([...this.getPath(object.container).pathA.listOfNames, object.name]);
+                return this.contains(object.container);
             } else {
-                if (this.container) {
-                    return this.getApp().appA.createPath(['..', ...this.container.getPath(object).pathA.listOfNames]);
-                }
+                return false;
             }
         }
     }
