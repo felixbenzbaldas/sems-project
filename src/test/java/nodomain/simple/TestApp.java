@@ -82,6 +82,6 @@ public class TestApp {
 
     @AfterEach
     void afterEach() throws IOException {
-        Utils.deleteDirectory(new File(PATH_FOR_TMP_FILES));
+        Utils.delete(new File(PATH_FOR_TMP_FILES));
     }
 }

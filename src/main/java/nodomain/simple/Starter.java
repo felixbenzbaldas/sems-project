@@ -31,10 +31,10 @@ public class Starter {
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
         try {
-            Utils.deleteDirectory(new File(deploymentPath + "/heroku/sems/assets"));
-            Utils.deleteDirectory(new File(deploymentPath + "/heroku/sems/icon.png"));
-            Utils.deleteDirectory(new File(deploymentPath + "/heroku/sems/index.html"));
-            Utils.deleteDirectory(new File(deploymentPath + "/heroku/sems/diko-thesis-2017.pdf"));
+            Utils.delete(new File(deploymentPath + "/heroku/sems/assets"));
+            Utils.delete(new File(deploymentPath + "/heroku/sems/icon.png"));
+            Utils.delete(new File(deploymentPath + "/heroku/sems/index.html"));
+            Utils.delete(new File(deploymentPath + "/heroku/sems/diko-thesis-2017.pdf"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

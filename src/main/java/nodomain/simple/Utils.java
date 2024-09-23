@@ -10,7 +10,7 @@ import java.util.Comparator;
 
 public class Utils {
 
-    static public void deleteDirectory(File file) throws IOException {
+    static public void delete(File file) throws IOException {
         if (file.exists()) {
             Files.walk(file.toPath()).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
         }
