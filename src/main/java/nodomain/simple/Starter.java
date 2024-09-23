@@ -14,9 +14,29 @@ public class Starter {
 
     public static void main(String[] args) throws IOException {
         if (args.length > 0) {
-            if ("test".equals(args[0])) {
-                createTester();
+            if (args[0].contains(",")) {
+                args = args[0].split(",");
             }
+            String command = args[0];
+            if ("test".equals(command)) {
+                createTester();
+            } else if ("deploy".equals(command)) {
+                createDeployer(args[1]);
+            }
+        }
+    }
+
+    static void createDeployer(String deploymentPath) {
+        System.out.println("deploymentPath " + deploymentPath);
+        Entity entity = new Entity();
+        entity.appA = new AppA(entity);
+        try {
+            Utils.deleteDirectory(new File(deploymentPath + "/heroku/sems/assets"));
+            Utils.deleteDirectory(new File(deploymentPath + "/heroku/sems/icon.png"));
+            Utils.deleteDirectory(new File(deploymentPath + "/heroku/sems/index.html"));
+            Utils.deleteDirectory(new File(deploymentPath + "/heroku/sems/diko-thesis-2017.pdf"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -11,7 +11,9 @@ import java.util.Comparator;
 public class Utils {
 
     static public void deleteDirectory(File file) throws IOException {
-        Files.walk(file.toPath()).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+        if (file.exists()) {
+            Files.walk(file.toPath()).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+        }
     }
 
     static public void runMultiplePlatformCommands(String ...commands) {
