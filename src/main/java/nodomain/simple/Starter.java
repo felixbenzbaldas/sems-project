@@ -13,7 +13,11 @@ public class Starter {
     public static final String PATH_FOR_TMP_FILES = TEST_RESOURCES_PATH + "/tmp";
 
     public static void main(String[] args) throws IOException {
-        createTester();
+        if (args.length > 0) {
+            if ("test".equals(args[0])) {
+                createTester();
+            }
+        }
     }
 
     public static Entity createApp() {
