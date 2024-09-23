@@ -20,14 +20,14 @@ public class Starter {
             }
             String command = args[0];
             if ("test".equals(command)) {
-                createTester();
+                test();
             } else if ("deploy".equals(command)) {
-                createDeployer(args[1]);
+                deploy(args[1]);
             }
         }
     }
 
-    static void createDeployer(String deploymentPath) {
+    static void deploy(String deploymentPath) {
         System.out.println("deploymentPath " + deploymentPath);
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
@@ -100,7 +100,7 @@ public class Starter {
         return app;
     }
 
-    public static Entity createTester() {
+    public static Entity test() {
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
         entity.appA.testA = new AppA_TestA(entity);
