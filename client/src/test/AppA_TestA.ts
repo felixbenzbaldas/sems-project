@@ -115,6 +115,16 @@ export class AppA_TestA {
                 return path.pathA.listOfNames.length === 1 &&
                     path.pathA.listOfNames.at(0) === text.name;
             }),
+            this.createTest('getPath of container', async test => {
+                test.test_app = Starter.createApp();
+                let app = test.test_app;
+                let text = await app.appA.createText('');
+
+                let path: Entity = text.getPath(app);
+
+                return path.pathA.listOfNames.length === 1 &&
+                    path.pathA.listOfNames.at(0) === '..';
+            }),
             ...this.createUiTests(),
             ...this.createModelTests(),
             ...this.createSemiAutomatedTests()

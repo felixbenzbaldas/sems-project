@@ -81,7 +81,9 @@ export class Entity {
 
     getPath(object: Entity) : Entity {
         this.logInfo('getPath of ' + object.getShortDescription());
-        if (this.containerA) {
+        if (this === object) {
+            return this.getApp().appA.createPath([]);
+        } else if (this.containerA) {
             if (object.container === this) {
                 return this.getApp().appA.createPath([object.name]);
             }
