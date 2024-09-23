@@ -69,15 +69,6 @@ describe('app', () => {
         expect(app.containerA.mapNameEntity.get(text.name)).toBe(text);
     });
 
-    it('can get path', async () => {
-        let app = Starter.createApp();
-        let text = await app.appA.createText('');
-
-        let path : Entity = app.getPath(text);
-
-        expect(path.pathA.listOfNames).toEqual([text.name]);
-    });
-
     it('can export app with one object', async () => {
         let app = Starter.createApp();
         let object = await app.appA.createText('foo');

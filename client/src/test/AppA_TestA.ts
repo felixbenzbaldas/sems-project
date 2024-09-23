@@ -105,6 +105,16 @@ export class AppA_TestA {
                     containedAndSub.name === container.containerA.mapNameEntity.keys().next().value &&
                     container.list.jsList.at(0).pathA;
             }),
+            this.createTest('getPath of contained', async test => {
+                test.test_app = Starter.createApp();
+                let app = test.test_app;
+                let text = await app.appA.createText('');
+
+                let path: Entity = app.getPath(text);
+
+                return path.pathA.listOfNames.length === 1 &&
+                    path.pathA.listOfNames.at(0) === text.name;
+            }),
             ...this.createUiTests(),
             ...this.createModelTests(),
             ...this.createSemiAutomatedTests()
