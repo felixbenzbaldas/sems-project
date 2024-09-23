@@ -6,6 +6,7 @@ import nodomain.simple.test.AppA_TestA;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 public class Starter {
@@ -35,6 +36,7 @@ public class Starter {
             Utils.delete(new File(deploymentPath + "/heroku/sems/icon.png"));
             Utils.delete(new File(deploymentPath + "/heroku/sems/index.html"));
             Utils.delete(new File(deploymentPath + "/heroku/sems/diko-thesis-2017.pdf"));
+            Utils.copyFolder(Path.of("client/dist"), Path.of(deploymentPath + "/heroku/sems"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
