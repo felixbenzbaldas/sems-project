@@ -84,8 +84,8 @@ export class Entity {
         if (this === object) {
             return this.getApp().appA.createPath([]);
         } else if (this.containerA) {
-            if (object.container === this) {
-                return this.getApp().appA.createPath([object.name]);
+            if (object.container) {
+                return this.getApp().appA.createPath([...this.getPath(object.container).pathA.listOfNames, object.name]);
             }
         } else {
             if (this.container) {
