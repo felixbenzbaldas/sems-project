@@ -139,6 +139,22 @@ export class AppA_TestA {
                 return path.pathA.listOfNames.length === 1 &&
                     path.pathA.listOfNames.at(0) === '..';
             }),
+            this.createTest('getPath of contained of contained of container', async test => {
+                test.test_app = Starter.createApp();
+                let app = test.test_app;
+                app.appA.logG.toListOfStrings = true;
+                let container = await app.appA.createText('container');
+                container.containerA = new ContainerA(container);
+                let containedContained = await container.containerA.createText('containedContained');
+                let text = await app.appA.createText('foo');
+
+                let path: Entity = text.getPath(containedContained);
+
+                return path.pathA.listOfNames.length === 3 &&
+                    path.pathA.listOfNames.at(0) === '..' &&
+                    path.pathA.listOfNames.at(1) === container.name &&
+                    path.pathA.listOfNames.at(2) === containedContained.name;
+            }),
             ...this.createUiTests(),
             ...this.createModelTests(),
             ...this.createSemiAutomatedTests()

@@ -83,15 +83,13 @@ export class Entity {
         this.logInfo('getPath of ' + object.getShortDescription());
         if (this === object) {
             return this.getApp().appA.createPath([]);
-        } else if (this.containerA) {
+        } else {
             if (object.container) {
                 return this.getApp().appA.createPath([...this.getPath(object.container).pathA.listOfNames, object.name]);
-            }
-        } else {
-            if (this.container) {
-                return this.getApp().appA.createPath(['..', ...this.container.getPath(object).pathA.listOfNames]);
             } else {
-                throw new Error('not implemented yet');
+                if (this.container) {
+                    return this.getApp().appA.createPath(['..', ...this.container.getPath(object).pathA.listOfNames]);
+                }
             }
         }
     }
