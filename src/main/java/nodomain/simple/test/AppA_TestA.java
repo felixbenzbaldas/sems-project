@@ -70,6 +70,21 @@ public class AppA_TestA {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            }),
+            this.createTest("replace in file", test -> {
+                try {
+                    test.file.mkdirs();
+                    File file = new File(test.file, "tmp");
+                    file.createNewFile();
+                    Utils.writeToFile(file, "foo-toReplace-bar");
+
+                    Utils.replace(file, "toReplace", "replaced");
+
+                    String read = Utils.readFromFile(file);
+                    return read.contains("replaced");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             })
         );
     }

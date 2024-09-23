@@ -1,5 +1,7 @@
 package nodomain.simple;
 
+import jdk.jshell.execution.Util;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -53,5 +55,10 @@ public class Utils {
 
     public static String readFromFile(File file) throws IOException {
         return String.join("\n", Files.readAllLines(file.toPath()));
+    }
+
+    public static void replace(File file, String toReplace, String replacement) throws IOException {
+        String content = Utils.readFromFile(file);
+        Utils.writeToFile(file, content.replace(toReplace, replacement));
     }
 }
