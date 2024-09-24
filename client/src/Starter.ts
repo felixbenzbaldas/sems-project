@@ -137,7 +137,14 @@ export class Starter {
     static async createWebsite() : Promise<Entity> {
         let app = Starter.createAppWithUI();
         app.appA.uiA.isWebsite = true;
-        let created = app.appA.unboundG.createFromJson(websiteData);
+        let created;
+        if (Starter.placeholderWebsite.startsWith('marker')) {
+            console.log("startsWith marker");
+            created = app.appA.unboundG.createFromJson(websiteData);
+        } else {
+            console.log("starts not with marker");
+            created = app.appA.unboundG.createFromJson(JSON.parse(Starter.placeholderWebsite));
+        }
         app.containerA.take(created);
         for (let i = 0; i < created.list.jsList.length; i++) {
             await app.appA.uiA.content.list.addAndUpdateUi(
