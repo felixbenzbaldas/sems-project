@@ -1,5 +1,6 @@
 package nodomain.simple.test;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.simple.Entity;
 import nodomain.simple.Starter;
@@ -100,6 +101,14 @@ public class AppA_TestA {
                     return jsonMap.containsKey("text") &&
                         jsonMap.containsKey("list");
                 } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }),
+            this.createTest("create reduced json string", test -> {
+                try {
+                    String jsonString = new ObjectMapper().writeValueAsString(Map.of("text", "foo"));
+                    return "{\"text\":\"foo\"}".equals(jsonString);
+                } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
                 }
             })
