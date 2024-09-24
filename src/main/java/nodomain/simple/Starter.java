@@ -32,6 +32,8 @@ public class Starter {
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
         try {
+            Utils.runMultiplePlatformCommands("cd ./client", "npm run build");
+
             Utils.delete(new File(deploymentPath + "/heroku/sems/assets"));
             Utils.delete(new File(deploymentPath + "/heroku/sems/icon.png"));
             Utils.delete(new File(deploymentPath + "/heroku/sems/index.html"));
@@ -41,19 +43,21 @@ public class Starter {
             String replacementPathAboutHeader = deploymentPath + "/PUBLIC-replacement-about-header.txt";
             String replacementPathAboutBody = deploymentPath + "/PUBLIC-replacement-about-body.txt";
             String replacementPathImpressumHeader = deploymentPath + "/PUBLIC-replacement-impressum-header.txt";
-            String replacementPathImpressumBody= deploymentPath + "/PUBLIC-replacement-impressum-body.txt";
+            String replacementPathImpressumBody = deploymentPath + "/PUBLIC-replacement-impressum-body.txt";
+            String replacementPathWebsite = deploymentPath + "/PUBLIC-replacement-website.txt";
 
             deployment_replace(deploymentPath, replacementPathAboutHeader, "marker-dr53hifhh4-about-header");
             deployment_replace(deploymentPath, replacementPathAboutBody, "marker-dr53hifhh4-about-body");
             deployment_replace(deploymentPath, replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
             deployment_replace(deploymentPath, replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
+            deployment_replace(deploymentPath, replacementPathWebsite, "marker-dr53hifhh4-website");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private static void deployment_replace(String deploymentPath, String pathOfReplacement, String toReplace) throws IOException {
-        String replacement = Utils.readFromFile(new File(pathOfReplacement));
+        String replacement = Utils.readFromFile(new File(pathOfReplacement)).replace("\n", "\\n");
         boolean found = false;
         for (File file : new File(deploymentPath + "/heroku/sems/assets").listFiles()) {
             String oldText = Utils.readFromFile(file);
