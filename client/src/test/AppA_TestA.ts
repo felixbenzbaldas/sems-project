@@ -3,6 +3,7 @@ import {Starter} from "@/Starter";
 import type {AppA} from "@/core/AppA";
 import {setCaret} from "@/utils";
 import {ContainerA} from "@/core/ContainerA";
+import {websiteData} from "@/website-data";
 
 class TestResults {
     successful : Array<Entity> = [];
@@ -104,6 +105,16 @@ export class AppA_TestA {
                     containedAndSub.container === container &&
                     containedAndSub.name === container.containerA.mapNameEntity.keys().next().value &&
                     container.list.jsList.at(0).pathA;
+            }),
+            this.createTest('createFromJson (website-data)', async test => {
+                let app = Starter.createApp();
+                test.test_app = app;
+                app.appA.logG.toListOfStrings = true;
+                let json = websiteData;
+
+                let container = app.appA.unboundG.createFromJson(json);
+
+                return container.text === 'demo website';
             }),
             this.createTest('getPath of contained', async test => {
                 test.test_app = Starter.createApp();
