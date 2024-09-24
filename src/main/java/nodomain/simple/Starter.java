@@ -57,7 +57,7 @@ public class Starter {
     }
 
     private static void deployment_replace(String deploymentPath, String pathOfReplacement, String toReplace) throws IOException {
-        String replacement = Utils.readFromFile(new File(pathOfReplacement)).replace("\n", "\\n");
+        String replacement = Utils.readFromFile(new File(pathOfReplacement));
         boolean found = false;
         for (File file : new File(deploymentPath + "/heroku/sems/assets").listFiles()) {
             String oldText = Utils.readFromFile(file);
