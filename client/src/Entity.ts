@@ -105,10 +105,12 @@ export class Entity {
     }
 
     async resolve(path: Entity) : Promise<Entity> {
-        if (path.pathA.listOfNames.at(0) === '..') {
+        if (path.pathA.listOfNames.length === 0) {
+            return this;
+        } else if (path.pathA.listOfNames.at(0) === '..') {
             return this.container.resolve(path.pathA.withoutFirst());
         } else {
-            return this.containerA.mapNameEntity.get(path.pathA.listOfNames[0]);
+            return this.containerA.mapNameEntity.get(path.pathA.listOfNames[0]).resolve(path.pathA.withoutFirst());
         }
     }
 

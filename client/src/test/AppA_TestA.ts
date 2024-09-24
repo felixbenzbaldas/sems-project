@@ -190,6 +190,20 @@ export class AppA_TestA {
 
                 return resolved === otherObject;
             }),
+            this.createTest('resolve contained of contained of container', async test => {
+                test.test_app = Starter.createApp();
+                let app = test.test_app;
+                app.appA.logG.toListOfStrings = true;
+                let container = await app.appA.createText('container');
+                container.containerA = new ContainerA(container);
+                let containedContained = await container.containerA.createText('containedContained');
+                let text = await app.appA.createText('foo');
+                let path = text.getPath(containedContained);
+
+                let resolved : Entity = await text.resolve(path);
+
+                return resolved === containedContained;
+            }),
             ...this.createUiTests(),
             ...this.createModelTests(),
             ...this.createSemiAutomatedTests()
