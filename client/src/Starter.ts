@@ -2,6 +2,7 @@ import {Entity} from "@/Entity";
 import {AppA_UiA} from "@/ui/AppA_UiA";
 import {AppA} from "@/core/AppA";
 import {AppA_TestA} from "@/test/AppA_TestA";
+import {websiteData} from "@/website-data";
 
 export class Starter {
 
@@ -185,8 +186,9 @@ export class Starter {
     static async createWebsite2() : Promise<Entity> {
         let app = Starter.createAppWithUI();
         app.appA.uiA.isWebsite = true;
+        let created = app.appA.unboundG.createFromJson(websiteData);
         await app.appA.uiA.content.list.addAndUpdateUi(
-            await app.appA.createText('demo website')
+            created
         );
         return app;
     }
