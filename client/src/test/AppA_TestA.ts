@@ -180,6 +180,16 @@ export class AppA_TestA {
                 return path.pathA.listOfNames.length === 1 &&
                     path.pathA.listOfNames.at(0) === '..';
             }),
+            this.createTest('resolve contained of container', async test => {
+                let app : Entity = Starter.createApp();
+                let object : Entity = await app.appA.createText('bar');
+                let otherObject : Entity = await app.appA.createText('foo');
+                let pathOfOther : Entity = object.getPath(otherObject);
+
+                let resolved : Entity = await object.resolve(pathOfOther);
+
+                return resolved === otherObject;
+            }),
             ...this.createUiTests(),
             ...this.createModelTests(),
             ...this.createSemiAutomatedTests()
