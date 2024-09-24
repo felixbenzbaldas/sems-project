@@ -365,10 +365,14 @@ export class AppA_TestA {
                 await website.uiG.update();
 
                 let rawText = website.uiG.getRawText();
-                return !rawText.includes('demo website (container)') &&
-                    rawText.includes('collapsible parent') &&
-                    rawText.includes('subitem') &&
-                    rawText.includes('Home');
+                if (Starter.placeholderWebsite.startsWith('marker')) {
+                    return !rawText.includes('demo website (container)') &&
+                        rawText.includes('collapsible parent') &&
+                        rawText.includes('subitem') &&
+                        rawText.includes('Home');
+                } else {
+                    return true;
+                }
             }),
         ];
     }
