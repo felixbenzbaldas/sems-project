@@ -181,4 +181,13 @@ export class Starter {
         tester.appA.testA = new AppA_TestA(tester);
         return tester;
     }
+
+    static async createWebsite2() : Promise<Entity> {
+        let app = Starter.createAppWithUI();
+        app.appA.uiA.isWebsite = true;
+        await app.appA.uiA.content.list.addAndUpdateUi(
+            await app.appA.createText('demo website')
+        );
+        return app;
+    }
 }

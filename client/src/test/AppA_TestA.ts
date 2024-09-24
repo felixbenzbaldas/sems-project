@@ -333,6 +333,16 @@ export class AppA_TestA {
                     rawText.includes('1') &&
                     rawText.includes('aSuccessfulTest');
             }),
+            this.createTest('modelTest_website', async test => {
+                let website = await Starter.createWebsite2();
+                test.test_app = website;
+                website.appA.logG.toListOfStrings = true;
+
+                await website.uiG.update();
+
+                let rawText = website.uiG.getRawText();
+                return rawText.includes('demo website');
+            }),
         ];
     }
 
@@ -410,7 +420,7 @@ export class AppA_TestA {
                 test.test_app.log('human-test: When scrolling to the bottom, you still see a rest of the application-content');
                 test.test_app.log('human-test: The placeholder-area adapts its size when resizing the window.');
                 return true;
-            })
+            }),
         ];
     }
 
