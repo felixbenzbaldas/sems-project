@@ -1,6 +1,8 @@
 package nodomain.simple.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.simple.Entity;
+import nodomain.simple.Starter;
 import nodomain.simple.Utils;
 import nodomain.simple.core.RandomString;
 
@@ -9,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public class AppA_TestA {
@@ -85,6 +88,17 @@ public class AppA_TestA {
 
                     String read = Utils.readFromFile(file);
                     return read.contains("replacement");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }),
+            this.createTest("read pretty json", test -> {
+                try {
+                    File file = new File(Starter.TEST_RESOURCES_PATH + "/prettyJson.txt");
+                    Object json = new ObjectMapper().readValue(file, Object.class);
+                    Map<String, Object> jsonMap = (Map<String, Object>) json;
+                    return jsonMap.containsKey("text") &&
+                        jsonMap.containsKey("list");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
