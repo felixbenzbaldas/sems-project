@@ -1,5 +1,5 @@
 export const websiteData = {
-    "text": "demo website",
+    "text": "demo website (container)",
     "list": [
         [
             "0"
@@ -63,7 +63,8 @@ export const websiteData = {
             "text": ""
         },
         "8": {
-            "text": "and a link: tbd"
+            "text": "Home",
+            "link": "https://.einfaches-web.org"
         }
     }
 };

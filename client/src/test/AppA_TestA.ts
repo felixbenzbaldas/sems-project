@@ -114,7 +114,7 @@ export class AppA_TestA {
 
                 let container = app.appA.unboundG.createFromJson(json);
 
-                return container.text === 'demo website';
+                return container.text === 'demo website (container)';
             }),
             this.createTest('getPath of contained', async test => {
                 test.test_app = Starter.createApp();
@@ -358,14 +358,17 @@ export class AppA_TestA {
                     rawText.includes('aSuccessfulTest');
             }),
             this.createTest('modelTest_website', async test => {
-                let website = await Starter.createWebsite2();
+                let website = await Starter.createWebsite();
                 test.test_app = website;
                 website.appA.logG.toListOfStrings = true;
 
                 await website.uiG.update();
 
                 let rawText = website.uiG.getRawText();
-                return rawText.includes('demo website');
+                return !rawText.includes('demo website (container)') &&
+                    rawText.includes('collapsible parent') &&
+                    rawText.includes('subitem') &&
+                    rawText.includes('Home');
             }),
         ];
     }

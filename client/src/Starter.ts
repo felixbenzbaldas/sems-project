@@ -11,6 +11,8 @@ export class Starter {
     static placeholderImpressumHeader = 'marker-dr53hifhh4-impressum-header';
     static placeholderImpressumBody = 'marker-dr53hifhh4-impressum-body';
 
+    static placeholderWebsite = 'marker-dr53hifhh4-website';
+
     static async createFromUrl() : Promise<Entity> {
         let queryParams = new URLSearchParams(window.location.search);
         let app : Entity;
@@ -43,57 +45,6 @@ export class Starter {
         app.text = 'easy application';
         app.appA = new AppA(app);
         return app;
-    }
-
-    static async createWebsite() : Promise<Entity> {
-        let app = Starter.createAppWithUI();
-        app.appA.uiA.isWebsite = true;
-        await app.appA.uiA.content.list.addAndUpdateUi(
-            ...(await Starter.createWebsiteContent(app))
-        );
-        return app;
-    }
-
-    static async createWebsiteContent(app : Entity) : Promise<Array<Entity>> {
-        return [
-            await app.appA.createText('This is easy software. It is being developed. New features will be added.'),
-            await app.appA.createText(''),
-            await app.appA.createCollapsible('easy client-app',
-                await app.appA.createText('The easy client-app is an easy application, which runs in your browser (e. g. Firefox / Edge). ' +
-                    'On this way you can use easy software without creating an account or installing it.'),
-                await app.appA.createLink(Starter.getBaseUrl() + '?client-app', 'Open')
-            ),
-            await app.appA.createText(''),
-            await app.appA.createCollapsible('easy tester',
-                await app.appA.createText('The easy software is able to test itself. The easy tester can run tests directly in the browser.'),
-                await app.appA.createLink(Starter.getBaseUrl() + '?test&withFailingDemoTest', 'Open')
-            ),
-            await app.appA.createText(''),
-            await app.appA.createText(''),
-            await app.appA.createCollapsible('Zu Verschenken',
-                await app.appA.createText('Virtual Reality Brille für Android-Smartphone'),
-                await app.appA.createText('Wasserkaraffe mit Deckel'),
-                await app.appA.createText('Spielpistole 0,08 Joule (mit Plastikkugeln als Munition)'),
-                await app.appA.createText('Poker Set (z. B. für Texas Holdem)'),
-                await app.appA.createText('Geschenk-Gutschein 20 € bei Wilkendorf\'s Teehaus in Karlsruhe')
-            ),
-            await app.appA.createText(''),
-            await app.appA.createCollapsible('Zu Verkaufen',
-                await app.appA.createCollapsible('Rotes Rennrad',
-                    await app.appA.createText('Marke: Bernd Herkelmann. Shimano DURA ACE Gangschaltung und Bremsen. ' +
-                        'Mit Gepäckträger, kann auch als Tourenrad verwendet werden. ' +
-                        'Der Lack ist leider etwas beschädigt. Der Rahmen ist relativ klein, daher für kleine Menschen geeignet. Inklusive ABUS-Zahlenschloss'),
-                    await app.appA.createText('Preis: 120 € VB')
-                ),
-                await app.appA.createCollapsible('hochwertiger Minikühlschrank - geräuschlos',
-                    await app.appA.createText('Marke: Dometic, Modell: DS 400 weiß miniCool Absorbertechnik'),
-                    await app.appA.createText('Preis: 100 € (Neupreis im Jahr 2013: 449 €)')
-                )
-            ),
-            await app.appA.createText(''),
-            await Starter.getPlaceholderAbout(app),
-            await Starter.getPlaceholderImpressum(app),
-        ];
     }
 
     private static getBaseUrl() : string {
@@ -183,13 +134,16 @@ export class Starter {
         return tester;
     }
 
-    static async createWebsite2() : Promise<Entity> {
+    static async createWebsite() : Promise<Entity> {
         let app = Starter.createAppWithUI();
         app.appA.uiA.isWebsite = true;
         let created = app.appA.unboundG.createFromJson(websiteData);
-        await app.appA.uiA.content.list.addAndUpdateUi(
-            created
-        );
+        app.containerA.take(created);
+        for (let i = 0; i < created.list.jsList.length; i++) {
+            await app.appA.uiA.content.list.addAndUpdateUi(
+                await created.list.getObject(i)
+            );
+        }
         return app;
     }
 }
