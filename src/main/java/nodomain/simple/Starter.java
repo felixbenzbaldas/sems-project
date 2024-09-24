@@ -1,6 +1,7 @@
 package nodomain.simple;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.simple.core.AppA;
 import nodomain.simple.test.AppA_TestA;
 
@@ -50,7 +51,7 @@ public class Starter {
             deployment_replace(deploymentPath, replacementPathAboutBody, "marker-dr53hifhh4-about-body");
             deployment_replace(deploymentPath, replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
             deployment_replace(deploymentPath, replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
-            deployment_replace(deploymentPath, replacementPathWebsite, "marker-dr53hifhh4-website");
+            deployment_replace_prettyJson(deploymentPath, replacementPathWebsite, "marker-dr53hifhh4-website");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -58,6 +59,22 @@ public class Starter {
 
     private static void deployment_replace(String deploymentPath, String pathOfReplacement, String toReplace) throws IOException {
         String replacement = Utils.readFromFile(new File(pathOfReplacement));
+        boolean found = false;
+        for (File file : new File(deploymentPath + "/heroku/sems/assets").listFiles()) {
+            String oldText = Utils.readFromFile(file);
+            if (oldText.contains(toReplace)) {
+                found = true;
+            }
+            Utils.writeToFile(file, oldText.replace(toReplace, replacement));
+        }
+        if (!found) {
+            throw new RuntimeException("replace was not successful!");
+        }
+    }
+
+    private static void deployment_replace_prettyJson(String deploymentPath, String pathOfReplacement, String toReplace) throws IOException {
+        Object json = new ObjectMapper().readValue(new File(pathOfReplacement), Object.class);
+        String replacement = new ObjectMapper().writeValueAsString(json).replace("\"", "\\\"").replace("\\n", "\\\\n");
         boolean found = false;
         for (File file : new File(deploymentPath + "/heroku/sems/assets").listFiles()) {
             String oldText = Utils.readFromFile(file);
