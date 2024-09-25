@@ -1,6 +1,7 @@
 package nodomain.simple;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.simple.core.AppA;
 import nodomain.simple.test.AppA_TestA;
@@ -9,12 +10,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 public class Starter {
     public static final String TEST_RESOURCES_PATH = "./src/test/resources";
     public static final String PATH_FOR_TMP_FILES = TEST_RESOURCES_PATH + "/tmp";
 
+    public static String deploymentPath;
+
     public static void main(String[] args) throws IOException {
+        deploymentPath = getProperty("deploymentPath");
+        System.out.println("deploymentPath " + deploymentPath);
         if (args.length > 0) {
             if (args[0].contains(",")) {
                 args = args[0].split(",");
@@ -23,15 +29,29 @@ public class Starter {
             if ("test".equals(command)) {
                 test();
             } else if ("deploy".equals(command)) {
-                deploy(args[1]);
+                deploy();
             } else if ("publish".equals(command)) {
-                publish(args[1]);
+                publish();
             }
         }
     }
 
-    static void deploy(String deploymentPath) {
-        System.out.println("deploymentPath " + deploymentPath);
+    public static String getProperty(String key) {
+        try {
+            Map<String, Object> properties = (java.util.Map<String, Object>) new ObjectMapper().readValue(getConfigFile(), Object.class);
+            return (String) properties.get(key);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static File getConfigFile() {
+        return new File(Config.pathToConfigFile);
+    }
+
+    static void deploy() {
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
         try {
@@ -47,15 +67,15 @@ public class Starter {
             String replacementPathImpressumBody = deploymentPath + "/PUBLIC-replacement-impressum-body.txt";
             String replacementPathWebsite = deploymentPath + "/data/PUBLIC-replacement-website.txt";
 
-            deployment_replace(deploymentPath, replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
-            deployment_replace(deploymentPath, replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
-            deployment_replace_prettyJson(deploymentPath, replacementPathWebsite, "marker-dr53hifhh4-website");
+            deployment_replace(replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
+            deployment_replace(replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
+            deployment_replace_prettyJson(replacementPathWebsite, "marker-dr53hifhh4-website");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static void deployment_replace(String deploymentPath, String pathOfReplacement, String toReplace) throws IOException {
+    private static void deployment_replace(String pathOfReplacement, String toReplace) throws IOException {
         String replacement = Utils.readFromFile(new File(pathOfReplacement));
         boolean found = false;
         for (File file : new File(deploymentPath + "/heroku/sems/assets").listFiles()) {
@@ -70,7 +90,7 @@ public class Starter {
         }
     }
 
-    private static void deployment_replace_prettyJson(String deploymentPath, String pathOfReplacement, String toReplace) throws IOException {
+    private static void deployment_replace_prettyJson(String pathOfReplacement, String toReplace) throws IOException {
         Object json = new ObjectMapper().readValue(new File(pathOfReplacement), Object.class);
         String replacement = new ObjectMapper().writeValueAsString(json).replace("\"", "\\\"").replace("\\n", "\\\\n");
         boolean found = false;
@@ -87,7 +107,7 @@ public class Starter {
     }
 
     // login to heroku at first
-    public static void publish(String deploymentPath) {
+    public static void publish() {
         Utils.runMultiplePlatformCommands(
             "cd " + new File(deploymentPath, "/heroku/sems"),
             "git add .",
