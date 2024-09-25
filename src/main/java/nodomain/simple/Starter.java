@@ -26,12 +26,10 @@ public class Starter {
                 args = args[0].split(",");
             }
             String command = args[0];
-            if ("test".equals(command)) {
-                test();
-            } else if ("deploy".equals(command)) {
-                deploy();
-            } else if ("publish".equals(command)) {
-                publish();
+            switch (command) {
+                case "test" -> test();
+                case "deploy" -> deploy();
+                case "publish" -> publish();
             }
         }
     }
