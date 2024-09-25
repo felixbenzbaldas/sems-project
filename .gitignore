@@ -11,5 +11,3 @@ gradle.properties
 /test_e2e.bat
 /test_everything.bat
 /runServer.bat
-/deploy.bat
-/publish.bat
