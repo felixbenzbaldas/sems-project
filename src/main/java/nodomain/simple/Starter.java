@@ -51,28 +51,24 @@ public class Starter {
         return new File(Config.pathToConfigFile);
     }
 
-    static void deploy() {
+    static void deploy() throws IOException {
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
-        try {
-            Utils.runMultiplePlatformCommands("cd ./client", "npm run build");
+        Utils.runMultiplePlatformCommands("cd ./client", "npm run build");
 
-            Utils.delete(new File(deploymentPath + "/heroku/sems/assets"));
-            Utils.delete(new File(deploymentPath + "/heroku/sems/icon.png"));
-            Utils.delete(new File(deploymentPath + "/heroku/sems/index.html"));
-            Utils.delete(new File(deploymentPath + "/heroku/sems/diko-thesis-2017.pdf"));
-            Utils.copyFolder(Path.of("client/dist"), Path.of(deploymentPath + "/heroku/sems"));
+        Utils.delete(new File(deploymentPath + "/heroku/sems/assets"));
+        Utils.delete(new File(deploymentPath + "/heroku/sems/icon.png"));
+        Utils.delete(new File(deploymentPath + "/heroku/sems/index.html"));
+        Utils.delete(new File(deploymentPath + "/heroku/sems/diko-thesis-2017.pdf"));
+        Utils.copyFolder(Path.of("client/dist"), Path.of(deploymentPath + "/heroku/sems"));
 
-            String replacementPathImpressumHeader = deploymentPath + "/PUBLIC-replacement-impressum-header.txt";
-            String replacementPathImpressumBody = deploymentPath + "/PUBLIC-replacement-impressum-body.txt";
-            String replacementPathWebsite = deploymentPath + "/data/PUBLIC-replacement-website.txt";
+        String replacementPathImpressumHeader = deploymentPath + "/PUBLIC-replacement-impressum-header.txt";
+        String replacementPathImpressumBody = deploymentPath + "/PUBLIC-replacement-impressum-body.txt";
+        String replacementPathWebsite = deploymentPath + "/data/PUBLIC-replacement-website.txt";
 
-            deployment_replace(replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
-            deployment_replace(replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
-            deployment_replace_prettyJson(replacementPathWebsite, "marker-dr53hifhh4-website");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        deployment_replace(replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
+        deployment_replace(replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
+        deployment_replace_prettyJson(replacementPathWebsite, "marker-dr53hifhh4-website");
     }
 
     private static void deployment_replace(String pathOfReplacement, String toReplace) throws IOException {
