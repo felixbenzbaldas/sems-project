@@ -6,11 +6,8 @@ import {websiteData} from "@/website-data";
 
 export class Starter {
 
-    static placeholderAboutHeader = 'marker-dr53hifhh4-about-header';
-    static placeholderAboutBody = 'marker-dr53hifhh4-about-body';
     static placeholderImpressumHeader = 'marker-dr53hifhh4-impressum-header';
     static placeholderImpressumBody = 'marker-dr53hifhh4-impressum-body';
-
     static placeholderWebsite = 'marker-dr53hifhh4-website';
 
     static async createFromUrl() : Promise<Entity> {
@@ -53,10 +50,6 @@ export class Starter {
 
     private static async getPlaceholderImpressum(app: Entity) {
         return Starter.getPlaceholder(app, Starter.placeholderImpressumHeader, Starter.placeholderImpressumBody);
-    }
-
-    private static async getPlaceholderAbout(app: Entity) {
-        return Starter.getPlaceholder(app, Starter.placeholderAboutHeader, Starter.placeholderAboutBody);
     }
 
     private static async getPlaceholder(app : Entity, placeholderHeader : string, placeholderBody : string) : Promise<Entity> {
