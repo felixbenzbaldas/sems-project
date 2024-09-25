@@ -24,6 +24,8 @@ public class Starter {
                 test();
             } else if ("deploy".equals(command)) {
                 deploy(args[1]);
+            } else if ("publish".equals(command)) {
+                publish(args[1]);
             }
         }
     }
@@ -86,6 +88,16 @@ public class Starter {
         if (!found) {
             throw new RuntimeException("replace was not successful!");
         }
+    }
+
+    // login to heroku at first
+    public static void publish(String deploymentPath) {
+        Utils.runMultiplePlatformCommands(
+            "cd " + new File(deploymentPath, "/heroku/sems"),
+            "git add .",
+            "git commit -am \"deployment\"",
+            "git push heroku main"
+        );
     }
 
     public static Entity createApp() {
