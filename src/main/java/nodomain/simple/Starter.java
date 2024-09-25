@@ -28,10 +28,23 @@ public class Starter {
             String command = args[0];
             switch (command) {
                 case "test" -> test();
+                case "run" -> run();
                 case "deployAndRun" -> deployAndRun();
                 case "publish" -> publish();
             }
         }
+    }
+
+    public static void run() {
+        Utils.runMultiplePlatformCommands(
+            "start \"\" http://localhost:8086/?testMode",
+            "start \"\" http://localhost:8086/?test",
+            "start \"\" http://localhost:8086/?client-app"
+        );
+        Utils.runMultiplePlatformCommands(
+            "cd " + deploymentPath + "/heroku/sems",
+            "http-server --port 8086"
+        );
     }
 
     public static String getProperty(String key) {
@@ -68,15 +81,7 @@ public class Starter {
         deployment_replace(replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
         deployment_replace_prettyJson(replacementPathWebsite, "marker-dr53hifhh4-website");
 
-        Utils.runMultiplePlatformCommands(
-            "start \"\" http://localhost:8086/?testMode",
-            "start \"\" http://localhost:8086/?test",
-            "start \"\" http://localhost:8086/?client-app"
-        );
-        Utils.runMultiplePlatformCommands(
-            "cd " + deploymentPath + "/heroku/sems",
-            "http-server --port 8086"
-        );
+        run();
     }
 
     private static void deployment_replace(String pathOfReplacement, String toReplace) throws IOException {
