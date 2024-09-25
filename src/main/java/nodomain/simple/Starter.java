@@ -28,7 +28,7 @@ public class Starter {
             String command = args[0];
             switch (command) {
                 case "test" -> test();
-                case "deploy" -> deploy();
+                case "deployAndRun" -> deployAndRun();
                 case "publish" -> publish();
             }
         }
@@ -49,7 +49,7 @@ public class Starter {
         return new File(Config.pathToConfigFile);
     }
 
-    static void deploy() throws IOException {
+    static void deployAndRun() throws IOException {
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
         Utils.runMultiplePlatformCommands("cd ./client", "npm run build");
@@ -67,6 +67,16 @@ public class Starter {
         deployment_replace(replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
         deployment_replace(replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
         deployment_replace_prettyJson(replacementPathWebsite, "marker-dr53hifhh4-website");
+
+        Utils.runMultiplePlatformCommands(
+            "start \"\" http://localhost:8086/?testMode",
+            "start \"\" http://localhost:8086/?test",
+            "start \"\" http://localhost:8086/?client-app"
+        );
+        Utils.runMultiplePlatformCommands(
+            "cd " + deploymentPath + "/heroku/sems",
+            "http-server --port 8086"
+        );
     }
 
     private static void deployment_replace(String pathOfReplacement, String toReplace) throws IOException {
