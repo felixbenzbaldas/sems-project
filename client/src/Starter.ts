@@ -39,7 +39,7 @@ export class Starter {
 
     static createApp() : Entity {
         let app = new Entity();
-        app.text = 'easy application';
+        app.text = 'simple application';
         app.appA = new AppA(app);
         return app;
     }
