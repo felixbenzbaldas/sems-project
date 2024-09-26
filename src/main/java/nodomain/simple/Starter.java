@@ -66,6 +66,12 @@ public class Starter {
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
         Utils.runMultiplePlatformCommands("cd ./client", "npm run build");
+        // TODO: wait until build has finished
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         Utils.delete(new File(deploymentPath + "/heroku/sems/assets"));
         Utils.delete(new File(deploymentPath + "/heroku/sems/icon.png"));
