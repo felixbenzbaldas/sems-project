@@ -34,7 +34,7 @@ export class Entity {
     }
 
     json_withoutContainedObjects() : any {
-        return {
+        let obj: any = {
             text: this.text,
             list: this.list?.json_withoutContainedObjects(),
             collapsible: this.collapsible,
@@ -42,7 +42,11 @@ export class Entity {
             link: this.link,
             editable: this.editable,
             content: this.appA?.uiA?.content.json_withoutContainedObjects(),
+        };
+        if (this.appA?.currentContainer) {
+            obj.currentContainerText = this.appA.currentContainer.text;
         }
+        return obj;
     }
 
     async setHiddenAndUpdateUi(value : boolean) {
