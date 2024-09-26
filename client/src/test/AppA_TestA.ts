@@ -1,7 +1,7 @@
 import type {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 import type {AppA} from "@/core/AppA";
-import {setCaret} from "@/utils";
+import {createRandomString, setCaret} from "@/utils";
 import {ContainerA} from "@/core/ContainerA";
 import {websiteData} from "@/website-data";
 
@@ -203,6 +203,13 @@ export class AppA_TestA {
                 let resolved : Entity = await text.resolve(path);
 
                 return resolved === containedContained;
+            }),
+            this.createTest('create random string', async test => {
+                test.test_app = Starter.createApp();
+                let app = test.test_app;
+                app.appA.logG.toListOfStrings = true;
+                return createRandomString().length == 10 &&
+                    createRandomString() != createRandomString();
             }),
             ...this.createUiTests(),
             ...this.createModelTests(),

@@ -19,3 +19,15 @@ export function setCaret(htmlElement: HTMLElement, position: number) {
         selection.addRange(range);
     }
 }
+
+export function createRandomString(): string {
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
+    let theString = '';
+    let numberOfCharacters = 10;
+    for (let i = 0; i < numberOfCharacters; i++) {
+        let randomIndex = Math.floor( Math.random() * characters.length);
+        let randomChar = characters.charAt(randomIndex);
+        theString += randomChar;
+    }
+    return theString;
+}

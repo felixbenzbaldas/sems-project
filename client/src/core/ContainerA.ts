@@ -1,4 +1,5 @@
 import type {Entity} from "@/Entity";
+import {createRandomString} from "@/utils";
 
 export class ContainerA {
 
@@ -8,7 +9,7 @@ export class ContainerA {
     constructor(private entity : Entity) {
     }
     getUniqueRandomName() : string {
-        return (this.nameCounter++).toString();
+        return createRandomString();
     }
 
     async getByName(name: string) : Promise<Entity> {
