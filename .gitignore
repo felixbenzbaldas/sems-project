@@ -11,3 +11,5 @@ gradle.properties
 /test_e2e.bat
 /test_everything.bat
 /runServer.bat
+
+/src/test/resources/tmp
