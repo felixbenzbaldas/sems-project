@@ -2,7 +2,7 @@ import type {Entity} from "@/Entity";
 import {devtools} from "vue";
 
 export class LogG {
-    toConsole: boolean;
+    toConsole: boolean; // Note: logging to console could lead to a data leak. You should be careful, when using it.
     toListOfStrings: boolean;
     listOfStrings: Array<string> = [];
 
@@ -15,10 +15,12 @@ export class LogG {
             if (this.toListOfStrings) {
                 this.listOfStrings.push(shortDescription + ' /// ' + log);
             }
-            if (this.toConsole) { // Note: logging to console could lead to a data leak. You should be careful, when using it.
-                if (devtools?.enabled || location?.hostname == 'localhost') {
-                    console.log(shortDescription + ' /// ' + log);
-                }
+            if (this.toConsole) {
+                console.log(shortDescription + ' /// ' + log);
+            }
+        } else {
+            if (location?.hostname == 'localhost') { // Note: logging to console could lead to a data leak. You should be careful, when using it.
+                console.log(logger.getShortDescription() + ' /// ' + log);
             }
         }
     }
