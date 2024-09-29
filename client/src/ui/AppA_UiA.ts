@@ -44,8 +44,8 @@ export class AppA_UiA {
             await this.input.getUi().updateUi();
             await this.output.getUi().updateUi();
             this.content.uiG.editable = true;
-            await this.content.updateUi();
         }
+        await this.content.updateUi();
         this.updateUiElement();
     }
 

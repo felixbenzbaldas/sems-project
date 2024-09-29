@@ -148,7 +148,7 @@ export class Starter {
         }
         app.containerA.take(created);
         for (let i = 0; i < created.list.jsList.length; i++) {
-            await app.appA.uiA.content.list.addAndUpdateUi(
+            await app.appA.uiA.content.list.add(
                 await created.list.getObject(i)
             );
         }
