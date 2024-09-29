@@ -4,6 +4,10 @@ import type {AppA} from "@/core/AppA";
 import {createRandomString, setCaret} from "@/utils";
 import {ContainerA} from "@/core/ContainerA";
 import {websiteData} from "@/website-data";
+import {AppA_TestA_UiG} from "@/test/AppA_TestA_UiG";
+import {AppA_TestA_ModelG} from "@/test/AppA_TestA_ModelG";
+import {AppA_TestA_SemiG} from "@/test/AppA_TestA_SemiG";
+import {AppA_TestA_PathG} from "@/test/AppA_TestA_PathG";
 
 class TestResults {
     successful : Array<Entity> = [];
@@ -13,10 +17,18 @@ class TestResults {
 export class AppA_TestA {
 
     private readonly appA : AppA;
+    readonly uiG: AppA_TestA_UiG;
+    readonly modelG: AppA_TestA_ModelG;
+    readonly semiG: AppA_TestA_SemiG;
+    readonly pathG: AppA_TestA_PathG;
     withFailingDemoTest: boolean;
 
     constructor(private entity : Entity) {
         this.appA = entity.appA;
+        this.uiG = new AppA_TestA_UiG(entity);
+        this.modelG = new AppA_TestA_ModelG(entity);
+        this.semiG = new AppA_TestA_SemiG(entity);
+        this.pathG = new AppA_TestA_PathG(entity);
     }
 
     async createRunAndDisplay() {
@@ -116,94 +128,6 @@ export class AppA_TestA {
 
                 return container.text === 'demo website (container)';
             }),
-            this.createTest('getPath of contained', async test => {
-                test.test_app = Starter.createApp();
-                let app = test.test_app;
-                let text = await app.appA.createText('');
-
-                let path: Entity = app.getPath(text);
-
-                return path.pathA.listOfNames.length === 1 &&
-                    path.pathA.listOfNames.at(0) === text.name;
-            }),
-            this.createTest('getPath of contained of contained', async test => {
-                test.test_app = Starter.createApp();
-                let app = test.test_app;
-                app.appA.logG.toListOfStrings = true;
-                let container = await app.appA.createText('container');
-                container.containerA = new ContainerA(container);
-                let containedContained = await container.containerA.createText('containedContained');
-
-                let path: Entity = app.getPath(containedContained);
-
-                return path.pathA.listOfNames.length === 2 &&
-                    path.pathA.listOfNames.at(0) === container.name &&
-                    path.pathA.listOfNames.at(1) === containedContained.name;
-            }),
-            this.createTest('getPath of container', async test => {
-                test.test_app = Starter.createApp();
-                let app = test.test_app;
-                let text = await app.appA.createText('');
-
-                let path: Entity = text.getPath(app);
-
-                return path.pathA.listOfNames.length === 1 &&
-                    path.pathA.listOfNames.at(0) === '..';
-            }),
-            this.createTest('getPath of contained of contained of container', async test => {
-                test.test_app = Starter.createApp();
-                let app = test.test_app;
-                app.appA.logG.toListOfStrings = true;
-                let container = await app.appA.createText('container');
-                container.containerA = new ContainerA(container);
-                let containedContained = await container.containerA.createText('containedContained');
-                let text = await app.appA.createText('foo');
-
-                let path: Entity = text.getPath(containedContained);
-
-                return path.pathA.listOfNames.length === 3 &&
-                    path.pathA.listOfNames.at(0) === '..' &&
-                    path.pathA.listOfNames.at(1) === container.name &&
-                    path.pathA.listOfNames.at(2) === containedContained.name;
-            }),
-            this.createTest('getPath of container (which has a container itself)', async test => {
-                test.test_app = Starter.createApp();
-                let app = test.test_app;
-                app.appA.logG.toListOfStrings = true;
-                let container = await app.appA.createText('container');
-                container.containerA = new ContainerA(container);
-                let containedContained = await container.containerA.createText('containedContained');
-                let text = await app.appA.createText('foo');
-
-                let path: Entity = containedContained.getPath(container);
-
-                return path.pathA.listOfNames.length === 1 &&
-                    path.pathA.listOfNames.at(0) === '..';
-            }),
-            this.createTest('resolve contained of container', async test => {
-                let app : Entity = Starter.createApp();
-                let object : Entity = await app.appA.createText('bar');
-                let otherObject : Entity = await app.appA.createText('foo');
-                let pathOfOther : Entity = object.getPath(otherObject);
-
-                let resolved : Entity = await object.resolve(pathOfOther);
-
-                return resolved === otherObject;
-            }),
-            this.createTest('resolve contained of contained of container', async test => {
-                test.test_app = Starter.createApp();
-                let app = test.test_app;
-                app.appA.logG.toListOfStrings = true;
-                let container = await app.appA.createText('container');
-                container.containerA = new ContainerA(container);
-                let containedContained = await container.containerA.createText('containedContained');
-                let text = await app.appA.createText('foo');
-                let path = text.getPath(containedContained);
-
-                let resolved : Entity = await text.resolve(path);
-
-                return resolved === containedContained;
-            }),
             this.createTest('create random string', async test => {
                 test.test_app = Starter.createApp();
                 let app = test.test_app;
@@ -211,9 +135,10 @@ export class AppA_TestA {
                 return createRandomString().length == 10 &&
                     createRandomString() != createRandomString();
             }),
-            ...this.createUiTests(),
-            ...this.createModelTests(),
-            ...this.createSemiAutomatedTests()
+            ...this.pathG.createTests(),
+            ...this.uiG.createTests(),
+            ...this.modelG.createTests(),
+            ...this.semiG.createTests()
         ];
         if (this.withFailingDemoTest) {
             tests.push(this.createFailingDemoTest());
@@ -229,237 +154,6 @@ export class AppA_TestA {
             return test.test_result;
         }
         return test;
-    }
-
-    createUiTests() {
-        return [
-            this.createTest('ui_makeCollapsible', async test => {
-                let app = Starter.createAppWithUI();
-                await app.appA.uiA.globalEventG.defaultAction();
-
-                await app.appA.uiA.globalEventG.toggleCollapsible();
-
-                return (await app.appA.uiA.content.list.getObject(0)).collapsible;
-            }),
-            this.createTest('ui_collapse', async test => {
-                let app = Starter.createAppWithUI();
-                await app.appA.uiA.globalEventG.defaultAction();
-                await app.appA.uiA.globalEventG.toggleCollapsible();
-                await app.appA.uiA.globalEventG.newSubitem();
-                let firstObject = await app.appA.uiA.content.list.getObject(0);
-                app.appA.uiA.focused = firstObject;
-
-                await app.appA.uiA.globalEventG.expandOrCollapse();
-
-                return firstObject.collapsed;
-            }),
-            this.createTest('ui_collapsible', async test => {
-                let app = Starter.createAppWithUI();
-                let collapsible = app.appA.unboundG.createCollapsible('', app.appA.unboundG.createText(''));
-
-                await collapsible.updateUi();
-
-                return collapsible.collapsed;
-            }),
-            this.createTest('ui_newSubitem', async test => {
-                let app = Starter.createAppWithUI();
-                await app.appA.uiA.globalEventG.defaultAction();
-
-                await app.appA.uiA.globalEventG.newSubitem();
-
-                let firstObject = await app.appA.uiA.content.list.getObject(0);
-                return firstObject.list.jsList.length == 1
-                    && (await firstObject.list.getObject(0)).text === '';
-            }),
-            this.createTest('ui_switchCurrentContainer', async test => {
-                let app = Starter.createAppWithUI();
-                await app.appA.uiA.globalEventG.defaultAction();
-
-                await app.appA.uiA.globalEventG.switchCurrentContainer();
-
-                return app.appA.currentContainer === app.appA.uiA.focused &&
-                    app.appA.currentContainer.containerA;
-            })
-        ]
-    }
-
-    createModelTests() {
-        return [
-            this.createTest('modelTest_objectCreation', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
-
-                return test.test_app.uiG.getRawText().includes('default action');
-            }),
-            this.createTest('modelTest_newSubitem', async test => {
-                let app = await Starter.createAppWithUIWithCommands_updateUi();
-                await app.updateUi();
-                await app.appA.uiA.globalEventG.defaultAction();
-
-                await app.uiG.click('new subitem');
-
-                let firstObject = await app.appA.uiA.content.list.getObject(0);
-                return firstObject.list.jsList.length == 1;
-            }),
-            this.createTest('modelTest_makeCollapsible', async test => {
-                let app = await Starter.createAppWithUIWithCommands_updateUi();
-                await app.appA.uiA.globalEventG.defaultAction();
-
-                await app.uiG.click('toggle collapsible');
-
-                return (await app.appA.uiA.content.list.getObject(0)).collapsible;
-            }),
-            this.createTest('modelTest_collapsed', async test => {
-                let app = await Starter.createAppWithUIWithCommands_updateUi();
-                await app.appA.uiA.globalEventG.defaultAction();
-                await app.appA.uiA.globalEventG.newSubitem();
-                let firstObject = await app.appA.uiA.content.list.getObject(0);
-                (await firstObject.list.getObject(0)).text = 'do-not-show-me';
-                firstObject.collapsible = true;
-                firstObject.collapsed = true;
-                await app.uiG.update();
-
-                let rawText = app.uiG.getRawText();
-
-                return !rawText.includes('do-not-show-me');
-            }),
-            this.createTest('modelTest_clickOnStaticText', async test => {
-                let app = await Starter.createAppWithUIWithCommands_updateUi();
-                await app.appA.uiA.globalEventG.defaultAction();
-                await app.appA.uiA.globalEventG.newSubitem();
-                let firstObject = await app.appA.uiA.content.list.getObject(0);
-                firstObject.text = 'clickMe';
-                firstObject.editable = false;
-                firstObject.collapsible = true;
-                firstObject.collapsed = true;
-                await firstObject.updateUi();
-
-                await app.uiG.click('clickMe');
-
-                return !firstObject.collapsed;
-            }),
-            this.createTest('modelTest_tester', async test => {
-                let tester = await Starter.createTest();
-                test.test_app = tester;
-                tester.appA.logG.toListOfStrings = true;
-
-                await tester.appA.testA.runAndDisplay([
-                    tester.appA.testA.createFailingDemoTest(),
-                    tester.appA.testA.createTest('aSuccessfulTest', async () => {
-                        return true;
-                    })
-                ]);
-
-                await tester.uiG.click('failed with');
-                await tester.uiG.click('ui');
-                await tester.uiG.click('log');
-                await tester.uiG.click('successful tests')
-                let rawText = tester.uiG.getRawText();
-                return rawText.includes('failed tests') &&
-                    rawText.includes('failing demo test') &&
-                    rawText.includes('stacktrace') &&
-                    rawText.includes('demo error in test') &&
-                    rawText.includes('a dummy log') &&
-                    rawText.includes('default action') &&
-                    rawText.includes('successful tests') &&
-                    rawText.includes('1') &&
-                    rawText.includes('aSuccessfulTest');
-            }),
-            this.createTest('modelTest_website', async test => {
-                let website = await Starter.createWebsite();
-                test.test_app = website;
-                website.appA.logG.toListOfStrings = true;
-
-                await website.uiG.update();
-
-                let rawText = website.uiG.getRawText();
-                if (Starter.placeholderWebsite.startsWith('marker')) {
-                    return !rawText.includes('demo website (container)') &&
-                        rawText.includes('collapsible parent') &&
-                        rawText.includes('subitem') &&
-                        rawText.includes('Home');
-                } else {
-                    return true;
-                }
-            }),
-        ];
-    }
-
-    createSemiAutomatedTests() {
-        return [
-            this.createTest('semiAutomatedTest_html', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
-                let html = test.test_app.appA.createEntityWithApp();
-                html.dangerous_html = document.createElement('div');
-                html.dangerous_html.innerText = 'show me';
-                await test.test_app.appA.uiA.content.list.addAndUpdateUi(html);
-                test.test_app.appA.logG.toListOfStrings = true;
-                test.test_app.log('human-test: the text "show me" appears');
-                return true;
-            }),
-            this.createTest('semiAutomatedTest_setCaret', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
-                let html = test.test_app.appA.createEntityWithApp();
-                html.dangerous_html = document.createElement('div');
-                html.dangerous_html.innerText = 'test';
-                html.dangerous_html.contentEditable = 'true';
-                html.dangerous_html.style.margin = '1rem';
-                await test.test_app.appA.uiA.content.list.addAndUpdateUi(html, test.test_app.appA.unboundG.createButton('setCaret', () => {
-
-                    setCaret(html.dangerous_html, 2);
-
-                }));
-                test.test_app.appA.logG.toListOfStrings = true;
-                test.test_app.log('human-test: when clicking the button, the caret is set to the middle of the word "test"');
-                return true;
-            }),
-            this.createTest('semiAutomatedTest_cursorStyle', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
-                let appA = test.test_app.appA;
-                await appA.uiA.globalEventG.defaultAction();
-                await appA.uiA.globalEventG.toggleCollapsible();
-                await appA.uiA.globalEventG.newSubitem();
-                appA.logG.toListOfStrings = true;
-                test.test_app.log('human-test: cursor style on collapsible object (outside text): pointer');
-                test.test_app.log('human-test: cursor style on non-collapsible object (outside text): default');
-                test.test_app.log('human-test: cursor style on editable text: text');
-                test.test_app.log('human-test: cursor style on non-editable, non-collapsible text: default');
-                test.test_app.log('human-test: cursor style on non-editable, collapsible text: pointer');
-                return true;
-            }),
-            this.createTest('semiAutomatedTest_expand/collapse', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
-                let appA = test.test_app.appA;
-                await appA.uiA.globalEventG.defaultAction();
-                await appA.uiA.globalEventG.toggleCollapsible();
-                await appA.uiA.globalEventG.newSubitem();
-                appA.logG.toListOfStrings = true;
-                test.test_app.log('human-test: expanded collapsible has the icon: _');
-                test.test_app.log('human-test: collapsed collapsible has the icon: [...]');
-                test.test_app.log('human-test: non-collapsible has no icon');
-                return true;
-            }),
-            this.createTest('semiAutomatedTest_placeholderArea', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
-                let appA = test.test_app.appA;
-                let html = appA.createEntityWithApp();
-                html.dangerous_html = document.createElement('div');
-                html.dangerous_html.style.height = '15rem';
-                html.dangerous_html.style.backgroundColor = 'gold';
-                html.dangerous_html.style.width = '15rem';
-                let collapsible = appA.unboundG.createCollapsible('scroll down and then collapse me', html);
-                collapsible.collapsed = false;
-                collapsible.editable = false;
-                appA.uiA.content.list.jsList.push(collapsible);
-                appA.logG.toListOfStrings = true;
-                test.test_app.log('info: The placeholder-area is an area which is inserted at the bottom of the site. ' +
-                    'It is necessary to avoid unwanted movements when collapsing a big item.');
-
-                test.test_app.log('human-test: The content above the item never moves, when collapsing it.');
-                test.test_app.log('human-test: When scrolling to the bottom, you still see a rest of the application-content');
-                test.test_app.log('human-test: The placeholder-area adapts its size when resizing the window.');
-                return true;
-            }),
-        ];
     }
 
     createFailingDemoTest(): Entity {
