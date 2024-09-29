@@ -6,16 +6,14 @@ export class OutputA {
     private readonly output : Entity;
 
     constructor(private entity : Entity) {
-        this.output = this.entity.appA.unboundG.createText('');
-        this.ui = this.entity.appA.unboundG.createTextWithList('output', this.output, this.entity.appA.unboundG.createButton('hide output', async () => {
-            await this.ui.setHiddenAndUpdateUi(true);
-        }));
-        this.ui.hidden = true;
+        this.output = this.entity.appA.unboundG.createText('There is no output. Click on \'export\'');
+        this.ui = this.entity.appA.unboundG.createTextWithList('output', this.output);
+        this.ui.collapsible = true;
     }
 
     async setAndUpdateUi(string : string) {
         this.output.text = string;
-        this.ui.hidden = false;
+        await this.ui.expand();
         await this.ui.uiG.update();
     }
 

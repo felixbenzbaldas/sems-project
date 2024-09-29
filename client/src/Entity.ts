@@ -231,17 +231,25 @@ export class Entity {
     async expandOrCollapse() {
         if (this.collapsible) {
             if (this.collapsed) {
-                this.collapsed = false;
-                this.uiG.headerG.updateBodyIcon();
-                await this.uiG.listG.update();
-                await this.uiG.bodyG.expand();
+                await this.expand();
             } else {
-                this.collapsed = true;
-                this.uiG.headerG.updateBodyIcon();
-                await this.uiG.bodyG.collapse();
+                await this.collapse();
             }
         } else {
             this.log('warning: not collapsible!');
         }
     }
+    async expand() {
+        this.collapsed = false;
+        this.uiG.headerG.updateBodyIcon();
+        await this.uiG.listG.update();
+        await this.uiG.bodyG.expand();
+    }
+
+    async collapse() {
+        this.collapsed = true;
+        this.uiG.headerG.updateBodyIcon();
+        await this.uiG.bodyG.collapse();
+    }
+
 }
