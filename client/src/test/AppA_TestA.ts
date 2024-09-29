@@ -69,6 +69,25 @@ export class AppA_TestA {
         return testResults;
     }
 
+    createTest(name: string, action: (test: Entity) => Promise<any>) : Entity {
+        let test = this.appA.unboundG.createText(name);
+        test.isTest = true;
+        test.action = async () => {
+            test.test_result = await action(test);
+            return test.test_result;
+        }
+        return test;
+    }
+
+    createFailingDemoTest(): Entity {
+        return this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
+            test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+            test.test_app.appA.logG.toListOfStrings = true;
+            test.test_app.log('a dummy log');
+            throw new Error('demo error in test');
+        });
+    }
+
     createTests() : Array<Entity> {
         let tests = [
             this.createTest('create application', async test => {
@@ -144,24 +163,5 @@ export class AppA_TestA {
             tests.push(this.createFailingDemoTest());
         }
         return tests;
-    }
-
-    createTest(name: string, action: (test: Entity) => Promise<any>) : Entity {
-        let test = this.appA.unboundG.createText(name);
-        test.isTest = true;
-        test.action = async () => {
-            test.test_result = await action(test);
-            return test.test_result;
-        }
-        return test;
-    }
-
-    createFailingDemoTest(): Entity {
-        return this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
-            test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
-            test.test_app.appA.logG.toListOfStrings = true;
-            test.test_app.log('a dummy log');
-            throw new Error('demo error in test');
-        });
     }
 }

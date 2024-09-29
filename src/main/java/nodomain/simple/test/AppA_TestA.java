@@ -48,6 +48,14 @@ public class AppA_TestA {
         }
     }
 
+    private Entity createTest(String name, ThrowingFunction<Entity, Boolean> testAction) {
+        Entity test = new Entity();
+        test.text = name;
+        test.file = new File(this.entity.file, new RandomString().next());
+        test.test_action = testAction;
+        return test;
+    }
+    
     public List<Entity> createTests() {
         return Arrays.asList(
             this.createTest("run multiple platform commands", test -> {
@@ -91,13 +99,5 @@ public class AppA_TestA {
                 return "{\"text\":\"foo\"}".equals(jsonString);
             })
         );
-    }
-
-    private Entity createTest(String name, ThrowingFunction<Entity, Boolean> testAction) {
-        Entity test = new Entity();
-        test.text = name;
-        test.file = new File(this.entity.file, new RandomString().next());
-        test.test_action = testAction;
-        return test;
     }
 }
