@@ -109,6 +109,9 @@ export class Starter {
             app.appA.unboundG.createButton('import', async () => {
                 await app.appA.uiA.globalEventG.import();
             }),
+            app.appA.unboundG.createButton('focus root', async () => {
+                await app.appA.uiA.globalEventG.focusRoot();
+            }),
             // app.appA.unboundG.createButton('flat export content', async () => {
             //     await app.appA.uiA.globalEventG.flatExportContent();
             // }),
