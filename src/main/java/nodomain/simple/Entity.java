@@ -3,12 +3,12 @@ package nodomain.simple;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.simple.core.AppA;
 import nodomain.simple.core.ListA;
+import nodomain.simple.core.ThrowingFunction;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 public class Entity {
 
@@ -19,7 +19,7 @@ public class Entity {
     public Entity container;
     public AppA appA;
     public File file;
-    public Function<Entity, Boolean> test_action;
+    public ThrowingFunction<Entity, Boolean> test_action;
     public Exception test_result_error;
 
     public void set(String property, Object value) {

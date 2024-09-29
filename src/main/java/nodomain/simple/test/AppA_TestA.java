@@ -1,19 +1,17 @@
 package nodomain.simple.test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.simple.Entity;
 import nodomain.simple.Starter;
 import nodomain.simple.Utils;
 import nodomain.simple.core.RandomString;
+import nodomain.simple.core.ThrowingFunction;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 public class AppA_TestA {
 
@@ -57,65 +55,45 @@ public class AppA_TestA {
 
                 Utils.runMultiplePlatformCommands("cd " + test.file, "mkdir test");
 
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                Thread.sleep(100);
                 return new File(test.file, "test").exists();
             }),
             this.createTest("read/write file", test -> {
-                try {
-                    test.file.mkdirs();
-                    File file = new File(test.file, "tmp");
-                    file.createNewFile();
+                test.file.mkdirs();
+                File file = new File(test.file, "tmp");
+                file.createNewFile();
 
-                    Utils.writeToFile(file, "foo");
-                    String read = Utils.readFromFile(file);
+                Utils.writeToFile(file, "foo");
+                String read = Utils.readFromFile(file);
 
-                    return "foo".equals(read);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                return "foo".equals(read);
             }),
             this.createTest("replace in file", test -> {
-                try {
-                    test.file.mkdirs();
-                    File file = new File(test.file, "tmp");
-                    file.createNewFile();
-                    Utils.writeToFile(file, "foo-toReplace-bar");
+                test.file.mkdirs();
+                File file = new File(test.file, "tmp");
+                file.createNewFile();
+                Utils.writeToFile(file, "foo-toReplace-bar");
 
-                    Utils.replace(file, "toReplace", "replacement");
+                Utils.replace(file, "toReplace", "replacement");
 
-                    String read = Utils.readFromFile(file);
-                    return read.contains("replacement");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                String read = Utils.readFromFile(file);
+                return read.contains("replacement");
             }),
             this.createTest("read pretty json", test -> {
-                try {
-                    File file = new File(Starter.TEST_RESOURCES_PATH + "/prettyJson.txt");
-                    Object json = new ObjectMapper().readValue(file, Object.class);
-                    Map<String, Object> jsonMap = (Map<String, Object>) json;
-                    return jsonMap.containsKey("text") &&
-                        jsonMap.containsKey("list");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                File file = new File(Starter.TEST_RESOURCES_PATH + "/prettyJson.txt");
+                Object json = new ObjectMapper().readValue(file, Object.class);
+                Map<String, Object> jsonMap = (Map<String, Object>) json;
+                return jsonMap.containsKey("text") &&
+                    jsonMap.containsKey("list");
             }),
             this.createTest("create reduced json string", test -> {
-                try {
-                    String jsonString = new ObjectMapper().writeValueAsString(Map.of("text", "foo"));
-                    return "{\"text\":\"foo\"}".equals(jsonString);
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
+                String jsonString = new ObjectMapper().writeValueAsString(Map.of("text", "foo"));
+                return "{\"text\":\"foo\"}".equals(jsonString);
             })
         );
     }
 
-    private Entity createTest(String name, Function<Entity, Boolean> testAction) {
+    private Entity createTest(String name, ThrowingFunction<Entity, Boolean> testAction) {
         Entity test = new Entity();
         test.text = name;
         test.file = new File(this.entity.file, new RandomString().next());
