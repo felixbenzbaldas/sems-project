@@ -11,6 +11,8 @@ export class Starter {
     static placeholderWebsite = 'marker-dr53hifhh4-website';
 
     static async createFromUrl() : Promise<Entity> {
+        let root : HTMLElement = document.querySelector(':root');
+        root.style.fontSize = '21px';
         let queryParams = new URLSearchParams(window.location.search);
         let app : Entity;
         if (queryParams.has('local')) {

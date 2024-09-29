@@ -75,6 +75,7 @@ export class UiG_HeaderG {
         button.innerText = this.entity.text;
         button.onclick = (event) => { this.entity.action(); };
         button.style.margin = '0.3rem 0.3rem 0.3rem 0rem';
+        button.style.fontSize = '0.9rem';
         this.htmlElement.style.display = 'inline';
         return button;
     }
