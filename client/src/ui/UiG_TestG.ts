@@ -41,9 +41,9 @@ export class UiG_TestG {
             this.bodyContent.list.jsList.push(errorUi);
         }
         if (this.entity.test_app) {
-            await this.bodyContent.list.addAndUpdateUi(appA.unboundG.createCollapsible('log',
+            await this.bodyContent.list.add(appA.unboundG.createCollapsible('log',
                 appA.unboundG.createText(this.entity.test_app.appA.logG.listOfStrings.join('\n'))));
-            await this.bodyContent.list.addAndUpdateUi(appA.unboundG.createCollapsible('ui',
+            await this.bodyContent.list.add(appA.unboundG.createCollapsible('ui',
                 this.entity.test_app));
         }
         await this.bodyContent.uiG.update();

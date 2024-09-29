@@ -34,7 +34,7 @@ export class ContainerA {
         let collapsible = this.entity.getApp().appA.unboundG.createCollapsible(text);
         this.take(collapsible);
         for (let entity of jsList) {
-            await collapsible.list.addAndUpdateUi(entity);
+            await collapsible.list.add(entity);
         }
         return collapsible;
     }

@@ -39,14 +39,15 @@ export class AppA_TestA {
         this.appA.uiA.content.list.jsList = [];
         let testResults : TestResults = await this.run(tests);
         if (testResults.failed.length > 0) {
-            await this.appA.uiA.content.list.addAndUpdateUi(this.appA.unboundG.createTextWithList('failed tests (' + testResults.failed.length + ')',
+            await this.appA.uiA.content.list.add(this.appA.unboundG.createTextWithList('failed tests (' + testResults.failed.length + ')',
                 ...testResults.failed));
         }
-        await this.appA.uiA.content.list.addAndUpdateUi(
+        await this.appA.uiA.content.list.add(
             this.appA.unboundG.createCollapsible('successful tests (' + testResults.successful.length + ')',
                 ...testResults.successful),
             this.appA.unboundG.createText(''),
             this.appA.unboundG.createText('Note: There are also (old) tests which can be run with JUnit/Vitest.'));
+        await this.appA.uiA.content.updateUi();
     }
 
     async run(tests : Array<Entity>) : Promise<TestResults> {
@@ -113,7 +114,7 @@ export class AppA_TestA {
                 container.containerA = new ContainerA(container);
                 app.appA.currentContainer = container;
                 let subitemAndContained = await app.appA.createText('subitem + contained');
-                await container.list.addAndUpdateUi(subitemAndContained);
+                await container.list.add(subitemAndContained);
 
                 let exported = await container.export();
 
