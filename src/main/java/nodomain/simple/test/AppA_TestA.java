@@ -55,7 +55,7 @@ public class AppA_TestA {
         test.test_action = testAction;
         return test;
     }
-    
+
     public List<Entity> createTests() {
         return Arrays.asList(
             this.createTest("run multiple platform commands", test -> {

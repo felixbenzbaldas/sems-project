@@ -9,14 +9,18 @@ export class ListA {
     }
 
     async addAndUpdateUi(...items : Array<Entity>) {
-        items.forEach(item => {
-           if (item.name && item.container) {
-               this.jsList.push(this.entity.getPath(item));
-           } else {
-               this.jsList.push(item);
-           }
-        });
+        await this.add(...items);
         await this.entity.updateUi();
+    }
+
+    async add(...items : Array<Entity>) {
+        for (let item of items) {
+            if (item.name && item.container) {
+                this.jsList.push(this.entity.getPath(item));
+            } else {
+                this.jsList.push(item);
+            }
+        };
     }
 
     json_withoutContainedObjects() {
