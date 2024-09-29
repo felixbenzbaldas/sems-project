@@ -10,9 +10,15 @@ export class Starter {
     static placeholderImpressumBody = 'marker-dr53hifhh4-impressum-body';
     static placeholderWebsite = 'marker-dr53hifhh4-website';
 
-    static async createFromUrl() : Promise<Entity> {
+    static async start() : Promise<HTMLElement> {
         let root : HTMLElement = document.querySelector(':root');
         root.style.fontSize = '21px';
+        let app = await Starter.createFromUrl();
+        await app.uiG.update();
+        return app.uiG.htmlElement;
+    }
+
+    static async createFromUrl() : Promise<Entity> {
         let queryParams = new URLSearchParams(window.location.search);
         let app : Entity;
         if (queryParams.has('local')) {

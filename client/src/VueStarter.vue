@@ -1,16 +1,13 @@
 <script setup lang="ts">
 
-import type {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
 
 async function init() {
-    let app : Entity = await Starter.createFromUrl();
-    let html = app.uiG.htmlElement;
+    let html = await Starter.start();
     while (document.body.children.length > 0) {
         document.body.removeChild(document.body.children.item(0));
     }
     document.body.appendChild(html);
-    await app.uiG.update();
 }
 
 init();
