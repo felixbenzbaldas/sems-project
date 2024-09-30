@@ -49,7 +49,7 @@ public class TestOnlyLocalhostServer {
         app.set("content", "bar");
         assertThat(app.data.get("content")).isEqualTo("bar");
 
-        app.appA.olsAspect_reset();
+        app.appA.onlyLocalhostServer_reset();
 
         assertThat((List<List<String>>) app.data.get("content")).isEmpty();
         Entity reloaded = Starter.loadApp(file);
@@ -60,7 +60,7 @@ public class TestOnlyLocalhostServer {
     void can_create_text() {
         Entity app = Starter.createOnlyLocalhostServer(new File(PATH_FOR_TMP_FILES), 8087);
 
-        String name = app.appA.olsAspect_createText(List.of(), "foo");
+        String name = app.appA.onlyLocalhostServer_createText(List.of(), "foo");
 
         assertThat(name).isNotEmpty();
     }

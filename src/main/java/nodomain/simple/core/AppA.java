@@ -1,13 +1,9 @@
 package nodomain.simple.core;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.simple.AppA_DeployG;
 import nodomain.simple.Entity;
-import nodomain.simple.Utils;
 import nodomain.simple.test.AppA_TestA;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public class AppA {
@@ -46,13 +42,12 @@ public class AppA {
         return entity;
     }
 
-    // ols = OnlyLocalhostServer
-    public void olsAspect_reset() {
+    public void onlyLocalhostServer_reset() {
         this.entity.set("content", List.of());
     }
 
     // returns the name
-    public String olsAspect_createText(List<String> pathOfContainer, String text) {
+    public String onlyLocalhostServer_createText(List<String> pathOfContainer, String text) {
         if (pathOfContainer.isEmpty()) {
             Entity entity = this.createText(text);
             return entity.name;
