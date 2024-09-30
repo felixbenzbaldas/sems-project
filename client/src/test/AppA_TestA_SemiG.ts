@@ -89,6 +89,7 @@ export class AppA_TestA_SemiG {
                 test.test_app.log('human-test: At beginning a vertical orange line indicates the focus of the root element.' +
                     ' The line appears at the top of the (empty) content area.');
                 test.test_app.log('human-test: The line disappears when creating a new object (the root has not the focus anymore).');
+                test.test_app.log('human-test: The created object is surrounded with an orange box (because it has the focus).');
                 return false;
             }),
         ];

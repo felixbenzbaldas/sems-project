@@ -28,6 +28,8 @@ export class UiG_HeaderG {
                 this.entity.uiG.textG.htmlElement.focus();
             }
         };
+        this.htmlElement.style.border = 'solid';
+        this.focusStyle_update();
         this.updateCursorStyle();
     }
 
@@ -96,6 +98,14 @@ export class UiG_HeaderG {
             this.htmlElement.style.cursor = 'pointer';
         } else {
             this.htmlElement.style.cursor = 'default';
+        }
+    }
+
+    focusStyle_update() {
+        if (this.entity.ui_hasFocus()) {
+            this.htmlElement.style.borderColor = 'orange';
+        } else {
+            this.htmlElement.style.borderColor = 'white';
         }
     }
 }

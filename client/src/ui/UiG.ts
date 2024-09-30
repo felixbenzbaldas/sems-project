@@ -163,6 +163,8 @@ export class UiG {
     updateFocusStyle() {
         if (this.entity.appA?.uiA) {
             this.entity.appA.uiA.focusStyle_update();
+        } else {
+            this.entity.uiG.headerG.focusStyle_update();
         }
     }
 }

@@ -36,7 +36,9 @@ export class AppA_UiA {
     focus(entity: Entity) {
         let focusedPrevious = this.focused;
         this.focused = entity;
-        focusedPrevious.uiG.updateFocusStyle();
+        if (focusedPrevious) {
+            focusedPrevious.uiG.updateFocusStyle();
+        }
         this.focused.uiG.updateFocusStyle();
     }
 
