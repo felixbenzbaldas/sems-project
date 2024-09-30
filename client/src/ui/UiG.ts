@@ -151,7 +151,7 @@ export class UiG {
                         counter++;
                     }
                 }
-                if (this.entity.list) {
+                if (this.entity.list && !this.entity.collapsed) {
                     counter += this.listG.countEditableTexts();
                 }
                 return counter;
