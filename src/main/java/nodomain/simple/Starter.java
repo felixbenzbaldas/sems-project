@@ -63,9 +63,33 @@ public class Starter {
     }
 
     static void deployAndRun() throws IOException {
-        Entity entity = new Entity();
-        entity.appA = new AppA(entity);
-        entity.appA.deployment_path = deploymentPath;
+        Entity app = new Entity();
+        app.appA = new AppA(app);
+        app.appA.deployment_path = deploymentPath;
+        deleteOldFiles();
+        buildClient();
+        Utils.copyFolder(Path.of("client/dist"), Path.of(deploymentPath + "/heroku/sems"));
+        replacements(app);
+        run();
+    }
+
+    private static void replacements(Entity entity) throws IOException {
+        String replacementPathImpressumHeader = deploymentPath + "/PUBLIC-replacement-impressum-header.txt";
+        String replacementPathImpressumBody = deploymentPath + "/PUBLIC-replacement-impressum-body.txt";
+        String replacementPathWebsite = deploymentPath + "/data/PUBLIC-replacement-website.txt";
+        deployment_replace(replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
+        deployment_replace(replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
+        entity.appA.deployment_replace_prettyJson(replacementPathWebsite, "marker-dr53hifhh4-website");
+    }
+
+    private static void deleteOldFiles() throws IOException {
+        Utils.delete(new File(deploymentPath + "/heroku/sems/assets"));
+        Utils.delete(new File(deploymentPath + "/heroku/sems/icon.png"));
+        Utils.delete(new File(deploymentPath + "/heroku/sems/index.html"));
+        Utils.delete(new File(deploymentPath + "/heroku/sems/diko-thesis-2017.pdf"));
+    }
+
+    private static void buildClient() {
         Utils.runMultiplePlatformCommands("cd ./client", "npm run build");
         // TODO: wait until build has finished
         try {
@@ -73,22 +97,6 @@ public class Starter {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-        Utils.delete(new File(deploymentPath + "/heroku/sems/assets"));
-        Utils.delete(new File(deploymentPath + "/heroku/sems/icon.png"));
-        Utils.delete(new File(deploymentPath + "/heroku/sems/index.html"));
-        Utils.delete(new File(deploymentPath + "/heroku/sems/diko-thesis-2017.pdf"));
-        Utils.copyFolder(Path.of("client/dist"), Path.of(deploymentPath + "/heroku/sems"));
-
-        String replacementPathImpressumHeader = deploymentPath + "/PUBLIC-replacement-impressum-header.txt";
-        String replacementPathImpressumBody = deploymentPath + "/PUBLIC-replacement-impressum-body.txt";
-        String replacementPathWebsite = deploymentPath + "/data/PUBLIC-replacement-website.txt";
-
-        deployment_replace(replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
-        deployment_replace(replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
-        entity.appA.deployment_replace_prettyJson(replacementPathWebsite, "marker-dr53hifhh4-website");
-
-        run();
     }
 
     private static void deployment_replace(String pathOfReplacement, String toReplace) throws IOException {
