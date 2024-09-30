@@ -53,4 +53,11 @@ public class AppA {
             throw new RuntimeException("not implemented yet");
         }
     }
+
+    public String escapeJsonString(String jsonString) {
+        return jsonString
+            .replace("\"", "\\\"")
+            .replace("\\\\\"", "\\\\\\\"")
+            .replace("\\n", "\\\\n");
+    }
 }

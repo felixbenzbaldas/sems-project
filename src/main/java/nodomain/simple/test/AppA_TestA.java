@@ -97,6 +97,18 @@ public class AppA_TestA {
             this.createTest("create reduced json string", test -> {
                 String jsonString = new ObjectMapper().writeValueAsString(Map.of("text", "foo"));
                 return "{\"text\":\"foo\"}".equals(jsonString);
+            }),
+            this.createTest("escapeJsonString", test -> {
+                System.out.println("Start test " + test.text);
+                String jsonString = new ObjectMapper().writeValueAsString(Map.of("text", "quote:\" break\nnewline"));
+                System.out.println("jsonString        = " + jsonString);
+
+                String escapedJsonString = Starter.createApp().appA.escapeJsonString(jsonString);
+
+                System.out.println("escapedJsonString = " + escapedJsonString);
+                String expected = "{\\\"text\\\":\\\"quote:\\\\\\\" break\\\\nnewline\\\"}";
+                System.out.println("expected          = " + expected);
+                return expected.equals(escapedJsonString);
             })
         );
     }
