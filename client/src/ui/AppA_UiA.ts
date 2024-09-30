@@ -30,14 +30,14 @@ export class AppA_UiA {
     async newSubitem() {
         let created = await this.entity.appA.createText('');
         await this.content.list.addAndUpdateUi(created);
-        let focusedPrevious = this.focused;
-        this.focused = created;
-        focusedPrevious.updateFocusStyle();
-        this.focused.updateFocusStyle();
+        this.focus(created);
     }
 
-    async focus(entity: Entity) {
+    focus(entity: Entity) {
+        let focusedPrevious = this.focused;
         this.focused = entity;
+        focusedPrevious.uiG.updateFocusStyle();
+        this.focused.uiG.updateFocusStyle();
     }
 
     async update() : Promise<void> {

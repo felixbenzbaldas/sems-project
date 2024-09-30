@@ -251,10 +251,4 @@ export class Entity {
         this.uiG.headerG.updateBodyIcon();
         await this.uiG.bodyG.collapse();
     }
-
-    updateFocusStyle() {
-        if (this.appA?.uiA) {
-            this.appA.uiA.focusStyle_update();
-        }
-    }
 }

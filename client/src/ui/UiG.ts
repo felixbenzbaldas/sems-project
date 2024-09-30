@@ -159,4 +159,10 @@ export class UiG {
         }
         return 0;
     }
+
+    updateFocusStyle() {
+        if (this.entity.appA?.uiA) {
+            this.entity.appA.uiA.focusStyle_update();
+        }
+    }
 }
