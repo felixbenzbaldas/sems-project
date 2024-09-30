@@ -15,6 +15,7 @@ export class AppA_UiA {
     readonly htmlElement: HTMLElement = document.createElement('div');
     globalEventG: AppA_UiA_GlobalEventG;
     withPlaceholderArea: boolean;
+    private focusStyle_marker: HTMLElement;
 
     constructor(private entity: Entity) {
         this.content = entity.appA.unboundG.createList();
@@ -23,6 +24,7 @@ export class AppA_UiA {
         this.input = new InputA(entity);
         this.globalEventG = new AppA_UiA_GlobalEventG(entity);
         this.focused = entity;
+        this.focusStyle_marker = this.focusStyle_createMarker();
     }
 
     async newSubitem() {
@@ -45,6 +47,7 @@ export class AppA_UiA {
             await this.output.getUi().updateUi();
             this.content.uiG.editable = true;
         }
+        this.focusStyle_update();
         await this.content.updateUi();
         this.updateUiElement();
     }
@@ -63,6 +66,7 @@ export class AppA_UiA {
             this.htmlElement.appendChild(this.output.getUi().uiG.htmlElement);
             this.htmlElement.appendChild(this.separatorLine());
         }
+        this.htmlElement.appendChild(this.focusStyle_marker);
         this.htmlElement.appendChild(this.content.uiG.htmlElement);
         if (this.withPlaceholderArea) {
             this.htmlElement.appendChild(this.createPlaceholderArea());
@@ -131,5 +135,19 @@ export class AppA_UiA {
             updatePlaceholderArea();
         });
         return placeholderAreaDiv;
+    }
+
+    private focusStyle_createMarker() : HTMLElement {
+        let div = document.createElement('div');
+        div.style.height = '0.2rem';
+        return div;
+    }
+
+    focusStyle_update() {
+        if (this.focused === this.entity) {
+            this.focusStyle_marker.style.backgroundColor = 'orange';
+        } else {
+            this.focusStyle_marker.style.backgroundColor = 'white';
+        }
     }
 }

@@ -82,6 +82,14 @@ export class AppA_TestA_SemiG {
                 test.test_app.log('human-test: The placeholder-area adapts its size when resizing the window.');
                 return true;
             }),
+            this.createTest('semiAutomatedTest_focusStyle', async test => {
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                let appA = test.test_app.appA;
+                appA.logG.toListOfStrings = true;
+                test.test_app.log('human-test: At beginning a vertical orange line indicates the focus of the root element.' +
+                    ' The line appears at the top of the (empty) content area.');
+                return false;
+            }),
         ];
     }
 
