@@ -1,6 +1,7 @@
 package nodomain.simple.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nodomain.simple.AppA_DeployG;
 import nodomain.simple.Entity;
 import nodomain.simple.Utils;
 import nodomain.simple.test.AppA_TestA;
@@ -13,10 +14,11 @@ public class AppA {
 
     private Entity entity;
     public AppA_TestA testA;
-    public String deployment_path;
+    public AppA_DeployG deployG;
 
     public AppA(Entity entity) {
         this.entity = entity;
+        this.deployG = new AppA_DeployG(entity);
     }
 
     public int port;
@@ -56,23 +58,6 @@ public class AppA {
             return entity.name;
         } else {
             throw new RuntimeException("not implemented yet");
-        }
-    }
-
-    public void deployment_replace_prettyJson(String pathOfReplacement, String toReplace) throws IOException {
-        Object json = new ObjectMapper().readValue(new File(pathOfReplacement), Object.class);
-        String jsonString = new ObjectMapper().writeValueAsString(json);
-        String replacement = this.escapeJsonString(jsonString);
-        boolean found = false;
-        for (File file : new File(this.deployment_path + "/heroku/sems/assets").listFiles()) {
-            String oldText = Utils.readFromFile(file);
-            if (oldText.contains(toReplace)) {
-                found = true;
-            }
-            Utils.writeToFile(file, oldText.replace(toReplace, replacement));
-        }
-        if (!found) {
-            throw new RuntimeException("replace was not successful!");
         }
     }
 

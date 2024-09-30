@@ -8,7 +8,6 @@ import nodomain.simple.test.AppA_TestA;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -36,15 +35,19 @@ public class Starter {
     }
 
     public static void run() {
-        Utils.runMultiplePlatformCommands(
-            "start \"\" http://localhost:8086/?testMode",
-            "start \"\" http://localhost:8086/?test",
-            "start \"\" http://localhost:8086/?client-app"
-        );
-        Utils.runMultiplePlatformCommands(
-            "cd " + deploymentPath + "/heroku/sems",
-            "http-server --port 8086"
-        );
+        Entity app = createDeployer(deploymentPath);
+        app.appA.deployG.run();
+    }
+
+    static void deployAndRun() throws IOException {
+        Entity app = createDeployer(deploymentPath);
+        app.appA.deployG.deployAndRun();
+    }
+
+    // login to heroku at first
+    public static void publish() {
+        Entity app = createDeployer(deploymentPath);
+        app.appA.deployG.publish();
     }
 
     public static String getProperty(String key) {
@@ -60,68 +63,6 @@ public class Starter {
 
     public static File getConfigFile() {
         return new File(Config.pathToConfigFile);
-    }
-
-    static void deployAndRun() throws IOException {
-        Entity app = new Entity();
-        app.appA = new AppA(app);
-        app.appA.deployment_path = deploymentPath;
-        deleteOldFiles();
-        buildClient();
-        Utils.copyFolder(Path.of("client/dist"), Path.of(deploymentPath + "/heroku/sems"));
-        replacements(app);
-        run();
-    }
-
-    private static void replacements(Entity entity) throws IOException {
-        String replacementPathImpressumHeader = deploymentPath + "/PUBLIC-replacement-impressum-header.txt";
-        String replacementPathImpressumBody = deploymentPath + "/PUBLIC-replacement-impressum-body.txt";
-        String replacementPathWebsite = deploymentPath + "/data/PUBLIC-replacement-website.txt";
-        deployment_replace(replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
-        deployment_replace(replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
-        entity.appA.deployment_replace_prettyJson(replacementPathWebsite, "marker-dr53hifhh4-website");
-    }
-
-    private static void deleteOldFiles() throws IOException {
-        Utils.delete(new File(deploymentPath + "/heroku/sems/assets"));
-        Utils.delete(new File(deploymentPath + "/heroku/sems/icon.png"));
-        Utils.delete(new File(deploymentPath + "/heroku/sems/index.html"));
-        Utils.delete(new File(deploymentPath + "/heroku/sems/diko-thesis-2017.pdf"));
-    }
-
-    private static void buildClient() {
-        Utils.runMultiplePlatformCommands("cd ./client", "npm run build");
-        // TODO: wait until build has finished
-        try {
-            Thread.sleep(6000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void deployment_replace(String pathOfReplacement, String toReplace) throws IOException {
-        String replacement = Utils.readFromFile(new File(pathOfReplacement));
-        boolean found = false;
-        for (File file : new File(deploymentPath + "/heroku/sems/assets").listFiles()) {
-            String oldText = Utils.readFromFile(file);
-            if (oldText.contains(toReplace)) {
-                found = true;
-            }
-            Utils.writeToFile(file, oldText.replace(toReplace, replacement));
-        }
-        if (!found) {
-            throw new RuntimeException("replace was not successful!");
-        }
-    }
-
-    // login to heroku at first
-    public static void publish() {
-        Utils.runMultiplePlatformCommands(
-            "cd " + new File(deploymentPath, "/heroku/sems"),
-            "git add .",
-            "git commit -am \"deployment\"",
-            "git push heroku main"
-        );
     }
 
     public static Entity createApp() {
@@ -157,12 +98,18 @@ public class Starter {
         return app;
     }
 
-    public static Entity test() {
+    public static Entity createDeployer(String deploymentPath) {
+        Entity app = new Entity();
+        app.appA = new AppA(app);
+        app.appA.deployG.path = deploymentPath;
+        return app;
+    }
+
+    public static void test() {
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
         entity.appA.testA = new AppA_TestA(entity);
         entity.file = new File(Starter.PATH_FOR_TMP_FILES);
         entity.appA.testA.createRunAndDisplayTests();
-        return entity;
     }
 }
