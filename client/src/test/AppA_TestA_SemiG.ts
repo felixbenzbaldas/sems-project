@@ -90,7 +90,8 @@ export class AppA_TestA_SemiG {
                     ' The line appears at the top of the (empty) content area.');
                 test.test_app.log('human-test: The line disappears when creating a new object (the root has not the focus anymore).');
                 test.test_app.log('human-test: The created object is surrounded with an orange box (because it has the focus).');
-                return false;
+                test.test_app.log('human-test: The orange box disappears when removing the focus.');
+                return true;
             }),
         ];
     }

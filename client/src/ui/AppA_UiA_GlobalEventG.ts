@@ -66,10 +66,10 @@ export class AppA_UiA_GlobalEventG {
             focused.list = new ListA(focused);
         }
         await focused.list.addAndUpdateUi(created);
-        this.entity.appA.uiA.focused = created;
+        this.entity.appA.uiA.focus(created);
     }
 
     async focusRoot() {
-        this.entity.appA.uiA.focused = this.entity;
+        this.entity.appA.uiA.focus(this.entity);
     }
 }

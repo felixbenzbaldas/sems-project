@@ -22,7 +22,7 @@ export class AppA_TestA_UiG {
                 await app.appA.uiA.globalEventG.toggleCollapsible();
                 await app.appA.uiA.globalEventG.newSubitem();
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
-                app.appA.uiA.focused = firstObject;
+                app.appA.uiA.focus(firstObject);
 
                 await app.appA.uiA.globalEventG.expandOrCollapse();
 

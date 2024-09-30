@@ -65,6 +65,6 @@ export class UiG_ListG {
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         this.entity.list.jsList.splice(position, 0, this.entity.getPath(created));
         await this.entity.updateUi();
-        this.entity.getApp().appA.uiA.focused = this.uisOfListItems.at(position);
+        this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
     }
 }
