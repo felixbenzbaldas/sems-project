@@ -24,8 +24,8 @@ public class Starter {
             if (args[0].contains(",")) {
                 args = args[0].split(",");
             }
-            String command = args[0];
-            switch (command) {
+            String method = args[0];
+            switch (method) {
                 case "test" -> test();
                 case "run" -> run();
                 case "deployAndRun" -> deployAndRun();
