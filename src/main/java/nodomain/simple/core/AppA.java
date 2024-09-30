@@ -11,13 +11,12 @@ public class AppA {
     private Entity entity;
     public AppA_TestA testA;
     public AppA_DeployG deployG;
+    public int port;
 
     public AppA(Entity entity) {
         this.entity = entity;
         this.deployG = new AppA_DeployG(entity);
     }
-
-    public int port;
 
     public Entity createList() {
         Entity entity = this.createEntity();
