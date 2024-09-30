@@ -252,4 +252,9 @@ export class Entity {
         await this.uiG.bodyG.collapse();
     }
 
+    updateFocusStyle() {
+        if (this.appA?.uiA) {
+            this.appA.uiA.focusStyle_update();
+        }
+    }
 }
