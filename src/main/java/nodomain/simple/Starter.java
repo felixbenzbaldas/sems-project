@@ -65,6 +65,7 @@ public class Starter {
     static void deployAndRun() throws IOException {
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
+        entity.appA.deployment_path = deploymentPath;
         Utils.runMultiplePlatformCommands("cd ./client", "npm run build");
         // TODO: wait until build has finished
         try {
@@ -85,29 +86,13 @@ public class Starter {
 
         deployment_replace(replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
         deployment_replace(replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
-        deployment_replace_prettyJson(replacementPathWebsite, "marker-dr53hifhh4-website");
+        entity.appA.deployment_replace_prettyJson(replacementPathWebsite, "marker-dr53hifhh4-website");
 
         run();
     }
 
     private static void deployment_replace(String pathOfReplacement, String toReplace) throws IOException {
         String replacement = Utils.readFromFile(new File(pathOfReplacement));
-        boolean found = false;
-        for (File file : new File(deploymentPath + "/heroku/sems/assets").listFiles()) {
-            String oldText = Utils.readFromFile(file);
-            if (oldText.contains(toReplace)) {
-                found = true;
-            }
-            Utils.writeToFile(file, oldText.replace(toReplace, replacement));
-        }
-        if (!found) {
-            throw new RuntimeException("replace was not successful!");
-        }
-    }
-
-    private static void deployment_replace_prettyJson(String pathOfReplacement, String toReplace) throws IOException {
-        Object json = new ObjectMapper().readValue(new File(pathOfReplacement), Object.class);
-        String replacement = new ObjectMapper().writeValueAsString(json).replace("\"", "\\\"").replace("\\n", "\\\\n");
         boolean found = false;
         for (File file : new File(deploymentPath + "/heroku/sems/assets").listFiles()) {
             String oldText = Utils.readFromFile(file);
