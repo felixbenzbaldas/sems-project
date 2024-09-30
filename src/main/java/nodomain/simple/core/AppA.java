@@ -62,7 +62,7 @@ public class AppA {
     public void deployment_replace_prettyJson(String pathOfReplacement, String toReplace) throws IOException {
         Object json = new ObjectMapper().readValue(new File(pathOfReplacement), Object.class);
         String jsonString = new ObjectMapper().writeValueAsString(json);
-        String replacement = jsonString.replace("\"", "\\\"").replace("\\n", "\\\\n");
+        String replacement = this.escapeJsonString(jsonString);
         boolean found = false;
         for (File file : new File(this.deployment_path + "/heroku/sems/assets").listFiles()) {
             String oldText = Utils.readFromFile(file);
