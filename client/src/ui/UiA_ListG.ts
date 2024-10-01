@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
+import {UiA} from "@/ui/UiA";
 
 export class UiA_ListG {
 
@@ -31,6 +32,7 @@ export class UiA_ListG {
         this.uisOfListItems = []; // TODO: do not always dismiss old uis
         for (let currentResolved of await this.entity.list.getResolvedList()) {
             let currentUi = currentResolved; // TODO: create extra object for currentUi
+            currentUi.uiA = new UiA(currentUi);
             currentUi.uiA.editable = this.entity.uiA.editable;
             currentUi.ui_context = this.entity;
             await currentUi.updateUi();

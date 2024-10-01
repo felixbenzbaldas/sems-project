@@ -2,6 +2,7 @@ import {Entity} from "@/Entity";
 import {OutputA} from "@/ui/OutputA";
 import {InputA} from "@/ui/InputA";
 import {AppA_UiA_GlobalEventG} from "@/ui/AppA_UiA_GlobalEventG";
+import {UiA} from "@/ui/UiA";
 
 export class AppA_UiA {
 
@@ -19,6 +20,7 @@ export class AppA_UiA {
 
     constructor(private entity: Entity) {
         this.content = entity.appA.unboundG.createList();
+        this.content.uiA = new UiA(this.content);
         this.content.container = entity;
         this.output = new OutputA(entity);
         this.input = new InputA(entity);

@@ -19,7 +19,7 @@ export class Entity {
     appA: AppA;
     containerA: ContainerA;
     editable: boolean;
-    readonly uiA: UiA;
+    uiA: UiA;
     ui_context: Entity;
     test_result_error: any;
     collapsible: boolean;
@@ -28,10 +28,6 @@ export class Entity {
     test_app: Entity;
     dangerous_html: HTMLElement;
     isTest: boolean;
-
-    constructor() {
-        this.uiA = new UiA(this);
-    }
 
     json_withoutContainedObjects() : any {
         let obj: any = {

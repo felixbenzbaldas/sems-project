@@ -1,5 +1,6 @@
 import {Starter} from "@/Starter";
 import type {Entity} from "@/Entity";
+import {UiA} from "@/ui/UiA";
 
 export class AppA_TestA_UiG {
 
@@ -31,6 +32,7 @@ export class AppA_TestA_UiG {
             this.createTest('ui_collapsible', async test => {
                 let app = Starter.createAppWithUI();
                 let collapsible = app.appA.unboundG.createCollapsible('', app.appA.unboundG.createText(''));
+                collapsible.uiA = new UiA(collapsible);
 
                 await collapsible.updateUi();
 

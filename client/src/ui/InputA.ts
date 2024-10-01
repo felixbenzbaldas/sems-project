@@ -1,4 +1,5 @@
 import type {Entity} from "@/Entity";
+import {UiA} from "@/ui/UiA";
 
 export class InputA {
 
@@ -9,6 +10,7 @@ export class InputA {
         this.input = entity.appA.unboundG.createText('');
         this.input.editable = true;
         this.ui = entity.appA.unboundG.createTextWithList('input', this.input);
+        this.ui.uiA = new UiA(this.ui);
         this.ui.collapsible = true;
     }
 

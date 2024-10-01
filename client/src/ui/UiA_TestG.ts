@@ -1,4 +1,5 @@
 import type {Entity} from "@/Entity";
+import {UiA} from "@/ui/UiA";
 
 export class UiA_TestG {
 
@@ -46,6 +47,7 @@ export class UiA_TestG {
             await this.bodyContent.list.add(appA.unboundG.createCollapsible('ui',
                 this.entity.test_app));
         }
+        this.bodyContent.uiA = new UiA(this.bodyContent);
         await this.bodyContent.uiA.update();
     }
 }

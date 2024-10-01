@@ -3,6 +3,7 @@ import {AppA_UiA} from "@/ui/AppA_UiA";
 import {AppA} from "@/core/AppA";
 import {AppA_TestA} from "@/test/AppA_TestA";
 import {websiteData} from "@/website-data";
+import {UiA} from "@/ui/UiA";
 
 export class Starter {
 
@@ -57,7 +58,9 @@ export class Starter {
     }
 
     private static async getPlaceholderImpressum(app: Entity) {
-        return Starter.getPlaceholder(app, Starter.placeholderImpressumHeader, Starter.placeholderImpressumBody);
+        let impressum = await Starter.getPlaceholder(app, Starter.placeholderImpressumHeader, Starter.placeholderImpressumBody);
+        impressum.uiA = new UiA(impressum);
+        return impressum;
     }
 
     private static async getPlaceholder(app : Entity, placeholderHeader : string, placeholderBody : string) : Promise<Entity> {
@@ -75,6 +78,7 @@ export class Starter {
 
     static createAppWithUI() : Entity {
         let app = Starter.createApp();
+        app.uiA = new UiA(app);
         app.appA.uiA = new AppA_UiA(app);
         return app;
     }
@@ -119,6 +123,7 @@ export class Starter {
             //     await app.appA.uiA.globalEventG.flatImportToContent();
             // }),
         );
+        app.appA.uiA.commands.uiA = new UiA(app.appA.uiA.commands);
         await app.uiA.update();
         return app;
     }
