@@ -1,7 +1,7 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 
-export class UiG_HeaderG {
+export class UiA_HeaderG {
     htmlElement: HTMLElement = document.createElement('div');
     content: HTMLElement = document.createElement('div');
     bodyIcon : HTMLElement = document.createElement('div');
@@ -14,7 +14,7 @@ export class UiG_HeaderG {
         this.updateContent();
         this.updateBodyIcon();
         if (this.content_fullWidth()) {
-            this.entity.uiG.htmlElement.style.minWidth = '100%';
+            this.entity.uiA.htmlElement.style.minWidth = '100%';
         }
         this.htmlElement.style.display = 'flex';
         this.htmlElement.style.flexWrap = 'wrap';
@@ -25,7 +25,7 @@ export class UiG_HeaderG {
                 await this.entity.expandOrCollapse();
             }
             if (notNullUndefined(this.entity.text)) {
-                this.entity.uiG.textG.htmlElement.focus();
+                this.entity.uiA.textG.htmlElement.focus();
             }
         };
         this.htmlElement.style.border = 'solid';
@@ -36,7 +36,7 @@ export class UiG_HeaderG {
     updateBodyIcon() {
         this.bodyIcon.style.display = 'inline-block';
         this.bodyIcon.style.marginLeft = '0.7rem';
-        if (this.entity.collapsible && this.entity.uiG.bodyG.bodyAvailable()) {
+        if (this.entity.collapsible && this.entity.uiA.bodyG.bodyAvailable()) {
             this.bodyIcon.style.display = 'default';
             if (this.entity.collapsed) {
                 this.bodyIcon.innerText = '[...]';
@@ -51,7 +51,7 @@ export class UiG_HeaderG {
     private updateContent() {
         this.content.innerHTML = null;
         if (this.entity.isTest) {
-            this.content.appendChild(this.entity.uiG.testG.headerContent_htmlElement);
+            this.content.appendChild(this.entity.uiA.testG.headerContent_htmlElement);
         } else if (this.entity.action) {
             this.content.appendChild(this.action_getUiElement());
         } else if (notNullUndefined(this.entity.link)) {
@@ -60,7 +60,7 @@ export class UiG_HeaderG {
             link.innerText = this.link_getText();
             this.content.appendChild(link);
         } else if (notNullUndefined(this.entity.text)) {
-            this.content.appendChild(this.entity.uiG.textG.htmlElement);
+            this.content.appendChild(this.entity.uiA.textG.htmlElement);
         }
     }
 
@@ -94,7 +94,7 @@ export class UiG_HeaderG {
     }
 
     private updateCursorStyle() {
-        if (this.entity.collapsible && this.entity.uiG.bodyG.bodyAvailable()) {
+        if (this.entity.collapsible && this.entity.uiA.bodyG.bodyAvailable()) {
             this.htmlElement.style.cursor = 'pointer';
         } else {
             this.htmlElement.style.cursor = 'default';

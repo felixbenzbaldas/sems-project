@@ -14,7 +14,7 @@ export class OutputA {
     async setAndUpdateUi(string : string) {
         this.output.text = string;
         await this.ui.expand();
-        await this.ui.uiG.update();
+        await this.ui.uiA.update();
     }
 
     getUi() : Entity {

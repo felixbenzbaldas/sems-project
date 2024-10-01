@@ -2,7 +2,7 @@ import {ListA} from "@/core/ListA";
 import {PathA} from "@/core/PathA";
 import {AppA} from "@/core/AppA";
 import {ContainerA} from "@/core/ContainerA";
-import {UiG} from "@/ui/UiG";
+import {UiA} from "@/ui/UiA";
 import {notNullUndefined} from "@/utils";
 
 export class Entity {
@@ -19,7 +19,7 @@ export class Entity {
     appA: AppA;
     containerA: ContainerA;
     editable: boolean;
-    readonly uiG: UiG;
+    readonly uiA: UiA;
     ui_context: Entity;
     test_result_error: any;
     collapsible: boolean;
@@ -30,7 +30,7 @@ export class Entity {
     isTest: boolean;
 
     constructor() {
-        this.uiG = new UiG(this);
+        this.uiA = new UiA(this);
     }
 
     json_withoutContainedObjects() : any {
@@ -51,7 +51,7 @@ export class Entity {
 
     async setHiddenAndUpdateUi(value : boolean) {
         this.hidden = value;
-        await this.uiG.update();
+        await this.uiA.update();
     }
 
     async httpRequest(url : string, method : string, args : Array<any>) : Promise<any> {
@@ -80,7 +80,7 @@ export class Entity {
     }
 
     async defaultActionOnSubitem(subitem : Entity) {
-        await this.uiG.listG.defaultActionOnSubitem(subitem);
+        await this.uiA.listG.defaultActionOnSubitem(subitem);
     }
 
     getPath(object: Entity) : Entity {
@@ -205,7 +205,7 @@ export class Entity {
     }
 
     async updateUi() {
-        await this.uiG.update();
+        await this.uiA.update();
     }
 
     async newSubitem() {
@@ -218,14 +218,14 @@ export class Entity {
             let created = await this.getApp().appA.createText('');
             await this.list.add(created);
             this.getApp().appA.uiA.focused = created;
-            await this.uiG.update();
+            await this.uiA.update();
         }
     }
 
     async toggleCollapsible() {
         this.collapsible = !this.collapsible;
         this.collapsed = false;
-        await this.uiG.update();
+        await this.uiA.update();
     }
 
     async expandOrCollapse() {
@@ -241,14 +241,14 @@ export class Entity {
     }
     async expand() {
         this.collapsed = false;
-        this.uiG.headerG.updateBodyIcon();
-        await this.uiG.listG.update();
-        await this.uiG.bodyG.expand();
+        this.uiA.headerG.updateBodyIcon();
+        await this.uiA.listG.update();
+        await this.uiA.bodyG.expand();
     }
 
     async collapse() {
         this.collapsed = true;
-        this.uiG.headerG.updateBodyIcon();
-        await this.uiG.bodyG.collapse();
+        this.uiA.headerG.updateBodyIcon();
+        await this.uiA.bodyG.collapse();
     }
 }

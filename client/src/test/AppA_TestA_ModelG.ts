@@ -11,14 +11,14 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_objectCreation', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
 
-                return test.test_app.uiG.getRawText().includes('default action');
+                return test.test_app.uiA.getRawText().includes('default action');
             }),
             this.createTest('modelTest_newSubitem', async test => {
                 let app = await Starter.createAppWithUIWithCommands_updateUi();
                 await app.updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
 
-                await app.uiG.click('new subitem');
+                await app.uiA.click('new subitem');
 
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
                 return firstObject.list.jsList.length == 1;
@@ -27,7 +27,7 @@ export class AppA_TestA_ModelG {
                 let app = await Starter.createAppWithUIWithCommands_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
 
-                await app.uiG.click('toggle collapsible');
+                await app.uiA.click('toggle collapsible');
 
                 return (await app.appA.uiA.content.list.getObject(0)).collapsible;
             }),
@@ -39,9 +39,9 @@ export class AppA_TestA_ModelG {
                 (await firstObject.list.getObject(0)).text = 'do-not-show-me';
                 firstObject.collapsible = true;
                 firstObject.collapsed = true;
-                await app.uiG.update();
+                await app.uiA.update();
 
-                let rawText = app.uiG.getRawText();
+                let rawText = app.uiA.getRawText();
 
                 return !rawText.includes('do-not-show-me');
             }),
@@ -56,7 +56,7 @@ export class AppA_TestA_ModelG {
                 firstObject.collapsed = true;
                 await firstObject.updateUi();
 
-                await app.uiG.click('clickMe');
+                await app.uiA.click('clickMe');
 
                 return !firstObject.collapsed;
             }),
@@ -72,11 +72,11 @@ export class AppA_TestA_ModelG {
                     })
                 ]);
 
-                await tester.uiG.click('failed with');
-                await tester.uiG.click('ui');
-                await tester.uiG.click('log');
-                await tester.uiG.click('successful tests')
-                let rawText = tester.uiG.getRawText();
+                await tester.uiA.click('failed with');
+                await tester.uiA.click('ui');
+                await tester.uiA.click('log');
+                await tester.uiA.click('successful tests')
+                let rawText = tester.uiA.getRawText();
                 return rawText.includes('failed tests') &&
                     rawText.includes('failing demo test') &&
                     rawText.includes('stacktrace') &&
@@ -92,9 +92,9 @@ export class AppA_TestA_ModelG {
                 test.test_app = website;
                 website.appA.logG.toListOfStrings = true;
 
-                await website.uiG.update();
+                await website.uiA.update();
 
-                let rawText = website.uiG.getRawText();
+                let rawText = website.uiA.getRawText();
                 if (Starter.placeholderWebsite.startsWith('marker')) {
                     return !rawText.includes('demo website (container)') &&
                         rawText.includes('collapsible parent') &&

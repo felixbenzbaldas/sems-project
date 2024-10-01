@@ -1,6 +1,6 @@
 import type {Entity} from "@/Entity";
 
-export class UiG_TestG {
+export class UiA_TestG {
 
     headerContent_htmlElement: HTMLElement = document.createElement('div');
     bodyContent: Entity;
@@ -15,18 +15,18 @@ export class UiG_TestG {
 
     private updateHeaderContent() {
         this.headerContent_htmlElement.innerHTML = null;
-        this.entity.uiG.textG.htmlElement.style.color = this.entity.test_result ? 'green' : 'red';
-        this.headerContent_htmlElement.appendChild(this.entity.uiG.textG.htmlElement);
+        this.entity.uiA.textG.htmlElement.style.color = this.entity.test_result ? 'green' : 'red';
+        this.headerContent_htmlElement.appendChild(this.entity.uiA.textG.htmlElement);
     }
 
     async click(text : string) {
-        await this.bodyContent.uiG.click(text);
+        await this.bodyContent.uiA.click(text);
     }
 
     getRawText(): string {
         let rawText = '';
         rawText += this.entity.text;
-        rawText += this.bodyContent.uiG.getRawText();
+        rawText += this.bodyContent.uiA.getRawText();
         return rawText;
     }
 
@@ -46,6 +46,6 @@ export class UiG_TestG {
             await this.bodyContent.list.add(appA.unboundG.createCollapsible('ui',
                 this.entity.test_app));
         }
-        await this.bodyContent.uiG.update();
+        await this.bodyContent.uiA.update();
     }
 }

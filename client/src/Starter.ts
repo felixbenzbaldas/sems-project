@@ -14,8 +14,8 @@ export class Starter {
         let root : HTMLElement = document.querySelector(':root');
         root.style.fontSize = '21px';
         let app = await Starter.createFromUrl();
-        await app.uiG.update();
-        return app.uiG.htmlElement;
+        await app.uiA.update();
+        return app.uiA.htmlElement;
     }
 
     static async createFromUrl() : Promise<Entity> {
@@ -119,7 +119,7 @@ export class Starter {
             //     await app.appA.uiA.globalEventG.flatImportToContent();
             // }),
         );
-        await app.uiG.update();
+        await app.uiA.update();
         return app;
     }
 

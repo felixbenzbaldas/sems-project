@@ -1,16 +1,16 @@
 import {beforeEach, describe, expect, it} from "vitest";
 import {Entity} from "@/Entity";
 import {Starter} from "@/Starter";
-import type {UiG} from "@/ui/UiG";
+import type {UiA} from "@/ui/UiA";
 
 describe('client-app (modelTests)', () => {
 
     let app : Entity;
-    let ui : UiG;
+    let ui : UiA;
 
     beforeEach(async () => {
         app = await Starter.createAppWithUIWithCommands_updateUi();
-        ui = app.uiG;
+        ui = app.uiA;
     });
 
     it('can create new object', async () => {

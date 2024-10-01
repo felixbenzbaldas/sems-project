@@ -1,28 +1,27 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
-import {UiG_ListG} from "@/ui/UiG_ListG";
-import {UiG_TextG} from "@/ui/UiG_TextG";
-import {UiG_BodyG} from "@/ui/UiG_BodyG";
-import {UiG_HeaderG} from "@/ui/UiG_HeaderG";
-import {UiG_TestG} from "@/ui/UiG_TestG";
+import {UiA_ListG} from "@/ui/UiA_ListG";
+import {UiA_TextG} from "@/ui/UiA_TextG";
+import {UiA_BodyG} from "@/ui/UiA_BodyG";
+import {UiA_HeaderG} from "@/ui/UiA_HeaderG";
+import {UiA_TestG} from "@/ui/UiA_TestG";
 
-// TODO: should be an aspect (suffix 'A'), not a group (suffix 'G')
-export class UiG {
+export class UiA {
 
     editable: boolean;
     htmlElement : HTMLElement = document.createElement('div');
-    listG: UiG_ListG;
-    textG : UiG_TextG;
-    headerG : UiG_HeaderG;
-    bodyG: UiG_BodyG;
-    testG: UiG_TestG;
+    listG: UiA_ListG;
+    textG : UiA_TextG;
+    headerG : UiA_HeaderG;
+    bodyG: UiA_BodyG;
+    testG: UiA_TestG;
 
     constructor(private entity : Entity) {
-        this.listG = new UiG_ListG(entity);
-        this.textG = new UiG_TextG(entity);
-        this.headerG = new UiG_HeaderG(entity);
-        this.bodyG = new UiG_BodyG(entity);
-        this.testG = new UiG_TestG(entity);
+        this.listG = new UiA_ListG(entity);
+        this.textG = new UiA_TextG(entity);
+        this.headerG = new UiA_HeaderG(entity);
+        this.bodyG = new UiA_BodyG(entity);
+        this.testG = new UiA_TestG(entity);
     }
 
     async update() {
@@ -96,7 +95,7 @@ export class UiG {
                 return this.headerG.link_getText();
             } else {
                 if (this.entity.isTest) {
-                    return this.entity.uiG.testG.getRawText();
+                    return this.entity.uiA.testG.getRawText();
                 } else {
                     let rawText = '';
                     if (notNullUndefined(this.entity.text)) {
@@ -118,7 +117,7 @@ export class UiG {
             if (this.entity.appA?.uiA) {
                 await this.entity.appA.uiA.click(text);
             } else if (this.entity.isTest) {
-                await this.entity.uiG.testG.click(text);
+                await this.entity.uiA.testG.click(text);
             } else if (this.entity.action) {
                 if (this.entity.text.includes(text)) {
                     await this.entity.action();
@@ -130,7 +129,7 @@ export class UiG {
                         await this.entity.expandOrCollapse();
                     }
                 }
-                if (!this.entity.collapsed && this.entity.uiG.bodyG.bodyAvailable()) {
+                if (!this.entity.collapsed && this.entity.uiA.bodyG.bodyAvailable()) {
                     await this.listG.click(text);
                 }
             } else if (this.entity.list) {
@@ -147,7 +146,7 @@ export class UiG {
             } else {
                 let counter = 0;
                 if (notNullUndefined(this.entity.text)) {
-                    if (this.entity.uiG.isEditable()) {
+                    if (this.entity.uiA.isEditable()) {
                         counter++;
                     }
                 }
@@ -164,7 +163,7 @@ export class UiG {
         if (this.entity.appA?.uiA) {
             this.entity.appA.uiA.focusStyle_update();
         } else {
-            this.entity.uiG.headerG.focusStyle_update();
+            this.entity.uiA.headerG.focusStyle_update();
         }
     }
 }

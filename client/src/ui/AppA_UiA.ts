@@ -37,9 +37,9 @@ export class AppA_UiA {
         let focusedPrevious = this.focused;
         this.focused = entity;
         if (focusedPrevious) {
-            focusedPrevious.uiG.updateFocusStyle();
+            focusedPrevious.uiA.updateFocusStyle();
         }
-        this.focused.uiG.updateFocusStyle();
+        this.focused.uiA.updateFocusStyle();
     }
 
     async update() : Promise<void> {
@@ -50,7 +50,7 @@ export class AppA_UiA {
             await this.commands.updateUi();
             await this.input.getUi().updateUi();
             await this.output.getUi().updateUi();
-            this.content.uiG.editable = true;
+            this.content.uiA.editable = true;
         }
         this.focusStyle_update();
         await this.content.updateUi();
@@ -60,19 +60,19 @@ export class AppA_UiA {
     private updateUiElement() {
         this.htmlElement.innerHTML = null;
         if (this.topImpressum) {
-            this.htmlElement.appendChild(this.topImpressum.uiG.htmlElement);
+            this.htmlElement.appendChild(this.topImpressum.uiA.htmlElement);
             this.htmlElement.appendChild(this.separatorLine());
         }
         if (this.commands) {
-            this.htmlElement.appendChild(this.commands.uiG.htmlElement);
+            this.htmlElement.appendChild(this.commands.uiA.htmlElement);
         }
         if (!this.isWebsite && !this.entity.appA.testA) {
-            this.htmlElement.appendChild(this.input.getUi().uiG.htmlElement);
-            this.htmlElement.appendChild(this.output.getUi().uiG.htmlElement);
+            this.htmlElement.appendChild(this.input.getUi().uiA.htmlElement);
+            this.htmlElement.appendChild(this.output.getUi().uiA.htmlElement);
             this.htmlElement.appendChild(this.separatorLine());
         }
         this.htmlElement.appendChild(this.focusStyle_marker);
-        this.htmlElement.appendChild(this.content.uiG.htmlElement);
+        this.htmlElement.appendChild(this.content.uiA.htmlElement);
         if (this.withPlaceholderArea) {
             this.htmlElement.appendChild(this.createPlaceholderArea());
         }
@@ -89,44 +89,44 @@ export class AppA_UiA {
     getRawText() : string {
         let rawText = '';
         if (this.topImpressum) {
-            rawText += this.topImpressum.uiG.getRawText();
+            rawText += this.topImpressum.uiA.getRawText();
         }
         if (this.entity.appA.testA) {
-            rawText += this.content.uiG.getRawText();
+            rawText += this.content.uiA.getRawText();
         } else {
             if (this.commands) {
-                rawText += this.commands.uiG.getRawText();
+                rawText += this.commands.uiA.getRawText();
             }
             if (!this.isWebsite) {
-                rawText += this.output.getUi().uiG.getRawText();
-                rawText += this.input.getUi().uiG.getRawText();
+                rawText += this.output.getUi().uiA.getRawText();
+                rawText += this.input.getUi().uiA.getRawText();
             }
-            rawText += this.content.uiG.getRawText();
+            rawText += this.content.uiA.getRawText();
         }
         return rawText;
     }
 
     async click(text : string) {
         if (this.commands) {
-            await this.commands.uiG.click(text);
+            await this.commands.uiA.click(text);
         }
         if (!this.isWebsite && !this.entity.appA.testA) {
-            await this.output.getUi().uiG.click(text);
-            await this.input.getUi().uiG.click(text);
+            await this.output.getUi().uiA.click(text);
+            await this.input.getUi().uiA.click(text);
         }
-        await this.content.uiG.click(text);
+        await this.content.uiA.click(text);
     }
 
     countEditableTexts() : number {
         let counter = 0;
         if (this.commands) {
-            counter += this.commands.uiG.countEditableTexts();
+            counter += this.commands.uiA.countEditableTexts();
         }
         if (!this.isWebsite) {
-            counter += this.output.getUi().uiG.countEditableTexts();
-            counter += this.input.getUi().uiG.countEditableTexts();
+            counter += this.output.getUi().uiA.countEditableTexts();
+            counter += this.input.getUi().uiA.countEditableTexts();
         }
-        counter += this.content.uiG.countEditableTexts();
+        counter += this.content.uiA.countEditableTexts();
         return counter;
     }
 

@@ -1,7 +1,7 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 
-export class UiG_BodyG {
+export class UiA_BodyG {
 
     htmlElement : HTMLElement = document.createElement('div');
     content_htmlElement : HTMLElement;
@@ -26,9 +26,9 @@ export class UiG_BodyG {
     async content_update() {
         this.content_htmlElement = document.createElement('div');
         if (this.entity.isTest) {
-            this.content_htmlElement.appendChild(this.entity.uiG.testG.bodyContent.uiG.htmlElement);
+            this.content_htmlElement.appendChild(this.entity.uiA.testG.bodyContent.uiA.htmlElement);
         } else if (this.entity.list && this.entity.list.jsList.length > 0) {
-            this.content_htmlElement = this.entity.uiG.listG.htmlElement;
+            this.content_htmlElement = this.entity.uiA.listG.htmlElement;
         }
     }
 

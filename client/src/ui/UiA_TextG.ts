@@ -1,6 +1,6 @@
 import type {Entity} from "@/Entity";
 
-export class UiG_TextG {
+export class UiA_TextG {
 
     htmlElement : HTMLElement = document.createElement('div');
 
@@ -22,11 +22,11 @@ export class UiG_TextG {
             this.updateEmptyMarker();
         };
         this.htmlElement.onclick = (event) => {
-            if (this.entity.uiG.isEditable()) {
+            if (this.entity.uiA.isEditable()) {
                 event.stopPropagation();
             }
         }
-        this.htmlElement.contentEditable = (this.entity.uiG.isEditable()) ? 'true' : 'false';
+        this.htmlElement.contentEditable = (this.entity.uiA.isEditable()) ? 'true' : 'false';
         this.updateEmptyMarker();
         this.htmlElement.style.display = 'inline-block';
         this.htmlElement.style.minWidth = '1rem';
@@ -35,7 +35,7 @@ export class UiG_TextG {
     }
 
     private updateEmptyMarker() {
-        if (document.activeElement != this.htmlElement && this.entity.uiG.isEditable() && this.entity.text.length === 0) {
+        if (document.activeElement != this.htmlElement && this.entity.uiA.isEditable() && this.entity.text.length === 0) {
             this.htmlElement.style.borderLeftColor = 'black';
         } else {
             this.htmlElement.style.borderLeftColor = 'white';
@@ -43,10 +43,10 @@ export class UiG_TextG {
     }
 
     private updateCursorStyle() {
-        if (this.entity.uiG.isEditable()) {
+        if (this.entity.uiA.isEditable()) {
             this.htmlElement.style.cursor = 'text';
         } else {
-            if (this.entity.collapsible && this.entity.uiG.bodyG.bodyAvailable()) {
+            if (this.entity.collapsible && this.entity.uiA.bodyG.bodyAvailable()) {
                 this.htmlElement.style.cursor = 'pointer';
             } else {
                 this.htmlElement.style.cursor = 'default';
