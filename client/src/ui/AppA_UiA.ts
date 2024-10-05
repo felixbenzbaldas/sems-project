@@ -3,6 +3,7 @@ import {OutputA} from "@/ui/OutputA";
 import {InputA} from "@/ui/InputA";
 import {AppA_UiA_GlobalEventG} from "@/ui/AppA_UiA_GlobalEventG";
 import {UiA} from "@/ui/UiA";
+import {ContainerA} from "@/core/ContainerA";
 
 export class AppA_UiA {
 
@@ -156,5 +157,12 @@ export class AppA_UiA {
         } else {
             this.focusStyle_marker.style.backgroundColor = 'white';
         }
+    }
+
+    switchCurrentContainer_updateStyles(entity: Entity) {
+        let previous = this.entity.appA.currentContainer;
+        this.entity.appA.switchCurrentContainer(entity);
+        previous.uiA.headerG.updateCurrentContainerStyle();
+        this.entity.appA.currentContainer.uiA.headerG.updateCurrentContainerStyle();
     }
 }
