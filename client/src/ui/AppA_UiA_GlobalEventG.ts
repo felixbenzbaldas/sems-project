@@ -39,10 +39,8 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async switchCurrentContainer() {
-        this.entity.appA.currentContainer = this.entity.appA.uiA.focused;
-        if (!this.entity.appA.currentContainer.containerA) {
-            this.entity.appA.currentContainer.containerA = new ContainerA(this.entity.appA.currentContainer);
-        }
+        this.entity.appA.switchCurrentContainer(this.entity.appA.uiA.focused);
+
     }
 
     private getUiA() {
@@ -50,7 +48,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async switchToAppContainer() {
-        this.entity.appA.currentContainer = this.entity;
+        this.entity.appA.switchCurrentContainer(this.entity);
     }
 
     async export() {

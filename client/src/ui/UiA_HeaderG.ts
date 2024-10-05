@@ -31,6 +31,7 @@ export class UiA_HeaderG {
         this.htmlElement.style.border = 'solid';
         this.focusStyle_update();
         this.updateCursorStyle();
+        this.updateCurrentContainerStyle();
     }
 
     updateBodyIcon() {
@@ -106,6 +107,14 @@ export class UiA_HeaderG {
             this.htmlElement.style.borderColor = 'orange';
         } else {
             this.htmlElement.style.borderColor = 'white';
+        }
+    }
+
+    updateCurrentContainerStyle() {
+        if (this.entity.getApp().appA.currentContainer === this.entity) {
+            this.htmlElement.style.backgroundColor = '#efefef';
+        } else {
+            this.htmlElement.style.backgroundColor = 'white';
         }
     }
 }

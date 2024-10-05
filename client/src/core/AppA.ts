@@ -64,4 +64,14 @@ export class AppA {
     async createLink(href: string, text?: string) {
         return await this.currentContainer.containerA.createLink(href, text);
     }
+
+    switchCurrentContainer(entity: Entity) {
+        let previous = this.currentContainer;
+        this.currentContainer = entity;
+        if (!this.currentContainer.containerA) {
+            this.currentContainer.containerA = new ContainerA(this.currentContainer);
+        }
+        previous.uiA.headerG.updateCurrentContainerStyle();
+        this.currentContainer.uiA.headerG.updateCurrentContainerStyle();
+    }
 }
