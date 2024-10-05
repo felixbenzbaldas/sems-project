@@ -39,7 +39,7 @@ export const websiteData = {
                 ]
             ],
             "collapsible": true,
-            "collapsed": false
+            "collapsed": true
         },
         "3": {
             "text": "subitem"
