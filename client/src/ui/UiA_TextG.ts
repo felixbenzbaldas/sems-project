@@ -1,4 +1,5 @@
 import type {Entity} from "@/Entity";
+import {setCaret} from "@/utils";
 
 export class UiA_TextG {
 
@@ -52,5 +53,9 @@ export class UiA_TextG {
                 this.htmlElement.style.cursor = 'default';
             }
         }
+    }
+
+    takeCaret() {
+        setCaret(this.htmlElement, this.entity.text.length);
     }
 }

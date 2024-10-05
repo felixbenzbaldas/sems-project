@@ -213,8 +213,8 @@ export class Entity {
             }
             let created = await this.getApp().appA.createText('');
             await this.list.add(created);
-            this.getApp().appA.uiA.focused = created;
             await this.uiA.update();
+            this.getApp().appA.uiA.focus(created);
         }
     }
 

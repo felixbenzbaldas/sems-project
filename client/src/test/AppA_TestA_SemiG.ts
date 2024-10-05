@@ -93,6 +93,14 @@ export class AppA_TestA_SemiG {
                 test.test_app.log('human-test: The orange box disappears when removing the focus.');
                 return true;
             }),
+            this.createTest('semiAutomatedTest_focus_caret', async test => {
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                let appA = test.test_app.appA;
+                appA.logG.toListOfStrings = true;
+                test.test_app.log('human-test: When focusing a text, it gets the caret.');
+                test.test_app.log('human-test: The caret is set to the end of the text.');
+                return true;
+            }),
             this.createTest('semiAutomatedTest_currentContainerStyle', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
                 let appA = test.test_app.appA;

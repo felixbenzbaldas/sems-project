@@ -43,6 +43,7 @@ export class AppA_UiA {
             focusedPrevious.uiA.updateFocusStyle();
         }
         this.focused.uiA.updateFocusStyle();
+        this.focused.uiA.takeCaret();
     }
 
     async update() : Promise<void> {

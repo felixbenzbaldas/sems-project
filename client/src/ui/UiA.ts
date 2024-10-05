@@ -166,4 +166,12 @@ export class UiA {
             this.entity.uiA.headerG.focusStyle_update();
         }
     }
+
+    takeCaret() {
+        if (!this.entity.appA) {
+            if (notNullUndefined(this.entity.text)) {
+                this.textG.takeCaret();
+            }
+        }
+    }
 }
