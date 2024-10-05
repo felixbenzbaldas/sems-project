@@ -124,7 +124,7 @@ export class UiA {
                 }
             } else if (notNullUndefined(this.entity.text)) {
                 if (this.entity.text.includes(text)) {
-                    await this.entity.getApp().appA.uiA.focus(this.entity);
+                    this.entity.getApp().appA.uiA.focus(this.entity);
                     if (!this.isEditable() && this.entity.collapsible) {
                         await this.entity.expandOrCollapse();
                     }
