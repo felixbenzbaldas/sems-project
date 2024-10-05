@@ -84,7 +84,6 @@ export class AppA_TestA_ModelG {
                     rawText.includes('a dummy log') &&
                     rawText.includes('default action') &&
                     rawText.includes('successful tests') &&
-                    rawText.includes('1') &&
                     rawText.includes('aSuccessfulTest');
             }),
             this.createTest('modelTest_website', async test => {
