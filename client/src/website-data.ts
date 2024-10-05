@@ -64,7 +64,7 @@ export const websiteData = {
         },
         "8": {
             "text": "Home",
-            "link": "https://.einfaches-web.org"
+            "link": "https://einfaches-web.org"
         }
     }
 };
