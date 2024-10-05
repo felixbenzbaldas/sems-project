@@ -45,7 +45,7 @@ export class AppA_TestA_ModelG {
 
                 return !rawText.includes('do-not-show-me');
             }),
-            this.createTest('modelTest_clickOnStaticText', async test => {
+            this.createTest('modelTest_click_nonEditableText', async test => {
                 let app = await Starter.createAppWithUIWithCommands_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.newSubitem();
