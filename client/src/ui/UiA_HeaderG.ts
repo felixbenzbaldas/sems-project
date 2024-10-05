@@ -22,10 +22,7 @@ export class UiA_HeaderG {
         this.htmlElement.appendChild(this.bodyIcon);
         this.htmlElement.onclick = async (event) => {
             if (!event.ctrlKey) {
-                await this.entity.expandOrCollapse();
-            }
-            if (notNullUndefined(this.entity.text)) {
-                this.entity.uiA.textG.htmlElement.focus();
+                await this.clickEvent();
             }
         };
         this.htmlElement.style.border = 'solid';
@@ -115,6 +112,13 @@ export class UiA_HeaderG {
             this.htmlElement.style.backgroundColor = '#efefef';
         } else {
             this.htmlElement.style.backgroundColor = 'white';
+        }
+    }
+
+    async clickEvent() {
+        await this.entity.expandOrCollapse();
+        if (notNullUndefined(this.entity.text) && !this.entity.action) {
+            this.entity.getApp().appA.uiA.focus(this.entity);
         }
     }
 }

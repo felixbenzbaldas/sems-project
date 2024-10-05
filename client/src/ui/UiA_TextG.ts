@@ -19,7 +19,9 @@ export class UiA_TextG {
             this.updateEmptyMarker();
         }
         this.htmlElement.onfocus = () => {
-            this.entity.getApp().appA.uiA.focus(this.entity);
+            if (this.entity.getApp().appA.uiA.focused != this.entity) {
+                this.entity.getApp().appA.uiA.focus(this.entity);
+            }
             this.updateEmptyMarker();
         };
         this.htmlElement.onclick = (event) => {

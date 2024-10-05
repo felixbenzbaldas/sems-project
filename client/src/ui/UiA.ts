@@ -124,9 +124,10 @@ export class UiA {
                 }
             } else if (notNullUndefined(this.entity.text)) {
                 if (this.entity.text.includes(text)) {
-                    this.entity.getApp().appA.uiA.focus(this.entity);
-                    if (!this.isEditable() && this.entity.collapsible) {
-                        await this.entity.expandOrCollapse();
+                    if (this.isEditable()) {
+                        this.entity.getApp().appA.uiA.focus(this.entity);
+                    } else {
+                        await this.headerG.clickEvent();
                     }
                 }
                 if (!this.entity.collapsed && this.entity.uiA.bodyG.bodyAvailable()) {
