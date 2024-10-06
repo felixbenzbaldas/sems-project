@@ -26,6 +26,7 @@ export class UiA_HeaderG {
             }
         };
         this.htmlElement.style.border = 'solid';
+        this.htmlElement.style.borderWidth = '0.1rem';
         this.focusStyle_update();
         this.updateCursorStyle();
         this.updateCurrentContainerStyle();
