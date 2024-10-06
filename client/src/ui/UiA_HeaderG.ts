@@ -74,7 +74,10 @@ export class UiA_HeaderG {
     action_getUiElement() {
         let button = document.createElement('button');
         button.innerText = this.entity.text;
-        button.onclick = (event) => { this.entity.action(); };
+        button.onclick = (event) => {
+            this.entity.action();
+            event.stopPropagation();
+        };
         button.style.margin = '0.3rem 0.3rem 0.3rem 0rem';
         button.style.fontSize = '0.9rem';
         this.htmlElement.style.display = 'inline';
@@ -118,7 +121,7 @@ export class UiA_HeaderG {
 
     async clickEvent() {
         await this.entity.expandOrCollapse();
-        if (notNullUndefined(this.entity.text) && !this.entity.action) {
+        if (notNullUndefined(this.entity.text)) {
             this.entity.getApp().appA.uiA.focus(this.entity);
         }
     }
