@@ -59,7 +59,7 @@ export class AppA_UiA_GlobalEventG {
     async import() {
         let focused = this.entity.appA.uiA.focused;
         let created = this.entity.appA.unboundG.createFromJson(JSON.parse(this.entity.appA.uiA.input.get()));
-        this.entity.appA.currentContainer.containerA.take(created);
+        this.entity.appA.currentContainer.containerA.bind(created);
         if (!focused.list) {
             focused.list = new ListA(focused);
         }

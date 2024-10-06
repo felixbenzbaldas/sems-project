@@ -169,7 +169,7 @@ export class Starter {
             console.log("starts not with marker");
             created = app.appA.unboundG.createFromJson(JSON.parse(Starter.placeholderWebsite));
         }
-        app.containerA.take(created, 'website');
+        app.containerA.bind(created, 'website');
         return created;
     }
 

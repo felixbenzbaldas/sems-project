@@ -20,19 +20,19 @@ export class ContainerA {
 
     async createText(text: string) : Promise<Entity> {
         let textObject = this.entity.getApp().appA.unboundG.createText(text);
-        this.take(textObject);
+        this.bind(textObject);
         return textObject;
     }
 
     async createList() : Promise<Entity> {
         let list = this.entity.getApp().appA.unboundG.createList();
-        this.take(list);
+        this.bind(list);
         return list;
     }
 
     async createCollapsible(text: string, ...jsList : Array<Entity>) {
         let collapsible = this.entity.getApp().appA.unboundG.createCollapsible(text);
-        this.take(collapsible);
+        this.bind(collapsible);
         for (let entity of jsList) {
             await collapsible.list.add(entity);
         }
@@ -41,11 +41,11 @@ export class ContainerA {
 
     async createLink(href: string, text?: string) {
         let entity = this.entity.getApp().appA.unboundG.createLink(href, text);
-        this.take(entity);
+        this.bind(entity);
         return entity;
     }
 
-    take(entity: Entity, name? : string) {
+    bind(entity: Entity, name? : string) {
         entity.name = name? name : this.getUniqueRandomName();
         entity.container = this.entity;
         this.mapNameEntity.set(entity.name, entity);
