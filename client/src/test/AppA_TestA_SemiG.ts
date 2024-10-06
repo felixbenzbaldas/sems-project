@@ -28,27 +28,29 @@ export class AppA_TestA_SemiG {
                 return true;
             }),
             this.createTest('semiAutomatedTest_html', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = Starter.createAppWithUI();
                 let html = test.test_app.appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
                 html.dangerous_html.innerText = 'show me';
-                await test.test_app.appA.uiA.content.list.addAndUpdateUi(html);
+                await test.test_app.appA.uiA.content.list.add(html);
+                await test.test_app.updateUi();
                 test.test_app.appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: the text "show me" appears');
                 return true;
             }),
             this.createTest('semiAutomatedTest_setCaret', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = Starter.createAppWithUI();
                 let html = test.test_app.appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
                 html.dangerous_html.innerText = 'test';
                 html.dangerous_html.contentEditable = 'true';
                 html.dangerous_html.style.margin = '1rem';
-                await test.test_app.appA.uiA.content.list.addAndUpdateUi(html, test.test_app.appA.unboundG.createButton('setCaret', () => {
+                await test.test_app.appA.uiA.content.list.add(html, test.test_app.appA.unboundG.createButton('setCaret', () => {
 
                     setCaret(html.dangerous_html, 2);
 
                 }));
+                await test.test_app.updateUi();
                 test.test_app.appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: when clicking the button, the caret is set to the middle of the word "test"');
                 return true;
