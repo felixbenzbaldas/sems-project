@@ -121,8 +121,6 @@ export class UiA_HeaderG {
 
     async clickEvent() {
         await this.entity.expandOrCollapse();
-        if (notNullUndefined(this.entity.text)) {
-            this.entity.getApp().appA.uiA.focus(this.entity);
-        }
+        this.entity.getApp().appA.uiA.focus(this.entity);
     }
 }
