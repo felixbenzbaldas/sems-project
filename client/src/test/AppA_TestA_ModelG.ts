@@ -103,6 +103,19 @@ export class AppA_TestA_ModelG {
                     return true;
                 }
             }),
+            this.createTest('modelTest_objectViewer', async test => {
+                let objectViewer = await Starter.createObjectViewer('3'); // see const websiteData
+                test.test_app = objectViewer;
+                objectViewer.appA.logG.toListOfStrings = true;
+                await objectViewer.uiA.update();
+                let rawText = objectViewer.uiA.getRawText();
+                test.test_app.log(rawText);
+                if (Starter.placeholderWebsite.startsWith('marker')) {
+                    return rawText === 'subitem' && test.test_app.uiA.countEditableTexts() === 0;
+                } else {
+                    return true;
+                }
+            }),
         ];
     }
 

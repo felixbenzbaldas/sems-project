@@ -151,20 +151,35 @@ export class Starter {
     static async createWebsite() : Promise<Entity> {
         let app = Starter.createAppWithUI();
         app.appA.uiA.isWebsite = true;
-        let created;
-        if (Starter.placeholderWebsite.startsWith('marker')) {
-            console.log("startsWith marker");
-            created = app.appA.unboundG.createFromJson(websiteData);
-        } else {
-            console.log("starts not with marker");
-            created = app.appA.unboundG.createFromJson(JSON.parse(Starter.placeholderWebsite));
-        }
+        let created = Starter.getWebsiteData_unbound(app);
         app.containerA.take(created);
         for (let i = 0; i < created.list.jsList.length; i++) {
             await app.appA.uiA.content.list.add(
                 await created.list.getObject(i)
             );
         }
+        return app;
+    }
+
+    private static getWebsiteData_unbound(app: Entity) {
+        if (Starter.placeholderWebsite.startsWith('marker')) {
+            console.log("startsWith marker");
+            return app.appA.unboundG.createFromJson(websiteData);
+        } else {
+            console.log("starts not with marker");
+            return app.appA.unboundG.createFromJson(JSON.parse(Starter.placeholderWebsite));
+        }
+    }
+
+    static async createObjectViewer(pathString: string) : Promise<Entity> {
+        let app : Entity = Starter.createAppWithUI();
+        let created = Starter.getWebsiteData_unbound(app);
+        let name = 'website';
+        created.name = name;
+        created.container = app;
+        app.containerA.mapNameEntity.set(name, created);
+        let listOfNames = ['..', name, ...pathString.split('-')];
+        await app.appA.uiA.content.list.add(app.appA.createPath(listOfNames));
         return app;
     }
 }
