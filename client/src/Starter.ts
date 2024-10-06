@@ -4,6 +4,7 @@ import {AppA} from "@/core/AppA";
 import {AppA_TestA} from "@/test/AppA_TestA";
 import {websiteData} from "@/website-data";
 import {UiA} from "@/ui/UiA";
+import {Static} from "@/Static";
 
 export class Starter {
 
@@ -36,6 +37,7 @@ export class Starter {
         } else {
             app = await Starter.createWebsite();
         }
+        Static.activeApp = app;
         if (queryParams.has('testMode')) {
             app.appA.logG.toConsole = true;
         }

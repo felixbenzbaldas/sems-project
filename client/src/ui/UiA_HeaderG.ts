@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
+import {Static} from "@/Static";
 
 export class UiA_HeaderG {
     htmlElement: HTMLElement = document.createElement('div');
@@ -21,6 +22,7 @@ export class UiA_HeaderG {
         this.htmlElement.appendChild(this.content);
         this.htmlElement.appendChild(this.bodyIcon);
         this.htmlElement.onclick = async (event) => {
+            Static.ensureActive(this.entity.getApp());
             if (!event.ctrlKey) {
                 await this.clickEvent();
             }
@@ -75,6 +77,7 @@ export class UiA_HeaderG {
         let button = document.createElement('button');
         button.innerText = this.entity.text;
         button.onclick = (event) => {
+            Static.ensureActive(this.entity.getApp());
             this.entity.action();
             event.stopPropagation();
         };
@@ -104,7 +107,7 @@ export class UiA_HeaderG {
     }
 
     focusStyle_update() {
-        if (this.entity.ui_hasFocus()) {
+        if (this.entity.ui_hasFocus() && this.entity.getApp() === Static.activeApp) {
             this.htmlElement.style.borderColor = 'orange';
         } else {
             this.htmlElement.style.borderColor = 'white';

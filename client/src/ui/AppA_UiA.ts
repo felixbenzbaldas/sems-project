@@ -4,6 +4,7 @@ import {InputA} from "@/ui/InputA";
 import {AppA_UiA_GlobalEventG} from "@/ui/AppA_UiA_GlobalEventG";
 import {UiA} from "@/ui/UiA";
 import {ContainerA} from "@/core/ContainerA";
+import {Static} from "@/Static";
 
 export class AppA_UiA {
 
@@ -153,7 +154,7 @@ export class AppA_UiA {
     }
 
     focusStyle_update() {
-        if (this.focused === this.entity) {
+        if (this.focused === this.entity && Static.activeApp === this.entity) {
             this.focusStyle_marker.style.backgroundColor = 'orange';
         } else {
             this.focusStyle_marker.style.backgroundColor = 'white';

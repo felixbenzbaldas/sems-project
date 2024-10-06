@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import {setCaret} from "@/utils";
+import {Static} from "@/Static";
 
 export class UiA_TextG {
 
@@ -25,6 +26,7 @@ export class UiA_TextG {
             this.updateEmptyMarker();
         };
         this.htmlElement.onclick = (event) => {
+            Static.ensureActive(this.entity.getApp());
             if (this.entity.uiA.isEditable()) {
                 event.stopPropagation();
             }

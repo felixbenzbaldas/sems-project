@@ -131,6 +131,13 @@ export class AppA_TestA_SemiG {
                 test.test_app.log('human-test: The background color updates, when changing the current container');
                 return true;
             }),
+            this.createTest('semiAutomatedTest_activeApp', async test => {
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                let appA = test.test_app.appA;
+                appA.logG.toListOfStrings = true;
+                test.test_app.log('human-test: Only the focus of the active app is visible.');
+                return true;
+            }),
         ];
     }
 
