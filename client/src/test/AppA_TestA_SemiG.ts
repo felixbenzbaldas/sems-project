@@ -115,10 +115,16 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_focus_caret', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                await test.test_app.appA.uiA.globalEventG.defaultAction();
+                test.test_app.appA.uiA.focused.text = 'foo%/ )"ü,% bar';
+                await test.test_app.appA.uiA.globalEventG.defaultAction();
+                await test.test_app.appA.uiA.globalEventG.defaultAction();
+                test.test_app.appA.uiA.focused.text = 'I have \n a new line';
                 let appA = test.test_app.appA;
                 appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: When focusing a text, it gets the caret.');
                 test.test_app.log('human-test: The caret is set to the end of the text.');
+                test.test_app.log('info: does not work properly when there is a newline.');
                 return true;
             }),
             this.createTest('semiAutomatedTest_currentContainerStyle', async test => {
