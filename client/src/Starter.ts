@@ -25,8 +25,10 @@ export class Starter {
         let app : Entity;
         if (queryParams.has('local')) {
             app = await Starter.createAppWithUIWithCommands_updateUi();
+            app.uiA.editable = true;
         } else if (queryParams.has('client-app')) {
             app = await Starter.createAppWithUIWithCommands_updateUi();
+            app.uiA.editable = true;
             app.appA.uiA.topImpressum = await Starter.getPlaceholderImpressum(app);
         } else if (queryParams.has('test')) {
             app = await Starter.createTest();

@@ -11,6 +11,8 @@ describe('client-app (modelTests)', () => {
     beforeEach(async () => {
         app = await Starter.createAppWithUIWithCommands_updateUi();
         ui = app.uiA;
+        ui.editable = true;
+        await app.updateUi();
     });
 
     it('can create new object', async () => {

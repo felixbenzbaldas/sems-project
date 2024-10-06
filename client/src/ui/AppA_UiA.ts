@@ -58,9 +58,7 @@ export class AppA_UiA {
             await this.input.getUi().updateUi();
             await this.output.getUi().updateUi();
         }
-        if (!this.isWebsite && !this.entity.appA.testA) {
-            this.content.uiA.editable = true;
-        }
+        this.content.uiA.editable = this.entity.uiA.editable;
         this.focusStyle_update();
         await this.content.updateUi();
         this.updateUiElement();
