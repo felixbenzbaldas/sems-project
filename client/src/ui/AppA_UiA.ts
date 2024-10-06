@@ -18,6 +18,8 @@ export class AppA_UiA {
     readonly htmlElement: HTMLElement = document.createElement('div');
     globalEventG: AppA_UiA_GlobalEventG;
     withPlaceholderArea: boolean;
+    showMeta : boolean;
+
     private focusStyle_marker: HTMLElement;
 
     constructor(private entity: Entity) {
@@ -51,10 +53,12 @@ export class AppA_UiA {
         if (this.topImpressum) {
             await this.topImpressum.updateUi();
         }
-        if (!this.isWebsite && !this.entity.appA.testA) {
+        if (this.showMeta) {
             await this.commands.updateUi();
             await this.input.getUi().updateUi();
             await this.output.getUi().updateUi();
+        }
+        if (!this.isWebsite && !this.entity.appA.testA) {
             this.content.uiA.editable = true;
         }
         this.focusStyle_update();
@@ -68,10 +72,10 @@ export class AppA_UiA {
             this.htmlElement.appendChild(this.topImpressum.uiA.htmlElement);
             this.htmlElement.appendChild(this.separatorLine());
         }
-        if (this.commands) {
-            this.htmlElement.appendChild(this.commands.uiA.htmlElement);
-        }
-        if (!this.isWebsite && !this.entity.appA.testA) {
+        if (this.showMeta) {
+            if (this.commands) {
+                this.htmlElement.appendChild(this.commands.uiA.htmlElement);
+            }
             this.htmlElement.appendChild(this.input.getUi().uiA.htmlElement);
             this.htmlElement.appendChild(this.output.getUi().uiA.htmlElement);
             this.htmlElement.appendChild(this.separatorLine());

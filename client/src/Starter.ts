@@ -87,6 +87,7 @@ export class Starter {
 
     static async createAppWithUIWithCommands_updateUi() : Promise<Entity> {
         let app = this.createAppWithUI();
+        app.appA.uiA.showMeta = true;
         app.appA.uiA.commands = app.appA.unboundG.createTextWithList('commands',
             app.appA.unboundG.createButton('default action', async () => {
                 await app.appA.uiA.globalEventG.defaultAction();
