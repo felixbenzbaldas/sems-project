@@ -45,8 +45,8 @@ export class ContainerA {
         return entity;
     }
 
-    take(entity: Entity) {
-        entity.name = this.getUniqueRandomName();
+    take(entity: Entity, name? : string) {
+        entity.name = name? name : this.getUniqueRandomName();
         entity.container = this.entity;
         this.mapNameEntity.set(entity.name, entity);
     }
