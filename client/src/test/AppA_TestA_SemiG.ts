@@ -9,6 +9,24 @@ export class AppA_TestA_SemiG {
 
     createTests() {
         return [
+            this.createTest('semiAutomatedTest_saveOnBlur', async test => {
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                let appA = test.test_app.appA;
+                await appA.uiA.globalEventG.defaultAction();
+                appA.logG.toListOfStrings = true;
+                test.test_app.log('human-test: When removing the focus, the text is saved. (check with \'export app\')');
+                return true;
+            }),
+            this.createTest('semiAutomatedTest_emptyMarker', async test => {
+                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                let appA = test.test_app.appA;
+                await appA.uiA.globalEventG.defaultAction();
+                await appA.uiA.globalEventG.defaultAction();
+                appA.logG.toListOfStrings = true;
+                test.test_app.log('human-test: An empty, editable, unfocused text is marked with a vertical black line');
+                test.test_app.log('human-test: The empty marker disappears, when the text gets the caret or is not empty anymore.');
+                return true;
+            }),
             this.createTest('semiAutomatedTest_html', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
                 let html = test.test_app.appA.createEntityWithApp();
