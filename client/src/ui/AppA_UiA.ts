@@ -103,10 +103,10 @@ export class AppA_UiA {
         if (this.entity.appA.testA) {
             rawText += this.content.uiA.getRawText();
         } else {
-            if (this.commands) {
-                rawText += this.commands.uiA.getRawText();
-            }
-            if (!this.isWebsite) {
+            if (this.showMeta) {
+                if (this.commands) {
+                    rawText += this.commands.uiA.getRawText();
+                }
                 rawText += this.output.getUi().uiA.getRawText();
                 rawText += this.input.getUi().uiA.getRawText();
             }
@@ -116,10 +116,10 @@ export class AppA_UiA {
     }
 
     async click(text : string) {
-        if (this.commands) {
-            await this.commands.uiA.click(text);
-        }
-        if (!this.isWebsite && !this.entity.appA.testA) {
+        if (this.showMeta) {
+            if (this.commands) {
+                await this.commands.uiA.click(text);
+            }
             await this.output.getUi().uiA.click(text);
             await this.input.getUi().uiA.click(text);
         }
@@ -128,10 +128,10 @@ export class AppA_UiA {
 
     countEditableTexts() : number {
         let counter = 0;
-        if (this.commands) {
-            counter += this.commands.uiA.countEditableTexts();
-        }
-        if (!this.isWebsite) {
+        if (this.showMeta) {
+            if (this.commands) {
+                counter += this.commands.uiA.countEditableTexts();
+            }
             counter += this.output.getUi().uiA.countEditableTexts();
             counter += this.input.getUi().uiA.countEditableTexts();
         }
