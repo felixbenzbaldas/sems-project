@@ -35,6 +35,9 @@ export class Starter {
             if (queryParams.has('withFailingDemoTest')) {
                 app.appA.testA.withFailingDemoTest = true;
             }
+        } else if (queryParams.has('path')) {
+            app = await Starter.createObjectViewer(queryParams.get('path'));
+            app.appA.uiA.topImpressum = await Starter.getPlaceholderImpressum(app);
         } else {
             app = await Starter.createWebsite();
         }
