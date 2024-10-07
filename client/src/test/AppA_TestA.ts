@@ -82,7 +82,7 @@ export class AppA_TestA {
 
     createFailingDemoTest(): Entity {
         return this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
-            test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+            test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
             test.test_app.appA.logG.toListOfStrings = true;
             test.test_app.log('a dummy log');
             throw new Error('demo error in test');

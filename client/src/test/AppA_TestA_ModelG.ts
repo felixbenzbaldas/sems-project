@@ -9,12 +9,12 @@ export class AppA_TestA_ModelG {
     createTests() {
         return [
             this.createTest('modelTest_objectCreation', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
 
                 return test.test_app.uiA.getRawText().includes('default action');
             }),
             this.createTest('modelTest_newSubitem', async test => {
-                let app = await Starter.createAppWithUIWithCommands_updateUi();
+                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 await app.updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
 
@@ -24,7 +24,7 @@ export class AppA_TestA_ModelG {
                 return firstObject.list.jsList.length == 1;
             }),
             this.createTest('modelTest_makeCollapsible', async test => {
-                let app = await Starter.createAppWithUIWithCommands_updateUi();
+                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.uiA.click('toggle collapsible');
@@ -32,7 +32,7 @@ export class AppA_TestA_ModelG {
                 return (await app.appA.uiA.content.list.getObject(0)).collapsible;
             }),
             this.createTest('modelTest_collapsed', async test => {
-                let app = await Starter.createAppWithUIWithCommands_updateUi();
+                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.newSubitem();
                 let firstObject = await app.appA.uiA.content.list.getObject(0);
@@ -46,7 +46,7 @@ export class AppA_TestA_ModelG {
                 return !rawText.includes('do-not-show-me');
             }),
             this.createTest('modelTest_click_nonEditableText', async test => {
-                let app = await Starter.createAppWithUIWithCommands_updateUi();
+                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.newSubitem();
                 let firstObject = await app.appA.uiA.content.list.getObject(0);

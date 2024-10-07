@@ -24,11 +24,10 @@ export class Starter {
         let queryParams = new URLSearchParams(window.location.search);
         let app : Entity;
         if (queryParams.has('local')) {
-            app = await Starter.createAppWithUIWithCommands_updateUi();
+            app = await Starter.createAppWithUIWithCommands_editable_updateUi();
             app.uiA.editable = true;
         } else if (queryParams.has('client-app')) {
-            app = await Starter.createAppWithUIWithCommands_updateUi();
-            app.uiA.editable = true;
+            app = await Starter.createAppWithUIWithCommands_editable_updateUi();
             app.appA.uiA.topImpressum = await Starter.getPlaceholderImpressum(app);
         } else if (queryParams.has('test')) {
             app = await Starter.createTest();
@@ -87,8 +86,9 @@ export class Starter {
         return app;
     }
 
-    static async createAppWithUIWithCommands_updateUi() : Promise<Entity> {
+    static async createAppWithUIWithCommands_editable_updateUi() : Promise<Entity> {
         let app = this.createAppWithUI();
+        app.uiA.editable = true;
         app.appA.uiA.showMeta = true;
         app.appA.uiA.commands = app.appA.unboundG.createTextWithList('commands',
             app.appA.unboundG.createButton('default action', async () => {

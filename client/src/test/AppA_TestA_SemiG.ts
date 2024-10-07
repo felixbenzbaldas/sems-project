@@ -10,7 +10,7 @@ export class AppA_TestA_SemiG {
     createTests() {
         return [
             this.createTest('semiAutomatedTest_saveOnBlur', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 appA.logG.toListOfStrings = true;
@@ -18,7 +18,7 @@ export class AppA_TestA_SemiG {
                 return true;
             }),
             this.createTest('semiAutomatedTest_emptyMarker', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 await appA.uiA.globalEventG.defaultAction();
@@ -56,7 +56,7 @@ export class AppA_TestA_SemiG {
                 return true;
             }),
             this.createTest('semiAutomatedTest_cursorStyle', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 await appA.uiA.globalEventG.toggleCollapsible();
@@ -70,7 +70,7 @@ export class AppA_TestA_SemiG {
                 return true;
             }),
             this.createTest('semiAutomatedTest_expand/collapse', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 await appA.uiA.globalEventG.toggleCollapsible();
@@ -82,7 +82,7 @@ export class AppA_TestA_SemiG {
                 return true;
             }),
             this.createTest('semiAutomatedTest_placeholderArea', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
                 let html = appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
@@ -103,7 +103,7 @@ export class AppA_TestA_SemiG {
                 return true;
             }),
             this.createTest('semiAutomatedTest_focusStyle', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
                 appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: At beginning a vertical orange line indicates the focus of the root element.' +
@@ -114,7 +114,7 @@ export class AppA_TestA_SemiG {
                 return true;
             }),
             this.createTest('semiAutomatedTest_focus_caret', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 await test.test_app.appA.uiA.globalEventG.defaultAction();
                 test.test_app.appA.uiA.focused.text = 'foo%/ )"ü,% bar';
                 await test.test_app.appA.uiA.globalEventG.defaultAction();
@@ -128,7 +128,7 @@ export class AppA_TestA_SemiG {
                 return true;
             }),
             this.createTest('semiAutomatedTest_currentContainerStyle', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 await appA.uiA.globalEventG.defaultAction();
@@ -140,7 +140,7 @@ export class AppA_TestA_SemiG {
                 return true;
             }),
             this.createTest('semiAutomatedTest_activeApp', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_updateUi();
+                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
                 appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: Only the focus of the active app is visible.');
@@ -148,7 +148,6 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_editableContent', async test => {
                 test.test_app = Starter.createAppWithUI();
-                test.test_app.uiA.editable = true;
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 appA.uiA.focused.text = 'edit me!';
