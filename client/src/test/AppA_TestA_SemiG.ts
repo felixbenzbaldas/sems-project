@@ -148,6 +148,7 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_editableContent', async test => {
                 test.test_app = Starter.createAppWithUI();
+                test.test_app.uiA.editable = true;
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 appA.uiA.focused.text = 'edit me!';
