@@ -11,6 +11,7 @@ export class UiA_ListG {
     }
 
     async update() {
+        this.entity.logInfo('UiA_ListG -> update(); uiA.editable = ' + this.entity.uiA.editable);
         if (this.entity.collapsible) {
             if (!notNullUndefined(this.entity.collapsed)) {
                 this.entity.collapsed = true;
@@ -31,9 +32,15 @@ export class UiA_ListG {
     private async updateUisOfListItems() {
         this.uisOfListItems = []; // TODO: do not always dismiss old uis
         for (let currentResolved of await this.entity.list.getResolvedList()) {
-            let currentUi = currentResolved; // TODO: create extra object for currentUi
-            currentUi.uiA = new UiA(currentUi);
-            currentUi.uiA.editable = this.entity.uiA.editable;
+            let currentUi; // TODO: create extra object for currentUi
+            if (currentResolved.appA?.uiA) {
+                currentUi = currentResolved;
+            } else {
+                currentUi = currentResolved;
+                currentUi.uiA = new UiA(currentUi);
+                currentUi.uiA.editable = this.entity.uiA.editable;
+            }
+            this.entity.logInfo('currentUi.uiA.editable ' + currentUi.uiA.editable);
             currentUi.ui_context = this.entity;
             await currentUi.updateUi();
             this.uisOfListItems.push(currentUi);

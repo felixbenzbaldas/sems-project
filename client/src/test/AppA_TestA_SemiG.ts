@@ -146,6 +146,18 @@ export class AppA_TestA_SemiG {
                 test.test_app.log('human-test: Only the focus of the active app is visible.');
                 return true;
             }),
+            this.createTest('semiAutomatedTest_editableContent', async test => {
+                test.test_app = Starter.createAppWithUI();
+                test.test_app.uiA.editable = true;
+                let appA = test.test_app.appA;
+                await appA.uiA.globalEventG.defaultAction();
+                appA.uiA.focused.text = 'edit me!';
+                appA.logG.toListOfStrings = true;
+                appA.logG.toConsole = true;
+                await test.test_app.updateUi();
+                test.test_app.log('human-test: The object is editable.');
+                return true;
+            }),
         ];
     }
 

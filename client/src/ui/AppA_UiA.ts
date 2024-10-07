@@ -59,6 +59,7 @@ export class AppA_UiA {
             await this.output.getUi().updateUi();
         }
         this.content.uiA.editable = this.entity.uiA.editable;
+        this.entity.logInfo('this.content.uiA.editable ' + this.content.uiA.editable);
         this.focusStyle_update();
         await this.content.updateUi();
         this.updateUiElement();
