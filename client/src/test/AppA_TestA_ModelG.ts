@@ -116,6 +116,21 @@ export class AppA_TestA_ModelG {
                     return true;
                 }
             }),
+            this.createTest('modelTest_cut', async test => {
+                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                test.test_app = app;
+                app.appA.logG.toListOfStrings = true;
+                await app.appA.uiA.globalEventG.defaultAction();
+                let firstObject = await app.appA.uiA.content.list.getObject(0);
+                firstObject.text = 'cutted';
+                await app.updateUi();
+
+                await app.uiA.click('cut');
+
+                let rawText = app.uiA.getRawText();
+                app.log('rawText = ' + rawText);
+                return !rawText.includes('cutted');
+            }),
         ];
     }
 
