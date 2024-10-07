@@ -235,11 +235,14 @@ export class Entity {
             this.log('warning: not collapsible!');
         }
     }
+
     async expand() {
-        this.collapsed = false;
-        this.uiA.headerG.updateBodyIcon();
-        await this.uiA.listG.update();
-        await this.uiA.bodyG.expand();
+        if (this.list?.jsList.length > 0) {
+            this.collapsed = false;
+            this.uiA.headerG.updateBodyIcon();
+            await this.uiA.listG.update();
+            await this.uiA.bodyG.expand();
+        }
     }
 
     async collapse() {
