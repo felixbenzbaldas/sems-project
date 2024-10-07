@@ -67,7 +67,6 @@ export class UiA {
     }
 
     isEditable() {
-        this.entity.logInfo('isEditable editable=' + this.entity.editable + ' uiA.editable= ' + this.editable);
         if (notNullUndefined(this.editable)) {
             if (notNullUndefined(this.entity.editable)) {
                 if (this.editable == true) {

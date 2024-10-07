@@ -11,7 +11,6 @@ export class UiA_ListG {
     }
 
     async update() {
-        this.entity.logInfo('UiA_ListG -> update(); uiA.editable = ' + this.entity.uiA.editable);
         if (this.entity.collapsible) {
             if (!notNullUndefined(this.entity.collapsed)) {
                 this.entity.collapsed = true;
@@ -40,7 +39,6 @@ export class UiA_ListG {
                 currentUi.uiA = new UiA(currentUi);
                 currentUi.uiA.editable = this.entity.uiA.editable;
             }
-            this.entity.logInfo('currentUi.uiA.editable ' + currentUi.uiA.editable);
             currentUi.ui_context = this.entity;
             await currentUi.updateUi();
             this.uisOfListItems.push(currentUi);

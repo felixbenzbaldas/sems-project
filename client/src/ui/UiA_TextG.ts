@@ -26,14 +26,12 @@ export class UiA_TextG {
             this.updateEmptyMarker();
         };
         this.htmlElement.onclick = (event) => {
-            this.entity.logInfo('onclick');
             Static.ensureActive(this.entity.getApp());
             if (this.entity.uiA.isEditable()) {
                 event.stopPropagation();
             }
         }
         this.htmlElement.contentEditable = (this.entity.uiA.isEditable()) ? 'true' : 'false';
-        this.entity.logInfo('contentEditable = ' + this.htmlElement.contentEditable);
         this.updateEmptyMarker();
         this.htmlElement.style.display = 'inline-block';
         this.htmlElement.style.minWidth = '1rem';
