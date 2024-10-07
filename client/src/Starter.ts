@@ -181,6 +181,8 @@ export class Starter {
         let created = Starter.getWebsiteData(app);
         let listOfNames = ['..', created.name, ...pathString.split('-')];
         await app.appA.uiA.content.list.add(app.appA.createPath(listOfNames));
+        await app.updateUi();
+        await (await app.appA.uiA.content.list.getObject(0)).expand();
         return app;
     }
 }

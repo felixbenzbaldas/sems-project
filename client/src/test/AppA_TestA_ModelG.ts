@@ -104,14 +104,14 @@ export class AppA_TestA_ModelG {
                 }
             }),
             this.createTest('modelTest_objectViewer', async test => {
-                let objectViewer = await Starter.createObjectViewer('3'); // see const websiteData
+                let objectViewer = await Starter.createObjectViewer('2'); // see const websiteData
                 test.test_app = objectViewer;
                 objectViewer.appA.logG.toListOfStrings = true;
                 await objectViewer.uiA.update();
                 let rawText = objectViewer.uiA.getRawText();
                 test.test_app.log(rawText);
                 if (Starter.placeholderWebsite.startsWith('marker')) {
-                    return rawText === 'subitem' && test.test_app.uiA.countEditableTexts() === 0;
+                    return rawText === 'collapsible parentsubitem' && test.test_app.uiA.countEditableTexts() === 0;
                 } else {
                     return true;
                 }
