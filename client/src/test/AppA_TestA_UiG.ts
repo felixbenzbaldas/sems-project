@@ -56,6 +56,17 @@ export class AppA_TestA_UiG {
 
                 return app.appA.currentContainer === app.appA.uiA.focused &&
                     app.appA.currentContainer.containerA;
+            }),
+            this.createTest('ui_cut', async test => {
+                let app = Starter.createAppWithUI();
+                test.test_app = app;
+                app.appA.logG.toListOfStrings = true;
+                await app.appA.uiA.globalEventG.defaultAction();
+                let object = app.appA.uiA.focused;
+
+                await app.appA.uiA.globalEventG.cut();
+
+                return app.appA.uiA.content.list.jsList.length === 0 && app.appA.uiA.clipboard === object;
             })
         ]
     }

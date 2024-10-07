@@ -70,4 +70,13 @@ export class AppA_UiA_GlobalEventG {
     async focusRoot() {
         this.entity.appA.uiA.focus(this.entity);
     }
+
+    async cut() {
+        let object = this.entity.appA.uiA.focused;
+        this.getUiA().clipboard = object;
+        let uiContext = this.getUiA().clipboard.ui_context;
+        let position = uiContext.uiA.listG.uisOfListItems.indexOf(object);
+        uiContext.list.jsList.splice(position, 1);
+        await uiContext.updateUi();
+    }
 }

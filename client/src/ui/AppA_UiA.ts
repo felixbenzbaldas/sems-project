@@ -19,6 +19,7 @@ export class AppA_UiA {
     globalEventG: AppA_UiA_GlobalEventG;
     withPlaceholderArea: boolean;
     showMeta : boolean;
+    clipboard: Entity;
 
     private focusStyle_marker: HTMLElement;
 
