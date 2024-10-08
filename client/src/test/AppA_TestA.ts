@@ -155,6 +155,19 @@ export class AppA_TestA {
                 return createRandomString().length == 10 &&
                     createRandomString() != createRandomString();
             }),
+            this.createTest('list_insertObjectAtPosition', async test => {
+                test.test_app = Starter.createApp();
+                let app = test.test_app;
+                app.appA.logG.toListOfStrings = true;
+                let list : Entity = await app.appA.createList();
+                let listItem : Entity = await app.appA.createText('subitem');
+
+                await list.list.insertObjectAtPosition(listItem, 0);
+
+                // return list.list.jsList.at(0).pathA.listOfNames.at(1) === listItem.name;
+                app.log('path = ' + list.list.jsList.at(0));
+                return await list.resolve(list.list.jsList.at(0)) === listItem;
+            }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),
             ...this.modelG.createTests(),

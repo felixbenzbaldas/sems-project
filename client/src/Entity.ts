@@ -115,6 +115,14 @@ export class Entity {
         }
     }
 
+    pathOrObject(object : Entity) : Entity {
+        if (object.name && object.container) {
+            return this.getPath(object);
+        } else {
+            return object;
+        }
+    }
+
     async export(): Promise<any> {
         let exported = this.json_withoutContainedObjects();
         if(this.containerA) {
