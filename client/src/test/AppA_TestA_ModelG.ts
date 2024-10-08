@@ -131,6 +131,19 @@ export class AppA_TestA_ModelG {
                 app.log('rawText = ' + rawText);
                 return !rawText.includes('cutted');
             }),
+            this.createTest('modelTest_extraUiForText', async test => {
+                let app = Starter.createAppWithUI();
+                test.test_app = app;
+                app.appA.logG.toListOfStrings = true;
+                let object = app.appA.unboundG.createText('foo');
+                let ui : Entity = app.appA.uiA.createUiFor(object);
+                object.uis_update();
+
+                let rawText = ui.uiA.getRawText();
+
+                app.log('raw text = ' + rawText);
+                return rawText === 'foo';
+            })
         ];
     }
 

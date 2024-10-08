@@ -258,4 +258,7 @@ export class Entity {
         }
         this.uis.push(ui);
     }
+
+    uis_update() {
+        // TODO    }
 }

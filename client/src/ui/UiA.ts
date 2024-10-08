@@ -89,20 +89,20 @@ export class UiA {
 
     getRawText() : string {
         this.entity.log('getRawText');
-        if (!this.entity.hidden) {
+        if (!this.getObject().hidden) {
             if (this.entity.appA?.uiA) {
                 return this.entity.appA.uiA.getRawText();
-            } else if (notNullUndefined(this.entity.link)) {
+            } else if (notNullUndefined(this.getObject().link)) {
                 return this.headerG.link_getText();
             } else {
-                if (this.entity.isTest) {
+                if (this.getObject().isTest) {
                     return this.entity.uiA.testG.getRawText();
                 } else {
                     let rawText = '';
-                    if (notNullUndefined(this.entity.text)) {
-                        rawText += this.entity.text;
+                    if (notNullUndefined(this.getObject().text)) {
+                        rawText += this.getObject().text;
                     }
-                    if (this.entity.list && this.entity.collapsed != true) {
+                    if (this.getObject().list && this.entity.collapsed != true) {
                         rawText += this.listG.getRawText();
                     }
                     return rawText;
@@ -110,6 +110,14 @@ export class UiA {
             }
         }
         return '';
+    }
+
+    getObject() : Entity {
+        if (this.object) {
+            return this.object;
+        } else {
+            return this.entity;
+        }
     }
 
     async click(text : string) {
