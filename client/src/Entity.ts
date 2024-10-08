@@ -116,10 +116,25 @@ export class Entity {
     }
 
     pathOrObject(object : Entity) : Entity {
-        if (object.name && object.container) {
+        if (this.canGetPath(object)) {
             return this.getPath(object);
         } else {
             return object;
+        }
+    }
+
+    canGetPath(entity : Entity) : boolean {
+        if (!notNullUndefined(entity.name) || !entity.container) {
+            return false;
+        }
+        if (this.contains(entity)) {
+            return true;
+        } else {
+            if (this.container) {
+                return this.container.canGetPath(entity);
+            } else {
+                return false;
+            }
         }
     }
 
