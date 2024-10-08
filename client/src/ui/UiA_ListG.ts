@@ -85,7 +85,7 @@ export class UiA_ListG {
     }
 
     async insertObjectAtPosition(object: Entity, position: number) : Promise<Entity> {
-        this.getObject().list.jsList.splice(position, 0, object); // TODO if not unbound: insert path
+        await this.getObject().list.insertObjectAtPosition(object, position);
         let ui = this.entity.getApp().appA.uiA.createUiFor(object);
         this.uisOfListItems.splice(position, 0, ui);
         ui.ui_context = this.entity;
