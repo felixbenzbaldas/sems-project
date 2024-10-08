@@ -12,7 +12,7 @@ export class UiA_ListG {
     }
 
     async update() {
-        if (this.entity.collapsible) {
+        if (this.getObject().collapsible) {
             if (!notNullUndefined(this.entity.collapsed)) {
                 this.entity.collapsed = true;
             }
@@ -51,7 +51,7 @@ export class UiA_ListG {
     }
 
     getRawText() : string {
-        if (notNullUndefined(this.entity.list)) {
+        if (notNullUndefined(this.getObject().list)) {
             return this.uisOfListItems.map(current => current.uiA.getRawText()).reduce((a, b) => a + b, '');
         } else {
             return '';
@@ -59,7 +59,7 @@ export class UiA_ListG {
     }
 
     async click(text : string) {
-        if (this.entity.list) {
+        if (this.getObject().list) {
             for (let current of this.uisOfListItems) {
                 await current.uiA.click(text);
             }
@@ -67,7 +67,7 @@ export class UiA_ListG {
     }
 
     countEditableTexts() : number {
-        if (this.entity.list) {
+        if (this.getObject().list) {
             return this.uisOfListItems.map(current => current.uiA.countEditableTexts()).reduce((a, b) => a + b, 0);
         }
     }
@@ -75,8 +75,8 @@ export class UiA_ListG {
     async defaultActionOnSubitem(subitem: Entity) {
         let created = await this.entity.getApp().appA.createText('');
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
-        this.entity.list.jsList.splice(position, 0, this.entity.getPath(created));
-        await this.entity.updateUi();
+        this.getObject().list.jsList.splice(position, 0, this.getObject().getPath(created));
+        await this.entity.updateUi(); // TODO this.getObject().updateUis()
         this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
     }
 
