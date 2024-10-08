@@ -20,7 +20,7 @@ export class ListA {
             } else {
                 this.jsList.push(item);
             }
-        };
+        }
     }
 
     json_withoutContainedObjects() {
