@@ -39,7 +39,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async switchCurrentContainer() {
-        this.entity.appA.uiA.switchCurrentContainer_updateStyles(this.entity.appA.uiA.focused);
+        this.getUiA().switchCurrentContainer_updateStyles(this.getUiA().focused);
 
     }
 
@@ -48,31 +48,31 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async switchToAppContainer() {
-        this.entity.appA.uiA.switchCurrentContainer_updateStyles(this.entity);
+        this.getUiA().switchCurrentContainer_updateStyles(this.entity);
     }
 
     async export() {
-        let toExport = this.entity.appA.uiA.focused;
+        let toExport = this.getUiA().focused;
         await this.getUiA().output.setAndUpdateUi(JSON.stringify(await toExport.export(), null, 4));
     }
 
     async import() {
-        let focused = this.entity.appA.uiA.focused;
-        let created = this.entity.appA.unboundG.createFromJson(JSON.parse(this.entity.appA.uiA.input.get()));
+        let focused = this.getUiA().focused;
+        let created = this.entity.appA.unboundG.createFromJson(JSON.parse(this.getUiA().input.get()));
         this.entity.appA.currentContainer.containerA.bind(created);
         if (!focused.list) {
             focused.list = new ListA(focused);
         }
         await focused.list.addAndUpdateUi(created);
-        this.entity.appA.uiA.focus(created);
+        this.getUiA().focus(created);
     }
 
     async focusRoot() {
-        this.entity.appA.uiA.focus(this.entity);
+        this.getUiA().focus(this.entity);
     }
 
     async cut() {
-        let object = this.entity.appA.uiA.focused;
+        let object = this.getUiA().focused;
         this.getUiA().clipboard = object;
         let uiContext = this.getUiA().clipboard.ui_context;
         let position = uiContext.uiA.listG.uisOfListItems.indexOf(object);
