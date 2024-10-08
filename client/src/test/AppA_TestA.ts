@@ -164,8 +164,7 @@ export class AppA_TestA {
 
                 await list.list.insertObjectAtPosition(listItem, 0);
 
-                // return list.list.jsList.at(0).pathA.listOfNames.at(1) === listItem.name;
-                app.log('path = ' + list.list.jsList.at(0));
+                app.log('path = ' + list.list.jsList.at(0).getShortDescription());
                 return await list.resolve(list.list.jsList.at(0)) === listItem;
             }),
             ...this.pathG.createTests(),
