@@ -1,6 +1,7 @@
 import type {Entity} from "@/Entity";
 import {setCaret} from "@/utils";
 import {Static} from "@/Static";
+import type {UiA} from "@/ui/UiA";
 
 export class UiA_TextG {
 
@@ -11,12 +12,12 @@ export class UiA_TextG {
     }
 
     update() {
-        this.htmlElement.innerText = this.entity.text;
+        this.htmlElement.innerText = this.getObject().text;
         this.htmlElement.style.minHeight = '1rem';
         this.htmlElement.style.whiteSpace = 'pre-wrap';
         this.htmlElement.style.outline = "0px solid transparent"; // prevent JS focus
         this.htmlElement.onblur = (event : any) => {
-            this.entity.text = event.target.innerText.trim();
+            this.getObject().text = event.target.innerText.trim();
             this.updateEmptyMarker();
         }
         this.htmlElement.onfocus = () => {
@@ -27,11 +28,11 @@ export class UiA_TextG {
         };
         this.htmlElement.onclick = (event) => {
             Static.ensureActive(this.entity.getApp());
-            if (this.entity.uiA.isEditable()) {
+            if (this.getUiA().isEditable()) {
                 event.stopPropagation();
             }
         }
-        this.htmlElement.contentEditable = (this.entity.uiA.isEditable()) ? 'true' : 'false';
+        this.htmlElement.contentEditable = (this.getUiA().isEditable()) ? 'true' : 'false';
         this.updateEmptyMarker();
         this.htmlElement.style.display = 'inline-block';
         this.htmlElement.style.minWidth = '1rem';
@@ -40,7 +41,7 @@ export class UiA_TextG {
     }
 
     private updateEmptyMarker() {
-        if (document.activeElement != this.htmlElement && this.entity.uiA.isEditable() && this.entity.text.length === 0) {
+        if (document.activeElement != this.htmlElement && this.getUiA().isEditable() && this.getObject().text.length === 0) {
             this.htmlElement.style.borderLeftColor = 'black';
         } else {
             this.htmlElement.style.borderLeftColor = 'white';
@@ -48,10 +49,10 @@ export class UiA_TextG {
     }
 
     private updateCursorStyle() {
-        if (this.entity.uiA.isEditable()) {
+        if (this.getUiA().isEditable()) {
             this.htmlElement.style.cursor = 'text';
         } else {
-            if (this.entity.collapsible && this.entity.uiA.bodyG.bodyAvailable()) {
+            if (this.getObject().collapsible && this.getUiA().bodyG.bodyAvailable()) {
                 this.htmlElement.style.cursor = 'pointer';
             } else {
                 this.htmlElement.style.cursor = 'default';
@@ -60,6 +61,18 @@ export class UiA_TextG {
     }
 
     takeCaret() {
-        setCaret(this.htmlElement, this.entity.text.length);
+        setCaret(this.htmlElement, this.getObject().text.length);
+    }
+
+    getUiA() : UiA {
+        return this.entity.uiA;
+    }
+
+    getObject() : Entity {
+        if (this.getUiA().object) {
+            return this.getUiA().object;
+        } else {
+            return this.entity;
+        }
     }
 }
