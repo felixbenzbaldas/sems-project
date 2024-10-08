@@ -15,6 +15,7 @@ export class UiA {
     headerG : UiA_HeaderG;
     bodyG: UiA_BodyG;
     testG: UiA_TestG;
+    object: Entity;
 
     constructor(private entity : Entity) {
         this.listG = new UiA_ListG(entity);

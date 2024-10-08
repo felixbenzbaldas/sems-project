@@ -67,6 +67,16 @@ export class AppA_TestA_UiG {
                 await app.appA.uiA.globalEventG.cut();
 
                 return app.appA.uiA.content.list.jsList.length === 0 && app.appA.uiA.clipboard === object;
+            }),
+            this.createTest('ui_createUiFor', async test => {
+                let app = Starter.createAppWithUI();
+                test.test_app = app;
+                app.appA.logG.toListOfStrings = true;
+                let object = app.appA.unboundG.createText('');
+
+                let ui : Entity = app.appA.uiA.createUiFor(object);
+
+                return ui.uiA.object === object && object.uis.at(0) === ui;
             })
         ]
     }

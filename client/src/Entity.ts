@@ -28,6 +28,7 @@ export class Entity {
     test_app: Entity;
     dangerous_html: HTMLElement;
     isTest: boolean;
+    uis: Array<Entity>;
 
     json_withoutContainedObjects() : any {
         let obj: any = {
@@ -249,5 +250,12 @@ export class Entity {
         this.collapsed = true;
         this.uiA.headerG.updateBodyIcon();
         await this.uiA.bodyG.collapse();
+    }
+
+    uis_add(ui: Entity) {
+        if (!notNullUndefined(this.uis)) {
+            this.uis = [];
+        }
+        this.uis.push(ui);
     }
 }

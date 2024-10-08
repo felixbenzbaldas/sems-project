@@ -170,4 +170,12 @@ export class AppA_UiA {
         previous.uiA.headerG.updateCurrentContainerStyle();
         this.entity.appA.currentContainer.uiA.headerG.updateCurrentContainerStyle();
     }
+
+    createUiFor(object: Entity) : Entity {
+        let ui : Entity = this.entity.getApp().appA.createEntityWithApp();
+        ui.uiA = new UiA(ui);
+        ui.uiA.object = object;
+        object.uis_add(ui);
+        return ui;
+    }
 }
