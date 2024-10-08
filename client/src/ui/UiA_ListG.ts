@@ -6,6 +6,7 @@ export class UiA_ListG {
 
     uisOfListItems : Array<Entity>;
     htmlElement : HTMLDivElement = document.createElement('div');
+    extraObjectForUi: boolean;
 
     constructor(private entity : Entity) {
     }
@@ -30,13 +31,17 @@ export class UiA_ListG {
 
     private async updateUisOfListItems() {
         this.uisOfListItems = []; // TODO: do not always dismiss old uis
-        for (let currentResolved of await this.entity.list.getResolvedList()) {
-            let currentUi; // TODO: create extra object for currentUi
+        for (let currentResolved of await this.getObject().list.getResolvedList()) {
+            let currentUi;
             if (currentResolved.appA?.uiA) {
                 currentUi = currentResolved;
             } else {
-                currentUi = currentResolved;
-                currentUi.uiA = new UiA(currentUi);
+                if (this.extraObjectForUi) {
+                    currentUi = this.entity.getApp().appA.uiA.createUiFor(currentResolved);
+                } else {
+                    currentUi = currentResolved;
+                    currentUi.uiA = new UiA(currentUi);
+                }
                 currentUi.uiA.editable = this.entity.uiA.editable;
             }
             currentUi.ui_context = this.entity;
@@ -73,5 +78,9 @@ export class UiA_ListG {
         this.entity.list.jsList.splice(position, 0, this.entity.getPath(created));
         await this.entity.updateUi();
         this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
+    }
+
+    getObject() : Entity {
+        return this.entity.uiA.getObject();
     }
 }

@@ -26,17 +26,17 @@ export class UiA {
     }
 
     async update() {
-        if (!this.entity.hidden && !this.entity.dangerous_html) {
+        if (!this.getObject().hidden && !this.getObject().dangerous_html) {
             if (this.entity.appA?.uiA) {
                 await this.entity.appA.uiA.update();
             } else {
-                if (this.entity.isTest) {
+                if (this.getObject().isTest) {
                     await this.testG.update();
                 }
-                if (this.entity.list) {
+                if (this.getObject().list) {
                     await this.listG.update();
                 }
-                if (notNullUndefined(this.entity.text)) {
+                if (notNullUndefined(this.getObject().text)) {
                     this.textG.update();
                 }
                 this.headerG.update();

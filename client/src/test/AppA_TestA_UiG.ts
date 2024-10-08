@@ -77,6 +77,20 @@ export class AppA_TestA_UiG {
                 let ui : Entity = app.appA.uiA.createUiFor(object);
 
                 return ui.uiA.object === object && object.uis.at(0) === ui;
+            }),
+            this.createTest('ui_list_extraObjectForUi', async test => {
+                let app = Starter.createAppWithUI();
+                test.test_app = app;
+                app.appA.logG.toListOfStrings = true;
+                let listItem = app.appA.unboundG.createText('listItem');
+                let list = app.appA.unboundG.createList(listItem);
+                let uiForList : Entity = app.appA.uiA.createUiFor(list);
+                uiForList.uiA.listG.extraObjectForUi = true;
+
+                await uiForList.uiA.update();
+
+                return uiForList.uiA.listG.uisOfListItems.at(0).uiA.object === listItem
+                    && uiForList.uiA.listG.uisOfListItems.at(0) != listItem;
             })
         ]
     }
