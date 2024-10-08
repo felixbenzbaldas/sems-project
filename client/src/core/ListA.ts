@@ -15,11 +15,7 @@ export class ListA {
 
     async add(...items : Array<Entity>) {
         for (let item of items) {
-            if (item.name && item.container) {
-                this.jsList.push(this.entity.getPath(item));
-            } else {
-                this.jsList.push(item);
-            }
+            this.jsList.push(this.entity.pathOrObject(item));
         }
     }
 
