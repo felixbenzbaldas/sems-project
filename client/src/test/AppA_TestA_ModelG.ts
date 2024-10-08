@@ -137,7 +137,7 @@ export class AppA_TestA_ModelG {
                 app.appA.logG.toListOfStrings = true;
                 let object = app.appA.unboundG.createText('foo');
                 let ui : Entity = app.appA.uiA.createUiFor(object);
-                object.uis_update();
+                await object.uis_update();
 
                 let rawText = ui.uiA.getRawText();
 

@@ -259,6 +259,14 @@ export class Entity {
         this.uis.push(ui);
     }
 
-    uis_update() {
-        // TODO    }
+    async uis_update() {
+        if (this.uiA) {
+            await this.uiA.update();
+        }
+        if (notNullUndefined(this.uis)) {
+            for (let ui of this.uis) {
+                await ui.uiA.update();
+            }
+        }
+    }
 }
