@@ -1,6 +1,7 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 import {Static} from "@/Static";
+import type {UiA} from "@/ui/UiA";
 
 export class UiA_HeaderG {
     htmlElement: HTMLElement = document.createElement('div');
@@ -15,7 +16,7 @@ export class UiA_HeaderG {
         this.updateContent();
         this.updateBodyIcon();
         if (this.content_fullWidth()) {
-            this.entity.uiA.htmlElement.style.minWidth = '100%';
+            this.getUiA().htmlElement.style.minWidth = '100%';
         }
         this.htmlElement.style.display = 'flex';
         this.htmlElement.style.flexWrap = 'wrap';
@@ -37,7 +38,7 @@ export class UiA_HeaderG {
     updateBodyIcon() {
         this.bodyIcon.style.display = 'inline-block';
         this.bodyIcon.style.marginLeft = '0.7rem';
-        if (this.entity.collapsible && this.entity.uiA.bodyG.bodyAvailable()) {
+        if (this.getObject().collapsible && this.getUiA().bodyG.bodyAvailable()) {
             this.bodyIcon.style.display = 'default';
             if (this.entity.collapsed) {
                 this.bodyIcon.innerText = '[...]';
@@ -51,34 +52,34 @@ export class UiA_HeaderG {
 
     private updateContent() {
         this.content.innerHTML = null;
-        if (this.entity.isTest) {
-            this.content.appendChild(this.entity.uiA.testG.headerContent_htmlElement);
-        } else if (this.entity.action) {
+        if (this.getObject().isTest) {
+            this.content.appendChild(this.getUiA().testG.headerContent_htmlElement);
+        } else if (this.getObject().action) {
             this.content.appendChild(this.action_getUiElement());
-        } else if (notNullUndefined(this.entity.link)) {
+        } else if (notNullUndefined(this.getObject().link)) {
             let link = document.createElement('a');
-            link.href = this.entity.link;
+            link.href = this.getObject().link;
             link.innerText = this.link_getText();
             this.content.appendChild(link);
-        } else if (notNullUndefined(this.entity.text)) {
-            this.content.appendChild(this.entity.uiA.textG.htmlElement);
+        } else if (notNullUndefined(this.getObject().text)) {
+            this.content.appendChild(this.getUiA().textG.htmlElement);
         }
     }
 
     private content_fullWidth() : boolean {
-        if (this.entity.isTest) {
+        if (this.getObject().isTest) {
             return true;
         } else {
-            return !this.entity.action;
+            return !this.getObject().action;
         }
     }
 
     action_getUiElement() {
         let button = document.createElement('button');
-        button.innerText = this.entity.text;
+        button.innerText = this.getObject().text;
         button.onclick = (event) => {
             Static.ensureActive(this.entity.getApp());
-            this.entity.action();
+            this.getObject().action();
             event.stopPropagation();
         };
         button.style.margin = '0.3rem 0.3rem 0.3rem 0rem';
@@ -88,18 +89,18 @@ export class UiA_HeaderG {
     }
 
     link_getText() {
-        return notNullUndefined(this.entity.text) ? this.entity.text : this.entity.link;
+        return notNullUndefined(this.getObject().text) ? this.getObject().text : this.getObject().link;
     }
 
     headerAvailable(): boolean {
-        return notNullUndefined(this.entity.isTest) ||
-            notNullUndefined(this.entity.action) ||
-            notNullUndefined(this.entity.link) ||
-            notNullUndefined(this.entity.text);
+        return notNullUndefined(this.getObject().isTest) ||
+            notNullUndefined(this.getObject().action) ||
+            notNullUndefined(this.getObject().link) ||
+            notNullUndefined(this.getObject().text);
     }
 
     private updateCursorStyle() {
-        if (this.entity.collapsible && this.entity.uiA.bodyG.bodyAvailable()) {
+        if (this.getObject().collapsible && this.getUiA().bodyG.bodyAvailable()) {
             this.htmlElement.style.cursor = 'pointer';
         } else {
             this.htmlElement.style.cursor = 'default';
@@ -115,7 +116,7 @@ export class UiA_HeaderG {
     }
 
     updateCurrentContainerStyle() {
-        if (this.entity.getApp().appA.currentContainer === this.entity) {
+        if (this.entity.getApp().appA.currentContainer === this.getObject()) {
             this.htmlElement.style.backgroundColor = '#efefef';
         } else {
             this.htmlElement.style.backgroundColor = 'white';
@@ -125,5 +126,17 @@ export class UiA_HeaderG {
     async clickEvent() {
         await this.entity.expandOrCollapse();
         this.entity.getApp().appA.uiA.focus(this.entity);
+    }
+
+    getUiA() : UiA {
+        return this.entity.uiA;
+    }
+
+    getObject() : Entity {
+        if (this.getUiA().object) {
+            return this.getUiA().object;
+        } else {
+            return this.entity;
+        }
     }
 }
