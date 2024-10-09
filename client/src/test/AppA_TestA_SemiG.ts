@@ -162,7 +162,7 @@ export class AppA_TestA_SemiG {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
                 appA.logG.toListOfStrings = true;
-                appA.uiA.content.uiA.listG.extraObjectForUi = true;
+                appA.uiA.setExtraObjectForUi(true);
                 await appA.uiA.globalEventG.defaultAction();
                 appA.uiA.focused.uiA.object.text = 'foo';
                 appA.logG.toConsole = true;

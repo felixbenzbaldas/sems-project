@@ -192,4 +192,8 @@ export class AppA_UiA {
     extraObjectForUi() : boolean {
         return this.content.uiA.listG.extraObjectForUi;
     }
+
+    setExtraObjectForUi(value: boolean) {
+        this.content.uiA.listG.extraObjectForUi = value;
+    }
 }
