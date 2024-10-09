@@ -52,7 +52,12 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async export() {
-        let toExport = this.getUiA().focused;
+        let toExport;
+        if (this.getUiA().content.uiA.listG.extraObjectForUi) {
+            toExport = this.getUiA().focused.uiA.object;
+        } else {
+            toExport = this.getUiA().focused;
+        }
         await this.getUiA().output.setAndUpdateUi(JSON.stringify(await toExport.export(), null, 4));
     }
 
