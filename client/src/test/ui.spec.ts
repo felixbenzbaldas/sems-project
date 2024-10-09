@@ -39,10 +39,11 @@ describe('ui', () => {
 
     test('Created object has focus', async () => {
         let app = Starter.createAppWithUI();
+        app.appA.uiA.setExtraObjectForUi(true);
 
         await app.appA.uiA.globalEventG.defaultAction();
 
-        expect((await app.appA.uiA.content.list.getObject(0)).ui_hasFocus()).toBeTruthy();
+        expect(app.appA.uiA.content.uiA.listG.uisOfListItems.at(0).ui_hasFocus()).toBeTruthy();
     });
 
     test('can create object after created object', async () => {
