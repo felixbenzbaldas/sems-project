@@ -46,11 +46,6 @@ export class Entity {
         return obj;
     }
 
-    async setHiddenAndUpdateUi(value : boolean) {
-        this.hidden = value;
-        await this.uiA.update();
-    }
-
     async httpRequest(url : string, method : string, args : Array<any>) : Promise<any> {
         return fetch(url, {
             method: 'POST',
@@ -236,13 +231,13 @@ export class Entity {
     }
 
     async toggleCollapsible() {
-        this.collapsible = !this.collapsible;
+        this.getObject().collapsible = !this.getObject().collapsible;
         this.collapsed = false;
         await this.uiA.update();
     }
 
     async expandOrCollapse() {
-        if (this.collapsible) {
+        if (this.getObject().collapsible) {
             if (this.collapsed) {
                 await this.expand();
             } else {
@@ -254,11 +249,19 @@ export class Entity {
     }
 
     async expand() {
-        if (this.list?.jsList.length > 0) {
+        if (this.getObject().list?.jsList.length > 0) {
             this.collapsed = false;
             this.uiA.headerG.updateBodyIcon();
             await this.uiA.listG.update();
             await this.uiA.bodyG.expand();
+        }
+    }
+
+    getObject() : Entity {
+        if (this.uiA?.object) {
+            return this.uiA.object;
+        } else {
+            return this;
         }
     }
 
