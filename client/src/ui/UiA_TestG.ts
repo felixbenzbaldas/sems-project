@@ -16,8 +16,8 @@ export class UiA_TestG {
 
     private updateHeaderContent() {
         this.headerContent_htmlElement.innerHTML = null;
-        this.entity.uiA.textG.htmlElement.style.color = this.entity.test_result ? 'green' : 'red';
-        this.headerContent_htmlElement.appendChild(this.entity.uiA.textG.htmlElement);
+        this.getUiA().textG.htmlElement.style.color = this.getObject().test_result ? 'green' : 'red';
+        this.headerContent_htmlElement.appendChild(this.getUiA().textG.htmlElement);
     }
 
     async click(text : string) {
@@ -26,7 +26,7 @@ export class UiA_TestG {
 
     getRawText(): string {
         let rawText = '';
-        rawText += this.entity.text;
+        rawText += this.getObject().text;
         rawText += this.bodyContent.uiA.getRawText();
         return rawText;
     }
@@ -34,17 +34,17 @@ export class UiA_TestG {
     private async updateBodyContent() {
         let appA = this.entity.getApp().appA;
         this.bodyContent = appA.unboundG.createList();
-        if (this.entity.test_result_error) {
-            let errorUi = appA.unboundG.createCollapsible('failed with ' + this.entity.test_result_error.toString());
-            if (this.entity.test_result_error.stack) {
-                errorUi.list.jsList.push(appA.unboundG.createTextWithList('stacktrace:', appA.unboundG.createText(this.entity.test_result_error.stack)));
+        if (this.getObject().test_result_error) {
+            let errorUi = appA.unboundG.createCollapsible('failed with ' + this.getObject().test_result_error.toString());
+            if (this.getObject().test_result_error.stack) {
+                errorUi.list.jsList.push(appA.unboundG.createTextWithList('stacktrace:', appA.unboundG.createText(this.getObject().test_result_error.stack)));
             }
             this.bodyContent.list.jsList.push(errorUi);
         }
-        if (this.entity.test_app) {
+        if (this.getObject().test_app) {
             let log = appA.unboundG.createText('');
             let updateLogFunc = async () => {
-                log.text = this.entity.test_app.appA.logG.listOfStrings.join('\n');
+                log.text = this.getObject().test_app.appA.logG.listOfStrings.join('\n');
                 if (log.uiA) {
                     await log.updateUi();
                 }
@@ -54,9 +54,21 @@ export class UiA_TestG {
                 log,
                 appA.unboundG.createButton('update log', updateLogFunc)));
             await this.bodyContent.list.add(appA.unboundG.createCollapsible('ui',
-                this.entity.test_app));
+                this.getObject().test_app));
         }
         this.bodyContent.uiA = new UiA(this.bodyContent);
         await this.bodyContent.uiA.update();
+    }
+
+    getUiA() : UiA {
+        return this.entity.uiA;
+    }
+
+    getObject() : Entity {
+        if (this.getUiA().object) {
+            return this.getUiA().object;
+        } else {
+            return this.entity;
+        }
     }
 }
