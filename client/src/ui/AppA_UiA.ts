@@ -38,8 +38,8 @@ export class AppA_UiA {
         let created = await this.entity.appA.createText('');
         if (this.content.uiA.listG.extraObjectForUi) {
             let uiForCreated = await this.content.uiA.listG.insertObjectAtPosition(created, 0);
-            await this.content.uiA.update();
-            this.focus(uiForCreated);
+            await this.content.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
+            this.focus(this.content.uiA.listG.uisOfListItems.at(0));
         } else {
             await this.content.list.addAndUpdateUi(created);
             this.focus(created);
