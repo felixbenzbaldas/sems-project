@@ -217,16 +217,28 @@ export class Entity {
     }
 
     async newSubitem() {
+        this.log('newSubitem');
         if (this.appA?.uiA) {
             await this.appA.uiA.newSubitem();
         } else {
-            if (!this.list) {
-                this.list = new ListA(this);
+            if (this.uiA?.object) {
+                if (!this.getObject().list) {
+                    this.getObject().list = new ListA(this.getObject());
+                }
+                this.uiA.listG.extraObjectForUi = true;
+                let created = await this.getApp().appA.createText('');
+                await this.uiA.listG.insertObjectAtPosition(created, 0);
+                await this.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
+                this.getApp().appA.uiA.focus(this.uiA.listG.uisOfListItems.at(0));
+            } else {
+                if (!this.list) {
+                    this.list = new ListA(this);
+                }
+                let created = await this.getApp().appA.createText('');
+                await this.list.add(created);
+                await this.uiA.update();
+                this.getApp().appA.uiA.focus(created);
             }
-            let created = await this.getApp().appA.createText('');
-            await this.list.add(created);
-            await this.uiA.update();
-            this.getApp().appA.uiA.focus(created);
         }
     }
 

@@ -164,7 +164,7 @@ export class AppA_TestA_SemiG {
                 appA.logG.toListOfStrings = true;
                 appA.uiA.content.uiA.listG.extraObjectForUi = true;
                 await appA.uiA.globalEventG.defaultAction();
-                appA.uiA.focused.text = 'foo';
+                appA.uiA.focused.uiA.object.text = 'foo';
                 appA.logG.toConsole = true;
                 await test.test_app.updateUi();
                 return false;
