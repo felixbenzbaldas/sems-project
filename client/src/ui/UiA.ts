@@ -49,19 +49,19 @@ export class UiA {
 
     private async updateUiElement() {
         this.htmlElement.innerHTML = null;
-        if (!this.entity.hidden) {
+        if (!this.getObject().hidden) {
             if (this.entity.appA?.uiA) {
                 this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
             } else if (this.headerG.headerAvailable()) {
                 this.htmlElement.appendChild(this.headerG.htmlElement);
                 this.htmlElement.appendChild(this.bodyG.htmlElement);
-            } else if (this.entity.list && this.entity.collapsed != true) {
+            } else if (this.getObject().list && this.entity.collapsed != true) {
                 this.htmlElement.appendChild(this.listG.htmlElement);
-            } else if (this.entity.dangerous_html) {
-                this.htmlElement.appendChild(this.entity.dangerous_html);
+            } else if (this.getObject().dangerous_html) {
+                this.htmlElement.appendChild(this.getObject().dangerous_html);
             } else {
                 let div = document.createElement('div');
-                div.innerText = this.entity.getDescription();
+                div.innerText = this.getObject().getDescription();
                 this.htmlElement.appendChild(div);
             }
         }
@@ -69,9 +69,9 @@ export class UiA {
 
     isEditable() {
         if (notNullUndefined(this.editable)) {
-            if (notNullUndefined(this.entity.editable)) {
+            if (notNullUndefined(this.getObject().editable)) {
                 if (this.editable == true) {
-                    return this.entity.editable;
+                    return this.getObject().editable;
                 } else {
                     return false;
                 }
@@ -79,8 +79,8 @@ export class UiA {
                 return this.editable;
             }
         } else {
-            if (notNullUndefined(this.entity.editable)) {
-                return this.entity.editable;
+            if (notNullUndefined(this.getObject().editable)) {
+                return this.getObject().editable;
             } else {
                 return false;
             }
@@ -122,27 +122,27 @@ export class UiA {
 
     async click(text : string) {
         this.entity.log('click ' + text);
-        if (!this.entity.hidden) {
+        if (!this.getObject().hidden) {
             if (this.entity.appA?.uiA) {
                 await this.entity.appA.uiA.click(text);
-            } else if (this.entity.isTest) {
-                await this.entity.uiA.testG.click(text);
-            } else if (this.entity.action) {
-                if (this.entity.text.includes(text)) {
-                    await this.entity.action();
+            } else if (this.getObject().isTest) {
+                await this.testG.click(text);
+            } else if (this.getObject().action) {
+                if (this.getObject().text.includes(text)) {
+                    await this.getObject().action();
                 }
-            } else if (notNullUndefined(this.entity.text)) {
-                if (this.entity.text.includes(text)) {
+            } else if (notNullUndefined(this.getObject().text)) {
+                if (this.getObject().text.includes(text)) {
                     if (this.isEditable()) {
                         this.entity.getApp().appA.uiA.focus(this.entity);
                     } else {
                         await this.headerG.clickEvent();
                     }
                 }
-                if (!this.entity.collapsed && this.entity.uiA.bodyG.bodyAvailable()) {
+                if (!this.entity.collapsed && this.bodyG.bodyAvailable()) {
                     await this.listG.click(text);
                 }
-            } else if (this.entity.list) {
+            } else if (this.getObject().list) {
                 await this.listG.click(text);
             }
         }
@@ -150,17 +150,17 @@ export class UiA {
 
     countEditableTexts() : number {
         this.entity.log('countEditableTexts');
-        if (!this.entity.hidden) {
+        if (!this.getObject().hidden) {
             if (this.entity.appA?.uiA) {
                 return this.entity.appA.uiA.countEditableTexts();
             } else {
                 let counter = 0;
-                if (notNullUndefined(this.entity.text)) {
-                    if (this.entity.uiA.isEditable()) {
+                if (notNullUndefined(this.getObject().text)) {
+                    if (this.isEditable()) {
                         counter++;
                     }
                 }
-                if (this.entity.list && !this.entity.collapsed) {
+                if (this.getObject().list && !this.entity.collapsed) {
                     counter += this.listG.countEditableTexts();
                 }
                 return counter;
@@ -173,13 +173,13 @@ export class UiA {
         if (this.entity.appA?.uiA) {
             this.entity.appA.uiA.focusStyle_update();
         } else {
-            this.entity.uiA.headerG.focusStyle_update();
+            this.headerG.focusStyle_update();
         }
     }
 
     takeCaret() {
         if (!this.entity.appA) {
-            if (notNullUndefined(this.entity.text)) {
+            if (notNullUndefined(this.getObject().text)) {
                 this.textG.takeCaret();
             }
         }
