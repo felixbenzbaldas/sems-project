@@ -157,16 +157,6 @@ export class AppA_TestA_SemiG {
                 await test.test_app.updateUi();
                 test.test_app.log('human-test: The object is editable.');
                 return true;
-            }),
-            this.createTest('semiAutomatedTest_extraObjectForUi_explorative', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
-                let appA = test.test_app.appA;
-                appA.logG.toListOfStrings = true;
-                await appA.uiA.globalEventG.defaultAction();
-                appA.uiA.focused.uiA.object.text = 'foo';
-                appA.logG.toConsole = true;
-                await test.test_app.updateUi();
-                return false;
             })
         ];
     }
