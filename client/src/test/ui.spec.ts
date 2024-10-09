@@ -48,12 +48,13 @@ describe('ui', () => {
 
     test('can create object after created object', async () => {
         let app = Starter.createAppWithUI();
+        app.appA.uiA.setExtraObjectForUi(true);
         await app.appA.uiA.globalEventG.defaultAction();
 
         await app.appA.uiA.globalEventG.defaultAction();
 
         expect(app.appA.uiA.content.list.jsList.length).toBe(2);
         let resolvedContent = await app.appA.uiA.content.list.getResolvedList();
-        expect(app.appA.uiA.focused).toBe(resolvedContent.at(1));
+        expect(app.appA.uiA.focused.uiA.object).toBe(resolvedContent.at(1));
     });
 });
