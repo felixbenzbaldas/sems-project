@@ -116,26 +116,15 @@ export class Entity {
     }
 
     pathOrObject(object : Entity) : Entity {
-        if (this.canGetPath(object)) {
-            return this.getPath(object);
-        } else {
+        if (object.isUnbound()) {
             return object;
+        } else {
+            return this.getPath(object);
         }
     }
 
-    canGetPath(entity : Entity) : boolean {
-        if (!notNullUndefined(entity.name) || !entity.container) {
-            return false;
-        }
-        if (this.contains(entity)) {
-            return true;
-        } else {
-            if (this.container) {
-                return this.container.canGetPath(entity);
-            } else {
-                return false;
-            }
-        }
+    isUnbound() : boolean {
+        return !notNullUndefined(this.name) || !this.container;
     }
 
     async export(): Promise<any> {
