@@ -11,6 +11,7 @@ export class AppA_TestA_UiG {
         return [
             this.createTest('ui_makeCollapsible', async test => {
                 let app = Starter.createAppWithUI();
+                app.appA.uiA.setExtraObjectForUi(true);
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.appA.uiA.globalEventG.toggleCollapsible();
