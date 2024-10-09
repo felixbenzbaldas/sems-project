@@ -34,6 +34,15 @@ export class AppA_TestA_UiG {
             this.createTest('ui_collapsible', async test => {
                 let app = Starter.createAppWithUI();
                 let collapsible = app.appA.unboundG.createCollapsible('', app.appA.unboundG.createText(''));
+                let ui = app.appA.uiA.createUiFor(collapsible);
+
+                await collapsible.uis_update();
+
+                return ui.collapsed;
+            }),
+            this.createTest('ui_collapsible_hybrid', async test => {
+                let app = Starter.createAppWithUI();
+                let collapsible = app.appA.unboundG.createCollapsible('', app.appA.unboundG.createText(''));
                 collapsible.uiA = new UiA(collapsible);
 
                 await collapsible.updateUi();
