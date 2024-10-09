@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
+import type {UiA} from "@/ui/UiA";
 
 export class UiA_BodyG {
 
@@ -25,16 +26,16 @@ export class UiA_BodyG {
 
     async content_update() {
         this.content_htmlElement = document.createElement('div');
-        if (this.entity.isTest) {
-            this.content_htmlElement.appendChild(this.entity.uiA.testG.bodyContent.uiA.htmlElement);
-        } else if (this.entity.list && this.entity.list.jsList.length > 0) {
-            this.content_htmlElement = this.entity.uiA.listG.htmlElement;
+        if (this.getObject().isTest) {
+            this.content_htmlElement.appendChild(this.getUiA().testG.bodyContent.uiA.htmlElement);
+        } else if (this.getObject().list && this.getObject().list.jsList.length > 0) {
+            this.content_htmlElement = this.getUiA().listG.htmlElement;
         }
     }
 
     bodyAvailable() : boolean {
-        return notNullUndefined(this.entity.test_result) ||
-            this.entity.list && this.entity.list.jsList.length > 0;
+        return notNullUndefined(this.getObject().test_result) ||
+            this.getObject().list && this.getObject().list.jsList.length > 0;
     }
 
     async expand() {
@@ -43,5 +44,18 @@ export class UiA_BodyG {
 
     async collapse() {
         await this.update();
+    }
+
+
+    getUiA() : UiA {
+        return this.entity.uiA;
+    }
+
+    getObject() : Entity {
+        if (this.getUiA().object) {
+            return this.getUiA().object;
+        } else {
+            return this.entity;
+        }
     }
 }
