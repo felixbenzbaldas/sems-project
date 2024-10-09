@@ -170,7 +170,7 @@ export class AppA_UiA {
         }
     }
 
-    switchCurrentContainer_updateStyles(entity: Entity) {
+    switchCurrentContainer_AndUpdateStyles(entity: Entity) {
         let previous = this.entity.appA.currentContainer;
         this.entity.appA.switchCurrentContainer(entity);
         previous.uiA.headerG.updateCurrentContainerStyle();

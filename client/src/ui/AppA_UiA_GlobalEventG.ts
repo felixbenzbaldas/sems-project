@@ -39,7 +39,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async switchCurrentContainer() {
-        this.getUiA().switchCurrentContainer_updateStyles(this.getUiA().focused);
+        this.getUiA().switchCurrentContainer_AndUpdateStyles(this.getUiA().focused);
 
     }
 
@@ -48,7 +48,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async switchToAppContainer() {
-        this.getUiA().switchCurrentContainer_updateStyles(this.entity);
+        this.getUiA().switchCurrentContainer_AndUpdateStyles(this.entity);
     }
 
     async export() {
