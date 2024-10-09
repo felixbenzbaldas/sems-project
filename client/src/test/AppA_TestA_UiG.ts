@@ -11,7 +11,6 @@ export class AppA_TestA_UiG {
         return [
             this.createTest('ui_makeCollapsible', async test => {
                 let app = Starter.createAppWithUI();
-                app.appA.uiA.setExtraObjectForUi(true);
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.appA.uiA.globalEventG.toggleCollapsible();
@@ -20,7 +19,6 @@ export class AppA_TestA_UiG {
             }),
             this.createTest('ui_collapse', async test => {
                 let app = Starter.createAppWithUI();
-                app.appA.uiA.setExtraObjectForUi(true);
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.toggleCollapsible();
                 await app.appA.uiA.globalEventG.newSubitem();
@@ -51,7 +49,6 @@ export class AppA_TestA_UiG {
             }),
             this.createTest('ui_newSubitem', async test => {
                 let app = Starter.createAppWithUI();
-                app.appA.uiA.setExtraObjectForUi(true);
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.appA.uiA.globalEventG.newSubitem();
@@ -62,7 +59,6 @@ export class AppA_TestA_UiG {
             }),
             this.createTest('ui_switchCurrentContainer', async test => {
                 let app = Starter.createAppWithUI()
-                app.appA.uiA.setExtraObjectForUi(true);
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.appA.uiA.globalEventG.switchCurrentContainer();
@@ -72,7 +68,6 @@ export class AppA_TestA_UiG {
             }),
             this.createTest('ui_cut', async test => {
                 let app = Starter.createAppWithUI();
-                app.appA.uiA.setExtraObjectForUi(true);
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 await app.appA.uiA.globalEventG.defaultAction();
@@ -99,7 +94,6 @@ export class AppA_TestA_UiG {
                 let listItem = app.appA.unboundG.createText('listItem');
                 let list = app.appA.unboundG.createList(listItem);
                 let uiForList : Entity = app.appA.uiA.createUiFor(list);
-                uiForList.uiA.listG.extraObjectForUi = true;
 
                 await uiForList.uiA.update();
 
@@ -113,7 +107,6 @@ export class AppA_TestA_UiG {
                 let listItem = app.appA.unboundG.createText('listItem');
                 let list = app.appA.unboundG.createList();
                 let uiForList : Entity = app.appA.uiA.createUiFor(list);
-                uiForList.uiA.listG.extraObjectForUi = true;
                 await uiForList.uiA.update();
 
                 let uiForListItem : Entity = await uiForList.uiA.listG.insertObjectAtPosition(listItem, 0);

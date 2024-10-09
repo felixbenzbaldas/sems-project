@@ -225,7 +225,6 @@ export class Entity {
                 if (!this.getObject().list) {
                     this.getObject().list = new ListA(this.getObject());
                 }
-                this.uiA.listG.extraObjectForUi = true;
                 let created = await this.getApp().appA.createText('');
                 await this.uiA.listG.insertObjectAtPosition(created, 0);
                 await this.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)

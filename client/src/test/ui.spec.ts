@@ -39,7 +39,6 @@ describe('ui', () => {
 
     test('Created object has focus', async () => {
         let app = Starter.createAppWithUI();
-        app.appA.uiA.setExtraObjectForUi(true);
 
         await app.appA.uiA.globalEventG.defaultAction();
 
@@ -48,7 +47,6 @@ describe('ui', () => {
 
     test('can create object after created object', async () => {
         let app = Starter.createAppWithUI();
-        app.appA.uiA.setExtraObjectForUi(true);
         await app.appA.uiA.globalEventG.defaultAction();
 
         await app.appA.uiA.globalEventG.defaultAction();

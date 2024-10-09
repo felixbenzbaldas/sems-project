@@ -10,13 +10,11 @@ export class AppA_TestA_ModelG {
         return [
             this.createTest('modelTest_objectCreation', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
-                test.test_app.appA.uiA.setExtraObjectForUi(true);
 
                 return test.test_app.uiA.getRawText().includes('default action');
             }),
             this.createTest('modelTest_newSubitem', async test => {
                 let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
-                app.appA.uiA.setExtraObjectForUi(true);
                 await app.updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
 
@@ -27,7 +25,6 @@ export class AppA_TestA_ModelG {
             }),
             this.createTest('modelTest_makeCollapsible', async test => {
                 let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
-                app.appA.uiA.setExtraObjectForUi(true);
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.uiA.click('toggle collapsible');
@@ -36,7 +33,6 @@ export class AppA_TestA_ModelG {
             }),
             this.createTest('modelTest_collapsed', async test => {
                 let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
-                app.appA.uiA.setExtraObjectForUi(true);
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.newSubitem();
                 let firstObjectUi = app.appA.uiA.content.uiA.listG.uisOfListItems.at(0);
@@ -52,7 +48,6 @@ export class AppA_TestA_ModelG {
             }),
             this.createTest('modelTest_click_nonEditableText', async test => {
                 let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
-                app.appA.uiA.setExtraObjectForUi(true);
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.newSubitem();
                 let firstObjectUi = app.appA.uiA.content.uiA.listG.uisOfListItems.at(0);
@@ -68,7 +63,6 @@ export class AppA_TestA_ModelG {
             }),
             this.createTest('modelTest_tester', async test => {
                 let tester = await Starter.createTest();
-                tester.appA.uiA.setExtraObjectForUi(true);
                 test.test_app = tester;
                 tester.appA.logG.toListOfStrings = true;
 
@@ -96,7 +90,6 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_website', async test => {
                 let website = await Starter.createWebsite();
                 test.test_app = website;
-                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 website.appA.logG.toListOfStrings = true;
 
                 await website.uiA.update();
@@ -126,7 +119,6 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_cut', async test => {
                 let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 test.test_app = app;
-                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 app.appA.logG.toListOfStrings = true;
                 await app.appA.uiA.globalEventG.defaultAction();
                 let firstObject = await app.appA.uiA.content.list.getObject(0);

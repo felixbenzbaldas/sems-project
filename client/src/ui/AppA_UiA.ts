@@ -36,14 +36,9 @@ export class AppA_UiA {
 
     async newSubitem() {
         let created = await this.entity.appA.createText('');
-        if (this.extraObjectForUi()) {
-            let uiForCreated = await this.content.uiA.listG.insertObjectAtPosition(created, 0);
-            await this.content.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
-            this.focus(this.content.uiA.listG.uisOfListItems.at(0));
-        } else {
-            await this.content.list.addAndUpdateUi(created);
-            this.focus(created);
-        }
+        let uiForCreated = await this.content.uiA.listG.insertObjectAtPosition(created, 0);
+        await this.content.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
+        this.focus(this.content.uiA.listG.uisOfListItems.at(0));
     }
 
     focus(entity: Entity) {
@@ -172,11 +167,7 @@ export class AppA_UiA {
 
     switchCurrentContainer_AndUpdateStyles(entity: Entity) {
         let previous = this.entity.appA.currentContainer;
-        if (this.extraObjectForUi()) {
-            this.entity.appA.switchCurrentContainer(entity.uiA.object);
-        } else {
-            this.entity.appA.switchCurrentContainer(entity);
-        }
+        this.entity.appA.switchCurrentContainer(entity.uiA.object);
         previous.uis_update_currentContainerStyle();
         this.entity.appA.currentContainer.uis_update_currentContainerStyle();
     }
@@ -189,11 +180,4 @@ export class AppA_UiA {
         return ui;
     }
 
-    extraObjectForUi() : boolean {
-        return this.content.uiA.listG.extraObjectForUi;
-    }
-
-    setExtraObjectForUi(value: boolean) {
-        this.content.uiA.listG.extraObjectForUi = value;
-    }
 }

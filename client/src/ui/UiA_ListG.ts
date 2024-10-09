@@ -6,7 +6,6 @@ export class UiA_ListG {
 
     uisOfListItems : Array<Entity>;
     htmlElement : HTMLDivElement = document.createElement('div');
-    extraObjectForUi: boolean;
 
     constructor(private entity : Entity) {
     }
@@ -36,12 +35,7 @@ export class UiA_ListG {
             if (currentResolved.appA?.uiA) {
                 currentUi = currentResolved;
             } else {
-                if (this.extraObjectForUi) {
-                    currentUi = this.entity.getApp().appA.uiA.createUiFor(currentResolved);
-                } else {
-                    currentUi = currentResolved;
-                    currentUi.uiA = new UiA(currentUi);
-                }
+                currentUi = this.entity.getApp().appA.uiA.createUiFor(currentResolved);
                 currentUi.uiA.editable = this.entity.uiA.editable;
             }
             currentUi.ui_context = this.entity;
