@@ -188,4 +188,8 @@ export class AppA_UiA {
         object.uis_add(ui);
         return ui;
     }
+
+    extraObjectForUi() : boolean {
+        return this.content.uiA.listG.extraObjectForUi;
+    }
 }

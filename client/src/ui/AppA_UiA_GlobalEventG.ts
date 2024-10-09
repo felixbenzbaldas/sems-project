@@ -77,11 +77,20 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async cut() {
-        let object = this.getUiA().focused;
-        this.getUiA().clipboard = object;
-        let uiContext = this.getUiA().clipboard.ui_context;
-        let position = uiContext.uiA.listG.uisOfListItems.indexOf(object);
-        uiContext.list.jsList.splice(position, 1);
-        await uiContext.updateUi();
+        if (this.getUiA().extraObjectForUi()) {
+            let ui = this.getUiA().focused;
+            this.getUiA().clipboard = ui.uiA.object;
+            let uiContext = ui.ui_context;
+            let position = uiContext.uiA.listG.uisOfListItems.indexOf(ui);
+            uiContext.getObject().list.jsList.splice(position, 1);
+            await uiContext.getObject().uis_update();
+        } else {
+            let object = this.getUiA().focused;
+            this.getUiA().clipboard = object;
+            let uiContext = this.getUiA().clipboard.ui_context;
+            let position = uiContext.uiA.listG.uisOfListItems.indexOf(object);
+            uiContext.list.jsList.splice(position, 1);
+            await uiContext.updateUi();
+        }
     }
 }
