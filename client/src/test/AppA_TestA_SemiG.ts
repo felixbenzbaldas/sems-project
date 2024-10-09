@@ -11,6 +11,7 @@ export class AppA_TestA_SemiG {
         return [
             this.createTest('semiAutomatedTest_saveOnBlur', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 appA.logG.toListOfStrings = true;
@@ -19,6 +20,7 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_emptyMarker', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 await appA.uiA.globalEventG.defaultAction();
@@ -29,6 +31,7 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_html', async test => {
                 test.test_app = Starter.createAppWithUI();
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 let html = test.test_app.appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
                 html.dangerous_html.innerText = 'show me';
@@ -40,6 +43,7 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_setCaret', async test => {
                 test.test_app = Starter.createAppWithUI();
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 let html = test.test_app.appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
                 html.dangerous_html.innerText = 'test';
@@ -58,6 +62,7 @@ export class AppA_TestA_SemiG {
             this.createTest('semiAutomatedTest_cursorStyle', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 await appA.uiA.globalEventG.defaultAction();
                 await appA.uiA.globalEventG.toggleCollapsible();
                 await appA.uiA.globalEventG.newSubitem();
@@ -72,6 +77,7 @@ export class AppA_TestA_SemiG {
             this.createTest('semiAutomatedTest_expand/collapse', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 await appA.uiA.globalEventG.defaultAction();
                 await appA.uiA.globalEventG.toggleCollapsible();
                 await appA.uiA.globalEventG.newSubitem();
@@ -83,6 +89,7 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_placeholderArea', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 let appA = test.test_app.appA;
                 let html = appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
@@ -104,6 +111,7 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_focusStyle', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 let appA = test.test_app.appA;
                 appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: When clicking \'focus root\' a vertical orange line indicates the focus of the root element.' +
@@ -115,11 +123,12 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_focus_caret', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 await test.test_app.appA.uiA.globalEventG.defaultAction();
-                test.test_app.appA.uiA.focused.text = 'foo%/ )"ü,% bar';
+                test.test_app.appA.uiA.focused.uiA.object.text = 'foo%/ )"ü,% bar';
                 await test.test_app.appA.uiA.globalEventG.defaultAction();
                 await test.test_app.appA.uiA.globalEventG.defaultAction();
-                test.test_app.appA.uiA.focused.text = 'I have \n a new line';
+                test.test_app.appA.uiA.focused.uiA.object.text = 'I have \n a new line';
                 let appA = test.test_app.appA;
                 appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: When focusing a text, it gets the caret.');
@@ -129,6 +138,7 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_currentContainerStyle', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 await appA.uiA.globalEventG.defaultAction();
@@ -141,6 +151,7 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_activeApp', async test => {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 let appA = test.test_app.appA;
                 appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: Only the focus of the active app is visible.');
@@ -148,10 +159,11 @@ export class AppA_TestA_SemiG {
             }),
             this.createTest('semiAutomatedTest_editableContent', async test => {
                 test.test_app = Starter.createAppWithUI();
+                test.test_app.appA.uiA.setExtraObjectForUi(true);
                 test.test_app.uiA.editable = true;
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
-                appA.uiA.focused.text = 'edit me!';
+                appA.uiA.focused.uiA.object.text = 'edit me!';
                 appA.logG.toListOfStrings = true;
                 appA.logG.toConsole = true;
                 await test.test_app.updateUi();
