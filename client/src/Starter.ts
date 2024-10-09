@@ -183,9 +183,10 @@ export class Starter {
         let app : Entity = Starter.createAppWithUI();
         let created = Starter.getWebsiteData(app);
         let listOfNames = ['..', created.name, ...pathString.split('-')];
+        app.appA.uiA.setExtraObjectForUi(true);
         await app.appA.uiA.content.list.add(app.appA.createPath(listOfNames));
         await app.updateUi();
-        await (await app.appA.uiA.content.list.getObject(0)).expand();
+        await app.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();
         return app;
     }
 }
