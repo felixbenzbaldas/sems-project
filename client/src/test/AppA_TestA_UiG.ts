@@ -51,6 +51,7 @@ export class AppA_TestA_UiG {
             }),
             this.createTest('ui_newSubitem', async test => {
                 let app = Starter.createAppWithUI();
+                app.appA.uiA.setExtraObjectForUi(true);
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.appA.uiA.globalEventG.newSubitem();
@@ -60,24 +61,26 @@ export class AppA_TestA_UiG {
                     && (await firstObject.list.getObject(0)).text === '';
             }),
             this.createTest('ui_switchCurrentContainer', async test => {
-                let app = Starter.createAppWithUI();
+                let app = Starter.createAppWithUI()
+                app.appA.uiA.setExtraObjectForUi(true);
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.appA.uiA.globalEventG.switchCurrentContainer();
 
-                return app.appA.currentContainer === app.appA.uiA.focused &&
+                return app.appA.currentContainer === app.appA.uiA.focused.uiA.object &&
                     app.appA.currentContainer.containerA;
             }),
             this.createTest('ui_cut', async test => {
                 let app = Starter.createAppWithUI();
+                app.appA.uiA.setExtraObjectForUi(true);
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 await app.appA.uiA.globalEventG.defaultAction();
-                let object = app.appA.uiA.focused;
+                let objectUi = app.appA.uiA.focused;
 
                 await app.appA.uiA.globalEventG.cut();
 
-                return app.appA.uiA.content.list.jsList.length === 0 && app.appA.uiA.clipboard === object;
+                return app.appA.uiA.content.list.jsList.length === 0 && app.appA.uiA.clipboard === objectUi.uiA.object;
             }),
             this.createTest('ui_createUiFor', async test => {
                 let app = Starter.createAppWithUI();
