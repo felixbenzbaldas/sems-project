@@ -204,6 +204,10 @@ export class Entity {
             return 'list (' + this.list.jsList.length + ')';
         } else if (this.pathA) {
             return 'path (' + this.pathA.listOfNames + ')';
+        } else if (this.uiA) {
+            if (this.uiA.object) {
+                return 'ui for:' + this.uiA.object.text;
+            }
         }
         return 'tbd';
     }
