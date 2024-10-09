@@ -84,6 +84,7 @@ export class UiA_ListG {
         return this.entity.uiA.getObject();
     }
 
+    // note: always creates extra object for ui
     async insertObjectAtPosition(object: Entity, position: number) : Promise<Entity> {
         await this.getObject().list.insertObjectAtPosition(object, position);
         let ui = this.entity.getApp().appA.uiA.createUiFor(object);

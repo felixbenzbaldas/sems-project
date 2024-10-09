@@ -36,8 +36,14 @@ export class AppA_UiA {
 
     async newSubitem() {
         let created = await this.entity.appA.createText('');
-        await this.content.list.addAndUpdateUi(created);
-        this.focus(created);
+        if (this.content.uiA.listG.extraObjectForUi) {
+            let uiForCreated = await this.content.uiA.listG.insertObjectAtPosition(created, 0);
+            await this.content.uiA.update();
+            this.focus(uiForCreated);
+        } else {
+            await this.content.list.addAndUpdateUi(created);
+            this.focus(created);
+        }
     }
 
     focus(entity: Entity) {
