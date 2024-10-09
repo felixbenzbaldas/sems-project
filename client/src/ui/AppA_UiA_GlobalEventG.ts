@@ -62,14 +62,28 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async import() {
-        let focused = this.getUiA().focused;
-        let created = this.entity.appA.unboundG.createFromJson(JSON.parse(this.getUiA().input.get()));
-        this.entity.appA.currentContainer.containerA.bind(created);
-        if (!focused.list) {
-            focused.list = new ListA(focused);
+        if (this.getUiA().extraObjectForUi()) {
+            let focused = this.getUiA().focused;
+            let created = this.entity.appA.unboundG.createFromJson(JSON.parse(this.getUiA().input.get()));
+            this.entity.appA.currentContainer.containerA.bind(created);
+            let focusedObject = focused.getObject();
+            if (!focusedObject.list) {
+                focusedObject.list = new ListA(focusedObject);
+            }
+            focused.uiA.listG.extraObjectForUi = true;
+            await focused.uiA.listG.insertObjectAtPosition(created, 0);
+            await focused.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
+            this.getUiA().focus(focused.uiA.listG.uisOfListItems.at(0));
+        } else {
+            let focused = this.getUiA().focused;
+            let created = this.entity.appA.unboundG.createFromJson(JSON.parse(this.getUiA().input.get()));
+            this.entity.appA.currentContainer.containerA.bind(created);
+            if (!focused.list) {
+                focused.list = new ListA(focused);
+            }
+            await focused.list.addAndUpdateUi(created);
+            this.getUiA().focus(created);
         }
-        await focused.list.addAndUpdateUi(created);
-        this.getUiA().focus(created);
     }
 
     async focusRoot() {
