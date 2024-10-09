@@ -20,15 +20,16 @@ export class AppA_TestA_UiG {
             }),
             this.createTest('ui_collapse', async test => {
                 let app = Starter.createAppWithUI();
+                app.appA.uiA.setExtraObjectForUi(true);
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.toggleCollapsible();
                 await app.appA.uiA.globalEventG.newSubitem();
-                let firstObject = await app.appA.uiA.content.list.getObject(0);
-                app.appA.uiA.focus(firstObject);
+                let firstObjectUi = app.appA.uiA.content.uiA.listG.uisOfListItems.at(0);
+                app.appA.uiA.focus(firstObjectUi);
 
                 await app.appA.uiA.globalEventG.expandOrCollapse();
 
-                return firstObject.collapsed;
+                return firstObjectUi.collapsed;
             }),
             this.createTest('ui_collapsible', async test => {
                 let app = Starter.createAppWithUI();
