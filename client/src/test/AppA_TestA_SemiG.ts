@@ -106,7 +106,7 @@ export class AppA_TestA_SemiG {
                 test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
                 let appA = test.test_app.appA;
                 appA.logG.toListOfStrings = true;
-                test.test_app.log('human-test: At beginning a vertical orange line indicates the focus of the root element.' +
+                test.test_app.log('human-test: When clicking \'focus root\' a vertical orange line indicates the focus of the root element.' +
                     ' The line appears at the top of the (empty) content area.');
                 test.test_app.log('human-test: The line disappears when creating a new object (the root has not the focus anymore).');
                 test.test_app.log('human-test: The created object is surrounded with an orange box (because it has the focus).');
