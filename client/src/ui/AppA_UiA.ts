@@ -172,9 +172,13 @@ export class AppA_UiA {
 
     switchCurrentContainer_AndUpdateStyles(entity: Entity) {
         let previous = this.entity.appA.currentContainer;
-        this.entity.appA.switchCurrentContainer(entity);
-        previous.uiA.headerG.updateCurrentContainerStyle();
-        this.entity.appA.currentContainer.uiA.headerG.updateCurrentContainerStyle();
+        if (this.content.uiA.listG.extraObjectForUi) {
+            this.entity.appA.switchCurrentContainer(entity.uiA.object);
+        } else {
+            this.entity.appA.switchCurrentContainer(entity);
+        }
+        previous.uis_update_currentContainerStyle();
+        this.entity.appA.currentContainer.uis_update_currentContainerStyle();
     }
 
     createUiFor(object: Entity) : Entity {

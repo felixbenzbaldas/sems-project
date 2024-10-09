@@ -300,4 +300,15 @@ export class Entity {
             }
         }
     }
+
+    uis_update_currentContainerStyle() {
+        if (this.uiA) {
+            this.uiA.headerG.updateCurrentContainerStyle();
+        }
+        if (notNullUndefined(this.uis)) {
+            for (let ui of this.uis) {
+                ui.uiA.headerG.updateCurrentContainerStyle();
+            }
+        }
+    }
 }
