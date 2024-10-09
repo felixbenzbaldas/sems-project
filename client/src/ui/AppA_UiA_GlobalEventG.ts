@@ -39,7 +39,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async switchCurrentContainer() {
-        this.getUiA().switchCurrentContainer_AndUpdateStyles(this.getUiA().focused);
+        this.getUiA().switchCurrentContainer_AndUpdateStyles(this.getUiA().focused.getObject());
 
     }
 
