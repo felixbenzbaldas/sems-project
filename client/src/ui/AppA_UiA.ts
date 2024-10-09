@@ -36,7 +36,7 @@ export class AppA_UiA {
 
     async newSubitem() {
         let created = await this.entity.appA.createText('');
-        if (this.content.uiA.listG.extraObjectForUi) {
+        if (this.extraObjectForUi()) {
             let uiForCreated = await this.content.uiA.listG.insertObjectAtPosition(created, 0);
             await this.content.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
             this.focus(this.content.uiA.listG.uisOfListItems.at(0));
@@ -172,7 +172,7 @@ export class AppA_UiA {
 
     switchCurrentContainer_AndUpdateStyles(entity: Entity) {
         let previous = this.entity.appA.currentContainer;
-        if (this.content.uiA.listG.extraObjectForUi) {
+        if (this.extraObjectForUi()) {
             this.entity.appA.switchCurrentContainer(entity.uiA.object);
         } else {
             this.entity.appA.switchCurrentContainer(entity);
