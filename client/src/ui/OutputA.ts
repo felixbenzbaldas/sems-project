@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
+import {selectAllTextOfDiv} from "@/utils";
 
 export class OutputA {
 
@@ -8,7 +9,9 @@ export class OutputA {
 
     constructor(private entity : Entity) {
         this.output = this.entity.appA.unboundG.createText('There is no output. Click on \'export\'');
-        this.ui = this.entity.appA.unboundG.createTextWithList('output', this.output);
+        this.ui = this.entity.appA.unboundG.createTextWithList('output', this.entity.appA.unboundG.createButton('select', () => {
+            selectAllTextOfDiv(this.ui.uiA.listG.uisOfListItems.at(1).uiA.textG.htmlElement);
+        }), this.output);
         this.ui.uiA = new UiA(this.ui);
         this.ui.collapsible = true;
     }
