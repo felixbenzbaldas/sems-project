@@ -1,5 +1,5 @@
 import {Starter} from "@/Starter";
-import {selectAllTextOfDiv, setCaret} from "@/utils";
+import {getSelectedText, selectAllTextOfDiv, setCaret} from "@/utils";
 import type {Entity} from "@/Entity";
 
 export class AppA_TestA_SemiG {
@@ -172,7 +172,25 @@ export class AppA_TestA_SemiG {
                 );
                 appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: The text is selected (and can be copied with CTRL+C)');
-                return false;
+                return true;
+            }),
+            this.createTest('semiAutomatedTest_getSelectedText', async test => {
+                test.test_app = Starter.createAppWithUI();
+                let appA = test.test_app.appA;
+                test.test_app.uiA.editable = true;
+                let text = appA.unboundG.createText('');
+                await appA.uiA.content.list.add(
+                    appA.unboundG.createButton('get selected text', async () => {
+                        text.text = getSelectedText();
+                        await text.uis_update();
+                    }),
+                    text
+                );
+                appA.logG.toListOfStrings = true;
+                test.test_app.log('human-action: select some text');
+                test.test_app.log('human-action: click \'get selected text\'');
+                test.test_app.log('human-test: The selected text is inserted in the text element.');
+                return true;
             }),
         ];
     }

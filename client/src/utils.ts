@@ -47,3 +47,11 @@ export function selectAllTextOfDiv(div : HTMLElement) {
         throw new Error('Could not select text of div!');
     }
 }
+
+export function getSelectedText(): string {
+    if (window.getSelection) {
+        return window.getSelection().toString();
+    } else if (document.getSelection) {
+        return document.getSelection().toString();
+    }
+}
