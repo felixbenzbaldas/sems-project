@@ -74,6 +74,13 @@ export class UiA_ListG {
         this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
     }
 
+    async pasteNextOnSubitem(subitem: Entity) {
+        let position : number = this.uisOfListItems.indexOf(subitem) + 1;
+        await this.insertObjectAtPosition(this.entity.getApp().appA.uiA.clipboard, position);
+        await this.getObject().uis_update();
+        this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
+    }
+
     getObject() : Entity {
         return this.entity.uiA.getObject();
     }
