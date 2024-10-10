@@ -31,3 +31,19 @@ export function createRandomString(): string {
     }
     return theString;
 }
+
+export function selectAllTextOfDiv(div : HTMLElement) {
+    if ((document as any).body.createTextRange) {
+        const range = (document as any).body.createTextRange();
+        range.moveToElementText(div);
+        range.select();
+    } else if (window.getSelection) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(div);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    } else {
+        throw new Error('Could not select text of div!');
+    }
+}

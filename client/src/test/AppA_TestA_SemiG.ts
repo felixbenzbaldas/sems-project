@@ -1,5 +1,5 @@
 import {Starter} from "@/Starter";
-import {setCaret} from "@/utils";
+import {selectAllTextOfDiv, setCaret} from "@/utils";
 import type {Entity} from "@/Entity";
 
 export class AppA_TestA_SemiG {
@@ -157,7 +157,23 @@ export class AppA_TestA_SemiG {
                 await test.test_app.updateUi();
                 test.test_app.log('human-test: The object is editable.');
                 return true;
-            })
+            }),
+            this.createTest('semiAutomatedTest_selectAllTextOfDiv', async test => {
+                test.test_app = Starter.createAppWithUI();
+                let appA = test.test_app.appA;
+                test.test_app.uiA.editable = true;
+                let html = appA.createEntityWithApp();
+                html.dangerous_html = document.createElement('div');
+                html.dangerous_html.innerText = 'hello\nworld';
+                await appA.uiA.content.list.add(
+                    appA.unboundG.createButton('select text', () => {selectAllTextOfDiv(html.dangerous_html);}),
+                    html,
+                    appA.unboundG.createText('')
+                );
+                appA.logG.toListOfStrings = true;
+                test.test_app.log('human-test: The text is selected (and can be copied with CTRL+C)');
+                return false;
+            }),
         ];
     }
 
