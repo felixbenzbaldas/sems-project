@@ -127,6 +127,9 @@ export class Starter {
             app.appA.unboundG.createButton('cut', async () => {
                 await app.appA.uiA.globalEventG.cut();
             }),
+            app.appA.unboundG.createButton('paste next', async () => {
+                await app.appA.uiA.globalEventG.pasteNext();
+            }),
             // app.appA.unboundG.createButton('flat export content', async () => {
             //     await app.appA.uiA.globalEventG.flatExportContent();
             // }),

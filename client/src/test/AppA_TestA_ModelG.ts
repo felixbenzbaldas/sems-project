@@ -131,6 +131,20 @@ export class AppA_TestA_ModelG {
                 app.log('rawText = ' + rawText);
                 return !rawText.includes('cutted');
             }),
+            this.createTest('modelTest_pasteNext', async test => {
+                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                test.test_app = app;
+                app.appA.logG.toListOfStrings = true;
+                await app.appA.uiA.globalEventG.defaultAction();
+                let firstObject = await app.appA.uiA.content.list.getObject(0);
+                firstObject.text = 'first object';
+                app.appA.uiA.clipboard = await app.appA.createText('pasted object');
+                await app.uiA.click('paste next');
+
+                let rawText = app.uiA.getRawText();
+                app.log('rawText = ' + rawText);
+                return rawText.includes('pasted object');
+            }),
             this.createTest('modelTest_extraUiForText', async test => {
                 let app = Starter.createAppWithUI();
                 test.test_app = app;

@@ -82,4 +82,8 @@ export class AppA_UiA_GlobalEventG {
         uiContext.getObject().list.jsList.splice(position, 1);
         await uiContext.getObject().uis_update();
     }
+
+    async pasteNext() {
+        await this.getUiA().focused.ui_context.pasteNextOnSubitem(this.getUiA().focused);
+    }
 }

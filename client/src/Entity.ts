@@ -75,6 +75,10 @@ export class Entity {
         await this.uiA.listG.defaultActionOnSubitem(subitem);
     }
 
+    async pasteNextOnSubitem(subitem: Entity) {
+        await this.uiA.listG.pasteNextOnSubitem(subitem);
+    }
+
     getPath(object: Entity) : Entity {
         this.logInfo('getPath of ' + object.getShortDescription());
         if (this.contains(object)) {
