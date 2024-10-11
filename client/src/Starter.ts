@@ -2,7 +2,6 @@ import {Entity} from "@/Entity";
 import {AppA_UiA} from "@/ui/AppA_UiA";
 import {AppA} from "@/core/AppA";
 import {AppA_TestA} from "@/test/AppA_TestA";
-import {websiteData} from "@/website-data";
 import {UiA} from "@/ui/UiA";
 import {Static} from "@/Static";
 import {Placeholder} from "@/Placeholder";
@@ -11,6 +10,7 @@ export class Starter {
 
     placeholder : Placeholder;
     createdApp : Entity;
+    environment_queryParams : URLSearchParams;
 
     constructor() {
         this.placeholder = new Placeholder(this);
@@ -18,7 +18,33 @@ export class Starter {
 
     async start() : Promise<HTMLElement> {
         this.environment_adjustRemSizes();
-        await this.createFromUrl();
+        this.environment_queryParams = new URLSearchParams(window.location.search);
+        if (this.environment_queryParams.has('local')) {
+            this.createAppWithUIWithCommands_editable();
+            this.testMode();
+            this.createdApp.uiA.editable = true;
+        } else if (this.environment_queryParams.has('client-app')) {
+            this.createAppWithUIWithCommands_editable();
+            this.testMode();
+            this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
+        } else if (this.environment_queryParams.has('test')) {
+            await this.createTest();
+            this.testMode();
+            this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
+            if (this.environment_queryParams.has('withFailingDemoTest')) {
+                this.createdApp.appA.testA.withFailingDemoTest = true;
+            }
+            await this.createdApp.appA.testA.createRunAndDisplay();
+        } else if (this.environment_queryParams.has('path')) {
+            await this.createObjectViewer(this.environment_queryParams.get('path'));
+            this.testMode();
+            this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
+        } else {
+            await this.createWebsite();
+            this.testMode();
+        }
+        Static.activeApp = this.createdApp;
+        this.createdApp.appA.uiA.withPlaceholderArea = true;
         await this.createdApp.uiA.update();
         return this.createdApp.uiA.htmlElement;
     }
@@ -27,35 +53,10 @@ export class Starter {
         let root: HTMLElement = document.querySelector(':root');
         root.style.fontSize = '21px';
     }
-
-    async createFromUrl() {
-        let queryParams = new URLSearchParams(window.location.search);
-        if (queryParams.has('local')) {
-            this.createAppWithUIWithCommands_editable();
-            this.createdApp.uiA.editable = true;
-        } else if (queryParams.has('client-app')) {
-            this.createAppWithUIWithCommands_editable();
-            this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
-        } else if (queryParams.has('test')) {
-            await this.createTest();
-            this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
-            if (queryParams.has('withFailingDemoTest')) {
-                this.createdApp.appA.testA.withFailingDemoTest = true;
-            }
-        } else if (queryParams.has('path')) {
-            await this.createObjectViewer(queryParams.get('path'));
-            this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
-        } else {
-            await this.createWebsite();
-        }
-        Static.activeApp = this.createdApp;
-        if (queryParams.has('testMode')) {
+    testMode() {
+        if (this.environment_queryParams.has('testMode')) {
             this.createdApp.appA.logG.toConsole = true;
         }
-        if (queryParams.has('test')) {
-            await this.createdApp.appA.testA.createRunAndDisplay();
-        }
-        this.createdApp.appA.uiA.withPlaceholderArea = true;
     }
 
     createApp() {
