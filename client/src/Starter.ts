@@ -20,11 +20,15 @@ export class Starter {
     }
 
     async start() : Promise<HTMLElement> {
-        let root : HTMLElement = document.querySelector(':root');
-        root.style.fontSize = '21px';
+        this.environment_adjustRemSizes();
         let app = await this.createFromUrl();
         await app.uiA.update();
         return app.uiA.htmlElement;
+    }
+
+    environment_adjustRemSizes() {
+        let root: HTMLElement = document.querySelector(':root');
+        root.style.fontSize = '21px';
     }
 
     async createFromUrl() : Promise<Entity> {
