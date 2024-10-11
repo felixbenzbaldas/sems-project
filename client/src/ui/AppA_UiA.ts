@@ -180,4 +180,51 @@ export class AppA_UiA {
         return ui;
     }
 
+    createCommands() : Entity {
+        return this.entity.appA.unboundG.createTextWithList('commands',
+            this.entity.appA.unboundG.createButton('default action', async () => {
+                await this.entity.appA.uiA.globalEventG.defaultAction();
+            }),
+            this.entity.appA.unboundG.createButton('new subitem', async () => {
+                await this.entity.appA.uiA.globalEventG.newSubitem();
+            }),
+            this.entity.appA.unboundG.createButton('toggle collapsible', async () => {
+                await this.entity.appA.uiA.globalEventG.toggleCollapsible();
+            }),
+            this.entity.appA.unboundG.createButton('expand/collapse', async () => {
+                await this.entity.appA.uiA.globalEventG.expandOrCollapse();
+            }),
+            this.entity.appA.unboundG.createButton('switch current container', async () => {
+                await this.entity.appA.uiA.globalEventG.switchCurrentContainer();
+            }),
+            this.entity.appA.unboundG.createButton('switch to app container', async () => {
+                await this.entity.appA.uiA.globalEventG.switchToAppContainer();
+            }),
+            this.entity.appA.unboundG.createButton('export', async () => {
+                await this.entity.appA.uiA.globalEventG.export();
+            }),
+            this.entity.appA.unboundG.createButton('export app', async () => {
+                await this.entity.appA.uiA.globalEventG.exportApp();
+            }),
+            this.entity.appA.unboundG.createButton('import', async () => {
+                await this.entity.appA.uiA.globalEventG.import();
+            }),
+            this.entity.appA.unboundG.createButton('focus root', async () => {
+                await this.entity.appA.uiA.globalEventG.focusRoot();
+            }),
+            this.entity.appA.unboundG.createButton('cut', async () => {
+                await this.entity.appA.uiA.globalEventG.cut();
+            }),
+            this.entity.appA.unboundG.createButton('paste next', async () => {
+                await this.entity.appA.uiA.globalEventG.pasteNext();
+            }),
+            // this.entity.appA.unboundG.createButton('flat export content', async () => {
+            //     await this.entity.appA.uiA.globalEventG.flatExportContent();
+            // }),
+            // this.entity.appA.unboundG.createButton('flat import to content', async () => {
+            //     await this.entity.appA.uiA.globalEventG.flatImportToContent();
+            // }),
+        );
+    }
+
 }

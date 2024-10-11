@@ -93,50 +93,7 @@ export class Starter {
         let app = this.createAppWithUI();
         app.uiA.editable = true;
         app.appA.uiA.showMeta = true;
-        app.appA.uiA.commands = app.appA.unboundG.createTextWithList('commands',
-            app.appA.unboundG.createButton('default action', async () => {
-                await app.appA.uiA.globalEventG.defaultAction();
-            }),
-            app.appA.unboundG.createButton('new subitem', async () => {
-                await app.appA.uiA.globalEventG.newSubitem();
-            }),
-            app.appA.unboundG.createButton('toggle collapsible', async () => {
-                await app.appA.uiA.globalEventG.toggleCollapsible();
-            }),
-            app.appA.unboundG.createButton('expand/collapse', async () => {
-                await app.appA.uiA.globalEventG.expandOrCollapse();
-            }),
-            app.appA.unboundG.createButton('switch current container', async () => {
-                await app.appA.uiA.globalEventG.switchCurrentContainer();
-            }),
-            app.appA.unboundG.createButton('switch to app container', async () => {
-                await app.appA.uiA.globalEventG.switchToAppContainer();
-            }),
-            app.appA.unboundG.createButton('export', async () => {
-                await app.appA.uiA.globalEventG.export();
-            }),
-            app.appA.unboundG.createButton('export app', async () => {
-                await app.appA.uiA.globalEventG.exportApp();
-            }),
-            app.appA.unboundG.createButton('import', async () => {
-                await app.appA.uiA.globalEventG.import();
-            }),
-            app.appA.unboundG.createButton('focus root', async () => {
-                await app.appA.uiA.globalEventG.focusRoot();
-            }),
-            app.appA.unboundG.createButton('cut', async () => {
-                await app.appA.uiA.globalEventG.cut();
-            }),
-            app.appA.unboundG.createButton('paste next', async () => {
-                await app.appA.uiA.globalEventG.pasteNext();
-            }),
-            // app.appA.unboundG.createButton('flat export content', async () => {
-            //     await app.appA.uiA.globalEventG.flatExportContent();
-            // }),
-            // app.appA.unboundG.createButton('flat import to content', async () => {
-            //     await app.appA.uiA.globalEventG.flatImportToContent();
-            // }),
-        );
+        app.appA.uiA.commands = app.appA.uiA.createCommands();
         app.appA.uiA.commands.uiA = new UiA(app.appA.uiA.commands);
         await app.uiA.update();
         return app;
