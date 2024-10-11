@@ -46,6 +46,9 @@ export class Starter {
         Static.activeApp = this.createdApp;
         this.createdApp.appA.uiA.withPlaceholderArea = true;
         await this.createdApp.uiA.update();
+        if (this.environment_queryParams.has('path')) {
+            await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();
+        }
         return this.createdApp.uiA.htmlElement;
     }
 
@@ -119,7 +122,6 @@ export class Starter {
         let listOfNames = ['..', created.name, ...pathString.split('-')];
         await this.createdApp.appA.uiA.content.list.add(this.createdApp.appA.createPath(listOfNames));
         await this.createdApp.updateUi();
-        await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
