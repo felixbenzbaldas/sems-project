@@ -95,7 +95,7 @@ export class AppA_TestA_ModelG {
                 await website.uiA.update();
 
                 let rawText = website.uiA.getRawText();
-                if (!Starter.replacedPlaceholder()) {
+                if (!Starter.replacedWebsitePlaceholder()) {
                     return !rawText.includes('demo website (container)') &&
                         rawText.includes('collapsible parent') &&
                         rawText.includes('subitem') &&
@@ -110,7 +110,7 @@ export class AppA_TestA_ModelG {
                 objectViewer.appA.logG.toListOfStrings = true;
                 let rawText = objectViewer.uiA.getRawText();
                 test.test_app.log(rawText);
-                if (!Starter.replacedPlaceholder()) {
+                if (!Starter.replacedWebsitePlaceholder()) {
                     return rawText === 'collapsible parentsubitem' && test.test_app.uiA.countEditableTexts() === 0;
                 } else {
                     return true;

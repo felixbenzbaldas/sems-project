@@ -181,7 +181,7 @@ export class Starter {
         return await new Starter().createWebsite();
     }
 
-    static replacedPlaceholder() {
+    static replacedWebsitePlaceholder() {
         return new Starter().placeholderWebsite.startsWith('marker');
     }
 }
