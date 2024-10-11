@@ -68,10 +68,9 @@ export class Starter {
         this.createdApp.appA = new AppA(this.createdApp);
     }
 
-    private getBaseUrl() : string {
+    environment_getBaseUrl() : string {
         return window.location.protocol + '/index.html';
     }
-
 
     createAppWithUI() {
         this.createApp();
