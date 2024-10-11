@@ -13,7 +13,7 @@ export class Starter {
     createdApp : Entity;
 
     constructor() {
-        this.placeholder = new Placeholder();
+        this.placeholder = new Placeholder(this);
     }
 
     static async start() : Promise<HTMLElement> {
@@ -39,16 +39,16 @@ export class Starter {
             this.createdApp.uiA.editable = true;
         } else if (queryParams.has('client-app')) {
             await this.createAppWithUIWithCommands_editable_updateUi();
-            this.createdApp.appA.uiA.topImpressum = await this.getPlaceholderImpressum();
+            this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
         } else if (queryParams.has('test')) {
             await this.createTest();
-            this.createdApp.appA.uiA.topImpressum = await this.getPlaceholderImpressum();
+            this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
             if (queryParams.has('withFailingDemoTest')) {
                 this.createdApp.appA.testA.withFailingDemoTest = true;
             }
         } else if (queryParams.has('path')) {
             await this.createObjectViewer(queryParams.get('path'));
-            this.createdApp.appA.uiA.topImpressum = await this.getPlaceholderImpressum();
+            this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
         } else {
             await this.createWebsite();
         }
@@ -72,24 +72,6 @@ export class Starter {
         return window.location.protocol + '/index.html';
     }
 
-    private async getPlaceholderImpressum() {
-        let impressum = await this.getPlaceholder(this.placeholder.impressumHeader, this.placeholder.impressumBody);
-        impressum.uiA = new UiA(impressum);
-        return impressum;
-    }
-
-    private async getPlaceholder(placeholderHeader : string, placeholderBody : string) : Promise<Entity> {
-        let placeholder : Entity;
-        if (placeholderBody.startsWith('marker')) {
-            placeholder = await this.createdApp.appA.createText('[ to replace during deployment ]');
-        } else {
-            placeholder = await this.createdApp.appA.createList();
-            placeholder.text = placeholderHeader;
-            placeholder.collapsible = true;
-            await this.createdApp.appA.addAllToListFromRawData(placeholder, JSON.parse(placeholderBody));
-        }
-        return placeholder;
-    }
 
     createAppWithUI() {
         this.createApp();
@@ -122,7 +104,7 @@ export class Starter {
     async createWebsite() : Promise<void> {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;
-        let created = this.getWebsiteData();
+        let created = this.placeholder.getWebsiteData();
         for (let i = 0; i < created.list.jsList.length; i++) {
             await this.createdApp.appA.uiA.content.list.add(
                 await created.list.getObject(i)
@@ -130,22 +112,9 @@ export class Starter {
         }
     }
 
-    private getWebsiteData() {
-        let created;
-        if (this.placeholder.website.startsWith('marker')) {
-            console.log("startsWith marker");
-            created = this.createdApp.appA.unboundG.createFromJson(websiteData);
-        } else {
-            console.log("starts not with marker");
-            created = this.createdApp.appA.unboundG.createFromJson(JSON.parse(this.placeholder.website));
-        }
-        this.createdApp.containerA.bind(created, 'website');
-        return created;
-    }
-
     async createObjectViewer(pathString: string) : Promise<void> {
         this.createAppWithUI();
-        let created = this.getWebsiteData();
+        let created = this.placeholder.getWebsiteData();
         let listOfNames = ['..', created.name, ...pathString.split('-')];
         await this.createdApp.appA.uiA.content.list.add(this.createdApp.appA.createPath(listOfNames));
         await this.createdApp.updateUi();
