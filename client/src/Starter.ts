@@ -10,6 +10,7 @@ import {Placeholder} from "@/Placeholder";
 export class Starter {
 
     placeholder : Placeholder;
+    createdApp : Entity;
 
     constructor() {
         this.placeholder = new Placeholder();
@@ -21,9 +22,9 @@ export class Starter {
 
     async start() : Promise<HTMLElement> {
         this.environment_adjustRemSizes();
-        let app = await this.createFromUrl();
-        await app.uiA.update();
-        return app.uiA.htmlElement;
+        await this.createFromUrl();
+        await this.createdApp.uiA.update();
+        return this.createdApp.uiA.htmlElement;
     }
 
     environment_adjustRemSizes() {
@@ -31,161 +32,166 @@ export class Starter {
         root.style.fontSize = '21px';
     }
 
-    async createFromUrl() : Promise<Entity> {
+    async createFromUrl() {
         let queryParams = new URLSearchParams(window.location.search);
-        let app : Entity;
         if (queryParams.has('local')) {
-            app = await this.createAppWithUIWithCommands_editable_updateUi();
-            app.uiA.editable = true;
+            await this.createAppWithUIWithCommands_editable_updateUi();
+            this.createdApp.uiA.editable = true;
         } else if (queryParams.has('client-app')) {
-            app = await this.createAppWithUIWithCommands_editable_updateUi();
-            app.appA.uiA.topImpressum = await this.getPlaceholderImpressum(app);
+            await this.createAppWithUIWithCommands_editable_updateUi();
+            this.createdApp.appA.uiA.topImpressum = await this.getPlaceholderImpressum();
         } else if (queryParams.has('test')) {
-            app = await this.createTest();
-            app.appA.uiA.topImpressum = await this.getPlaceholderImpressum(app);
+            await this.createTest();
+            this.createdApp.appA.uiA.topImpressum = await this.getPlaceholderImpressum();
             if (queryParams.has('withFailingDemoTest')) {
-                app.appA.testA.withFailingDemoTest = true;
+                this.createdApp.appA.testA.withFailingDemoTest = true;
             }
         } else if (queryParams.has('path')) {
-            app = await this.createObjectViewer(queryParams.get('path'));
-            app.appA.uiA.topImpressum = await this.getPlaceholderImpressum(app);
+            await this.createObjectViewer(queryParams.get('path'));
+            this.createdApp.appA.uiA.topImpressum = await this.getPlaceholderImpressum();
         } else {
-            app = await this.createWebsite();
+            await this.createWebsite();
         }
-        Static.activeApp = app;
+        Static.activeApp = this.createdApp;
         if (queryParams.has('testMode')) {
-            app.appA.logG.toConsole = true;
+            this.createdApp.appA.logG.toConsole = true;
         }
         if (queryParams.has('test')) {
-            await app.appA.testA.createRunAndDisplay();
+            await this.createdApp.appA.testA.createRunAndDisplay();
         }
-        app.appA.uiA.withPlaceholderArea = true;
-        return app;
+        this.createdApp.appA.uiA.withPlaceholderArea = true;
     }
 
-    createApp() : Entity {
-        let app = new Entity();
-        app.text = 'simple application';
-        app.appA = new AppA(app);
-        return app;
+    createApp() {
+        this.createdApp = new Entity();
+        this.createdApp.text = 'simple application';
+        this.createdApp.appA = new AppA(this.createdApp);
     }
 
     private getBaseUrl() : string {
         return window.location.protocol + '/index.html';
     }
 
-    private async getPlaceholderImpressum(app: Entity) {
-        let impressum = await this.getPlaceholder(app, this.placeholder.impressumHeader, this.placeholder.impressumBody);
+    private async getPlaceholderImpressum() {
+        let impressum = await this.getPlaceholder(this.placeholder.impressumHeader, this.placeholder.impressumBody);
         impressum.uiA = new UiA(impressum);
         return impressum;
     }
 
-    private async getPlaceholder(app : Entity, placeholderHeader : string, placeholderBody : string) : Promise<Entity> {
+    private async getPlaceholder(placeholderHeader : string, placeholderBody : string) : Promise<Entity> {
         let placeholder : Entity;
         if (placeholderBody.startsWith('marker')) {
-            placeholder = await app.appA.createText('[ to replace during deployment ]');
+            placeholder = await this.createdApp.appA.createText('[ to replace during deployment ]');
         } else {
-            placeholder = await app.appA.createList();
+            placeholder = await this.createdApp.appA.createList();
             placeholder.text = placeholderHeader;
             placeholder.collapsible = true;
-            await app.appA.addAllToListFromRawData(placeholder, JSON.parse(placeholderBody));
+            await this.createdApp.appA.addAllToListFromRawData(placeholder, JSON.parse(placeholderBody));
         }
         return placeholder;
     }
 
-    createAppWithUI() : Entity {
-        let app = this.createApp();
-        app.uiA = new UiA(app);
-        app.appA.uiA = new AppA_UiA(app);
-        return app;
+    createAppWithUI() {
+        this.createApp();
+        this.createdApp.uiA = new UiA(this.createdApp);
+        this.createdApp.appA.uiA = new AppA_UiA(this.createdApp);
     }
 
-    async createAppWithUIWithCommands_editable_updateUi() : Promise<Entity> {
-        let app = this.createAppWithUI();
-        app.uiA.editable = true;
-        app.appA.uiA.showMeta = true;
-        app.appA.uiA.commands = app.appA.uiA.createCommands();
-        app.appA.uiA.commands.uiA = new UiA(app.appA.uiA.commands);
-        await app.uiA.update();
-        return app;
+    async createAppWithUIWithCommands_editable_updateUi() : Promise<void> {
+        this.createAppWithUI();
+        this.createdApp.uiA.editable = true;
+        this.createdApp.appA.uiA.showMeta = true;
+        this.createdApp.appA.uiA.commands = this.createdApp.appA.uiA.createCommands();
+        this.createdApp.appA.uiA.commands.uiA = new UiA(this.createdApp.appA.uiA.commands);
+        await this.createdApp.uiA.update();
     }
 
     async loadLocalhostApp(port: number) {
-        let app = new Entity();
-        app.text = 'todo: load from server';
-        app.appA = new AppA(app);
-        app.appA.server = 'http://localhost:' + port + '/';
-        return app;
+        this.createdApp = new Entity();
+        this.createdApp.text = 'todo: load from server';
+        this.createdApp.appA = new AppA(this.createdApp);
+        this.createdApp.appA.server = 'http://localhost:' + port + '/';
     }
 
-    async createTest() : Promise<Entity> {
-        let tester = this.createAppWithUI();
-        tester.text = 'Tester';
-        tester.appA.testA = new AppA_TestA(tester);
-        return tester;
+    async createTest() : Promise<void> {
+        this.createAppWithUI();
+        this.createdApp.text = 'Tester';
+        this.createdApp.appA.testA = new AppA_TestA(this.createdApp);
     }
 
-    async createWebsite() : Promise<Entity> {
-        let app = this.createAppWithUI();
-        app.appA.uiA.isWebsite = true;
-        let created = this.getWebsiteData(app);
+    async createWebsite() : Promise<void> {
+        this.createAppWithUI();
+        this.createdApp.appA.uiA.isWebsite = true;
+        let created = this.getWebsiteData();
         for (let i = 0; i < created.list.jsList.length; i++) {
-            await app.appA.uiA.content.list.add(
+            await this.createdApp.appA.uiA.content.list.add(
                 await created.list.getObject(i)
             );
         }
-        return app;
     }
 
-    private getWebsiteData(app: Entity) {
+    private getWebsiteData() {
         let created;
         if (this.placeholder.website.startsWith('marker')) {
             console.log("startsWith marker");
-            created = app.appA.unboundG.createFromJson(websiteData);
+            created = this.createdApp.appA.unboundG.createFromJson(websiteData);
         } else {
             console.log("starts not with marker");
-            created = app.appA.unboundG.createFromJson(JSON.parse(this.placeholder.website));
+            created = this.createdApp.appA.unboundG.createFromJson(JSON.parse(this.placeholder.website));
         }
-        app.containerA.bind(created, 'website');
+        this.createdApp.containerA.bind(created, 'website');
         return created;
     }
 
-    async createObjectViewer(pathString: string) : Promise<Entity> {
-        let app : Entity = this.createAppWithUI();
-        let created = this.getWebsiteData(app);
+    async createObjectViewer(pathString: string) : Promise<void> {
+        this.createAppWithUI();
+        let created = this.getWebsiteData();
         let listOfNames = ['..', created.name, ...pathString.split('-')];
-        await app.appA.uiA.content.list.add(app.appA.createPath(listOfNames));
-        await app.updateUi();
-        await app.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();
-        return app;
+        await this.createdApp.appA.uiA.content.list.add(this.createdApp.appA.createPath(listOfNames));
+        await this.createdApp.updateUi();
+        await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();
     }
 
     static async createAppWithUIWithCommands_editable_updateUi() {
-        return new Starter().createAppWithUIWithCommands_editable_updateUi();
+        let starter = new Starter();
+        await starter.createAppWithUIWithCommands_editable_updateUi();
+        return starter.createdApp;
     }
 
     static createApp() {
-        return new Starter().createApp();
+        let starter = new Starter();
+        starter.createApp();
+        return starter.createdApp;
     }
 
     static async createTest() {
-        return await new Starter().createTest();
+        let starter = new Starter();
+        await starter.createTest();
+        return starter.createdApp;
     }
 
     static createAppWithUI() {
-        return new Starter().createAppWithUI();
+        let starter = new Starter();
+        starter.createAppWithUI();
+        return starter.createdApp;
     }
 
     static async loadLocalhostApp(port: number) {
-        return await new Starter().loadLocalhostApp(port);
+        let starter = new Starter();
+        await starter.loadLocalhostApp(port);
+        return starter.createdApp;
     }
 
     static async createObjectViewer(pathString: string) {
-        return await new Starter().createObjectViewer(pathString);
+        let starter = new Starter();
+        await starter.createObjectViewer(pathString);
+        return starter.createdApp;
     }
 
     static async createWebsite() {
-        return await new Starter().createWebsite();
+        let starter = new Starter();
+        await starter.createWebsite();
+        return starter.createdApp;
     }
 
     static replacedWebsitePlaceholder() {
