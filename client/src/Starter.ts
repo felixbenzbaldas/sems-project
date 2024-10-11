@@ -31,10 +31,10 @@ export class Starter {
     async createFromUrl() {
         let queryParams = new URLSearchParams(window.location.search);
         if (queryParams.has('local')) {
-            await this.createAppWithUIWithCommands_editable_updateUi();
+            this.createAppWithUIWithCommands_editable();
             this.createdApp.uiA.editable = true;
         } else if (queryParams.has('client-app')) {
-            await this.createAppWithUIWithCommands_editable_updateUi();
+            this.createAppWithUIWithCommands_editable();
             this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
         } else if (queryParams.has('test')) {
             await this.createTest();
@@ -75,12 +75,17 @@ export class Starter {
     }
 
     async createAppWithUIWithCommands_editable_updateUi() : Promise<void> {
+        this.createAppWithUIWithCommands_editable();
+        await this.createdApp.uiA.update();
+    }
+
+
+    createAppWithUIWithCommands_editable() {
         this.createAppWithUI();
         this.createdApp.uiA.editable = true;
         this.createdApp.appA.uiA.showMeta = true;
         this.createdApp.appA.uiA.commands = this.createdApp.appA.uiA.createCommands();
         this.createdApp.appA.uiA.commands.uiA = new UiA(this.createdApp.appA.uiA.commands);
-        await this.createdApp.uiA.update();
     }
 
     async loadLocalhostApp(port: number) {
