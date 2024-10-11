@@ -16,10 +16,6 @@ export class Starter {
         this.placeholder = new Placeholder(this);
     }
 
-    static async start() : Promise<HTMLElement> {
-        return await new Starter().start();
-    }
-
     async start() : Promise<HTMLElement> {
         this.environment_adjustRemSizes();
         await this.createFromUrl();
@@ -118,6 +114,13 @@ export class Starter {
         await this.createdApp.appA.uiA.content.list.add(this.createdApp.appA.createPath(listOfNames));
         await this.createdApp.updateUi();
         await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    // static methods
+
+    static async start() : Promise<HTMLElement> {
+        return await new Starter().start();
     }
 
     static async createAppWithUIWithCommands_editable_updateUi() {
