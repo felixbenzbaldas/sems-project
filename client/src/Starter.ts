@@ -5,12 +5,15 @@ import {AppA_TestA} from "@/test/AppA_TestA";
 import {websiteData} from "@/website-data";
 import {UiA} from "@/ui/UiA";
 import {Static} from "@/Static";
+import {Placeholder} from "@/Placeholder";
 
 export class Starter {
 
-    placeholderImpressumHeader = 'marker-dr53hifhh4-impressum-header';
-    placeholderImpressumBody = 'marker-dr53hifhh4-impressum-body';
-    placeholderWebsite = 'marker-dr53hifhh4-website';
+    placeholder : Placeholder;
+
+    constructor() {
+        this.placeholder = new Placeholder();
+    }
 
     static async start() : Promise<HTMLElement> {
         return await new Starter().start();
@@ -68,7 +71,7 @@ export class Starter {
     }
 
     private async getPlaceholderImpressum(app: Entity) {
-        let impressum = await this.getPlaceholder(app, this.placeholderImpressumHeader, this.placeholderImpressumBody);
+        let impressum = await this.getPlaceholder(app, this.placeholder.impressumHeader, this.placeholder.impressumBody);
         impressum.uiA = new UiA(impressum);
         return impressum;
     }
@@ -132,12 +135,12 @@ export class Starter {
 
     private getWebsiteData(app: Entity) {
         let created;
-        if (this.placeholderWebsite.startsWith('marker')) {
+        if (this.placeholder.website.startsWith('marker')) {
             console.log("startsWith marker");
             created = app.appA.unboundG.createFromJson(websiteData);
         } else {
             console.log("starts not with marker");
-            created = app.appA.unboundG.createFromJson(JSON.parse(this.placeholderWebsite));
+            created = app.appA.unboundG.createFromJson(JSON.parse(this.placeholder.website));
         }
         app.containerA.bind(created, 'website');
         return created;
@@ -182,6 +185,6 @@ export class Starter {
     }
 
     static replacedWebsitePlaceholder() {
-        return new Starter().placeholderWebsite.startsWith('marker');
+        return new Starter().placeholder.website.startsWith('marker');
     }
 }
