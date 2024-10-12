@@ -136,7 +136,11 @@ export class StarterA {
     // static methods
 
     static async start() : Promise<HTMLElement> {
-        return await new StarterA().start();
+        let starterApplication = new Entity();
+        starterApplication.appA = new AppA(starterApplication);
+        starterApplication.text = 'starter app';
+        let starter : StarterA = starterApplication.appA.createStarter();
+        return starter.start();
     }
 
     static async createAppWithUIWithCommands_editable_updateUi() {
