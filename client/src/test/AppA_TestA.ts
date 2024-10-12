@@ -156,7 +156,7 @@ export class AppA_TestA {
                     createRandomString() != createRandomString();
             }),
             this.createTest('list_insertObjectAtPosition', async test => {
-                test.test_app = StarterA.createApp();
+                test.test_app = this.appA.createStarter().createApp();
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 let list : Entity = await app.appA.createList();

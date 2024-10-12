@@ -62,50 +62,56 @@ export class StarterA {
         }
     }
 
-    createApp() {
+    createApp() : Entity {
         this.createdApp = new Entity();
         this.createdApp.text = 'simple application';
         this.createdApp.appA = new AppA(this.createdApp);
+        return this.createdApp;
     }
 
     environment_getBaseUrl() : string {
         return window.location.protocol + '/index.html';
     }
 
-    createAppWithUI() {
+    createAppWithUI() : Entity {
         this.createApp();
         this.createdApp.uiA = new UiA(this.createdApp);
         this.createdApp.appA.uiA = new AppA_UiA(this.createdApp);
+        return this.createdApp;
     }
 
-    async createAppWithUIWithCommands_editable_updateUi() : Promise<void> {
+    async createAppWithUIWithCommands_editable_updateUi() : Promise<Entity> {
         this.createAppWithUIWithCommands_editable();
         await this.createdApp.uiA.update();
+        return this.createdApp;
     }
 
 
-    createAppWithUIWithCommands_editable() {
+    createAppWithUIWithCommands_editable() : Entity {
         this.createAppWithUI();
         this.createdApp.uiA.editable = true;
         this.createdApp.appA.uiA.showMeta = true;
         this.createdApp.appA.uiA.commands = this.createdApp.appA.uiA.createCommands();
         this.createdApp.appA.uiA.commands.uiA = new UiA(this.createdApp.appA.uiA.commands);
+        return this.createdApp;
     }
 
-    async loadLocalhostApp(port: number) {
+    async loadLocalhostApp(port: number) : Promise<Entity> {
         this.createdApp = new Entity();
         this.createdApp.text = 'todo: load from server';
         this.createdApp.appA = new AppA(this.createdApp);
         this.createdApp.appA.server = 'http://localhost:' + port + '/';
+        return this.createdApp;
     }
 
-    async createTest() : Promise<void> {
+    async createTest() : Promise<Entity> {
         this.createAppWithUI();
         this.createdApp.text = 'Tester';
         this.createdApp.appA.testA = new AppA_TestA(this.createdApp);
+        return this.createdApp;
     }
 
-    async createWebsite() : Promise<void> {
+    async createWebsite() : Promise<Entity> {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;
         let created = this.placeholder.getWebsiteData();
@@ -114,14 +120,16 @@ export class StarterA {
                 await created.list.getObject(i)
             );
         }
+        return this.createdApp;
     }
 
-    async createObjectViewer(pathString: string) : Promise<void> {
+    async createObjectViewer(pathString: string) : Promise<Entity> {
         this.createAppWithUI();
         let created = this.placeholder.getWebsiteData();
         let listOfNames = ['..', created.name, ...pathString.split('-')];
         await this.createdApp.appA.uiA.content.list.add(this.createdApp.appA.createPath(listOfNames));
         await this.createdApp.updateUi();
+        return this.createdApp;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
