@@ -6,6 +6,7 @@ import {LogG} from "@/core/LogG";
 import type {AppA_TestA} from "@/test/AppA_TestA";
 import {ContainerA} from "@/core/ContainerA";
 import {AppA_UnboundG} from "@/core/AppA_UnboundG";
+import {StarterA} from "@/StarterA";
 
 export class AppA {
 
@@ -70,5 +71,11 @@ export class AppA {
         if (!this.currentContainer.containerA) {
             this.currentContainer.containerA = new ContainerA(this.currentContainer);
         }
+    }
+
+    createStarter() : StarterA {
+        let starter = this.createEntityWithApp();
+        starter.starterA = new StarterA(starter);
+        return starter.starterA;
     }
 }

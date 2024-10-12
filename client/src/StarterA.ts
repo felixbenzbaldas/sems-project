@@ -8,12 +8,11 @@ import {Placeholder} from "@/Placeholder";
 
 export class StarterA {
 
-    entity : Entity;
     placeholder : Placeholder;
     createdApp : Entity;
     environment_queryParams : URLSearchParams;
 
-    constructor() {
+    constructor(public entity? : Entity) {
         this.placeholder = new Placeholder(this);
     }
 

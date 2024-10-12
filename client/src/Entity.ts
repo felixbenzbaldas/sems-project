@@ -4,6 +4,7 @@ import {AppA} from "@/core/AppA";
 import {ContainerA} from "@/core/ContainerA";
 import {UiA} from "@/ui/UiA";
 import {notNullUndefined} from "@/utils";
+import type {StarterA} from "@/StarterA";
 
 export class Entity {
 
@@ -29,6 +30,7 @@ export class Entity {
     dangerous_html: HTMLElement;
     isTest: boolean;
     uis: Array<Entity>;
+    starterA: StarterA;
 
     json_withoutContainedObjects() : any {
         let obj: any = {

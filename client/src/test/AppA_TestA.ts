@@ -1,6 +1,6 @@
-import type {Entity} from "@/Entity";
+import {Entity} from "@/Entity";
 import {StarterA} from "@/StarterA";
-import type {AppA} from "@/core/AppA";
+import {AppA} from "@/core/AppA";
 import {createRandomString, setCaret} from "@/utils";
 import {ContainerA} from "@/core/ContainerA";
 import {websiteData} from "@/website-data";
@@ -166,6 +166,15 @@ export class AppA_TestA {
 
                 app.log('path = ' + list.list.jsList.at(0).getShortDescription());
                 return await list.resolve(list.list.jsList.at(0)) === listItem;
+            }),
+            this.createTest('createStarter', async test => {
+                let starterApplication = new Entity();
+                starterApplication.appA = new AppA(starterApplication);
+                starterApplication.text = 'starter app';
+
+                let starter : StarterA = starterApplication.appA.createStarter();
+
+                return starter && starter.entity.app === starterApplication;
             }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),
