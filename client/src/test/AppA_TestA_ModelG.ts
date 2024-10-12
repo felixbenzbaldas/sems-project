@@ -1,4 +1,4 @@
-import {Starter} from "@/Starter";
+import {StarterA} from "@/StarterA";
 import type {Entity} from "@/Entity";
 
 export class AppA_TestA_ModelG {
@@ -9,12 +9,12 @@ export class AppA_TestA_ModelG {
     createTests() {
         return [
             this.createTest('modelTest_objectCreation', async test => {
-                test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                test.test_app = await StarterA.createAppWithUIWithCommands_editable_updateUi();
 
                 return test.test_app.uiA.getRawText().includes('default action');
             }),
             this.createTest('modelTest_newSubitem', async test => {
-                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                let app = await StarterA.createAppWithUIWithCommands_editable_updateUi();
                 await app.updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
 
@@ -24,7 +24,7 @@ export class AppA_TestA_ModelG {
                 return firstObject.list.jsList.length == 1;
             }),
             this.createTest('modelTest_makeCollapsible', async test => {
-                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                let app = await StarterA.createAppWithUIWithCommands_editable_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.uiA.click('toggle collapsible');
@@ -32,7 +32,7 @@ export class AppA_TestA_ModelG {
                 return (await app.appA.uiA.content.list.getObject(0)).collapsible;
             }),
             this.createTest('modelTest_collapsed', async test => {
-                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                let app = await StarterA.createAppWithUIWithCommands_editable_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.newSubitem();
                 let firstObjectUi = app.appA.uiA.content.uiA.listG.uisOfListItems.at(0);
@@ -47,7 +47,7 @@ export class AppA_TestA_ModelG {
                 return !rawText.includes('do-not-show-me');
             }),
             this.createTest('modelTest_click_nonEditableText', async test => {
-                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                let app = await StarterA.createAppWithUIWithCommands_editable_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.newSubitem();
                 let firstObjectUi = app.appA.uiA.content.uiA.listG.uisOfListItems.at(0);
@@ -62,7 +62,7 @@ export class AppA_TestA_ModelG {
                 return app.appA.uiA.content.uiA.listG.uisOfListItems.at(0).collapsed === false;
             }),
             this.createTest('modelTest_tester', async test => {
-                let tester = await Starter.createTest();
+                let tester = await StarterA.createTest();
                 test.test_app = tester;
                 tester.appA.logG.toListOfStrings = true;
 
@@ -88,14 +88,14 @@ export class AppA_TestA_ModelG {
                     rawText.includes('aSuccessfulTest');
             }),
             this.createTest('modelTest_website', async test => {
-                let website = await Starter.createWebsite();
+                let website = await StarterA.createWebsite();
                 test.test_app = website;
                 website.appA.logG.toListOfStrings = true;
 
                 await website.uiA.update();
 
                 let rawText = website.uiA.getRawText();
-                if (!Starter.replacedWebsitePlaceholder()) {
+                if (!StarterA.replacedWebsitePlaceholder()) {
                     return !rawText.includes('demo website (container)') &&
                         rawText.includes('collapsible parent') &&
                         rawText.includes('subitem') &&
@@ -105,19 +105,19 @@ export class AppA_TestA_ModelG {
                 }
             }),
             this.createTest('modelTest_objectViewer', async test => {
-                let objectViewer = await Starter.createObjectViewer('2'); // see const websiteData
+                let objectViewer = await StarterA.createObjectViewer('2'); // see const websiteData
                 test.test_app = objectViewer;
                 objectViewer.appA.logG.toListOfStrings = true;
                 let rawText = objectViewer.uiA.getRawText();
                 test.test_app.log(rawText);
-                if (!Starter.replacedWebsitePlaceholder()) {
+                if (!StarterA.replacedWebsitePlaceholder()) {
                     return rawText === 'collapsible parentsubitem' && test.test_app.uiA.countEditableTexts() === 0;
                 } else {
                     return true;
                 }
             }),
             this.createTest('modelTest_cut', async test => {
-                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                let app = await StarterA.createAppWithUIWithCommands_editable_updateUi();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 await app.appA.uiA.globalEventG.defaultAction();
@@ -132,7 +132,7 @@ export class AppA_TestA_ModelG {
                 return !rawText.includes('cutted');
             }),
             this.createTest('modelTest_pasteNext', async test => {
-                let app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+                let app = await StarterA.createAppWithUIWithCommands_editable_updateUi();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 await app.appA.uiA.globalEventG.defaultAction();
@@ -146,7 +146,7 @@ export class AppA_TestA_ModelG {
                 return rawText.includes('pasted object');
             }),
             this.createTest('modelTest_extraUiForText', async test => {
-                let app = Starter.createAppWithUI();
+                let app = StarterA.createAppWithUI();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let object = app.appA.unboundG.createText('foo');

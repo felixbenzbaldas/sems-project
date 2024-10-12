@@ -1,4 +1,4 @@
-import type {Starter} from "@/Starter";
+import type {StarterA} from "@/StarterA";
 import {UiA} from "@/ui/UiA";
 import {Entity} from "@/Entity";
 import {websiteData} from "@/website-data";
@@ -9,7 +9,7 @@ export class Placeholder {
     impressumBody = 'marker-dr53hifhh4-impressum-body';
     website = 'marker-dr53hifhh4-website';
 
-    constructor(public starter : Starter) {
+    constructor(public starter : StarterA) {
     }
 
     async getPlaceholderImpressum() {

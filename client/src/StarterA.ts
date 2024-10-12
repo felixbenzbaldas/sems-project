@@ -6,8 +6,9 @@ import {UiA} from "@/ui/UiA";
 import {Static} from "@/Static";
 import {Placeholder} from "@/Placeholder";
 
-export class Starter {
+export class StarterA {
 
+    entity : Entity;
     placeholder : Placeholder;
     createdApp : Entity;
     environment_queryParams : URLSearchParams;
@@ -128,52 +129,52 @@ export class Starter {
     // static methods
 
     static async start() : Promise<HTMLElement> {
-        return await new Starter().start();
+        return await new StarterA().start();
     }
 
     static async createAppWithUIWithCommands_editable_updateUi() {
-        let starter = new Starter();
+        let starter = new StarterA();
         await starter.createAppWithUIWithCommands_editable_updateUi();
         return starter.createdApp;
     }
 
     static createApp() {
-        let starter = new Starter();
+        let starter = new StarterA();
         starter.createApp();
         return starter.createdApp;
     }
 
     static async createTest() {
-        let starter = new Starter();
+        let starter = new StarterA();
         await starter.createTest();
         return starter.createdApp;
     }
 
     static createAppWithUI() {
-        let starter = new Starter();
+        let starter = new StarterA();
         starter.createAppWithUI();
         return starter.createdApp;
     }
 
     static async loadLocalhostApp(port: number) {
-        let starter = new Starter();
+        let starter = new StarterA();
         await starter.loadLocalhostApp(port);
         return starter.createdApp;
     }
 
     static async createObjectViewer(pathString: string) {
-        let starter = new Starter();
+        let starter = new StarterA();
         await starter.createObjectViewer(pathString);
         return starter.createdApp;
     }
 
     static async createWebsite() {
-        let starter = new Starter();
+        let starter = new StarterA();
         await starter.createWebsite();
         return starter.createdApp;
     }
 
     static replacedWebsitePlaceholder() {
-        return new Starter().placeholder.website.startsWith('marker');
+        return new StarterA().placeholder.website.startsWith('marker');
     }
 }

@@ -1,6 +1,6 @@
 import {beforeEach, describe, expect, it} from "vitest";
 import {Entity} from "@/Entity";
-import {Starter} from "@/Starter";
+import {StarterA} from "@/StarterA";
 import type {UiA} from "@/ui/UiA";
 
 describe('client-app (modelTests)', () => {
@@ -9,7 +9,7 @@ describe('client-app (modelTests)', () => {
     let ui : UiA;
 
     beforeEach(async () => {
-        app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+        app = await StarterA.createAppWithUIWithCommands_editable_updateUi();
         ui = app.uiA;
         ui.editable = true;
         await app.updateUi();

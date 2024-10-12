@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {Starter} from "@/Starter";
+import {StarterA} from "@/StarterA";
 import type {AppA} from "@/core/AppA";
 import {createRandomString, setCaret} from "@/utils";
 import {ContainerA} from "@/core/ContainerA";
@@ -82,7 +82,7 @@ export class AppA_TestA {
 
     createFailingDemoTest(): Entity {
         return this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
-            test.test_app = await Starter.createAppWithUIWithCommands_editable_updateUi();
+            test.test_app = await StarterA.createAppWithUIWithCommands_editable_updateUi();
             test.test_app.appA.logG.toListOfStrings = true;
             test.test_app.log('a dummy log');
             throw new Error('demo error in test');
@@ -92,12 +92,12 @@ export class AppA_TestA {
     createTests() : Array<Entity> {
         let tests = [
             this.createTest('create application', async test => {
-                let app = Starter.createApp();
+                let app = StarterA.createApp();
 
                 return app.text === 'simple application';
             }),
             this.createTest('tester', async test => {
-                let tester = await Starter.createTest();
+                let tester = await StarterA.createTest();
 
                 let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.createFailingDemoTest()]);
 
@@ -107,7 +107,7 @@ export class AppA_TestA {
                     testResults.successful.length == 0;
             }),
             this.createTest('export', async test => {
-                let app = Starter.createApp();
+                let app = StarterA.createApp();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let container = app.appA.unboundG.createTextWithList('the container');
@@ -124,7 +124,7 @@ export class AppA_TestA {
                     exported.objects[exported.list[0][0].toString()].text === 'subitem + contained';
             }),
             this.createTest('createFromJson', async test => {
-                let app = Starter.createApp();
+                let app = StarterA.createApp();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let json = {text: 'container + parent', list: [['0']], objects: {'0': {text: 'contained + subitem'}}};
@@ -139,7 +139,7 @@ export class AppA_TestA {
                     container.list.jsList.at(0).pathA;
             }),
             this.createTest('createFromJson (website-data)', async test => {
-                let app = Starter.createApp();
+                let app = StarterA.createApp();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let json = websiteData;
@@ -149,14 +149,14 @@ export class AppA_TestA {
                 return container.text === 'demo website (container)';
             }),
             this.createTest('create random string', async test => {
-                test.test_app = Starter.createApp();
+                test.test_app = StarterA.createApp();
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 return createRandomString().length == 10 &&
                     createRandomString() != createRandomString();
             }),
             this.createTest('list_insertObjectAtPosition', async test => {
-                test.test_app = Starter.createApp();
+                test.test_app = StarterA.createApp();
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 let list : Entity = await app.appA.createList();

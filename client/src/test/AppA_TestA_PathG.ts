@@ -1,4 +1,4 @@
-import {Starter} from "@/Starter";
+import {StarterA} from "@/StarterA";
 import type {Entity} from "@/Entity";
 import {ContainerA} from "@/core/ContainerA";
 
@@ -10,7 +10,7 @@ export class AppA_TestA_PathG {
     createTests() {
         return [
             this.createTest('getPath of contained', async test => {
-                test.test_app = Starter.createApp();
+                test.test_app = StarterA.createApp();
                 let app = test.test_app;
                 let text = await app.appA.createText('');
 
@@ -20,7 +20,7 @@ export class AppA_TestA_PathG {
                     path.pathA.listOfNames.at(0) === text.name;
             }),
             this.createTest('getPath of contained of contained', async test => {
-                test.test_app = Starter.createApp();
+                test.test_app = StarterA.createApp();
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 let container = await app.appA.createText('container');
@@ -34,7 +34,7 @@ export class AppA_TestA_PathG {
                     path.pathA.listOfNames.at(1) === containedContained.name;
             }),
             this.createTest('getPath of container', async test => {
-                test.test_app = Starter.createApp();
+                test.test_app = StarterA.createApp();
                 let app = test.test_app;
                 let text = await app.appA.createText('');
 
@@ -44,7 +44,7 @@ export class AppA_TestA_PathG {
                     path.pathA.listOfNames.at(0) === '..';
             }),
             this.createTest('getPath of contained of contained of container', async test => {
-                test.test_app = Starter.createApp();
+                test.test_app = StarterA.createApp();
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 let container = await app.appA.createText('container');
@@ -60,7 +60,7 @@ export class AppA_TestA_PathG {
                     path.pathA.listOfNames.at(2) === containedContained.name;
             }),
             this.createTest('getPath of container (which has a container itself)', async test => {
-                test.test_app = Starter.createApp();
+                test.test_app = StarterA.createApp();
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 let container = await app.appA.createText('container');
@@ -74,7 +74,7 @@ export class AppA_TestA_PathG {
                     path.pathA.listOfNames.at(0) === '..';
             }),
             this.createTest('resolve contained of container', async test => {
-                let app: Entity = Starter.createApp();
+                let app: Entity = StarterA.createApp();
                 let object: Entity = await app.appA.createText('bar');
                 let otherObject: Entity = await app.appA.createText('foo');
                 let pathOfOther: Entity = object.getPath(otherObject);
@@ -84,7 +84,7 @@ export class AppA_TestA_PathG {
                 return resolved === otherObject;
             }),
             this.createTest('resolve contained of contained of container', async test => {
-                test.test_app = Starter.createApp();
+                test.test_app = StarterA.createApp();
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 let container = await app.appA.createText('container');

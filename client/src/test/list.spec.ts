@@ -1,11 +1,11 @@
 import {describe, expect, it, test} from "vitest";
 import {Entity} from "@/Entity";
-import {Starter} from "@/Starter";
+import {StarterA} from "@/StarterA";
 
 describe('list', () => {
 
     it('can add object of same container', async () => {
-        let app : Entity = Starter.createApp();
+        let app : Entity = StarterA.createApp();
         let list : Entity = await app.appA.createList();
         let object : Entity = await app.appA.createText('bar');
 
@@ -16,7 +16,7 @@ describe('list', () => {
     });
 
     it('can get json (one item)', async () => {
-        let app = Starter.createApp();
+        let app = StarterA.createApp();
         let list = await app.appA.createList();
         let item = await app.appA.createText('bar');
         await list.list.add(item);
@@ -28,7 +28,7 @@ describe('list', () => {
     });
 
     it('can export (one item)', async () => {
-        let app = Starter.createApp();
+        let app = StarterA.createApp();
         let list = await app.appA.createList();
         let item = await app.appA.createText('bar');
         await list.list.add(item);

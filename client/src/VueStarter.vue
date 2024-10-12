@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
-import {Starter} from "@/Starter";
+import {StarterA} from "@/StarterA";
 
 async function init() {
-    let html = await Starter.start();
+    let html = await StarterA.start();
     while (document.body.children.length > 0) {
         document.body.removeChild(document.body.children.item(0));
     }

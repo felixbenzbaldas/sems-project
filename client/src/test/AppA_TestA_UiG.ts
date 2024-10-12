@@ -1,4 +1,4 @@
-import {Starter} from "@/Starter";
+import {StarterA} from "@/StarterA";
 import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
 
@@ -10,7 +10,7 @@ export class AppA_TestA_UiG {
     createTests() {
         return [
             this.createTest('ui_makeCollapsible', async test => {
-                let app = Starter.createAppWithUI();
+                let app = StarterA.createAppWithUI();
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.appA.uiA.globalEventG.toggleCollapsible();
@@ -18,7 +18,7 @@ export class AppA_TestA_UiG {
                 return (await app.appA.uiA.content.list.getObject(0)).collapsible;
             }),
             this.createTest('ui_collapse', async test => {
-                let app = Starter.createAppWithUI();
+                let app = StarterA.createAppWithUI();
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.toggleCollapsible();
                 await app.appA.uiA.globalEventG.newSubitem();
@@ -30,7 +30,7 @@ export class AppA_TestA_UiG {
                 return firstObjectUi.collapsed;
             }),
             this.createTest('ui_collapsible', async test => {
-                let app = Starter.createAppWithUI();
+                let app = StarterA.createAppWithUI();
                 let collapsible = app.appA.unboundG.createCollapsible('', app.appA.unboundG.createText(''));
                 let ui = app.appA.uiA.createUiFor(collapsible);
 
@@ -39,7 +39,7 @@ export class AppA_TestA_UiG {
                 return ui.collapsed;
             }),
             this.createTest('ui_collapsible_hybrid', async test => {
-                let app = Starter.createAppWithUI();
+                let app = StarterA.createAppWithUI();
                 let collapsible = app.appA.unboundG.createCollapsible('', app.appA.unboundG.createText(''));
                 collapsible.uiA = new UiA(collapsible);
 
@@ -48,7 +48,7 @@ export class AppA_TestA_UiG {
                 return collapsible.collapsed;
             }),
             this.createTest('ui_newSubitem', async test => {
-                let app = Starter.createAppWithUI();
+                let app = StarterA.createAppWithUI();
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.appA.uiA.globalEventG.newSubitem();
@@ -58,7 +58,7 @@ export class AppA_TestA_UiG {
                     && (await firstObject.list.getObject(0)).text === '';
             }),
             this.createTest('ui_switchCurrentContainer', async test => {
-                let app = Starter.createAppWithUI()
+                let app = StarterA.createAppWithUI()
                 await app.appA.uiA.globalEventG.defaultAction();
 
                 await app.appA.uiA.globalEventG.switchCurrentContainer();
@@ -67,7 +67,7 @@ export class AppA_TestA_UiG {
                     app.appA.currentContainer.containerA;
             }),
             this.createTest('ui_cut', async test => {
-                let app = Starter.createAppWithUI();
+                let app = StarterA.createAppWithUI();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 await app.appA.uiA.globalEventG.defaultAction();
@@ -78,7 +78,7 @@ export class AppA_TestA_UiG {
                 return app.appA.uiA.content.list.jsList.length === 0 && app.appA.uiA.clipboard === objectUi.uiA.object;
             }),
             this.createTest('ui_createUiFor', async test => {
-                let app = Starter.createAppWithUI();
+                let app = StarterA.createAppWithUI();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let object = app.appA.unboundG.createText('');
@@ -88,7 +88,7 @@ export class AppA_TestA_UiG {
                 return ui.uiA.object === object && object.uis.at(0) === ui;
             }),
             this.createTest('ui_list_extraObjectForUi', async test => {
-                let app = Starter.createAppWithUI();
+                let app = StarterA.createAppWithUI();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let listItem = app.appA.unboundG.createText('listItem');
@@ -101,7 +101,7 @@ export class AppA_TestA_UiG {
                     && uiForList.uiA.listG.uisOfListItems.at(0) != listItem;
             }),
             this.createTest('ui_list_insertObjectAtPosition', async test => {
-                let app = Starter.createAppWithUI();
+                let app = StarterA.createAppWithUI();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let listItem = app.appA.unboundG.createText('listItem');
@@ -115,7 +115,7 @@ export class AppA_TestA_UiG {
                     && uiForList.uiA.listG.uisOfListItems.at(0) === uiForListItem;
             }),
             this.createTest('ui_pasteNext', async test => {
-                let app = Starter.createAppWithUI();
+                let app = StarterA.createAppWithUI();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let firstItem = app.appA.unboundG.createText('firstItem');

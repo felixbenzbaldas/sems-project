@@ -1,17 +1,17 @@
 import {describe, expect, it, test} from "vitest";
 import {Entity} from "@/Entity";
-import {Starter} from "@/Starter";
+import {StarterA} from "@/StarterA";
 
 describe('app', () => {
 
     it('can be created', async () => {
-        let app : Entity = Starter.createApp();
+        let app : Entity = StarterA.createApp();
 
         expect(app.text).toEqual('simple application');
     });
 
     it('can create an entity', async () => {
-        let app : Entity = Starter.createApp();
+        let app : Entity = StarterA.createApp();
 
         let entity : Entity = app.appA.createEntityWithApp();
 
@@ -19,7 +19,7 @@ describe('app', () => {
     });
 
     it('can set text', async () => {
-        let app : Entity = Starter.createApp();
+        let app : Entity = StarterA.createApp();
 
         app.text = 'my application';
 
@@ -27,7 +27,7 @@ describe('app', () => {
     });
 
     it('can create a simple list', async () => {
-        let app : Entity = Starter.createApp();
+        let app : Entity = StarterA.createApp();
 
         let list : Entity = app.appA.unboundG.createList();
 
@@ -35,7 +35,7 @@ describe('app', () => {
     });
 
     it('can get json (without contained objects)', async () => {
-        let app : Entity = Starter.createApp();
+        let app : Entity = StarterA.createApp();
         app.text = 'my app';
 
         let json = app.json_withoutContainedObjects();
@@ -44,7 +44,7 @@ describe('app', () => {
     });
 
     it('can create text', async () => {
-        let app = Starter.createApp();
+        let app = StarterA.createApp();
 
         let text = await app.appA.createText('foo');
 
@@ -52,7 +52,7 @@ describe('app', () => {
     });
 
     it('can create list', async () => {
-        let app = Starter.createApp();
+        let app = StarterA.createApp();
 
         let list = await app.appA.createList();
 
@@ -60,7 +60,7 @@ describe('app', () => {
     });
 
     it('assigns created object to container', async () => {
-        let app = Starter.createApp();
+        let app = StarterA.createApp();
 
         let text = await app.appA.createText('');
 
@@ -70,7 +70,7 @@ describe('app', () => {
     });
 
     it('can export app with one object', async () => {
-        let app = Starter.createApp();
+        let app = StarterA.createApp();
         let object = await app.appA.createText('foo');
 
         let exported : any = await app.export();
@@ -81,7 +81,7 @@ describe('app', () => {
     });
 
     test('can add all to list from raw data (empty)', async () => {
-        let app = Starter.createApp();
+        let app = StarterA.createApp();
         let list = await app.appA.createList();
         let rawData : any = {list:[]};
 
@@ -91,7 +91,7 @@ describe('app', () => {
     });
 
     test('can add all to list from raw data (one item)', async () => {
-        let app = Starter.createApp();
+        let app = StarterA.createApp();
         let list = await app.appA.createList();
         let rawData : any = {
             list:[['..','0']],
@@ -110,7 +110,7 @@ describe('app', () => {
     });
 
     it('can log', async () => {
-        let app = Starter.createApp();
+        let app = StarterA.createApp();
         app.text = 'my app';
         // app.appA.logG.toConsole = true;
         app.appA.logG.toListOfStrings = true;
@@ -121,7 +121,7 @@ describe('app', () => {
     });
 
     test('Can get shortDescription of text', async () => {
-        let app : Entity = Starter.createApp();
+        let app : Entity = StarterA.createApp();
         let text : Entity = app.appA.unboundG.createText('12345678901234567890123456789012');
 
         let shortDescription = text.getShortDescription();
@@ -130,7 +130,7 @@ describe('app', () => {
     });
 
     test('Can get description of path', async () => {
-        let app : Entity = Starter.createApp();
+        let app : Entity = StarterA.createApp();
         let path : Entity = app.appA.createPath(['a', 'b']);
 
         let description = path.getDescription();

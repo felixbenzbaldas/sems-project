@@ -1,11 +1,11 @@
 import {describe, expect, it} from "vitest";
 import {Entity} from "@/Entity";
-import {Starter} from "@/Starter";
+import {StarterA} from "@/StarterA";
 
 describe('simple list', () => {
     
     it('can add entity', async () => {
-        let app : Entity = Starter.createApp();
+        let app : Entity = StarterA.createApp();
         let list : Entity = app.appA.unboundG.createList();
 
         await list.list.add(app.appA.createEntityWithApp());
@@ -14,7 +14,7 @@ describe('simple list', () => {
     });
 
     it('can get json (empty)', async () => {
-        let app : Entity = Starter.createApp();
+        let app : Entity = StarterA.createApp();
         let list : Entity = app.appA.unboundG.createList();
 
         let json = list.json_withoutContainedObjects();
@@ -23,7 +23,7 @@ describe('simple list', () => {
     });
 
     it('can get description', async () => {
-        let app : Entity = Starter.createApp();
+        let app : Entity = StarterA.createApp();
         let list : Entity = app.appA.unboundG.createList();
         await list.list.add(app.appA.createEntityWithApp());
 
