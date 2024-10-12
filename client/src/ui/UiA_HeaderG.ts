@@ -108,7 +108,7 @@ export class UiA_HeaderG {
     }
 
     focusStyle_update() {
-        if (this.entity.ui_hasFocus() && this.entity.getApp() === Static.activeApp) {
+        if (this.entity.ui_hasFocus() && this.entity.getApp().appA.uiA.isActive()) {
             this.htmlElement.style.borderColor = 'orange';
         } else {
             this.htmlElement.style.borderColor = 'white';

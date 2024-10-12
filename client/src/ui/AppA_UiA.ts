@@ -158,7 +158,7 @@ export class AppA_UiA {
     }
 
     focusStyle_update() {
-        if (this.focused === this.entity && Static.activeApp === this.entity) {
+        if (this.focused === this.entity && this.isActive()) {
             this.focusStyle_marker.style.backgroundColor = 'orange';
         } else {
             this.focusStyle_marker.style.backgroundColor = 'white';
@@ -225,6 +225,10 @@ export class AppA_UiA {
             //     await this.entity.appA.uiA.globalEventG.flatImportToContent();
             // }),
         );
+    }
+
+    isActive() : boolean {
+        return Static.activeApp === this.entity;
     }
 
 }
