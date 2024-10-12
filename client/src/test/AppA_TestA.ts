@@ -82,7 +82,7 @@ export class AppA_TestA {
 
     createFailingDemoTest(): Entity {
         return this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
-            test.test_app = await StarterA.createAppWithUIWithCommands_editable_updateUi();
+            test.test_app = await this.appA.createStarter().createAppWithUIWithCommands_editable_updateUi();
             test.test_app.appA.logG.toListOfStrings = true;
             test.test_app.log('a dummy log');
             throw new Error('demo error in test');
@@ -107,7 +107,7 @@ export class AppA_TestA {
                     testResults.successful.length == 0;
             }),
             this.createTest('export', async test => {
-                let app = StarterA.createApp();
+                let app = this.appA.createStarter().createApp();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let container = app.appA.unboundG.createTextWithList('the container');
@@ -124,7 +124,7 @@ export class AppA_TestA {
                     exported.objects[exported.list[0][0].toString()].text === 'subitem + contained';
             }),
             this.createTest('createFromJson', async test => {
-                let app = StarterA.createApp();
+                let app = this.appA.createStarter().createApp();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let json = {text: 'container + parent', list: [['0']], objects: {'0': {text: 'contained + subitem'}}};
@@ -139,7 +139,7 @@ export class AppA_TestA {
                     container.list.jsList.at(0).pathA;
             }),
             this.createTest('createFromJson (website-data)', async test => {
-                let app = StarterA.createApp();
+                let app = this.appA.createStarter().createApp();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let json = websiteData;
@@ -149,7 +149,7 @@ export class AppA_TestA {
                 return container.text === 'demo website (container)';
             }),
             this.createTest('create random string', async test => {
-                test.test_app = StarterA.createApp();
+                test.test_app = this.appA.createStarter().createApp();
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 return createRandomString().length == 10 &&
