@@ -12,7 +12,6 @@ import type {Environment} from "@/Environment";
 export class AppA {
 
     uiA: AppA_UiA;
-    server: string;
     readonly logG: LogG;
     testA : AppA_TestA;
     currentContainer: Entity;

@@ -12,12 +12,6 @@ export class ContainerA {
         return createRandomString();
     }
 
-    async getByName(name: string) : Promise<Entity> {
-        let entity = this.entity.getApp().appA.createEntityWithApp();
-        entity.text = '42'; // TODO http-request
-        return entity;
-    }
-
     async createText(text: string) : Promise<Entity> {
         let textObject = this.entity.getApp().appA.unboundG.createText(text);
         this.bind(textObject);

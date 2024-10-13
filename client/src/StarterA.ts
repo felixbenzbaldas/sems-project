@@ -90,14 +90,6 @@ export class StarterA {
         return this.createdApp;
     }
 
-    async loadLocalhostApp(port: number) : Promise<Entity> {
-        this.createdApp = new Entity();
-        this.createdApp.text = 'todo: load from server';
-        this.createdApp.appA = new AppA(this.createdApp);
-        this.createdApp.appA.server = 'http://localhost:' + port + '/';
-        return this.createdApp;
-    }
-
     async createTest() : Promise<Entity> {
         this.createAppWithUI();
         this.createdApp.text = 'Tester';
@@ -150,12 +142,6 @@ export class StarterA {
     static createAppWithUI() {
         let starter = new StarterA();
         starter.createAppWithUI();
-        return starter.createdApp;
-    }
-
-    static async loadLocalhostApp(port: number) {
-        let starter = new StarterA();
-        await starter.loadLocalhostApp(port);
         return starter.createdApp;
     }
 
