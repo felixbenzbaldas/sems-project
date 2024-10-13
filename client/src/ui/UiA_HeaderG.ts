@@ -1,6 +1,5 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
-import {Static} from "@/Static";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_HeaderG {
@@ -23,7 +22,7 @@ export class UiA_HeaderG {
         this.htmlElement.appendChild(this.content);
         this.htmlElement.appendChild(this.bodyIcon);
         this.htmlElement.onclick = async (event) => {
-            Static.ensureActive(this.entity.getApp());
+            this.entity.getApp().appA.ensureActive();
             if (!event.ctrlKey) {
                 await this.clickEvent();
             }
@@ -78,7 +77,7 @@ export class UiA_HeaderG {
         let button = document.createElement('button');
         button.innerText = this.getObject().text;
         button.onclick = (event) => {
-            Static.ensureActive(this.entity.getApp());
+            this.entity.getApp().appA.ensureActive();
             this.getObject().action();
             event.stopPropagation();
         };

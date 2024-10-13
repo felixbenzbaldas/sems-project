@@ -1,6 +1,36 @@
+import type {Entity} from "@/Entity";
+
 export class Environment {
 
+    queryParams : URLSearchParams;
+    activeApp: Entity;
+
     static create() : Environment {
-        return undefined;
+        let environment = new Environment();
+        environment.queryParams = new URLSearchParams(window.location.search);
+        environment.adjustRemSizes();
+        return environment;
+    }
+
+    adjustRemSizes() {
+        let root: HTMLElement = document.querySelector(':root');
+        root.style.fontSize = '21px';
+    }
+
+    getBaseUrl() : string {
+        return window.location.protocol + '/index.html';
+    }
+
+    ensureActive(app: Entity) {
+        if (app != this.activeApp) {
+            let previous = this.activeApp?.appA.uiA.focused;
+            this.activeApp = app;
+            if (previous) {
+                previous.uiA.updateFocusStyle();
+            }
+            if (app.appA.uiA.focused) {
+                app.appA.uiA.focused.uiA.updateFocusStyle();
+            }
+        }
     }
 }

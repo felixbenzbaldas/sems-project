@@ -4,7 +4,6 @@ import {InputA} from "@/ui/InputA";
 import {AppA_UiA_GlobalEventG} from "@/ui/AppA_UiA_GlobalEventG";
 import {UiA} from "@/ui/UiA";
 import {ContainerA} from "@/core/ContainerA";
-import {Static} from "@/Static";
 
 export class AppA_UiA {
 
@@ -228,7 +227,11 @@ export class AppA_UiA {
     }
 
     isActive() : boolean {
-        return Static.activeApp === this.entity;
+        if (this.entity.appA.environment) {
+            return this.entity.appA.environment.activeApp === this.entity;
+        } else {
+            return true;
+        }
     }
 
 }

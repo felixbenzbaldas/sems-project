@@ -80,4 +80,10 @@ export class AppA {
         starter.starterA = new StarterA(starter);
         return starter.starterA;
     }
+
+    ensureActive() {
+        if (this.environment) {
+            this.environment.ensureActive(this.entity);
+        }
+    }
 }
