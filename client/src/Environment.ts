@@ -1,4 +1,5 @@
-import type {Entity} from "@/Entity";
+import {Entity} from "@/Entity";
+import {AppA} from "@/core/AppA";
 
 export class Environment {
 
@@ -32,5 +33,13 @@ export class Environment {
                 app.appA.uiA.focused.uiA.updateFocusStyle();
             }
         }
+    }
+
+    createApp() : Entity {
+        let app = new Entity();
+        app.appA = new AppA(app);
+        app.appA.environment = this;
+        app.text = 'app (by environment)';
+        return app;
     }
 }

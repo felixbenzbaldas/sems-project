@@ -15,7 +15,7 @@ export class StarterA {
         this.placeholder = new Placeholder(this);
     }
 
-    async start() : Promise<HTMLElement> {
+    async fullStart() : Promise<HTMLElement> {
         if (this.getEnvironment().queryParams.has('local')) {
             this.createAppWithUIWithCommands_editable();
             this.testMode();
@@ -128,15 +128,6 @@ export class StarterA {
 
     ////////////////////////////////////////////////////////////////////////////////////////
     // static methods
-
-    static async start() : Promise<HTMLElement> {
-        let starterApplication = new Entity();
-        starterApplication.appA = new AppA(starterApplication);
-        starterApplication.appA.environment = Environment.create();
-        starterApplication.text = 'starter app';
-        let starter : StarterA = starterApplication.appA.createStarter();
-        return starter.start();
-    }
 
     static async createAppWithUIWithCommands_editable_updateUi() {
         let starter = new StarterA();
