@@ -18,10 +18,6 @@ export class Environment {
         root.style.fontSize = '21px';
     }
 
-    getBaseUrl() : string {
-        return window.location.protocol + '/index.html';
-    }
-
     ensureActive(app: Entity) {
         if (app != this.activeApp) {
             let previous = this.activeApp?.appA.uiA.focused;
