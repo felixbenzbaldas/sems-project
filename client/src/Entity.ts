@@ -5,6 +5,7 @@ import {ContainerA} from "@/core/ContainerA";
 import {UiA} from "@/ui/UiA";
 import {notNullUndefined} from "@/utils";
 import type {StarterA} from "@/StarterA";
+import type {Environment} from "@/Environment";
 
 export class Entity {
 

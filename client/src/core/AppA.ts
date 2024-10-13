@@ -7,6 +7,7 @@ import type {AppA_TestA} from "@/test/AppA_TestA";
 import {ContainerA} from "@/core/ContainerA";
 import {AppA_UnboundG} from "@/core/AppA_UnboundG";
 import {StarterA} from "@/StarterA";
+import type {Environment} from "@/Environment";
 
 export class AppA {
 
@@ -16,6 +17,7 @@ export class AppA {
     testA : AppA_TestA;
     currentContainer: Entity;
     unboundG : AppA_UnboundG;
+    environment: Environment;
 
     constructor(private entity : Entity) {
         this.unboundG = new AppA_UnboundG(entity);

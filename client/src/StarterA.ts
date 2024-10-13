@@ -5,6 +5,7 @@ import {AppA_TestA} from "@/test/AppA_TestA";
 import {UiA} from "@/ui/UiA";
 import {Static} from "@/Static";
 import {Placeholder} from "@/Placeholder";
+import {Environment} from "@/Environment";
 
 export class StarterA {
 
@@ -66,6 +67,7 @@ export class StarterA {
         this.createdApp = new Entity();
         this.createdApp.text = 'simple application';
         this.createdApp.appA = new AppA(this.createdApp);
+        this.createdApp.appA.environment =  this.entity?.getApp().appA.environment;
         return this.createdApp;
     }
 
@@ -138,6 +140,7 @@ export class StarterA {
     static async start() : Promise<HTMLElement> {
         let starterApplication = new Entity();
         starterApplication.appA = new AppA(starterApplication);
+        starterApplication.appA.environment = Environment.create();
         starterApplication.text = 'starter app';
         let starter : StarterA = starterApplication.appA.createStarter();
         return starter.start();
