@@ -45,4 +45,12 @@ export class ListA {
     async insertObjectAtPosition(object: Entity, position: number) {
         this.jsList.splice(position, 0, this.entity.pathOrObject(object));
     }
+
+    async findByText(text: string) : Promise<Entity> {
+        for (let item of (await this.getResolvedList())) {
+            if (item.text === text) {
+                return item;
+            }
+        }
+    }
 }
