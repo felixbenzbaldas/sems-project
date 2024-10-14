@@ -100,10 +100,10 @@ export class StarterA {
     async createWebsite() : Promise<Entity> {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;
-        let created = this.placeholder.getWebsiteData();
-        for (let i = 0; i < created.list.jsList.length; i++) {
+        let websiteData = this.placeholder.getWebsiteData();
+        for (let i = 0; i < websiteData.list.jsList.length; i++) {
             await this.createdApp.appA.uiA.content.list.add(
-                await created.list.getObject(i)
+                await websiteData.list.getObject(i)
             );
         }
         return this.createdApp;
@@ -111,8 +111,8 @@ export class StarterA {
 
     async createObjectViewer(pathString: string) : Promise<Entity> {
         this.createAppWithUI();
-        let created = this.placeholder.getWebsiteData();
-        let listOfNames = ['..', created.name, ...pathString.split('-')];
+        let websiteData = this.placeholder.getWebsiteData();
+        let listOfNames = ['..', websiteData.name, ...pathString.split('-')];
         await this.createdApp.appA.uiA.content.list.add(this.createdApp.appA.createPath(listOfNames));
         await this.createdApp.updateUi();
         return this.createdApp;
