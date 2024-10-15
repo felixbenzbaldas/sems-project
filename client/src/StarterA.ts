@@ -115,6 +115,7 @@ export class StarterA {
         let listOfNames = ['..', websiteData.name, ...pathString.split('-')];
         await this.createdApp.appA.uiA.content.list.add(this.createdApp.appA.createPath(listOfNames));
         await this.createdApp.updateUi();
+        await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();
         return this.createdApp;
     }
 
