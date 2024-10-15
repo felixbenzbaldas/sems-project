@@ -157,8 +157,4 @@ export class StarterA {
         await starter.createWebsite();
         return starter.createdApp;
     }
-
-    static replacedWebsitePlaceholder() {
-        return !new StarterA().placeholder.website.startsWith('marker');
-    }
 }
