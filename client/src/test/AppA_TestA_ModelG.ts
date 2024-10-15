@@ -157,6 +157,20 @@ export class AppA_TestA_ModelG {
 
                 app.log('raw text = ' + rawText);
                 return rawText === 'foo';
+            }),
+            this.createTest('modelTest_webMeta', async test => {
+                let environment = new Environment();
+                environment.jsonData = testData;
+                let starter = environment.createApp().appA.createStarter();
+                let app = starter.createAppWithUI();
+                starter.createData();
+                app.appA.uiA.topImpressum = await starter.createWebMeta();
+                test.test_app = app;
+                app.appA.logG.toListOfStrings = true;
+                await app.updateUi()
+                let rawText = app.uiA.getRawText();
+                test.test_app.log(rawText);
+                return rawText === 'some meta information';
             })
         ];
     }
