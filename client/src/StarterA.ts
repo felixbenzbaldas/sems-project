@@ -109,6 +109,20 @@ export class StarterA {
         return this.createdApp;
     }
 
+    async createWebsite2() : Promise<Entity> {
+        this.createAppWithUI();
+        this.createdApp.appA.uiA.isWebsite = true;
+        let data = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
+        this.createdApp.containerA.bind(data, 'data');
+        let start = await (await data.list.getObject(0)).list.getObject(0);
+        for (let i = 0; i < start.list.jsList.length; i++) {
+            await this.createdApp.appA.uiA.content.list.add(
+                await start.list.getObject(i)
+            );
+        }
+        return this.createdApp;
+    }
+
     async createObjectViewer(pathString: string) : Promise<Entity> {
         this.createAppWithUI();
         let websiteData = this.placeholder.getWebsiteData();

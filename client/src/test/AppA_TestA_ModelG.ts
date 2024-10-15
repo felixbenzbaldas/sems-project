@@ -2,6 +2,7 @@ import {StarterA} from "@/StarterA";
 import type {Entity} from "@/Entity";
 import {Environment} from "@/Environment";
 import {websiteData} from "@/website-data";
+import {testData} from "@/testData";
 
 export class AppA_TestA_ModelG {
 
@@ -100,6 +101,24 @@ export class AppA_TestA_ModelG {
                 await website.uiA.update();
                 let rawText = website.uiA.getRawText();
                 return !rawText.includes('demo website (container)') &&
+                    rawText.includes('collapsible parent') &&
+                    rawText.includes('subitem') &&
+                    rawText.includes('Home');
+            }),
+            this.createTest('modelTest_website2', async test => {
+                let environment = new Environment();
+                environment.jsonData = testData;
+
+                let website = await environment.createApp().appA.createStarter().createWebsite2();
+
+                test.test_app = website;
+                website.appA.logG.toListOfStrings = true;
+                await website.uiA.update();
+                let rawText = website.uiA.getRawText();
+                test.test_app.log('rawText = ' + rawText);
+                return !rawText.includes('demo website (container)') &&
+                    !rawText.includes('localhost') &&
+                    !rawText.includes('start') &&
                     rawText.includes('collapsible parent') &&
                     rawText.includes('subitem') &&
                     rawText.includes('Home');
