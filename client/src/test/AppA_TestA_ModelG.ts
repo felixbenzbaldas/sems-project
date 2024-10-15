@@ -163,7 +163,6 @@ export class AppA_TestA_ModelG {
                 environment.jsonData = testData;
                 let starter = environment.createApp().appA.createStarter();
                 let app = starter.createAppWithUI();
-                starter.createData();
                 app.appA.uiA.topImpressum = await starter.createUnboundWebMeta();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
