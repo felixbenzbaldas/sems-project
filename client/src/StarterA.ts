@@ -100,8 +100,7 @@ export class StarterA {
     async createWebsite() : Promise<Entity> {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;
-        let data = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
-        this.createdApp.containerA.bind(data, 'data');
+        let data = this.getData();
         let start = await (await data.list.getObject(0)).list.getObject(0);
         for (let i = 0; i < start.list.jsList.length; i++) {
             await this.createdApp.appA.uiA.content.list.add(
@@ -113,13 +112,18 @@ export class StarterA {
 
     async createObjectViewer(pathString: string) : Promise<Entity> {
         this.createAppWithUI();
-        let data = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
-        this.createdApp.containerA.bind(data, 'data');
+        let data = this.getData();
         let listOfNames = ['..', data.name, ...pathString.split('-')];
         await this.createdApp.appA.uiA.content.list.add(this.createdApp.appA.createPath(listOfNames));
         await this.createdApp.updateUi();
         await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();
         return this.createdApp;
+    }
+
+    getData() {
+        let data = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
+        this.createdApp.containerA.bind(data, 'data');
+        return data;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
