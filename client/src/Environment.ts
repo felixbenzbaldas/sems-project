@@ -1,5 +1,6 @@
 import {Entity} from "@/Entity";
 import {AppA} from "@/core/AppA";
+import {websiteData} from "@/website-data";
 
 export class Environment {
 
@@ -11,6 +12,12 @@ export class Environment {
         let environment = new Environment();
         environment.queryParams = new URLSearchParams(window.location.search);
         environment.adjustRemSizes();
+        let placeholder_jsonString = 'marker-dr53hifhh4-website'; // note: placeholder_jsonString will be replaced during deployment
+        if (placeholder_jsonString.startsWith('marker')) {
+            environment.jsonData = websiteData;
+        } else {
+            environment.jsonData = JSON.parse(placeholder_jsonString);
+        }
         return environment;
     }
 
