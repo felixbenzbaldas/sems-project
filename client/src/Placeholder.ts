@@ -7,7 +7,6 @@ export class Placeholder {
 
     impressumHeader = 'marker-dr53hifhh4-impressum-header';
     impressumBody = 'marker-dr53hifhh4-impressum-body';
-    website = 'marker-dr53hifhh4-website';
 
     constructor(public starter : StarterA) {
     }
@@ -32,19 +31,7 @@ export class Placeholder {
     }
 
     getWebsiteData() {
-        let created;
-        if (this.starter.getEnvironment()?.jsonData) {
-            console.log("use Environment->jsonData");
-            created = this.starter.createdApp.appA.unboundG.createFromJson(this.starter.getEnvironment().jsonData);
-        } else {
-            if (this.website.startsWith('marker')) {
-                console.log("startsWith marker");
-                created = this.starter.createdApp.appA.unboundG.createFromJson(websiteData);
-            } else {
-                console.log("starts not with marker");
-                created = this.starter.createdApp.appA.unboundG.createFromJson(JSON.parse(this.website));
-            }
-        }
+        let created = this.starter.createdApp.appA.unboundG.createFromJson(this.starter.getEnvironment().jsonData);
         this.starter.createdApp.containerA.bind(created, 'website');
         return created;
     }
