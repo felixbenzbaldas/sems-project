@@ -62,7 +62,7 @@ export class AppA_TestA_ModelG {
                 return app.appA.uiA.content.uiA.listG.uisOfListItems.at(0).collapsed === false;
             }),
             this.createTest('modelTest_tester', async test => {
-                let tester = await StarterA.createTest();
+                let tester = await this.entity.appA.createStarter().createTest();
                 test.test_app = tester;
                 tester.appA.logG.toListOfStrings = true;
 
@@ -88,7 +88,7 @@ export class AppA_TestA_ModelG {
                     rawText.includes('aSuccessfulTest');
             }),
             this.createTest('modelTest_website', async test => {
-                let website = await StarterA.createWebsite();
+                let website = await this.entity.appA.createStarter().createWebsite();
                 test.test_app = website;
                 website.appA.logG.toListOfStrings = true;
 
@@ -105,7 +105,7 @@ export class AppA_TestA_ModelG {
                 }
             }),
             this.createTest('modelTest_objectViewer', async test => {
-                let objectViewer = await StarterA.createObjectViewer('2'); // see const websiteData
+                let objectViewer = await this.entity.appA.createStarter().createObjectViewer('2'); // see const websiteData
                 test.test_app = objectViewer;
                 objectViewer.appA.logG.toListOfStrings = true;
                 let rawText = objectViewer.uiA.getRawText();

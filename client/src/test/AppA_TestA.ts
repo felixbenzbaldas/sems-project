@@ -92,13 +92,15 @@ export class AppA_TestA {
 
     createTests() : Array<Entity> {
         let tests = [
-            this.createTest('create application', async test => {
-                let app = StarterA.createApp();
+            this.createTest('environment_createApp', async test => {
+                let environment = new Environment();
 
-                return app.text === 'simple application';
+                let app = environment.createApp();
+
+                return app.appA.environment === environment;
             }),
             this.createTest('tester', async test => {
-                let tester = await StarterA.createTest();
+                let tester = await this.appA.createStarter().createTest();
 
                 let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.createFailingDemoTest()]);
 
