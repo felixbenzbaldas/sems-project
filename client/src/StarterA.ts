@@ -125,8 +125,9 @@ export class StarterA {
 
     async createObjectViewer(pathString: string) : Promise<Entity> {
         this.createAppWithUI();
-        let websiteData = this.placeholder.getWebsiteData();
-        let listOfNames = ['..', websiteData.name, ...pathString.split('-')];
+        let data = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
+        this.createdApp.containerA.bind(data, 'data');
+        let listOfNames = ['..', data.name, ...pathString.split('-')];
         await this.createdApp.appA.uiA.content.list.add(this.createdApp.appA.createPath(listOfNames));
         await this.createdApp.updateUi();
         await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();

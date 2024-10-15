@@ -125,7 +125,7 @@ export class AppA_TestA_ModelG {
             }),
             this.createTest('modelTest_objectViewer', async test => {
                 let environment = new Environment();
-                environment.jsonData = websiteData;
+                environment.jsonData = testData;
                 let objectViewer = await environment.createApp().appA.createStarter().createObjectViewer('2'); // see const websiteData
                 test.test_app = objectViewer;
                 objectViewer.appA.logG.toListOfStrings = true;
