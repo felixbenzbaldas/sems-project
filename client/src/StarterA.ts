@@ -158,6 +158,6 @@ export class StarterA {
     }
 
     static replacedWebsitePlaceholder() {
-        return new StarterA().placeholder.website.startsWith('marker');
+        return !new StarterA().placeholder.website.startsWith('marker');
     }
 }
