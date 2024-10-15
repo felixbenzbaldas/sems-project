@@ -1,5 +1,7 @@
 import {StarterA} from "@/StarterA";
 import type {Entity} from "@/Entity";
+import {Environment} from "@/Environment";
+import {websiteData} from "@/website-data";
 
 export class AppA_TestA_ModelG {
 
@@ -88,33 +90,29 @@ export class AppA_TestA_ModelG {
                     rawText.includes('aSuccessfulTest');
             }),
             this.createTest('modelTest_website', async test => {
-                let website = await this.entity.appA.createStarter().createWebsite();
+                let environment = new Environment();
+                environment.jsonData = websiteData;
+                let website = await environment.createApp().appA.createStarter().createWebsite();
                 test.test_app = website;
                 website.appA.logG.toListOfStrings = true;
 
                 await website.uiA.update();
 
                 let rawText = website.uiA.getRawText();
-                if (!StarterA.replacedWebsitePlaceholder()) {
-                    return !rawText.includes('demo website (container)') &&
-                        rawText.includes('collapsible parent') &&
-                        rawText.includes('subitem') &&
-                        rawText.includes('Home');
-                } else {
-                    return true;
-                }
+                return !rawText.includes('demo website (container)') &&
+                    rawText.includes('collapsible parent') &&
+                    rawText.includes('subitem') &&
+                    rawText.includes('Home');
             }),
             this.createTest('modelTest_objectViewer', async test => {
-                let objectViewer = await this.entity.appA.createStarter().createObjectViewer('2'); // see const websiteData
+                let environment = new Environment();
+                environment.jsonData = websiteData;
+                let objectViewer = await environment.createApp().appA.createStarter().createObjectViewer('2'); // see const websiteData
                 test.test_app = objectViewer;
                 objectViewer.appA.logG.toListOfStrings = true;
                 let rawText = objectViewer.uiA.getRawText();
                 test.test_app.log(rawText);
-                if (!StarterA.replacedWebsitePlaceholder()) {
-                    return rawText === 'collapsible parentsubitem' && test.test_app.uiA.countEditableTexts() === 0;
-                } else {
-                    return true;
-                }
+                return rawText === 'collapsible parentsubitem' && test.test_app.uiA.countEditableTexts() === 0;
             }),
             this.createTest('modelTest_cut', async test => {
                 let app = await this.entity.appA.createStarter().createAppWithUIWithCommands_editable_updateUi();
