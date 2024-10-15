@@ -5,6 +5,7 @@ export class Environment {
 
     queryParams : URLSearchParams;
     activeApp: Entity;
+    jsonData : any;
 
     static create() : Environment {
         let environment = new Environment();
