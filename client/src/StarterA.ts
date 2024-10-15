@@ -37,7 +37,7 @@ export class StarterA {
             this.testMode();
             this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
         } else {
-            await this.createWebsite();
+            await this.createWebsite2();
             this.testMode();
         }
         this.getEnvironment().activeApp = this.createdApp;
