@@ -92,12 +92,12 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_website', async test => {
                 let environment = new Environment();
                 environment.jsonData = websiteData;
+
                 let website = await environment.createApp().appA.createStarter().createWebsite();
+
                 test.test_app = website;
                 website.appA.logG.toListOfStrings = true;
-
                 await website.uiA.update();
-
                 let rawText = website.uiA.getRawText();
                 return !rawText.includes('demo website (container)') &&
                     rawText.includes('collapsible parent') &&
