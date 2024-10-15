@@ -164,7 +164,7 @@ export class AppA_TestA_ModelG {
                 let starter = environment.createApp().appA.createStarter();
                 let app = starter.createAppWithUI();
                 starter.createData();
-                app.appA.uiA.topImpressum = await starter.createFreshWebMeta();
+                app.appA.uiA.topImpressum = await starter.createUnboundWebMeta();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 await app.updateUi()

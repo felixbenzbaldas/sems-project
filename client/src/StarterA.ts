@@ -25,11 +25,11 @@ export class StarterA {
         } else if (this.getEnvironment().queryParams.has('client-app')) {
             this.createAppWithUIWithCommands_editable();
             this.testMode();
-            this.createdApp.appA.uiA.topImpressum = await this.createFreshWebMeta();
+            this.createdApp.appA.uiA.topImpressum = await this.createUnboundWebMeta();
         } else if (this.getEnvironment().queryParams.has('test')) {
             await this.createTest();
             this.testMode();
-            this.createdApp.appA.uiA.topImpressum = await this.createFreshWebMeta();
+            this.createdApp.appA.uiA.topImpressum = await this.createUnboundWebMeta();
             if (this.getEnvironment().queryParams.has('withFailingDemoTest')) {
                 this.createdApp.appA.testA.withFailingDemoTest = true;
             }
@@ -37,7 +37,7 @@ export class StarterA {
         } else if (this.getEnvironment().queryParams.has('path')) {
             await this.createObjectViewer(this.getEnvironment().queryParams.get('path'));
             this.testMode();
-            this.createdApp.appA.uiA.topImpressum = await this.createFreshWebMeta();
+            this.createdApp.appA.uiA.topImpressum = await this.createUnboundWebMeta();
         } else {
             await this.createWebsite();
             this.testMode();
@@ -127,19 +127,11 @@ export class StarterA {
         this.createdApp.containerA.bind(this.data, 'data');
     }
 
-    async createFreshWebMeta() : Promise<Entity> {
-        let tmpData = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
-        let tmpWebMeta = await (await (await tmpData.list.getObject(0)).list.findByText('webMeta')).list.getObject(0);
-        let webMeta = await this.createdApp.appA.createText(tmpWebMeta.text);
-        if (tmpWebMeta.list) {
-            webMeta.list = new ListA(webMeta);
-            webMeta.collapsible = true;
-            for (let i = 0; i < tmpWebMeta.list.jsList.length; i++) {
-                await webMeta.list.add(await this.createdApp.appA.createText((await tmpWebMeta.list.getObject(i)).text));
-            }
-        }
-        webMeta.uiA = new UiA(webMeta);
-        return webMeta;
+    async createUnboundWebMeta() : Promise<Entity> {
+        let unboundData = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
+        let unboundWebMeta = await (await (await unboundData.list.getObject(0)).list.findByText('webMeta')).list.getObject(0);
+        unboundWebMeta.uiA = new UiA(unboundWebMeta);
+        return unboundWebMeta;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////

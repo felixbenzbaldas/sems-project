@@ -105,6 +105,7 @@ export const testData = {
         },
         "p5L6xkXZAO": {
             "text": "some meta information",
+            "collapsible": true,
             "list": [
                 [
                     "..",
