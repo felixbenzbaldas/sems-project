@@ -3,12 +3,12 @@ import {StarterA} from "@/StarterA";
 import {AppA} from "@/core/AppA";
 import {createRandomString, setCaret} from "@/utils";
 import {ContainerA} from "@/core/ContainerA";
-import {websiteData} from "@/website-data";
 import {AppA_TestA_UiG} from "@/test/AppA_TestA_UiG";
 import {AppA_TestA_ModelG} from "@/test/AppA_TestA_ModelG";
 import {AppA_TestA_SemiG} from "@/test/AppA_TestA_SemiG";
 import {AppA_TestA_PathG} from "@/test/AppA_TestA_PathG";
 import {Environment} from "@/Environment";
+import {testData} from "@/testData";
 
 class TestResults {
     successful : Array<Entity> = [];
@@ -141,11 +141,11 @@ export class AppA_TestA {
                     containedAndSub.name === container.containerA.mapNameEntity.keys().next().value &&
                     container.list.jsList.at(0).pathA;
             }),
-            this.createTest('createFromJson (website-data)', async test => {
+            this.createTest('createFromJson (testData)', async test => {
                 let app = this.appA.createStarter().createApp();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
-                let json = websiteData;
+                let json = testData;
 
                 let container = app.appA.unboundG.createFromJson(json);
 

@@ -1,6 +1,5 @@
 import {Entity} from "@/Entity";
 import {AppA} from "@/core/AppA";
-import {websiteData} from "@/website-data";
 import {testData} from "@/testData";
 
 export class Environment {

@@ -37,7 +37,7 @@ export class StarterA {
             this.testMode();
             this.createdApp.appA.uiA.topImpressum = await this.placeholder.getPlaceholderImpressum();
         } else {
-            await this.createWebsite2();
+            await this.createWebsite();
             this.testMode();
         }
         this.getEnvironment().activeApp = this.createdApp;
@@ -98,18 +98,6 @@ export class StarterA {
     }
 
     async createWebsite() : Promise<Entity> {
-        this.createAppWithUI();
-        this.createdApp.appA.uiA.isWebsite = true;
-        let websiteData = this.placeholder.getWebsiteData();
-        for (let i = 0; i < websiteData.list.jsList.length; i++) {
-            await this.createdApp.appA.uiA.content.list.add(
-                await websiteData.list.getObject(i)
-            );
-        }
-        return this.createdApp;
-    }
-
-    async createWebsite2() : Promise<Entity> {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;
         let data = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);

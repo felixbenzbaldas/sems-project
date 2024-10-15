@@ -1,7 +1,6 @@
 import type {StarterA} from "@/StarterA";
 import {UiA} from "@/ui/UiA";
 import {Entity} from "@/Entity";
-import {websiteData} from "@/website-data";
 
 export class Placeholder {
 
@@ -28,11 +27,5 @@ export class Placeholder {
             await this.starter.createdApp.appA.addAllToListFromRawData(placeholder, JSON.parse(placeholderBody));
         }
         return placeholder;
-    }
-
-    getWebsiteData() {
-        let created = this.starter.createdApp.appA.unboundG.createFromJson(this.starter.getEnvironment().jsonData);
-        this.starter.createdApp.containerA.bind(created, 'website');
-        return created;
     }
 }

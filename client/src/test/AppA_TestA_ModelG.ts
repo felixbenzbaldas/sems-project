@@ -1,7 +1,5 @@
-import {StarterA} from "@/StarterA";
 import type {Entity} from "@/Entity";
 import {Environment} from "@/Environment";
-import {websiteData} from "@/website-data";
 import {testData} from "@/testData";
 
 export class AppA_TestA_ModelG {
@@ -92,24 +90,9 @@ export class AppA_TestA_ModelG {
             }),
             this.createTest('modelTest_website', async test => {
                 let environment = new Environment();
-                environment.jsonData = websiteData;
-
-                let website = await environment.createApp().appA.createStarter().createWebsite();
-
-                test.test_app = website;
-                website.appA.logG.toListOfStrings = true;
-                await website.uiA.update();
-                let rawText = website.uiA.getRawText();
-                return !rawText.includes('demo website (container)') &&
-                    rawText.includes('collapsible parent') &&
-                    rawText.includes('subitem') &&
-                    rawText.includes('Home');
-            }),
-            this.createTest('modelTest_website2', async test => {
-                let environment = new Environment();
                 environment.jsonData = testData;
 
-                let website = await environment.createApp().appA.createStarter().createWebsite2();
+                let website = await environment.createApp().appA.createStarter().createWebsite();
 
                 test.test_app = website;
                 website.appA.logG.toListOfStrings = true;
@@ -126,7 +109,7 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_objectViewer', async test => {
                 let environment = new Environment();
                 environment.jsonData = testData;
-                let objectViewer = await environment.createApp().appA.createStarter().createObjectViewer('2'); // see const websiteData
+                let objectViewer = await environment.createApp().appA.createStarter().createObjectViewer('2'); // see const testData
                 test.test_app = objectViewer;
                 objectViewer.appA.logG.toListOfStrings = true;
                 let rawText = objectViewer.uiA.getRawText();
