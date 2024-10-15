@@ -33,12 +33,17 @@ export class Placeholder {
 
     getWebsiteData() {
         let created;
-        if (this.website.startsWith('marker')) {
-            console.log("startsWith marker");
-            created = this.starter.createdApp.appA.unboundG.createFromJson(websiteData);
+        if (this.starter.getEnvironment()?.jsonData) {
+            console.log("use Environment->jsonData");
+            created = this.starter.createdApp.appA.unboundG.createFromJson(this.starter.getEnvironment().jsonData);
         } else {
-            console.log("starts not with marker");
-            created = this.starter.createdApp.appA.unboundG.createFromJson(JSON.parse(this.website));
+            if (this.website.startsWith('marker')) {
+                console.log("startsWith marker");
+                created = this.starter.createdApp.appA.unboundG.createFromJson(websiteData);
+            } else {
+                console.log("starts not with marker");
+                created = this.starter.createdApp.appA.unboundG.createFromJson(JSON.parse(this.website));
+            }
         }
         this.starter.createdApp.containerA.bind(created, 'website');
         return created;
