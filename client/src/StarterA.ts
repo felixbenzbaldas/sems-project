@@ -3,18 +3,14 @@ import {AppA_UiA} from "@/ui/AppA_UiA";
 import {AppA} from "@/core/AppA";
 import {AppA_TestA} from "@/test/AppA_TestA";
 import {UiA} from "@/ui/UiA";
-import {Placeholder} from "@/Placeholder";
 import {Environment} from "@/Environment";
-import {ListA} from "@/core/ListA";
 
 export class StarterA {
 
-    placeholder : Placeholder;
     createdApp : Entity;
     data: Entity;
 
     constructor(public entity? : Entity) {
-        this.placeholder = new Placeholder(this);
     }
 
     async fullStart() : Promise<HTMLElement> {
