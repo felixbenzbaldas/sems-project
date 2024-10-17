@@ -3,6 +3,9 @@ export const testData = {
     "list": [
         [
             "20"
+        ],
+        [
+            "bVxq4DNobR"
         ]
     ],
     "objects": {
@@ -94,6 +97,9 @@ export const testData = {
                 ]
             ]
         },
+        "101": {
+            "text": "subitem (webmeta)"
+        },
         "FObPP80aX9": {
             "text": "webMeta",
             "list": [
@@ -105,16 +111,34 @@ export const testData = {
         },
         "p5L6xkXZAO": {
             "text": "some meta information",
-            "collapsible": true,
             "list": [
                 [
                     "..",
                     "101"
                 ]
+            ],
+            "collapsible": true
+        },
+        "bVxq4DNobR": {
+            "text": "testdomain.org",
+            "list": [
+                [
+                    "..",
+                    "mtg2ZtfqQb"
+                ]
             ]
         },
-        "101": {
-            "text": "subitem (webmeta)"
+        "lb6AtGozSV": {
+            "text": "testwebsite"
+        },
+        "mtg2ZtfqQb": {
+            "text": "start",
+            "list": [
+                [
+                    "..",
+                    "lb6AtGozSV"
+                ]
+            ]
         }
     }
 };

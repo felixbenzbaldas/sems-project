@@ -97,7 +97,8 @@ export class StarterA {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;
         this.createData();
-        let start = await (await this.data.list.getObject(0)).list.getObject(0);
+        let website = await this.data.list.findByText(this.getEnvironment().hostname)
+        let start = await website.list.getObject(0);
         for (let i = 0; i < start.list.jsList.length; i++) {
             await this.createdApp.appA.uiA.content.list.add(
                 await start.list.getObject(i)
@@ -152,18 +153,6 @@ export class StarterA {
     static createAppWithUI() {
         let starter = new StarterA();
         starter.createAppWithUI();
-        return starter.createdApp;
-    }
-
-    static async createObjectViewer(pathString: string) {
-        let starter = new StarterA();
-        await starter.createObjectViewer(pathString);
-        return starter.createdApp;
-    }
-
-    static async createWebsite() {
-        let starter = new StarterA();
-        await starter.createWebsite();
         return starter.createdApp;
     }
 }

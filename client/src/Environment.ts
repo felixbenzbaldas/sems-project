@@ -7,6 +7,7 @@ export class Environment {
     queryParams : URLSearchParams;
     activeApp: Entity;
     jsonData : any;
+    hostname: string;
 
     static create() : Environment {
         let environment = new Environment();
@@ -18,6 +19,7 @@ export class Environment {
         } else {
             environment.jsonData = JSON.parse(placeholder_jsonString);
         }
+        environment.hostname = window.location.hostname;
         return environment;
     }
 
