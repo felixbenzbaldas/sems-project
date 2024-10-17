@@ -5,7 +5,7 @@ Content means notes, texts, structured data, images and more.
 
 #### Project Status
 
-eS is being developed. The first useful features will probably be available in october 2024.
+eS is being developed.
 
 #### Entity Aspects
 
