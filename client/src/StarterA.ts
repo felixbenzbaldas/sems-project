@@ -97,17 +97,7 @@ export class StarterA {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;
         this.createData();
-        let hostname : string;
-        if (this.getEnvironment().hostname === 'localhost') {
-            if (this.getEnvironment().queryParams?.has('virtualHostname')) {
-                hostname = this.getEnvironment().queryParams.get('virtualHostname');
-            } else {
-                hostname = 'localhost';
-            }
-        } else {
-            hostname = this.getEnvironment().hostname;
-        }
-        let website = await this.data.list.findByText(hostname)
+        let website = await this.data.list.findByText(this.createWebsite_hostname())
         let start = await website.list.getObject(0);
         for (let i = 0; i < start.list.jsList.length; i++) {
             await this.createdApp.appA.uiA.content.list.add(
@@ -115,6 +105,18 @@ export class StarterA {
             );
         }
         return this.createdApp;
+    }
+
+    createWebsite_hostname() : string {
+        if (this.getEnvironment().hostname === 'localhost') {
+            if (this.getEnvironment().queryParams?.has('virtualHostname')) {
+                return this.getEnvironment().queryParams.get('virtualHostname');
+            } else {
+                return 'localhost';
+            }
+        } else {
+            return this.getEnvironment().hostname;
+        }
     }
 
     async createObjectViewer(pathString: string) : Promise<Entity> {
