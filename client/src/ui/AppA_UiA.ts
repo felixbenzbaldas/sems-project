@@ -13,7 +13,6 @@ export class AppA_UiA {
     readonly output : OutputA;
     readonly input : InputA;
     focused : Entity;
-    topImpressum: Entity;
     readonly htmlElement: HTMLElement = document.createElement('div');
     globalEventG: AppA_UiA_GlobalEventG;
     withPlaceholderArea: boolean;
@@ -52,9 +51,6 @@ export class AppA_UiA {
     }
 
     async update() : Promise<void> {
-        if (this.topImpressum) {
-            await this.topImpressum.updateUi();
-        }
         if (this.showMeta) {
             await this.commands.updateUi();
             await this.input.getUi().updateUi();
@@ -71,10 +67,6 @@ export class AppA_UiA {
 
     private updateUiElement() {
         this.htmlElement.innerHTML = null;
-        if (this.topImpressum) {
-            this.htmlElement.appendChild(this.topImpressum.uiA.htmlElement);
-            this.htmlElement.appendChild(this.separatorLine());
-        }
         if (this.showMeta) {
             if (this.commands) {
                 this.htmlElement.appendChild(this.commands.uiA.htmlElement);
@@ -88,6 +80,9 @@ export class AppA_UiA {
         if (this.withPlaceholderArea) {
             this.htmlElement.appendChild(this.createPlaceholderArea());
         }
+        if (this.webMeta) {
+            this.htmlElement.appendChild(this.webMeta.uiA.htmlElement);
+        }
     }
 
     private separatorLine() : HTMLElement {
@@ -100,9 +95,6 @@ export class AppA_UiA {
 
     getRawText() : string {
         let rawText = '';
-        if (this.topImpressum) {
-            rawText += this.topImpressum.uiA.getRawText();
-        }
         if (this.entity.appA.testA) {
             rawText += this.content.uiA.getRawText();
         } else {

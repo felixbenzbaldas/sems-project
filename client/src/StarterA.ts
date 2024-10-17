@@ -21,11 +21,9 @@ export class StarterA {
         } else if (this.getEnvironment().queryParams.has('client-app')) {
             this.createAppWithUIWithCommands_editable();
             this.testMode();
-            this.createdApp.appA.uiA.topImpressum = await this.createUnboundWebMeta();
         } else if (this.getEnvironment().queryParams.has('test')) {
             await this.createTest();
             this.testMode();
-            this.createdApp.appA.uiA.topImpressum = await this.createUnboundWebMeta();
             if (this.getEnvironment().queryParams.has('withFailingDemoTest')) {
                 this.createdApp.appA.testA.withFailingDemoTest = true;
             }
@@ -33,13 +31,13 @@ export class StarterA {
         } else if (this.getEnvironment().queryParams.has('path')) {
             await this.createObjectViewer(this.getEnvironment().queryParams.get('path'));
             this.testMode();
-            this.createdApp.appA.uiA.topImpressum = await this.createUnboundWebMeta();
         } else {
             await this.createWebsite();
             this.testMode();
         }
         this.getEnvironment().activeApp = this.createdApp;
         this.createdApp.appA.uiA.withPlaceholderArea = true;
+        this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
         await this.createdApp.uiA.update();
         if (this.getEnvironment().queryParams.has('path')) {
             await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();
