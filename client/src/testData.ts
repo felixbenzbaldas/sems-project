@@ -52,7 +52,7 @@ export const testData = {
             "link": "https://einfaches-web.org"
         },
         "20": {
-            "text": "localhost",
+            "text": "testdomain1.org",
             "list": [
                 [
                     "..",
@@ -120,7 +120,7 @@ export const testData = {
             "collapsible": true
         },
         "bVxq4DNobR": {
-            "text": "testdomain.org",
+            "text": "testdomain2.org",
             "list": [
                 [
                     "..",
@@ -129,7 +129,7 @@ export const testData = {
             ]
         },
         "lb6AtGozSV": {
-            "text": "testwebsite"
+            "text": "testwebsite2"
         },
         "mtg2ZtfqQb": {
             "text": "start",

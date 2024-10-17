@@ -91,7 +91,7 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_website', async test => {
                 let environment = new Environment();
                 environment.jsonData = testData;
-                environment.hostname = 'localhost';
+                environment.hostname = 'testdomain1.org';
 
                 let website = await environment.createApp().appA.createStarter().createWebsite();
 
@@ -101,7 +101,7 @@ export class AppA_TestA_ModelG {
                 let rawText = website.uiA.getRawText();
                 test.test_app.log('rawText = ' + rawText);
                 return !rawText.includes('demo website (container)') &&
-                    !rawText.includes('localhost') &&
+                    !rawText.includes('testdomain1.org') &&
                     !rawText.includes('start') &&
                     rawText.includes('collapsible parent') &&
                     rawText.includes('subitem') &&
@@ -111,7 +111,7 @@ export class AppA_TestA_ModelG {
                 let environment = new Environment();
                 environment.jsonData = testData;
                 environment.hostname = 'localhost';
-                environment.queryParams = new URLSearchParams('virtualHostname=testdomain.org');
+                environment.queryParams = new URLSearchParams('virtualHostname=testdomain2.org');
 
                 let website = await environment.createApp().appA.createStarter().createWebsite();
 
@@ -120,7 +120,7 @@ export class AppA_TestA_ModelG {
                 await website.uiA.update();
                 let rawText = website.uiA.getRawText();
                 test.test_app.log('rawText = ' + rawText);
-                return rawText.includes('testwebsite');
+                return rawText.includes('testwebsite2');
             }),
             this.createTest('modelTest_objectViewer', async test => {
                 let environment = new Environment();
