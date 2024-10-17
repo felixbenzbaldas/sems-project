@@ -163,13 +163,16 @@ export class AppA_TestA_ModelG {
                 environment.jsonData = testData;
                 let starter = environment.createApp().appA.createStarter();
                 let app = starter.createAppWithUI();
-                app.appA.uiA.topImpressum = await starter.createUnboundWebMeta();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
+                app.appA.uiA.webMeta = await starter.createUnboundWebMeta();
+                await app.appA.uiA.globalEventG.newSubitem();
+                (await app.appA.uiA.content.list.getObject(0)).text = 'foo';
+                app.appA.uiA.withPlaceholderArea = true;
                 await app.updateUi()
                 let rawText = app.uiA.getRawText();
                 test.test_app.log(rawText);
-                return rawText === 'some meta information';
+                return rawText === 'foosome meta information';
             })
         ];
     }

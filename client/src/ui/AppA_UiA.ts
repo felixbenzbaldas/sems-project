@@ -19,6 +19,7 @@ export class AppA_UiA {
     withPlaceholderArea: boolean;
     showMeta : boolean;
     clipboard: Entity;
+    webMeta: Entity;
 
     private focusStyle_marker: HTMLElement;
 
@@ -62,6 +63,9 @@ export class AppA_UiA {
         this.content.uiA.editable = this.entity.uiA.editable;
         this.focusStyle_update();
         await this.content.updateUi();
+        if (this.webMeta) {
+            await this.webMeta.updateUi();
+        }
         this.updateUiElement();
     }
 
@@ -110,6 +114,9 @@ export class AppA_UiA {
                 rawText += this.input.getUi().uiA.getRawText();
             }
             rawText += this.content.uiA.getRawText();
+        }
+        if (this.webMeta) {
+            rawText += this.webMeta.uiA.getRawText();
         }
         return rawText;
     }
