@@ -97,7 +97,17 @@ export class StarterA {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;
         this.createData();
-        let website = await this.data.list.findByText(this.getEnvironment().hostname)
+        let hostname : string;
+        if (this.getEnvironment().hostname === 'localhost') {
+            if (this.getEnvironment().queryParams?.has('virtualHostname')) {
+                hostname = this.getEnvironment().queryParams.get('virtualHostname');
+            } else {
+                hostname = 'localhost';
+            }
+        } else {
+            hostname = this.getEnvironment().hostname;
+        }
+        let website = await this.data.list.findByText(hostname)
         let start = await website.list.getObject(0);
         for (let i = 0; i < start.list.jsList.length; i++) {
             await this.createdApp.appA.uiA.content.list.add(

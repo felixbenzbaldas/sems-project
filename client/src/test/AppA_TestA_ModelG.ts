@@ -107,6 +107,21 @@ export class AppA_TestA_ModelG {
                     rawText.includes('subitem') &&
                     rawText.includes('Home');
             }),
+            this.createTest('modelTest_website_virtualHostname', async test => {
+                let environment = new Environment();
+                environment.jsonData = testData;
+                environment.hostname = 'localhost';
+                environment.queryParams = new URLSearchParams('virtualHostname=testdomain.org');
+
+                let website = await environment.createApp().appA.createStarter().createWebsite();
+
+                test.test_app = website;
+                website.appA.logG.toListOfStrings = true;
+                await website.uiA.update();
+                let rawText = website.uiA.getRawText();
+                test.test_app.log('rawText = ' + rawText);
+                return rawText.includes('testwebsite');
+            }),
             this.createTest('modelTest_objectViewer', async test => {
                 let environment = new Environment();
                 environment.jsonData = testData;
@@ -174,19 +189,6 @@ export class AppA_TestA_ModelG {
                 let rawText = app.uiA.getRawText();
                 test.test_app.log(rawText);
                 return rawText === 'foosome meta information';
-            }),
-            this.createTest('modelTest_websiteForHostname', async test => {
-                let environment = new Environment();
-                environment.jsonData = testData;
-                environment.hostname = 'testdomain.org';
-                let starter = environment.createApp().appA.createStarter();
-                let app = await starter.createWebsite();
-                test.test_app = app;
-                app.appA.logG.toListOfStrings = true;
-                await app.updateUi()
-                let rawText = app.uiA.getRawText();
-                test.test_app.log(rawText);
-                return rawText === 'testwebsite';
             })
         ];
     }
