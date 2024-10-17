@@ -19,17 +19,9 @@ public class AppA_DeployG {
         this.deleteOldFiles();
         this.buildClient();
         Utils.copyFolder(Path.of("client/dist"), Path.of(this.path + "/heroku/sems"));
-        this.replacements();
+        this.replace(this.path + "/data/PUBLIC-replacement-website.txt",
+            "marker-dr53hifhh4-website");
         this.run();
-    }
-
-    private void replacements() throws IOException {
-        String replacementPathImpressumHeader = this.path + "/PUBLIC-replacement-impressum-header.txt";
-        String replacementPathImpressumBody = this.path + "/PUBLIC-replacement-impressum-body.txt";
-        String replacementPathWebsite = this.path + "/data/PUBLIC-replacement-website.txt";
-        this.deprecatedReplace(replacementPathImpressumHeader, "marker-dr53hifhh4-impressum-header");
-        this.deprecatedReplace(replacementPathImpressumBody, "marker-dr53hifhh4-impressum-body");
-        this.replace_prettyJson(replacementPathWebsite, "marker-dr53hifhh4-website");
     }
 
     private void deleteOldFiles() throws IOException {
@@ -49,22 +41,7 @@ public class AppA_DeployG {
         }
     }
 
-    private void deprecatedReplace(String pathOfReplacement, String toReplace) throws IOException {
-        String replacement = Utils.readFromFile(new File(pathOfReplacement));
-        boolean found = false;
-        for (File file : new File(this.path + "/heroku/sems/assets").listFiles()) {
-            String oldText = Utils.readFromFile(file);
-            if (oldText.contains(toReplace)) {
-                found = true;
-            }
-            Utils.writeToFile(file, oldText.replace(toReplace, replacement));
-        }
-        if (!found) {
-            throw new RuntimeException("replace was not successful!");
-        }
-    }
-
-    public void replace_prettyJson(String pathOfReplacement, String toReplace) throws IOException {
+    public void replace(String pathOfReplacement, String toReplace) throws IOException {
         Object json = new ObjectMapper().readValue(new File(pathOfReplacement), Object.class);
         String jsonString = new ObjectMapper().writeValueAsString(json);
         String replacement = this.entity.appA.escapeJsonString(jsonString);
