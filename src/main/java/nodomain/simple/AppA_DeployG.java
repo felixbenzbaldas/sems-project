@@ -60,7 +60,7 @@ public class AppA_DeployG {
 
     public void run() {
         Utils.runMultiplePlatformCommands(
-            "start \"\" http://localhost:8086/?testMode",
+            "start \"\" http://localhost:8086/?virtualHostname=einfaches-web.org",
             "start \"\" http://localhost:8086/?test",
             "start \"\" http://localhost:8086/?client-app"
         );
