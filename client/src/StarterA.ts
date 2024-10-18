@@ -98,11 +98,14 @@ export class StarterA {
         this.createdApp.appA.uiA.isWebsite = true;
         this.createData();
         let website = await this.data.list.findByText(this.createWebsite_hostname())
-        let start = await website.list.getObject(0);
+        let start = await website.list.findByText('start');
         for (let i = 0; i < start.list.jsList.length; i++) {
             await this.createdApp.appA.uiA.content.list.add(
                 await start.list.getObject(i)
             );
+        }
+        if (this.getEnvironment().setTitle)  {
+            this.getEnvironment().setTitle((await (await website.list.findByText('title'))?.list.getObject(0)).text);
         }
         return this.createdApp;
     }

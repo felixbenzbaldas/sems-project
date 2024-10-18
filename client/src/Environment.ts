@@ -8,6 +8,7 @@ export class Environment {
     activeApp: Entity;
     jsonData : any;
     hostname: string;
+    setTitle: (text: string) => void;
 
     static create() : Environment {
         let environment = new Environment();
@@ -20,6 +21,9 @@ export class Environment {
             environment.jsonData = JSON.parse(placeholder_jsonString);
         }
         environment.hostname = window.location.hostname;
+        environment.setTitle = text => {
+            document.title = text;
+        }
         return environment;
     }
 

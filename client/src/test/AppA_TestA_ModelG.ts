@@ -92,6 +92,10 @@ export class AppA_TestA_ModelG {
                 let environment = new Environment();
                 environment.jsonData = testData;
                 environment.hostname = 'testdomain1.org';
+                let settedTitle : string;
+                environment.setTitle = (text) => {
+                    settedTitle = text;
+                }
 
                 let website = await environment.createApp().appA.createStarter().createWebsite();
 
@@ -99,13 +103,15 @@ export class AppA_TestA_ModelG {
                 website.appA.logG.toListOfStrings = true;
                 await website.uiA.update();
                 let rawText = website.uiA.getRawText();
+                test.test_app.log('setted title = ' + settedTitle);
                 test.test_app.log('rawText = ' + rawText);
                 return !rawText.includes('demo website (container)') &&
                     !rawText.includes('testdomain1.org') &&
                     !rawText.includes('start') &&
                     rawText.includes('collapsible parent') &&
                     rawText.includes('subitem') &&
-                    rawText.includes('Home');
+                    rawText.includes('Home') &&
+                    settedTitle === 'demo title';
             }),
             this.createTest('modelTest_website_virtualHostname', async test => {
                 let environment = new Environment();
