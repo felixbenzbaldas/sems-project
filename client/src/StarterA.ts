@@ -39,7 +39,7 @@ export class StarterA {
         this.createdApp.appA.uiA.withPlaceholderArea = true;
         this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
         await this.createdApp.uiA.update();
-        if (this.getEnvironment().queryParams.has('path')) {
+        if (this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.length === 1) {
             await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();
         }
         return this.createdApp.uiA.htmlElement;
