@@ -1,7 +1,7 @@
 import {Entity} from "@/Entity";
 import {StarterA} from "@/StarterA";
 import {AppA} from "@/core/AppA";
-import {createRandomString, notNullUndefined, nullUndefined, setCaret} from "@/utils";
+import {assert_sameAs, createRandomString, notNullUndefined, nullUndefined, setCaret} from "@/utils";
 import {ContainerA} from "@/core/ContainerA";
 import {AppA_TestA_UiG} from "@/test/AppA_TestA_UiG";
 import {AppA_TestA_ModelG} from "@/test/AppA_TestA_ModelG";
@@ -199,6 +199,15 @@ export class AppA_TestA {
                     nullUndefined(undefined) &&
                     !nullUndefined(42) &&
                     notNullUndefined(42);
+            }),
+            this.createTest('assert_sameAs', async test => {
+                try {
+                    assert_sameAs(42, 43);
+                } catch (throwable) {
+                    let error = throwable as Error;
+                    return error.message === 'AssertionError: 42 !== 43';
+                }
+                return false;
             }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),

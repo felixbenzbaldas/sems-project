@@ -59,3 +59,9 @@ export function getSelectedText(): string {
         return document.getSelection().toString();
     }
 }
+
+export function assert_sameAs(firstValue : any, secondValue : any) {
+    if (firstValue !== secondValue) {
+        throw new Error('AssertionError: ' + firstValue + ' !== ' + secondValue);
+    }
+}
