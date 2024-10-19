@@ -180,7 +180,7 @@ export class AppA_TestA {
 
                 let found = await list.list.findByText('findMe');
 
-                return found === subitem;
+                assert_sameAs(found, subitem);
             }),
             this.createTest('createStarter', async test => {
                 let starterApplication = new Entity();
