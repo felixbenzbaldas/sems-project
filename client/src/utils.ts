@@ -4,8 +4,12 @@ export async function wait(milliseconds : number) {
     });
 }
 
+export function nullUndefined(toCheck : any) : boolean {
+    return toCheck === null || toCheck === undefined;
+}
+
 export function notNullUndefined(toCheck : any) {
-    return toCheck != null && toCheck != undefined;
+    return !nullUndefined(toCheck);
 }
 
 export function setCaret(htmlElement: HTMLElement, position: number) {

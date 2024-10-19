@@ -1,7 +1,7 @@
 import {Entity} from "@/Entity";
 import {StarterA} from "@/StarterA";
 import {AppA} from "@/core/AppA";
-import {createRandomString, setCaret} from "@/utils";
+import {createRandomString, notNullUndefined, nullUndefined, setCaret} from "@/utils";
 import {ContainerA} from "@/core/ContainerA";
 import {AppA_TestA_UiG} from "@/test/AppA_TestA_UiG";
 import {AppA_TestA_ModelG} from "@/test/AppA_TestA_ModelG";
@@ -191,6 +191,14 @@ export class AppA_TestA {
                 let starter : StarterA = starterApplication.appA.createStarter();
 
                 return starter && starter.entity.app === starterApplication;
+            }),
+            this.createTest('nullUndefined', async test => {
+                test.test_app = StarterA.createApp();
+                let app = test.test_app;
+                return nullUndefined(null) &&
+                    nullUndefined(undefined) &&
+                    !nullUndefined(42) &&
+                    notNullUndefined(42);
             }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),

@@ -3,7 +3,7 @@ import {PathA} from "@/core/PathA";
 import {AppA} from "@/core/AppA";
 import {ContainerA} from "@/core/ContainerA";
 import {UiA} from "@/ui/UiA";
-import {notNullUndefined} from "@/utils";
+import {notNullUndefined, nullUndefined} from "@/utils";
 import type {StarterA} from "@/StarterA";
 import type {Environment} from "@/Environment";
 
@@ -111,7 +111,7 @@ export class Entity {
     }
 
     isUnbound() : boolean {
-        return !notNullUndefined(this.name) || !this.container;
+        return nullUndefined(this.name) || !this.container;
     }
 
     async export(): Promise<any> {
@@ -275,7 +275,7 @@ export class Entity {
     }
 
     uis_add(ui: Entity) {
-        if (!notNullUndefined(this.uis)) {
+        if (nullUndefined(this.uis)) {
             this.uis = [];
         }
         this.uis.push(ui);

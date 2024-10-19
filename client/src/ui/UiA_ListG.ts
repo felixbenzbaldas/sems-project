@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined} from "@/utils";
+import {notNullUndefined, nullUndefined} from "@/utils";
 import {UiA} from "@/ui/UiA";
 
 export class UiA_ListG {
@@ -12,7 +12,7 @@ export class UiA_ListG {
 
     async update() {
         if (this.getObject().collapsible) {
-            if (!notNullUndefined(this.entity.collapsed)) {
+            if (nullUndefined(this.entity.collapsed)) {
                 this.entity.collapsed = true;
             }
         }
