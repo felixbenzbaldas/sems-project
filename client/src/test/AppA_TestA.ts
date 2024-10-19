@@ -75,7 +75,7 @@ export class AppA_TestA {
         let test = this.appA.unboundG.createText(name);
         test.isTest = true;
         test.action = async () => {
-            test.test_result = await action(test);
+            test.test_result = await action(test) !== false;
             return test.test_result;
         }
         return test;
