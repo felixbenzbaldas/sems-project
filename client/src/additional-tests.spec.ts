@@ -9,6 +9,14 @@ describe('platform', () => {
 
         expect(json.text).toEqual('bar');
     });
+
+    it('null and undefined', async () => {
+        expect(undefined == null).toBe(true);
+        expect(undefined != null).toBe(false);
+        expect(undefined === null).toBe(false);
+        expect(undefined !== null).toBe(true);
+        expect(null ?? 42).toBe(42);
+    });
 });
 
 describe('slow tests', () => {
