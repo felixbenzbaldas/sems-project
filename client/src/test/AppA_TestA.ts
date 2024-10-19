@@ -193,7 +193,7 @@ export class AppA_TestA {
                 return starter && starter.entity.app === starterApplication;
             }),
             this.createTest('nullUndefined', async test => {
-                test.test_app = StarterA.createApp();
+                test.test_app = this.appA.createStarter().createApp();
                 let app = test.test_app;
                 return nullUndefined(null) &&
                     nullUndefined(undefined) &&
