@@ -184,4 +184,8 @@ export class UiA {
             }
         }
     }
+
+    hasFocus() {
+        return this.entity.getApp().appA.uiA.focused === this.entity;
+    }
 }

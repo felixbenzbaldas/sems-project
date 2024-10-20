@@ -305,8 +305,4 @@ export class Entity {
         await this.uiA.bodyG.collapse();
     }
 
-    ui_hasFocus() {
-        return this.getApp().appA.uiA.focused == this;
-    }
-
 }
