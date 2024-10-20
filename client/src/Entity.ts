@@ -16,7 +16,7 @@ export class Entity {
     list: ListA;
     app: Entity;
     action: Function;
-    hidden: boolean = false;
+    hidden: boolean;
     pathA: PathA;
     appA: AppA;
     containerA: ContainerA;
