@@ -13,25 +13,28 @@ export class Entity {
     container: Entity;
     text: string;
     link: string;
-    listA: ListA;
     app: Entity;
     action: Function;
     hidden: boolean;
+    editable: boolean;
+    collapsible: boolean;
+    dangerous_html: HTMLElement;
+    uis: Array<Entity>;
+
+    listA: ListA;
     pathA: PathA;
     appA: AppA;
     containerA: ContainerA;
-    editable: boolean;
     uiA: UiA;
+    starterA: StarterA;
+
     ui_context: Entity;
-    test_result_error: any;
-    collapsible: boolean;
     collapsed: boolean;
+
+    test_result_error: any;
     test_result: boolean;
     test_app: Entity;
-    dangerous_html: HTMLElement;
     isTest: boolean;
-    uis: Array<Entity>;
-    starterA: StarterA;
 
     json_withoutContainedObjects() : any {
         let obj: any = {
