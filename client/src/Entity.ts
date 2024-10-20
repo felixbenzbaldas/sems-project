@@ -28,7 +28,6 @@ export class Entity {
     uiA: UiA;
     starterA: StarterA;
 
-
     test_result_error: any;
     test_result: boolean;
     test_app: Entity;
