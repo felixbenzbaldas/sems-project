@@ -49,10 +49,6 @@ export class AppA_UnboundG {
     }
 
     createFromJson(json: any) : Entity {
-        {
-            let jsonString = JSON.stringify(json);
-            this.entity.logInfo('createFromJson ' + jsonString.substring(0, Math.min(jsonString.length, 20)) + ' ...');
-        }
         let entity : Entity = this.entity.appA.createEntityWithApp();
         entity.text = json.text;
         entity.collapsible = json.collapsible;
