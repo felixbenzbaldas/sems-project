@@ -11,18 +11,18 @@ import type {Environment} from "@/Environment";
 
 export class AppA {
 
-    uiA: AppA_UiA;
-    readonly logG: LogG;
-    testA : AppA_TestA;
     currentContainer: Entity;
-    unboundG : AppA_UnboundG;
     environment: Environment;
+    readonly logG: LogG;
+    readonly unboundG : AppA_UnboundG;
+    uiA: AppA_UiA;
+    testA : AppA_TestA;
 
     constructor(private entity : Entity) {
         this.unboundG = new AppA_UnboundG(entity);
+        this.logG = new LogG(entity);
         entity.containerA = new ContainerA(entity);
         this.currentContainer = entity;
-        this.logG = new LogG(entity);
     }
 
     createEntityWithApp() {
