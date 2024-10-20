@@ -28,8 +28,6 @@ export class Entity {
     uiA: UiA;
     starterA: StarterA;
 
-    ui_context: Entity;
-    collapsed: boolean;
 
     test_result_error: any;
     test_result: boolean;
@@ -50,24 +48,6 @@ export class Entity {
             obj.currentContainerText = this.appA.currentContainer.text;
         }
         return obj;
-    }
-
-    async defaultAction() {
-        if (this.appA?.uiA) {
-            await this.appA.uiA.newSubitem();
-        } else if (this.action) {
-            throw 'not implemented yet';
-        } else {
-            await this.ui_context.defaultActionOnSubitem(this);
-        }
-    }
-
-    async defaultActionOnSubitem(subitem : Entity) {
-        await this.uiA.listG.defaultActionOnSubitem(subitem);
-    }
-
-    async pasteNextOnSubitem(subitem: Entity) {
-        await this.uiA.listG.pasteNextOnSubitem(subitem);
     }
 
     getPath(object: Entity) : Entity {
@@ -167,10 +147,6 @@ export class Entity {
         }
     }
 
-    ui_hasFocus() {
-        return this.getApp().appA.uiA.focused == this;
-    }
-
     getApp() {
         if (this.appA) {
             return this;
@@ -209,6 +185,66 @@ export class Entity {
 
     async updateUi() {
         await this.uiA.update();
+    }
+
+    getObject() : Entity {
+        if (this.uiA?.object) {
+            return this.uiA.object;
+        } else {
+            return this;
+        }
+    }
+
+    uis_add(ui: Entity) {
+        if (nullUndefined(this.uis)) {
+            this.uis = [];
+        }
+        this.uis.push(ui);
+    }
+
+    async uis_update() {
+        if (this.uiA) {
+            await this.uiA.update();
+        }
+        if (notNullUndefined(this.uis)) {
+            for (let ui of this.uis) {
+                await ui.uiA.update();
+            }
+        }
+    }
+
+    uis_update_currentContainerStyle() {
+        if (this.uiA) {
+            this.uiA.headerG.updateCurrentContainerStyle();
+        }
+        if (notNullUndefined(this.uis)) {
+            for (let ui of this.uis) {
+                ui.uiA.headerG.updateCurrentContainerStyle();
+            }
+        }
+    }
+
+    // TODO the following members belong to uiA
+
+    ui_context: Entity;
+    collapsed: boolean;
+
+    async defaultAction() {
+        if (this.appA?.uiA) {
+            await this.appA.uiA.newSubitem();
+        } else if (this.action) {
+            throw 'not implemented yet';
+        } else {
+            await this.ui_context.defaultActionOnSubitem(this);
+        }
+    }
+
+    async defaultActionOnSubitem(subitem : Entity) {
+        await this.uiA.listG.defaultActionOnSubitem(subitem);
+    }
+
+    async pasteNextOnSubitem(subitem: Entity) {
+        await this.uiA.listG.pasteNextOnSubitem(subitem);
     }
 
     async newSubitem() {
@@ -263,46 +299,14 @@ export class Entity {
         }
     }
 
-    getObject() : Entity {
-        if (this.uiA?.object) {
-            return this.uiA.object;
-        } else {
-            return this;
-        }
-    }
-
     async collapse() {
         this.collapsed = true;
         this.uiA.headerG.updateBodyIcon();
         await this.uiA.bodyG.collapse();
     }
 
-    uis_add(ui: Entity) {
-        if (nullUndefined(this.uis)) {
-            this.uis = [];
-        }
-        this.uis.push(ui);
+    ui_hasFocus() {
+        return this.getApp().appA.uiA.focused == this;
     }
 
-    async uis_update() {
-        if (this.uiA) {
-            await this.uiA.update();
-        }
-        if (notNullUndefined(this.uis)) {
-            for (let ui of this.uis) {
-                await ui.uiA.update();
-            }
-        }
-    }
-
-    uis_update_currentContainerStyle() {
-        if (this.uiA) {
-            this.uiA.headerG.updateCurrentContainerStyle();
-        }
-        if (notNullUndefined(this.uis)) {
-            for (let ui of this.uis) {
-                ui.uiA.headerG.updateCurrentContainerStyle();
-            }
-        }
-    }
 }
