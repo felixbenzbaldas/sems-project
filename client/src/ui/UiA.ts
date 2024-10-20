@@ -5,6 +5,7 @@ import {UiA_TextG} from "@/ui/UiA_TextG";
 import {UiA_BodyG} from "@/ui/UiA_BodyG";
 import {UiA_HeaderG} from "@/ui/UiA_HeaderG";
 import {UiA_TestG} from "@/ui/UiA_TestG";
+import {ListA} from "@/ListA";
 
 export class UiA {
 
@@ -17,6 +18,7 @@ export class UiA {
     testG: UiA_TestG;
     object: Entity;
     context: Entity;
+    collapsed: boolean;
 
     constructor(private entity : Entity) {
         this.listG = new UiA_ListG(entity);
@@ -56,7 +58,7 @@ export class UiA {
             } else if (this.headerG.headerAvailable()) {
                 this.htmlElement.appendChild(this.headerG.htmlElement);
                 this.htmlElement.appendChild(this.bodyG.htmlElement);
-            } else if (this.getObject().listA && this.entity.collapsed != true) {
+            } else if (this.getObject().listA && this.collapsed != true) {
                 this.htmlElement.appendChild(this.listG.htmlElement);
             } else if (this.getObject().dangerous_html) {
                 this.htmlElement.appendChild(this.getObject().dangerous_html);
@@ -103,7 +105,7 @@ export class UiA {
                     if (notNullUndefined(this.getObject().text)) {
                         rawText += this.getObject().text;
                     }
-                    if (this.getObject().listA && this.entity.collapsed != true) {
+                    if (this.getObject().listA && this.collapsed != true) {
                         rawText += this.listG.getRawText();
                     }
                     return rawText;
@@ -140,7 +142,7 @@ export class UiA {
                         await this.headerG.clickEvent();
                     }
                 }
-                if (!this.entity.collapsed && this.bodyG.bodyAvailable()) {
+                if (!this.collapsed && this.bodyG.bodyAvailable()) {
                     await this.listG.click(text);
                 }
             } else if (this.getObject().listA) {
@@ -161,7 +163,7 @@ export class UiA {
                         counter++;
                     }
                 }
-                if (this.getObject().listA && !this.entity.collapsed) {
+                if (this.getObject().listA && !this.collapsed) {
                     counter += this.listG.countEditableTexts();
                 }
                 return counter;
@@ -188,5 +190,81 @@ export class UiA {
 
     hasFocus() {
         return this.entity.getApp().appA.uiA.focused === this.entity;
+    }
+
+    async defaultAction() {
+        if (this.entity.appA?.uiA) {
+            await this.entity.appA.uiA.newSubitem();
+        } else if (this.entity.action) {
+            throw 'not implemented yet';
+        } else {
+            await this.context.uiA.defaultActionOnSubitem(this.entity);
+        }
+    }
+
+    async defaultActionOnSubitem(subitem : Entity) {
+        await this.listG.defaultActionOnSubitem(subitem);
+    }
+
+    async pasteNextOnSubitem(subitem: Entity) {
+        await this.listG.pasteNextOnSubitem(subitem);
+    }
+
+    async newSubitem() {
+        this.entity.log('newSubitem');
+        if (this.entity.appA?.uiA) {
+            await this.entity.appA.uiA.newSubitem();
+        } else {
+            if (this.object) {
+                if (!this.getObject().listA) {
+                    this.getObject().listA = new ListA(this.getObject());
+                }
+                let created = await this.entity.getApp().appA.createText('');
+                await this.listG.insertObjectAtPosition(created, 0);
+                await this.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
+                this.entity.getApp().appA.uiA.focus(this.listG.uisOfListItems.at(0));
+            } else {
+                if (!this.entity.listA) {
+                    this.entity.listA = new ListA(this.entity);
+                }
+                let created = await this.entity.getApp().appA.createText('');
+                await this.entity.listA.add(created);
+                await this.update();
+                this.entity.getApp().appA.uiA.focus(created);
+            }
+        }
+    }
+
+    async toggleCollapsible() {
+        this.getObject().collapsible = !this.getObject().collapsible;
+        this.collapsed = false;
+        await this.update();
+    }
+
+    async expandOrCollapse() {
+        if (this.getObject().collapsible) {
+            if (this.collapsed) {
+                await this.expand();
+            } else {
+                await this.collapse();
+            }
+        } else {
+            this.entity.log('warning: not collapsible!');
+        }
+    }
+
+    async expand() {
+        if (this.getObject().listA?.jsList.length > 0) {
+            this.collapsed = false;
+            this.headerG.updateBodyIcon();
+            await this.listG.update();
+            await this.bodyG.expand();
+        }
+    }
+
+    async collapse() {
+        this.collapsed = true;
+        this.headerG.updateBodyIcon();
+        await this.bodyG.collapse();
     }
 }

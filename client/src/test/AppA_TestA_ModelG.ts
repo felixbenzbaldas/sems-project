@@ -40,7 +40,7 @@ export class AppA_TestA_ModelG {
                 let firstObject = firstObjectUi.uiA.object;
                 (await firstObject.listA.getObject(0)).text = 'do-not-show-me';
                 firstObject.collapsible = true;
-                firstObjectUi.collapsed = true;
+                firstObjectUi.uiA.collapsed = true;
                 await firstObjectUi.uiA.update();
 
                 let rawText = app.uiA.getRawText();
@@ -60,7 +60,7 @@ export class AppA_TestA_ModelG {
 
                 await app.uiA.click('clickMe');
 
-                return app.appA.uiA.content.uiA.listG.uisOfListItems.at(0).collapsed === false;
+                return app.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.collapsed === false;
             }),
             this.createTest('modelTest_tester', async test => {
                 let tester = await this.entity.appA.createStarter().createTest();

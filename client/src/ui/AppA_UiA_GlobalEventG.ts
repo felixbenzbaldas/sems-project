@@ -9,7 +9,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async defaultAction() {
-        await this.getUiA().focused.defaultAction();
+        await this.getUiA().focused.uiA.defaultAction();
     }
 
     async exportApp() {
@@ -21,25 +21,25 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async flatImportToContent() {
-        await this.getUiA().input.getUi().expand();
+        await this.getUiA().input.getUi().uiA.expand();
         await this.entity.appA.addAllToListFromRawData(this.getUiA().content, JSON.parse(this.getUiA().input.get()));
     }
 
     async toggleCollapsible() {
-        await this.getUiA().focused.toggleCollapsible();
+        await this.getUiA().focused.uiA.toggleCollapsible();
     }
 
     async newSubitem() {
         this.entity.logInfo('newSubitem');
-        await this.getUiA().focused.newSubitem();
+        await this.getUiA().focused.uiA.newSubitem();
     }
 
     async expandOrCollapse() {
-        await this.getUiA().focused.expandOrCollapse();
+        await this.getUiA().focused.uiA.expandOrCollapse();
     }
 
     async switchCurrentContainer() {
-        this.getUiA().switchCurrentContainer_AndUpdateStyles(this.getUiA().focused.getObject());
+        this.getUiA().switchCurrentContainer_AndUpdateStyles(this.getUiA().focused.uiA.getObject());
 
     }
 
@@ -61,7 +61,7 @@ export class AppA_UiA_GlobalEventG {
         let focused = this.getUiA().focused;
         let created = this.entity.appA.unboundG.createFromJson(JSON.parse(this.getUiA().input.get()));
         this.entity.appA.currentContainer.containerA.bind(created);
-        let focusedObject = focused.getObject();
+        let focusedObject = focused.uiA.getObject();
         if (!focusedObject.listA) {
             focusedObject.listA = new ListA(focusedObject);
         }
@@ -84,6 +84,6 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async pasteNext() {
-        await this.getUiA().focused.uiA.context.pasteNextOnSubitem(this.getUiA().focused);
+        await this.getUiA().focused.uiA.context.uiA.pasteNextOnSubitem(this.getUiA().focused);
     }
 }

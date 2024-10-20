@@ -39,7 +39,7 @@ export class UiA_HeaderG {
         this.bodyIcon.style.marginLeft = '0.7rem';
         if (this.getObject().collapsible && this.getUiA().bodyG.bodyAvailable()) {
             this.bodyIcon.style.display = 'default';
-            if (this.entity.collapsed) {
+            if (this.entity.uiA.collapsed) {
                 this.bodyIcon.innerText = '[...]';
             } else {
                 this.bodyIcon.innerText = ' _';
@@ -123,7 +123,7 @@ export class UiA_HeaderG {
     }
 
     async clickEvent() {
-        await this.entity.expandOrCollapse();
+        await this.entity.uiA.expandOrCollapse();
         this.entity.getApp().appA.uiA.focus(this.entity);
     }
 

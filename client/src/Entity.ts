@@ -39,7 +39,7 @@ export class Entity {
             text: this.text,
             list: this.listA?.json_withoutContainedObjects(),
             collapsible: this.collapsible,
-            collapsed: this.collapsed,
+            collapsed: this.uiA?.collapsed,
             link: this.link,
             editable: this.editable,
             content: this.appA?.uiA?.content.json_withoutContainedObjects(),
@@ -223,85 +223,4 @@ export class Entity {
             }
         }
     }
-
-    // TODO the following members belong to uiA
-
-    collapsed: boolean;
-
-    async defaultAction() {
-        if (this.appA?.uiA) {
-            await this.appA.uiA.newSubitem();
-        } else if (this.action) {
-            throw 'not implemented yet';
-        } else {
-            await this.uiA.context.defaultActionOnSubitem(this);
-        }
-    }
-
-    async defaultActionOnSubitem(subitem : Entity) {
-        await this.uiA.listG.defaultActionOnSubitem(subitem);
-    }
-
-    async pasteNextOnSubitem(subitem: Entity) {
-        await this.uiA.listG.pasteNextOnSubitem(subitem);
-    }
-
-    async newSubitem() {
-        this.log('newSubitem');
-        if (this.appA?.uiA) {
-            await this.appA.uiA.newSubitem();
-        } else {
-            if (this.uiA?.object) {
-                if (!this.getObject().listA) {
-                    this.getObject().listA = new ListA(this.getObject());
-                }
-                let created = await this.getApp().appA.createText('');
-                await this.uiA.listG.insertObjectAtPosition(created, 0);
-                await this.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
-                this.getApp().appA.uiA.focus(this.uiA.listG.uisOfListItems.at(0));
-            } else {
-                if (!this.listA) {
-                    this.listA = new ListA(this);
-                }
-                let created = await this.getApp().appA.createText('');
-                await this.listA.add(created);
-                await this.uiA.update();
-                this.getApp().appA.uiA.focus(created);
-            }
-        }
-    }
-
-    async toggleCollapsible() {
-        this.getObject().collapsible = !this.getObject().collapsible;
-        this.collapsed = false;
-        await this.uiA.update();
-    }
-
-    async expandOrCollapse() {
-        if (this.getObject().collapsible) {
-            if (this.collapsed) {
-                await this.expand();
-            } else {
-                await this.collapse();
-            }
-        } else {
-            this.log('warning: not collapsible!');
-        }
-    }
-
-    async expand() {
-        if (this.getObject().listA?.jsList.length > 0) {
-            this.collapsed = false;
-            this.uiA.headerG.updateBodyIcon();
-            await this.uiA.listG.update();
-            await this.uiA.bodyG.expand();
-        }
-    }
-
-    async collapse() {
-        this.collapsed = true;
-        this.uiA.headerG.updateBodyIcon();
-        await this.uiA.bodyG.collapse();
-    }
-
 }

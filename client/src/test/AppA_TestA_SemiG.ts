@@ -90,7 +90,6 @@ export class AppA_TestA_SemiG {
                 html.dangerous_html.style.backgroundColor = 'gold';
                 html.dangerous_html.style.width = '15rem';
                 let collapsible = appA.unboundG.createCollapsible('scroll down and then collapse me', html);
-                collapsible.collapsed = false;
                 collapsible.editable = false;
                 appA.uiA.content.listA.jsList.push(collapsible);
                 appA.logG.toListOfStrings = true;

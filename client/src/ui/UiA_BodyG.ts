@@ -12,7 +12,7 @@ export class UiA_BodyG {
 
     async update() {
         this.htmlElement.innerHTML = null;
-        if (!this.entity.collapsed && this.bodyAvailable()) {
+        if (!this.entity.uiA.collapsed && this.bodyAvailable()) {
             this.htmlElement.hidden = false;
             await this.content_update();
             this.htmlElement.appendChild(this.content_htmlElement);

@@ -12,11 +12,11 @@ export class UiA_ListG {
 
     async update() {
         if (this.getObject().collapsible) {
-            if (nullUndefined(this.entity.collapsed)) {
-                this.entity.collapsed = true;
+            if (nullUndefined(this.entity.uiA.collapsed)) {
+                this.entity.uiA.collapsed = true;
             }
         }
-        if (!this.entity.collapsed) {
+        if (!this.entity.uiA.collapsed) {
             await this.updateUisOfListItems();
             this.htmlElement.innerHTML = null;
             this.htmlElement.style.display = 'flex';

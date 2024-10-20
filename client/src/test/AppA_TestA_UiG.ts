@@ -27,7 +27,7 @@ export class AppA_TestA_UiG {
 
                 await app.appA.uiA.globalEventG.expandOrCollapse();
 
-                return firstObjectUi.collapsed;
+                return firstObjectUi.uiA.collapsed;
             }),
             this.createTest('ui_collapsible', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI();
@@ -36,7 +36,7 @@ export class AppA_TestA_UiG {
 
                 await collapsible.uis_update();
 
-                return ui.collapsed;
+                return ui.uiA.collapsed;
             }),
             this.createTest('ui_collapsible_hybrid', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI();
@@ -45,7 +45,7 @@ export class AppA_TestA_UiG {
 
                 await collapsible.updateUi();
 
-                return collapsible.collapsed;
+                return collapsible.uiA.collapsed;
             }),
             this.createTest('ui_newSubitem', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI();
