@@ -1,5 +1,5 @@
 import {Entity} from "@/Entity";
-import {AppA} from "@/core/AppA";
+import {AppA} from "@/AppA";
 import {testData} from "@/testData";
 
 export class Environment {

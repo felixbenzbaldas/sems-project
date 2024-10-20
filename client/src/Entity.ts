@@ -1,7 +1,7 @@
-import {ListA} from "@/core/ListA";
-import {PathA} from "@/core/PathA";
-import {AppA} from "@/core/AppA";
-import {ContainerA} from "@/core/ContainerA";
+import {ListA} from "@/ListA";
+import {PathA} from "@/PathA";
+import {AppA} from "@/AppA";
+import {ContainerA} from "@/ContainerA";
 import {UiA} from "@/ui/UiA";
 import {notNullUndefined, nullUndefined} from "@/utils";
 import type {StarterA} from "@/StarterA";

@@ -1,8 +1,8 @@
 import {Entity} from "@/Entity";
 import {StarterA} from "@/StarterA";
-import {AppA} from "@/core/AppA";
+import {AppA} from "@/AppA";
 import {assert_sameAs, createRandomString, notNullUndefined, nullUndefined, setCaret} from "@/utils";
-import {ContainerA} from "@/core/ContainerA";
+import {ContainerA} from "@/ContainerA";
 import {AppA_TestA_UiG} from "@/test/AppA_TestA_UiG";
 import {AppA_TestA_ModelG} from "@/test/AppA_TestA_ModelG";
 import {AppA_TestA_SemiG} from "@/test/AppA_TestA_SemiG";

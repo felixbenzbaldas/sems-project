@@ -3,7 +3,7 @@ import {OutputA} from "@/ui/OutputA";
 import {InputA} from "@/ui/InputA";
 import {AppA_UiA_GlobalEventG} from "@/ui/AppA_UiA_GlobalEventG";
 import {UiA} from "@/ui/UiA";
-import {ContainerA} from "@/core/ContainerA";
+import {ContainerA} from "@/ContainerA";
 
 export class AppA_UiA {
 

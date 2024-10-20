@@ -1,7 +1,7 @@
 import {Entity} from "@/Entity";
-import {ListA} from "@/core/ListA";
+import {ListA} from "@/ListA";
 import {notNullUndefined} from "@/utils";
-import {ContainerA} from "@/core/ContainerA";
+import {ContainerA} from "@/ContainerA";
 
 // / unbound means that the created object has no container and no name.
 export class AppA_UnboundG {

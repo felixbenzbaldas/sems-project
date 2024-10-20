@@ -1,7 +1,7 @@
 import type {Entity} from "@/Entity";
 import type {AppA_UiA} from "@/ui/AppA_UiA";
-import {ContainerA} from "@/core/ContainerA";
-import {ListA} from "@/core/ListA";
+import {ContainerA} from "@/ContainerA";
+import {ListA} from "@/ListA";
 
 export class AppA_UiA_GlobalEventG {
 

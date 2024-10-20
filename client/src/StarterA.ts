@@ -1,6 +1,6 @@
 import {Entity} from "@/Entity";
 import {AppA_UiA} from "@/ui/AppA_UiA";
-import {AppA} from "@/core/AppA";
+import {AppA} from "@/AppA";
 import {AppA_TestA} from "@/test/AppA_TestA";
 import {UiA} from "@/ui/UiA";
 import {Environment} from "@/Environment";

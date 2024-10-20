@@ -1,6 +1,6 @@
 import {StarterA} from "@/StarterA";
 import type {Entity} from "@/Entity";
-import {ContainerA} from "@/core/ContainerA";
+import {ContainerA} from "@/ContainerA";
 
 export class AppA_TestA_PathG {
 

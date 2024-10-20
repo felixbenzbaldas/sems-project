@@ -1,11 +1,11 @@
 import type {AppA_UiA} from "@/ui/AppA_UiA";
-import {ListA} from "@/core/ListA";
-import {PathA} from "@/core/PathA";
+import {ListA} from "@/ListA";
+import {PathA} from "@/PathA";
 import {Entity} from "@/Entity";
-import {LogG} from "@/core/LogG";
+import {LogG} from "@/LogG";
 import type {AppA_TestA} from "@/test/AppA_TestA";
-import {ContainerA} from "@/core/ContainerA";
-import {AppA_UnboundG} from "@/core/AppA_UnboundG";
+import {ContainerA} from "@/ContainerA";
+import {AppA_UnboundG} from "@/AppA_UnboundG";
 import {StarterA} from "@/StarterA";
 import type {Environment} from "@/Environment";
 
