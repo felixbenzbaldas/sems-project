@@ -54,7 +54,7 @@ export class AppA {
             let dependencyValue = (rawData.dependencies as Array<any>).find((dependency : any) =>
                 dependency.name === path.at(1)
             );
-            await list.list.add(await this.createText(dependencyValue.text));
+            await list.listA.add(await this.createText(dependencyValue.text));
         }
     }
 

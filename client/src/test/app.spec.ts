@@ -31,7 +31,7 @@ describe('app', () => {
 
         let list : Entity = app.appA.unboundG.createList();
 
-        expect(list.list.jsList.length).toBe(0);
+        expect(list.listA.jsList.length).toBe(0);
     });
 
     it('can get json (without contained objects)', async () => {
@@ -56,7 +56,7 @@ describe('app', () => {
 
         let list = await app.appA.createList();
 
-        expect(list.list.jsList.length).toBe(0);
+        expect(list.listA.jsList.length).toBe(0);
     });
 
     it('assigns created object to container', async () => {
@@ -87,7 +87,7 @@ describe('app', () => {
 
         await app.appA.addAllToListFromRawData(list, rawData);
 
-        expect(list.list.jsList.length).toBe(0);
+        expect(list.listA.jsList.length).toBe(0);
     });
 
     test('can add all to list from raw data (one item)', async () => {
@@ -105,8 +105,8 @@ describe('app', () => {
 
         await app.appA.addAllToListFromRawData(list, rawData);
 
-        expect(list.list.jsList.length).toBe(1);
-        expect((await list.resolve(list.list.jsList.at(0))).text).toEqual('new item');
+        expect(list.listA.jsList.length).toBe(1);
+        expect((await list.resolve(list.listA.jsList.at(0))).text).toEqual('new item');
     });
 
     it('can log', async () => {

@@ -37,13 +37,13 @@ export class AppA_TestA {
     }
 
     async runAndDisplay(tests : Array<Entity>) {
-        this.appA.uiA.content.list.jsList = [];
+        this.appA.uiA.content.listA.jsList = [];
         let testResults : TestResults = await this.run(tests);
         if (testResults.failed.length > 0) {
-            await this.appA.uiA.content.list.add(this.appA.unboundG.createTextWithList('failed tests (' + testResults.failed.length + ')',
+            await this.appA.uiA.content.listA.add(this.appA.unboundG.createTextWithList('failed tests (' + testResults.failed.length + ')',
                 ...testResults.failed));
         }
-        await this.appA.uiA.content.list.add(
+        await this.appA.uiA.content.listA.add(
             this.appA.unboundG.createCollapsible('successful tests (' + testResults.successful.length + ')',
                 ...testResults.successful),
             this.appA.unboundG.createText(''),
@@ -117,7 +117,7 @@ export class AppA_TestA {
                 container.containerA = new ContainerA(container);
                 app.appA.currentContainer = container;
                 let subitemAndContained = await app.appA.createText('subitem + contained');
-                await container.list.add(subitemAndContained);
+                await container.listA.add(subitemAndContained);
 
                 let exported = await container.export();
 
@@ -134,12 +134,12 @@ export class AppA_TestA {
 
                 let container = app.appA.unboundG.createFromJson(json);
 
-                let containedAndSub = await container.list.getObject(0);
+                let containedAndSub = await container.listA.getObject(0);
                 return container.text === 'container + parent' &&
                     containedAndSub.text === 'contained + subitem' &&
                     containedAndSub.container === container &&
                     containedAndSub.name === container.containerA.mapNameEntity.keys().next().value &&
-                    container.list.jsList.at(0).pathA;
+                    container.listA.jsList.at(0).pathA;
             }),
             this.createTest('createFromJson (testData)', async test => {
                 let app = this.appA.createStarter().createApp();
@@ -165,10 +165,10 @@ export class AppA_TestA {
                 let list : Entity = await app.appA.createList();
                 let listItem : Entity = await app.appA.createText('subitem');
 
-                await list.list.insertObjectAtPosition(listItem, 0);
+                await list.listA.insertObjectAtPosition(listItem, 0);
 
-                app.log('path = ' + list.list.jsList.at(0).getShortDescription());
-                return await list.resolve(list.list.jsList.at(0)) === listItem;
+                app.log('path = ' + list.listA.jsList.at(0).getShortDescription());
+                return await list.resolve(list.listA.jsList.at(0)) === listItem;
             }),
             this.createTest('list_findByText', async test => {
                 test.test_app = this.appA.createStarter().createApp();
@@ -176,9 +176,9 @@ export class AppA_TestA {
                 app.appA.logG.toListOfStrings = true;
                 let list : Entity = await app.appA.createList();
                 let subitem = await app.appA.createText('findMe');
-                await list.list.add(subitem);
+                await list.listA.add(subitem);
 
-                let found = await list.list.findByText('findMe');
+                let found = await list.listA.findByText('findMe');
 
                 assert_sameAs(found, subitem);
             }),

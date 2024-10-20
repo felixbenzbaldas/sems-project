@@ -32,7 +32,7 @@ export class AppA_TestA_SemiG {
                 let html = test.test_app.appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
                 html.dangerous_html.innerText = 'show me';
-                await test.test_app.appA.uiA.content.list.add(html);
+                await test.test_app.appA.uiA.content.listA.add(html);
                 await test.test_app.updateUi();
                 test.test_app.appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: the text "show me" appears');
@@ -45,7 +45,7 @@ export class AppA_TestA_SemiG {
                 html.dangerous_html.innerText = 'test';
                 html.dangerous_html.contentEditable = 'true';
                 html.dangerous_html.style.margin = '1rem';
-                await test.test_app.appA.uiA.content.list.add(html, test.test_app.appA.unboundG.createButton('setCaret', () => {
+                await test.test_app.appA.uiA.content.listA.add(html, test.test_app.appA.unboundG.createButton('setCaret', () => {
 
                     setCaret(html.dangerous_html, 2);
 
@@ -92,7 +92,7 @@ export class AppA_TestA_SemiG {
                 let collapsible = appA.unboundG.createCollapsible('scroll down and then collapse me', html);
                 collapsible.collapsed = false;
                 collapsible.editable = false;
-                appA.uiA.content.list.jsList.push(collapsible);
+                appA.uiA.content.listA.jsList.push(collapsible);
                 appA.logG.toListOfStrings = true;
                 test.test_app.log('info: The placeholder-area is an area which is inserted at the bottom of the site. ' +
                     'It is necessary to avoid unwanted movements when collapsing a big item.');
@@ -132,8 +132,8 @@ export class AppA_TestA_SemiG {
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 await appA.uiA.globalEventG.defaultAction();
-                (await appA.uiA.content.list.getObject(0)).text = 'first container';
-                (await appA.uiA.content.list.getObject(1)).text = 'second container';
+                (await appA.uiA.content.listA.getObject(0)).text = 'first container';
+                (await appA.uiA.content.listA.getObject(1)).text = 'second container';
                 appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: When switching the current container, it is marked with a grey background.');
                 test.test_app.log('human-test: The background color updates, when changing the current container');
@@ -165,7 +165,7 @@ export class AppA_TestA_SemiG {
                 let html = appA.createEntityWithApp();
                 html.dangerous_html = document.createElement('div');
                 html.dangerous_html.innerText = 'hello\nworld';
-                await appA.uiA.content.list.add(
+                await appA.uiA.content.listA.add(
                     appA.unboundG.createButton('select text', () => {selectAllTextOfDiv(html.dangerous_html);}),
                     html,
                     appA.unboundG.createText('')
@@ -179,7 +179,7 @@ export class AppA_TestA_SemiG {
                 let appA = test.test_app.appA;
                 test.test_app.uiA.editable = true;
                 let text = appA.unboundG.createText('');
-                await appA.uiA.content.list.add(
+                await appA.uiA.content.listA.add(
                     appA.unboundG.createButton('get selected text', async () => {
                         text.text = getSelectedText();
                         await text.uis_update();

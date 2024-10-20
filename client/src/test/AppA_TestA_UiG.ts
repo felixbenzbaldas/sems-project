@@ -15,7 +15,7 @@ export class AppA_TestA_UiG {
 
                 await app.appA.uiA.globalEventG.toggleCollapsible();
 
-                return (await app.appA.uiA.content.list.getObject(0)).collapsible;
+                return (await app.appA.uiA.content.listA.getObject(0)).collapsible;
             }),
             this.createTest('ui_collapse', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI();
@@ -53,9 +53,9 @@ export class AppA_TestA_UiG {
 
                 await app.appA.uiA.globalEventG.newSubitem();
 
-                let firstObject = await app.appA.uiA.content.list.getObject(0);
-                return firstObject.list.jsList.length == 1
-                    && (await firstObject.list.getObject(0)).text === '';
+                let firstObject = await app.appA.uiA.content.listA.getObject(0);
+                return firstObject.listA.jsList.length == 1
+                    && (await firstObject.listA.getObject(0)).text === '';
             }),
             this.createTest('ui_switchCurrentContainer', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI()
@@ -75,7 +75,7 @@ export class AppA_TestA_UiG {
 
                 await app.appA.uiA.globalEventG.cut();
 
-                return app.appA.uiA.content.list.jsList.length === 0 && app.appA.uiA.clipboard === objectUi.uiA.object;
+                return app.appA.uiA.content.listA.jsList.length === 0 && app.appA.uiA.clipboard === objectUi.uiA.object;
             }),
             this.createTest('ui_createUiFor', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI();
@@ -127,7 +127,7 @@ export class AppA_TestA_UiG {
 
                 await uiForList.uiA.listG.pasteNextOnSubitem(uiForList.uiA.listG.uisOfListItems.at(0));
 
-                return list.list.jsList.at(1) === toPaste &&
+                return list.listA.jsList.at(1) === toPaste &&
                     uiForList.uiA.listG.uisOfListItems.at(1).uiA.object === toPaste &&
                     app.appA.uiA.focused.uiA.object === toPaste;
             })

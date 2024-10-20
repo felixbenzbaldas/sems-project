@@ -11,7 +11,7 @@ export class AppA_UnboundG {
 
     createList(...jsList : Array<Entity>) : Entity {
         let list = this.entity.appA.createEntityWithApp();
-        list.list = new ListA(list, ...jsList);
+        list.listA = new ListA(list, ...jsList);
         return list;
     }
 
@@ -31,7 +31,7 @@ export class AppA_UnboundG {
     createTextWithList(text : string, ...jsList : Array<Entity>) : Entity {
         let entity = this.entity.appA.createEntityWithApp();
         entity.text = text;
-        entity.list = new ListA(entity, ...jsList);
+        entity.listA = new ListA(entity, ...jsList);
         return entity;
     }
 
@@ -60,13 +60,13 @@ export class AppA_UnboundG {
         entity.link = json.link;
         entity.editable = json.editable;
         if (notNullUndefined(json.list)) {
-            entity.list = new ListA(entity);
-            entity.list.jsList = [];
+            entity.listA = new ListA(entity);
+            entity.listA.jsList = [];
             for (let current of json.list) {
                 if (current instanceof Array) {
-                    entity.list.jsList.push(this.entity.appA.createPath(current));
+                    entity.listA.jsList.push(this.entity.appA.createPath(current));
                 } else {
-                    entity.list.jsList.push(this.createFromJson(current));
+                    entity.listA.jsList.push(this.createFromJson(current));
                 }
             }
         }

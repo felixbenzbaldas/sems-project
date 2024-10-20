@@ -33,7 +33,7 @@ export class UiA {
                 if (this.getObject().isTest) {
                     await this.testG.update();
                 }
-                if (this.getObject().list) {
+                if (this.getObject().listA) {
                     await this.listG.update();
                 }
                 if (notNullUndefined(this.getObject().text)) {
@@ -55,7 +55,7 @@ export class UiA {
             } else if (this.headerG.headerAvailable()) {
                 this.htmlElement.appendChild(this.headerG.htmlElement);
                 this.htmlElement.appendChild(this.bodyG.htmlElement);
-            } else if (this.getObject().list && this.entity.collapsed != true) {
+            } else if (this.getObject().listA && this.entity.collapsed != true) {
                 this.htmlElement.appendChild(this.listG.htmlElement);
             } else if (this.getObject().dangerous_html) {
                 this.htmlElement.appendChild(this.getObject().dangerous_html);
@@ -102,7 +102,7 @@ export class UiA {
                     if (notNullUndefined(this.getObject().text)) {
                         rawText += this.getObject().text;
                     }
-                    if (this.getObject().list && this.entity.collapsed != true) {
+                    if (this.getObject().listA && this.entity.collapsed != true) {
                         rawText += this.listG.getRawText();
                     }
                     return rawText;
@@ -142,7 +142,7 @@ export class UiA {
                 if (!this.entity.collapsed && this.bodyG.bodyAvailable()) {
                     await this.listG.click(text);
                 }
-            } else if (this.getObject().list) {
+            } else if (this.getObject().listA) {
                 await this.listG.click(text);
             }
         }
@@ -160,7 +160,7 @@ export class UiA {
                         counter++;
                     }
                 }
-                if (this.getObject().list && !this.entity.collapsed) {
+                if (this.getObject().listA && !this.entity.collapsed) {
                     counter += this.listG.countEditableTexts();
                 }
                 return counter;

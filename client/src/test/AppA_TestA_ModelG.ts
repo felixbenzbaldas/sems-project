@@ -21,8 +21,8 @@ export class AppA_TestA_ModelG {
 
                 await app.uiA.click('new subitem');
 
-                let firstObject = await app.appA.uiA.content.list.getObject(0);
-                return firstObject.list.jsList.length == 1;
+                let firstObject = await app.appA.uiA.content.listA.getObject(0);
+                return firstObject.listA.jsList.length == 1;
             }),
             this.createTest('modelTest_makeCollapsible', async test => {
                 let app = await this.entity.appA.createStarter().createAppWithUIWithCommands_editable_updateUi();
@@ -30,15 +30,15 @@ export class AppA_TestA_ModelG {
 
                 await app.uiA.click('toggle collapsible');
 
-                return (await app.appA.uiA.content.list.getObject(0)).collapsible;
+                return (await app.appA.uiA.content.listA.getObject(0)).collapsible;
             }),
             this.createTest('modelTest_collapsed', async test => {
                 let app = await this.entity.appA.createStarter().createAppWithUIWithCommands_editable_updateUi();
                 await app.appA.uiA.globalEventG.defaultAction();
                 await app.appA.uiA.globalEventG.newSubitem();
-                let firstObjectUi = app.appA.uiA.content.uiA.listG.uisOfListItems.at(0);
+                let firstObjectUi : Entity = app.appA.uiA.content.uiA.listG.uisOfListItems.at(0);
                 let firstObject = firstObjectUi.uiA.object;
-                (await firstObject.list.getObject(0)).text = 'do-not-show-me';
+                (await firstObject.listA.getObject(0)).text = 'do-not-show-me';
                 firstObject.collapsible = true;
                 firstObjectUi.collapsed = true;
                 await firstObjectUi.uiA.update();
@@ -143,7 +143,7 @@ export class AppA_TestA_ModelG {
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 await app.appA.uiA.globalEventG.defaultAction();
-                let firstObject = await app.appA.uiA.content.list.getObject(0);
+                let firstObject = await app.appA.uiA.content.listA.getObject(0);
                 firstObject.text = 'cutted';
                 await app.updateUi();
 
@@ -158,7 +158,7 @@ export class AppA_TestA_ModelG {
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 await app.appA.uiA.globalEventG.defaultAction();
-                let firstObject = await app.appA.uiA.content.list.getObject(0);
+                let firstObject = await app.appA.uiA.content.listA.getObject(0);
                 firstObject.text = 'first object';
                 app.appA.uiA.clipboard = await app.appA.createText('pasted object');
                 await app.uiA.click('paste next');
@@ -189,7 +189,7 @@ export class AppA_TestA_ModelG {
                 app.appA.logG.toListOfStrings = true;
                 app.appA.uiA.webMeta = await starter.createUnboundWebMeta();
                 await app.appA.uiA.globalEventG.newSubitem();
-                (await app.appA.uiA.content.list.getObject(0)).text = 'foo';
+                (await app.appA.uiA.content.listA.getObject(0)).text = 'foo';
                 app.appA.uiA.withPlaceholderArea = true;
                 await app.updateUi()
                 let rawText = app.uiA.getRawText();

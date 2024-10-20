@@ -28,14 +28,14 @@ export class UiA_BodyG {
         this.content_htmlElement = document.createElement('div');
         if (this.getObject().isTest) {
             this.content_htmlElement.appendChild(this.getUiA().testG.bodyContent.uiA.htmlElement);
-        } else if (this.getObject().list && this.getObject().list.jsList.length > 0) {
+        } else if (this.getObject().listA && this.getObject().listA.jsList.length > 0) {
             this.content_htmlElement = this.getUiA().listG.htmlElement;
         }
     }
 
     bodyAvailable() : boolean {
         return notNullUndefined(this.getObject().test_result) ||
-            this.getObject().list && this.getObject().list.jsList.length > 0;
+            this.getObject().listA && this.getObject().listA.jsList.length > 0;
     }
 
     async expand() {

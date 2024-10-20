@@ -30,7 +30,7 @@ export class UiA_ListG {
 
     private async updateUisOfListItems() {
         this.uisOfListItems = []; // TODO: do not always dismiss old uis
-        for (let currentResolved of await this.getObject().list.getResolvedList()) {
+        for (let currentResolved of await this.getObject().listA.getResolvedList()) {
             let currentUi;
             if (currentResolved.appA?.uiA) {
                 currentUi = currentResolved;
@@ -45,7 +45,7 @@ export class UiA_ListG {
     }
 
     getRawText() : string {
-        if (notNullUndefined(this.getObject().list)) {
+        if (notNullUndefined(this.getObject().listA)) {
             return this.uisOfListItems.map(current => current.uiA.getRawText()).reduce((a, b) => a + b, '');
         } else {
             return '';
@@ -53,7 +53,7 @@ export class UiA_ListG {
     }
 
     async click(text : string) {
-        if (this.getObject().list) {
+        if (this.getObject().listA) {
             for (let current of this.uisOfListItems) {
                 await current.uiA.click(text);
             }
@@ -61,7 +61,7 @@ export class UiA_ListG {
     }
 
     countEditableTexts() : number {
-        if (this.getObject().list) {
+        if (this.getObject().listA) {
             return this.uisOfListItems.map(current => current.uiA.countEditableTexts()).reduce((a, b) => a + b, 0);
         }
     }
@@ -69,7 +69,7 @@ export class UiA_ListG {
     async defaultActionOnSubitem(subitem: Entity) {
         let created = await this.entity.getApp().appA.createText('');
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
-        this.getObject().list.jsList.splice(position, 0, this.getObject().getPath(created));
+        this.getObject().listA.jsList.splice(position, 0, this.getObject().getPath(created));
         await this.getObject().uis_update();
         this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
     }
@@ -87,7 +87,7 @@ export class UiA_ListG {
 
     // note: always creates extra object for ui
     async insertObjectAtPosition(object: Entity, position: number) : Promise<Entity> {
-        await this.getObject().list.insertObjectAtPosition(object, position);
+        await this.getObject().listA.insertObjectAtPosition(object, position);
         let ui = this.entity.getApp().appA.uiA.createUiFor(object);
         if (notNullUndefined(this.uisOfListItems)) { // TODO
             this.uisOfListItems.splice(position, 0, ui);

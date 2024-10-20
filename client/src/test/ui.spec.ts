@@ -10,7 +10,7 @@ describe('ui', () => {
 
         await app.appA.uiA.globalEventG.defaultAction();
 
-        expect(app.appA.uiA.content.list.jsList.length).toBe(1);
+        expect(app.appA.uiA.content.listA.jsList.length).toBe(1);
     });
 
     it('can get json', async () => {
@@ -51,8 +51,8 @@ describe('ui', () => {
 
         await app.appA.uiA.globalEventG.defaultAction();
 
-        expect(app.appA.uiA.content.list.jsList.length).toBe(2);
-        let resolvedContent = await app.appA.uiA.content.list.getResolvedList();
+        expect(app.appA.uiA.content.listA.jsList.length).toBe(2);
+        let resolvedContent = await app.appA.uiA.content.listA.getResolvedList();
         expect(app.appA.uiA.focused.uiA.object).toBe(resolvedContent.at(1));
     });
 });

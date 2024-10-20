@@ -13,7 +13,7 @@ export class Entity {
     container: Entity;
     text: string;
     link: string;
-    list: ListA;
+    listA: ListA;
     app: Entity;
     action: Function;
     hidden: boolean;
@@ -36,7 +36,7 @@ export class Entity {
     json_withoutContainedObjects() : any {
         let obj: any = {
             text: this.text,
-            list: this.list?.json_withoutContainedObjects(),
+            list: this.listA?.json_withoutContainedObjects(),
             collapsible: this.collapsible,
             collapsed: this.collapsed,
             link: this.link,
@@ -151,8 +151,8 @@ export class Entity {
     }
 
     private async addDependencies(set: Set<Entity>, entity: Entity) {
-        if (entity.list) {
-            for (let current of entity.list.jsList) {
+        if (entity.listA) {
+            for (let current of entity.listA.jsList) {
                 if (current.pathA) {
                     let currentObject = await this.resolve(current);
                     if (!set.has(currentObject)) {
@@ -187,8 +187,8 @@ export class Entity {
     getDescription() : string {
         if(notNullUndefined(this.text)) {
             return this.text ? this.text : '[empty text]';
-        } else if (this.list) {
-            return 'list (' + this.list.jsList.length + ')';
+        } else if (this.listA) {
+            return 'list (' + this.listA.jsList.length + ')';
         } else if (this.pathA) {
             return 'path (' + this.pathA.listOfNames + ')';
         } else if (this.uiA) {
@@ -214,19 +214,19 @@ export class Entity {
             await this.appA.uiA.newSubitem();
         } else {
             if (this.uiA?.object) {
-                if (!this.getObject().list) {
-                    this.getObject().list = new ListA(this.getObject());
+                if (!this.getObject().listA) {
+                    this.getObject().listA = new ListA(this.getObject());
                 }
                 let created = await this.getApp().appA.createText('');
                 await this.uiA.listG.insertObjectAtPosition(created, 0);
                 await this.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
                 this.getApp().appA.uiA.focus(this.uiA.listG.uisOfListItems.at(0));
             } else {
-                if (!this.list) {
-                    this.list = new ListA(this);
+                if (!this.listA) {
+                    this.listA = new ListA(this);
                 }
                 let created = await this.getApp().appA.createText('');
-                await this.list.add(created);
+                await this.listA.add(created);
                 await this.uiA.update();
                 this.getApp().appA.uiA.focus(created);
             }
@@ -252,7 +252,7 @@ export class Entity {
     }
 
     async expand() {
-        if (this.getObject().list?.jsList.length > 0) {
+        if (this.getObject().listA?.jsList.length > 0) {
             this.collapsed = false;
             this.uiA.headerG.updateBodyIcon();
             await this.uiA.listG.update();

@@ -97,15 +97,15 @@ export class StarterA {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;
         this.createData();
-        let website = await this.data.list.findByText(this.createWebsite_hostname())
-        let start = await website.list.findByText('start');
-        for (let i = 0; i < start.list.jsList.length; i++) {
-            await this.createdApp.appA.uiA.content.list.add(
-                await start.list.getObject(i)
+        let website = await this.data.listA.findByText(this.createWebsite_hostname())
+        let start = await website.listA.findByText('start');
+        for (let i = 0; i < start.listA.jsList.length; i++) {
+            await this.createdApp.appA.uiA.content.listA.add(
+                await start.listA.getObject(i)
             );
         }
         if (this.getEnvironment().setTitle)  {
-            this.getEnvironment().setTitle((await (await website.list.findByText('title'))?.list.getObject(0)).text);
+            this.getEnvironment().setTitle((await (await website.listA.findByText('title'))?.listA.getObject(0)).text);
         }
         return this.createdApp;
     }
@@ -126,7 +126,7 @@ export class StarterA {
         this.createAppWithUI();
         this.createData();
         let listOfNames = ['..', this.data.name, ...pathString.split('-')];
-        await this.createdApp.appA.uiA.content.list.add(this.createdApp.appA.createPath(listOfNames));
+        await this.createdApp.appA.uiA.content.listA.add(this.createdApp.appA.createPath(listOfNames));
         await this.createdApp.updateUi();
         await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.at(0).expand();
         return this.createdApp;
@@ -139,7 +139,7 @@ export class StarterA {
 
     async createUnboundWebMeta() : Promise<Entity> {
         let unboundData = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
-        let unboundWebMeta = await (await (await unboundData.list.getObject(0)).list.findByText('webMeta')).list.getObject(0);
+        let unboundWebMeta = await (await (await unboundData.listA.getObject(0)).listA.findByText('webMeta')).listA.getObject(0);
         unboundWebMeta.uiA = new UiA(unboundWebMeta);
         return unboundWebMeta;
     }

@@ -62,8 +62,8 @@ export class AppA_UiA_GlobalEventG {
         let created = this.entity.appA.unboundG.createFromJson(JSON.parse(this.getUiA().input.get()));
         this.entity.appA.currentContainer.containerA.bind(created);
         let focusedObject = focused.getObject();
-        if (!focusedObject.list) {
-            focusedObject.list = new ListA(focusedObject);
+        if (!focusedObject.listA) {
+            focusedObject.listA = new ListA(focusedObject);
         }
         await focused.uiA.listG.insertObjectAtPosition(created, 0);
         await focused.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
@@ -79,7 +79,7 @@ export class AppA_UiA_GlobalEventG {
         this.getUiA().clipboard = ui.uiA.object;
         let uiContext = ui.ui_context;
         let position = uiContext.uiA.listG.uisOfListItems.indexOf(ui);
-        uiContext.getObject().list.jsList.splice(position, 1);
+        uiContext.getObject().listA.jsList.splice(position, 1);
         await uiContext.getObject().uis_update();
     }
 

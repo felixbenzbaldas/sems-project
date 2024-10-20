@@ -9,17 +9,17 @@ describe('list', () => {
         let list : Entity = await app.appA.createList();
         let object : Entity = await app.appA.createText('bar');
 
-        await list.list.add(object);
+        await list.listA.add(object);
 
-        expect(list.list.jsList.length).toBe(1);
-        expect(list.list.jsList.at(0).pathA.listOfNames).toEqual(list.getPath(object).pathA.listOfNames);
+        expect(list.listA.jsList.length).toBe(1);
+        expect(list.listA.jsList.at(0).pathA.listOfNames).toEqual(list.getPath(object).pathA.listOfNames);
     });
 
     it('can get json (one item)', async () => {
         let app = StarterA.createApp();
         let list = await app.appA.createList();
         let item = await app.appA.createText('bar');
-        await list.list.add(item);
+        await list.listA.add(item);
 
         let json : any = list.json_withoutContainedObjects();
 
@@ -31,7 +31,7 @@ describe('list', () => {
         let app = StarterA.createApp();
         let list = await app.appA.createList();
         let item = await app.appA.createText('bar');
-        await list.list.add(item);
+        await list.listA.add(item);
 
         let exported : any = await list.export_allDependenciesInOneContainer();
 

@@ -37,9 +37,9 @@ export class UiA_TestG {
         if (this.getObject().test_result_error) {
             let errorUi = appA.unboundG.createCollapsible('failed with ' + this.getObject().test_result_error.toString());
             if (this.getObject().test_result_error.stack) {
-                errorUi.list.jsList.push(appA.unboundG.createTextWithList('stacktrace:', appA.unboundG.createText(this.getObject().test_result_error.stack)));
+                errorUi.listA.jsList.push(appA.unboundG.createTextWithList('stacktrace:', appA.unboundG.createText(this.getObject().test_result_error.stack)));
             }
-            this.bodyContent.list.jsList.push(errorUi);
+            this.bodyContent.listA.jsList.push(errorUi);
         }
         if (this.getObject().test_app) {
             let log = appA.unboundG.createText('');
@@ -50,10 +50,10 @@ export class UiA_TestG {
                 }
             }
             await updateLogFunc();
-            await this.bodyContent.list.add(appA.unboundG.createCollapsible('log',
+            await this.bodyContent.listA.add(appA.unboundG.createCollapsible('log',
                 log,
                 appA.unboundG.createButton('update log', updateLogFunc)));
-            await this.bodyContent.list.add(appA.unboundG.createCollapsible('ui',
+            await this.bodyContent.listA.add(appA.unboundG.createCollapsible('ui',
                 this.getObject().test_app));
         }
         this.bodyContent.uiA = new UiA(this.bodyContent);
