@@ -77,13 +77,13 @@ export class AppA_UiA_GlobalEventG {
     async cut() {
         let ui = this.getUiA().focused;
         this.getUiA().clipboard = ui.uiA.object;
-        let uiContext = ui.ui_context;
+        let uiContext = ui.uiA.context;
         let position = uiContext.uiA.listG.uisOfListItems.indexOf(ui);
         uiContext.getObject().listA.jsList.splice(position, 1);
         await uiContext.getObject().uis_update();
     }
 
     async pasteNext() {
-        await this.getUiA().focused.ui_context.pasteNextOnSubitem(this.getUiA().focused);
+        await this.getUiA().focused.uiA.context.pasteNextOnSubitem(this.getUiA().focused);
     }
 }

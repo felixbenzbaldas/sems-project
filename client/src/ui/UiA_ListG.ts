@@ -38,7 +38,7 @@ export class UiA_ListG {
                 currentUi = this.entity.getApp().appA.uiA.createUiFor(currentResolved);
                 currentUi.uiA.editable = this.entity.uiA.editable;
             }
-            currentUi.ui_context = this.entity;
+            currentUi.uiA.context = this.entity;
             await currentUi.updateUi();
             this.uisOfListItems.push(currentUi);
         }
@@ -92,7 +92,7 @@ export class UiA_ListG {
         if (notNullUndefined(this.uisOfListItems)) { // TODO
             this.uisOfListItems.splice(position, 0, ui);
         }
-        ui.ui_context = this.entity;
+        ui.uiA.context = this.entity;
         return ui;
     }
 }

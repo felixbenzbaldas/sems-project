@@ -226,7 +226,6 @@ export class Entity {
 
     // TODO the following members belong to uiA
 
-    ui_context: Entity;
     collapsed: boolean;
 
     async defaultAction() {
@@ -235,7 +234,7 @@ export class Entity {
         } else if (this.action) {
             throw 'not implemented yet';
         } else {
-            await this.ui_context.defaultActionOnSubitem(this);
+            await this.uiA.context.defaultActionOnSubitem(this);
         }
     }
 
