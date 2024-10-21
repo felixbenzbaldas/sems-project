@@ -20,6 +20,7 @@ export class Entity {
     collapsible: boolean;
     dangerous_html: HTMLElement;
     uis: Array<Entity>;
+    formalTextA_jsFunction: Function;
 
     listA: ListA;
     pathA: PathA;
@@ -221,5 +222,13 @@ export class Entity {
                 ui.uiA.headerG.updateCurrentContainerStyle();
             }
         }
+    }
+
+    createFormalText(name: string, jsFunction: Function) : Entity {
+        let formalText : Entity = new Entity();
+        formalText.app = this.getApp();
+        formalText.formalTextA_jsFunction = jsFunction;
+        this.containerA.bind(formalText, name);
+        return formalText;
     }
 }
