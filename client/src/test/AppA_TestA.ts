@@ -1,7 +1,7 @@
 import {Entity} from "@/Entity";
 import {StarterA} from "@/StarterA";
 import {AppA} from "@/AppA";
-import {assert_sameAs, createRandomString, notNullUndefined, nullUndefined, setCaret} from "@/utils";
+import {assert, assert_sameAs, createRandomString, notNullUndefined, nullUndefined, setCaret} from "@/utils";
 import {ContainerA} from "@/ContainerA";
 import {AppA_TestA_UiG} from "@/test/AppA_TestA_UiG";
 import {AppA_TestA_ModelG} from "@/test/AppA_TestA_ModelG";
@@ -195,10 +195,19 @@ export class AppA_TestA {
             this.createTest('nullUndefined', async test => {
                 test.test_app = this.appA.createStarter().createApp();
                 let app = test.test_app;
-                return nullUndefined(null) &&
-                    nullUndefined(undefined) &&
-                    !nullUndefined(42) &&
-                    notNullUndefined(42);
+                assert(nullUndefined(null));
+                assert(nullUndefined(undefined));
+                assert(!nullUndefined(42));
+                assert(notNullUndefined(42));
+            }),
+            this.createTest('assert', async test => {
+                try {
+                    assert(false);
+                } catch (throwable) {
+                    let error = throwable as Error;
+                    return error.message === 'AssertionError: condition not fulfilled';
+                }
+                return false;
             }),
             this.createTest('assert_sameAs', async test => {
                 try {
