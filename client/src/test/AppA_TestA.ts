@@ -257,7 +257,7 @@ export class AppA_TestA {
                 let testRun : Entity = test.testA2_run();
 
                 assertFalse(testRun.testRunA2_resultA_success);
-                assert(testRun.testRunA2_resultA_error != undefined);
+                assert(testRun.testRunA2_resultA_error !== undefined);
             }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),
