@@ -239,7 +239,6 @@ export class Entity {
     async test2A_run() {
         let testRun : Entity = new Entity();
         testRun.app = this.getApp();
-        this.getApp().containerA.bind(testRun);
         testRun.testRunA_test = this;
         if (this.listA) {
             testRun.listA = new ListA(testRun);
