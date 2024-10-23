@@ -1,7 +1,15 @@
 import {Entity} from "@/Entity";
 import {StarterA} from "@/StarterA";
 import {AppA} from "@/AppA";
-import {assert, assert_sameAs, createRandomString, notNullUndefined, nullUndefined, setCaret} from "@/utils";
+import {
+    assert,
+    assert_sameAs,
+    assertFalse,
+    createRandomString,
+    notNullUndefined,
+    nullUndefined,
+    setCaret
+} from "@/utils";
 import {ContainerA} from "@/ContainerA";
 import {AppA_TestA_UiG} from "@/test/AppA_TestA_UiG";
 import {AppA_TestA_ModelG} from "@/test/AppA_TestA_ModelG";
@@ -205,7 +213,7 @@ export class AppA_TestA {
                     assert(false);
                 } catch (throwable) {
                     let error = throwable as Error;
-                    return error.message === 'AssertionError: condition not fulfilled';
+                    return error.message === 'AssertionError: condition must be fulfilled';
                 }
                 return false;
             }),
@@ -248,7 +256,7 @@ export class AppA_TestA {
 
                 let testRun : Entity = test.testA2_run();
 
-                assert(!testRun.testRunA2_resultA_success);
+                assertFalse(testRun.testRunA2_resultA_success);
                 assert(testRun.testRunA2_resultA_error != undefined);
             }),
             ...this.pathG.createTests(),

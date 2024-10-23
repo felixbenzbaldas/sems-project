@@ -62,7 +62,12 @@ export function getSelectedText(): string {
 
 export function assert(condition : boolean, message? : string) {
     if (!condition) {
-        throw new Error('AssertionError: ' + (message ? message : 'condition not fulfilled'));
+        throw new Error('AssertionError: condition must be fulfilled' + (message ? (' - info: ' + message) : ''));
+    }
+}
+export function assertFalse(condition : boolean, message? : string) {
+    if (condition) {
+        throw new Error('AssertionError: condition must NOT be fulfilled' + (message ? (' - info: ' + message) : ''));
     }
 }
 
