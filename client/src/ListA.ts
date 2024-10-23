@@ -29,8 +29,13 @@ export class ListA {
         });
     }
 
-    async getObject(index : number) : Promise<Entity> {
-        return this.entity.resolve(this.jsList.at(index));
+    async getResolved(index : number) : Promise<Entity> {
+        let entity = this.jsList[index];
+        if (entity.pathA) {
+            return await this.entity.resolve(entity);
+        } else {
+            return entity;
+        }
     }
 
     async getResolvedList() : Promise<Array<Entity>> {
