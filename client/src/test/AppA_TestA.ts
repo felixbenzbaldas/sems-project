@@ -239,6 +239,18 @@ export class AppA_TestA {
 
                 assert(testRun.testRunA2_resultA_success);
             }),
+            this.createTest('runTest_failing', async () => {
+                let app : Entity = this.appA.createStarter().createApp();
+                let name = 'testName';
+                let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                    assert(false);
+                });
+
+                let testRun : Entity = test.testA2_run();
+
+                assert(!testRun.testRunA2_resultA_success);
+                assert(testRun.testRunA2_resultA_error != undefined);
+            }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),
             ...this.modelG.createTests(),

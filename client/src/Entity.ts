@@ -35,6 +35,7 @@ export class Entity {
     isTest: boolean;
 
     testRunA2_resultA_success: boolean;
+    testRunA2_resultA_error: Error;
 
     json_withoutContainedObjects() : any {
         let obj: any = {
@@ -237,7 +238,13 @@ export class Entity {
     testA2_run() {
         let testRun : Entity = new Entity();
         testRun.app = this.getApp();
-        testRun.testRunA2_resultA_success = true;
+        try {
+            this.formalTextA_jsFunction(testRun);
+            testRun.testRunA2_resultA_success = true;
+        } catch (e : any) {
+            testRun.testRunA2_resultA_error = e;
+            testRun.testRunA2_resultA_success = false;
+        }
         return testRun;
     }
 }
