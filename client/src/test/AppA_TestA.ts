@@ -143,7 +143,7 @@ export class AppA_TestA {
 
                 let container = app.appA.unboundG.createFromJson(json);
 
-                let containedAndSub = await container.listA.getObject(0);
+                let containedAndSub = await container.listA.getResolved(0);
                 return container.text === 'container + parent' &&
                     containedAndSub.text === 'contained + subitem' &&
                     containedAndSub.container === container &&
@@ -268,7 +268,7 @@ export class AppA_TestA {
 
                 assert(testRun.testRunA_resultA_success, 'testRun->success');
                 assert_sameAs(testRun.testRunA_test, test);
-                let nestedTestRun = await testRun.listA.getObject(0);
+                let nestedTestRun = await testRun.listA.getResolved(0);
                 assert(nestedTestRun.testRunA_resultA_success, 'nestedTestRun->success');
                 assert_sameAs(nestedTestRun.testRunA_test, nestedTest);
             }),

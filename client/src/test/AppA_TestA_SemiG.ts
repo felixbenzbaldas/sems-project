@@ -131,8 +131,8 @@ export class AppA_TestA_SemiG {
                 let appA = test.test_app.appA;
                 await appA.uiA.globalEventG.defaultAction();
                 await appA.uiA.globalEventG.defaultAction();
-                (await appA.uiA.content.listA.getObject(0)).text = 'first container';
-                (await appA.uiA.content.listA.getObject(1)).text = 'second container';
+                (await appA.uiA.content.listA.getResolved(0)).text = 'first container';
+                (await appA.uiA.content.listA.getResolved(1)).text = 'second container';
                 appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: When switching the current container, it is marked with a grey background.');
                 test.test_app.log('human-test: The background color updates, when changing the current container');

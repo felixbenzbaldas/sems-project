@@ -111,11 +111,11 @@ export class StarterA {
         let start = await website.listA.findByText('start');
         for (let i = 0; i < start.listA.jsList.length; i++) {
             await this.createdApp.appA.uiA.content.listA.add(
-                await start.listA.getObject(i)
+                await start.listA.getResolved(i)
             );
         }
         if (this.getEnvironment().setTitle)  {
-            this.getEnvironment().setTitle((await (await website.listA.findByText('title'))?.listA.getObject(0)).text);
+            this.getEnvironment().setTitle((await (await website.listA.findByText('title'))?.listA.getResolved(0)).text);
         }
         return this.createdApp;
     }
@@ -149,7 +149,7 @@ export class StarterA {
 
     async createUnboundWebMeta() : Promise<Entity> {
         let unboundData = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
-        let unboundWebMeta = await (await (await unboundData.listA.getObject(0)).listA.findByText('webMeta')).listA.getObject(0);
+        let unboundWebMeta = await (await (await unboundData.listA.getResolved(0)).listA.findByText('webMeta')).listA.getResolved(0);
         unboundWebMeta.uiA = new UiA(unboundWebMeta);
         return unboundWebMeta;
     }
