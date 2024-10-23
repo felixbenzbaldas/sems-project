@@ -252,10 +252,10 @@ export class AppA_TestA {
                     // test
                 });
 
-                let testRun : Entity = test.testA2_run();
+                let testRun : Entity = test.test2A_run();
 
-                assert(testRun.testRunA2_resultA_success);
-                assert_sameAs(testRun.testRunA2_test, test);
+                assert(testRun.testRunA_resultA_success);
+                assert_sameAs(testRun.testRunA_test, test);
             }),
             this.createTest('runTest_failing', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
@@ -264,10 +264,10 @@ export class AppA_TestA {
                     assert(false);
                 });
 
-                let testRun : Entity = test.testA2_run();
+                let testRun : Entity = test.test2A_run();
 
-                assertFalse(testRun.testRunA2_resultA_success);
-                assert_notSameAs(testRun.testRunA2_resultA_error, undefined);
+                assertFalse(testRun.testRunA_resultA_success);
+                assert_notSameAs(testRun.testRunA_resultA_error, undefined);
             }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),
