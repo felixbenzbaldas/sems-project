@@ -9,6 +9,7 @@ export class Environment {
     jsonData : any;
     hostname: string;
     setTitle: (text: string) => void;
+    testCreator: (app: Entity) => Entity;
 
     static create() : Environment {
         let environment = new Environment();

@@ -221,7 +221,21 @@ export class AppA_TestA_ModelG {
                 let rawText = ui.uiA.getRawText();
 
                 assert_sameAs(rawText, name);
-            })
+            }),
+            this.createTest('modelTest_fullStart_tester2', async test => {
+                let environment = new Environment();
+                environment.queryParams = new URLSearchParams('tester2');
+                environment.jsonData = testData;
+                environment.testCreator = (app : Entity) => {
+                    return app.createFormalText('aTestTest', (run : Entity) =>  {});
+                };
+                let starter = environment.createApp().appA.createStarter();
+
+                await starter.fullStart();
+
+                let rawText = starter.createdApp.uiA.getRawText();
+                assert(rawText.includes('aTestTest'));
+            }),
         ];
     }
 
