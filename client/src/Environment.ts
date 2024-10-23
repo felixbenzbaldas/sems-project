@@ -1,6 +1,7 @@
 import {Entity} from "@/Entity";
 import {AppA} from "@/AppA";
 import {testData} from "@/testData";
+import {appTest} from "@/test/appTest2";
 
 export class Environment {
 
@@ -25,6 +26,7 @@ export class Environment {
         environment.setTitle = text => {
             document.title = text;
         }
+        environment.testCreator = appTest;
         return environment;
     }
 
