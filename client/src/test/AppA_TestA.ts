@@ -255,6 +255,7 @@ export class AppA_TestA {
                 let testRun : Entity = test.testA2_run();
 
                 assert(testRun.testRunA2_resultA_success);
+                assert_sameAs(testRun.testRunA2_test, test);
             }),
             this.createTest('runTest_failing', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
