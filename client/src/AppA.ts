@@ -17,6 +17,7 @@ export class AppA {
     readonly unboundG : AppA_UnboundG;
     uiA: AppA_UiA;
     testA : AppA_TestA;
+    tester2A_test: Entity;
 
     constructor(private entity : Entity) {
         this.unboundG = new AppA_UnboundG(entity);
@@ -84,5 +85,10 @@ export class AppA {
         if (this.environment) {
             this.environment.ensureActive(this.entity);
         }
+    }
+
+    async tester2A_run() {
+        let run = this.tester2A_test.test2A_run();
+        await this.uiA.content.listA.add(run);
     }
 }

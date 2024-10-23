@@ -93,6 +93,12 @@ export class StarterA {
         return this.createdApp;
     }
 
+    createTester2(testCreator: (app: Entity) => Entity) : Entity {
+        this.createAppWithUI();
+        this.createdApp.appA.tester2A_test = testCreator(this.createdApp);
+        return this.createdApp;
+    }
+
     async createWebsite() : Promise<Entity> {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;

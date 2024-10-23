@@ -89,6 +89,18 @@ export class AppA_TestA_ModelG {
                     rawText.includes('successful tests') &&
                     rawText.includes('aSuccessfulTest');
             }),
+            this.createTest('modelTest_tester2', async outerTest => {
+                let testCreator : (app : Entity) => Entity = (app : Entity) => {
+                    let test = app.createFormalText('appTest', (run : Entity) =>  {});
+                    return test;
+                };
+                let tester : Entity = this.entity.appA.createStarter().createTester2(testCreator);
+                outerTest.test_app = tester;
+                tester.appA.logG.toListOfStrings = true;
+                await tester.appA.tester2A_run();
+                await tester.uiA.update();
+                assert_sameAs(tester.uiA.getRawText(), 'appTest');
+            }),
             this.createTest('modelTest_website', async test => {
                 let environment = new Environment();
                 environment.jsonData = testData;
