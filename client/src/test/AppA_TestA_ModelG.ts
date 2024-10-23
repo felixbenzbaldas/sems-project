@@ -214,7 +214,7 @@ export class AppA_TestA_ModelG {
                 let name = 'testName';
                 let test : Entity = app.createFormalText(name, (testRun : Entity) => {
                 });
-                let testRun : Entity = test.test2A_run();
+                let testRun : Entity = await test.test2A_run();
                 let ui : Entity = app.appA.uiA.createUiFor(testRun);
                 await ui.uiA.update();
 

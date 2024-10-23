@@ -198,7 +198,7 @@ export class AppA_TestA_SemiG {
                 let name = 'testName';
                 let test : Entity = app.createFormalText(name, (testRun : Entity) => {
                 });
-                let testRun : Entity = test.test2A_run();
+                let testRun : Entity = await test.test2A_run();
                 await app.appA.uiA.content.listA.add(testRun);
                 app.appA.logG.toListOfStrings = true;
                 outerTest.test_app.log('human-test: the test run \'testName\' is displayed');

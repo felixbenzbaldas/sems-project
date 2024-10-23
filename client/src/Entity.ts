@@ -236,17 +236,39 @@ export class Entity {
         return formalText;
     }
 
-    test2A_run() {
+    async test2A_run() {
         let testRun : Entity = new Entity();
         testRun.app = this.getApp();
+        this.getApp().containerA.bind(testRun);
         testRun.testRunA_test = this;
+        if (this.listA) {
+            testRun.listA = new ListA(testRun);
+            for (let nestedTest of await (this.listA.getResolvedList())) {
+                let nestedTestRun = await nestedTest.test2A_run();
+                await testRun.listA.add(nestedTestRun);
+                if (!nestedTestRun.testRunA_resultA_success) {
+                    testRun.testRunA_resultA_success = false;
+                }
+            }
+        }
         try {
             this.formalTextA_jsFunction(testRun);
-            testRun.testRunA_resultA_success = true;
+            if (testRun.testRunA_resultA_success != false) {
+                testRun.testRunA_resultA_success = true;
+            }
         } catch (e : any) {
             testRun.testRunA_resultA_error = e;
             testRun.testRunA_resultA_success = false;
         }
         return testRun;
+    }
+
+    async addNestedTest(name: string, jsFunction: (testRun: Entity) => void) : Promise<Entity> {
+        let nestedTest : Entity = this.getApp().createFormalText(name, jsFunction);
+        if (!this.listA) {
+            this.listA = new ListA(this);
+        }
+        await this.listA.add(nestedTest);
+        return nestedTest;
     }
 }

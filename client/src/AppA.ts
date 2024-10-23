@@ -88,7 +88,7 @@ export class AppA {
     }
 
     async tester2A_run() {
-        let run = this.tester2A_test.test2A_run();
+        let run = await this.tester2A_test.test2A_run();
         await this.uiA.content.listA.add(run);
     }
 }

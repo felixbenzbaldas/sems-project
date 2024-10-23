@@ -17,6 +17,7 @@ import {AppA_TestA_SemiG} from "@/test/AppA_TestA_SemiG";
 import {AppA_TestA_PathG} from "@/test/AppA_TestA_PathG";
 import {Environment} from "@/Environment";
 import {testData} from "@/testData";
+import {ListA} from "@/ListA";
 
 class TestResults {
     successful : Array<Entity> = [];
@@ -252,10 +253,24 @@ export class AppA_TestA {
                     // test
                 });
 
-                let testRun : Entity = test.test2A_run();
+                let testRun : Entity = await test.test2A_run();
 
                 assert(testRun.testRunA_resultA_success);
                 assert_sameAs(testRun.testRunA_test, test);
+            }),
+            this.createTest('runTest_withNestedTest', async () => {
+                let app : Entity = this.appA.createStarter().createApp();
+                let name = 'testName';
+                let test : Entity = app.createFormalText(name, () => {});
+                let nestedTest = await test.addNestedTest('nestedTest', () => {});
+
+                let testRun : Entity = await test.test2A_run();
+
+                assert(testRun.testRunA_resultA_success, 'testRun->success');
+                assert_sameAs(testRun.testRunA_test, test);
+                let nestedTestRun = await testRun.listA.getObject(0);
+                assert(nestedTestRun.testRunA_resultA_success, 'nestedTestRun->success');
+                assert_sameAs(nestedTestRun.testRunA_test, nestedTest);
             }),
             this.createTest('runTest_failing', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
@@ -264,7 +279,7 @@ export class AppA_TestA {
                     assert(false);
                 });
 
-                let testRun : Entity = test.test2A_run();
+                let testRun : Entity = await test.test2A_run();
 
                 assertFalse(testRun.testRunA_resultA_success);
                 assert_notSameAs(testRun.testRunA_resultA_error, undefined);
