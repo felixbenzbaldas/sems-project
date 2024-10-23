@@ -1,6 +1,7 @@
 import type {Entity} from "@/Entity";
 import {Environment} from "@/Environment";
 import {testData} from "@/testData";
+import {assert, assert_sameAs} from "@/utils";
 
 export class AppA_TestA_ModelG {
 
@@ -195,6 +196,19 @@ export class AppA_TestA_ModelG {
                 let rawText = app.uiA.getRawText();
                 test.test_app.log(rawText);
                 return rawText === 'foosome meta information';
+            }),
+            this.createTest('modelTest_testRun', async outerTest => {
+                let app : Entity = this.entity.appA.createStarter().createAppWithUI();
+                let name = 'testName';
+                let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                });
+                let testRun : Entity = test.test2A_run();
+                let ui : Entity = app.appA.uiA.createUiFor(testRun);
+                await ui.uiA.update();
+
+                let rawText = ui.uiA.getRawText();
+
+                assert_sameAs(rawText, name);
             })
         ];
     }
