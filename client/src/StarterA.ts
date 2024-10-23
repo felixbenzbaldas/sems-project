@@ -30,8 +30,8 @@ export class StarterA {
             await this.createdApp.appA.testA.createRunAndDisplay();
         } else if (this.getEnvironment().queryParams.has('tester2')) {
             this.createTester2(this.getEnvironment().testCreator);
-            await this.createdApp.appA.tester2A_run();
             this.testMode();
+            await this.createdApp.appA.tester2A_run();
         } else if (this.getEnvironment().queryParams.has('path')) {
             await this.createObjectViewer(this.getEnvironment().queryParams.get('path'));
             this.testMode();
