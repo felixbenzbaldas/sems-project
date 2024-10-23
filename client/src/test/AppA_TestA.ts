@@ -228,6 +228,17 @@ export class AppA_TestA {
 
                 assert_sameAs(app.containerA.mapNameEntity.get(name), formalText);
             }),
+            this.createTest('runTest', async () => {
+                let app : Entity = this.appA.createStarter().createApp();
+                let name = 'testName';
+                let test : Entity = app.createFormalText(name, () => {
+                    // test
+                });
+
+                let testRun : Entity = test.testA2_run();
+
+                assert(testRun.testRunA2_resultA_success);
+            }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),
             ...this.modelG.createTests(),

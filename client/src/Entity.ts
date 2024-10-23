@@ -34,6 +34,8 @@ export class Entity {
     test_app: Entity;
     isTest: boolean;
 
+    testRunA2_resultA_success: boolean;
+
     json_withoutContainedObjects() : any {
         let obj: any = {
             text: this.text,
@@ -230,5 +232,12 @@ export class Entity {
         formalText.formalTextA_jsFunction = jsFunction;
         this.containerA.bind(formalText, name);
         return formalText;
+    }
+
+    testA2_run() {
+        let testRun : Entity = new Entity();
+        testRun.app = this.getApp();
+        testRun.testRunA2_resultA_success = true;
+        return testRun;
     }
 }
