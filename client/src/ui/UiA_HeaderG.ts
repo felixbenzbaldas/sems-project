@@ -62,6 +62,10 @@ export class UiA_HeaderG {
             this.content.appendChild(link);
         } else if (notNullUndefined(this.getObject().text)) {
             this.content.appendChild(this.getUiA().textG.htmlElement);
+        } else if (notNullUndefined(this.getObject().testRunA_resultA_success)) {
+            let result = this.getObject().testRunA_resultA_success ? 'S' : 'F';
+            this.content.innerText = result + ' ' + this.entity.getApp().getPath(this.getObject().testRunA_test).pathA.listOfNames.join('_');
+            this.content.style.color = this.getObject().testRunA_resultA_success ? 'green' : 'red';
         }
     }
 
@@ -92,10 +96,11 @@ export class UiA_HeaderG {
     }
 
     headerAvailable(): boolean {
-        return notNullUndefined(this.getObject().isTest) ||
+        return this.getObject().isTest ||
             notNullUndefined(this.getObject().action) ||
             notNullUndefined(this.getObject().link) ||
-            notNullUndefined(this.getObject().text);
+            notNullUndefined(this.getObject().text) ||
+            notNullUndefined(this.getObject().testRunA_resultA_success);
     }
 
     private updateCursorStyle() {

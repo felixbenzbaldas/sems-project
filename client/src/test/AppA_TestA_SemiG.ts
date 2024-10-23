@@ -1,5 +1,5 @@
 import {StarterA} from "@/StarterA";
-import {getSelectedText, selectAllTextOfDiv, setCaret} from "@/utils";
+import {assert_sameAs, getSelectedText, selectAllTextOfDiv, setCaret} from "@/utils";
 import type {Entity} from "@/Entity";
 
 export class AppA_TestA_SemiG {
@@ -191,6 +191,19 @@ export class AppA_TestA_SemiG {
                 test.test_app.log('human-test: The selected text is inserted in the text element.');
                 return true;
             }),
+            this.createTest('semi_testRun', async outerTest => {
+                outerTest.test_app = this.entity.appA.createStarter().createAppWithUI();
+                outerTest.test_app.uiA.editable = true;
+                let app = outerTest.test_app;
+                let name = 'testName';
+                let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                });
+                let testRun : Entity = test.test2A_run();
+                await app.appA.uiA.content.listA.add(testRun);
+                app.appA.logG.toListOfStrings = true;
+                outerTest.test_app.log('human-test: the test run \'testName\' is displayed');
+                return true;
+            })
         ];
     }
 
