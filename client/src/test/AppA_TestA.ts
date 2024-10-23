@@ -2,7 +2,7 @@ import {Entity} from "@/Entity";
 import {StarterA} from "@/StarterA";
 import {AppA} from "@/AppA";
 import {
-    assert,
+    assert, assert_notSameAs,
     assert_sameAs,
     assertFalse,
     createRandomString,
@@ -226,6 +226,15 @@ export class AppA_TestA {
                 }
                 return false;
             }),
+            this.createTest('assert_notSameAs', async test => {
+                try {
+                    assert_notSameAs(42, 42);
+                } catch (throwable) {
+                    let error = throwable as Error;
+                    return error.message === 'AssertionError: 42 === 42';
+                }
+                return false;
+            }),
             this.createTest('createFormalText', async test => {
                 let app : Entity = this.appA.createStarter().createApp();
                 let name = 'nameOfFormalText';
@@ -257,7 +266,7 @@ export class AppA_TestA {
                 let testRun : Entity = test.testA2_run();
 
                 assertFalse(testRun.testRunA2_resultA_success);
-                assert(testRun.testRunA2_resultA_error !== undefined);
+                assert_notSameAs(testRun.testRunA2_resultA_error, undefined);
             }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),
