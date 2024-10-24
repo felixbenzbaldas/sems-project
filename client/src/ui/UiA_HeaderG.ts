@@ -3,6 +3,7 @@ import {notNullUndefined} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_HeaderG {
+
     htmlElement: HTMLElement = document.createElement('div');
     content: HTMLElement = document.createElement('div');
     bodyIcon : HTMLElement = document.createElement('div');

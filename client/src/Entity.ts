@@ -16,7 +16,6 @@ export class Entity {
     link: string;
     app: Entity;
     action: Function;
-    hidden: boolean;
     editable: boolean;
     collapsible: boolean;
     dangerous_html: HTMLElement;
@@ -158,7 +157,7 @@ export class Entity {
                         await this.addDependencies(set, currentObject);
                     }
                 }
-            };
+            }
         }
     }
 

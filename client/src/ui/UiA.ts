@@ -29,7 +29,7 @@ export class UiA {
     }
 
     async update() {
-        if (!this.getObject().hidden && !this.getObject().dangerous_html) {
+        if (!this.getObject().dangerous_html) {
             if (this.entity.appA?.uiA) {
                 await this.entity.appA.uiA.update();
             } else {
@@ -52,21 +52,19 @@ export class UiA {
 
     private async updateUiElement() {
         this.htmlElement.innerHTML = null;
-        if (!this.getObject().hidden) {
-            if (this.entity.appA?.uiA) {
-                this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
-            } else if (this.headerG.headerAvailable()) {
-                this.htmlElement.appendChild(this.headerG.htmlElement);
-                this.htmlElement.appendChild(this.bodyG.htmlElement);
-            } else if (this.getObject().listA && this.collapsed != true) {
-                this.htmlElement.appendChild(this.listG.htmlElement);
-            } else if (this.getObject().dangerous_html) {
-                this.htmlElement.appendChild(this.getObject().dangerous_html);
-            } else {
-                let div = document.createElement('div');
-                div.innerText = this.getObject().getDescription();
-                this.htmlElement.appendChild(div);
-            }
+        if (this.entity.appA?.uiA) {
+            this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
+        } else if (this.headerG.headerAvailable()) {
+            this.htmlElement.appendChild(this.headerG.htmlElement);
+            this.htmlElement.appendChild(this.bodyG.htmlElement);
+        } else if (this.getObject().listA && this.collapsed != true) {
+            this.htmlElement.appendChild(this.listG.htmlElement);
+        } else if (this.getObject().dangerous_html) {
+            this.htmlElement.appendChild(this.getObject().dangerous_html);
+        } else {
+            let div = document.createElement('div');
+            div.innerText = this.getObject().getDescription();
+            this.htmlElement.appendChild(div);
         }
     }
 
@@ -92,26 +90,24 @@ export class UiA {
 
     getRawText() : string {
         this.entity.log('getRawText');
-        if (!this.getObject().hidden) {
-            if (this.entity.appA?.uiA) {
-                return this.entity.appA.uiA.getRawText();
-            } else if (notNullUndefined(this.getObject().link)) {
-                return this.headerG.link_getText();
-            } else if (notNullUndefined(this.getObject().testRunA)) {
-                return this.getObject().testRunA.test.name;
+        if (this.entity.appA?.uiA) {
+            return this.entity.appA.uiA.getRawText();
+        } else if (notNullUndefined(this.getObject().link)) {
+            return this.headerG.link_getText();
+        } else if (notNullUndefined(this.getObject().testRunA)) {
+            return this.getObject().testRunA.test.name;
+        } else {
+            if (this.getObject().isTest) {
+                return this.testG.getRawText();
             } else {
-                if (this.getObject().isTest) {
-                    return this.testG.getRawText();
-                } else {
-                    let rawText = '';
-                    if (notNullUndefined(this.getObject().text)) {
-                        rawText += this.getObject().text;
-                    }
-                    if (this.getObject().listA && this.collapsed != true) {
-                        rawText += this.listG.getRawText();
-                    }
-                    return rawText;
+                let rawText = '';
+                if (notNullUndefined(this.getObject().text)) {
+                    rawText += this.getObject().text;
                 }
+                if (this.getObject().listA && this.collapsed != true) {
+                    rawText += this.listG.getRawText();
+                }
+                return rawText;
             }
         }
         return '';
@@ -127,51 +123,46 @@ export class UiA {
 
     async click(text : string) {
         this.entity.log('click ' + text);
-        if (!this.getObject().hidden) {
-            if (this.entity.appA?.uiA) {
-                await this.entity.appA.uiA.click(text);
-            } else if (this.getObject().isTest) {
-                await this.testG.click(text);
-            } else if (this.getObject().action) {
-                if (this.getObject().text.includes(text)) {
-                    await this.getObject().action();
+        if (this.entity.appA?.uiA) {
+            await this.entity.appA.uiA.click(text);
+        } else if (this.getObject().isTest) {
+            await this.testG.click(text);
+        } else if (this.getObject().action) {
+            if (this.getObject().text.includes(text)) {
+                await this.getObject().action();
+            }
+        } else if (notNullUndefined(this.getObject().text)) {
+            if (this.getObject().text.includes(text)) {
+                if (this.isEditable()) {
+                    this.entity.getApp().appA.uiA.focus(this.entity);
+                } else {
+                    await this.headerG.clickEvent();
                 }
-            } else if (notNullUndefined(this.getObject().text)) {
-                if (this.getObject().text.includes(text)) {
-                    if (this.isEditable()) {
-                        this.entity.getApp().appA.uiA.focus(this.entity);
-                    } else {
-                        await this.headerG.clickEvent();
-                    }
-                }
-                if (!this.collapsed && this.bodyG.bodyAvailable()) {
-                    await this.listG.click(text);
-                }
-            } else if (this.getObject().listA) {
+            }
+            if (!this.collapsed && this.bodyG.bodyAvailable()) {
                 await this.listG.click(text);
             }
+        } else if (this.getObject().listA) {
+            await this.listG.click(text);
         }
     }
 
     countEditableTexts() : number {
         this.entity.log('countEditableTexts');
-        if (!this.getObject().hidden) {
-            if (this.entity.appA?.uiA) {
-                return this.entity.appA.uiA.countEditableTexts();
-            } else {
-                let counter = 0;
-                if (notNullUndefined(this.getObject().text)) {
-                    if (this.isEditable()) {
-                        counter++;
-                    }
+        if (this.entity.appA?.uiA) {
+            return this.entity.appA.uiA.countEditableTexts();
+        } else {
+            let counter = 0;
+            if (notNullUndefined(this.getObject().text)) {
+                if (this.isEditable()) {
+                    counter++;
                 }
-                if (this.getObject().listA && !this.collapsed) {
-                    counter += this.listG.countEditableTexts();
-                }
-                return counter;
             }
+            if (this.getObject().listA && !this.collapsed) {
+                counter += this.listG.countEditableTexts();
+            }
+            return counter;
         }
-        return 0;
     }
 
     updateFocusStyle() {
