@@ -217,23 +217,14 @@ export class UiA {
         if (this.entity.appA?.uiA) {
             await this.entity.appA.uiA.newSubitem();
         } else {
-            if (this.object) {
-                if (!this.getObject().listA) {
-                    this.getObject().listA = new ListA(this.getObject());
-                }
-                let created = await this.entity.getApp().appA.createText('');
-                await this.listG.insertObjectAtPosition(created, 0);
-                await this.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
-                this.entity.getApp().appA.uiA.focus(this.listG.uisOfListItems.at(0));
-            } else {
-                if (!this.entity.listA) {
-                    this.entity.listA = new ListA(this.entity);
-                }
-                let created = await this.entity.getApp().appA.createText('');
-                await this.entity.listA.add(created);
-                await this.update();
-                this.entity.getApp().appA.uiA.focus(created);
+            if (!this.getObject().listA) {
+                this.getObject().listA = new ListA(this.getObject());
             }
+            let created = await this.entity.getApp().appA.createText('');
+            await this.listG.insertObjectAtPosition(created, 0);
+            await this.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
+                                 // TODO update all uis
+            this.entity.getApp().appA.uiA.focus(this.listG.uisOfListItems.at(0));
         }
     }
 
