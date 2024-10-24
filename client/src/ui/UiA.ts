@@ -29,26 +29,29 @@ export class UiA {
     }
 
     async update() {
-        if (!this.getObject().dangerous_html) {
-            if (this.entity.appA?.uiA) {
-                await this.entity.appA.uiA.update();
-            } else {
-                if (this.getObject().isTest) {
-                    await this.testG.update();
-                }
-                if (this.getObject().listA) {
-                    await this.listG.update();
-                }
-                if (notNullUndefined(this.getObject().text)) {
-                    this.textG.update();
-                }
-                this.headerG.update();
-                await this.bodyG.update();
+        if (this.getObject().dangerous_html) {
+            await this.updateUiElement();
+        } else if (this.entity.appA?.uiA) {
+            await this.entity.appA.uiA.update();
+            await this.updateUiElement();
+        } else if (this.getObject().isTest) {
+            await this.testG.update();
+            this.headerG.update();
+            await this.bodyG.update();
+            await this.updateUiElement();
+        } else {
+            if (this.getObject().listA) {
+                await this.listG.update();
             }
+            if (notNullUndefined(this.getObject().text)) {
+                this.textG.update();
+            }
+            this.headerG.update();
+            await this.bodyG.update();
+            await this.updateUiElement();
         }
-        await this.updateUiElement();
     }
-
+    
     private async updateUiElement() {
         this.htmlElement.innerHTML = null;
         if (this.entity.appA?.uiA) {
