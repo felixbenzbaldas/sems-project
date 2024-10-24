@@ -39,13 +39,21 @@ export class UiA {
             this.headerG.update();
             await this.bodyG.update();
             await this.updateUiElement();
-        } else {
-            if (this.getObject().listA) {
-                await this.listG.update();
-            }
-            if (notNullUndefined(this.getObject().text)) {
-                this.textG.update();
-            }
+        } else if (this.isPlainList()) {
+            await this.listG.update();
+            await this.updateUiElement();
+        } else if (this.isTextWithList()) {
+            await this.listG.update();
+            this.textG.update();
+            this.headerG.update();
+            await this.bodyG.update();
+            await this.updateUiElement();
+        } else if (this.isPlainText()) {
+            this.textG.update();
+            this.headerG.update();
+            await this.bodyG.update();
+            await this.updateUiElement();
+        } else if (this.getObject().testRunA) {
             this.headerG.update();
             await this.bodyG.update();
             await this.updateUiElement();
@@ -74,8 +82,16 @@ export class UiA {
         }
     }
 
+    isPlainText() {
+        return notNullUndefined(this.getObject().text) && !this.getObject().listA;
+    }
+
     isPlainList() {
         return this.getObject().listA && nullUndefined(this.getObject().text);
+    }
+
+    isTextWithList() {
+        return notNullUndefined(this.getObject().text) && this.getObject().listA;
     }
 
     resetHtmlElement() {
