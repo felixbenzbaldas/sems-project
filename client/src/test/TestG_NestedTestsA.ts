@@ -1,6 +1,6 @@
 import type {Entity} from "@/Entity";
 
-export class TestA_NestedTestsA {
+export class TestG_NestedTestsA {
 
     constructor(private entity : Entity) {
     }

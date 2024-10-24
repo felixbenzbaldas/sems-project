@@ -255,23 +255,23 @@ export class AppA_TestA {
 
                 let testRun : Entity = await test.test2A_run();
 
-                assert(testRun.testRunA_resultA_success);
-                assert_sameAs(testRun.testRunA_test, test);
+                assert(testRun.testRunG_resultG_success);
+                assert_sameAs(testRun.testRunG_test, test);
             }),
             this.createTest('runTest_withNestedTest', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
                 let name = 'testName';
                 let test : Entity = app.createFormalText(name, () => {});
-                test.testA_installNestedTestsA();
-                let nestedTest = await test.testA_nestedTestsA.add('nestedTest', () => {});
+                test.testG_installNestedTestsA();
+                let nestedTest = await test.testG_nestedTestsA.add('nestedTest', () => {});
 
                 let testRun : Entity = await test.test2A_run();
 
-                assert(testRun.testRunA_resultA_success, 'testRun->success');
-                assert_sameAs(testRun.testRunA_test, test);
+                assert(testRun.testRunG_resultG_success, 'testRun->success');
+                assert_sameAs(testRun.testRunG_test, test);
                 let nestedTestRun = await testRun.listA.getResolved(0);
-                assert(nestedTestRun.testRunA_resultA_success, 'nestedTestRun->success');
-                assert_sameAs(nestedTestRun.testRunA_test, nestedTest);
+                assert(nestedTestRun.testRunG_resultG_success, 'nestedTestRun->success');
+                assert_sameAs(nestedTestRun.testRunG_test, nestedTest);
             }),
             this.createTest('runTest_failing', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
@@ -282,8 +282,8 @@ export class AppA_TestA {
 
                 let testRun : Entity = await test.test2A_run();
 
-                assertFalse(testRun.testRunA_resultA_success);
-                assert_notSameAs(testRun.testRunA_resultA_error, undefined);
+                assertFalse(testRun.testRunG_resultG_success);
+                assert_notSameAs(testRun.testRunG_resultG_error, undefined);
             }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),

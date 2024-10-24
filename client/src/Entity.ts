@@ -5,7 +5,7 @@ import {ContainerA} from "@/ContainerA";
 import {UiA} from "@/ui/UiA";
 import {notNullUndefined, nullUndefined} from "@/utils";
 import type {StarterA} from "@/StarterA";
-import {TestA_NestedTestsA} from "@/test/TestA_NestedTestsA";
+import {TestG_NestedTestsA} from "@/test/TestG_NestedTestsA";
 
 export class Entity {
 
@@ -20,7 +20,7 @@ export class Entity {
     collapsible: boolean;
     dangerous_html: HTMLElement;
     uis: Array<Entity>;
-    formalTextA_jsFunction: Function;
+    formalTextG_jsFunction: Function;
 
     listA: ListA;
     installListA() {
@@ -37,13 +37,13 @@ export class Entity {
     test_app: Entity;
     isTest: boolean;
 
-    testRunA_resultA_success: boolean;
-    testRunA_resultA_error: Error;
-    testRunA_test: Entity;
-    testA_nestedTestsA : TestA_NestedTestsA;
-    testA_installNestedTestsA() {
-        this.testA_nestedTestsA = new TestA_NestedTestsA(this);
-        this.testA_nestedTestsA.install();
+    testRunG_resultG_success: boolean;
+    testRunG_resultG_error: Error;
+    testRunG_test: Entity;
+    testG_nestedTestsA : TestG_NestedTestsA;
+    testG_installNestedTestsA() {
+        this.testG_nestedTestsA = new TestG_NestedTestsA(this);
+        this.testG_nestedTestsA.install();
     }
 
     json_withoutContainedObjects() : any {
@@ -239,7 +239,7 @@ export class Entity {
     createFormalText(name: string, jsFunction: Function) : Entity {
         let formalText : Entity = new Entity();
         formalText.app = this.getApp();
-        formalText.formalTextA_jsFunction = jsFunction;
+        formalText.formalTextG_jsFunction = jsFunction;
         this.containerA.bind(formalText, name);
         return formalText;
     }
@@ -247,25 +247,25 @@ export class Entity {
     async test2A_run() {
         let testRun : Entity = new Entity();
         testRun.app = this.getApp();
-        testRun.testRunA_test = this;
+        testRun.testRunG_test = this;
         if (this.listA) {
             testRun.installListA();
             for (let nestedTest of await (this.listA.getResolvedList())) {
                 let nestedTestRun = await nestedTest.test2A_run();
                 await testRun.listA.add(nestedTestRun);
-                if (!nestedTestRun.testRunA_resultA_success) {
-                    testRun.testRunA_resultA_success = false;
+                if (!nestedTestRun.testRunG_resultG_success) {
+                    testRun.testRunG_resultG_success = false;
                 }
             }
         }
         try {
-            this.formalTextA_jsFunction(testRun);
-            if (testRun.testRunA_resultA_success != false) {
-                testRun.testRunA_resultA_success = true;
+            this.formalTextG_jsFunction(testRun);
+            if (testRun.testRunG_resultG_success != false) {
+                testRun.testRunG_resultG_success = true;
             }
         } catch (e : any) {
-            testRun.testRunA_resultA_error = e;
-            testRun.testRunA_resultA_success = false;
+            testRun.testRunG_resultG_error = e;
+            testRun.testRunG_resultG_success = false;
         }
         return testRun;
     }
