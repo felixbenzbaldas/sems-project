@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined} from "@/utils";
+import {notNullUndefined, nullUndefined} from "@/utils";
 import {UiA_ListG} from "@/ui/UiA_ListG";
 import {UiA_TextG} from "@/ui/UiA_TextG";
 import {UiA_BodyG} from "@/ui/UiA_BodyG";
@@ -51,23 +51,31 @@ export class UiA {
             await this.updateUiElement();
         }
     }
-    
+
     private async updateUiElement() {
-        this.htmlElement.innerHTML = null;
         if (this.entity.appA?.uiA) {
+            this.resetHtmlElement();
             this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
         } else if (this.headerG.headerAvailable()) {
+            this.resetHtmlElement();
             this.htmlElement.appendChild(this.headerG.htmlElement);
             this.htmlElement.appendChild(this.bodyG.htmlElement);
-        } else if (this.getObject().listA && this.collapsed != true) {
-            this.htmlElement.appendChild(this.listG.htmlElement);
         } else if (this.getObject().dangerous_html) {
+            this.resetHtmlElement();
             this.htmlElement.appendChild(this.getObject().dangerous_html);
+        } else if (this.getObject().listA && nullUndefined(this.getObject().text)) {
+            this.resetHtmlElement();
+            this.htmlElement.appendChild(this.listG.htmlElement);
         } else {
+            this.resetHtmlElement();
             let div = document.createElement('div');
             div.innerText = this.getObject().getDescription();
             this.htmlElement.appendChild(div);
         }
+    }
+
+    resetHtmlElement() {
+        this.htmlElement.innerHTML = null;
     }
 
     isEditable() {
