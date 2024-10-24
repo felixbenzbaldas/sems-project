@@ -262,7 +262,8 @@ export class AppA_TestA {
                 let app : Entity = this.appA.createStarter().createApp();
                 let name = 'testName';
                 let test : Entity = app.createFormalText(name, () => {});
-                let nestedTest = await test.addNestedTest('nestedTest', () => {});
+                test.testA_installNestedTestsA();
+                let nestedTest = await test.testA_nestedTestsA.add('nestedTest', () => {});
 
                 let testRun : Entity = await test.test2A_run();
 

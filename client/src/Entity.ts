@@ -5,7 +5,7 @@ import {ContainerA} from "@/ContainerA";
 import {UiA} from "@/ui/UiA";
 import {notNullUndefined, nullUndefined} from "@/utils";
 import type {StarterA} from "@/StarterA";
-import type {Environment} from "@/Environment";
+import {TestA_NestedTestsA} from "@/test/TestA_NestedTestsA";
 
 export class Entity {
 
@@ -40,6 +40,11 @@ export class Entity {
     testRunA_resultA_success: boolean;
     testRunA_resultA_error: Error;
     testRunA_test: Entity;
+    testA_nestedTestsA : TestA_NestedTestsA;
+    testA_installNestedTestsA() {
+        this.testA_nestedTestsA = new TestA_NestedTestsA(this);
+        this.testA_nestedTestsA.install();
+    }
 
     json_withoutContainedObjects() : any {
         let obj: any = {
@@ -263,14 +268,5 @@ export class Entity {
             testRun.testRunA_resultA_success = false;
         }
         return testRun;
-    }
-
-    async addNestedTest(name: string, jsFunction: (testRun: Entity) => void) : Promise<Entity> {
-        let nestedTest : Entity = this.getApp().createFormalText(name, jsFunction);
-        if (!this.listA) {
-            this.installListA();
-        }
-        await this.listA.add(nestedTest);
-        return nestedTest;
     }
 }
