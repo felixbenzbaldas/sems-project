@@ -2,6 +2,7 @@ import type {Entity} from "@/Entity";
 import {notNullUndefined, nullUndefined} from "@/utils";
 import {UiA} from "@/ui/UiA";
 
+// TODO should be an aspect not a group. Then: entity.uiA.getObject().listA <==> entity.uiA.listA
 export class UiA_ListG {
 
     uisOfListItems : Array<Entity>;
