@@ -110,7 +110,6 @@ export class UiA {
                 return rawText;
             }
         }
-        return '';
     }
 
     getObject() : Entity {
