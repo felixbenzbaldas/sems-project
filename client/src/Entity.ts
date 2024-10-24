@@ -23,6 +23,9 @@ export class Entity {
     formalTextA_jsFunction: Function;
 
     listA: ListA;
+    installListA() {
+        this.listA = new ListA(this);
+    }
     pathA: PathA;
     appA: AppA;
     containerA: ContainerA;
@@ -241,7 +244,7 @@ export class Entity {
         testRun.app = this.getApp();
         testRun.testRunA_test = this;
         if (this.listA) {
-            testRun.listA = new ListA(testRun);
+            testRun.installListA();
             for (let nestedTest of await (this.listA.getResolvedList())) {
                 let nestedTestRun = await nestedTest.test2A_run();
                 await testRun.listA.add(nestedTestRun);
@@ -265,7 +268,7 @@ export class Entity {
     async addNestedTest(name: string, jsFunction: (testRun: Entity) => void) : Promise<Entity> {
         let nestedTest : Entity = this.getApp().createFormalText(name, jsFunction);
         if (!this.listA) {
-            this.listA = new ListA(this);
+            this.installListA();
         }
         await this.listA.add(nestedTest);
         return nestedTest;

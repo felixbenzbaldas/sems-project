@@ -55,7 +55,7 @@ export class AppA_UnboundG {
         entity.link = json.link;
         entity.editable = json.editable;
         if (notNullUndefined(json.list)) {
-            entity.listA = new ListA(entity);
+            entity.installListA();
             entity.listA.jsList = [];
             for (let current of json.list) {
                 if (current instanceof Array) {

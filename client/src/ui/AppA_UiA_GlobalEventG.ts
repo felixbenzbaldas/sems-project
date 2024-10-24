@@ -63,7 +63,7 @@ export class AppA_UiA_GlobalEventG {
         this.entity.appA.currentContainer.containerA.bind(created);
         let focusedObject = focused.uiA.getObject();
         if (!focusedObject.listA) {
-            focusedObject.listA = new ListA(focusedObject);
+            focusedObject.installListA();
         }
         await focused.uiA.listG.insertObjectAtPosition(created, 0);
         await focused.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)

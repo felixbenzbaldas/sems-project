@@ -218,7 +218,7 @@ export class UiA {
             await this.entity.appA.uiA.newSubitem();
         } else {
             if (!this.getObject().listA) {
-                this.getObject().listA = new ListA(this.getObject());
+                this.getObject().installListA();
             }
             let created = await this.entity.getApp().appA.createText('');
             await this.listG.insertObjectAtPosition(created, 0);
