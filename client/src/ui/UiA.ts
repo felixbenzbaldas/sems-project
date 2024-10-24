@@ -47,7 +47,6 @@ export class UiA {
             }
         }
         await this.updateUiElement();
-        this.entity.log('ui_updated');
     }
 
     private async updateUiElement() {
