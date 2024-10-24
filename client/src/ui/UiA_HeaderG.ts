@@ -96,14 +96,6 @@ export class UiA_HeaderG {
         return notNullUndefined(this.getObject().text) ? this.getObject().text : this.getObject().link;
     }
 
-    headerAvailable(): boolean {
-        return this.getObject().isTest ||
-            notNullUndefined(this.getObject().action) ||
-            notNullUndefined(this.getObject().link) ||
-            notNullUndefined(this.getObject().text) ||
-            notNullUndefined(this.getObject().testRunA);
-    }
-
     private updateCursorStyle() {
         if (this.getObject().collapsible && this.getUiA().bodyG.bodyAvailable()) {
             this.htmlElement.style.cursor = 'pointer';

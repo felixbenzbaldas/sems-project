@@ -56,14 +56,14 @@ export class UiA {
         if (this.entity.appA?.uiA) {
             this.resetHtmlElement();
             this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
-        } else if (this.headerG.headerAvailable()) {
+        } else if (this.isHeaderBody()) {
             this.resetHtmlElement();
             this.htmlElement.appendChild(this.headerG.htmlElement);
             this.htmlElement.appendChild(this.bodyG.htmlElement);
         } else if (this.getObject().dangerous_html) {
             this.resetHtmlElement();
             this.htmlElement.appendChild(this.getObject().dangerous_html);
-        } else if (this.getObject().listA && nullUndefined(this.getObject().text)) {
+        } else if (this.isPlainList()) {
             this.resetHtmlElement();
             this.htmlElement.appendChild(this.listG.htmlElement);
         } else {
@@ -74,8 +74,20 @@ export class UiA {
         }
     }
 
+    isPlainList() {
+        return this.getObject().listA && nullUndefined(this.getObject().text);
+    }
+
     resetHtmlElement() {
         this.htmlElement.innerHTML = null;
+    }
+
+    isHeaderBody() : boolean {
+        return this.getObject().isTest ||
+            notNullUndefined(this.getObject().action) ||
+            notNullUndefined(this.getObject().link) ||
+            notNullUndefined(this.getObject().text) ||
+            notNullUndefined(this.getObject().testRunA);
     }
 
     isEditable() {
