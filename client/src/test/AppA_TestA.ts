@@ -253,7 +253,7 @@ export class AppA_TestA {
                     // test
                 });
 
-                let testRun : Entity = await test.test2A_run();
+                let testRun : Entity = await test.testG_run();
 
                 assert(testRun.testRunG_resultG_success);
                 assert_sameAs(testRun.testRunG_test, test);
@@ -265,7 +265,7 @@ export class AppA_TestA {
                 test.testG_installNestedTestsA();
                 let nestedTest = await test.testG_nestedTestsA.add('nestedTest', () => {});
 
-                let testRun : Entity = await test.test2A_run();
+                let testRun : Entity = await test.testG_run();
 
                 assert(testRun.testRunG_resultG_success, 'testRun->success');
                 assert_sameAs(testRun.testRunG_test, test);
@@ -280,7 +280,7 @@ export class AppA_TestA {
                     assert(false);
                 });
 
-                let testRun : Entity = await test.test2A_run();
+                let testRun : Entity = await test.testG_run();
 
                 assertFalse(testRun.testRunG_resultG_success);
                 assert_notSameAs(testRun.testRunG_resultG_error, undefined);

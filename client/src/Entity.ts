@@ -245,14 +245,14 @@ export class Entity {
         return formalText;
     }
 
-    async test2A_run() {
+    async testG_run() {
         let testRun : Entity = new Entity();
         testRun.app = this.getApp();
         testRun.testRunG_test = this;
         if (this.listA) {
             testRun.installListA();
             for (let nestedTest of await (this.listA.getResolvedList())) {
-                let nestedTestRun = await nestedTest.test2A_run();
+                let nestedTestRun = await nestedTest.testG_run();
                 await testRun.listA.add(nestedTestRun);
                 if (!nestedTestRun.testRunG_resultG_success) {
                     testRun.testRunG_resultG_success = false;

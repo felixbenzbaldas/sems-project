@@ -16,8 +16,8 @@ export class AppA {
     readonly logG: LogG;
     readonly unboundG : AppA_UnboundG;
     uiA: AppA_UiA;
-    testA : AppA_TestA;
-    tester2A_test: Entity;
+    testA : AppA_TestA; // deprecated
+    testerG_test: Entity;
 
     constructor(private entity : Entity) {
         this.unboundG = new AppA_UnboundG(entity);
@@ -87,8 +87,8 @@ export class AppA {
         }
     }
 
-    async tester2A_run() {
-        let run = await this.tester2A_test.test2A_run();
+    async testerG_run() {
+        let run = await this.testerG_test.testG_run();
         await this.uiA.content.listA.add(run);
     }
 }

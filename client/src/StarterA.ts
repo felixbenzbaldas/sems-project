@@ -31,7 +31,7 @@ export class StarterA {
         } else if (this.getEnvironment().queryParams.has('tester2')) {
             this.createTester2(this.getEnvironment().testCreator);
             this.testMode();
-            await this.createdApp.appA.tester2A_run();
+            await this.createdApp.appA.testerG_run();
         } else if (this.getEnvironment().queryParams.has('path')) {
             await this.createObjectViewer(this.getEnvironment().queryParams.get('path'));
             this.testMode();
@@ -99,7 +99,7 @@ export class StarterA {
 
     createTester2(testCreator: (app: Entity) => Entity) : Entity {
         this.createAppWithUI();
-        this.createdApp.appA.tester2A_test = testCreator(this.createdApp);
+        this.createdApp.appA.testerG_test = testCreator(this.createdApp);
         return this.createdApp;
     }
 

@@ -97,7 +97,7 @@ export class AppA_TestA_ModelG {
                 let tester : Entity = this.entity.appA.createStarter().createTester2(testCreator);
                 outerTest.test_app = tester;
                 tester.appA.logG.toListOfStrings = true;
-                await tester.appA.tester2A_run();
+                await tester.appA.testerG_run();
                 await tester.uiA.update();
                 assert_sameAs(tester.uiA.getRawText(), 'appTest');
             }),
@@ -214,7 +214,7 @@ export class AppA_TestA_ModelG {
                 let name = 'testName';
                 let test : Entity = app.createFormalText(name, (testRun : Entity) => {
                 });
-                let testRun : Entity = await test.test2A_run();
+                let testRun : Entity = await test.testG_run();
                 let ui : Entity = app.appA.uiA.createUiFor(testRun);
                 await ui.uiA.update();
 
