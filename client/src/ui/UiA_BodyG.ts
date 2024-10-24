@@ -13,14 +13,11 @@ export class UiA_BodyG {
     async update() {
         this.htmlElement.innerHTML = null;
         if (!this.entity.uiA.collapsed && this.bodyAvailable()) {
-            this.htmlElement.hidden = false;
             await this.content_update();
             this.htmlElement.appendChild(this.content_htmlElement);
             this.htmlElement.style.paddingLeft = '0.8rem';
             this.htmlElement.style.paddingTop = '0.2rem';
             this.htmlElement.style.paddingBottom = '0.2rem';
-        } else {
-            this.htmlElement.hidden = true;
         }
     }
 
