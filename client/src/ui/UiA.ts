@@ -97,8 +97,8 @@ export class UiA {
                 return this.entity.appA.uiA.getRawText();
             } else if (notNullUndefined(this.getObject().link)) {
                 return this.headerG.link_getText();
-            } else if (notNullUndefined(this.getObject().testRunG_resultG_success)) {
-                return this.getObject().testRunG_test.name;
+            } else if (notNullUndefined(this.getObject().testRunA)) {
+                return this.getObject().testRunA.test.name;
             } else {
                 if (this.getObject().isTest) {
                     return this.testG.getRawText();

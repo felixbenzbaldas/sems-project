@@ -6,6 +6,7 @@ import {UiA} from "@/ui/UiA";
 import {notNullUndefined, nullUndefined} from "@/utils";
 import type {StarterA} from "@/StarterA";
 import {TestG_NestedTestsA} from "@/test/TestG_NestedTestsA";
+import {TestRunA} from "@/test/TestRunA";
 
 export class Entity {
 
@@ -31,6 +32,10 @@ export class Entity {
     containerA: ContainerA;
     uiA: UiA;
     starterA: StarterA;
+    testRunA: TestRunA;
+    installTestRunA() {
+        this.testRunA = new TestRunA(this);
+    }
 
     // deprecated
     test_result_error: any;
@@ -38,9 +43,6 @@ export class Entity {
     test_app: Entity;
     isTest: boolean;
 
-    testRunG_resultG_success: boolean;
-    testRunG_resultG_error: Error;
-    testRunG_test: Entity;
     testG_nestedTestsA : TestG_NestedTestsA;
     testG_installNestedTestsA() {
         this.testG_nestedTestsA = new TestG_NestedTestsA(this);
@@ -248,25 +250,26 @@ export class Entity {
     async testG_run() {
         let testRun : Entity = new Entity();
         testRun.app = this.getApp();
-        testRun.testRunG_test = this;
+        testRun.installTestRunA();
+        testRun.testRunA.test = this;
         if (this.listA) {
             testRun.installListA();
             for (let nestedTest of await (this.listA.getResolvedList())) {
                 let nestedTestRun = await nestedTest.testG_run();
                 await testRun.listA.add(nestedTestRun);
-                if (!nestedTestRun.testRunG_resultG_success) {
-                    testRun.testRunG_resultG_success = false;
+                if (!nestedTestRun.testRunA.resultG_success) {
+                    testRun.testRunA.resultG_success = false;
                 }
             }
         }
         try {
             this.formalTextG_jsFunction(testRun);
-            if (testRun.testRunG_resultG_success != false) {
-                testRun.testRunG_resultG_success = true;
+            if (testRun.testRunA.resultG_success != false) {
+                testRun.testRunA.resultG_success = true;
             }
         } catch (e : any) {
-            testRun.testRunG_resultG_error = e;
-            testRun.testRunG_resultG_success = false;
+            testRun.testRunA.resultG_error = e;
+            testRun.testRunA.resultG_success = false;
         }
         return testRun;
     }

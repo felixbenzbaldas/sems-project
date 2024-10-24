@@ -255,8 +255,8 @@ export class AppA_TestA {
 
                 let testRun : Entity = await test.testG_run();
 
-                assert(testRun.testRunG_resultG_success);
-                assert_sameAs(testRun.testRunG_test, test);
+                assert(testRun.testRunA.resultG_success);
+                assert_sameAs(testRun.testRunA.test, test);
             }),
             this.createTest('runTest_withNestedTest', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
@@ -267,11 +267,11 @@ export class AppA_TestA {
 
                 let testRun : Entity = await test.testG_run();
 
-                assert(testRun.testRunG_resultG_success, 'testRun->success');
-                assert_sameAs(testRun.testRunG_test, test);
+                assert(testRun.testRunA.resultG_success, 'testRun->success');
+                assert_sameAs(testRun.testRunA.test, test);
                 let nestedTestRun = await testRun.listA.getResolved(0);
-                assert(nestedTestRun.testRunG_resultG_success, 'nestedTestRun->success');
-                assert_sameAs(nestedTestRun.testRunG_test, nestedTest);
+                assert(nestedTestRun.testRunA.resultG_success, 'nestedTestRun->success');
+                assert_sameAs(nestedTestRun.testRunA.test, nestedTest);
             }),
             this.createTest('runTest_failing', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
@@ -282,8 +282,8 @@ export class AppA_TestA {
 
                 let testRun : Entity = await test.testG_run();
 
-                assertFalse(testRun.testRunG_resultG_success);
-                assert_notSameAs(testRun.testRunG_resultG_error, undefined);
+                assertFalse(testRun.testRunA.resultG_success);
+                assert_notSameAs(testRun.testRunA.resultG_error, undefined);
             }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),
