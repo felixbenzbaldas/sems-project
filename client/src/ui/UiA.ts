@@ -29,53 +29,41 @@ export class UiA {
     }
 
     async update() {
+        this.resetHtmlElement();
         if (this.getObject().dangerous_html) {
-            await this.updateUiElement();
+            this.htmlElement.appendChild(this.getObject().dangerous_html);
         } else if (this.entity.appA?.uiA) {
             await this.entity.appA.uiA.update();
-            await this.updateUiElement();
+            this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
         } else if (this.getObject().isTest) {
+            this.textG.update();
             await this.testG.update();
             this.headerG.update();
             await this.bodyG.update();
-            await this.updateUiElement();
+            this.htmlElement.appendChild(this.headerG.htmlElement);
+            this.htmlElement.appendChild(this.bodyG.htmlElement);
         } else if (this.isPlainList()) {
             await this.listG.update();
-            await this.updateUiElement();
+            this.htmlElement.appendChild(this.listG.htmlElement);
         } else if (this.isTextWithList()) {
             await this.listG.update();
             this.textG.update();
             this.headerG.update();
             await this.bodyG.update();
-            await this.updateUiElement();
+            this.htmlElement.appendChild(this.headerG.htmlElement);
+            this.htmlElement.appendChild(this.bodyG.htmlElement);
         } else if (this.isPlainText()) {
             this.textG.update();
             this.headerG.update();
             await this.bodyG.update();
-            await this.updateUiElement();
+            this.htmlElement.appendChild(this.headerG.htmlElement);
+            this.htmlElement.appendChild(this.bodyG.htmlElement);
         } else if (this.getObject().testRunA) {
             this.headerG.update();
             await this.bodyG.update();
-            await this.updateUiElement();
-        }
-    }
-
-    private async updateUiElement() {
-        if (this.entity.appA?.uiA) {
-            this.resetHtmlElement();
-            this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
-        } else if (this.isHeaderBody()) {
-            this.resetHtmlElement();
             this.htmlElement.appendChild(this.headerG.htmlElement);
             this.htmlElement.appendChild(this.bodyG.htmlElement);
-        } else if (this.getObject().dangerous_html) {
-            this.resetHtmlElement();
-            this.htmlElement.appendChild(this.getObject().dangerous_html);
-        } else if (this.isPlainList()) {
-            this.resetHtmlElement();
-            this.htmlElement.appendChild(this.listG.htmlElement);
         } else {
-            this.resetHtmlElement();
             let div = document.createElement('div');
             div.innerText = this.getObject().getDescription();
             this.htmlElement.appendChild(div);
