@@ -26,14 +26,18 @@ export class UiA_BodyG {
         if (this.getObject().isTest) {
             this.content_htmlElement.appendChild(this.getUiA().testG.bodyContent.uiA.htmlElement);
         } else if (this.getObject().listA && this.getObject().listA.jsList.length > 0) {
-            await this.entity.uiA.listG.update();
+            await this.getUiA().listG.update();
             this.content_htmlElement = this.getUiA().listG.htmlElement;
+        } else if (this.getObject().testRunA) {
+            await this.getUiA().testRunG.update();
+            this.content_htmlElement = this.getUiA().testRunG.htmlElement;
         }
     }
 
     bodyAvailable() : boolean {
         return notNullUndefined(this.getObject().test_result) ||
-            this.getObject().listA && this.getObject().listA.jsList.length > 0;
+            this.getObject().listA && this.getObject().listA.jsList.length > 0 ||
+            notNullUndefined(this.getObject().testRunA);
     }
 
     async expand() {

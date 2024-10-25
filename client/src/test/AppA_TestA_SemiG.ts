@@ -1,5 +1,5 @@
 import {StarterA} from "@/StarterA";
-import {assert_sameAs, getSelectedText, selectAllTextOfDiv, setCaret} from "@/utils";
+import {assert, assert_sameAs, getSelectedText, selectAllTextOfDiv, setCaret} from "@/utils";
 import type {Entity} from "@/Entity";
 
 export class AppA_TestA_SemiG {
@@ -201,8 +201,23 @@ export class AppA_TestA_SemiG {
                 let testRun : Entity = await test.testG_run();
                 await app.appA.uiA.content.listA.add(testRun);
                 app.appA.logG.toListOfStrings = true;
-                outerTest.test_app.log('human-test: the test run \'testName\' is displayed');
+                outerTest.test_app.log('human-test: the test run \'testName\' is displayed (green)');
                 return true;
+            }),
+            this.createTest('semi_testRun_failing', async outerTest => {
+                outerTest.test_app = this.entity.appA.createStarter().createAppWithUI();
+                outerTest.test_app.uiA.editable = true;
+                let app = outerTest.test_app;
+                let name = 'testName';
+                let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                    assert(false);
+                });
+                let testRun : Entity = await test.testG_run();
+                await app.appA.uiA.content.listA.add(testRun);
+                app.appA.logG.toListOfStrings = true;
+                outerTest.test_app.log('human-test: the test run \'testName\' is displayed (red)');
+                outerTest.test_app.log('human-test: the assertion error is displayed');
+                return false;
             })
         ];
     }

@@ -6,6 +6,7 @@ import {UiA_BodyG} from "@/ui/UiA_BodyG";
 import {UiA_HeaderG} from "@/ui/UiA_HeaderG";
 import {UiA_TestG} from "@/ui/UiA_TestG";
 import {UiA_HeaderBodyG} from "@/ui/UiA_HeaderBodyG";
+import {UiA_TestRunG} from "@/ui/UiA_TestRunG";
 
 export class UiA {
 
@@ -20,6 +21,7 @@ export class UiA {
     context: Entity;
     collapsed: boolean;
     headerBodyG: UiA_HeaderBodyG;
+    testRunG: UiA_TestRunG;
 
     constructor(private entity : Entity) {
         this.headerBodyG = new UiA_HeaderBodyG(entity);
@@ -28,6 +30,7 @@ export class UiA {
         this.headerG = new UiA_HeaderG(entity);
         this.bodyG = new UiA_BodyG(entity);
         this.testG = new UiA_TestG(entity);
+        this.testRunG = new UiA_TestRunG(entity);
     }
 
     async update() {
