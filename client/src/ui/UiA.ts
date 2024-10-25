@@ -5,7 +5,7 @@ import {UiA_TextG} from "@/ui/UiA_TextG";
 import {UiA_BodyG} from "@/ui/UiA_BodyG";
 import {UiA_HeaderG} from "@/ui/UiA_HeaderG";
 import {UiA_TestG} from "@/ui/UiA_TestG";
-import {ListA} from "@/ListA";
+import {UiA_HeaderBodyG} from "@/ui/UiA_HeaderBodyG";
 
 export class UiA {
 
@@ -19,8 +19,10 @@ export class UiA {
     object: Entity;
     context: Entity;
     collapsed: boolean;
+    headerBodyG: UiA_HeaderBodyG;
 
     constructor(private entity : Entity) {
+        this.headerBodyG = new UiA_HeaderBodyG(entity);
         this.listG = new UiA_ListG(entity);
         this.textG = new UiA_TextG(entity);
         this.headerG = new UiA_HeaderG(entity);
@@ -35,51 +37,16 @@ export class UiA {
         } else if (this.entity.appA?.uiA) {
             await this.entity.appA.uiA.update();
             this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
-        } else if (this.getObject().isTest) {
-            this.textG.update();
-            await this.testG.update();
-            this.headerG.update();
-            await this.bodyG.update();
-            this.htmlElement.appendChild(this.headerG.htmlElement);
-            this.htmlElement.appendChild(this.bodyG.htmlElement);
+        } else if (this.isHeaderBody()) {
+            await this.headerBodyG.update();
         } else if (this.isPlainList()) {
-            await this.listG.update();
-            this.htmlElement.appendChild(this.listG.htmlElement);
-        } else if (this.isTextWithList()) {
-            await this.listG.update();
-            this.textG.update();
-            this.headerG.update();
-            await this.bodyG.update();
-            this.htmlElement.appendChild(this.headerG.htmlElement);
-            this.htmlElement.appendChild(this.bodyG.htmlElement);
-        } else if (this.isPlainText()) {
-            this.textG.update();
-            this.headerG.update();
-            await this.bodyG.update();
-            this.htmlElement.appendChild(this.headerG.htmlElement);
-            this.htmlElement.appendChild(this.bodyG.htmlElement);
-        } else if (this.getObject().testRunA) {
-            this.headerG.update();
-            await this.bodyG.update();
-            this.htmlElement.appendChild(this.headerG.htmlElement);
-            this.htmlElement.appendChild(this.bodyG.htmlElement);
+            await this.entity.uiA.listG.update();
+            this.entity.uiA.htmlElement.appendChild(this.entity.uiA.listG.htmlElement);
         } else {
             let div = document.createElement('div');
             div.innerText = this.getObject().getDescription();
             this.htmlElement.appendChild(div);
         }
-    }
-
-    isPlainText() {
-        return notNullUndefined(this.getObject().text) && !this.getObject().listA;
-    }
-
-    isPlainList() {
-        return this.getObject().listA && nullUndefined(this.getObject().text);
-    }
-
-    isTextWithList() {
-        return notNullUndefined(this.getObject().text) && this.getObject().listA;
     }
 
     resetHtmlElement() {
@@ -92,6 +59,10 @@ export class UiA {
             notNullUndefined(this.getObject().link) ||
             notNullUndefined(this.getObject().text) ||
             notNullUndefined(this.getObject().testRunA);
+    }
+
+    isPlainList() {
+        return this.entity.uiA.getObject().listA && !this.isHeaderBody();
     }
 
     isEditable() {
