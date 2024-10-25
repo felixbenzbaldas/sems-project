@@ -17,6 +17,7 @@ export class UiA_TestG {
     private updateHeaderContent() {
         this.headerContent_htmlElement.innerHTML = null;
         this.getUiA().textG.htmlElement.style.color = this.getObject().test_result ? 'green' : 'red';
+        this.entity.uiA.textG.update();
         this.headerContent_htmlElement.appendChild(this.getUiA().textG.htmlElement);
     }
 

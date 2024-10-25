@@ -8,7 +8,6 @@ export class UiA_HeaderBodyG {
 
     async update() {
         if (this.entity.uiA.getObject().isTest) {
-            this.entity.uiA.textG.update();
             await this.entity.uiA.testG.update();
             this.entity.uiA.headerG.update();
             await this.entity.uiA.bodyG.update();
