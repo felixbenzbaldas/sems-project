@@ -138,7 +138,7 @@ export class UiA {
                     await this.headerG.clickEvent();
                 }
             }
-            if (!this.collapsed && this.bodyG.bodyAvailable()) {
+            if (!this.collapsed && this.bodyG.hasContent()) {
                 await this.listG.click(text);
             }
         } else if (this.getObject().listA) {

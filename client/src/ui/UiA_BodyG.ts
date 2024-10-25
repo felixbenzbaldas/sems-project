@@ -12,7 +12,7 @@ export class UiA_BodyG {
 
     async update() {
         this.htmlElement.innerHTML = null;
-        if (!this.entity.uiA.collapsed && this.bodyAvailable()) {
+        if (!this.entity.uiA.collapsed && this.hasContent()) {
             await this.content_update();
             this.htmlElement.appendChild(this.content_htmlElement);
             this.htmlElement.style.paddingLeft = '0.8rem';
@@ -25,7 +25,7 @@ export class UiA_BodyG {
         this.content_htmlElement = document.createElement('div');
         if (this.getObject().isTest) {
             this.content_htmlElement.appendChild(this.getUiA().testG.bodyContent.uiA.htmlElement);
-        } else if (this.getObject().listA && this.getObject().listA.jsList.length > 0) {
+        } else if (this.getObject().listA && !this.getObject().testRunA) {
             await this.getUiA().listG.update();
             this.content_htmlElement = this.getUiA().listG.htmlElement;
         } else if (this.getObject().testRunA) {
@@ -34,7 +34,7 @@ export class UiA_BodyG {
         }
     }
 
-    bodyAvailable() : boolean {
+    hasContent() : boolean {
         return notNullUndefined(this.getObject().test_result) ||
             this.getObject().listA && this.getObject().listA.jsList.length > 0 ||
             notNullUndefined(this.getObject().testRunA);
