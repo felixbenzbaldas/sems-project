@@ -62,6 +62,7 @@ export class UiA_HeaderG {
             link.innerText = this.link_getText();
             this.content.appendChild(link);
         } else if (notNullUndefined(this.getObject().text)) {
+            this.entity.uiA.textG.update();
             this.content.appendChild(this.getUiA().textG.htmlElement);
         } else if (notNullUndefined(this.getObject().testRunA)) {
             let result = this.getObject().testRunA.resultG_success ? 'S' : 'F';
