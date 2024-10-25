@@ -15,7 +15,6 @@ export class UiA_HeaderBodyG {
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
         } else if (this.isTextWithList()) {
-            await this.entity.uiA.listG.update();
             this.entity.uiA.textG.update();
             this.entity.uiA.headerG.update();
             await this.entity.uiA.bodyG.update();

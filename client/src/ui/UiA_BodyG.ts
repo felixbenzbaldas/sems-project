@@ -26,6 +26,7 @@ export class UiA_BodyG {
         if (this.getObject().isTest) {
             this.content_htmlElement.appendChild(this.getUiA().testG.bodyContent.uiA.htmlElement);
         } else if (this.getObject().listA && this.getObject().listA.jsList.length > 0) {
+            await this.entity.uiA.listG.update();
             this.content_htmlElement = this.getUiA().listG.htmlElement;
         }
     }
