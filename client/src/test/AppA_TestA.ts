@@ -2,13 +2,13 @@ import {Entity} from "@/Entity";
 import {StarterA} from "@/StarterA";
 import {AppA} from "@/AppA";
 import {
-    assert, assert_notSameAs,
+    assert,
+    assert_notSameAs,
     assert_sameAs,
     assertFalse,
     createRandomString,
     notNullUndefined,
-    nullUndefined,
-    setCaret
+    nullUndefined
 } from "@/utils";
 import {ContainerA} from "@/ContainerA";
 import {AppA_TestA_UiG} from "@/test/AppA_TestA_UiG";
@@ -17,7 +17,6 @@ import {AppA_TestA_SemiG} from "@/test/AppA_TestA_SemiG";
 import {AppA_TestA_PathG} from "@/test/AppA_TestA_PathG";
 import {Environment} from "@/Environment";
 import {testData} from "@/testData";
-import {ListA} from "@/ListA";
 
 class TestResults {
     successful : Array<Entity> = [];
@@ -272,6 +271,19 @@ export class AppA_TestA {
                 let nestedTestRun = await testRun.listA.getResolved(0);
                 assert(nestedTestRun.testRunA.resultG_success, 'nestedTestRun->success');
                 assert_sameAs(nestedTestRun.testRunA.test, nestedTest);
+            }),
+            this.createTest('runTest_withFailingNestedTest', async () => {
+                let app : Entity = this.appA.createStarter().createApp();
+                let test : Entity = app.createFormalText('foo', () => {});
+                test.testG_installNestedTestsA();
+                await test.testG_nestedTestsA.add('nestedTest', () => {
+                    assert(false);
+                });
+
+                let testRun : Entity = await test.testG_run();
+
+                assertFalse(testRun.testRunA.resultG_success);
+                assertFalse((await testRun.listA.getResolved(0)).testRunA.resultG_success);
             }),
             this.createTest('runTest_failing', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
