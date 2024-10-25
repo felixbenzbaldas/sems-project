@@ -66,7 +66,7 @@ export class UiA_HeaderG {
             this.content.appendChild(this.getUiA().textG.htmlElement);
         } else if (notNullUndefined(this.getObject().testRunA)) {
             let result = this.getObject().testRunA.resultG_success ? 'S' : 'F';
-            this.content.innerText = result + ' ' + this.entity.getApp().getPath(this.getObject().testRunA.test).pathA.listOfNames.join('_');
+            this.content.innerText = result + ' ' + this.testRun_getPathString();
             this.content.style.color = this.getObject().testRunA.resultG_success ? 'green' : 'red';
         }
     }
@@ -77,6 +77,10 @@ export class UiA_HeaderG {
         } else {
             return !this.getObject().action;
         }
+    }
+
+    testRun_getPathString() : string {
+        return this.entity.getApp().getPath(this.getObject().testRunA.test).pathA.listOfNames.join('_');
     }
 
     action_getUiElement() {

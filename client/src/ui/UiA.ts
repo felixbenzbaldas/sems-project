@@ -92,7 +92,7 @@ export class UiA {
         } else if (notNullUndefined(this.getObject().link)) {
             return this.headerG.link_getText();
         } else if (notNullUndefined(this.getObject().testRunA)) {
-            return this.getObject().testRunA.test.name;
+            return this.headerG.testRun_getPathString();
         } else {
             if (this.getObject().isTest) {
                 return this.testG.getRawText();
