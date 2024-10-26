@@ -41,7 +41,6 @@ export class AppA_TestA_ModelG {
                 let firstObject = firstObjectUi.uiA.object;
                 (await firstObject.listA.getResolved(0)).text = 'do-not-show-me';
                 firstObject.collapsible = true;
-                firstObjectUi.uiA.collapsed = true;
                 await firstObjectUi.uiA.update();
 
                 let rawText = app.uiA.getRawText();
