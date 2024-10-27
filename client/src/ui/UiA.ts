@@ -90,25 +90,16 @@ export class UiA {
 
     getRawText() : string {
         this.entity.log('getRawText');
-        if (this.entity.appA?.uiA) {
+        if (this.getObject().dangerous_html) {
+            return '';
+        } else if (this.entity.appA?.uiA) {
             return this.entity.appA.uiA.getRawText();
-        } else if (notNullUndefined(this.getObject().link)) {
-            return this.headerG.link_getText();
-        } else if (notNullUndefined(this.getObject().testRunA)) {
-            return this.headerG.testRun_getPathString();
+        } else if (this.isHeaderBody()) {
+            return this.headerBodyG.getRawText();
+        } else if (this.isPlainList()) {
+            return this.listG.getRawText();
         } else {
-            if (this.getObject().isTest) {
-                return this.testG.getRawText();
-            } else {
-                let rawText = '';
-                if (notNullUndefined(this.getObject().text)) {
-                    rawText += this.getObject().text;
-                }
-                if (this.getObject().listA && this.collapsed != true) {
-                    rawText += this.listG.getRawText();
-                }
-                return rawText;
-            }
+            return this.getObject().getDescription();
         }
     }
 

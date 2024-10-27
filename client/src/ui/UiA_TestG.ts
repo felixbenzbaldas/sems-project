@@ -25,13 +25,6 @@ export class UiA_TestG {
         await this.bodyContent.uiA.click(text);
     }
 
-    getRawText(): string {
-        let rawText = '';
-        rawText += this.getObject().text;
-        rawText += this.bodyContent.uiA.getRawText();
-        return rawText;
-    }
-
     private async updateBodyContent() {
         let appA = this.entity.getApp().appA;
         this.bodyContent = appA.unboundG.createList();
@@ -71,5 +64,9 @@ export class UiA_TestG {
         } else {
             return this.entity;
         }
+    }
+
+    header_getRawText() {
+        return this.getObject().text;
     }
 }

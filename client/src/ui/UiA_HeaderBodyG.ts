@@ -22,4 +22,8 @@ export class UiA_HeaderBodyG {
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
         }
     }
+
+    getRawText() : string {
+        return this.entity.uiA.headerG.getRawText() + this.entity.uiA.bodyG.getRawText();
+    }
 }

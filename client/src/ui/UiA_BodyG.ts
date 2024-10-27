@@ -54,4 +54,21 @@ export class UiA_BodyG {
             return this.entity;
         }
     }
+
+    getRawText() : string {
+        if (this.getObject().isTest) {
+            return this.getUiA().testG.bodyContent.uiA.getRawText();
+        } else if (this.getObject().listA && !this.getObject().testRunA) {
+            if (this.getUiA().collapsed) {
+                return '';
+            } else {
+                return this.getUiA().listG.getRawText();
+            }
+        } else if (this.getObject().testRunA) {
+            if (this.getUiA().testRunG.bodyContent) {
+                return this.getUiA().testRunG.bodyContent.uiA.getRawText();
+            }
+        }
+        return '';
+    }
 }

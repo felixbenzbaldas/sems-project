@@ -141,4 +141,16 @@ export class UiA_HeaderG {
             return this.entity;
         }
     }
+
+    getRawText() : string {
+        if (this.getObject().isTest) {
+            return this.getUiA().testG.header_getRawText();
+        } else if (notNullUndefined(this.getObject().link)) {
+            return this.link_getText();
+        } else if (notNullUndefined(this.getObject().text)) {
+            return this.getObject().text;
+        } else if (notNullUndefined(this.getObject().testRunA)) {
+            return this.testRun_getPathString();
+        }
+    }
 }
