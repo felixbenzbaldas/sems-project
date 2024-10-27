@@ -212,6 +212,8 @@ export class UiA {
 
     async toggleCollapsible() {
         this.getObject().collapsible = !this.getObject().collapsible;
+        this.headerG.updateCursorStyle();
+        this.headerG.updateBodyIcon();
         await this.ensureExpanded();
     }
 

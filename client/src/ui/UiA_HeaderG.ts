@@ -101,7 +101,7 @@ export class UiA_HeaderG {
         return notNullUndefined(this.getObject().text) ? this.getObject().text : this.getObject().link;
     }
 
-    private updateCursorStyle() {
+    updateCursorStyle() {
         if (this.getObject().collapsible && this.getUiA().bodyG.hasContent()) {
             this.htmlElement.style.cursor = 'pointer';
         } else {
