@@ -214,14 +214,14 @@ export class UiA {
             await this.listG.insertObjectAtPosition(created, 0);
             await this.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
                                  // TODO update all uis
+            await this.expand();
             this.entity.getApp().appA.uiA.focus(this.listG.uisOfListItems.at(0));
         }
     }
 
     async toggleCollapsible() {
         this.getObject().collapsible = !this.getObject().collapsible;
-        this.collapsed = false;
-        await this.update();
+        await this.expand();
     }
 
     async expandOrCollapse() {

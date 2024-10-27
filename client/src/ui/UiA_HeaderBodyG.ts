@@ -6,6 +6,9 @@ export class UiA_HeaderBodyG {
     }
 
     async update() {
+        if (this.entity.uiA.getObject().collapsible) {
+            this.entity.uiA.collapsed = true;
+        }
         if (this.entity.uiA.getObject().isTest) {
             await this.entity.uiA.testG.update();
             this.entity.uiA.headerG.update();
