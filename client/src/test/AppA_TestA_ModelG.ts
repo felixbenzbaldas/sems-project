@@ -212,6 +212,7 @@ export class AppA_TestA_ModelG {
                 let app : Entity = this.entity.appA.createStarter().createAppWithUI();
                 let name = 'testName';
                 let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                    assert(false);
                 });
                 let testRun : Entity = await test.testG_run();
 
@@ -219,7 +220,8 @@ export class AppA_TestA_ModelG {
                 await ui.uiA.update();
                 let rawText = ui.uiA.getRawText();
 
-                assert_sameAs(rawText, name);
+                assert(rawText.includes(name));
+                assert(rawText.includes('AssertionError'));
             }),
             this.createTest('modelTest_fullStart_tester2', async test => {
                 let environment = new Environment();

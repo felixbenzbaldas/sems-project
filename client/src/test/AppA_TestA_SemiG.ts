@@ -216,7 +216,6 @@ export class AppA_TestA_SemiG {
                 await app.appA.uiA.content.listA.add(testRun);
                 app.appA.logG.toListOfStrings = true;
                 outerTest.test_app.log('human-test: the test run \'testName\' is displayed (red)');
-                outerTest.test_app.log('human-test: the assertion error is displayed');
                 return true;
             })
         ];
