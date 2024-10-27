@@ -18,7 +18,7 @@ export class OutputA {
 
     async setAndUpdateUi(string : string) {
         this.output.text = string;
-        await this.ui.uiA.expand();
+        await this.ui.uiA.ensureExpanded();
         await this.ui.uiA.update();
     }
 

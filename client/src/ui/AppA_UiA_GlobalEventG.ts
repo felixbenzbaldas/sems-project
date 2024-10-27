@@ -21,7 +21,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async flatImportToContent() {
-        await this.getUiA().input.getUi().uiA.expand();
+        await this.getUiA().input.getUi().uiA.ensureExpanded();
         await this.entity.appA.addAllToListFromRawData(this.getUiA().content, JSON.parse(this.getUiA().input.get()));
     }
 

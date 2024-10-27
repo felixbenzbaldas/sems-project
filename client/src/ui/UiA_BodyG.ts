@@ -40,15 +40,6 @@ export class UiA_BodyG {
             notNullUndefined(this.getObject().testRunA?.resultG_error);
     }
 
-    async expand() {
-        await this.update();
-    }
-
-    async collapse() {
-        await this.update();
-    }
-
-
     getUiA() : UiA {
         return this.entity.uiA;
     }

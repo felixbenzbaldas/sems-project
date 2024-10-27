@@ -214,40 +214,40 @@ export class UiA {
             await this.listG.insertObjectAtPosition(created, 0);
             await this.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
                                  // TODO update all uis
-            await this.expand();
+            await this.ensureExpanded();
             this.entity.getApp().appA.uiA.focus(this.listG.uisOfListItems.at(0));
         }
     }
 
     async toggleCollapsible() {
         this.getObject().collapsible = !this.getObject().collapsible;
-        await this.expand();
+        await this.ensureExpanded();
     }
 
     async expandOrCollapse() {
         if (this.getObject().collapsible) {
             if (this.collapsed) {
-                await this.expand();
+                await this.ensureExpanded();
             } else {
-                await this.collapse();
+                await this.ensureCollapsed();
             }
         } else {
             this.entity.log('warning: not collapsible!');
         }
     }
 
-    async expand() {
+    async ensureExpanded() {
         if (this.getObject().listA?.jsList.length > 0) {
             this.collapsed = false;
             this.headerG.updateBodyIcon();
             await this.listG.update();
-            await this.bodyG.expand();
+            await this.bodyG.update();
         }
     }
 
-    async collapse() {
+    async ensureCollapsed() {
         this.collapsed = true;
         this.headerG.updateBodyIcon();
-        await this.bodyG.collapse();
+        await this.bodyG.update();
     }
 }
