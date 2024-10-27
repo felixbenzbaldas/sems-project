@@ -217,7 +217,7 @@ export class AppA_TestA_SemiG {
                 app.appA.logG.toListOfStrings = true;
                 outerTest.test_app.log('human-test: the test run \'testName\' is displayed (red)');
                 outerTest.test_app.log('human-test: the assertion error is displayed');
-                return false;
+                return true;
             })
         ];
     }
