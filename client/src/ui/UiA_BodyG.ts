@@ -37,10 +37,13 @@ export class UiA_BodyG {
     }
 
     hasContent() : boolean {
-        return notNullUndefined(this.getObject().test_result) ||
-            this.getObject().listA && this.getObject().listA.jsList.length > 0 ||
-            notNullUndefined(this.getObject().testRunA?.resultG_error) ||
-            notNullUndefined(this.getObject().testRunA?.nestedRuns);
+        if (this.getObject().testRunA) {
+            return this.getUiA().testRunG.hasBodyContent();
+        } else if (this.getObject().isTest) {
+            return notNullUndefined(this.getObject().test_result);
+        } else {
+            return this.getObject().listA && this.getObject().listA.jsList.length > 0
+        }
     }
 
     getUiA() : UiA {

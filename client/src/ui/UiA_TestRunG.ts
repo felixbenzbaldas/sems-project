@@ -1,6 +1,7 @@
 import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
 import type {TestRunA} from "@/test/TestRunA";
+import {notNullUndefined} from "@/utils";
 
 export class UiA_TestRunG {
 
@@ -51,7 +52,12 @@ export class UiA_TestRunG {
         return this.entity.getApp().getPath(this.getTestRun().test).pathA.listOfNames.join('_');
     }
 
-    header_getRawText() {
+    header_getRawText() : string {
         return this.getPathString();
+    }
+
+    hasBodyContent() : boolean {
+        return notNullUndefined(this.getTestRun().resultG_error) ||
+            notNullUndefined(this.getTestRun().nestedRuns);
     }
 }
