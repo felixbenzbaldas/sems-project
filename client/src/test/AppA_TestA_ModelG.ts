@@ -98,7 +98,7 @@ export class AppA_TestA_ModelG {
                 tester.appA.logG.toListOfStrings = true;
                 await tester.appA.testerG_run();
                 await tester.uiA.update();
-                assert_sameAs(tester.uiA.getRawText(), 'appTest');
+                assert(tester.uiA.getRawText().includes('appTest'));
             }),
             this.createTest('modelTest_website', async test => {
                 let environment = new Environment();

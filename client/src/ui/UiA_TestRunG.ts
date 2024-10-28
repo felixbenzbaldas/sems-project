@@ -18,7 +18,7 @@ export class UiA_TestRunG {
 
     updateHeaderContent() {
         this.headerContent_htmlElement = document.createElement('div');
-        this.headerContent_htmlElement.innerText = this.getPathString();
+        this.headerContent_htmlElement.innerText = this.header_getText();
         this.headerContent_htmlElement.style.color = this.getTestRun().resultG_success ? 'green' : 'red';
     }
 
@@ -52,8 +52,8 @@ export class UiA_TestRunG {
         return this.entity.getApp().getPath(this.getTestRun().test).pathA.listOfNames.join('_');
     }
 
-    header_getRawText() : string {
-        return this.getPathString();
+    header_getText() : string {
+        return 'run: ' + this.getPathString();
     }
 
     hasBodyContent() : boolean {

@@ -143,7 +143,7 @@ export class UiA_HeaderG {
         } else if (notNullUndefined(this.getObject().text)) {
             return this.getObject().text;
         } else if (notNullUndefined(this.getObject().testRunA)) {
-            return this.getUiA().testRunG.header_getRawText();
+            return this.getUiA().testRunG.header_getText();
         }
     }
 }
