@@ -65,9 +65,7 @@ export class UiA_HeaderG {
             this.entity.uiA.textG.update();
             this.content.appendChild(this.getUiA().textG.htmlElement);
         } else if (notNullUndefined(this.getObject().testRunA)) {
-            let result = this.getObject().testRunA.resultG_success ? 'S' : 'F';
-            this.content.innerText = result + ' ' + this.testRun_getPathString();
-            this.content.style.color = this.getObject().testRunA.resultG_success ? 'green' : 'red';
+            this.content.appendChild(this.getUiA().testRunG.headerContent_htmlElement);
         }
     }
 
@@ -78,11 +76,6 @@ export class UiA_HeaderG {
             return !this.getObject().action;
         }
     }
-
-    testRun_getPathString() : string {
-        return this.entity.getApp().getPath(this.getObject().testRunA.test).pathA.listOfNames.join('_');
-    }
-
     action_getUiElement() {
         let button = document.createElement('button');
         button.innerText = this.getObject().text;
@@ -150,7 +143,7 @@ export class UiA_HeaderG {
         } else if (notNullUndefined(this.getObject().text)) {
             return this.getObject().text;
         } else if (notNullUndefined(this.getObject().testRunA)) {
-            return this.testRun_getPathString();
+            return this.getUiA().testRunG.header_getRawText();
         }
     }
 }

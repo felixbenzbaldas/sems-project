@@ -5,12 +5,20 @@ import type {TestRunA} from "@/test/TestRunA";
 export class UiA_TestRunG {
 
     bodyContent: Entity;
+    headerContent_htmlElement: HTMLElement;
 
     constructor(private entity : Entity) {
     }
 
     async update() {
-        await this.updateBodyContent()
+        this.updateHeaderContent();
+        await this.updateBodyContent();
+    }
+
+    updateHeaderContent() {
+        this.headerContent_htmlElement = document.createElement('div');
+        this.headerContent_htmlElement.innerText = this.getPathString();
+        this.headerContent_htmlElement.style.color = this.getTestRun().resultG_success ? 'green' : 'red';
     }
 
     async updateBodyContent() {
@@ -32,4 +40,11 @@ export class UiA_TestRunG {
         return this.entity.uiA.getObject().testRunA;
     }
 
+    getPathString() : string {
+        return this.entity.getApp().getPath(this.getTestRun().test).pathA.listOfNames.join('_');
+    }
+
+    header_getRawText() {
+        return this.getPathString();
+    }
 }
