@@ -229,7 +229,7 @@ export class AppA_TestA_ModelG {
                 let test : Entity = app.createFormalText(name, (testRun : Entity) => {
                 });
                 test.testG_installNestedTestsA();
-                await test.testG_nestedTestsA.add('nestedTest', () => {
+                test.testG_nestedTestsA.add('nestedTest', () => {
                     assert(false);
                 });
                 let testRun : Entity = await test.testG_run();

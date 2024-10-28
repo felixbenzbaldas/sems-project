@@ -262,7 +262,7 @@ export class AppA_TestA {
                 let name = 'testName';
                 let test : Entity = app.createFormalText(name, () => {});
                 test.testG_installNestedTestsA();
-                let nestedTest = await test.testG_nestedTestsA.add('nestedTest', () => {});
+                let nestedTest = test.testG_nestedTestsA.add('nestedTest', () => {});
 
                 let testRun : Entity = await test.testG_run();
 
@@ -276,7 +276,7 @@ export class AppA_TestA {
                 let app : Entity = this.appA.createStarter().createApp();
                 let test : Entity = app.createFormalText('foo', () => {});
                 test.testG_installNestedTestsA();
-                await test.testG_nestedTestsA.add('nestedTest', () => {
+                test.testG_nestedTestsA.add('nestedTest', () => {
                     assert(false);
                 });
 

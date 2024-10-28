@@ -6,9 +6,9 @@ export const appTest = (app : Entity) => {
     });
     test.testG_installNestedTestsA();
     {
-        test.testG_nestedTestsA.nestedTests.listA.jsList.push(app.createFormalText('failing dummy test', (run : Entity) => {
+        test.testG_nestedTestsA.add('failing dummy test', (run : Entity) => {
             assert(false);
-        }));
+        });
     }
     return test;
 }

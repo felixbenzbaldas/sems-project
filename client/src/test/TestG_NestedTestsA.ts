@@ -11,7 +11,7 @@ export class TestG_NestedTestsA {
         this.nestedTests = this.entity.getApp().appA.unboundG.createList();
     }
 
-    async add(name: string, jsFunction: (testRun: Entity) => void) : Promise<Entity> {
+    add(name: string, jsFunction: (testRun: Entity) => void) : Entity {
         let nestedTest : Entity = this.entity.getApp().createFormalText(name, jsFunction);
         this.nestedTests.listA.jsList.push(nestedTest);
         return nestedTest;
