@@ -6,7 +6,7 @@ export const appTest = (app : Entity) => {
     });
     test.testG_installNestedTestsA();
     {
-        test.testG_nestedTestsA.add('failing dummy test', (run : Entity) => {
+        test.testG_nestedTestsA.add('failingDummyTest', (run : Entity) => {
             assert(false);
         });
     }
