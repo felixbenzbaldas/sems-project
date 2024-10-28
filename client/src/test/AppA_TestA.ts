@@ -268,7 +268,7 @@ export class AppA_TestA {
 
                 assert(testRun.testRunA.resultG_success, 'testRun->success');
                 assert_sameAs(testRun.testRunA.test, test);
-                let nestedTestRun = await testRun.listA.getResolved(0);
+                let nestedTestRun = await testRun.testRunA.nestedRuns.listA.getResolved(0);
                 assert(nestedTestRun.testRunA.resultG_success, 'nestedTestRun->success');
                 assert_sameAs(nestedTestRun.testRunA.test, nestedTest);
             }),
@@ -283,7 +283,7 @@ export class AppA_TestA {
                 let testRun : Entity = await test.testG_run();
 
                 assertFalse(testRun.testRunA.resultG_success);
-                assertFalse((await testRun.listA.getResolved(0)).testRunA.resultG_success);
+                assertFalse((await testRun.testRunA.nestedRuns.listA.getResolved(0)).testRunA.resultG_success);
             }),
             this.createTest('runTest_failing', async () => {
                 let app : Entity = this.appA.createStarter().createApp();

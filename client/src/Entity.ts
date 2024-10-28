@@ -251,11 +251,11 @@ export class Entity {
         testRun.app = this.getApp();
         testRun.installTestRunA();
         testRun.testRunA.test = this;
-        if (this.listA) {
-            testRun.installListA();
-            for (let nestedTest of await (this.listA.getResolvedList())) {
+        if (this.testG_nestedTestsA) {
+            testRun.testRunA.nestedRuns = this.getApp().appA.unboundG.createList();
+            for (let nestedTest of await (this.testG_nestedTestsA.nestedTests.listA.getResolvedList())) {
                 let nestedTestRun = await nestedTest.testG_run();
-                await testRun.listA.add(nestedTestRun);
+                testRun.testRunA.nestedRuns.listA.jsList.push(nestedTestRun);
                 if (!nestedTestRun.testRunA.resultG_success) {
                     testRun.testRunA.resultG_success = false;
                 }

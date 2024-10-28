@@ -2,18 +2,18 @@ import type {Entity} from "@/Entity";
 
 export class TestG_NestedTestsA {
 
+    nestedTests : Entity;
+
     constructor(private entity : Entity) {
     }
 
     install() {
-        if (!this.entity.listA) {
-            this.entity.installListA();
-        }
+        this.nestedTests = this.entity.getApp().appA.unboundG.createList();
     }
 
     async add(name: string, jsFunction: (testRun: Entity) => void) : Promise<Entity> {
         let nestedTest : Entity = this.entity.getApp().createFormalText(name, jsFunction);
-        await this.entity.listA.add(nestedTest);
+        this.nestedTests.listA.jsList.push(nestedTest);
         return nestedTest;
     }
 }
