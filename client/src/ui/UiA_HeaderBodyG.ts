@@ -5,7 +5,7 @@ export class UiA_HeaderBodyG {
     constructor(private entity : Entity) {
     }
 
-    async update() {
+    async install() {
         if (this.entity.uiA.getObject().collapsible) {
             this.entity.uiA.collapsed = true;
         }

@@ -41,7 +41,7 @@ export class UiA {
             await this.entity.appA.uiA.update();
             this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
         } else if (this.isHeaderBody()) {
-            await this.headerBodyG.update();
+            await this.headerBodyG.install();
         } else if (this.isPlainList()) {
             await this.entity.uiA.listG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.listG.htmlElement);
