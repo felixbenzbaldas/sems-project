@@ -223,6 +223,24 @@ export class AppA_TestA_ModelG {
                 assert(rawText.includes(name));
                 assert(rawText.includes('AssertionError'));
             }),
+            this.createTest('modelTest_testRun_withFailingNestedTest', async outerTest => {
+                let app : Entity = this.entity.appA.createStarter().createAppWithUI();
+                let name = 'foo';
+                let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                });
+                test.testG_installNestedTestsA();
+                await test.testG_nestedTestsA.add('nestedTest', () => {
+                    assert(false);
+                });
+                let testRun : Entity = await test.testG_run();
+
+                let ui : Entity = app.appA.uiA.createUiFor(testRun);
+                await ui.uiA.update();
+                let rawText = ui.uiA.getRawText();
+
+                assert(rawText.includes('nestedTest'));
+                assert(rawText.includes('AssertionError'));
+            }),
             this.createTest('modelTest_fullStart_tester2', async test => {
                 let environment = new Environment();
                 environment.queryParams = new URLSearchParams('tester2');

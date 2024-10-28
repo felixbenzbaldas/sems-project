@@ -32,6 +32,9 @@ export class UiA_TestRunG {
             }
             this.bodyContent.listA.jsList.push(error);
         }
+        if (this.getObject().testRunA.nestedRuns) {
+            this.bodyContent.listA.jsList.push(this.getObject().testRunA.nestedRuns);
+        }
         this.bodyContent.uiA = new UiA(this.bodyContent);
         await this.bodyContent.uiA.update();
     }
