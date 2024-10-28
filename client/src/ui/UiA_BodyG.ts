@@ -39,7 +39,8 @@ export class UiA_BodyG {
     hasContent() : boolean {
         return notNullUndefined(this.getObject().test_result) ||
             this.getObject().listA && this.getObject().listA.jsList.length > 0 ||
-            notNullUndefined(this.getObject().testRunA?.resultG_error);
+            notNullUndefined(this.getObject().testRunA?.resultG_error) ||
+            notNullUndefined(this.getObject().testRunA?.nestedRuns);
     }
 
     getUiA() : UiA {
