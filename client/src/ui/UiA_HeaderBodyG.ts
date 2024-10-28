@@ -15,6 +15,12 @@ export class UiA_HeaderBodyG {
             await this.entity.uiA.bodyG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
+        } else if (this.entity.uiA.getObject().testRunA) {
+            await this.entity.uiA.testRunG.update();
+            this.entity.uiA.headerG.update();
+            await this.entity.uiA.bodyG.update();
+            this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
+            this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
         } else {
             this.entity.uiA.headerG.update();
             await this.entity.uiA.bodyG.update();

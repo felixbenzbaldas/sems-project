@@ -32,7 +32,6 @@ export class UiA_BodyG {
             await this.getUiA().listG.update();
             this.content_htmlElement = this.getUiA().listG.htmlElement;
         } else if (this.getObject().testRunA) {
-            await this.getUiA().testRunG.update();
             this.content_htmlElement = this.getUiA().testRunG.bodyContent.uiA.htmlElement;
         }
     }
