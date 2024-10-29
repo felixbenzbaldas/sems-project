@@ -181,13 +181,15 @@ export class Entity {
         if(notNullUndefined(this.text)) {
             return this.text ? this.text : '[empty text]';
         } else if (this.listA) {
-            return 'list (' + this.listA.jsList.length + ')';
+            return 'list (' + this.listA.jsList?.length + ')';
         } else if (this.pathA) {
             return 'path (' + this.pathA.listOfNames + ')';
         } else if (this.uiA) {
-            if (this.uiA.object) {
-                return 'ui for:' + this.uiA.object.text;
-            }
+            return 'ui';
+        } else if (notNullUndefined(this.name)) {
+            return 'name: ' + this.name;
+        } else if (this.testRunA) {
+            return 'run: ' + this.testRunA.test?.name;
         }
         return 'tbd';
     }
