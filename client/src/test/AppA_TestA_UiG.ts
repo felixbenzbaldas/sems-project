@@ -1,6 +1,7 @@
 import {StarterA} from "@/StarterA";
 import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
+import {assert} from "@/utils";
 
 export class AppA_TestA_UiG {
 
@@ -130,6 +131,15 @@ export class AppA_TestA_UiG {
                 return list.listA.jsList.at(1) === toPaste &&
                     uiForList.uiA.listG.uisOfListItems.at(1).uiA.object === toPaste &&
                     app.appA.uiA.focused.uiA.object === toPaste;
+            }),
+            this.createTest('ui_keyboardEvent', async test => {
+                let app = this.entity.appA.createStarter().createAppWithUI();
+                test.test_app = app;
+                app.appA.logG.toListOfStrings = true;
+                await app.appA.uiA.keyG.keyboardEvent(new KeyboardEvent('keyup', {
+                    key: 'Enter'
+                }));
+                assert(app.appA.uiA.content.listA.jsList.length === 1);
             })
         ]
     }
