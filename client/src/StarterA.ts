@@ -35,6 +35,8 @@ export class StarterA {
         } else if (this.getEnvironment().queryParams.has('path')) {
             await this.createObjectViewer(this.getEnvironment().queryParams.get('path'));
             this.testMode();
+        } else if (this.getEnvironment().queryParams.has('run')) {
+            await this.run();
         } else {
             await this.createWebsite();
             this.testMode();
@@ -47,6 +49,16 @@ export class StarterA {
             await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
         }
         return this.createdApp.uiA.htmlElement;
+    }
+
+    async run() : Promise<Entity> {
+        this.createAppWithUI();
+        this.createdApp.appA.testerG_test = this.getEnvironment().testCreator(this.createdApp);
+        let pathParam : string = this.getEnvironment().queryParams.get('run');
+        let path = this.createdApp.appA.createPath(pathParam.split('_'));
+        let run : Entity = await (await this.createdApp.resolve(path)).testG_run();
+        this.createdApp.appA.uiA.content.listA.jsList.push(run);
+        return this.createdApp;
     }
 
     getEnvironment() : Environment {

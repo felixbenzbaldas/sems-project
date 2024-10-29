@@ -1,7 +1,7 @@
 import type {Entity} from "@/Entity";
 import {Environment} from "@/Environment";
 import {testData} from "@/testData";
-import {assert, assert_sameAs} from "@/utils";
+import {assert, assert_notSameAs, assert_sameAs, assertFalse} from "@/utils";
 
 export class AppA_TestA_ModelG {
 
@@ -254,6 +254,25 @@ export class AppA_TestA_ModelG {
 
                 let rawText = starter.createdApp.uiA.getRawText();
                 assert(rawText.includes('aTestTest'));
+            }),
+            this.createTest('modelTest_runInOwnWindow', async (test : Entity) => {
+                let environment = new Environment();
+                environment.queryParams = new URLSearchParams('run=isolatedRun');
+                environment.jsonData = testData; // TODO remove
+                environment.testCreator = (app : Entity) => {
+                    return app.createFormalText('isolatedRun', (run : Entity) => {});
+                }
+                let starterA = environment.createApp().appA.createStarter();
+
+                await starterA.fullStart();
+
+                test.test_app = starterA.createdApp;
+                let app = starterA.createdApp;
+                app.appA.logG.toListOfStrings = true;
+                await app.uiA.update();
+                let rawText = app.uiA.getRawText();
+                app.log('rawText = ' + rawText);
+                assert(rawText.includes('isolatedRun'));
             }),
         ];
     }
