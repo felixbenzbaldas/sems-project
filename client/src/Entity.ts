@@ -269,6 +269,7 @@ export class Entity {
         } catch (e : any) {
             testRun.testRunA.resultG_error = e;
             testRun.testRunA.resultG_success = false;
+            console.error(e);
         }
         return testRun;
     }
