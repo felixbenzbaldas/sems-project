@@ -27,7 +27,18 @@ export class Environment {
             document.title = text;
         }
         environment.testCreator = appTest;
+        environment.create_installWindowKeyListener();
         return environment;
+    }
+
+    create_installWindowKeyListener() {
+        let listener = (keyboardEvent : KeyboardEvent) => {
+            if (this.activeApp.appA.uiA) {
+                this.activeApp.appA.uiA.keyG.keyboardEvent(keyboardEvent);
+            }
+        };
+        window.onkeyup = listener;
+        window.onkeydown = listener;
     }
 
     adjustRemSizes() {

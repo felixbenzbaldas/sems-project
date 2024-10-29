@@ -4,6 +4,7 @@ import {InputA} from "@/ui/InputA";
 import {AppA_UiA_GlobalEventG} from "@/ui/AppA_UiA_GlobalEventG";
 import {UiA} from "@/ui/UiA";
 import {ContainerA} from "@/ContainerA";
+import {AppA_UiA_KeyG} from "@/ui/AppA_UiA_KeyG";
 
 export class AppA_UiA {
 
@@ -19,6 +20,7 @@ export class AppA_UiA {
     showMeta : boolean;
     clipboard: Entity;
     webMeta: Entity;
+    keyG: AppA_UiA_KeyG;
 
     private focusStyle_marker: HTMLElement;
 
@@ -29,6 +31,7 @@ export class AppA_UiA {
         this.output = new OutputA(entity);
         this.input = new InputA(entity);
         this.globalEventG = new AppA_UiA_GlobalEventG(entity);
+        this.keyG = new AppA_UiA_KeyG(entity);
         this.focused = entity;
         this.focusStyle_marker = this.focusStyle_createMarker();
     }
