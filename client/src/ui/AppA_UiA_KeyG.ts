@@ -7,6 +7,7 @@ export class AppA_UiA_KeyG {
 
     constructor(private entity: Entity) {
         this.map.set('Enter (keyup)', async keyboardEvent => {
+            this.entity.appA.uiA.focused.uiA.textG.save();
             await this.entity.appA.uiA.globalEventG.defaultAction();
         });
     }

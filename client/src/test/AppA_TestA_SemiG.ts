@@ -229,6 +229,17 @@ export class AppA_TestA_SemiG {
                 test.test_app.log('human-test: when pressing keys, the according key events are logged.');
                 return true;
             }),
+            this.createTest('semi_Enter', async test => {
+                test.test_app = this.entity.appA.createStarter().createAppWithUI();
+                let appA = test.test_app.appA;
+                test.test_app.uiA.editable = true;
+                await appA.uiA.globalEventG.defaultAction();
+                appA.logG.toListOfStrings = true;
+                appA.logG.toConsole = true;
+                test.test_app.log('human-action: focus the object and write a key');
+                test.test_app.log('human-test: when pressing Enter the written key is saved.');
+                return false;
+            }),
         ];
     }
 

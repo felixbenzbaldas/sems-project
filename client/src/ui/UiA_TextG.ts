@@ -16,7 +16,7 @@ export class UiA_TextG {
         this.htmlElement.style.whiteSpace = 'pre-wrap';
         this.htmlElement.style.outline = "0px solid transparent"; // prevent JS focus
         this.htmlElement.onblur = (event : any) => {
-            this.getObject().text = event.target.innerText.trim();
+            this.save();
             this.updateEmptyMarker();
         }
         this.htmlElement.onfocus = () => {
@@ -37,6 +37,10 @@ export class UiA_TextG {
         this.htmlElement.style.minWidth = '1rem';
         this.htmlElement.style.maxWidth = '42rem';
         this.updateCursorStyle();
+    }
+
+    save() {
+        this.getObject().text = this.htmlElement.innerText.trim();
     }
 
     private updateEmptyMarker() {
