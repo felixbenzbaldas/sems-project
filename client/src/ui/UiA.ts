@@ -117,6 +117,8 @@ export class UiA {
             await this.entity.appA.uiA.click(text);
         } else if (this.getObject().isTest) {
             await this.testG.click(text);
+        } else if (this.getObject().testRunA) {
+            await this.testRunG.bodyContent.uiA.click(text);
         } else if (this.getObject().action) {
             if (this.getObject().text.includes(text)) {
                 await this.getObject().action();

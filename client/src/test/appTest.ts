@@ -6,6 +6,7 @@ export const appTest = (app : Entity) => {
     });
     test.testG_installNestedTestsA();
     test.testG_nestedTestsA.add('failingDummyTest', (run : Entity) => {
+        run.testRunA.appUi = app.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
         assert(false);
     });
     return test;

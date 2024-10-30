@@ -24,7 +24,7 @@ export class AppA_UiA {
 
     private focusStyle_marker: HTMLElement;
 
-    constructor(private entity: Entity) {
+    constructor(public entity: Entity) {
         this.content = entity.appA.unboundG.createList();
         this.content.uiA = new UiA(this.content);
         this.content.container = entity;

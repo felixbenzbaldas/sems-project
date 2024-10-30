@@ -212,16 +212,19 @@ export class AppA_TestA_ModelG {
                 let app : Entity = this.entity.appA.createStarter().createAppWithUI();
                 let name = 'testName';
                 let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                    testRun.testRunA.appUi = app.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
                     assert(false);
                 });
                 let testRun : Entity = await test.testG_run();
 
                 let ui : Entity = app.appA.uiA.createUiFor(testRun);
                 await ui.uiA.update();
+                await ui.uiA.click('ui');
                 let rawText = ui.uiA.getRawText();
 
                 assert(rawText.includes(name));
                 assert(rawText.includes('AssertionError'));
+                assert(rawText.includes('default action'), 'includes default action');
             }),
             this.createTest('modelTest_testRun_withFailingNestedTest', async outerTest => {
                 let app : Entity = this.entity.appA.createStarter().createAppWithUI();
