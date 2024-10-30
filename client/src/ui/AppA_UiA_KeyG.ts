@@ -48,6 +48,10 @@ export class AppA_UiA_KeyG {
     }
 
     createCompareString(keyboardEvent: KeyboardEvent) {
+        return this.createCompareString_withoutType(keyboardEvent) + ' (' + keyboardEvent.type + ')';
+    }
+
+    createCompareString_withoutType(keyboardEvent: KeyboardEvent) {
         let list = [];
         if (keyboardEvent.ctrlKey) {
             list.push("ctrl");
@@ -61,6 +65,6 @@ export class AppA_UiA_KeyG {
         if (notNullUndefined(keyboardEvent.key)) {
             list.push(keyboardEvent.key);
         }
-        return list.join('+') + ' (' + keyboardEvent.type + ')';
+        return list.join('+');
     }
 }
