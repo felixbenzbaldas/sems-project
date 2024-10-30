@@ -18,6 +18,7 @@ export class AppA {
     uiA: AppA_UiA;
     testA : AppA_TestA; // deprecated
     testerG_test: Entity;
+    testMode: boolean;
 
     constructor(public entity : Entity) {
         this.unboundG = new AppA_UnboundG(entity);

@@ -14,7 +14,9 @@ export class AppA_UiA_KeyG {
 
     async keyboardEvent(keyboardEvent: KeyboardEvent) {
         let keyCompareString = this.createCompareString(keyboardEvent);
-        this.entity.log(keyCompareString);
+        if (this.entity.appA.testMode) {
+            this.entity.logInfo(keyCompareString);
+        }
         if (this.map.has(keyCompareString)) {
             await this.map.get(keyCompareString)(keyboardEvent);
         }
