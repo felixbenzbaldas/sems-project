@@ -19,7 +19,7 @@ export class AppA {
     testA : AppA_TestA; // deprecated
     testerG_test: Entity;
 
-    constructor(private entity : Entity) {
+    constructor(public entity : Entity) {
         this.unboundG = new AppA_UnboundG(entity);
         this.logG = new LogG(entity);
         entity.containerA = new ContainerA(entity);

@@ -62,6 +62,7 @@ export class UiA_TestRunG {
 
     hasBodyContent() : boolean {
         return notNullUndefined(this.getTestRun().resultG_error) ||
-            notNullUndefined(this.getTestRun().nestedRuns);
+            notNullUndefined(this.getTestRun().nestedRuns) ||
+            notNullUndefined(this.getTestRun().appUi);
     }
 }

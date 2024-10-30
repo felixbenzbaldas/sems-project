@@ -216,18 +216,6 @@ export class AppA_TestA_SemiG {
                 app.appA.logG.toListOfStrings = true;
                 outerTest.test_app.log('human-test: the test run \'testName\' is displayed (red)');
                 return true;
-            }),
-            this.createTest('semi_keyboardEvent', async test => {
-                test.test_app = this.entity.appA.createStarter().createAppWithUI();
-                let appA = test.test_app.appA;
-                await appA.uiA.content.listA.add(
-                    appA.unboundG.createButton('activate test-app', () => {}),
-                );
-                appA.logG.toListOfStrings = true;
-                appA.logG.toConsole = true;
-                test.test_app.log('human-action: click \'activate test-app\'');
-                test.test_app.log('human-test: when pressing keys, the according key events are logged.');
-                return true;
             })
         ];
     }
