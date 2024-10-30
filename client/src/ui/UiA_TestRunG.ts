@@ -37,7 +37,8 @@ export class UiA_TestRunG {
             this.bodyContent.listA.jsList.push(this.getObject().testRunA.nestedRuns);
         }
         if (this.getObject().testRunA.appUi) {
-            this.bodyContent.listA.jsList.push(this.entity.getApp().appA.unboundG.createCollapsible('ui', this.getObject().testRunA.appUi.entity));
+            this.bodyContent.listA.jsList.push(
+                this.entity.getApp().appA.unboundG.createCollapsible('ui', this.getObject().testRunA.appUi.entity));
         }
         this.bodyContent.uiA = new UiA(this.bodyContent);
         await this.bodyContent.uiA.update();
