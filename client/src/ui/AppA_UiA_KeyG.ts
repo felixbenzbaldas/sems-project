@@ -14,6 +14,27 @@ export class AppA_UiA_KeyG {
             this.entity.appA.uiA.focused.uiA.textG.save();
             await this.entity.appA.uiA.globalEventG.newSubitem();
         });
+        this.map.set('ctrl+f (keydown)', async keyboardEvent => {
+            keyboardEvent.preventDefault();
+        });
+        this.map.set('ctrl+f (keyup)', async keyboardEvent => {
+            await this.entity.appA.uiA.globalEventG.toggleCollapsible();
+        });
+        this.map.set('ctrl+f (keyup)', async keyboardEvent => {
+            await this.entity.appA.uiA.globalEventG.toggleCollapsible();
+        });
+        this.map.set('ctrl+i (keydown)', async keyboardEvent => {
+            keyboardEvent.preventDefault();
+        });
+        this.map.set('ctrl+i (keyup)', async keyboardEvent => {
+            await this.entity.appA.uiA.globalEventG.scaleDown();
+        });
+        this.map.set('ctrl+k (keydown)', async keyboardEvent => {
+            keyboardEvent.preventDefault();
+        });
+        this.map.set('ctrl+k (keyup)', async keyboardEvent => {
+            await this.entity.appA.uiA.globalEventG.scaleUp();
+        });
     }
 
     async keyboardEvent(keyboardEvent: KeyboardEvent) {

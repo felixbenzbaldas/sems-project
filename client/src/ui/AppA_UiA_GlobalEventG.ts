@@ -86,4 +86,12 @@ export class AppA_UiA_GlobalEventG {
     async pasteNext() {
         await this.getUiA().focused.uiA.context.uiA.pasteNextOnSubitem(this.getUiA().focused);
     }
+
+    async scaleUp() {
+        await this.getUiA().focused.uiA.ensureExpanded();
+    }
+
+    async scaleDown() {
+        await this.getUiA().focused.uiA.ensureCollapsed();
+    }
 }
