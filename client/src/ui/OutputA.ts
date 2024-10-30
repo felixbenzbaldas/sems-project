@@ -18,8 +18,8 @@ export class OutputA {
 
     async setAndUpdateUi(string : string) {
         this.output.text = string;
-        await this.ui.uiA.ensureExpanded();
         await this.ui.uiA.update();
+        await this.ui.uiA.ensureExpanded();
     }
 
     getUi() : Entity {
