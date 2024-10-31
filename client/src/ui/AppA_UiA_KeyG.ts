@@ -20,10 +20,10 @@ export class AppA_UiA_KeyG {
         this.map.set('ctrl+f', async keyboardEvent => {
             await this.entity.appA.uiA.globalEventG.toggleCollapsible();
         });
-        this.map.set('ctrl+i', async keyboardEvent => {
+        this.map.set('ctrl+e', async keyboardEvent => {
             await this.entity.appA.uiA.globalEventG.scaleDown();
         });
-        this.map.set('ctrl+k', async keyboardEvent => {
+        this.map.set('ctrl+d', async keyboardEvent => {
             await this.entity.appA.uiA.globalEventG.scaleUp();
         });
     }
