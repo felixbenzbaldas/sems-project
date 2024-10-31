@@ -1,4 +1,4 @@
-ES will be used to test itself.
+The Simple Software will be used to test itself.
 
 The tests can be executed over the GUI.
 

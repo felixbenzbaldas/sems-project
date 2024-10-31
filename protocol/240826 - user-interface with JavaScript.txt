@@ -9,4 +9,4 @@ This will have the following benefits:
 - the old ES application is also implemtented without a ui-framework. Therefore some code can be reused.
 - it will be easy to reuse ES-code in other projects. There is no dependency to a specific ui-framework.
 
-(Maybe in the future a ui-framework will be used for special use cases.)
+(Maybe in the future an ui-framework will be used for special use cases.)
