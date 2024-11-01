@@ -31,7 +31,7 @@ export const appTest = (tester : Entity) => {
         let list = appUi.getApp().unboundG.createList_typed();
         let uiForList = appUi.createUiFor_typed(list.entity);
         await uiForList.update();
-        list.jsList.push(appUi.entity.appA.unboundG.createText('subitem'));
+        list.jsList.push(appUi.getApp().unboundG.createText('subitem'));
 
         await list.update(0);
 
