@@ -86,6 +86,10 @@ export class StarterA {
         return this.createdApp;
     }
 
+    createAppWithUI_typed() : AppA_UiA {
+        return this.createAppWithUI().appA.uiA;
+    }
+
     async createAppWithUIWithCommands_editable_updateUi() : Promise<Entity> {
         this.createAppWithUIWithCommands_editable();
         await this.createdApp.uiA.update();

@@ -245,4 +245,14 @@ export class UiA {
         this.headerG.updateBodyIcon();
         await this.bodyG.update();
     }
+
+    async update_addedListItem(position: number) {
+        if (this.isHeaderBody()) {
+            if (!this.collapsed) {
+                await this.listG.update_addedListItem(position);
+            }
+        } else if (this.isPlainList()) {
+            await this.listG.update_addedListItem(position);
+        }
+    }
 }

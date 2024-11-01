@@ -67,6 +67,7 @@ export class UiA_ListG {
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         this.getObject().listA.jsList.splice(position, 0, this.getObject().getPath(created));
         await this.getObject().uis_update();
+        await this.entity.uiA.ensureExpanded();
         this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
     }
 
@@ -90,5 +91,11 @@ export class UiA_ListG {
         }
         ui.uiA.context = this.entity;
         return ui;
+    }
+
+    async update_addedListItem(position: number) {
+        let ui = this.entity.getApp().appA.uiA.createUiFor(await this.getObject().listA.getResolved(position));
+        this.uisOfListItems.splice(position, 0, ui);
+        ui.uiA.context = this.entity;
     }
 }

@@ -240,6 +240,14 @@ export class Entity {
         }
     }
 
+    async uis_update_addedListItem(position: number) {
+        if (notNullUndefined(this.uis)) {
+            for (let ui of this.uis) {
+                await ui.uiA.update_addedListItem(position);
+            }
+        }
+    }
+
     createFormalText(name: string, jsFunction: Function) : Entity {
         let formalText : Entity = new Entity();
         formalText.app = this.getApp();
@@ -264,7 +272,7 @@ export class Entity {
             }
         }
         try {
-            this.formalTextG_jsFunction(testRun);
+            await this.formalTextG_jsFunction(testRun);
             if (testRun.testRunA.resultG_success != false) {
                 testRun.testRunA.resultG_success = true;
             }
