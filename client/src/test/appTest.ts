@@ -36,6 +36,7 @@ export const appTest = (tester : Entity) => {
         await list.update(0);
 
         assert_sameAs(1, uiForList.listG.uisOfListItems.length);
+        assert(uiForList.htmlElement.innerHTML.includes('subitem'), 'update html');
     });
     return test;
 }

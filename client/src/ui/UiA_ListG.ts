@@ -100,7 +100,11 @@ export class UiA_ListG {
     async update_addedListItem(position: number) {
         let ui = this.createUiFor(await this.getObject().listA.getResolved(position));
         this.uisOfListItems.splice(position, 0, ui);
-        // TODO update ui
-        // TODO update html
+        await ui.uiA.update();
+        if (position + 1 === this.uisOfListItems.length) {
+            this.htmlElement.appendChild(ui.uiA.htmlElement);
+        } else {
+            this.htmlElement.insertBefore(ui.uiA.htmlElement, this.uisOfListItems[position + 1].uiA.htmlElement);
+        }
     }
 }
