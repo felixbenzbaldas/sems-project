@@ -204,11 +204,12 @@ export class UiA {
                 this.getObject().installListA();
             }
             let created = await this.entity.getApp().appA.createText('');
-            await this.listG.insertObjectAtPosition(created, 0);
-            await this.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
-                                 // TODO update all uis
+            let position = 0;
+            let listA = this.getObject().listA;
+            await listA.insertObjectAtPosition(created, position);
+            await listA.update(position);
             await this.ensureExpanded();
-            this.entity.getApp().appA.uiA.focus(this.listG.uisOfListItems.at(0));
+            this.entity.getApp().appA.uiA.focus(this.entity.uiA.listG.uisOfListItems.at(position));
         }
     }
 
