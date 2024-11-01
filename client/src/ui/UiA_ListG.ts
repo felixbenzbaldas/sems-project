@@ -97,5 +97,7 @@ export class UiA_ListG {
         let ui = this.entity.getApp().appA.uiA.createUiFor(await this.getObject().listA.getResolved(position));
         this.uisOfListItems.splice(position, 0, ui);
         ui.uiA.context = this.entity;
+        // TODO update ui
+        // TODO update html
     }
 }
