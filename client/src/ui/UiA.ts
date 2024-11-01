@@ -248,7 +248,11 @@ export class UiA {
 
     async update_addedListItem(position: number) {
         if (this.isHeaderBody()) {
-            if (!this.collapsed) {
+            if (this.getObject().collapsible) {
+                if (!this.collapsed) {
+                    await this.listG.update_addedListItem(position);
+                }
+            } else {
                 await this.listG.update_addedListItem(position);
             }
         } else if (this.isPlainList()) {
