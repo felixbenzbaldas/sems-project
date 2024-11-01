@@ -241,6 +241,9 @@ export class Entity {
     }
 
     async uis_update_addedListItem(position: number) {
+        if (this.uiA) {
+            await this.uiA.update_addedListItem(position);
+        }
         if (notNullUndefined(this.uis)) {
             for (let ui of this.uis) {
                 await ui.uiA.update_addedListItem(position);
