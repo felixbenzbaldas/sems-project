@@ -70,8 +70,7 @@ export class UiA_ListG {
         let created = await this.entity.getApp().appA.createText('');
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         this.getObject().listA.jsList.splice(position, 0, this.getObject().getPath(created));
-        await this.getObject().uis_update();
-        await this.entity.uiA.ensureExpanded();
+        await this.getObject().uis_update_addedListItem(position);
         this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
     }
 
