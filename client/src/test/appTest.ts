@@ -5,7 +5,7 @@ export const appTest = (app : Entity) => {
     let test = app.createFormalText('appTest', (run : Entity) => {
     });
     test.testG_installNestedTestsA();
-    test.testG_nestedTestsA.add('failingDummyTest', (run : Entity) => {
+    test.testG_nestedTestsA.add('failingDummyTest', async (run : Entity) => {
         run.testRunA.appUi = app.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
         assert(false);
     });
