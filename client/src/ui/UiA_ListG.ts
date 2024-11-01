@@ -13,30 +13,34 @@ export class UiA_ListG {
 
     async update() {
         if (!this.entity.uiA.collapsed) {
-            await this.updateUisOfListItems();
             this.htmlElement.innerHTML = null;
             this.htmlElement.style.display = 'flex';
             this.htmlElement.style.flexWrap = 'wrap';
             this.htmlElement.style.rowGap = '0.25rem';
-            for (let ui of this.uisOfListItems) {
-                this.htmlElement.appendChild(ui.uiA.htmlElement);
-            }
+            await this.updateUisOfListItems();
         }
     }
 
     private async updateUisOfListItems() {
         this.uisOfListItems = []; // TODO: do not always dismiss old uis
         for (let currentResolved of await this.getObject().listA.getResolvedList()) {
-            let currentUi;
-            if (currentResolved.appA?.uiA) {
-                currentUi = currentResolved;
-            } else {
-                currentUi = this.entity.getApp().appA.uiA.createUiFor(currentResolved);
-                currentUi.uiA.editable = this.entity.uiA.editable;
-            }
-            currentUi.uiA.context = this.entity;
+            let currentUi = this.createUiFor(currentResolved);
             await currentUi.updateUi();
             this.uisOfListItems.push(currentUi);
+            this.htmlElement.appendChild(currentUi.uiA.htmlElement);
+        }
+    }
+
+    createUiFor(listItem : Entity) : Entity {
+        if (listItem.appA?.uiA) {
+            listItem.uiA.context = this.entity;
+            return listItem;
+        } else {
+            let ui;
+            ui = this.entity.getApp().appA.uiA.createUiFor(listItem);
+            ui.uiA.editable = this.entity.uiA.editable;
+            ui.uiA.context = this.entity;
+            return ui;
         }
     }
 
@@ -94,9 +98,8 @@ export class UiA_ListG {
     }
 
     async update_addedListItem(position: number) {
-        let ui = this.entity.getApp().appA.uiA.createUiFor(await this.getObject().listA.getResolved(position));
+        let ui = this.createUiFor(await this.getObject().listA.getResolved(position));
         this.uisOfListItems.splice(position, 0, ui);
-        ui.uiA.context = this.entity;
         // TODO update ui
         // TODO update html
     }
