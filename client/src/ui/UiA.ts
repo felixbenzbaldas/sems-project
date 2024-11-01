@@ -23,7 +23,7 @@ export class UiA {
     headerBodyG: UiA_HeaderBodyG;
     testRunG: UiA_TestRunG;
 
-    constructor(private entity : Entity) {
+    constructor(public entity : Entity) {
         this.headerBodyG = new UiA_HeaderBodyG(entity);
         this.listG = new UiA_ListG(entity);
         this.textG = new UiA_TextG(entity);

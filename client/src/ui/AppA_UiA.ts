@@ -5,6 +5,7 @@ import {AppA_UiA_GlobalEventG} from "@/ui/AppA_UiA_GlobalEventG";
 import {UiA} from "@/ui/UiA";
 import {ContainerA} from "@/ContainerA";
 import {AppA_UiA_KeyG} from "@/ui/AppA_UiA_KeyG";
+import type {AppA} from "@/AppA";
 
 export class AppA_UiA {
 
@@ -37,7 +38,7 @@ export class AppA_UiA {
     }
 
     async newSubitem() {
-        let created = await this.entity.appA.createText('');
+        let created = await this.getApp().createText('');
         let uiForCreated = await this.content.uiA.listG.insertObjectAtPosition(created, 0);
         await this.content.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
         this.focus(this.content.uiA.listG.uisOfListItems.at(0));
@@ -98,7 +99,7 @@ export class AppA_UiA {
 
     getRawText() : string {
         let rawText = '';
-        if (this.entity.appA.testA) {
+        if (this.getApp().testA) {
             rawText += this.content.uiA.getRawText();
         } else {
             if (this.showMeta) {
@@ -167,10 +168,10 @@ export class AppA_UiA {
     }
 
     switchCurrentContainer_AndUpdateStyles(newContainer: Entity) {
-        let previous = this.entity.appA.currentContainer;
-        this.entity.appA.switchCurrentContainer(newContainer);
+        let previous = this.getApp().currentContainer;
+        this.getApp().switchCurrentContainer(newContainer);
         previous.uis_update_currentContainerStyle();
-        this.entity.appA.currentContainer.uis_update_currentContainerStyle();
+        this.getApp().currentContainer.uis_update_currentContainerStyle();
     }
 
     createUiFor(object: Entity) : Entity {
@@ -181,43 +182,47 @@ export class AppA_UiA {
         return ui;
     }
 
+    createUiFor_typed(object: Entity) : UiA {
+        return this.createUiFor(object).uiA;
+    }
+
     createCommands() : Entity {
-        return this.entity.appA.unboundG.createTextWithList('commands',
-            this.entity.appA.unboundG.createButton('default action', async () => {
-                await this.entity.appA.uiA.globalEventG.defaultAction();
+        return this.getApp().unboundG.createTextWithList('commands',
+            this.getApp().unboundG.createButton('default action', async () => {
+                await this.getApp().uiA.globalEventG.defaultAction();
             }),
-            this.entity.appA.unboundG.createButton('new subitem', async () => {
-                await this.entity.appA.uiA.globalEventG.newSubitem();
+            this.getApp().unboundG.createButton('new subitem', async () => {
+                await this.getApp().uiA.globalEventG.newSubitem();
             }),
-            this.entity.appA.unboundG.createButton('toggle collapsible', async () => {
-                await this.entity.appA.uiA.globalEventG.toggleCollapsible();
+            this.getApp().unboundG.createButton('toggle collapsible', async () => {
+                await this.getApp().uiA.globalEventG.toggleCollapsible();
             }),
-            this.entity.appA.unboundG.createButton('expand/collapse', async () => {
-                await this.entity.appA.uiA.globalEventG.expandOrCollapse();
+            this.getApp().unboundG.createButton('expand/collapse', async () => {
+                await this.getApp().uiA.globalEventG.expandOrCollapse();
             }),
-            this.entity.appA.unboundG.createButton('switch current container', async () => {
-                await this.entity.appA.uiA.globalEventG.switchCurrentContainer();
+            this.getApp().unboundG.createButton('switch current container', async () => {
+                await this.getApp().uiA.globalEventG.switchCurrentContainer();
             }),
-            this.entity.appA.unboundG.createButton('switch to app container', async () => {
-                await this.entity.appA.uiA.globalEventG.switchToAppContainer();
+            this.getApp().unboundG.createButton('switch to app container', async () => {
+                await this.getApp().uiA.globalEventG.switchToAppContainer();
             }),
-            this.entity.appA.unboundG.createButton('export', async () => {
-                await this.entity.appA.uiA.globalEventG.export();
+            this.getApp().unboundG.createButton('export', async () => {
+                await this.getApp().uiA.globalEventG.export();
             }),
-            this.entity.appA.unboundG.createButton('export app', async () => {
-                await this.entity.appA.uiA.globalEventG.exportApp();
+            this.getApp().unboundG.createButton('export app', async () => {
+                await this.getApp().uiA.globalEventG.exportApp();
             }),
-            this.entity.appA.unboundG.createButton('import', async () => {
-                await this.entity.appA.uiA.globalEventG.import();
+            this.getApp().unboundG.createButton('import', async () => {
+                await this.getApp().uiA.globalEventG.import();
             }),
-            this.entity.appA.unboundG.createButton('focus root', async () => {
-                await this.entity.appA.uiA.globalEventG.focusRoot();
+            this.getApp().unboundG.createButton('focus root', async () => {
+                await this.getApp().uiA.globalEventG.focusRoot();
             }),
-            this.entity.appA.unboundG.createButton('cut', async () => {
-                await this.entity.appA.uiA.globalEventG.cut();
+            this.getApp().unboundG.createButton('cut', async () => {
+                await this.getApp().uiA.globalEventG.cut();
             }),
-            this.entity.appA.unboundG.createButton('paste next', async () => {
-                await this.entity.appA.uiA.globalEventG.pasteNext();
+            this.getApp().unboundG.createButton('paste next', async () => {
+                await this.getApp().uiA.globalEventG.pasteNext();
             }),
             // this.entity.appA.unboundG.createButton('flat export content', async () => {
             //     await this.entity.appA.uiA.globalEventG.flatExportContent();
@@ -229,11 +234,14 @@ export class AppA_UiA {
     }
 
     isActive() : boolean {
-        if (this.entity.appA.environment) {
-            return this.entity.appA.environment.activeApp === this.entity;
+        if (this.getApp().environment) {
+            return this.getApp().environment.activeApp === this.entity;
         } else {
             return true;
         }
     }
 
+    getApp() : AppA {
+        return this.entity.appA;
+    }
 }

@@ -1,16 +1,16 @@
 import type {Entity} from "@/Entity";
 import {assert, assert_sameAs} from "@/utils";
 
-export const appTest = (app : Entity) => {
-    let test = app.createFormalText('appTest', (run : Entity) => {
+export const appTest = (tester : Entity) => {
+    let test = tester.createFormalText('appTest', (run : Entity) => {
     });
     test.testG_installNestedTestsA();
     test.testG_nestedTestsA.add('failingDummyTest', async (run : Entity) => {
-        run.testRunA.appUi = app.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
+        run.testRunA.appUi = tester.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
         assert(false);
     });
     test.testG_nestedTestsA.add('semiKeyboardEvent', async run => {
-        let appA = app.appA.createStarter().createAppWithUI().appA;
+        let appA = tester.appA.createStarter().createAppWithUI().appA;
         appA.testMode = true;
         run.testRunA.appUi = appA.uiA;
         await appA.uiA.content.listA.add(
@@ -27,15 +27,15 @@ export const appTest = (app : Entity) => {
         appA.entity.log('human-test: now the keys are not logged.');
     });
     test.testG_nestedTestsA.add('updateAddedSubitem', async run => {
-        let appUi = app.appA.createStarter().createAppWithUI_typed();
-        let list = appUi.entity.appA.unboundG.createList();
-        let uiForList = appUi.createUiFor(list);
-        await uiForList.uiA.update();
-        list.listA.jsList.push(appUi.entity.appA.unboundG.createText('subitem'));
+        let appUi = tester.appA.createStarter().createAppWithUI_typed();
+        let list = appUi.getApp().unboundG.createList_typed();
+        let uiForList = appUi.createUiFor_typed(list.entity);
+        await uiForList.update();
+        list.jsList.push(appUi.entity.appA.unboundG.createText('subitem'));
 
-        await list.uis_update_addedListItem(0);
+        await list.update(0);
 
-        assert_sameAs(1, uiForList.uiA.listG.uisOfListItems.length);
+        assert_sameAs(1, uiForList.listG.uisOfListItems.length);
     });
     return test;
 }

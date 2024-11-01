@@ -15,6 +15,10 @@ export class AppA_UnboundG {
         return list;
     }
 
+    createList_typed(...jsList : Array<Entity>) : ListA {
+        return this.createList(...jsList).listA;
+    }
+
     createText(text: string) : Entity {
         let entity = this.entity.appA.createEntityWithApp();
         entity.text = text;

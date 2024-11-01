@@ -4,7 +4,7 @@ export class ListA {
 
     jsList : Array<Entity>;
 
-    constructor(private entity : Entity, ...jsList : Array<Entity>) {
+    constructor(public entity : Entity, ...jsList : Array<Entity>) {
         this.jsList = jsList;
     }
 
@@ -57,5 +57,9 @@ export class ListA {
                 return item;
             }
         }
+    }
+
+    async update(position: number) {
+        await this.entity.uis_update_addedListItem(position)
     }
 }
