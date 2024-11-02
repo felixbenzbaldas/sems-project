@@ -4,6 +4,7 @@ import {AppA} from "@/AppA";
 import {AppA_TestA} from "@/test/AppA_TestA";
 import {UiA} from "@/ui/UiA";
 import {Environment} from "@/Environment";
+import {notNullUndefined, nullUndefined} from "@/utils";
 
 export class StarterA {
 
@@ -43,12 +44,22 @@ export class StarterA {
         }
         this.getEnvironment().activeApp = this.createdApp;
         this.createdApp.appA.uiA.withPlaceholderArea = true;
-        this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
+        if (this.isPublicWeb()) {
+            this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
+        }
         await this.createdApp.uiA.update();
         if (this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.length === 1) {
             await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
         }
         return this.createdApp.uiA.htmlElement;
+    }
+
+    isPublicWeb() {
+        if (nullUndefined(this.hostname())) {
+            return false;
+        } else {
+            return this.hostname() != 'localhost';
+        }
     }
 
     async run() : Promise<Entity> {
@@ -123,7 +134,7 @@ export class StarterA {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;
         this.createData();
-        let website = await this.data.listA.findByText(this.createWebsite_hostname())
+        let website = await this.data.listA.findByText(this.hostname())
         let start = await website.listA.findByText('start');
         for (let i = 0; i < start.listA.jsList.length; i++) {
             await this.createdApp.appA.uiA.content.listA.add(
@@ -136,7 +147,7 @@ export class StarterA {
         return this.createdApp;
     }
 
-    createWebsite_hostname() : string {
+    hostname() : string {
         if (this.getEnvironment().hostname === 'localhost') {
             if (this.getEnvironment().queryParams?.has('virtualHostname')) {
                 return this.getEnvironment().queryParams.get('virtualHostname');
