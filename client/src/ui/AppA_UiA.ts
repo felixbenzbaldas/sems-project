@@ -23,6 +23,7 @@ export class AppA_UiA {
     webMeta: Entity;
     keyG: AppA_UiA_KeyG;
 
+    private isInstalled : boolean;
     private focusStyle_marker: HTMLElement;
 
     constructor(public entity: Entity) {
@@ -38,10 +39,19 @@ export class AppA_UiA {
     }
 
     async newSubitem() {
+        await this.ensureInstalled();
         let created = await this.getApp().createText('');
-        let uiForCreated = await this.content.uiA.listG.insertObjectAtPosition(created, 0);
-        await this.content.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
-        this.focus(this.content.uiA.listG.uisOfListItems.at(0));
+        let position = 0;
+        let listA = this.content.listA;
+        await listA.insertObjectAtPosition(created, position);
+        await this.content.uiA.listG.update_addedListItem(position);
+        this.entity.getApp().appA.uiA.focus(this.content.uiA.listG.uisOfListItems.at(position));
+    }
+
+    private async ensureInstalled() { // TODO this should not be necessary
+        if (!this.isInstalled) {
+            await this.update();
+        }
     }
 
     focus(entity: Entity) {
@@ -67,6 +77,7 @@ export class AppA_UiA {
             await this.webMeta.updateUi();
         }
         this.updateUiElement();
+        this.isInstalled = true;
     }
 
     private updateUiElement() {

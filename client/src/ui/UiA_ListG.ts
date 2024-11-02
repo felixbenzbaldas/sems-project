@@ -70,31 +70,21 @@ export class UiA_ListG {
         let created = await this.entity.getApp().appA.createText('');
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         let listA = this.getObject().listA;
-        listA.jsList.splice(position, 0, this.getObject().getPath(created));
+        await listA.insertObjectAtPosition(created, position);
         await listA.entity.uis_update_addedListItem(position);
         this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
     }
 
     async pasteNextOnSubitem(subitem: Entity) {
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
-        await this.insertObjectAtPosition(this.entity.getApp().appA.uiA.clipboard, position);
-        await this.getObject().uis_update();
+        let listA = this.getObject().listA;
+        await listA.insertObjectAtPosition(this.entity.getApp().appA.uiA.clipboard, position);
+        await listA.entity.uis_update_addedListItem(position);
         this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
     }
 
     getObject() : Entity {
         return this.entity.uiA.getObject();
-    }
-
-    // note: always creates extra object for ui
-    async insertObjectAtPosition(object: Entity, position: number) : Promise<Entity> {
-        await this.getObject().listA.insertObjectAtPosition(object, position);
-        let ui = this.entity.getApp().appA.uiA.createUiFor(object);
-        if (notNullUndefined(this.uisOfListItems)) { // TODO
-            this.uisOfListItems.splice(position, 0, ui);
-        }
-        ui.uiA.context = this.entity;
-        return ui;
     }
 
     async update_addedListItem(position: number) {

@@ -65,9 +65,12 @@ export class AppA_UiA_GlobalEventG {
         if (!focusedObject.listA) {
             focusedObject.installListA();
         }
-        await focused.uiA.listG.insertObjectAtPosition(created, 0);
-        await focused.uiA.update(); // TODO update in insertObjectAtPosition (without deleting old uis)
-        this.getUiA().focus(focused.uiA.listG.uisOfListItems.at(0));
+        let position = 0;
+        let listA = focusedObject.listA;
+        await listA.insertObjectAtPosition(created, position);
+        await listA.entity.uis_update_addedListItem(position);
+        await focused.uiA.ensureExpanded();
+        focused.getApp().appA.uiA.focus(focused.uiA.listG.uisOfListItems.at(position));
     }
 
     async focusRoot() {
