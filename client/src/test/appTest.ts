@@ -33,7 +33,7 @@ export const appTest = (tester : Entity) => {
         await uiForList.update();
         list.jsList.push(appUi.getApp().unboundG.createText('subitem'));
 
-        await list.update(0);
+        await list.entity.uis_update_addedListItem(0);
 
         assert_sameAs(1, uiForList.listG.uisOfListItems.length);
         assert(uiForList.htmlElement.innerHTML.includes('subitem'), 'update html');

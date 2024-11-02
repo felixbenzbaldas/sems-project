@@ -58,8 +58,4 @@ export class ListA {
             }
         }
     }
-
-    async update(position: number) {
-        await this.entity.uis_update_addedListItem(position)
-    }
 }
