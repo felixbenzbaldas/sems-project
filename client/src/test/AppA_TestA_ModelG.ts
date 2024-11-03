@@ -90,7 +90,7 @@ export class AppA_TestA_ModelG {
             }),
             this.createTest('modelTest_tester2', async outerTest => {
                 let testCreator : (app : Entity) => Entity = (app : Entity) => {
-                    let test = app.createFormalText('appTest', (run : Entity) =>  {});
+                    let test = app.createCode('appTest', (run : Entity) =>  {});
                     return test;
                 };
                 let tester : Entity = this.entity.appA.createStarter().createTester2(testCreator);
@@ -211,7 +211,7 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_testRun', async outerTest => {
                 let app : Entity = this.entity.appA.createStarter().createAppWithUI();
                 let name = 'testName';
-                let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                let test : Entity = app.createCode(name, (testRun : Entity) => {
                     testRun.testRunA.appUi = app.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
                     assert(false);
                 });
@@ -229,7 +229,7 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_testRun_withFailingNestedTest', async outerTest => {
                 let app : Entity = this.entity.appA.createStarter().createAppWithUI();
                 let name = 'foo';
-                let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                let test : Entity = app.createCode(name, (testRun : Entity) => {
                 });
                 test.testG_installNestedTestsA();
                 test.testG_nestedTestsA.add('nestedTest', () => {
@@ -249,7 +249,7 @@ export class AppA_TestA_ModelG {
                 environment.queryParams = new URLSearchParams('tester2');
                 environment.jsonData = testData;
                 environment.testCreator = (app : Entity) => {
-                    return app.createFormalText('aTestTest', (run : Entity) =>  {});
+                    return app.createCode('aTestTest', (run : Entity) =>  {});
                 };
                 let starter = environment.createApp().appA.createStarter();
 
@@ -262,7 +262,7 @@ export class AppA_TestA_ModelG {
                 let environment = new Environment();
                 environment.queryParams = new URLSearchParams('run=isolatedRun');
                 environment.testCreator = (app : Entity) => {
-                    return app.createFormalText('isolatedRun', (run : Entity) => {});
+                    return app.createCode('isolatedRun', (run : Entity) => {});
                 }
                 test.test_app  = environment.createApp();
                 test.test_app.appA.logG.toListOfStrings = true;

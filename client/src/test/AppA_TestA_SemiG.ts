@@ -195,7 +195,7 @@ export class AppA_TestA_SemiG {
                 outerTest.test_app.uiA.editable = true;
                 let app = outerTest.test_app;
                 let name = 'testName';
-                let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                let test : Entity = app.createCode(name, (testRun : Entity) => {
                 });
                 let testRun : Entity = await test.testG_run();
                 await app.appA.uiA.content.listA.add(testRun);
@@ -208,7 +208,7 @@ export class AppA_TestA_SemiG {
                 outerTest.test_app.uiA.editable = true;
                 let app = outerTest.test_app;
                 let name = 'testName';
-                let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                let test : Entity = app.createCode(name, (testRun : Entity) => {
                     assert(false);
                 });
                 let testRun : Entity = await test.testG_run();

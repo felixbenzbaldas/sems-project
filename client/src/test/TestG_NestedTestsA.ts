@@ -12,7 +12,7 @@ export class TestG_NestedTestsA {
     }
 
     add(name: string, jsFunction: (testRun: Entity) => void) : Entity {
-        let nestedTest : Entity = this.entity.getApp().createFormalText(name, jsFunction);
+        let nestedTest : Entity = this.entity.getApp().createCode(name, jsFunction);
         this.nestedTests.listA.jsList.push(nestedTest);
         return nestedTest;
     }

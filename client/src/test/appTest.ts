@@ -2,7 +2,7 @@ import type {Entity} from "@/Entity";
 import {assert, assert_sameAs} from "@/utils";
 
 export const appTest = (tester : Entity) => {
-    let test = tester.createFormalText('appTest', (run : Entity) => {
+    let test = tester.createCode('appTest', (run : Entity) => {
     });
     test.testG_installNestedTestsA();
     test.testG_nestedTestsA.add('failingDummyTest', async (run : Entity) => {

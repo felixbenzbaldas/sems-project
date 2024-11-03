@@ -235,20 +235,20 @@ export class AppA_TestA {
                 }
                 return false;
             }),
-            this.createTest('createFormalText', async test => {
+            this.createTest('code', async test => {
                 let app : Entity = this.appA.createStarter().createApp();
-                let name = 'nameOfFormalText';
+                let name = 'nameOfCode';
 
-                let formalText : Entity = app.createFormalText(name, () => {
+                let code : Entity = app.createCode(name, () => {
                     // do something
                 });
 
-                assert_sameAs(app.containerA.mapNameEntity.get(name), formalText);
+                assert_sameAs(app.containerA.mapNameEntity.get(name), code);
             }),
             this.createTest('runTest', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
                 let name = 'testName';
-                let test : Entity = app.createFormalText(name, () => {
+                let test : Entity = app.createCode(name, () => {
                     // test
                 });
 
@@ -260,7 +260,7 @@ export class AppA_TestA {
             this.createTest('runTest_withNestedTest', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
                 let name = 'testName';
-                let test : Entity = app.createFormalText(name, () => {});
+                let test : Entity = app.createCode(name, () => {});
                 test.testG_installNestedTestsA();
                 let nestedTest = test.testG_nestedTestsA.add('nestedTest', () => {});
 
@@ -274,7 +274,7 @@ export class AppA_TestA {
             }),
             this.createTest('runTest_withFailingNestedTest', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
-                let test : Entity = app.createFormalText('foo', () => {});
+                let test : Entity = app.createCode('foo', () => {});
                 test.testG_installNestedTestsA();
                 test.testG_nestedTestsA.add('nestedTest', () => {
                     assert(false);
@@ -288,7 +288,7 @@ export class AppA_TestA {
             this.createTest('runTest_failing', async () => {
                 let app : Entity = this.appA.createStarter().createApp();
                 let name = 'testName';
-                let test : Entity = app.createFormalText(name, (testRun : Entity) => {
+                let test : Entity = app.createCode(name, (testRun : Entity) => {
                     assert(false);
                 });
 

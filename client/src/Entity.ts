@@ -20,7 +20,7 @@ export class Entity {
     collapsible: boolean;
     dangerous_html: HTMLElement;
     uis: Array<Entity>;
-    formalTextG_jsFunction: Function;
+    codeG_jsFunction: Function;
 
     listA: ListA;
     installListA() {
@@ -251,12 +251,12 @@ export class Entity {
         }
     }
 
-    createFormalText(name: string, jsFunction: Function) : Entity {
-        let formalText : Entity = new Entity();
-        formalText.app = this.getApp();
-        formalText.formalTextG_jsFunction = jsFunction;
-        this.containerA.bind(formalText, name);
-        return formalText;
+    createCode(name: string, jsFunction: Function) : Entity {
+        let code : Entity = new Entity();
+        code.app = this.getApp();
+        code.codeG_jsFunction = jsFunction;
+        this.containerA.bind(code, name);
+        return code;
     }
 
     async testG_run() {
@@ -275,7 +275,7 @@ export class Entity {
             }
         }
         try {
-            await this.formalTextG_jsFunction(testRun);
+            await this.codeG_jsFunction(testRun);
             if (testRun.testRunA.resultG_success != false) {
                 testRun.testRunA.resultG_success = true;
             }
