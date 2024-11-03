@@ -13,10 +13,8 @@ export class StarterA {
     createdApp : Entity;
     data: Entity;
 
-    constructor(public entity? : Entity) {
-        if (entity) {
-            this.fullStartG = new StarterA_FullStartG(entity);
-        }
+    constructor(public entity : Entity) {
+        this.fullStartG = new StarterA_FullStartG(entity);
     }
 
     async fullStart() : Promise<HTMLElement> {
@@ -58,7 +56,7 @@ export class StarterA {
     }
 
     getEnvironment() : Environment {
-        return this.entity?.getApp().appA.environment;
+        return this.entity.getApp().appA.environment;
     }
 
     testMode() {
@@ -71,7 +69,7 @@ export class StarterA {
         this.createdApp = new Entity();
         this.createdApp.text = 'simple application';
         this.createdApp.appA = new AppA(this.createdApp);
-        this.createdApp.appA.environment =  this.entity?.getApp().appA.environment;
+        this.createdApp.appA.environment =  this.entity.getApp().appA.environment;
         return this.createdApp;
     }
 
@@ -170,25 +168,25 @@ export class StarterA {
     // static methods
 
     static async createAppWithUIWithCommands_editable_updateUi() {
-        let starter = new StarterA();
+        let starter = new Environment().createApp().appA.createStarter();
         await starter.createAppWithUIWithCommands_editable_updateUi();
         return starter.createdApp;
     }
 
     static createApp() {
-        let starter = new StarterA();
+        let starter = new Environment().createApp().appA.createStarter();
         starter.createApp();
         return starter.createdApp;
     }
 
     static async createTest() {
-        let starter = new StarterA();
+        let starter = new Environment().createApp().appA.createStarter();
         await starter.createTest();
         return starter.createdApp;
     }
 
     static createAppWithUI() {
-        let starter = new StarterA();
+        let starter = new Environment().createApp().appA.createStarter();
         starter.createAppWithUI();
         return starter.createdApp;
     }
