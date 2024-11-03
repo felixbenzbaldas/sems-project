@@ -5,7 +5,16 @@ import {AppA_TestA} from "@/test/AppA_TestA";
 import {UiA} from "@/ui/UiA";
 import {Environment} from "@/Environment";
 import {notNullUndefined, nullUndefined} from "@/utils";
+enum Type {
+    ClientApp,
+    OldTester,
+    Tester,
+    ObjectViewer,
+    TestRun,
+    Website,
+    LocalApp,
 
+}
 export class StarterA {
 
     createdApp : Entity;
@@ -15,43 +24,103 @@ export class StarterA {
     }
 
     async fullStart() : Promise<HTMLElement> {
-        if (this.getEnvironment().queryParams.has('local')) {
-            this.createAppWithUIWithCommands_editable();
-            this.testMode();
-            this.createdApp.uiA.editable = true;
-        } else if (this.getEnvironment().queryParams.has('client-app')) {
-            this.createAppWithUIWithCommands_editable();
-            this.testMode();
+        switch (this.fullStart_getType()) {
+            case Type.OldTester :
+                await this.createTest();
+                this.testMode();
+                if (this.getEnvironment().queryParams.has('withFailingDemoTest')) {
+                    this.createdApp.appA.testA.withFailingDemoTest = true;
+                }
+                await this.createdApp.appA.testA.createRunAndDisplay();
+                this.getEnvironment().activeApp = this.createdApp;
+                this.createdApp.appA.uiA.withPlaceholderArea = true;
+                if (this.isPublicWeb()) {
+                    this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
+                }
+                await this.createdApp.uiA.update();
+                return this.createdApp.uiA.htmlElement;
+            case Type.Tester:
+                this.createTester2(this.getEnvironment().testCreator);
+                this.testMode();
+                await this.createdApp.appA.testerG_run();
+                this.getEnvironment().activeApp = this.createdApp;
+                this.createdApp.appA.uiA.withPlaceholderArea = true;
+                if (this.isPublicWeb()) {
+                    this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
+                }
+                await this.createdApp.uiA.update();
+                return this.createdApp.uiA.htmlElement;
+            case Type.ObjectViewer:
+                await this.createObjectViewer(this.getEnvironment().queryParams.get('path'));
+                this.testMode();
+                this.getEnvironment().activeApp = this.createdApp;
+                this.createdApp.appA.uiA.withPlaceholderArea = true;
+                if (this.isPublicWeb()) {
+                    this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
+                }
+                await this.createdApp.uiA.update();
+                if (this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.length === 1) {
+                    await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
+                }
+                return this.createdApp.uiA.htmlElement;
+            case Type.TestRun:
+                await this.run();
+                this.getEnvironment().activeApp = this.createdApp;
+                this.createdApp.appA.uiA.withPlaceholderArea = true;
+                if (this.isPublicWeb()) {
+                    this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
+                }
+                await this.createdApp.uiA.update();
+                return this.createdApp.uiA.htmlElement;
+            case Type.Website:
+                await this.createWebsite();
+                this.testMode();
+                this.getEnvironment().activeApp = this.createdApp;
+                this.createdApp.appA.uiA.withPlaceholderArea = true;
+                if (this.isPublicWeb()) {
+                    this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
+                }
+                await this.createdApp.uiA.update();
+                if (this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.length === 1) {
+                    await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
+                }
+                return this.createdApp.uiA.htmlElement;
+            case Type.LocalApp:
+                this.createAppWithUIWithCommands_editable();
+                this.testMode();
+                this.getEnvironment().activeApp = this.createdApp;
+                this.createdApp.appA.uiA.withPlaceholderArea = true;
+                await this.createdApp.uiA.update();
+                return this.createdApp.uiA.htmlElement;
+            case Type.ClientApp:
+                this.createAppWithUIWithCommands_editable();
+                this.testMode();
+                this.getEnvironment().activeApp = this.createdApp;
+                this.createdApp.appA.uiA.withPlaceholderArea = true;
+                this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
+                await this.createdApp.uiA.update();
+                return this.createdApp.uiA.htmlElement;
+        }
+    }
+
+    fullStart_getType() : Type {
+        if (this.getEnvironment().queryParams.has('client-app')) {
+            return Type.ClientApp;
         } else if (this.getEnvironment().queryParams.has('test')) {
-            await this.createTest();
-            this.testMode();
-            if (this.getEnvironment().queryParams.has('withFailingDemoTest')) {
-                this.createdApp.appA.testA.withFailingDemoTest = true;
-            }
-            await this.createdApp.appA.testA.createRunAndDisplay();
+            return Type.OldTester;
         } else if (this.getEnvironment().queryParams.has('tester2')) {
-            this.createTester2(this.getEnvironment().testCreator);
-            this.testMode();
-            await this.createdApp.appA.testerG_run();
+            return Type.Tester;
         } else if (this.getEnvironment().queryParams.has('path')) {
-            await this.createObjectViewer(this.getEnvironment().queryParams.get('path'));
-            this.testMode();
+            return Type.ObjectViewer;
         } else if (this.getEnvironment().queryParams.has('run')) {
-            await this.run();
+            return Type.TestRun;
         } else {
-            await this.createWebsite();
-            this.testMode();
+            if (this.isPublicWeb()) {
+                return Type.Website;
+            } else {
+                return Type.LocalApp;
+            }
         }
-        this.getEnvironment().activeApp = this.createdApp;
-        this.createdApp.appA.uiA.withPlaceholderArea = true;
-        if (this.isPublicWeb()) {
-            this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
-        }
-        await this.createdApp.uiA.update();
-        if (this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.length === 1) {
-            await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
-        }
-        return this.createdApp.uiA.htmlElement;
     }
 
     isPublicWeb() {
