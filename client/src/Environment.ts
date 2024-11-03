@@ -28,7 +28,6 @@ export class Environment {
         }
         environment.testCreator = appTest;
         environment.create_installWindowKeyListener();
-        environment.create_warningBeforeLossOfUnsavedChanges();
         return environment;
     }
 
@@ -68,9 +67,13 @@ export class Environment {
         return app;
     }
 
-    create_warningBeforeLossOfUnsavedChanges() {
+    warningBeforeLossOfUnsavedChanges() {
         window.onbeforeunload = () => {
             return -1;
         };
+    }
+
+    noWarningBeforeLossOfUnsavedChanges() {
+        window.onbeforeunload = undefined;
     }
 }

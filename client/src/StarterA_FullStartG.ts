@@ -81,6 +81,7 @@ export class StarterA_FullStartG {
         starter.getEnvironment().activeApp = starter.createdApp;
         starter.createdApp.appA.uiA.withPlaceholderArea = true;
         await starter.createdApp.uiA.update();
+        starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
         return starter.createdApp.uiA.htmlElement;
     }
     async clientApp() {
@@ -91,6 +92,7 @@ export class StarterA_FullStartG {
         starter.createdApp.appA.uiA.withPlaceholderArea = true;
         starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         await starter.createdApp.uiA.update();
+        starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
         return starter.createdApp.uiA.htmlElement;
     }
     getStarter() : StarterA {
