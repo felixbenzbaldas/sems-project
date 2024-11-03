@@ -5,120 +5,36 @@ import {AppA_TestA} from "@/test/AppA_TestA";
 import {UiA} from "@/ui/UiA";
 import {Environment} from "@/Environment";
 import {notNullUndefined, nullUndefined} from "@/utils";
-enum Type {
-    ClientApp,
-    OldTester,
-    Tester,
-    ObjectViewer,
-    TestRun,
-    Website,
-    LocalApp,
+import {StarterA_FullStartG} from "@/StarterA_FullStartG";
 
-}
 export class StarterA {
 
+    fullStartG : StarterA_FullStartG;
     createdApp : Entity;
     data: Entity;
 
     constructor(public entity? : Entity) {
-    }
-
-    async fullStart() : Promise<HTMLElement> {
-        switch (this.fullStart_getType()) {
-            case Type.OldTester :
-                await this.createTest();
-                this.testMode();
-                if (this.getEnvironment().queryParams.has('withFailingDemoTest')) {
-                    this.createdApp.appA.testA.withFailingDemoTest = true;
-                }
-                await this.createdApp.appA.testA.createRunAndDisplay();
-                this.getEnvironment().activeApp = this.createdApp;
-                this.createdApp.appA.uiA.withPlaceholderArea = true;
-                if (this.isPublicWeb()) {
-                    this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
-                }
-                await this.createdApp.uiA.update();
-                return this.createdApp.uiA.htmlElement;
-            case Type.Tester:
-                this.createTester2(this.getEnvironment().testCreator);
-                this.testMode();
-                await this.createdApp.appA.testerG_run();
-                this.getEnvironment().activeApp = this.createdApp;
-                this.createdApp.appA.uiA.withPlaceholderArea = true;
-                if (this.isPublicWeb()) {
-                    this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
-                }
-                await this.createdApp.uiA.update();
-                return this.createdApp.uiA.htmlElement;
-            case Type.ObjectViewer:
-                await this.createObjectViewer(this.getEnvironment().queryParams.get('path'));
-                this.testMode();
-                this.getEnvironment().activeApp = this.createdApp;
-                this.createdApp.appA.uiA.withPlaceholderArea = true;
-                if (this.isPublicWeb()) {
-                    this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
-                }
-                await this.createdApp.uiA.update();
-                if (this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.length === 1) {
-                    await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
-                }
-                return this.createdApp.uiA.htmlElement;
-            case Type.TestRun:
-                await this.run();
-                this.getEnvironment().activeApp = this.createdApp;
-                this.createdApp.appA.uiA.withPlaceholderArea = true;
-                if (this.isPublicWeb()) {
-                    this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
-                }
-                await this.createdApp.uiA.update();
-                return this.createdApp.uiA.htmlElement;
-            case Type.Website:
-                await this.createWebsite();
-                this.testMode();
-                this.getEnvironment().activeApp = this.createdApp;
-                this.createdApp.appA.uiA.withPlaceholderArea = true;
-                if (this.isPublicWeb()) {
-                    this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
-                }
-                await this.createdApp.uiA.update();
-                if (this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.length === 1) {
-                    await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
-                }
-                return this.createdApp.uiA.htmlElement;
-            case Type.LocalApp:
-                this.createAppWithUIWithCommands_editable();
-                this.testMode();
-                this.getEnvironment().activeApp = this.createdApp;
-                this.createdApp.appA.uiA.withPlaceholderArea = true;
-                await this.createdApp.uiA.update();
-                return this.createdApp.uiA.htmlElement;
-            case Type.ClientApp:
-                this.createAppWithUIWithCommands_editable();
-                this.testMode();
-                this.getEnvironment().activeApp = this.createdApp;
-                this.createdApp.appA.uiA.withPlaceholderArea = true;
-                this.createdApp.appA.uiA.webMeta = await this.createUnboundWebMeta();
-                await this.createdApp.uiA.update();
-                return this.createdApp.uiA.htmlElement;
+        if (entity) {
+            this.fullStartG = new StarterA_FullStartG(entity);
         }
     }
 
-    fullStart_getType() : Type {
+    async fullStart() : Promise<HTMLElement> {
         if (this.getEnvironment().queryParams.has('client-app')) {
-            return Type.ClientApp;
+            return this.fullStartG.clientApp();
         } else if (this.getEnvironment().queryParams.has('test')) {
-            return Type.OldTester;
+            return this.fullStartG.oldTester();
         } else if (this.getEnvironment().queryParams.has('tester2')) {
-            return Type.Tester;
+            return this.fullStartG.tester();
         } else if (this.getEnvironment().queryParams.has('path')) {
-            return Type.ObjectViewer;
+            return this.fullStartG.objectViewer();
         } else if (this.getEnvironment().queryParams.has('run')) {
-            return Type.TestRun;
+            return this.fullStartG.testRun();
         } else {
             if (this.isPublicWeb()) {
-                return Type.Website;
+                return this.fullStartG.website();
             } else {
-                return Type.LocalApp;
+                return this.fullStartG.localApp();
             }
         }
     }
