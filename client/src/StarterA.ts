@@ -174,9 +174,7 @@ export class StarterA {
     }
 
     static createApp() {
-        let starter = new Environment().createApp().appA.createStarter();
-        starter.createApp();
-        return starter.createdApp;
+        return new Environment().createApp();
     }
 
     static async createTest() {
