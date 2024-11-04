@@ -69,6 +69,9 @@ export class StarterA_FullStartG {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
         await starter.createdApp.uiA.update();
+        if (starter.createdApp.appA.uiA.content.uiA.listG.uisOfListItems.length === 1) {
+            await starter.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
+        }
         return starter.createdApp.uiA.htmlElement;
     }
     async localApp() {
