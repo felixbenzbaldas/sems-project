@@ -246,13 +246,7 @@ export class AppA_UiA {
             }),
             this.getApp().unboundG.createButton('paste next', async () => {
                 await this.getApp().uiA.globalEventG.pasteNext();
-            }),
-            // this.entity.appA.unboundG.createButton('flat export content', async () => {
-            //     await this.entity.appA.uiA.globalEventG.flatExportContent();
-            // }),
-            // this.entity.appA.unboundG.createButton('flat import to content', async () => {
-            //     await this.entity.appA.uiA.globalEventG.flatImportToContent();
-            // }),
+            })
         );
     }
 
