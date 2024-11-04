@@ -38,5 +38,19 @@ export const appTest = (tester : Entity) => {
         assert_sameAs(1, uiForList.listG.uisOfListItems.length);
         assert(uiForList.htmlElement.innerHTML.includes('subitem'), 'update html');
     });
+    test.testG_nestedTestsA.add('paste', async run => {
+        let appUi = await tester.appA.createStarter().createAppWithUI_typed();
+        await appUi.getApp().uiA.update(); // TODO should not be necessary
+        await appUi.globalEventG.defaultAction();
+        let uiForParent : Entity = appUi.content.uiA.listG.uisOfListItems[0];
+        let toPaste = appUi.getApp().unboundG.createText('toPaste');
+        appUi.clipboard = toPaste;
+
+        await appUi.globalEventG.paste();
+
+        return uiForParent.getObject().listA.jsList.at(1) === toPaste &&
+            uiForParent.uiA.listG.uisOfListItems.at(1).uiA.object === toPaste &&
+            appUi.focused.uiA.object === toPaste;
+    });
     return test;
 }

@@ -34,6 +34,10 @@ export class AppA_UiA_GlobalEventG {
         await this.getUiA().focused.uiA.newSubitem();
     }
 
+    async paste() {
+        await this.getUiA().focused.uiA.paste();
+    }
+
     async expandOrCollapse() {
         await this.getUiA().focused.uiA.expandOrCollapse();
     }

@@ -213,6 +213,22 @@ export class UiA {
         }
     }
 
+    async paste() {
+        if (this.entity.appA?.uiA) {
+            await this.entity.appA.uiA.paste();
+        } else {
+            if (!this.getObject().listA) {
+                this.getObject().installListA();
+            }
+            let position = 0;
+            let listA = this.getObject().listA;
+            await listA.insertObjectAtPosition(this.entity.getApp().appA.uiA.clipboard, position);
+            await listA.entity.uis_update_addedListItem(position);
+            await this.ensureExpanded();
+            this.entity.getApp().appA.uiA.focus(this.entity.uiA.listG.uisOfListItems.at(position));
+        }
+    }
+
     async toggleCollapsible() {
         this.getObject().collapsible = !this.getObject().collapsible;
         this.headerG.updateCursorStyle();

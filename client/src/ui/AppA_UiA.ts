@@ -48,6 +48,15 @@ export class AppA_UiA {
         this.entity.getApp().appA.uiA.focus(this.content.uiA.listG.uisOfListItems.at(position));
     }
 
+    async paste() {
+        await this.ensureInstalled();
+        let position = 0;
+        let listA = this.content.listA;
+        await listA.insertObjectAtPosition(this.clipboard, position);
+        await this.content.uiA.listG.update_addedListItem(position);
+        this.entity.getApp().appA.uiA.focus(this.content.uiA.listG.uisOfListItems.at(position));
+    }
+
     private async ensureInstalled() { // TODO this should not be necessary
         if (!this.isInstalled) {
             await this.update();
