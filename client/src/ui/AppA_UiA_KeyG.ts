@@ -26,6 +26,15 @@ export class AppA_UiA_KeyG {
         this.map.set('ctrl+d', async keyboardEvent => {
             await this.entity.appA.uiA.globalEventG.scaleUp();
         });
+        this.map.set('ctrl+shift+X', async keyboardEvent => {
+            await this.entity.appA.uiA.globalEventG.cut();
+        });
+        this.map.set('ctrl+shift+V', async keyboardEvent => {
+            await this.entity.appA.uiA.globalEventG.paste();
+        });
+        this.map.set('F3', async keyboardEvent => {
+            await this.entity.appA.uiA.globalEventG.pasteNext();
+        });
     }
 
     async keyboardEvent(keyboardEvent: KeyboardEvent) {

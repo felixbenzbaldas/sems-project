@@ -241,6 +241,9 @@ export class AppA_UiA {
             this.getApp().unboundG.createButton('cut', async () => {
                 await this.getApp().uiA.globalEventG.cut();
             }),
+            this.getApp().unboundG.createButton('paste', async () => {
+                await this.getApp().uiA.globalEventG.paste();
+            }),
             this.getApp().unboundG.createButton('paste next', async () => {
                 await this.getApp().uiA.globalEventG.pasteNext();
             }),
