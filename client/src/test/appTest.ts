@@ -5,10 +5,12 @@ export const appTest = (tester : Entity) => {
     let test = tester.createCode('appTest', (run : Entity) => {
     });
     test.testG_installNestedTestsA();
-    test.testG_nestedTestsA.add('failingDummyTest', async (run : Entity) => {
-        run.testRunA.appUi = tester.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
-        assert(false);
-    });
+    if (tester.appA.environment.queryParams.has('withFailingDemoTest')) {
+        test.testG_nestedTestsA.add('failingDemoTest', async (run : Entity) => {
+            run.testRunA.appUi = tester.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
+            assert(false);
+        });
+    }
     test.testG_nestedTestsA.add('semiKeyboardEvent', async run => {
         let appA = tester.appA.createStarter().createAppWithUI().appA;
         appA.testMode = true;
