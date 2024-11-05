@@ -56,8 +56,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async export() {
-        let toExport;
-        toExport = this.getUiA().focused.uiA.object;
+        let toExport = this.getUiA().focused.uiA.object;
         await this.getUiA().output.setAndUpdateUi(JSON.stringify(await toExport.export(), null, 4));
     }
 
