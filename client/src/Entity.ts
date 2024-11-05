@@ -143,7 +143,7 @@ export class Entity {
     async getObjectAndDependencies() : Promise<Set<Entity>> {
         let set = new Set<Entity>();
         set.add(this);
-        await this.addDependencies(set, this);
+        await this.addDependencies(set);
         return set;
     }
 
@@ -153,14 +153,14 @@ export class Entity {
         return set;
     }
 
-    private async addDependencies(set: Set<Entity>, entity: Entity) {
-        if (entity.listA) {
-            for (let current of entity.listA.jsList) {
+    async addDependencies(set: Set<Entity>) {
+        if (this.listA) {
+            for (let current of this.listA.jsList) {
                 if (current.pathA) {
                     let currentObject = await this.resolve(current);
                     if (!set.has(currentObject)) {
                         set.add(currentObject);
-                        await this.addDependencies(set, currentObject);
+                        await currentObject.addDependencies(set);
                     }
                 }
             }
