@@ -37,6 +37,10 @@ export class AppA {
         return new Entity();
     }
 
+    async createBoundEntity() : Promise<Entity> {
+        return await this.currentContainer.containerA.createBoundEntity();
+    }
+
     async createText(text: string) : Promise<Entity> {
         return this.currentContainer.containerA.createText(text);
     }

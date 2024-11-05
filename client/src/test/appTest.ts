@@ -82,5 +82,13 @@ export const appTest = (tester : Entity) => {
         assert_sameAs(copy.text, object.text);
         assert_sameAs(copy.collapsible, object.collapsible);
     });
+    test.testG_nestedTestsA.add('createBoundEntity', async run => {
+        let app = tester.appA.createStarter().createApp_typed();
+
+        let entity = await app.createBoundEntity();
+
+        assert_sameAs(app.entity.getPath(entity).pathA.listOfNames[0], entity.name);
+        assert_sameAs(app.entity, entity.container);
+    });
     return test;
 }

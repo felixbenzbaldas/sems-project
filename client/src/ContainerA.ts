@@ -1,4 +1,4 @@
-import type {Entity} from "@/Entity";
+import {Entity} from "@/Entity";
 import {createRandomString} from "@/utils";
 
 export class ContainerA {
@@ -10,6 +10,12 @@ export class ContainerA {
 
     getUniqueRandomName() : string {
         return createRandomString();
+    }
+
+    async createBoundEntity() {
+        let entity = this.entity.getApp_typed().createEntityWithApp();
+        this.bind(entity);
+        return entity;
     }
 
     async createText(text: string) : Promise<Entity> {
@@ -44,5 +50,4 @@ export class ContainerA {
         entity.container = this.entity;
         this.mapNameEntity.set(entity.name, entity);
     }
-
 }
