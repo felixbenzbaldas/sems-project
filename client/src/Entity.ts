@@ -292,7 +292,7 @@ export class Entity {
     }
 
     async shallowCopy() : Promise<Entity> {
-        let copy = await this.getApp_typed().createList();
+        let copy = await this.getApp_typed().createBoundEntity();
         copy.text = this.text;
         copy.collapsible = this.collapsible;
         copy.link = this.link;
@@ -310,22 +310,43 @@ export class Entity {
         return copy;
     }
 
+    deepCopy_map : Map<Entity, Entity>;
+    deepCopy_dependencies : Set<Entity>;
+
     async deepCopy() : Promise<Entity> {
-        let copy = await this.getApp_typed().createList();
-        copy.text = this.text;
-        copy.collapsible = this.collapsible;
-        copy.link = this.link;
-        copy.editable = this.editable;
-        if (this.listA) {
-            copy.installListA();
-            for (let listItem of this.listA.jsList) {
+        this.deepCopy_dependencies = await this.getDependencies();
+        await this.deepCopy_createBoundEmptyEntities();
+        let objectAndDependencies = this.deepCopy_dependencies;
+        objectAndDependencies.add(this);
+        for (let object of objectAndDependencies) {
+            await this.deepCopy_copyToEmptyEntity(object, this.deepCopy_map.get(object));
+        }
+        return this.deepCopy_map.get(this);
+    }
+
+    async deepCopy_copyToEmptyEntity(object : Entity, emptyEntity : Entity) {
+        emptyEntity.text = object.text;
+        emptyEntity.collapsible = object.collapsible;
+        emptyEntity.link = object.link;
+        emptyEntity.editable = object.editable;
+        if (object.listA) {
+            emptyEntity.installListA();
+            for (let listItem of object.listA.jsList) {
                 if (listItem.pathA) {
-                    copy.listA.jsList.push(copy.getPath(await this.resolve(listItem)));
+                    emptyEntity.listA.jsList.push(emptyEntity.getPath(await object.resolve(listItem)));
                 } else {
-                    copy.listA.jsList.push(listItem);
+                    emptyEntity.listA.jsList.push(listItem);
                 }
             }
         }
-        return copy;
+    }
+
+    async deepCopy_createBoundEmptyEntities() {
+        this.deepCopy_map = new Map();
+        let objectAndDependencies = this.deepCopy_dependencies;
+        objectAndDependencies.add(this);
+        for (let object of objectAndDependencies) {
+            this.deepCopy_map.set(object, await this.getApp_typed().createBoundEntity());
+        }
     }
 }

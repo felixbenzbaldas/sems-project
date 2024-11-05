@@ -87,14 +87,14 @@ export const appTest = (tester : Entity) => {
         let object = await app.createList();
         object.text = 'foo';
         object.collapsible = true;
-        let dependency = await app.createList();
+        let dependency = await app.createText('dependency');
         await object.listA.add(dependency);
 
         let copy : Entity = await object.deepCopy();
 
-        // assert_sameAs(await copy.listA.getResolved(0), dependency);
         assert_sameAs(copy.text, object.text);
         assert_sameAs(copy.collapsible, object.collapsible);
+        assert_sameAs((await copy.listA.getResolved(0)).text, 'dependency');
     });
     test.testG_nestedTestsA.add('createBoundEntity', async run => {
         let app = tester.appA.createStarter().createApp_typed();
