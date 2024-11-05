@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {assert, assert_sameAs} from "@/utils";
+import {assert, assert_notSameAs, assert_sameAs} from "@/utils";
 
 export const appTest = (tester : Entity) => {
     let test = tester.createCode('appTest', (run : Entity) => {
@@ -95,6 +95,7 @@ export const appTest = (tester : Entity) => {
         assert_sameAs(copy.text, object.text);
         assert_sameAs(copy.collapsible, object.collapsible);
         assert_sameAs((await copy.listA.getResolved(0)).text, 'dependency');
+        assert_notSameAs(await copy.listA.getResolved(0), dependency);
     });
     test.testG_nestedTestsA.add('createBoundEntity', async run => {
         let app = tester.appA.createStarter().createApp_typed();
