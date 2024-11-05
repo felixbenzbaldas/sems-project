@@ -90,7 +90,7 @@ export const appTest = (tester : Entity) => {
         let dependency = await app.createText('dependency');
         await object.listA.add(dependency);
 
-        let copy : Entity = await object.deepCopy();
+        let copy : Entity = await object.deepCopy().run();
 
         assert_sameAs(copy.text, object.text);
         assert_sameAs(copy.collapsible, object.collapsible);

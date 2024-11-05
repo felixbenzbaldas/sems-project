@@ -7,6 +7,7 @@ import {notNullUndefined, nullUndefined} from "@/utils";
 import type {StarterA} from "@/StarterA";
 import {TestG_NestedTestsA} from "@/test/TestG_NestedTestsA";
 import {TestRunA} from "@/test/TestRunA";
+import {DeepCopyA} from "@/DeepCopyA";
 
 export class Entity {
 
@@ -310,43 +311,7 @@ export class Entity {
         return copy;
     }
 
-    deepCopy_map : Map<Entity, Entity>;
-    deepCopy_dependencies : Set<Entity>;
-
-    async deepCopy() : Promise<Entity> {
-        this.deepCopy_dependencies = await this.getDependencies();
-        await this.deepCopy_createBoundEmptyEntities();
-        let objectAndDependencies = this.deepCopy_dependencies;
-        objectAndDependencies.add(this);
-        for (let object of objectAndDependencies) {
-            await this.deepCopy_copyToEmptyEntity(object, this.deepCopy_map.get(object));
-        }
-        return this.deepCopy_map.get(this);
-    }
-
-    async deepCopy_copyToEmptyEntity(object : Entity, emptyEntity : Entity) {
-        emptyEntity.text = object.text;
-        emptyEntity.collapsible = object.collapsible;
-        emptyEntity.link = object.link;
-        emptyEntity.editable = object.editable;
-        if (object.listA) {
-            emptyEntity.installListA();
-            for (let listItem of object.listA.jsList) {
-                if (listItem.pathA) {
-                    emptyEntity.listA.jsList.push(emptyEntity.getPath(await object.resolve(listItem)));
-                } else {
-                    emptyEntity.listA.jsList.push(listItem);
-                }
-            }
-        }
-    }
-
-    async deepCopy_createBoundEmptyEntities() {
-        this.deepCopy_map = new Map();
-        let objectAndDependencies = this.deepCopy_dependencies;
-        objectAndDependencies.add(this);
-        for (let object of objectAndDependencies) {
-            this.deepCopy_map.set(object, await this.getApp_typed().createBoundEntity());
-        }
+    deepCopy() : DeepCopyA {
+        return new DeepCopyA(this);
     }
 }
