@@ -309,4 +309,23 @@ export class Entity {
         }
         return copy;
     }
+
+    async deepCopy() : Promise<Entity> {
+        let copy = await this.getApp_typed().createList();
+        copy.text = this.text;
+        copy.collapsible = this.collapsible;
+        copy.link = this.link;
+        copy.editable = this.editable;
+        if (this.listA) {
+            copy.installListA();
+            for (let listItem of this.listA.jsList) {
+                if (listItem.pathA) {
+                    copy.listA.jsList.push(copy.getPath(await this.resolve(listItem)));
+                } else {
+                    copy.listA.jsList.push(listItem);
+                }
+            }
+        }
+        return copy;
+    }
 }

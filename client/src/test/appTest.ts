@@ -82,6 +82,20 @@ export const appTest = (tester : Entity) => {
         assert_sameAs(copy.text, object.text);
         assert_sameAs(copy.collapsible, object.collapsible);
     });
+    test.testG_nestedTestsA.add('deepCopy', async run => {
+        let app = tester.appA.createStarter().createApp_typed();
+        let object = await app.createList();
+        object.text = 'foo';
+        object.collapsible = true;
+        let dependency = await app.createList();
+        await object.listA.add(dependency);
+
+        let copy : Entity = await object.deepCopy();
+
+        // assert_sameAs(await copy.listA.getResolved(0), dependency);
+        assert_sameAs(copy.text, object.text);
+        assert_sameAs(copy.collapsible, object.collapsible);
+    });
     test.testG_nestedTestsA.add('createBoundEntity', async run => {
         let app = tester.appA.createStarter().createApp_typed();
 
