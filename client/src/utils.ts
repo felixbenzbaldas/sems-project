@@ -71,7 +71,7 @@ export function assertFalse(condition : boolean, message? : string) {
     }
 }
 
-export function assert_sameAs(firstValue : any, secondValue : any) {
+export function assert_sameAs<T> (firstValue : T, secondValue : T) {
     if (firstValue !== secondValue) {
         throw new Error('AssertionError: ' + firstValue + ' !== ' + secondValue);
     }
