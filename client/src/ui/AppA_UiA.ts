@@ -241,6 +241,9 @@ export class AppA_UiA {
             this.getApp().unboundG.createButton('cut', async () => {
                 await this.getApp().uiA.globalEventG.cut();
             }),
+            this.getApp().unboundG.createButton('deep copy', async () => {
+                await this.getApp().uiA.globalEventG.deepCopy();
+            }),
             this.getApp().unboundG.createButton('paste', async () => {
                 await this.getApp().uiA.globalEventG.paste();
             }),

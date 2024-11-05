@@ -105,4 +105,8 @@ export class AppA_UiA_GlobalEventG {
             await this.getUiA().focused.uiA.ensureCollapsed();
         }
     }
+
+    async deepCopy() {
+        this.getUiA().clipboard = await this.getUiA().focused.getObject().deepCopy().run();
+    }
 }
