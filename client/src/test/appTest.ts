@@ -96,6 +96,7 @@ export const appTest = (tester : Entity) => {
         assert_sameAs(copy.collapsible, object.collapsible);
         assert_sameAs((await copy.listA.getResolved(0)).text, 'dependency');
         assert_notSameAs(await copy.listA.getResolved(0), dependency);
+        assert_sameAs(copy.container, app.entity);
     });
     test.testG_nestedTestsA.add('createBoundEntity', async run => {
         let app = tester.appA.createStarter().createApp_typed();
