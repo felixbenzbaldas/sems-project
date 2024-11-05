@@ -9,7 +9,7 @@ export class DeepCopyA {
     }
 
     async run() : Promise<Entity> {
-        await this.createObjectAndDependencies();
+        this.objectAndDependencies = await this.entity.getObjectAndDependencies();
         await this.createBoundEmptyEntities();
         for (let object of this.objectAndDependencies) {
             await this.copyToEmptyEntity(object, this.map.get(object));
@@ -17,9 +17,11 @@ export class DeepCopyA {
         return this.map.get(this.entity);
     }
 
-    async createObjectAndDependencies() {
-        this.objectAndDependencies = await this.entity.getDependencies();
-        this.objectAndDependencies.add(this.entity);
+    async createBoundEmptyEntities() {
+        this.map = new Map();
+        for (let object of this.objectAndDependencies) {
+            this.map.set(object, await this.entity.getApp_typed().createBoundEntity());
+        }
     }
 
     async copyToEmptyEntity(object : Entity, emptyEntity : Entity) {
@@ -36,13 +38,6 @@ export class DeepCopyA {
                     emptyEntity.listA.jsList.push(listItem);
                 }
             }
-        }
-    }
-
-    async createBoundEmptyEntities() {
-        this.map = new Map();
-        for (let object of this.objectAndDependencies) {
-            this.map.set(object, await this.entity.getApp_typed().createBoundEntity());
         }
     }
 }

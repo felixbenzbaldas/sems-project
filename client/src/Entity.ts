@@ -140,10 +140,15 @@ export class Entity {
         return exported;
     }
 
-    async getDependencies() : Promise<Set<Entity>> {
+    async getObjectAndDependencies() : Promise<Set<Entity>> {
         let set = new Set<Entity>();
         set.add(this);
         await this.addDependencies(set, this);
+        return set;
+    }
+
+    async getDependencies() : Promise<Set<Entity>> {
+        let set = await this.getObjectAndDependencies();
         set.delete(this);
         return set;
     }
