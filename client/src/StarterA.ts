@@ -73,6 +73,10 @@ export class StarterA {
         return this.createdApp;
     }
 
+    createApp_typed() : AppA {
+        return this.createApp().appA;
+    }
+
     createAppWithUI() : Entity {
         this.createApp();
         this.createdApp.uiA = new UiA(this.createdApp);

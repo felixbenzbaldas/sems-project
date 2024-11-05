@@ -54,5 +54,19 @@ export const appTest = (tester : Entity) => {
         assert_sameAs(uiForParent.uiA.listG.uisOfListItems.at(0).uiA.object, toPaste);
         assert_sameAs(appUi.focused.uiA.object, toPaste);
     });
+    test.testG_nestedTestsA.add('dependencies', async run => {
+        let app = tester.appA.createStarter().createApp_typed();
+        let object = await app.createList();
+        let dependency = await app.createList();
+        let dependencyOfDependency = await app.createText('dependencyOfDependency');
+        await object.listA.add(dependency);
+        await dependency.listA.add(dependencyOfDependency);
+
+        let dependencies = await object.getDependencies();
+
+        assert_sameAs(dependencies.size, 2);
+        assert(dependencies.has(dependency), 'has dependency');
+        assert(dependencies.has(dependencyOfDependency));
+    });
     return test;
 }
