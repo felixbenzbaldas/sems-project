@@ -169,6 +169,10 @@ export class Entity {
         }
     }
 
+    getApp_typed() {
+        return this.getApp().appA;
+    }
+
     log(log: string) {
         this.getApp()?.appA?.logG.log(this, log);
     }
@@ -285,5 +289,24 @@ export class Entity {
             console.error(e);
         }
         return testRun;
+    }
+
+    async shallowCopy() : Promise<Entity> {
+        let copy = await this.getApp_typed().createList();
+        copy.text = this.text;
+        copy.collapsible = this.collapsible;
+        copy.link = this.link;
+        copy.editable = this.editable;
+        if (this.listA) {
+            copy.installListA();
+            for (let listItem of this.listA.jsList) {
+                if (listItem.pathA) {
+                    copy.listA.jsList.push(copy.getPath(await this.resolve(listItem)));
+                } else {
+                    copy.listA.jsList.push(listItem);
+                }
+            }
+        }
+        return copy;
     }
 }

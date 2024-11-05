@@ -68,5 +68,19 @@ export const appTest = (tester : Entity) => {
         assert(dependencies.has(dependency), 'has dependency');
         assert(dependencies.has(dependencyOfDependency));
     });
+    test.testG_nestedTestsA.add('shallowCopy', async run => {
+        let app = tester.appA.createStarter().createApp_typed();
+        let object = await app.createList();
+        object.text = 'foo';
+        object.collapsible = true;
+        let dependency = await app.createList();
+        await object.listA.add(dependency);
+
+        let copy : Entity = await object.shallowCopy();
+
+        assert_sameAs(await copy.listA.getResolved(0), dependency);
+        assert_sameAs(copy.text, object.text);
+        assert_sameAs(copy.collapsible, object.collapsible);
+    });
     return test;
 }
