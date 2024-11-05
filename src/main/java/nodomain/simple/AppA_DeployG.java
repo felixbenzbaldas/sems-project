@@ -62,7 +62,7 @@ public class AppA_DeployG {
         Utils.runMultiplePlatformCommands(
             "start \"\" http://localhost:8086/?virtualHostname=einfaches-web.org",
             "start \"\" http://localhost:8086/?test",
-            "start \"\" http://localhost:8086/?client-app"
+            "start \"\" http://localhost:8086"
         );
         Utils.runMultiplePlatformCommands(
             "cd " + this.path + "/heroku/sems",
