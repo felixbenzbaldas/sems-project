@@ -50,9 +50,9 @@ export const appTest = (tester : Entity) => {
 
         await appUi.globalEventG.paste();
 
-        return uiForParent.getObject().listA.jsList.at(1) === toPaste &&
-            uiForParent.uiA.listG.uisOfListItems.at(1).uiA.object === toPaste &&
-            appUi.focused.uiA.object === toPaste;
+        assert_sameAs(uiForParent.getObject().listA.jsList.at(0), toPaste);
+        assert_sameAs(uiForParent.uiA.listG.uisOfListItems.at(0).uiA.object, toPaste);
+        assert_sameAs(appUi.focused.uiA.object, toPaste);
     });
     return test;
 }
