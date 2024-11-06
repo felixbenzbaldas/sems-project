@@ -229,47 +229,38 @@ export class Entity {
     }
 
     async uis_update() {
-        if (this.uiA) {
-            await this.uiA.update();
-        }
-        if (notNullUndefined(this.uis)) {
-            for (let ui of this.uis) {
-                await ui.uiA.update();
-            }
+        for (let ui of this.getAllUis()) {
+            await ui.update();
         }
     }
 
     uis_update_currentContainerStyle() {
-        if (this.uiA) {
-            this.uiA.headerG.updateCurrentContainerStyle();
-        }
-        if (notNullUndefined(this.uis)) {
-            for (let ui of this.uis) {
-                ui.uiA.headerG.updateCurrentContainerStyle();
-            }
+        for (let ui of this.getAllUis()) {
+            ui.headerG.updateCurrentContainerStyle();
         }
     }
 
     async uis_update_addedListItem(position: number) {
-        if (this.uiA) {
-            await this.uiA.update_addedListItem(position);
-        }
-        if (notNullUndefined(this.uis)) {
-            for (let ui of this.uis) {
-                await ui.uiA.update_addedListItem(position);
-            }
+        for (let ui of this.getAllUis()) {
+            await ui.update_addedListItem(position);
         }
     }
 
     async uis_update_removedListItem(position: number) {
+        for (let ui of this.getAllUis()) {
+            await ui.update_removedListItem(position);
+        }
+    }
+
+    getAllUis() : Array<UiA> {
+        let allUis : Array<UiA> = [];
         if (this.uiA) {
-            await this.uiA.update_removedListItem(position);
+            allUis.push(this.uiA);
         }
-        if (notNullUndefined(this.uis)) {
-            for (let ui of this.uis) {
-                await ui.uiA.update_removedListItem(position);
-            }
+        if(notNullUndefined(this.uis)) {
+            allUis.push(...this.uis.map(entity => entity.uiA));
         }
+        return allUis;
     }
 
     createCode(name: string, jsFunction: Function) : Entity {
