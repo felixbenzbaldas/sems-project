@@ -86,7 +86,7 @@ export class AppA_TestA_UiG {
 
                 let ui : Entity = app.appA.uiA.createUiFor(object);
 
-                return ui.uiA.object === object && object.uis.at(0) === ui;
+                return ui.uiA.object === object && object.uis.at(0) === ui.uiA;
             }),
             this.createTest('ui_list_extraObjectForUi', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI();

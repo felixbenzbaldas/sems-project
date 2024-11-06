@@ -20,7 +20,7 @@ export class Entity {
     editable: boolean;
     collapsible: boolean;
     dangerous_html: HTMLElement;
-    uis: Array<Entity>;
+    uis: Array<UiA>;
     codeG_jsFunction: Function;
 
     listA: ListA;
@@ -221,7 +221,7 @@ export class Entity {
         }
     }
 
-    uis_add(ui: Entity) {
+    uis_add(ui: UiA) {
         if (nullUndefined(this.uis)) {
             this.uis = [];
         }
@@ -258,7 +258,7 @@ export class Entity {
             allUis.push(this.uiA);
         }
         if(notNullUndefined(this.uis)) {
-            allUis.push(...this.uis.map(entity => entity.uiA));
+            allUis.push(...this.uis);
         }
         return allUis;
     }

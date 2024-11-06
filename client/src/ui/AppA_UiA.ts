@@ -198,7 +198,7 @@ export class AppA_UiA {
         let ui : Entity = this.entity.getApp().appA.createEntityWithApp();
         ui.uiA = new UiA(ui);
         ui.uiA.object = object;
-        object.uis_add(ui);
+        object.uis_add(ui.uiA);
         return ui;
     }
 
