@@ -261,6 +261,17 @@ export class Entity {
         }
     }
 
+    async uis_update_removedListItem(position: number) {
+        if (this.uiA) {
+            await this.uiA.update_removedListItem(position);
+        }
+        if (notNullUndefined(this.uis)) {
+            for (let ui of this.uis) {
+                await ui.uiA.update_removedListItem(position);
+            }
+        }
+    }
+
     createCode(name: string, jsFunction: Function) : Entity {
         let code : Entity = new Entity();
         code.app = this.getApp();

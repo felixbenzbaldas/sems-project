@@ -44,19 +44,31 @@ export class UiA_HeaderBodyG {
         this.entity.uiA.headerG.updateBodyIcon();
     }
 
+    async update_removedListItem(position: number) {
+        if (this.showBody()) {
+            await this.entity.uiA.listG.update_removedListItem(position);
+        } else {
+            await this.entity.uiA.bodyG.update();
+        }
+    }
+
     isUiListInstalled() {
         return notNullUndefined(this.entity.uiA.listG.uisOfListItems);
     }
 
     showBody() : boolean {
-        if (this.entity.uiA.getObject().collapsible) {
-            if (this.entity.uiA.collapsed) {
-                return false;
+        if (this.entity.uiA.bodyG.hasContent()) {
+            if (this.entity.uiA.getObject().collapsible) {
+                if (this.entity.uiA.collapsed) {
+                    return false;
+                } else {
+                    return true;
+                }
             } else {
                 return true;
             }
         } else {
-            return true;
+            return false;
         }
     }
 }

@@ -270,4 +270,12 @@ export class UiA {
             await this.listG.update_addedListItem(position);
         }
     }
+
+    async update_removedListItem(position: number) {
+        if (this.isHeaderBody()) {
+            await this.headerBodyG.update_removedListItem(position);
+        } else if (this.isPlainList()) {
+            await this.listG.update_removedListItem(position);
+        }
+    }
 }

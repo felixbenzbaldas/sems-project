@@ -40,6 +40,20 @@ export const appTest = (tester : Entity) => {
         assert_sameAs(1, uiForList.listG.uisOfListItems.length);
         assert(uiForList.htmlElement.innerHTML.includes('subitem'), 'update html');
     });
+    test.testG_nestedTestsA.add('updateRemovedSubitem', async run => {
+        let appUi = tester.appA.createStarter().createAppWithUI_typed();
+        let list = appUi.getApp().unboundG.createList_typed();
+        list.jsList.push(appUi.getApp().unboundG.createText('subitem-one'));
+        list.jsList.push(appUi.getApp().unboundG.createText('subitem-two'));
+        let uiForList = appUi.createUiFor_typed(list.entity);
+        await uiForList.update();
+
+        await list.entity.uis_update_removedListItem(0);
+
+        assert_sameAs(1, uiForList.listG.uisOfListItems.length);
+        assert(!uiForList.htmlElement.innerHTML.includes('subitem-one'), 'update html');
+        assert(uiForList.htmlElement.innerHTML.includes('subitem-two'), 'update html');
+    });
     test.testG_nestedTestsA.add('paste', async run => {
         let appUi = await tester.appA.createStarter().createAppWithUI_typed();
         await appUi.getApp().uiA.update(); // TODO should not be necessary

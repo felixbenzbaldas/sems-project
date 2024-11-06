@@ -97,4 +97,9 @@ export class UiA_ListG {
             this.htmlElement.insertBefore(ui.uiA.htmlElement, this.uisOfListItems[position + 1].uiA.htmlElement);
         }
     }
+
+    async update_removedListItem(position: number) {
+        let removedUi : Entity = this.uisOfListItems.splice(position, 1)[0];
+        this.htmlElement.removeChild(removedUi.uiA.htmlElement);
+    }
 }
