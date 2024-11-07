@@ -278,4 +278,8 @@ export class UiA {
             await this.listG.update_removedListItem(position);
         }
     }
+
+    async update_text() {
+        this.textG.update();
+    }
 }

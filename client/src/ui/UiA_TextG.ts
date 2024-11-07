@@ -15,9 +15,9 @@ export class UiA_TextG {
         this.htmlElement.style.minHeight = '1rem';
         this.htmlElement.style.whiteSpace = 'pre-wrap';
         this.htmlElement.style.outline = "0px solid transparent"; // prevent JS focus
-        this.htmlElement.onblur = (event : any) => {
+        this.htmlElement.onblur = async (event : any) => {
             this.save();
-            this.updateEmptyMarker();
+            await this.getObject().uis_update_text();
         }
         this.htmlElement.onfocus = () => {
             if (this.entity.getApp().appA.uiA.focused != this.entity) {
