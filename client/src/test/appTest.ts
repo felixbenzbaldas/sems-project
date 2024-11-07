@@ -30,7 +30,10 @@ export const appTest = (tester : Entity) => {
         appA.entity.log('human-action: click \'switch off testMode\'');
         appA.entity.log('human-test: now the keys are not logged.');
     });
-    test.testG_nestedTestsA.add('updateAddedSubitem', async run => {
+    let ui : Entity = test.testG_nestedTestsA.add('ui', ()=>{});
+    ui.containerA = new ContainerA(ui);
+    ui.testG_installNestedTestsA();
+    ui.testG_nestedTestsA.add('updateAddedSubitem', async run => {
         let appUi = tester.appA.createStarter().createAppWithUI_typed();
         let list = appUi.getApp().unboundG.createList_typed();
         let uiForList = appUi.createUiFor_typed(list.entity);
@@ -42,7 +45,7 @@ export const appTest = (tester : Entity) => {
         assert_sameAs(1, uiForList.listG.uisOfListItems.length);
         assert(uiForList.htmlElement.innerHTML.includes('subitem'), 'update html');
     });
-    test.testG_nestedTestsA.add('updateRemovedSubitem', async run => {
+    ui.testG_nestedTestsA.add('updateRemovedSubitem', async run => {
         let appUi = tester.appA.createStarter().createAppWithUI_typed();
         let list = appUi.getApp().unboundG.createList_typed();
         list.jsList.push(appUi.getApp().unboundG.createText('subitem-one'));
