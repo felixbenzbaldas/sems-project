@@ -7,6 +7,7 @@ export class UiA_HeaderG {
     htmlElement: HTMLElement = document.createElement('div');
     content: HTMLElement = document.createElement('div');
     bodyIcon : HTMLElement = document.createElement('div');
+    innerHtmlElement: HTMLElement = document.createElement('div');
 
     constructor(private entity: Entity) {
     }
@@ -20,21 +21,21 @@ export class UiA_HeaderG {
         }
         this.htmlElement.style.display = 'flex';
         this.htmlElement.style.flexWrap = 'wrap';
-        let innerHtmlElement = document.createElement('div');
-        innerHtmlElement.style.maxWidth = '42rem';
-        innerHtmlElement.style.display = 'flex';
-        innerHtmlElement.style.flexWrap = 'wrap';
-        this.htmlElement.appendChild(innerHtmlElement);
-        innerHtmlElement.appendChild(this.content);
-        innerHtmlElement.appendChild(this.bodyIcon);
+        this.innerHtmlElement.style.maxWidth = '42rem';
+        this.innerHtmlElement.style.padding = '0.05rem';
+        this.innerHtmlElement.style.display = 'flex';
+        this.innerHtmlElement.style.flexWrap = 'wrap';
+        this.htmlElement.appendChild(this.innerHtmlElement);
+        this.innerHtmlElement.appendChild(this.content);
+        this.innerHtmlElement.appendChild(this.bodyIcon);
         this.htmlElement.onclick = async (event) => {
             this.entity.getApp().appA.ensureActive();
             if (!event.ctrlKey) {
                 await this.clickEvent();
             }
         };
-        this.htmlElement.style.border = 'solid';
-        this.htmlElement.style.borderWidth = '0.1rem';
+        this.innerHtmlElement.style.border = 'solid';
+        this.innerHtmlElement.style.borderWidth = '0.1rem';
         this.focusStyle_update();
         this.updateCursorStyle();
         this.updateCurrentContainerStyle();
@@ -109,17 +110,17 @@ export class UiA_HeaderG {
 
     focusStyle_update() {
         if (this.entity.uiA.hasFocus() && this.entity.getApp().appA.uiA.isActive()) {
-            this.htmlElement.style.borderColor = 'orange';
+            this.innerHtmlElement.style.borderColor = 'orange';
         } else {
-            this.htmlElement.style.borderColor = 'white';
+            this.innerHtmlElement.style.borderColor = 'white';
         }
     }
 
     updateCurrentContainerStyle() {
         if (this.entity.getApp().appA.currentContainer === this.getObject()) {
-            this.htmlElement.style.backgroundColor = '#efefef';
+            this.innerHtmlElement.style.backgroundColor = '#efefef';
         } else {
-            this.htmlElement.style.backgroundColor = 'white';
+            this.innerHtmlElement.style.backgroundColor = 'white';
         }
     }
 

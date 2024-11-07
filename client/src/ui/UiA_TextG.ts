@@ -35,6 +35,9 @@ export class UiA_TextG {
         this.updateEmptyMarker();
         this.htmlElement.style.display = 'inline-block';
         this.htmlElement.style.minWidth = '1rem';
+        if (this.getUiA().isEditable()) {
+            this.getUiA().headerG.innerHtmlElement.style.width = '42rem';
+        }
         this.updateCursorStyle();
     }
 
