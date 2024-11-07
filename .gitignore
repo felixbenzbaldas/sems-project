@@ -13,3 +13,4 @@ gradle.properties
 /runServer.bat
 
 /src/test/resources/tmp
+/installDevelopmentEnvironment-withIntellij.bat
