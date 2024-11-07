@@ -1,9 +1,11 @@
 import type {Entity} from "@/Entity";
 import {assert, assert_notSameAs, assert_sameAs} from "@/utils";
+import {ContainerA} from "@/ContainerA";
 
 export const appTest = (tester : Entity) => {
-    let test = tester.createCode('appTest', (run : Entity) => {
+    let test = tester.createCode('test', (run : Entity) => {
     });
+    test.containerA = new ContainerA(test);
     test.testG_installNestedTestsA();
     if (tester.appA.environment.queryParams.has('withFailingDemoTest')) {
         test.testG_nestedTestsA.add('failingDemoTest', async (run : Entity) => {

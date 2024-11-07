@@ -273,7 +273,8 @@ export class Entity {
         let code : Entity = new Entity();
         code.app = this.getApp();
         code.codeG_jsFunction = jsFunction;
-        this.containerA.bind(code, name);
+        let containerA = this.containerA ? this.containerA : this.getApp().containerA;
+        containerA.bind(code, name);
         return code;
     }
 

@@ -1,4 +1,5 @@
 import type {Entity} from "@/Entity";
+import type {ContainerA} from "@/ContainerA";
 
 export class TestG_NestedTestsA {
 
@@ -12,7 +13,7 @@ export class TestG_NestedTestsA {
     }
 
     add(name: string, jsFunction: (testRun: Entity) => void) : Entity {
-        let nestedTest : Entity = this.entity.getApp().createCode(name, jsFunction);
+        let nestedTest : Entity = this.entity.createCode(name, jsFunction);
         this.nestedTests.listA.jsList.push(nestedTest);
         return nestedTest;
     }
