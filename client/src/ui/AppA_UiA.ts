@@ -238,6 +238,9 @@ export class AppA_UiA {
             this.getApp().unboundG.createButton('focus root', async () => {
                 await this.getApp().uiA.globalEventG.focusRoot();
             }),
+            this.getApp().unboundG.createButton('mark', async () => {
+                await this.getApp().uiA.globalEventG.mark();
+            }),
             this.getApp().unboundG.createButton('cut', async () => {
                 await this.getApp().uiA.globalEventG.cut();
             }),

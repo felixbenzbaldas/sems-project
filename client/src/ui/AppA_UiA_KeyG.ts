@@ -35,6 +35,9 @@ export class AppA_UiA_KeyG {
         this.map.set('F3', async keyboardEvent => {
             await this.entity.appA.uiA.globalEventG.pasteNext();
         });
+        this.map.set('ctrl+shift+D', async keyboardEvent => {
+            await this.entity.appA.uiA.globalEventG.mark();
+        });
     }
 
     async keyboardEvent(keyboardEvent: KeyboardEvent) {

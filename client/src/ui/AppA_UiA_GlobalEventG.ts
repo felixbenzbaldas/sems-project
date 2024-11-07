@@ -96,6 +96,10 @@ export class AppA_UiA_GlobalEventG {
         }
     }
 
+    async mark() {
+        this.getUiA().clipboard = this.getUiA().focused.getObject();
+    }
+
     async pasteNext() {
         await this.getUiA().focused.uiA.context.uiA.pasteNextOnSubitem(this.getUiA().focused);
     }
