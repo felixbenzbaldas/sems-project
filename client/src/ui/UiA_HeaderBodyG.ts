@@ -48,6 +48,7 @@ export class UiA_HeaderBodyG {
         if (this.showBody()) {
             await this.entity.uiA.listG.update_removedListItem(position);
         } else {
+            this.entity.uiA.headerG.updateBodyIcon();
             await this.entity.uiA.bodyG.update();
         }
     }

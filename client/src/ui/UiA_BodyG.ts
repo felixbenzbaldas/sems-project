@@ -42,7 +42,7 @@ export class UiA_BodyG {
         } else if (this.getObject().isTest) {
             return notNullUndefined(this.getObject().test_result);
         } else {
-            return this.getObject().listA && this.getObject().listA.jsList.length > 0
+            return this.getObject().listA && this.getObject().listA.jsList.length > 0;
         }
     }
 
