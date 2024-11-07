@@ -7,7 +7,6 @@ export class UiA_HeaderG {
     htmlElement: HTMLElement = document.createElement('div');
     content: HTMLElement = document.createElement('div');
     bodyIcon : HTMLElement = document.createElement('div');
-    innerHtmlElement: HTMLElement = document.createElement('div');
 
     constructor(private entity: Entity) {
     }
@@ -16,26 +15,26 @@ export class UiA_HeaderG {
         this.htmlElement.innerHTML = null;
         this.updateContent();
         this.updateBodyIcon();
-        if (this.content_fullWidth()) {
+        if (this.ownRow()) {
             this.getUiA().htmlElement.style.minWidth = '100%';
         }
         this.htmlElement.style.display = 'flex';
         this.htmlElement.style.flexWrap = 'wrap';
-        this.innerHtmlElement.style.maxWidth = '42rem';
-        this.innerHtmlElement.style.padding = '0.05rem';
-        this.innerHtmlElement.style.display = 'flex';
-        this.innerHtmlElement.style.flexWrap = 'wrap';
-        this.htmlElement.appendChild(this.innerHtmlElement);
-        this.innerHtmlElement.appendChild(this.content);
-        this.innerHtmlElement.appendChild(this.bodyIcon);
+        this.htmlElement.style.maxWidth = '42rem';
+        this.htmlElement.style.padding = '0.05rem';
+        this.htmlElement.appendChild(this.content);
+        this.htmlElement.appendChild(this.bodyIcon);
         this.htmlElement.onclick = async (event) => {
             this.entity.getApp().appA.ensureActive();
             if (!event.ctrlKey) {
                 await this.clickEvent();
             }
         };
-        this.innerHtmlElement.style.border = 'solid';
-        this.innerHtmlElement.style.borderWidth = '0.1rem';
+        if (this.ownRow()) {
+            this.getUiA().headerG.htmlElement.style.width = '42rem';
+        }
+        this.htmlElement.style.border = 'solid';
+        this.htmlElement.style.borderWidth = '0.1rem';
         this.focusStyle_update();
         this.updateCursorStyle();
         this.updateCurrentContainerStyle();
@@ -75,13 +74,14 @@ export class UiA_HeaderG {
         }
     }
 
-    private content_fullWidth() : boolean {
+    ownRow() : boolean {
         if (this.getObject().isTest) {
             return true;
         } else {
             return !this.getObject().action;
         }
     }
+    
     action_getUiElement() {
         let button = document.createElement('button');
         button.innerText = this.getObject().text;
@@ -110,17 +110,17 @@ export class UiA_HeaderG {
 
     focusStyle_update() {
         if (this.entity.uiA.hasFocus() && this.entity.getApp().appA.uiA.isActive()) {
-            this.innerHtmlElement.style.borderColor = 'orange';
+            this.htmlElement.style.borderColor = 'orange';
         } else {
-            this.innerHtmlElement.style.borderColor = 'white';
+            this.htmlElement.style.borderColor = 'white';
         }
     }
 
     updateCurrentContainerStyle() {
         if (this.entity.getApp().appA.currentContainer === this.getObject()) {
-            this.innerHtmlElement.style.backgroundColor = '#efefef';
+            this.htmlElement.style.backgroundColor = '#efefef';
         } else {
-            this.innerHtmlElement.style.backgroundColor = 'white';
+            this.htmlElement.style.backgroundColor = 'white';
         }
     }
 
