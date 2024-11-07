@@ -3,8 +3,8 @@ import {UiA} from "@/ui/UiA";
 
 export class InputA {
 
-    private readonly ui : Entity;
-    private readonly input : Entity;
+    readonly ui : Entity;
+    readonly input : Entity;
 
     constructor(private entity : Entity) {
         this.input = entity.appA.unboundG.createText('');

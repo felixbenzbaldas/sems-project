@@ -76,6 +76,16 @@ export class AppA_UiA_GlobalEventG {
         focused.getApp().appA.uiA.focus(focused.uiA.listG.uisOfListItems.at(position));
     }
 
+    async importToApp() {
+        (document.activeElement as HTMLElement).blur();
+        let created = this.entity.appA.unboundG.createFromJson(JSON.parse(this.getUiA().input.get()));
+        this.entity.containerA.bind(created);
+        await this.getUiA().content.listA.insertObjectAtPosition(created, 0);
+        await this.getUiA().content.uis_update_addedListItem(0);
+        this.getUiA().focus(this.getUiA().content.uiA.listG.uisOfListItems[0]);
+        await this.getUiA().input.ui.uiA.ensureCollapsed()
+    }
+
     async focusRoot() {
         this.getUiA().focus(this.entity);
     }
