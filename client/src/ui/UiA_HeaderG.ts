@@ -20,8 +20,13 @@ export class UiA_HeaderG {
         }
         this.htmlElement.style.display = 'flex';
         this.htmlElement.style.flexWrap = 'wrap';
-        this.htmlElement.appendChild(this.content);
-        this.htmlElement.appendChild(this.bodyIcon);
+        let innerHtmlElement = document.createElement('div');
+        innerHtmlElement.style.maxWidth = '42rem';
+        innerHtmlElement.style.display = 'flex';
+        innerHtmlElement.style.flexWrap = 'wrap';
+        this.htmlElement.appendChild(innerHtmlElement);
+        innerHtmlElement.appendChild(this.content);
+        innerHtmlElement.appendChild(this.bodyIcon);
         this.htmlElement.onclick = async (event) => {
             this.entity.getApp().appA.ensureActive();
             if (!event.ctrlKey) {
