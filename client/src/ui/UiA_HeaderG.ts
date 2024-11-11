@@ -30,9 +30,6 @@ export class UiA_HeaderG {
                 await this.clickEvent();
             }
         };
-        if (this.ownRow()) {
-            this.getUiA().headerG.htmlElement.style.width = '42rem';
-        }
         this.htmlElement.style.border = 'solid';
         this.htmlElement.style.borderWidth = '0.1rem';
         this.focusStyle_update();
