@@ -73,10 +73,13 @@ export class AppA_TestA_UiG {
                 app.appA.logG.toListOfStrings = true;
                 await app.appA.uiA.globalEventG.defaultAction();
                 let objectUi = app.appA.uiA.focused;
+                objectUi.uiA.textG.htmlElement.innerText = 'foo';
 
                 await app.appA.uiA.globalEventG.cut();
 
-                return app.appA.uiA.content.listA.jsList.length === 0 && app.appA.uiA.clipboard === objectUi.uiA.object;
+                assert_sameAs(app.appA.uiA.content.listA.jsList.length, 0);
+                assert_sameAs(app.appA.uiA.clipboard, objectUi.uiA.object);
+                assert_sameAs(objectUi.uiA.object.text, 'foo');
             }),
             this.createTest('ui_createUiFor', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI();

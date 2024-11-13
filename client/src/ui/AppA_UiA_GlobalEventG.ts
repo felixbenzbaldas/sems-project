@@ -92,6 +92,7 @@ export class AppA_UiA_GlobalEventG {
 
     async cut() {
         let ui = this.getUiA().focused;
+        ui.uiA.textG.save();
         this.getUiA().clipboard = ui.uiA.object;
         let uiContext = ui.uiA.context;
         let uiListItems = uiContext.uiA.listG.uisOfListItems;
