@@ -83,7 +83,8 @@ export class AppA_UiA_GlobalEventG {
         await this.getUiA().content.listA.insertObjectAtPosition(created, 0);
         await this.getUiA().content.uis_update_addedListItem(0);
         this.getUiA().focus(this.getUiA().content.uiA.listG.uisOfListItems[0]);
-        await this.getUiA().input.ui.uiA.ensureCollapsed()
+        await this.getUiA().input.ui.uiA.ensureCollapsed();
+        await this.switchCurrentContainer();
     }
 
     async focusRoot() {
