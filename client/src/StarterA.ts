@@ -46,9 +46,7 @@ export class StarterA {
     }
 
     async run() : Promise<Entity> {
-        this.createAppWithUI();
-        this.createdApp.appA.installTesterA();
-        this.createdApp.appA.testerA.test = this.getEnvironment().testCreator(this.createdApp);
+        this.createTester2(this.getEnvironment().testCreator)
         let pathParam : string = this.getEnvironment().queryParams.get('run');
         let path = this.createdApp.appA.createPath(pathParam.split('_'));
         let run : Entity = await (await this.createdApp.resolve(path)).testG_run();
