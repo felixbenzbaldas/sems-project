@@ -8,6 +8,7 @@ import {ContainerA} from "@/ContainerA";
 import {AppA_UnboundG} from "@/AppA_UnboundG";
 import {StarterA} from "@/StarterA";
 import type {Environment} from "@/Environment";
+import {AppA_TesterA} from "@/test/AppA_TesterA";
 
 export class AppA {
 
@@ -17,8 +18,11 @@ export class AppA {
     readonly unboundG : AppA_UnboundG;
     uiA: AppA_UiA;
     testA : AppA_TestA; // deprecated
-    testerG_test: Entity;
     testMode: boolean;
+    testerA: AppA_TesterA;
+    installTesterA() {
+        this.testerA = new AppA_TesterA(this.entity);
+    }
 
     constructor(public entity : Entity) {
         this.unboundG = new AppA_UnboundG(entity);
@@ -90,10 +94,5 @@ export class AppA {
         if (this.environment) {
             this.environment.ensureActive(this.entity);
         }
-    }
-
-    async testerG_run() {
-        let run = await this.testerG_test.testG_run();
-        await this.uiA.content.listA.add(run);
     }
 }

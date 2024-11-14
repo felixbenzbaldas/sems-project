@@ -24,7 +24,7 @@ export class StarterA_FullStartG {
         let starter = this.getStarter();
         starter.createTester2(starter.getEnvironment().testCreator);
         starter.testMode();
-        await starter.createdApp.appA.testerG_run();
+        await starter.createdApp.appA.testerA.run();
         starter.getEnvironment().activeApp = starter.createdApp;
         starter.createdApp.appA.uiA.withPlaceholderArea = true;
         if (starter.isPublicWeb()) {

@@ -47,7 +47,8 @@ export class StarterA {
 
     async run() : Promise<Entity> {
         this.createAppWithUI();
-        this.createdApp.appA.testerG_test = this.getEnvironment().testCreator(this.createdApp);
+        this.createdApp.appA.installTesterA();
+        this.createdApp.appA.testerA.test = this.getEnvironment().testCreator(this.createdApp);
         let pathParam : string = this.getEnvironment().queryParams.get('run');
         let path = this.createdApp.appA.createPath(pathParam.split('_'));
         let run : Entity = await (await this.createdApp.resolve(path)).testG_run();
@@ -113,7 +114,8 @@ export class StarterA {
 
     createTester2(testCreator: (app: Entity) => Entity) : Entity {
         this.createAppWithUI();
-        this.createdApp.appA.testerG_test = testCreator(this.createdApp);
+        this.createdApp.appA.installTesterA();
+        this.createdApp.appA.testerA.test = testCreator(this.createdApp);
         return this.createdApp;
     }
 

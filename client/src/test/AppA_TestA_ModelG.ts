@@ -96,7 +96,7 @@ export class AppA_TestA_ModelG {
                 let tester : Entity = this.entity.appA.createStarter().createTester2(testCreator);
                 outerTest.test_app = tester;
                 tester.appA.logG.toListOfStrings = true;
-                await tester.appA.testerG_run();
+                await tester.appA.testerA.run();
                 await tester.uiA.update();
                 assert(tester.uiA.getRawText().includes('appTest'));
             }),
