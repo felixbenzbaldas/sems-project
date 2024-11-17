@@ -43,10 +43,10 @@ export class AppA_TesterA {
             appA.entity.log('human-action: click \'switch off testMode\'');
             appA.entity.log('human-test: now the keys are not logged.');
         });
-        let ui : Entity = test.testG_nestedTestsA.add('ui', ()=>{});
-        ui.containerA = new ContainerA(ui);
-        ui.testG_installNestedTestsA();
-        ui.testG_nestedTestsA.add('updateAddedSubitem', async run => {
+        let uiTest : Entity = test.testG_nestedTestsA.add('ui', ()=>{});
+        uiTest.containerA = new ContainerA(uiTest);
+        uiTest.testG_installNestedTestsA();
+        uiTest.testG_nestedTestsA.add('updateAddedSubitem', async run => {
             let appUi = tester.appA.createStarter().createAppWithUI_typed();
             let list = appUi.getApp().unboundG.createList_typed();
             let uiForList = appUi.createUiFor_typed(list.entity);
@@ -58,7 +58,7 @@ export class AppA_TesterA {
             assert_sameAs(1, uiForList.listG.uisOfListItems.length);
             assert(uiForList.htmlElement.innerHTML.includes('subitem'), 'update html');
         });
-        ui.testG_nestedTestsA.add('updateRemovedSubitem', async run => {
+        uiTest.testG_nestedTestsA.add('updateRemovedSubitem', async run => {
             let appUi = tester.appA.createStarter().createAppWithUI_typed();
             let list = appUi.getApp().unboundG.createList_typed();
             list.jsList.push(appUi.getApp().unboundG.createText('subitem-one'));
