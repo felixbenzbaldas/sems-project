@@ -32,8 +32,8 @@ export class AppA_TesterA {
         this.uiTestG.addTo(test);
         {
             let semiGroup = test.testG_nestedTestsA.add('semi', () => {});
-            semiGroup.testG_installNestedTestsA();
             semiGroup.installContainerA();
+            semiGroup.testG_installNestedTestsA();
             semiGroup.testG_nestedTestsA.add('keyboardEvent',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
