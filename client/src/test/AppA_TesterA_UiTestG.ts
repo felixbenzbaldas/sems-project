@@ -13,7 +13,7 @@ export class AppA_TesterA_UiTestG {
 
     addTo(boundParent : Entity) {
         this.test = boundParent.testG_nestedTestsA.add(this.name, ()=>{});
-        this.test.containerA = new ContainerA(this.test);
+        this.test.installContainerA()
         this.test.testG_installNestedTestsA();
         this.addTests();
     }

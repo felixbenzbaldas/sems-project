@@ -70,7 +70,7 @@ export class AppA_UnboundG {
             }
         }
         if (notNullUndefined(json.objects)) {
-            entity.containerA = new ContainerA(entity);
+            entity.installContainerA();
             for (let key of Object.keys(json.objects)) {
                 let current : Entity = this.createFromJson(json.objects[key]);
                 entity.containerA.mapNameEntity.set(key, current);

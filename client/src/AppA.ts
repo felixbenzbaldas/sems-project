@@ -27,7 +27,7 @@ export class AppA {
     constructor(public entity : Entity) {
         this.unboundG = new AppA_UnboundG(entity);
         this.logG = new LogG(entity);
-        entity.containerA = new ContainerA(entity);
+        entity.installContainerA();
         this.currentContainer = entity;
     }
 
@@ -80,7 +80,7 @@ export class AppA {
     switchCurrentContainer(entity: Entity) {
         this.currentContainer = entity;
         if (!this.currentContainer.containerA) {
-            this.currentContainer.containerA = new ContainerA(this.currentContainer);
+            this.currentContainer.installContainerA();
         }
     }
 

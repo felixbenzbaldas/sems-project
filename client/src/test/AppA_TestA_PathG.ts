@@ -24,7 +24,7 @@ export class AppA_TestA_PathG {
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 let container = await app.appA.createText('container');
-                container.containerA = new ContainerA(container);
+                container.installContainerA();
                 let containedContained = await container.containerA.createText('containedContained');
 
                 let path: Entity = app.getPath(containedContained);
@@ -48,7 +48,7 @@ export class AppA_TestA_PathG {
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 let container = await app.appA.createText('container');
-                container.containerA = new ContainerA(container);
+                container.installContainerA();
                 let containedContained = await container.containerA.createText('containedContained');
                 let text = await app.appA.createText('foo');
 
@@ -64,7 +64,7 @@ export class AppA_TestA_PathG {
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 let container = await app.appA.createText('container');
-                container.containerA = new ContainerA(container);
+                container.installContainerA();
                 let containedContained = await container.containerA.createText('containedContained');
                 let text = await app.appA.createText('foo');
 
@@ -88,7 +88,7 @@ export class AppA_TestA_PathG {
                 let app = test.test_app;
                 app.appA.logG.toListOfStrings = true;
                 let container = await app.appA.createText('container');
-                container.containerA = new ContainerA(container);
+                container.installContainerA();
                 let containedContained = await container.containerA.createText('containedContained');
                 let text = await app.appA.createText('foo');
                 let path = text.getPath(containedContained);

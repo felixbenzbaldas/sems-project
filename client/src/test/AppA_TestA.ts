@@ -122,7 +122,7 @@ export class AppA_TestA {
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
                 let container = app.appA.unboundG.createTextWithList('the container');
-                container.containerA = new ContainerA(container);
+                container.installContainerA();
                 app.appA.currentContainer = container;
                 let subitemAndContained = await app.appA.createText('subitem + contained');
                 await container.listA.add(subitemAndContained);

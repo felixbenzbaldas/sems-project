@@ -21,7 +21,7 @@ export class AppA_TesterA {
         let tester = this.entity;
         let test = tester.createCode('test', (run : Entity) => {
         });
-        test.containerA = new ContainerA(test);
+        test.installContainerA();
         test.testG_installNestedTestsA();
         if (tester.appA.environment.queryParams.has('withFailingDemoTest')) {
             test.testG_nestedTestsA.add('failingDemoTest', async (run : Entity) => {
@@ -33,7 +33,7 @@ export class AppA_TesterA {
         {
             let semiGroup = test.testG_nestedTestsA.add('semi', () => {});
             semiGroup.testG_installNestedTestsA();
-            semiGroup.containerA = new ContainerA(semiGroup);
+            semiGroup.installContainerA();
             semiGroup.testG_nestedTestsA.add('keyboardEvent',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
