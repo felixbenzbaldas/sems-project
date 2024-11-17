@@ -30,23 +30,29 @@ export class AppA_TesterA {
             });
         }
         this.uiTestG.addTo(test);
-        test.testG_nestedTestsA.add('semiKeyboardEvent', async run => {
-            let appA = tester.appA.createStarter().createAppWithUI().appA;
-            appA.testMode = true;
-            run.testRunA.appUi = appA.uiA;
-            await appA.uiA.content.listA.add(
-                appA.unboundG.createButton('activate test-app', () => {}),
-                appA.unboundG.createButton('switch off testMode', () => {
-                    appA.testMode = false;
-                })
-            );
-            appA.logG.toListOfStrings = true;
-            appA.logG.toConsole = true;
-            appA.entity.log('human-action: click \'activate test-app\'');
-            appA.entity.log('human-test: when pressing keys, the according key events are logged.');
-            appA.entity.log('human-action: click \'switch off testMode\'');
-            appA.entity.log('human-test: now the keys are not logged.');
-        });
+        {
+            let semiGroup = test.testG_nestedTestsA.add('semi', () => {});
+            semiGroup.testG_installNestedTestsA();
+            semiGroup.containerA = new ContainerA(semiGroup);
+            semiGroup.testG_nestedTestsA.add('keyboardEvent',  async run => {
+                let appA = tester.appA.createStarter().createAppWithUI().appA;
+                appA.testMode = true;
+                run.testRunA.appUi = appA.uiA;
+                await appA.uiA.content.listA.add(
+                    appA.unboundG.createButton('activate test-app', () => {
+                    }),
+                    appA.unboundG.createButton('switch off testMode', () => {
+                        appA.testMode = false;
+                    })
+                );
+                appA.logG.toListOfStrings = true;
+                appA.logG.toConsole = true;
+                appA.entity.log('human-action: click \'activate test-app\'');
+                appA.entity.log('human-test: when pressing keys, the according key events are logged.');
+                appA.entity.log('human-action: click \'switch off testMode\'');
+                appA.entity.log('human-test: now the keys are not logged.');
+            });
+        }
         test.testG_nestedTestsA.add('paste', async run => {
             let appUi = await tester.appA.createStarter().createAppWithUI_typed();
             await appUi.getApp().uiA.update(); // TODO should not be necessary
