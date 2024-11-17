@@ -1,12 +1,15 @@
 import {Entity} from "@/Entity";
 import {ContainerA} from "@/ContainerA";
 import {assert, assert_notSameAs, assert_sameAs} from "@/utils";
+import {AppA_TesterA_UiTestG} from "@/test/AppA_TesterA_UiTestG";
 
 export class AppA_TesterA {
 
     test: Entity;
+    uiTestG: AppA_TesterA_UiTestG;
 
     constructor(public entity : Entity) {
+        this.uiTestG = new AppA_TesterA_UiTestG(entity);
     }
 
     async run() {
@@ -26,6 +29,7 @@ export class AppA_TesterA {
                 assert(false);
             });
         }
+        this.uiTestG.addTo(test);
         test.testG_nestedTestsA.add('semiKeyboardEvent', async run => {
             let appA = tester.appA.createStarter().createAppWithUI().appA;
             appA.testMode = true;
@@ -42,36 +46,6 @@ export class AppA_TesterA {
             appA.entity.log('human-test: when pressing keys, the according key events are logged.');
             appA.entity.log('human-action: click \'switch off testMode\'');
             appA.entity.log('human-test: now the keys are not logged.');
-        });
-        let uiTest : Entity = test.testG_nestedTestsA.add('ui', ()=>{});
-        uiTest.containerA = new ContainerA(uiTest);
-        uiTest.testG_installNestedTestsA();
-        uiTest.testG_nestedTestsA.add('updateAddedSubitem', async run => {
-            let appUi = tester.appA.createStarter().createAppWithUI_typed();
-            let list = appUi.getApp().unboundG.createList_typed();
-            let uiForList = appUi.createUiFor_typed(list.entity);
-            await uiForList.update();
-            list.jsList.push(appUi.getApp().unboundG.createText('subitem'));
-
-            await list.entity.uis_update_addedListItem(0);
-
-            assert_sameAs(1, uiForList.listG.uisOfListItems.length);
-            assert(uiForList.htmlElement.innerHTML.includes('subitem'), 'update html');
-        });
-        uiTest.testG_nestedTestsA.add('updateRemovedSubitem', async run => {
-            let appUi = tester.appA.createStarter().createAppWithUI_typed();
-            let list = appUi.getApp().unboundG.createList_typed();
-            list.jsList.push(appUi.getApp().unboundG.createText('subitem-one'));
-            list.jsList.push(appUi.getApp().unboundG.createText('subitem-two'));
-            let uiForList = appUi.createUiFor_typed(list.entity);
-            await uiForList.update();
-            list.jsList.splice(0, 1);
-
-            await list.entity.uis_update_removedListItem(0);
-
-            assert_sameAs(1, uiForList.listG.uisOfListItems.length);
-            assert(!uiForList.htmlElement.innerHTML.includes('subitem-one'), 'update html');
-            assert(uiForList.htmlElement.innerHTML.includes('subitem-two'), 'update html');
         });
         test.testG_nestedTestsA.add('paste', async run => {
             let appUi = await tester.appA.createStarter().createAppWithUI_typed();
