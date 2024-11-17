@@ -4,14 +4,22 @@ import {assert, assert_sameAs} from "@/utils";
 
 export class AppA_TesterA_UiTestG {
 
+    name : string;
+    test : Entity;
+
     constructor(public entity : Entity) {
+        this.name = 'ui';
     }
 
     addTo(boundParent : Entity) {
-        let uiTest : Entity = boundParent.testG_nestedTestsA.add('ui', ()=>{});
-        uiTest.containerA = new ContainerA(uiTest);
-        uiTest.testG_installNestedTestsA();
-        uiTest.testG_nestedTestsA.add('updateAddedSubitem', async run => {
+        this.test = boundParent.testG_nestedTestsA.add(this.name, ()=>{});
+        this.test.containerA = new ContainerA(this.test);
+        this.test.testG_installNestedTestsA();
+        this.addTests();
+    }
+
+    addTests() {
+        this.addTest('updateAddedSubitem', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let list = appUi.getApp().unboundG.createList_typed();
             let uiForList = appUi.createUiFor_typed(list.entity);
@@ -23,7 +31,7 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs(1, uiForList.listG.uisOfListItems.length);
             assert(uiForList.htmlElement.innerHTML.includes('subitem'), 'update html');
         });
-        uiTest.testG_nestedTestsA.add('updateRemovedSubitem', async run => {
+        this.addTest('updateRemovedSubitem', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let list = appUi.getApp().unboundG.createList_typed();
             list.jsList.push(appUi.getApp().unboundG.createText('subitem-one'));
@@ -38,5 +46,9 @@ export class AppA_TesterA_UiTestG {
             assert(!uiForList.htmlElement.innerHTML.includes('subitem-one'), 'update html');
             assert(uiForList.htmlElement.innerHTML.includes('subitem-two'), 'update html');
         });
+    }
+
+    addTest(name : string, jsFunction: (testRun: Entity) => void) {
+        this.test.testG_nestedTestsA.add(name, jsFunction);
     }
 }
