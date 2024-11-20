@@ -140,6 +140,41 @@ export class AppA_TesterA {
             assert_sameAs(app.entity.getPath(entity).pathA.listOfNames[0], entity.name);
             assert_sameAs(app.entity, entity.container);
         });
+        test.testG_nestedTestsA.add('createFromOldJson', async run => {
+            let app = tester.appA.createStarter().createApp();
+            let json = {
+                "rootObject":"AHouse-0",
+                "objects":[
+                    {
+                        "id":"AHouse-0",
+                        "details":["AHouse-567", "AnotherHouse-789"],
+                        "properties":{
+                            "context":"AHouse-345",
+                            "text":"foo bar",
+                            "defaultExpanded":true
+                        }
+                    }
+                ]
+            };
+
+            let container = app.appA.unboundG.createFromOldJson(json);
+
+            assert_sameAs(container.containerA.mapNameEntity.size, 1);
+            assert_sameAs(container.listA.jsList.length, 1);
+            let root : Entity = await container.listA.getResolved(0);
+            assert_sameAs(root.text, 'foo bar');
+            assert_sameAs(root.name, '0');
+            assert_sameAs(root.context.pathA.listOfNames[0], '..');
+            assert_sameAs(root.context.pathA.listOfNames[1], '345');
+            assert_sameAs(root.collapsible, false);
+            assert_sameAs(root.listA.jsList.length, 2);
+            assert_sameAs(root.listA.jsList[0].pathA.listOfNames[0], '..');
+            assert_sameAs(root.listA.jsList[0].pathA.listOfNames[1], '567');
+            assert_sameAs(root.listA.jsList[1].pathA.listOfNames[0], '..');
+            assert_sameAs(root.listA.jsList[1].pathA.listOfNames[1], '..');
+            assert_sameAs(root.listA.jsList[1].pathA.listOfNames[2], 'AnotherHouse');
+            assert_sameAs(root.listA.jsList[1].pathA.listOfNames[3], '789');
+        });
         return test;
     }
 }

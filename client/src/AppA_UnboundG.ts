@@ -80,4 +80,8 @@ export class AppA_UnboundG {
         }
         return entity;
     }
+
+    createFromOldJson(json: any) : Entity {
+        return undefined;
+    }
 }
