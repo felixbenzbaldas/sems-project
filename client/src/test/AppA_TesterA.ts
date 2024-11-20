@@ -52,6 +52,27 @@ export class AppA_TesterA {
                 appA.entity.log('human-action: click \'switch off testMode\'');
                 appA.entity.log('human-test: now the keys are not logged.');
             });
+            semiGroup.testG_nestedTestsA.add('contextIcon',  async run => {
+                let appA = tester.appA.createStarter().createAppWithUI().appA;
+                appA.testMode = true;
+                run.testRunA.appUi = appA.uiA;
+                let parent = appA.unboundG.createTextWithList('parent');
+                let withContext = appA.unboundG.createText('withContext');
+                let withoutContext = appA.unboundG.createText('withoutContext');
+                let outOfContext = appA.unboundG.createText('outOfContext');
+                withContext.context = parent;
+                outOfContext.context = appA.unboundG.createText('aDummyContext');
+                parent.listA.jsList.push(withContext);
+                parent.listA.jsList.push(withoutContext);
+                parent.listA.jsList.push(outOfContext);
+                appA.uiA.content.listA.jsList.push(parent);
+                await appA.uiA.update();
+                let parentUi = appA.uiA.content.uiA.listG.uisOfListItems[0];
+                assert_sameAs(parentUi.uiA.listG.uisOfListItems[0].uiA.headerG.contextIcon.innerText, '-');
+                assert_sameAs(parentUi.uiA.listG.uisOfListItems[1].uiA.headerG.contextIcon.style.display, 'none');
+                assert_sameAs(parentUi.uiA.listG.uisOfListItems[2].uiA.headerG.contextIcon.innerText, '|');
+                appA.entity.log('human-test: The item withContext should show the appropriate contextIcon -');
+            });
         }
         test.testG_nestedTestsA.add('paste', async run => {
             let appUi = await tester.appA.createStarter().createAppWithUI_typed();

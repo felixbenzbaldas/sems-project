@@ -7,12 +7,14 @@ export class UiA_HeaderG {
     htmlElement: HTMLElement = document.createElement('div');
     content: HTMLElement = document.createElement('div');
     bodyIcon : HTMLElement = document.createElement('div');
+    contextIcon : HTMLElement = document.createElement('div');
 
     constructor(private entity: Entity) {
     }
 
     update() {
         this.htmlElement.innerHTML = null;
+        this.updateContextIcon();
         this.updateContent();
         this.updateBodyIcon();
         if (this.ownRow()) {
@@ -22,6 +24,7 @@ export class UiA_HeaderG {
         this.htmlElement.style.flexWrap = 'wrap';
         this.htmlElement.style.maxWidth = '42rem';
         this.htmlElement.style.padding = '0.05rem';
+        this.htmlElement.appendChild(this.contextIcon);
         this.htmlElement.appendChild(this.content);
         this.htmlElement.appendChild(this.bodyIcon);
         this.htmlElement.onclick = async (event) => {
@@ -37,22 +40,21 @@ export class UiA_HeaderG {
         this.updateCurrentContainerStyle();
     }
 
-    updateBodyIcon() {
-        this.bodyIcon.style.display = 'inline-block';
-        this.bodyIcon.style.marginLeft = '0.7rem';
-        if (this.getObject().collapsible && this.getUiA().bodyG.hasContent()) {
-            this.bodyIcon.style.display = 'default';
-            if (this.entity.uiA.collapsed) {
-                this.bodyIcon.innerText = '[...]';
+    updateContextIcon() {
+        if (this.getObject().context) {
+            this.contextIcon.style.display = 'inline-block';
+            this.contextIcon.style.marginRight= '0.5rem';
+            if (this.entity.uiA.context.uiA.getObject() === this.getObject().context) {
+                this.contextIcon.innerText = '-';
             } else {
-                this.bodyIcon.innerText = ' _';
+                this.contextIcon.innerText = '|';
             }
         } else {
-            this.bodyIcon.style.display = 'none';
+            this.contextIcon.style.display = 'none';
         }
     }
 
-    private updateContent() {
+    updateContent() {
         this.content.innerHTML = null;
         if (this.getObject().isTest) {
             this.content.appendChild(this.getUiA().testG.headerContent_htmlElement);
@@ -68,6 +70,21 @@ export class UiA_HeaderG {
             this.content.appendChild(this.getUiA().textG.htmlElement);
         } else if (notNullUndefined(this.getObject().testRunA)) {
             this.content.appendChild(this.getUiA().testRunG.headerContent_htmlElement);
+        }
+    }
+
+    updateBodyIcon() {
+        this.bodyIcon.style.display = 'inline-block';
+        this.bodyIcon.style.marginLeft = '0.7rem';
+        if (this.getObject().collapsible && this.getUiA().bodyG.hasContent()) {
+            this.bodyIcon.style.display = 'default';
+            if (this.entity.uiA.collapsed) {
+                this.bodyIcon.innerText = '[...]';
+            } else {
+                this.bodyIcon.innerText = ' _';
+            }
+        } else {
+            this.bodyIcon.style.display = 'none';
         }
     }
 

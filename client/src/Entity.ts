@@ -21,6 +21,8 @@ export class Entity {
     collapsible: boolean;
     dangerous_html: HTMLElement;
     uis: Array<UiA>;
+    context: Entity;
+
     codeG_jsFunction: Function;
 
     listA: ListA;
