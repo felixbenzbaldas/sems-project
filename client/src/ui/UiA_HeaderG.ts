@@ -12,9 +12,9 @@ export class UiA_HeaderG {
     constructor(private entity: Entity) {
     }
 
-    update() {
+    async update() {
         this.htmlElement.innerHTML = null;
-        this.updateContextIcon();
+        await this.updateContextIcon();
         this.updateContent();
         this.updateBodyIcon();
         if (this.ownRow()) {
@@ -40,11 +40,11 @@ export class UiA_HeaderG {
         this.updateCurrentContainerStyle();
     }
 
-    updateContextIcon() {
+    async updateContextIcon() {
         if (this.getObject().context) {
             this.contextIcon.style.display = 'inline-block';
             this.contextIcon.style.marginRight= '0.5rem';
-            if (this.entity.uiA.context.uiA.getObject() === this.getObject().context) {
+            if (this.entity.uiA.context.uiA.getObject() === await this.getObject().resolve(this.getObject().context)) {
                 this.contextIcon.innerText = '-';
             } else {
                 this.contextIcon.innerText = '|';

@@ -12,18 +12,18 @@ export class UiA_HeaderBodyG {
         }
         if (this.entity.uiA.getObject().isTest) {
             await this.entity.uiA.testG.update();
-            this.entity.uiA.headerG.update();
+            await this.entity.uiA.headerG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
             await this.entity.uiA.bodyG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
         } else if (this.entity.uiA.getObject().testRunA) {
             await this.entity.uiA.testRunG.update();
-            this.entity.uiA.headerG.update();
+            await this.entity.uiA.headerG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
             await this.entity.uiA.bodyG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
         } else {
-            this.entity.uiA.headerG.update();
+            await this.entity.uiA.headerG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
             await this.entity.uiA.bodyG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
