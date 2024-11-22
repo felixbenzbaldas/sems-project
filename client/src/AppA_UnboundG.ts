@@ -2,6 +2,7 @@ import {Entity} from "@/Entity";
 import {ListA} from "@/ListA";
 import {notNullUndefined} from "@/utils";
 import {ContainerA} from "@/ContainerA";
+import {CreateFromOldFormat} from "@/CreateFromOldFormat";
 
 // / unbound means that the created object has no container and no name.
 export class AppA_UnboundG {
@@ -82,43 +83,6 @@ export class AppA_UnboundG {
     }
 
     async createFromOldJson(json: any) : Promise<Entity> {
-        let entity : Entity = this.entity.appA.createEntityWithApp();
-        entity.installContainerA();
-        entity.installListA();
-        let houseName = this.createFromOldJson_splitOldPath(json.rootObject)[0];
-        for (let jsonObject of json.objects) {
-            let name =  this.createFromOldJson_splitOldPath(jsonObject.id)[1];
-            let current : Entity = await entity.containerA.createBoundEntity(name);
-            let properties = jsonObject.properties;
-            current.text = properties.text;
-            if (properties.context) {
-                current.context = this.createFromOldJson_createPath(houseName, current, properties.context);
-            }
-            if (notNullUndefined(properties.defaultExpanded)) {
-                current.collapsible = !properties.defaultExpanded;
-            }
-            if (jsonObject.details) {
-                current.installListA();
-                for (let detail of jsonObject.details) {
-                    current.listA.jsList.push(this.createFromOldJson_createPath(houseName, current, detail));
-                }
-            }
-        }
-        entity.listA.jsList.push(this.entity.appA.createPath([
-            this.createFromOldJson_splitOldPath(json.rootObject)[1]]));
-        return entity;
-    }
-
-    createFromOldJson_splitOldPath(oldPath : string) : Array<string> {
-        return oldPath.split('-');
-    }
-
-    createFromOldJson_createPath(houseName : string, object : Entity, oldPath : string) : Entity {
-        let splitted = this.createFromOldJson_splitOldPath(oldPath);
-        if (houseName === splitted[0]) {
-            return this.entity.appA.createPath(['..', splitted[1]]);
-        } else {
-            return this.entity.appA.createPath(['..', '..', splitted[0], splitted[1]]);
-        }
+        return new CreateFromOldFormat(this.entity).run(json);
     }
 }
