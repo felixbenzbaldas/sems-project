@@ -2,7 +2,7 @@ import {Entity} from "@/Entity";
 
 export class PathA {
 
-    listOfNames : Array<string>
+    listOfNames : Array<string>;
 
     constructor(listOfNames : Array<string>) {
         this.listOfNames = listOfNames;
