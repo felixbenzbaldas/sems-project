@@ -235,6 +235,9 @@ export class AppA_UiA {
             this.getApp().unboundG.createButton('import', async () => {
                 await this.getApp().uiA.globalEventG.import();
             }),
+            this.getApp().unboundG.createButton('import from old json', async () => {
+                await this.getApp().uiA.globalEventG.importOldJson();
+            }),
             this.getApp().unboundG.createButton('focus root', async () => {
                 await this.getApp().uiA.globalEventG.focusRoot();
             }),
