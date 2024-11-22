@@ -153,13 +153,20 @@ export class AppA_TesterA {
                             "text":"foo bar",
                             "defaultExpanded":true
                         }
+                    },
+                    {
+                        "id":"AHouse-567",
+                        "properties":{
+                            "text":"foo bar",
+                            "defaultExpanded":false
+                        }
                     }
                 ]
             };
 
-            let container = app.appA.unboundG.createFromOldJson(json);
+            let container = await app.appA.unboundG.createFromOldJson(json);
 
-            assert_sameAs(container.containerA.mapNameEntity.size, 1);
+            assert_sameAs(container.containerA.mapNameEntity.size, 2);
             assert_sameAs(container.listA.jsList.length, 1);
             let root : Entity = await container.listA.getResolved(0);
             assert_sameAs(root.text, 'foo bar');

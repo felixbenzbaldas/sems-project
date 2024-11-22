@@ -12,9 +12,9 @@ export class ContainerA {
         return createRandomString();
     }
 
-    async createBoundEntity() {
+    async createBoundEntity(name? : string) {
         let entity = this.entity.getApp_typed().createEntityWithApp();
-        this.bind(entity);
+        this.bind(entity, name);
         return entity;
     }
 
