@@ -59,6 +59,9 @@ export class AppA_UnboundG {
         entity.collapsible = json.collapsible;
         entity.link = json.link;
         entity.editable = json.editable;
+        if (notNullUndefined(json.context)) {
+            entity.context = this.entity.appA.createPath(json.context);
+        }
         if (notNullUndefined(json.list)) {
             entity.installListA();
             entity.listA.jsList = [];

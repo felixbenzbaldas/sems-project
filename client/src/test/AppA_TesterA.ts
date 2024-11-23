@@ -212,7 +212,14 @@ export class AppA_TesterA {
         });
         let createFromJsonTest = test.testG_nestedTestsA.add('createFromJson', async test => {
             let app = tester.appA.createStarter().createApp();
-            let json = {text: 'container + parent', list: [['0']], objects: {'0': {text: 'contained + subitem'}}};
+            let json = {
+                text: 'container + parent',
+                list: [['0']],
+                objects: {'0': {
+                    text: 'contained + subitem',
+                    context: ['..']
+                }}
+            };
 
             let container = app.appA.unboundG.createFromJson(json);
 
@@ -222,8 +229,8 @@ export class AppA_TesterA {
             assert_sameAs(containedAndSub.text, 'contained + subitem');
             assert_sameAs(containedAndSub.container, container);
             assert_sameAs(containedAndSub.name, container.containerA.mapNameEntity.keys().next().value);
+            assert_sameAs(await containedAndSub.resolve(containedAndSub.context), container);
             assert(notNullUndefined(container.listA.jsList.at(0).pathA));
-
         });
         createFromJsonTest.testG_installNestedTestsA();
         createFromJsonTest.installContainerA();
