@@ -117,31 +117,6 @@ export class AppA_TestA {
                     dummyTestRun.test_app.appA.logG.listOfStrings.join().includes('a dummy log') &&
                     testResults.successful.length == 0;
             }),
-            this.createTest('createFromJson', async test => {
-                let app = this.appA.createStarter().createApp();
-                test.test_app = app;
-                app.appA.logG.toListOfStrings = true;
-                let json = {text: 'container + parent', list: [['0']], objects: {'0': {text: 'contained + subitem'}}};
-
-                let container = app.appA.unboundG.createFromJson(json);
-
-                let containedAndSub = await container.listA.getResolved(0);
-                return container.text === 'container + parent' &&
-                    containedAndSub.text === 'contained + subitem' &&
-                    containedAndSub.container === container &&
-                    containedAndSub.name === container.containerA.mapNameEntity.keys().next().value &&
-                    container.listA.jsList.at(0).pathA;
-            }),
-            this.createTest('createFromJson (testData)', async test => {
-                let app = this.appA.createStarter().createApp();
-                test.test_app = app;
-                app.appA.logG.toListOfStrings = true;
-                let json = testData;
-
-                let container = app.appA.unboundG.createFromJson(json);
-
-                return container.text === 'demo website (container)';
-            }),
             this.createTest('create random string', async test => {
                 test.test_app = this.appA.createStarter().createApp();
                 let app = test.test_app;

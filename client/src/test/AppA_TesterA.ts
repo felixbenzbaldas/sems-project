@@ -1,7 +1,8 @@
 import {Entity} from "@/Entity";
 import {ContainerA} from "@/ContainerA";
-import {assert, assert_notSameAs, assert_sameAs} from "@/utils";
+import {assert, assert_notSameAs, assert_sameAs, notNullUndefined} from "@/utils";
 import {AppA_TesterA_UiTestG} from "@/test/AppA_TesterA_UiTestG";
+import {testData} from "@/testData";
 
 export class AppA_TesterA {
 
@@ -208,6 +209,30 @@ export class AppA_TesterA {
             app.log('json: ' + JSON.stringify(json, null, 4));
             assert_sameAs(json.text, 'object');
             assert_sameAs(json.context[0], 'aName');
+        });
+        let createFromJsonTest = test.testG_nestedTestsA.add('createFromJson', async test => {
+            let app = tester.appA.createStarter().createApp();
+            let json = {text: 'container + parent', list: [['0']], objects: {'0': {text: 'contained + subitem'}}};
+
+            let container = app.appA.unboundG.createFromJson(json);
+
+            let containedAndSub = await container.listA.getResolved(0);
+
+            assert_sameAs(container.text, 'container + parent');
+            assert_sameAs(containedAndSub.text, 'contained + subitem');
+            assert_sameAs(containedAndSub.container, container);
+            assert_sameAs(containedAndSub.name, container.containerA.mapNameEntity.keys().next().value);
+            assert(notNullUndefined(container.listA.jsList.at(0).pathA));
+
+        });
+        createFromJsonTest.testG_installNestedTestsA();
+        createFromJsonTest.installContainerA();
+        createFromJsonTest.testG_nestedTestsA.add('testData', async test => {
+            let app = tester.appA.createStarter().createApp();
+
+            let container = app.appA.unboundG.createFromJson(testData);
+
+            assert_sameAs(container.text, 'demo website (container)');
         });
         return test;
     }
