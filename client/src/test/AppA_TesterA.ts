@@ -198,6 +198,17 @@ export class AppA_TesterA {
             assert_sameAs(exported.list.length, 1);
             assert_sameAs(exported.objects[exported.list[0][0].toString()].text, 'subitem + contained');
         });
+        test.testG_nestedTestsA.add('jsonWithoutContainedObjects', async run => {
+            let app = tester.appA.createStarter().createApp();
+            let object = app.appA.unboundG.createTextWithList('object');
+            object.context = app.appA.createPath(['aName']);
+
+            let json = object.json_withoutContainedObjects();
+
+            app.log('json: ' + JSON.stringify(json, null, 4));
+            assert_sameAs(json.text, 'object');
+            assert_sameAs(json.context[0], 'aName');
+        });
         return test;
     }
 }

@@ -63,6 +63,7 @@ export class Entity {
             link: this.link,
             editable: this.editable,
             content: this.appA?.uiA?.content.json_withoutContainedObjects(),
+            context: this.context?.pathA.listOfNames
         };
         if (this.appA?.currentContainer) {
             obj.currentContainerText = this.appA.currentContainer.text;
