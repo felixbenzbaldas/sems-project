@@ -183,6 +183,21 @@ export class AppA_TesterA {
             assert_sameAs(root.listA.jsList[1].pathA.listOfNames[2], 'AnotherHouse');
             assert_sameAs(root.listA.jsList[1].pathA.listOfNames[3], '789');
         });
+        test.testG_nestedTestsA.add('export', async run => {
+            let app = tester.appA.createStarter().createApp();
+            let container = app.appA.unboundG.createTextWithList('the container');
+            container.installContainerA();
+            app.appA.currentContainer = container;
+            let subitemAndContained = await app.appA.createText('subitem + contained');
+            await container.listA.add(subitemAndContained);
+
+            let exported = await container.export();
+
+            app.log('exported: ' + JSON.stringify(exported, null, 4));
+            assert_sameAs(exported.text, 'the container');
+            assert_sameAs(exported.list.length, 1);
+            assert_sameAs(exported.objects[exported.list[0][0].toString()].text, 'subitem + contained');
+        });
         return test;
     }
 }

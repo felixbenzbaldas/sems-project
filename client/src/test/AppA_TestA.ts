@@ -117,23 +117,6 @@ export class AppA_TestA {
                     dummyTestRun.test_app.appA.logG.listOfStrings.join().includes('a dummy log') &&
                     testResults.successful.length == 0;
             }),
-            this.createTest('export', async test => {
-                let app = this.appA.createStarter().createApp();
-                test.test_app = app;
-                app.appA.logG.toListOfStrings = true;
-                let container = app.appA.unboundG.createTextWithList('the container');
-                container.installContainerA();
-                app.appA.currentContainer = container;
-                let subitemAndContained = await app.appA.createText('subitem + contained');
-                await container.listA.add(subitemAndContained);
-
-                let exported = await container.export();
-
-                app.log('exported: ' + JSON.stringify(exported, null, 4));
-                return exported.text === 'the container' &&
-                    exported.list.length === 1 &&
-                    exported.objects[exported.list[0][0].toString()].text === 'subitem + contained';
-            }),
             this.createTest('createFromJson', async test => {
                 let app = this.appA.createStarter().createApp();
                 test.test_app = app;
