@@ -1,6 +1,6 @@
 import {Entity} from "@/Entity";
 import {ContainerA} from "@/ContainerA";
-import {assert, assert_notSameAs, assert_sameAs, notNullUndefined, textFileInput} from "@/utils";
+import {assert, assert_notSameAs, assert_sameAs, downloadText, notNullUndefined, textFileInput} from "@/utils";
 import {AppA_TesterA_UiTestG} from "@/test/AppA_TesterA_UiTestG";
 import {testData} from "@/testData";
 
@@ -94,15 +94,7 @@ export class AppA_TesterA {
                 appA.uiA.content.listA.jsList.push(html);
                 const fileContent = 'foo123';
                 const fileName = 'testfile.txt';
-                html.codeG_html = document.createElement('div');
-
-                let htmlElement = document.createElement('a');
-                htmlElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(fileContent));
-                htmlElement.setAttribute('download', fileName);
-                htmlElement.innerText = 'download';
-
-                html.codeG_html.appendChild(htmlElement);
-
+                html.codeG_html = downloadText(fileContent, fileName, 'download');
                 appA.entity.log('human-action: Click on download');
                 appA.entity.log('human-test: The download window appears');
                 appA.entity.log('human-test: The content of the downloaded file is ' + fileContent);

@@ -83,7 +83,7 @@ export function assert_notSameAs(firstValue : any, secondValue : any) {
     }
 }
 
-export function textFileInput(handleTextInput : (text : string) => void) {
+export function textFileInput(handleTextInput : (text : string) => void) : HTMLElement {
     let fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.addEventListener('change', (event: Event) => {
@@ -94,4 +94,12 @@ export function textFileInput(handleTextInput : (text : string) => void) {
         reader.readAsText((event.target as any).files[0]);
     }, false);
     return fileInput;
+}
+
+export function downloadText(content : string, fileName : string, label : string) : HTMLElement {
+    let htmlElement = document.createElement('a');
+    htmlElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+    htmlElement.setAttribute('download', fileName);
+    htmlElement.innerText = label;
+    return htmlElement;
 }
