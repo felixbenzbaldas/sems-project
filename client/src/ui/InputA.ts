@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
+import {textFileInput} from "@/utils";
 
 export class InputA {
 
@@ -9,17 +10,19 @@ export class InputA {
     constructor(private entity : Entity) {
         this.input = entity.appA.unboundG.createText('');
         this.input.editable = true;
-        this.ui = entity.appA.unboundG.createTextWithList('input', this.input);
+        let html = entity.getApp_typed().createEntityWithApp();
+        html.codeG_html = textFileInput(async text => {
+            this.input.text = text;
+            await this.input.uis_update();
+        });
+        this.ui = entity.appA.unboundG.createTextWithList('input', this.input,
+            entity.appA.unboundG.createTextWithList('You can choose a text file as input:', html));
         this.ui.uiA = new UiA(this.ui);
         this.ui.collapsible = true;
     }
 
     getUi() : Entity {
         return this.ui;
-    }
-
-    set(string: string) {
-        this.input.text = string;
     }
 
     get() : string {

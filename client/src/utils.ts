@@ -83,7 +83,7 @@ export function assert_notSameAs(firstValue : any, secondValue : any) {
     }
 }
 
-export function textFileInput(handleTextInput : (text : String) => void) {
+export function textFileInput(handleTextInput : (text : string) => void) {
     let fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.addEventListener('change', (event: Event) => {

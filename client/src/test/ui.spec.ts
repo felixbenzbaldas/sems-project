@@ -23,7 +23,7 @@ describe('ui', () => {
 
     it('can flat import to content', async () => {
         let app = StarterA.createAppWithUI();
-        app.appA.uiA.input.set('{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}');
+        app.appA.uiA.input.input.text = '{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}';
 
         await app.appA.uiA.globalEventG.flatImportToContent();
 
