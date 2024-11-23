@@ -75,6 +75,15 @@ export class AppA_TesterA {
                 assert_sameAs(parentUi.uiA.listG.uisOfListItems[2].uiA.headerG.contextIcon.innerText, '|');
                 appA.entity.log('human-test: The item withContext should show the appropriate contextIcon -');
             });
+            semiGroup.testG_nestedTestsA.add('upload',  async run => {
+                let appA = tester.appA.createStarter().createAppWithUI().appA;
+                run.testRunA.appUi = appA.uiA;
+                let html = appA.createEntityWithApp();
+                html.codeG_html = document.createElement('div');
+                appA.uiA.content.listA.jsList.push(html);
+                appA.entity.log('human-action: Click on upload -> choose a text file');
+                appA.entity.log('human-test: The text of the file appears.');
+            });
         }
         test.testG_nestedTestsA.add('paste', async run => {
             let appUi = await tester.appA.createStarter().createAppWithUI_typed();

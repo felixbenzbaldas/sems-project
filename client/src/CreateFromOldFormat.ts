@@ -21,10 +21,10 @@ export class CreateFromOldFormat {
             if (properties.context) {
                 current.context = this.createPath(current, properties.context);
             }
-            if (notNullUndefined(properties.defaultExpanded)) {
-                current.collapsible = !properties.defaultExpanded;
-            }
-            if (jsonObject.details) {
+            if (jsonObject.details && jsonObject.details.length > 0) {
+                if (notNullUndefined(properties.defaultExpanded)) {
+                    current.collapsible = !properties.defaultExpanded;
+                }
                 current.installListA();
                 for (let detail of jsonObject.details) {
                     current.listA.jsList.push(this.createPath(current, detail));

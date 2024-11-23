@@ -35,8 +35,8 @@ export class UiA {
 
     async update() {
         this.resetHtmlElement();
-        if (this.getObject().dangerous_html) {
-            this.htmlElement.appendChild(this.getObject().dangerous_html);
+        if (this.getObject().codeG_html) {
+            this.htmlElement.appendChild(this.getObject().codeG_html);
         } else if (this.entity.appA?.uiA) {
             await this.entity.appA.uiA.update();
             this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
@@ -90,7 +90,7 @@ export class UiA {
 
     getRawText() : string {
         this.entity.log('getRawText');
-        if (this.getObject().dangerous_html) {
+        if (this.getObject().codeG_html) {
             return '';
         } else if (this.entity.appA?.uiA) {
             return this.entity.appA.uiA.getRawText();

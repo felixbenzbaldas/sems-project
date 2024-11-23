@@ -19,7 +19,7 @@ export class Entity {
     action: Function;
     editable: boolean;
     collapsible: boolean;
-    dangerous_html: HTMLElement;
+    codeG_html: HTMLElement;
     uis: Array<UiA>;
     context: Entity;
 
