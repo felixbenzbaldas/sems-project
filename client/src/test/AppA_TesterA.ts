@@ -1,6 +1,6 @@
 import {Entity} from "@/Entity";
 import {ContainerA} from "@/ContainerA";
-import {assert, assert_notSameAs, assert_sameAs, notNullUndefined} from "@/utils";
+import {assert, assert_notSameAs, assert_sameAs, notNullUndefined, textFileInput} from "@/utils";
 import {AppA_TesterA_UiTestG} from "@/test/AppA_TesterA_UiTestG";
 import {testData} from "@/testData";
 
@@ -80,27 +80,10 @@ export class AppA_TesterA {
                 run.testRunA.appUi = appA.uiA;
                 let html = appA.createEntityWithApp();
                 appA.uiA.content.listA.jsList.push(html);
-                html.codeG_html = document.createElement('div');
-                let fileInput = document.createElement('input');
-                fileInput.type = 'file';
-                html.codeG_html.appendChild(fileInput);
-                let readSingleFile = (e : any) => {
-                    let file = e.target.files[0];
-                    if (!file) {
-                        return;
-                    }
-                    let reader = new FileReader();
-                    reader.onload = function(e) {
-                        let contents = e.target.result;
-                        displayContents(contents);
-                    };
-                    reader.readAsText(file);
-                }
-                let displayContents = (contents : any) => {
+                html.codeG_html = textFileInput((contents : any) => {
                     appA.uiA.content.listA.jsList.push(appA.unboundG.createText(contents));
                     appA.uiA.update();
-                }
-                fileInput.addEventListener('change', readSingleFile, false);
+                });
                 appA.entity.log('human-action: Click on upload -> choose a text file');
                 appA.entity.log('human-test: The text of the file appears.');
             });

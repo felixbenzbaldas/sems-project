@@ -82,3 +82,16 @@ export function assert_notSameAs(firstValue : any, secondValue : any) {
         throw new Error('AssertionError: ' + firstValue + ' === ' + secondValue);
     }
 }
+
+export function textFileInput(handleTextInput : (text : String) => void) {
+    let fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.addEventListener('change', (event: Event) => {
+        let reader = new FileReader();
+        reader.onload = (progressEvent: ProgressEvent<FileReader>) => {
+            handleTextInput(progressEvent.target.result as string);
+        };
+        reader.readAsText((event.target as any).files[0]);
+    }, false);
+    return fileInput;
+}
