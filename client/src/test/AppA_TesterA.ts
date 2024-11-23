@@ -96,7 +96,7 @@ export class AppA_TesterA {
                 const fileName = 'testfile.txt';
                 html.codeG_html = downloadText(fileContent, fileName, 'download');
                 appA.entity.log('human-action: Click on download');
-                appA.entity.log('human-test: The download window appears');
+                appA.entity.log('human-test: A text file is downloaded.');
                 appA.entity.log('human-test: The content of the downloaded file is ' + fileContent);
             });
         }
