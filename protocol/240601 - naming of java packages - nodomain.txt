@@ -1,1 +1,1 @@
-The package names of ES start with 'nodomain'. This is a concious violation of the java convention for package names. It is good practice to try to avoid dependencies. Therefore there should not be a dependency to a domain, which has a dependency to a domain owner.
+The package names of ES start with 'nodomain'. This is a conscious violation of the java convention for package names. It is good practice to try to avoid dependencies. Therefore there should not be a dependency to a domain, which has a dependency to a domain owner.
