@@ -62,11 +62,14 @@ export class AppA_TesterA {
                 let inContext = await appA.createText('inContext');
                 let withoutContext = await appA.createText('withoutContext');
                 let outOfContext = await appA.createText('outOfContext');
+                let longText = await appA.createText('longText-'.repeat(40));
                 inContext.context = inContext.getPath(parent);
+                longText.context = longText.getPath(parent);
                 outOfContext.context = outOfContext.getPath(await appA.createText('aDummyContext'));
                 await parent.listA.add(inContext);
                 await parent.listA.add(outOfContext);
                 await parent.listA.add(withoutContext);
+                await parent.listA.add(longText);
                 await appA.uiA.content.listA.add(parent);
                 await appA.uiA.update();
                 let parentUi = appA.uiA.content.uiA.listG.uisOfListItems[0];
@@ -74,6 +77,7 @@ export class AppA_TesterA {
                 assert_sameAs(parentUi.uiA.listG.uisOfListItems[1].uiA.headerG.contextIcon.innerText, '/');
                 assert_sameAs(parentUi.uiA.listG.uisOfListItems[2].uiA.headerG.contextIcon.innerText, '');
                 appA.entity.log('human-test: The item withContext should show the appropriate contextIcon -');
+                appA.entity.log('human-test: The contextIcon always appears left of the content - also for the long text.');
             });
             semiGroup.testG_nestedTestsA.add('upload',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;

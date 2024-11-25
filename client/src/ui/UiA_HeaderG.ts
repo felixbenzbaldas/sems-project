@@ -5,36 +5,42 @@ import type {UiA} from "@/ui/UiA";
 export class UiA_HeaderG {
 
     htmlElement: HTMLElement = document.createElement('div');
+    divForContentAndBodyIcon : HTMLElement = document.createElement('div');
     content: HTMLElement = document.createElement('div');
     bodyIcon : HTMLElement = document.createElement('div');
     contextIcon : HTMLElement = document.createElement('div');
+
 
     constructor(private entity: Entity) {
     }
 
     async update() {
         this.htmlElement.innerHTML = null;
+        this.divForContentAndBodyIcon.innerHTML = null;
         await this.updateContextIcon();
         this.updateContent();
         this.updateBodyIcon();
         if (this.ownRow()) {
             this.getUiA().htmlElement.style.minWidth = '100%';
         }
-        this.htmlElement.style.display = 'flex';
-        this.htmlElement.style.flexWrap = 'wrap';
         this.htmlElement.style.maxWidth = '42rem';
-        this.htmlElement.style.padding = '0.05rem';
+        this.htmlElement.style.display = 'flex';
+        this.divForContentAndBodyIcon.style.flexGrow = '2';
+        this.divForContentAndBodyIcon.style.display = 'flex';
+        this.divForContentAndBodyIcon.style.flexWrap = 'wrap';
+        // this.divForContentAndBodyIcon.style.padding = '0.05rem';
         this.htmlElement.appendChild(this.contextIcon);
-        this.htmlElement.appendChild(this.content);
-        this.htmlElement.appendChild(this.bodyIcon);
+        this.htmlElement.appendChild(this.divForContentAndBodyIcon);
+        this.divForContentAndBodyIcon.appendChild(this.content);
+        this.divForContentAndBodyIcon.appendChild(this.bodyIcon);
         this.htmlElement.onclick = async (event) => {
             this.entity.getApp().appA.ensureActive();
             if (!event.ctrlKey) {
                 await this.clickEvent();
             }
         };
-        this.htmlElement.style.border = 'solid';
-        this.htmlElement.style.borderWidth = '0.1rem';
+        this.divForContentAndBodyIcon.style.border = 'solid';
+        this.divForContentAndBodyIcon.style.borderWidth = '0.1rem';
         this.focusStyle_update();
         this.updateCursorStyle();
         this.updateCurrentContainerStyle();
@@ -116,25 +122,25 @@ export class UiA_HeaderG {
 
     updateCursorStyle() {
         if (this.getObject().collapsible && this.getUiA().bodyG.hasContent()) {
-            this.htmlElement.style.cursor = 'pointer';
+            this.divForContentAndBodyIcon.style.cursor = 'pointer';
         } else {
-            this.htmlElement.style.cursor = 'default';
+            this.divForContentAndBodyIcon.style.cursor = 'default';
         }
     }
 
     focusStyle_update() {
         if (this.entity.uiA.hasFocus() && this.entity.getApp().appA.uiA.isActive()) {
-            this.htmlElement.style.borderColor = 'orange';
+            this.divForContentAndBodyIcon.style.borderColor = 'orange';
         } else {
-            this.htmlElement.style.borderColor = 'white';
+            this.divForContentAndBodyIcon.style.borderColor = 'white';
         }
     }
 
     updateCurrentContainerStyle() {
         if (this.entity.getApp().appA.currentContainer === this.getObject()) {
-            this.htmlElement.style.backgroundColor = '#efefef';
+            this.divForContentAndBodyIcon.style.backgroundColor = '#efefef';
         } else {
-            this.htmlElement.style.backgroundColor = 'white';
+            this.divForContentAndBodyIcon.style.backgroundColor = 'white';
         }
     }
 
