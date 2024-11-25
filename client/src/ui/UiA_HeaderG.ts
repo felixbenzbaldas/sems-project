@@ -41,16 +41,16 @@ export class UiA_HeaderG {
     }
 
     async updateContextIcon() {
+        this.contextIcon.style.display = 'inline-block';
+        this.contextIcon.style.width = '0.4rem';
         if (this.getObject().context) {
-            this.contextIcon.style.display = 'inline-block';
-            this.contextIcon.style.marginRight= '0.5rem';
             if (this.entity.uiA.context.uiA.getObject() === await this.getObject().resolve(this.getObject().context)) {
                 this.contextIcon.innerText = '-';
             } else {
-                this.contextIcon.innerText = '|';
+                this.contextIcon.innerText = '/';
             }
         } else {
-            this.contextIcon.style.display = 'none';
+            this.contextIcon.innerText = '';
         }
     }
 

@@ -65,14 +65,14 @@ export class AppA_TesterA {
                 inContext.context = inContext.getPath(parent);
                 outOfContext.context = outOfContext.getPath(await appA.createText('aDummyContext'));
                 await parent.listA.add(inContext);
-                await parent.listA.add(withoutContext);
                 await parent.listA.add(outOfContext);
+                await parent.listA.add(withoutContext);
                 await appA.uiA.content.listA.add(parent);
                 await appA.uiA.update();
                 let parentUi = appA.uiA.content.uiA.listG.uisOfListItems[0];
                 assert_sameAs(parentUi.uiA.listG.uisOfListItems[0].uiA.headerG.contextIcon.innerText, '-');
-                assert_sameAs(parentUi.uiA.listG.uisOfListItems[1].uiA.headerG.contextIcon.style.display, 'none');
-                assert_sameAs(parentUi.uiA.listG.uisOfListItems[2].uiA.headerG.contextIcon.innerText, '|');
+                assert_sameAs(parentUi.uiA.listG.uisOfListItems[1].uiA.headerG.contextIcon.innerText, '/');
+                assert_sameAs(parentUi.uiA.listG.uisOfListItems[2].uiA.headerG.contextIcon.innerText, '');
                 appA.entity.log('human-test: The item withContext should show the appropriate contextIcon -');
             });
             semiGroup.testG_nestedTestsA.add('upload',  async run => {
