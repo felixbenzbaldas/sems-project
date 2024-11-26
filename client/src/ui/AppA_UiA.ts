@@ -207,6 +207,18 @@ export class AppA_UiA {
     }
 
     createCommands() : Entity {
+        let lowPriorityCommands = this.getApp().unboundG.createTextWithList('mehr',
+            this.getApp().unboundG.createButton('switch to app container', async () => {
+                await this.getApp().uiA.globalEventG.switchToAppContainer();
+            }),
+            this.getApp().unboundG.createButton('export app', async () => {
+                await this.getApp().uiA.globalEventG.exportApp();
+            }),
+            this.getApp().unboundG.createButton('import from old json', async () => {
+                await this.getApp().uiA.globalEventG.importOldJson();
+            }),
+        );
+        lowPriorityCommands.collapsible = true;
         return this.getApp().unboundG.createTextWithList('commands',
             this.getApp().unboundG.createButton('default action', async () => {
                 await this.getApp().uiA.globalEventG.defaultAction();
@@ -223,23 +235,14 @@ export class AppA_UiA {
             this.getApp().unboundG.createButton('switch current container', async () => {
                 await this.getApp().uiA.globalEventG.switchCurrentContainer();
             }),
-            this.getApp().unboundG.createButton('switch to app container', async () => {
-                await this.getApp().uiA.globalEventG.switchToAppContainer();
-            }),
             this.getApp().unboundG.createButton('export', async () => {
                 await this.getApp().uiA.globalEventG.export();
             }),
-            this.getApp().unboundG.createButton('export app', async () => {
-                await this.getApp().uiA.globalEventG.exportApp();
+            this.getApp().unboundG.createButton('load', async () => {
+                await this.getApp().uiA.globalEventG.load();
             }),
             this.getApp().unboundG.createButton('import', async () => {
                 await this.getApp().uiA.globalEventG.import();
-            }),
-            this.getApp().unboundG.createButton('import from old json', async () => {
-                await this.getApp().uiA.globalEventG.importOldJson();
-            }),
-            this.getApp().unboundG.createButton('focus root', async () => {
-                await this.getApp().uiA.globalEventG.focusRoot();
             }),
             this.getApp().unboundG.createButton('mark', async () => {
                 await this.getApp().uiA.globalEventG.mark();
@@ -255,7 +258,11 @@ export class AppA_UiA {
             }),
             this.getApp().unboundG.createButton('paste next', async () => {
                 await this.getApp().uiA.globalEventG.pasteNext();
-            })
+            }),
+            this.getApp().unboundG.createButton('focus root', async () => {
+                await this.getApp().uiA.globalEventG.focusRoot();
+            }),
+            lowPriorityCommands
         );
     }
 

@@ -39,7 +39,7 @@ export class AppA_UiA_KeyG {
             await this.entity.appA.uiA.globalEventG.mark();
         });
         this.map.set('F11', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.importToApp();
+            await this.entity.appA.uiA.globalEventG.load();
         });
     }
 
