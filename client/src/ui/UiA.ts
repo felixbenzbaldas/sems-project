@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined, nullUndefined} from "@/utils";
+import {notNullUndefined} from "@/utils";
 import {UiA_ListG} from "@/ui/UiA_ListG";
 import {UiA_TextG} from "@/ui/UiA_TextG";
 import {UiA_BodyG} from "@/ui/UiA_BodyG";
@@ -215,13 +215,20 @@ export class UiA {
 
     async cut() {
         this.textG.save();
-        this.entity.getApp().appA.uiA.clipboard = this.object;
+        let obj = this.getObject();
+        this.entity.getApp().appA.uiA.clipboard = obj;
         let uiContext = this.context;
         let uiListItems = uiContext.uiA.listG.uisOfListItems;
         let position = uiListItems.indexOf(this.entity);
-        uiContext.getObject().listA.jsList.splice(position, 1);
-        await uiContext.getObject().uis_update_removedListItem(position);
-        if (uiContext.getObject().listA.jsList.length > 0) {
+        let contextObj = uiContext.getObject();
+        if (notNullUndefined(obj.context)) {
+            if (await obj.resolve(obj.context) === contextObj) {
+                obj.context = null;
+            }
+        }
+        contextObj.listA.jsList.splice(position, 1);
+        await contextObj.uis_update_removedListItem(position);
+        if (contextObj.listA.jsList.length > 0) {
             let focusPosition = Math.min(uiListItems.length - 1, position);
             this.entity.getApp_typed().uiA.focus(uiListItems[focusPosition]);
         } else {

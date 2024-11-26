@@ -56,11 +56,14 @@ export class AppA_TesterA_UiTestG {
             child.context = child.getPath(parent);
             let parentUi = appUi.createUiFor_typed(parent);
             await parentUi.update();
+            let childUi = parentUi.listG.uisOfListItems[0].uiA;
+            childUi.textG.htmlElement.innerText = 'unsaved text';
 
-            await parentUi.listG.uisOfListItems[0].uiA.cut();
+            await childUi.cut();
 
             assert_sameAs(parent.listA.jsList.length, 0);
-            // assert_sameAs(child.context, undefined);
+            assert_sameAs(child.text, 'unsaved text');
+            assert_sameAs(child.context, null);
         });
     }
 
