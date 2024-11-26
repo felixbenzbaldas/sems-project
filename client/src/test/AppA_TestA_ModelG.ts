@@ -150,21 +150,6 @@ export class AppA_TestA_ModelG {
                 test.test_app.log(rawText);
                 return rawText === 'collapsible parentsubitem' && test.test_app.uiA.countEditableTexts() === 0;
             }),
-            this.createTest('modelTest_cut', async test => {
-                let app = await this.entity.appA.createStarter().createAppWithUIWithCommands_editable_updateUi();
-                test.test_app = app;
-                app.appA.logG.toListOfStrings = true;
-                await app.appA.uiA.globalEventG.defaultAction();
-                let firstObject = await app.appA.uiA.content.listA.getResolved(0);
-                firstObject.text = 'cutted';
-                await app.updateUi();
-
-                await app.uiA.click('cut');
-
-                let rawText = app.uiA.getRawText();
-                app.log('rawText = ' + rawText);
-                return !rawText.includes('cutted');
-            }),
             this.createTest('modelTest_pasteNext', async test => {
                 let app = await this.entity.appA.createStarter().createAppWithUIWithCommands_editable_updateUi();
                 test.test_app = app;

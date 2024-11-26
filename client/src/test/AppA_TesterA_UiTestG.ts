@@ -1,6 +1,6 @@
 import type {Entity} from "@/Entity";
 import {ContainerA} from "@/ContainerA";
-import {assert, assert_sameAs} from "@/utils";
+import {assert, assert_sameAs, assertFalse} from "@/utils";
 
 export class AppA_TesterA_UiTestG {
 
@@ -45,6 +45,20 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs(1, uiForList.listG.uisOfListItems.length);
             assert(!uiForList.htmlElement.innerHTML.includes('subitem-one'), 'update html');
             assert(uiForList.htmlElement.innerHTML.includes('subitem-two'), 'update html');
+        });
+        this.addTest('cut', async run => {
+            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+            run.testRunA.appUi = appUi;
+            await appUi.globalEventG.defaultAction();
+            let firstObject = await appUi.content.listA.getResolved(0);
+            firstObject.text = 'cutted';
+            await appUi.update();
+
+            await appUi.globalEventG.cut();
+
+            let rawText = appUi.getRawText();
+            appUi.entity.log('rawText = ' + rawText);
+            assertFalse(rawText.includes('cutted'));
         });
     }
 
