@@ -224,6 +224,7 @@ export class UiA {
         if (notNullUndefined(obj.context)) {
             if (await obj.resolve(obj.context) === contextObj) {
                 obj.context = null;
+                obj.uis_update_context();
             }
         }
         contextObj.listA.jsList.splice(position, 1);
@@ -304,5 +305,9 @@ export class UiA {
 
     async update_text() {
         this.textG.update();
+    }
+
+    async update_context() {
+        await this.headerG.updateContextIcon();
     }
 }
