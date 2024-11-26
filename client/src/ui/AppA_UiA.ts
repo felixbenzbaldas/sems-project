@@ -209,58 +209,58 @@ export class AppA_UiA {
     createCommands() : Entity {
         let lowPriorityCommands = this.getApp().unboundG.createTextWithList('mehr',
             this.getApp().unboundG.createButton('switch to app container', async () => {
-                await this.getApp().uiA.globalEventG.switchToAppContainer();
+                await this.globalEventG.switchToAppContainer();
             }),
             this.getApp().unboundG.createButton('export app', async () => {
-                await this.getApp().uiA.globalEventG.exportApp();
+                await this.globalEventG.exportApp();
             }),
             this.getApp().unboundG.createButton('import from old json', async () => {
-                await this.getApp().uiA.globalEventG.importOldJson();
+                await this.globalEventG.importOldJson();
             }),
         );
         lowPriorityCommands.collapsible = true;
         return this.getApp().unboundG.createTextWithList('commands',
             this.getApp().unboundG.createButton('default action', async () => {
-                await this.getApp().uiA.globalEventG.defaultAction();
+                await this.globalEventG.defaultAction();
             }),
             this.getApp().unboundG.createButton('new subitem', async () => {
-                await this.getApp().uiA.globalEventG.newSubitem();
+                await this.globalEventG.newSubitem();
             }),
             this.getApp().unboundG.createButton('toggle collapsible', async () => {
-                await this.getApp().uiA.globalEventG.toggleCollapsible();
+                await this.globalEventG.toggleCollapsible();
             }),
             this.getApp().unboundG.createButton('expand/collapse', async () => {
-                await this.getApp().uiA.globalEventG.expandOrCollapse();
+                await this.globalEventG.expandOrCollapse();
             }),
             this.getApp().unboundG.createButton('switch current container', async () => {
-                await this.getApp().uiA.globalEventG.switchCurrentContainer();
+                await this.globalEventG.switchCurrentContainer();
             }),
             this.getApp().unboundG.createButton('export', async () => {
-                await this.getApp().uiA.globalEventG.export();
+                await this.globalEventG.export();
             }),
             this.getApp().unboundG.createButton('load', async () => {
-                await this.getApp().uiA.globalEventG.load();
+                await this.globalEventG.load();
             }),
             this.getApp().unboundG.createButton('import', async () => {
-                await this.getApp().uiA.globalEventG.import();
+                await this.globalEventG.import();
             }),
             this.getApp().unboundG.createButton('mark', async () => {
-                await this.getApp().uiA.globalEventG.mark();
+                await this.globalEventG.mark();
             }),
             this.getApp().unboundG.createButton('cut', async () => {
-                await this.getApp().uiA.globalEventG.cut();
+                await this.globalEventG.cut();
             }),
             this.getApp().unboundG.createButton('deep copy', async () => {
-                await this.getApp().uiA.globalEventG.deepCopy();
+                await this.globalEventG.deepCopy();
             }),
             this.getApp().unboundG.createButton('paste', async () => {
-                await this.getApp().uiA.globalEventG.paste();
+                await this.globalEventG.paste();
             }),
             this.getApp().unboundG.createButton('paste next', async () => {
-                await this.getApp().uiA.globalEventG.pasteNext();
+                await this.globalEventG.pasteNext();
             }),
             this.getApp().unboundG.createButton('focus root', async () => {
-                await this.getApp().uiA.globalEventG.focusRoot();
+                await this.globalEventG.focusRoot();
             }),
             lowPriorityCommands
         );
