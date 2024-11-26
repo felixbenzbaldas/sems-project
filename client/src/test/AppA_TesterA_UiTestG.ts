@@ -49,16 +49,18 @@ export class AppA_TesterA_UiTestG {
         this.addTest('cut', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             run.testRunA.appUi = appUi;
-            await appUi.globalEventG.defaultAction();
-            let firstObject = await appUi.content.listA.getResolved(0);
-            firstObject.text = 'cutted';
-            await appUi.update();
+            let appA = appUi.entity.appA;
+            let child = await appA.createText('child');
+            let parent = await appA.createList();
+            await parent.listA.add(child);
+            child.context = child.getPath(parent);
+            let parentUi = appUi.createUiFor_typed(parent);
+            await parentUi.update();
 
-            await appUi.globalEventG.cut();
+            await parentUi.listG.uisOfListItems[0].uiA.cut();
 
-            let rawText = appUi.getRawText();
-            appUi.entity.log('rawText = ' + rawText);
-            assertFalse(rawText.includes('cutted'));
+            assert_sameAs(parent.listA.jsList.length, 0);
+            // assert_sameAs(child.context, undefined);
         });
     }
 

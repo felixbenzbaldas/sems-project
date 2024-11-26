@@ -1,7 +1,4 @@
 import type {Entity} from "@/Entity";
-import type {AppA_UiA} from "@/ui/AppA_UiA";
-import {ContainerA} from "@/ContainerA";
-import {ListA} from "@/ListA";
 
 export class AppA_UiA_GlobalEventG {
 
@@ -108,20 +105,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async cut() {
-        let ui = this.getUiA().focused;
-        ui.uiA.textG.save();
-        this.getUiA().clipboard = ui.uiA.object;
-        let uiContext = ui.uiA.context;
-        let uiListItems = uiContext.uiA.listG.uisOfListItems;
-        let position = uiListItems.indexOf(ui);
-        uiContext.getObject().listA.jsList.splice(position, 1);
-        await uiContext.getObject().uis_update_removedListItem(position);
-        if (uiContext.getObject().listA.jsList.length > 0) {
-            let focusPosition = Math.min(uiListItems.length - 1, position);
-            this.entity.getApp_typed().uiA.focus(uiListItems[focusPosition]);
-        } else {
-            this.entity.getApp_typed().uiA.focus(uiContext);
-        }
+        await this.getUiA().focused.uiA.cut();
     }
 
     async mark() {

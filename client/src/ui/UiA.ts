@@ -213,6 +213,22 @@ export class UiA {
         }
     }
 
+    async cut() {
+        this.textG.save();
+        this.entity.getApp().appA.uiA.clipboard = this.object;
+        let uiContext = this.context;
+        let uiListItems = uiContext.uiA.listG.uisOfListItems;
+        let position = uiListItems.indexOf(this.entity);
+        uiContext.getObject().listA.jsList.splice(position, 1);
+        await uiContext.getObject().uis_update_removedListItem(position);
+        if (uiContext.getObject().listA.jsList.length > 0) {
+            let focusPosition = Math.min(uiListItems.length - 1, position);
+            this.entity.getApp_typed().uiA.focus(uiListItems[focusPosition]);
+        } else {
+            this.entity.getApp_typed().uiA.focus(uiContext);
+        }
+    }
+
     async paste() {
         if (this.entity.appA?.uiA) {
             await this.entity.appA.uiA.paste();
