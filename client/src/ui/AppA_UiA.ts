@@ -6,6 +6,7 @@ import {UiA} from "@/ui/UiA";
 import {ContainerA} from "@/ContainerA";
 import {AppA_UiA_KeyG} from "@/ui/AppA_UiA_KeyG";
 import type {AppA} from "@/AppA";
+import {textElem} from "@/utils";
 
 export class AppA_UiA {
 
@@ -101,7 +102,9 @@ export class AppA_UiA {
         this.htmlElement.appendChild(this.statusBar);
         this.htmlElement.appendChild(this.scrollableArea);
         this.scrollableArea.style.overflowY = 'auto';
-        this.statusBar.innerText = '[  status bar  ]';
+        this.statusBar.style.backgroundColor = "#efefef";
+        this.statusBar.style.minHeight = '1.2rem';
+        this.statusBar.style.maxHeight = '1.2rem';
         if (this.showMeta) {
             if (this.commands) {
                 this.scrollableArea.appendChild(this.commands.uiA.htmlElement);
@@ -118,6 +121,18 @@ export class AppA_UiA {
         if (this.webMeta) {
             this.scrollableArea.appendChild(this.webMeta.uiA.htmlElement);
         }
+    }
+
+    signal(text : string) {
+        this.statusBar.innerHTML = null;
+        let textHtmlElement = textElem(text);
+        this.statusBar.appendChild(textHtmlElement);
+        textHtmlElement.style.backgroundColor = 'green';
+        textHtmlElement.style.display = 'inline';
+        textHtmlElement.style.marginLeft = '0.5rem';
+        setTimeout(()=> {
+            textHtmlElement.style.backgroundColor = "#efefef";
+        }, 800);
     }
 
     private separatorLine() : HTMLElement {

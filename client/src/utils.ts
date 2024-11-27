@@ -109,3 +109,9 @@ export function setWidth(htmlElement : HTMLElement, width : string) {
     // weird: this is needed to 'strengthen' the width - see test_semi_setWidth
     htmlElement.style.minWidth = width;
 }
+
+export function textElem(text : string) : HTMLDivElement {
+    let html = document.createElement('div');
+    html.innerText = text;
+    return html;
+}
