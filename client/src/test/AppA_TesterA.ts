@@ -1,6 +1,14 @@
 import {Entity} from "@/Entity";
 import {ContainerA} from "@/ContainerA";
-import {assert, assert_notSameAs, assert_sameAs, downloadText, notNullUndefined, textFileInput} from "@/utils";
+import {
+    assert,
+    assert_notSameAs,
+    assert_sameAs,
+    downloadText,
+    notNullUndefined,
+    setWidth,
+    textFileInput
+} from "@/utils";
 import {AppA_TesterA_UiTestG} from "@/test/AppA_TesterA_UiTestG";
 import {testData} from "@/testData";
 
@@ -102,6 +110,31 @@ export class AppA_TesterA {
                 appA.entity.log('human-action: Click on download');
                 appA.entity.log('human-test: A text file is downloaded.');
                 appA.entity.log('human-test: The content of the downloaded file is ' + fileContent);
+            });
+            semiGroup.testG_nestedTestsA.add('setWidth',  async run => {
+                let appA = tester.appA.createStarter().createAppWithUI().appA;
+                run.testRunA.appUi = appA.uiA;
+                let html = appA.createEntityWithApp();
+                appA.uiA.content.listA.jsList.push(html);
+                html.codeG_html = document.createElement('div');
+                let left = document.createElement('div');
+                html.codeG_html.appendChild(left);
+                let right = document.createElement('div');
+                html.codeG_html.appendChild(right);
+                html.codeG_html.style.display = 'flex';
+                html.codeG_html.style.width = '30rem';
+                html.codeG_html.style.height = '10rem';
+                html.codeG_html.style.border = 'solid';
+                left.style.width = '5rem'; // this is not 'strong' enough. You will need the setWidth function
+                right.contentEditable = 'true';
+                right.style.minWidth = '5rem';
+                right.style.border = 'solid';
+                right.innerText = 'Write some text here (multiple lines)!';
+
+                setWidth(left, '5rem');
+
+                appA.entity.log('human-action: write multiple lines in the text field');
+                appA.entity.log('human-test: The text does not move.');
             });
         }
         test.testG_nestedTestsA.add('paste', async run => {

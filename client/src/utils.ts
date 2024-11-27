@@ -103,3 +103,9 @@ export function downloadText(content : string, fileName : string, label : string
     htmlElement.innerText = label;
     return htmlElement;
 }
+
+export function setWidth(htmlElement : HTMLElement, width : string) {
+    htmlElement.style.width = width;
+    // weird: this is needed to 'strengthen' the width - see test_semi_setWidth
+    htmlElement.style.minWidth = width;
+}

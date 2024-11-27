@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined} from "@/utils";
+import {notNullUndefined, setWidth} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_HeaderG {
@@ -48,8 +48,7 @@ export class UiA_HeaderG {
 
     async updateContextIcon() {
         this.contextIcon.style.display = 'block';
-        this.contextIcon.style.width = '0.4rem';
-        this.contextIcon.style.minWidth = '0.4rem'; // weird: this is needed to 'strengthen' the width
+        setWidth(this.contextIcon, '0.4rem');
         if (this.getObject().context) {
             if (this.entity.uiA.context.uiA.getObject() === await this.getObject().resolve(this.getObject().context)) {
                 this.contextIcon.innerText = '-';
