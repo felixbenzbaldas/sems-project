@@ -30,6 +30,9 @@ export class UiA_HeaderG {
         this.divForContentAndBodyIcon.style.flexWrap = 'wrap';
         // this.divForContentAndBodyIcon.style.padding = '0.05rem';
         this.htmlElement.appendChild(this.contextIcon);
+        if (this.getUiA().showContainerMark()) {
+            this.htmlElement.appendChild(this.createContainerMark());
+        }
         this.htmlElement.appendChild(this.divForContentAndBodyIcon);
         this.divForContentAndBodyIcon.appendChild(this.content);
         this.divForContentAndBodyIcon.appendChild(this.bodyIcon);
@@ -58,6 +61,15 @@ export class UiA_HeaderG {
         } else {
             this.contextIcon.innerText = '';
         }
+    }
+
+    createContainerMark() {
+        let containerMark = document.createElement('div');
+        containerMark.style.display = 'block';
+        setWidth(containerMark, '0.8rem');
+        containerMark.innerText = 'O'
+        containerMark.style.color = 'green';
+        return containerMark;
     }
 
     updateContent() {
