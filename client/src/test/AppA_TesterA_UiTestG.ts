@@ -65,6 +65,21 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs(child.text, 'unsaved text');
             assert_sameAs(child.context, null);
         });
+        this.addTest('showContainerMark', async run => {
+            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+            run.testRunA.appUi = appUi;
+            let appA = appUi.entity.appA;
+            let markedContainer = appA.createEntityWithApp();
+            markedContainer.installContainerA();
+            markedContainer.installListA();
+            appA.entity.containerA.bind(markedContainer,'sa9llaMlry'); // TODO should not be hardcoded
+            markedContainer.text = 'marked container';
+            await appUi.content.listA.add(markedContainer);
+
+            let ui = appUi.createUiFor_typed(markedContainer);
+
+            assert(ui.showContainerMark());
+        });
     }
 
     addTest(name : string, jsFunction: (testRun: Entity) => void) {

@@ -340,4 +340,16 @@ export class Entity {
     deepCopy() : DeepCopyA {
         return new DeepCopyA(this);
     }
+
+    containerMark() : boolean {
+        if (this.name === 'sa9llaMlry') {
+            return true;
+        } else {
+            if (this.container) {
+                return this.container.containerMark();
+            } else {
+                return false;
+            }
+        }
+    }
 }

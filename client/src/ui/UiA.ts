@@ -310,4 +310,8 @@ export class UiA {
     async update_context() {
         await this.headerG.updateContextIcon();
     }
+
+    showContainerMark() {
+        return this.getObject().containerMark();
+    }
 }
