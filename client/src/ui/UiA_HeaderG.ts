@@ -47,8 +47,9 @@ export class UiA_HeaderG {
     }
 
     async updateContextIcon() {
-        this.contextIcon.style.display = 'inline-block';
+        this.contextIcon.style.display = 'block';
         this.contextIcon.style.width = '0.4rem';
+        this.contextIcon.style.minWidth = '0.4rem'; // weird: this is needed to 'strengthen' the width
         if (this.getObject().context) {
             if (this.entity.uiA.context.uiA.getObject() === await this.getObject().resolve(this.getObject().context)) {
                 this.contextIcon.innerText = '-';
