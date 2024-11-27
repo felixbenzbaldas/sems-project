@@ -29,7 +29,16 @@ export class Environment {
             return tester.appA.testerA.createTestForSimpleSoftware();
         };
         environment.create_installWindowKeyListener();
+        document.body.style.margin = '0rem';
+        environment.updateWindowHeight();
+        window.addEventListener('resize', () => {
+            environment.updateWindowHeight();
+        });
         return environment;
+    }
+
+    updateWindowHeight() {
+        document.body.style.height = window.innerHeight + 'px';
     }
 
     create_installWindowKeyListener() {

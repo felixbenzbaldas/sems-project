@@ -39,6 +39,7 @@ export class UiA {
             this.htmlElement.appendChild(this.getObject().codeG_html);
         } else if (this.entity.appA?.uiA) {
             await this.entity.appA.uiA.update();
+            this.htmlElement.style.height = '100%';
             this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
         } else if (this.isHeaderBody()) {
             await this.headerBodyG.install();

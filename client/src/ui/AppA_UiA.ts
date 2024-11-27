@@ -16,6 +16,8 @@ export class AppA_UiA {
     readonly input : InputA;
     focused : Entity;
     readonly htmlElement: HTMLElement = document.createElement('div');
+    scrollableArea : HTMLElement;
+    statusBar: HTMLDivElement;
     globalEventG: AppA_UiA_GlobalEventG;
     withPlaceholderArea: boolean;
     showMeta : boolean;
@@ -91,21 +93,30 @@ export class AppA_UiA {
 
     private updateUiElement() {
         this.htmlElement.innerHTML = null;
+        this.htmlElement.style.height = '100%';
+        this.htmlElement.style.display = 'flex';
+        this.htmlElement.style.flexDirection = 'column';
+        this.scrollableArea = document.createElement('div');
+        this.statusBar = document.createElement('div');
+        this.htmlElement.appendChild(this.statusBar);
+        this.htmlElement.appendChild(this.scrollableArea);
+        this.scrollableArea.style.overflowY = 'auto';
+        this.statusBar.innerText = '[  status bar  ]';
         if (this.showMeta) {
             if (this.commands) {
-                this.htmlElement.appendChild(this.commands.uiA.htmlElement);
+                this.scrollableArea.appendChild(this.commands.uiA.htmlElement);
             }
-            this.htmlElement.appendChild(this.input.getUi().uiA.htmlElement);
-            this.htmlElement.appendChild(this.output.getUi().uiA.htmlElement);
-            this.htmlElement.appendChild(this.separatorLine());
+            this.scrollableArea.appendChild(this.input.getUi().uiA.htmlElement);
+            this.scrollableArea.appendChild(this.output.getUi().uiA.htmlElement);
+            this.scrollableArea.appendChild(this.separatorLine());
         }
-        this.htmlElement.appendChild(this.focusStyle_marker);
-        this.htmlElement.appendChild(this.content.uiA.htmlElement);
+        this.scrollableArea.appendChild(this.focusStyle_marker);
+        this.scrollableArea.appendChild(this.content.uiA.htmlElement);
         if (this.withPlaceholderArea) {
-            this.htmlElement.appendChild(this.createPlaceholderArea());
+            this.scrollableArea.appendChild(this.createPlaceholderArea());
         }
         if (this.webMeta) {
-            this.htmlElement.appendChild(this.webMeta.uiA.htmlElement);
+            this.scrollableArea.appendChild(this.webMeta.uiA.htmlElement);
         }
     }
 
