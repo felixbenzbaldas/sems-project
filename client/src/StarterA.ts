@@ -18,23 +18,25 @@ export class StarterA {
     }
 
     async fullStart() : Promise<HTMLElement> {
-        if (this.getEnvironment().queryParams.has('client-app')) {
-            return this.fullStartG.clientApp();
-        } else if (this.getEnvironment().queryParams.has('test')) {
-            return this.fullStartG.oldTester();
-        } else if (this.getEnvironment().queryParams.has('tester2')) {
-            return this.fullStartG.tester();
-        } else if (this.getEnvironment().queryParams.has('path')) {
-            return this.fullStartG.objectViewer();
-        } else if (this.getEnvironment().queryParams.has('run')) {
-            return this.fullStartG.testRun();
-        } else {
-            if (this.isPublicWeb()) {
-                return this.fullStartG.website();
-            } else {
-                return this.fullStartG.localApp();
-            }
+        const mode = this.getEnvironment().queryParams.get('mode');
+        switch (mode) {
+            case 'client-app':
+                return this.fullStartG.clientApp();
+            case 'test':
+                return this.fullStartG.oldTester();
+            case 'tester2':
+                return this.fullStartG.tester();
+            case 'path':
+                return this.fullStartG.objectViewer();
+            case 'run':
+                return this.fullStartG.testRun();
+            default:
+                break;
         }
+
+        return this.isPublicWeb() ?
+            this.fullStartG.website() :
+            this.fullStartG.localApp();
     }
 
     isPublicWeb() {
@@ -58,8 +60,8 @@ export class StarterA {
         return this.entity.getApp().appA.environment;
     }
 
-    testMode() {
-        if (this.getEnvironment().queryParams.has('testMode')) {
+    enableLogIfTestMode() {
+        if (this.getEnvironment().queryParams.get('mode') === 'test') {
             this.createdApp.appA.logG.toConsole = true;
         }
     }

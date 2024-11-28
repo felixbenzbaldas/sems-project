@@ -7,7 +7,7 @@ export class StarterA_FullStartG {
     async oldTester() {
         let starter = this.getStarter();
         await starter.createTest();
-        starter.testMode();
+        starter.enableLogIfTestMode();
         if (starter.getEnvironment().queryParams.has('withFailingDemoTest')) {
             starter.createdApp.appA.testA.withFailingDemoTest = true;
         }
@@ -23,7 +23,7 @@ export class StarterA_FullStartG {
     async tester() {
         let starter = this.getStarter();
         starter.createTester2(starter.getEnvironment().testCreator);
-        starter.testMode();
+        starter.enableLogIfTestMode();
         await starter.createdApp.appA.testerA.run();
         starter.getEnvironment().activeApp = starter.createdApp;
         starter.createdApp.appA.uiA.withPlaceholderArea = true;
@@ -36,7 +36,7 @@ export class StarterA_FullStartG {
     async objectViewer() {
         let starter = this.getStarter();
         await starter.createObjectViewer(starter.getEnvironment().queryParams.get('path'));
-        starter.testMode();
+        starter.enableLogIfTestMode();
         starter.getEnvironment().activeApp = starter.createdApp;
         starter.createdApp.appA.uiA.withPlaceholderArea = true;
         if (starter.isPublicWeb()) {
@@ -62,7 +62,7 @@ export class StarterA_FullStartG {
     async website() {
         let starter = this.getStarter();
         await starter.createWebsite();
-        starter.testMode();
+        starter.enableLogIfTestMode();
         starter.getEnvironment().activeApp = starter.createdApp;
         starter.createdApp.appA.uiA.withPlaceholderArea = true;
         if (starter.isPublicWeb()) {
@@ -78,7 +78,7 @@ export class StarterA_FullStartG {
     async localApp() {
         let starter = this.getStarter();
         starter.createAppWithUIWithCommands_editable();
-        starter.testMode();
+        starter.enableLogIfTestMode();
         starter.getEnvironment().activeApp = starter.createdApp;
         starter.createdApp.appA.uiA.withPlaceholderArea = true;
         await starter.createdApp.uiA.update();
@@ -88,7 +88,7 @@ export class StarterA_FullStartG {
     async clientApp() {
         let starter = this.getStarter();
         starter.createAppWithUIWithCommands_editable();
-        starter.testMode();
+        starter.enableLogIfTestMode();
         starter.getEnvironment().activeApp = starter.createdApp;
         starter.createdApp.appA.uiA.withPlaceholderArea = true;
         starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
