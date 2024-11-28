@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined, nullUndefined} from "@/utils";
+import {clearElement, notNullUndefined} from "@/utils";
 import {UiA} from "@/ui/UiA";
 
 // TODO should be an aspect not a group. Then: entity.uiA.getObject().listA <==> entity.uiA.listA
@@ -13,7 +13,7 @@ export class UiA_ListG {
 
     async update() {
         if (!this.entity.uiA.collapsed) {
-            this.htmlElement.innerHTML = null;
+            clearElement(this.htmlElement);
             this.htmlElement.style.display = 'flex';
             this.htmlElement.style.flexWrap = 'wrap';
             this.htmlElement.style.rowGap = '0.25rem';

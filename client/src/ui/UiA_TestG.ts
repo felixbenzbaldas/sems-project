@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
+import { clearElement } from '../utils';
 
 export class UiA_TestG {
 
@@ -15,7 +16,7 @@ export class UiA_TestG {
     }
 
     private updateHeaderContent() {
-        this.headerContent_htmlElement.innerHTML = null;
+        clearElement(this.headerContent_htmlElement);
         this.getUiA().textG.htmlElement.style.color = this.getObject().test_result ? 'green' : 'red';
         this.entity.uiA.textG.update();
         this.headerContent_htmlElement.appendChild(this.getUiA().textG.htmlElement);

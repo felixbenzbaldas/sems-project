@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined} from "@/utils";
+import {clearElement, notNullUndefined} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_HeaderG {
@@ -13,8 +13,9 @@ export class UiA_HeaderG {
     }
 
     async update() {
-        this.htmlElement.innerHTML = null;
+        clearElement(this.htmlElement);
         await this.updateContextIcon();
+        this.updateContextIcon();
         this.updateContent();
         this.updateBodyIcon();
         if (this.ownRow()) {
@@ -55,7 +56,7 @@ export class UiA_HeaderG {
     }
 
     updateContent() {
-        this.content.innerHTML = null;
+        clearElement(this.content);
         if (this.getObject().isTest) {
             this.content.appendChild(this.getUiA().testG.headerContent_htmlElement);
         } else if (this.getObject().action) {

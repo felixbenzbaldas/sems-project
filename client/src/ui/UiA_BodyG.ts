@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined} from "@/utils";
+import {clearElement, notNullUndefined} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_BodyG {
@@ -11,7 +11,7 @@ export class UiA_BodyG {
     }
 
     async update() {
-        this.htmlElement.innerHTML = null;
+        clearElement(this.htmlElement);
         if (!this.entity.uiA.collapsed && this.hasContent()) {
             this.htmlElement.style.display = 'block';
             await this.content_update();
