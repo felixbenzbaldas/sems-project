@@ -101,11 +101,7 @@ export class UiA {
     }
 
     getObject() : Entity {
-        if (this.object) {
-            return this.object;
-        } else {
-            return this.entity;
-        }
+        return this.object || this.entity
     }
 
     async click(text : string) {
