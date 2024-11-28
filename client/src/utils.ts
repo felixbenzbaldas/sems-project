@@ -103,3 +103,7 @@ export function downloadText(content : string, fileName : string, label : string
     htmlElement.innerText = label;
     return htmlElement;
 }
+
+export function clearElement(element : HTMLElement) {
+    element.innerHTML = '';
+}
