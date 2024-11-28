@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined, nullUndefined} from "@/utils";
+import {clearElement} from "@/utils";
 import {UiA_ListG} from "@/ui/UiA_ListG";
 import {UiA_TextG} from "@/ui/UiA_TextG";
 import {UiA_BodyG} from "@/ui/UiA_BodyG";
@@ -17,6 +18,8 @@ export class UiA {
     headerG : UiA_HeaderG;
     bodyG: UiA_BodyG;
     testG: UiA_TestG;
+
+    // currently also undefined
     object: Entity;
     context: Entity;
     collapsed: boolean;
@@ -34,7 +37,7 @@ export class UiA {
     }
 
     async update() {
-        this.resetHtmlElement();
+        clearElement(this.htmlElement);
         if (this.getObject().codeG_html) {
             this.htmlElement.appendChild(this.getObject().codeG_html);
         } else if (this.entity.appA?.uiA) {
@@ -50,10 +53,6 @@ export class UiA {
             div.innerText = this.getObject().getDescription();
             this.htmlElement.appendChild(div);
         }
-    }
-
-    resetHtmlElement() {
-        this.htmlElement.innerHTML = null;
     }
 
     isHeaderBody() : boolean {
@@ -104,11 +103,7 @@ export class UiA {
     }
 
     getObject() : Entity {
-        if (this.object) {
-            return this.object;
-        } else {
-            return this.entity;
-        }
+        return this.object || this.entity
     }
 
     async click(text : string) {
