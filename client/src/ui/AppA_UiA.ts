@@ -6,6 +6,7 @@ import {UiA} from "@/ui/UiA";
 import {ContainerA} from "@/ContainerA";
 import {AppA_UiA_KeyG} from "@/ui/AppA_UiA_KeyG";
 import type {AppA} from "@/AppA";
+import { clearElement } from '../utils';
 
 export class AppA_UiA {
 
@@ -90,7 +91,7 @@ export class AppA_UiA {
     }
 
     private updateUiElement() {
-        this.htmlElement.innerHTML = null;
+        clearElement(this.htmlElement);
         if (this.showMeta) {
             if (this.commands) {
                 this.htmlElement.appendChild(this.commands.uiA.htmlElement);
