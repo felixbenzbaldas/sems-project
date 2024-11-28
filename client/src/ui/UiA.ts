@@ -18,6 +18,8 @@ export class UiA {
     headerG : UiA_HeaderG;
     bodyG: UiA_BodyG;
     testG: UiA_TestG;
+
+    // currently also undefined
     object: Entity;
     context: Entity;
     collapsed: boolean;
