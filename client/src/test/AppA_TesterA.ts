@@ -3,7 +3,7 @@ import {ContainerA} from "@/ContainerA";
 import {
     assert,
     assert_notSameAs,
-    assert_sameAs,
+    assert_sameAs, assertFalse,
     downloadText,
     notNullUndefined,
     setWidth,
@@ -86,6 +86,27 @@ export class AppA_TesterA {
                 assert_sameAs(parentUi.uiA.listG.uisOfListItems[2].uiA.headerG.contextIcon.innerText, '');
                 appA.entity.log('human-test: The item withContext should show the appropriate contextIcon -');
                 appA.entity.log('human-test: The contextIcon always appears left of the content - also for the long text.');
+            });
+            semiGroup.testG_nestedTestsA.add('contextAsSubitem',  async run => {
+                let appA = tester.appA.createStarter().createAppWithUI().appA;
+                appA.testMode = true;
+                run.testRunA.appUi = appA.uiA;
+                let parent = await appA.createText('parent');
+                parent.installListA();
+                let inContext = await appA.createText('inContext');
+                let withoutContext = await appA.createText('withoutContext');
+                let outOfContext = await appA.createText('outOfContext');
+                inContext.context = inContext.getPath(parent);
+                outOfContext.context = outOfContext.getPath(await appA.createText('aDummyContext'));
+                await parent.listA.add(inContext);
+                await parent.listA.add(outOfContext);
+                await parent.listA.add(withoutContext);
+                await appA.uiA.content.listA.add(parent);
+                await appA.uiA.update();
+                let parentUi = appA.uiA.content.uiA.listG.uisOfListItems[0];
+                assertFalse(await parentUi.uiA.listG.uisOfListItems[0].uiA.showContextAsSubitem());
+                assert(await parentUi.uiA.listG.uisOfListItems[1].uiA.showContextAsSubitem());
+                assertFalse(await parentUi.uiA.listG.uisOfListItems[2].uiA.showContextAsSubitem());
             });
             semiGroup.testG_nestedTestsA.add('upload',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;

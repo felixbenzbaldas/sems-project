@@ -319,4 +319,12 @@ export class UiA {
             return false;
         }
     }
+
+    async inContext() : Promise<boolean> {
+        return this.context.uiA.getObject() === await this.getObject().resolve(this.getObject().context);
+    }
+
+    async showContextAsSubitem() : Promise<boolean> {
+        return this.getObject().context && !await this.inContext();
+    }
 }
