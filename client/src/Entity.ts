@@ -352,4 +352,14 @@ export class Entity {
             }
         }
     }
+
+    async script_setContextForAllObjectsInContainer() {
+        for (let value of [this, ...this.containerA.mapNameEntity.values()]) {
+            if (value.listA) {
+                (await value.listA.getResolvedList()).forEach((subitem : Entity) => {
+                    subitem.context = subitem.getPath(value);
+                });
+            }
+        }
+    }
 }

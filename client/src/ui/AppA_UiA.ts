@@ -243,6 +243,9 @@ export class AppA_UiA {
             this.getApp().unboundG.createButton('import from old json', async () => {
                 await this.globalEventG.importOldJson();
             }),
+            this.getApp().unboundG.createButton('script: set context for all objects in container', async () => {
+                await this.globalEventG.script_setContextForAllObjectsInContainer();
+            })
         );
         lowPriorityCommands.collapsible = true;
         return this.getApp().unboundG.createTextWithList('commands',

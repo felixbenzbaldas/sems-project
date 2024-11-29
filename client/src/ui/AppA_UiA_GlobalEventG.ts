@@ -142,4 +142,8 @@ export class AppA_UiA_GlobalEventG {
     async removeContext() {
         this.getUiA().focused.uiA.removeContext();
     }
+
+    async script_setContextForAllObjectsInContainer() {
+        await this.getUiA().focused.uiA.getObject().script_setContextForAllObjectsInContainer();
+    }
 }
