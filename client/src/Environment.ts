@@ -30,6 +30,7 @@ export class Environment {
         };
         environment.create_installWindowKeyListener();
         document.body.style.margin = '0rem';
+        document.body.style.overflowY = 'hidden'; // Chrome sometimes shows an unnecessary scrollbar, if not hidden
         environment.updateWindowHeight();
         window.addEventListener('resize', () => {
             environment.updateWindowHeight();
