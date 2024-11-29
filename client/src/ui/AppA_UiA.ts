@@ -102,6 +102,8 @@ export class AppA_UiA {
         this.htmlElement.appendChild(this.statusBar);
         this.htmlElement.appendChild(this.scrollableArea);
         this.scrollableArea.style.overflowY = 'auto';
+        this.scrollableArea.style.paddingLeft = '0.2rem';
+        this.scrollableArea.style.paddingRight = '0.2rem';
         this.statusBar.style.backgroundColor = "#efefef";
         this.statusBar.style.minHeight = '1.2rem';
         this.statusBar.style.maxHeight = '1.2rem';
