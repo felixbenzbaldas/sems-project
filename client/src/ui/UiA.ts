@@ -331,4 +331,8 @@ export class UiA {
     setContext() {
         this.getObject().context = this.getObject().getPath(this.context.uiA.getObject());
     }
+
+    removeContext() {
+        this.getObject().context = undefined;
+    }
 }

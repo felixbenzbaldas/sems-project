@@ -1,6 +1,6 @@
 import type {Entity} from "@/Entity";
 import {ContainerA} from "@/ContainerA";
-import {assert, assert_sameAs, assertFalse, notNullUndefined} from "@/utils";
+import {assert, assert_sameAs, assertFalse, notNullUndefined, nullUndefined} from "@/utils";
 
 export class AppA_TesterA_UiTestG {
 
@@ -95,6 +95,22 @@ export class AppA_TesterA_UiTestG {
 
             assert(notNullUndefined(subitem.context));
             assert_sameAs(await subitem.resolve(subitem.context), parent);
+        });
+        this.addTest('removeContext', async run => {
+            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+            let appA = appUi.entity.appA;
+            let subitem = await appA.createText('subitem');
+            let parent = await appA.createList();
+            parent.installListA();
+            await parent.listA.add(subitem);
+            subitem.context = subitem.getPath(parent);
+            let uiParent = appUi.createUiFor_typed(parent);
+            await uiParent.update();
+            let uiSubitem = uiParent.listG.uisOfListItems[0].uiA;
+
+            uiSubitem.removeContext();
+
+            assert(nullUndefined(subitem.context));
         });
     }
 
