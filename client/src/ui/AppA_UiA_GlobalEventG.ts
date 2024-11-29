@@ -134,4 +134,12 @@ export class AppA_UiA_GlobalEventG {
     async deepCopy() {
         this.getUiA().clipboard = await this.getUiA().focused.getObject().deepCopy().run();
     }
+
+    async setContext() {
+        this.getUiA().focused.uiA.setContext();
+    }
+
+    async removeContext() {
+        this.getUiA().focused.uiA.removeContext();
+    }
 }
