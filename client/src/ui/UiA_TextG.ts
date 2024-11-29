@@ -10,7 +10,7 @@ export class UiA_TextG {
         this.htmlElement.style.borderLeft = 'solid';
     }
 
-    update() {
+    async update() {
         this.htmlElement.innerText = this.getObject().text;
         this.htmlElement.style.minHeight = '1rem';
         this.htmlElement.style.whiteSpace = 'pre-wrap';
@@ -35,7 +35,7 @@ export class UiA_TextG {
         this.updateEmptyMarker();
         this.htmlElement.style.display = 'inline-block';
         this.htmlElement.style.minWidth = '1rem';
-        this.updateCursorStyle();
+        await this.updateCursorStyle();
     }
 
     save() {
@@ -50,11 +50,11 @@ export class UiA_TextG {
         }
     }
 
-    private updateCursorStyle() {
+    async updateCursorStyle() {
         if (this.getUiA().isEditable()) {
             this.htmlElement.style.cursor = 'text';
         } else {
-            if (this.getObject().collapsible && this.getUiA().headerBodyG.hasBodyContent()) {
+            if (this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
                 this.htmlElement.style.cursor = 'pointer';
             } else {
                 this.htmlElement.style.cursor = 'default';

@@ -10,14 +10,14 @@ export class UiA_TestG {
     }
 
     async update() {
-        this.updateHeaderContent();
+        await this.updateHeaderContent();
         await this.updateBodyContent();
     }
 
-    private updateHeaderContent() {
+    async updateHeaderContent() {
         this.headerContent_htmlElement.innerHTML = null;
         this.getUiA().textG.htmlElement.style.color = this.getObject().test_result ? 'green' : 'red';
-        this.entity.uiA.textG.update();
+        await this.entity.uiA.textG.update();
         this.headerContent_htmlElement.appendChild(this.getUiA().textG.htmlElement);
     }
 

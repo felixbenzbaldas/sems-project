@@ -18,8 +18,8 @@ export class UiA_HeaderG {
         this.htmlElement.innerHTML = null;
         this.divForContentAndBodyIcon.innerHTML = null;
         await this.updateContextIcon();
-        this.updateContent();
-        this.updateBodyIcon();
+        await this.updateContent();
+        await this.updateBodyIcon();
         if (this.ownRow()) {
             this.getUiA().htmlElement.style.minWidth = '100%';
         }
@@ -45,7 +45,7 @@ export class UiA_HeaderG {
         this.divForContentAndBodyIcon.style.border = 'solid';
         this.divForContentAndBodyIcon.style.borderWidth = '0.1rem';
         this.focusStyle_update();
-        this.updateCursorStyle();
+        await this.updateCursorStyle();
         this.updateCurrentContainerStyle();
     }
 
@@ -72,7 +72,7 @@ export class UiA_HeaderG {
         return containerMark;
     }
 
-    updateContent() {
+    async updateContent() {
         this.content.innerHTML = null;
         if (this.getObject().isTest) {
             this.content.appendChild(this.getUiA().testG.headerContent_htmlElement);
@@ -84,17 +84,17 @@ export class UiA_HeaderG {
             link.innerText = this.link_getText();
             this.content.appendChild(link);
         } else if (notNullUndefined(this.getObject().text)) {
-            this.entity.uiA.textG.update();
+            await this.entity.uiA.textG.update();
             this.content.appendChild(this.getUiA().textG.htmlElement);
         } else if (notNullUndefined(this.getObject().testRunA)) {
             this.content.appendChild(this.getUiA().testRunG.headerContent_htmlElement);
         }
     }
 
-    updateBodyIcon() {
+    async updateBodyIcon() {
         this.bodyIcon.style.display = 'inline-block';
         this.bodyIcon.style.marginLeft = '0.7rem';
-        if (this.getObject().collapsible && this.getUiA().headerBodyG.hasBodyContent()) {
+        if (this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
             this.bodyIcon.style.display = 'default';
             if (this.entity.uiA.collapsed) {
                 this.bodyIcon.innerText = '[...]';
@@ -132,8 +132,8 @@ export class UiA_HeaderG {
         return notNullUndefined(this.getObject().text) ? this.getObject().text : this.getObject().link;
     }
 
-    updateCursorStyle() {
-        if (this.getObject().collapsible && this.getUiA().headerBodyG.hasBodyContent()) {
+    async updateCursorStyle() {
+        if (this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
             this.divForContentAndBodyIcon.style.cursor = 'pointer';
         } else {
             this.divForContentAndBodyIcon.style.cursor = 'default';

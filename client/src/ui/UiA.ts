@@ -132,7 +132,7 @@ export class UiA {
                     await this.headerG.clickEvent();
                 }
             }
-            if (!this.collapsed && this.headerBodyG.hasBodyContent()) {
+            if (!this.collapsed && await this.headerBodyG.hasBodyContent()) {
                 await this.listG.click(text);
             }
         } else if (this.getObject().listA) {
@@ -256,8 +256,8 @@ export class UiA {
 
     async toggleCollapsible() {
         this.getObject().collapsible = !this.getObject().collapsible;
-        this.headerG.updateCursorStyle();
-        this.headerG.updateBodyIcon();
+        await this.headerG.updateCursorStyle();
+        await this.headerG.updateBodyIcon();
         await this.ensureExpanded();
     }
 
@@ -276,7 +276,7 @@ export class UiA {
     async ensureExpanded() {
         if (this.getObject().listA?.jsList.length > 0) {
             this.collapsed = false;
-            this.headerG.updateBodyIcon();
+            await this.headerG.updateBodyIcon();
             await this.listG.update();
             await this.bodyG.update();
         }
@@ -284,7 +284,7 @@ export class UiA {
 
     async ensureCollapsed() {
         this.collapsed = true;
-        this.headerG.updateBodyIcon();
+        await this.headerG.updateBodyIcon();
         await this.bodyG.update();
     }
 
@@ -305,7 +305,7 @@ export class UiA {
     }
 
     async update_text() {
-        this.textG.update();
+        await this.textG.update();
     }
 
     async update_context() {

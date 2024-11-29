@@ -13,7 +13,7 @@ export class UiA_BodyG {
 
     async update() {
         this.htmlElement.innerHTML = null;
-        if (!this.entity.uiA.collapsed && this.getUiA().headerBodyG.hasBodyContent()) {
+        if (!this.entity.uiA.collapsed && await this.getUiA().headerBodyG.hasBodyContent()) {
             this.htmlElement.style.display = 'block';
             await this.content_update();
             this.htmlElement.appendChild(this.content_htmlElement);

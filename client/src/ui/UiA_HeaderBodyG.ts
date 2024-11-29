@@ -35,20 +35,20 @@ export class UiA_HeaderBodyG {
     }
 
     async update_addedListItem(position: number) {
-        if (this.showBody()) {
+        if (await this.showBody()) {
             if (!this.isUiListInstalled()) {
                 await this.entity.uiA.listG.update();
             }
             await this.entity.uiA.listG.update_addedListItem(position);
         }
-        this.entity.uiA.headerG.updateBodyIcon();
+        await this.entity.uiA.headerG.updateBodyIcon();
     }
 
     async update_removedListItem(position: number) {
-        if (this.showBody()) {
+        if (await this.showBody()) {
             await this.entity.uiA.listG.update_removedListItem(position);
         } else {
-            this.entity.uiA.headerG.updateBodyIcon();
+            await this.entity.uiA.headerG.updateBodyIcon();
             await this.entity.uiA.bodyG.update();
         }
     }
@@ -57,8 +57,8 @@ export class UiA_HeaderBodyG {
         return notNullUndefined(this.entity.uiA.listG.uisOfListItems);
     }
 
-    showBody() : boolean {
-        if (this.hasBodyContent()) {
+    async showBody() : Promise<boolean> {
+        if (await this.hasBodyContent()) {
             if (this.getObject().collapsible) {
                 if (this.entity.uiA.collapsed) {
                     return false;
@@ -73,13 +73,17 @@ export class UiA_HeaderBodyG {
         }
     }
 
-    hasBodyContent() : boolean {
+    async hasBodyContent() : Promise<boolean> {
         if (this.getObject().testRunA) {
             return this.entity.uiA.testRunG.hasBodyContent();
         } else if (this.getObject().isTest) {
             return notNullUndefined(this.getObject().test_result);
         } else {
-            return this.getObject().listA && this.getObject().listA.jsList.length > 0;
+            if (await this.entity.uiA.hasContextAsSubitem()) {
+                return true;
+            } else {
+                return this.getObject().listA && this.getObject().listA.jsList.length > 0;
+            }
         }
     }
 
