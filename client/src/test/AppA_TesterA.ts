@@ -98,6 +98,8 @@ export class AppA_TesterA {
                 let outOfContext = await appA.createText('outOfContext');
                 inContext.context = inContext.getPath(parent);
                 outOfContext.context = outOfContext.getPath(await appA.createText('aDummyContext'));
+                outOfContext.installListA();
+                await outOfContext.listA.add(await appA.createText('aDummySubitem'));
                 await parent.listA.add(inContext);
                 await parent.listA.add(outOfContext);
                 await parent.listA.add(withoutContext);
@@ -109,6 +111,7 @@ export class AppA_TesterA {
                 assertFalse(await parentUi.uiA.listG.uisOfListItems[2].uiA.hasContextAsSubitem());
                 //
                 assert(await parentUi.uiA.listG.uisOfListItems[1].uiA.headerBodyG.hasBodyContent());
+                appA.entity.log('human-test: outOfContext shows "contextAsSubitem"');
             });
             semiGroup.testG_nestedTestsA.add('upload',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;

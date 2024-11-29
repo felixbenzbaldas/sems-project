@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined} from "@/utils";
+import {notNullUndefined, textElem} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 // TODO the body aspect should only exist if showBody === true
@@ -29,11 +29,18 @@ export class UiA_BodyG {
         this.content_htmlElement = document.createElement('div');
         if (this.getObject().isTest) {
             this.content_htmlElement.appendChild(this.getUiA().testG.bodyContent.uiA.htmlElement);
-        } else if (this.getObject().listA && !this.getObject().testRunA) {
-            await this.getUiA().listG.update();
-            this.content_htmlElement = this.getUiA().listG.htmlElement;
         } else if (this.getObject().testRunA) {
             this.content_htmlElement = this.getUiA().testRunG.bodyContent.uiA.htmlElement;
+        } else {
+            if (await this.getUiA().hasContextAsSubitem()) {
+                let text = textElem('[contextAsSubitem]');
+                text.style.marginLeft = '1rem';
+                this.content_htmlElement.appendChild(text);
+            }
+            if (this.getObject().listA && !this.getObject().testRunA) {
+                await this.getUiA().listG.update();
+                this.content_htmlElement.appendChild(this.getUiA().listG.htmlElement);
+            }
         }
     }
 
