@@ -33,21 +33,26 @@ export class UiA_BodyG {
             this.content_htmlElement = this.getUiA().testRunG.bodyContent.uiA.htmlElement;
         } else {
             if (await this.getUiA().hasContextAsSubitem()) {
-                let contextObj = await this.getObject().resolve(this.getObject().context);
-                let contextAsSubitem = this.entity.getApp_typed().unboundG.createTextWithList('[context]', contextObj);
-                contextAsSubitem.collapsible = true;
-                contextAsSubitem.editable = false;
-                let ui = this.entity.getApp_typed().uiA.createUiFor_typed(contextAsSubitem);
-                ui.editable = true;
-                await ui.update()
-                ui.htmlElement.style.marginBottom = '0.1rem';
-                this.content_htmlElement.appendChild(ui.htmlElement);
+                this.content_htmlElement.appendChild(await this.createContextAsSubitem());
             }
             if (this.getObject().listA && !this.getObject().testRunA) {
                 await this.getUiA().listG.update();
                 this.content_htmlElement.appendChild(this.getUiA().listG.htmlElement);
             }
         }
+    }
+
+    async createContextAsSubitem() : Promise<HTMLElement> {
+        let contextObj = await this.getObject().resolve(this.getObject().context);
+        let contextAsSubitem = this.entity.getApp_typed().unboundG.createTextWithList('[context]', contextObj);
+        contextAsSubitem.collapsible = true;
+        contextAsSubitem.editable = false;
+        let ui = this.entity.getApp_typed().uiA.createUiFor_typed(contextAsSubitem);
+        ui.editable = true;
+        await ui.update()
+        ui.htmlElement.style.marginBottom = '0.1rem';
+        ui.headerG.htmlElement.style.color = 'grey';
+        return ui.htmlElement;
     }
 
     getUiA() : UiA {
