@@ -104,9 +104,9 @@ export class AppA_TesterA {
                 await appA.uiA.content.listA.add(parent);
                 await appA.uiA.update();
                 let parentUi = appA.uiA.content.uiA.listG.uisOfListItems[0];
-                assertFalse(await parentUi.uiA.listG.uisOfListItems[0].uiA.showContextAsSubitem());
-                assert(await parentUi.uiA.listG.uisOfListItems[1].uiA.showContextAsSubitem());
-                assertFalse(await parentUi.uiA.listG.uisOfListItems[2].uiA.showContextAsSubitem());
+                assertFalse(await parentUi.uiA.listG.uisOfListItems[0].uiA.hasContextAsSubitem());
+                assert(await parentUi.uiA.listG.uisOfListItems[1].uiA.hasContextAsSubitem());
+                assertFalse(await parentUi.uiA.listG.uisOfListItems[2].uiA.hasContextAsSubitem());
             });
             semiGroup.testG_nestedTestsA.add('upload',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;

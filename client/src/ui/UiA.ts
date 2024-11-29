@@ -324,7 +324,7 @@ export class UiA {
         return this.context.uiA.getObject() === await this.getObject().resolve(this.getObject().context);
     }
 
-    async showContextAsSubitem() : Promise<boolean> {
+    async hasContextAsSubitem() : Promise<boolean> {
         return this.getObject().context && !await this.inContext();
     }
 
