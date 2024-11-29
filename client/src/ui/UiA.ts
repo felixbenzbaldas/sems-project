@@ -328,4 +328,7 @@ export class UiA {
         return this.getObject().context && !await this.inContext();
     }
 
+    setContext() {
+        this.getObject().context = this.getObject().getPath(this.context.uiA.getObject());
+    }
 }
