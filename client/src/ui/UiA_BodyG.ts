@@ -2,6 +2,7 @@ import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
+// TODO the body aspect should only exist if showBody === true
 export class UiA_BodyG {
 
     htmlElement : HTMLElement = document.createElement('div');
@@ -12,7 +13,7 @@ export class UiA_BodyG {
 
     async update() {
         this.htmlElement.innerHTML = null;
-        if (!this.entity.uiA.collapsed && this.hasContent()) {
+        if (!this.entity.uiA.collapsed && this.getUiA().headerBodyG.hasBodyContent()) {
             this.htmlElement.style.display = 'block';
             await this.content_update();
             this.htmlElement.appendChild(this.content_htmlElement);
@@ -33,16 +34,6 @@ export class UiA_BodyG {
             this.content_htmlElement = this.getUiA().listG.htmlElement;
         } else if (this.getObject().testRunA) {
             this.content_htmlElement = this.getUiA().testRunG.bodyContent.uiA.htmlElement;
-        }
-    }
-
-    hasContent() : boolean {
-        if (this.getObject().testRunA) {
-            return this.getUiA().testRunG.hasBodyContent();
-        } else if (this.getObject().isTest) {
-            return notNullUndefined(this.getObject().test_result);
-        } else {
-            return this.getObject().listA && this.getObject().listA.jsList.length > 0;
         }
     }
 

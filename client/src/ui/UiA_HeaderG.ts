@@ -94,7 +94,7 @@ export class UiA_HeaderG {
     updateBodyIcon() {
         this.bodyIcon.style.display = 'inline-block';
         this.bodyIcon.style.marginLeft = '0.7rem';
-        if (this.getObject().collapsible && this.getUiA().bodyG.hasContent()) {
+        if (this.getObject().collapsible && this.getUiA().headerBodyG.hasBodyContent()) {
             this.bodyIcon.style.display = 'default';
             if (this.entity.uiA.collapsed) {
                 this.bodyIcon.innerText = '[...]';
@@ -133,7 +133,7 @@ export class UiA_HeaderG {
     }
 
     updateCursorStyle() {
-        if (this.getObject().collapsible && this.getUiA().bodyG.hasContent()) {
+        if (this.getObject().collapsible && this.getUiA().headerBodyG.hasBodyContent()) {
             this.divForContentAndBodyIcon.style.cursor = 'pointer';
         } else {
             this.divForContentAndBodyIcon.style.cursor = 'default';

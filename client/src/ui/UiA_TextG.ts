@@ -54,7 +54,7 @@ export class UiA_TextG {
         if (this.getUiA().isEditable()) {
             this.htmlElement.style.cursor = 'text';
         } else {
-            if (this.getObject().collapsible && this.getUiA().bodyG.hasContent()) {
+            if (this.getObject().collapsible && this.getUiA().headerBodyG.hasBodyContent()) {
                 this.htmlElement.style.cursor = 'pointer';
             } else {
                 this.htmlElement.style.cursor = 'default';

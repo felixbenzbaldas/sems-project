@@ -132,7 +132,7 @@ export class UiA {
                     await this.headerG.clickEvent();
                 }
             }
-            if (!this.collapsed && this.bodyG.hasContent()) {
+            if (!this.collapsed && this.headerBodyG.hasBodyContent()) {
                 await this.listG.click(text);
             }
         } else if (this.getObject().listA) {
@@ -327,4 +327,5 @@ export class UiA {
     async showContextAsSubitem() : Promise<boolean> {
         return this.getObject().context && !await this.inContext();
     }
+
 }

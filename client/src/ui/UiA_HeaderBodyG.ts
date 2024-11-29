@@ -58,8 +58,8 @@ export class UiA_HeaderBodyG {
     }
 
     showBody() : boolean {
-        if (this.entity.uiA.bodyG.hasContent()) {
-            if (this.entity.uiA.getObject().collapsible) {
+        if (this.hasBodyContent()) {
+            if (this.getObject().collapsible) {
                 if (this.entity.uiA.collapsed) {
                     return false;
                 } else {
@@ -71,5 +71,19 @@ export class UiA_HeaderBodyG {
         } else {
             return false;
         }
+    }
+
+    hasBodyContent() : boolean {
+        if (this.getObject().testRunA) {
+            return this.entity.uiA.testRunG.hasBodyContent();
+        } else if (this.getObject().isTest) {
+            return notNullUndefined(this.getObject().test_result);
+        } else {
+            return this.getObject().listA && this.getObject().listA.jsList.length > 0;
+        }
+    }
+
+    getObject() : Entity {
+        return this.entity.uiA.getObject();
     }
 }
