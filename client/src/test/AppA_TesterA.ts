@@ -91,6 +91,7 @@ export class AppA_TesterA {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
                 run.testRunA.appUi = appA.uiA;
+                appA.entity.uiA.editable = true;
                 let parent = await appA.createText('parent');
                 parent.installListA();
                 let inContext = await appA.createText('inContext');
