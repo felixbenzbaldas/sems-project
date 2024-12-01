@@ -208,6 +208,7 @@ export class UiA {
             let position = 0;
             let listA = this.getObject().listA;
             await listA.insertObjectAtPosition(created, position);
+            created.context = created.getPath(this.getObject());
             await listA.entity.uis_update_addedListItem(position);
             await this.ensureExpanded();
             this.entity.getApp().appA.uiA.focus(this.entity.uiA.listG.uisOfListItems.at(position));
