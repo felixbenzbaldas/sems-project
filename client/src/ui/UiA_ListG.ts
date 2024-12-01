@@ -71,6 +71,7 @@ export class UiA_ListG {
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         let listA = this.getObject().listA;
         await listA.insertObjectAtPosition(created, position);
+        created.context = created.getPath(this.getObject());
         await listA.entity.uis_update_addedListItem(position);
         this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
     }
