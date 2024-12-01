@@ -157,6 +157,21 @@ export class AppA_TesterA_UiTestG {
             let createdUi = appUi.content.uiA.listG.uisOfListItems[0].uiA.listG.uisOfListItems[1];
             assert_sameAs(appUi.focused, createdUi);
         });
+        defaultActionTest.testG_installNestedTestsA();
+        defaultActionTest.installContainerA();
+        defaultActionTest.testG_nestedTestsA.add('withAppAsParent', async run => {
+            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+            await appUi.entity.uiA.update();
+            await appUi.globalEventG.newSubitem();
+
+            await appUi.globalEventG.defaultAction();
+
+            let created = await appUi.content.listA.getResolved(1);
+            assert(notNullUndefined(created));
+            assert(nullUndefined(created.context));
+            let createdUi = appUi.content.uiA.listG.uisOfListItems[1];
+            assert_sameAs(appUi.focused, createdUi);
+        });
     }
 
     addTest(name : string, jsFunction: (testRun: Entity) => void) {
