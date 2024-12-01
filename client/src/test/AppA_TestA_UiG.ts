@@ -48,16 +48,6 @@ export class AppA_TestA_UiG {
 
                 return collapsible.uiA.collapsed;
             }),
-            this.createTest('ui_newSubitem', async test => {
-                let app = this.entity.appA.createStarter().createAppWithUI();
-                await app.appA.uiA.globalEventG.defaultAction();
-
-                await app.appA.uiA.globalEventG.newSubitem();
-
-                let firstObject = await app.appA.uiA.content.listA.getResolved(0);
-                return firstObject.listA.jsList.length == 1
-                    && (await firstObject.listA.getResolved(0)).text === '';
-            }),
             this.createTest('ui_switchCurrentContainer', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI()
                 await app.appA.uiA.globalEventG.defaultAction();

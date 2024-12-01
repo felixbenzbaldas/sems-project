@@ -112,9 +112,25 @@ export class AppA_TesterA_UiTestG {
 
             assert(nullUndefined(subitem.context));
         });
-        this.addTest('newSubitem-onApp', async run => {
+        let newSubitemTest = this.test.testG_nestedTestsA.add('newSubitem', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
+            await appUi.entity.uiA.update();
+            await appUi.globalEventG.newSubitem();
+
+            await appUi.globalEventG.newSubitem();
+
+            let firstObj = await appUi.content.listA.getResolved(0);
+            let created = await firstObj.listA.getResolved(0);
+            assert(notNullUndefined(created));
+            assert_sameAs((await created.resolve(created.context)), firstObj);
+            let createdUi = appUi.content.uiA.listG.uisOfListItems[0].uiA.listG.uisOfListItems[0];
+            assert_sameAs(appUi.focused, createdUi);
+        });
+        newSubitemTest.testG_installNestedTestsA();
+        newSubitemTest.installContainerA();
+        newSubitemTest.testG_nestedTestsA.add('onApp', async run => {
+            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             await appUi.entity.uiA.update();
 
             await appUi.globalEventG.newSubitem();
