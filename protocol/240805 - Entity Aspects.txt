@@ -6,6 +6,6 @@ Maybe this is a violation of OOP-principles. The Entity class is more a data str
 
 These ideas are part of a concept which is called Entity Aspects.
 
-Further information for Entity Aspects will be provided.
+For more information about Entity-Aspects see: https//einfaches-web.org/?path=ea
 
 (Entity Aspects is not the same as Aspect-Oriented Programming.)
