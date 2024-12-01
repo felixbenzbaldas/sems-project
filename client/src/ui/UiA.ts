@@ -226,7 +226,7 @@ export class UiA {
         if (notNullUndefined(obj.context)) {
             if (await obj.resolve(obj.context) === contextObj) {
                 obj.context = null;
-                obj.uis_update_context();
+                await obj.uis_update_context();
             }
         }
         contextObj.listA.jsList.splice(position, 1);
