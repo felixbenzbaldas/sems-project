@@ -275,10 +275,9 @@ export class UiA {
     }
 
     async ensureExpanded() {
-        if (this.getObject().listA?.jsList.length > 0) {
+        if (this.isHeaderBody() && await this.headerBodyG.hasBodyContent()) {
             this.collapsed = false;
             await this.headerG.updateBodyIcon();
-            await this.listG.update();
             await this.bodyG.update();
         }
     }
