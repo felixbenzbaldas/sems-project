@@ -8,7 +8,7 @@ describe('simple list', () => {
         let app : Entity = StarterA.createApp();
         let list : Entity = app.appA.unboundG.createList();
 
-        await list.listA.add(app.appA.createEntityWithApp());
+        await list.listA.deprecated_add(app.appA.createEntityWithApp());
 
         expect(list.listA.jsList.length).toBe(1);
     });
@@ -25,7 +25,7 @@ describe('simple list', () => {
     it('can get description', async () => {
         let app : Entity = StarterA.createApp();
         let list : Entity = app.appA.unboundG.createList();
-        await list.listA.add(app.appA.createEntityWithApp());
+        await list.listA.deprecated_add(app.appA.createEntityWithApp());
 
         let description = list.getDescription();
 

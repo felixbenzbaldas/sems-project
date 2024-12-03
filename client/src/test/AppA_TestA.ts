@@ -48,10 +48,10 @@ export class AppA_TestA {
         this.appA.uiA.content.listA.jsList = [];
         let testResults : TestResults = await this.run(tests);
         if (testResults.failed.length > 0) {
-            await this.appA.uiA.content.listA.add(this.appA.unboundG.createTextWithList('failed tests (' + testResults.failed.length + ')',
+            await this.appA.uiA.content.listA.deprecated_add(this.appA.unboundG.createTextWithList('failed tests (' + testResults.failed.length + ')',
                 ...testResults.failed));
         }
-        await this.appA.uiA.content.listA.add(
+        await this.appA.uiA.content.listA.deprecated_add(
             this.appA.unboundG.createCollapsible('successful tests (' + testResults.successful.length + ')',
                 ...testResults.successful),
             this.appA.unboundG.createText(''),

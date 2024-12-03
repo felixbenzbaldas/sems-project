@@ -72,15 +72,6 @@ export class AppA {
         return this.direct(entity).pathA;
     }
 
-    async addAllToListFromRawData(list: Entity, rawData: any) {
-        for (let path of rawData.list) {
-            let dependencyValue = (rawData.dependencies as Array<any>).find((dependency : any) =>
-                dependency.name === path.at(1)
-            );
-            await list.listA.add(await this.createText(dependencyValue.text));
-        }
-    }
-
     async createCollapsible(text: string, ...jsList : Array<Entity>) {
         return await this.currentContainer.containerA.createCollapsible(text, ...jsList);
     }

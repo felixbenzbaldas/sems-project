@@ -9,22 +9,21 @@ export class ListA {
         this.jsList = jsList;
     }
 
-    async addAndUpdateUi(...items : Array<Entity>) {
-        await this.add(...items);
-        await this.entity.updateUi();
-    }
-
-    async add(...items : Array<Entity>) {
+    async deprecated_add(...items : Array<Entity>) {
         for (let item of items) {
             this.jsList.push(this.entity.pathOrObject(item));
         }
     }
 
-    add_path(path : Array<string>) {
-        this.jsList.push(this.entity.getApp_typed().createPath(path, this.entity));
+    add(object: Entity) {
+        this.jsList.push(this.entity.getPath(object));
     }
 
-    add_direct(entity: Entity) {
+    addByListOfNames(listOfNames : Array<string>) {
+        this.jsList.push(this.entity.getApp_typed().createPath(listOfNames, this.entity));
+    }
+
+    addDirect(entity: Entity) {
         this.jsList.push(this.entity.getApp_typed().direct(this.entity));
     }
 

@@ -23,7 +23,7 @@ export class AppA_TesterA {
 
     async run() {
         let run = await this.test.testG_run();
-        await this.entity.appA.uiA.content.listA.add(run);
+        await this.entity.appA.uiA.content.listA.deprecated_add(run);
     }
 
     createTestForSimpleSoftware() : Entity {
@@ -47,7 +47,7 @@ export class AppA_TesterA {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
                 run.testRunA.appUi = appA.uiA;
-                await appA.uiA.content.listA.add(
+                await appA.uiA.content.listA.deprecated_add(
                     appA.unboundG.createButton('activate test-app', () => {
                     }),
                     appA.unboundG.createButton('switch off testMode', () => {
@@ -74,11 +74,11 @@ export class AppA_TesterA {
                 inContext.context = inContext.getPath(parent);
                 longText.context = longText.getPath(parent);
                 outOfContext.context = outOfContext.getPath(await appA.createText('aDummyContext'));
-                await parent.listA.add(inContext);
-                await parent.listA.add(outOfContext);
-                await parent.listA.add(withoutContext);
-                await parent.listA.add(longText);
-                await appA.uiA.content.listA.add(parent);
+                await parent.listA.deprecated_add(inContext);
+                await parent.listA.deprecated_add(outOfContext);
+                await parent.listA.deprecated_add(withoutContext);
+                await parent.listA.deprecated_add(longText);
+                await appA.uiA.content.listA.deprecated_add(parent);
                 await appA.uiA.update();
                 let parentUi = appA.uiA.content.uiA.listG.uisOfListItems[0];
                 assert_sameAs(parentUi.uiA.listG.uisOfListItems[0].uiA.headerG.contextIcon.innerText, '-');
@@ -100,11 +100,11 @@ export class AppA_TesterA {
                 inContext.context = inContext.getPath(parent);
                 outOfContext.context = outOfContext.getPath(await appA.createText('aDummyContext'));
                 outOfContext.installListA();
-                await outOfContext.listA.add(await appA.createText('aDummySubitem'));
-                await parent.listA.add(inContext);
-                await parent.listA.add(outOfContext);
-                await parent.listA.add(withoutContext);
-                await appA.uiA.content.listA.add(parent);
+                await outOfContext.listA.deprecated_add(await appA.createText('aDummySubitem'));
+                await parent.listA.deprecated_add(inContext);
+                await parent.listA.deprecated_add(outOfContext);
+                await parent.listA.deprecated_add(withoutContext);
+                await appA.uiA.content.listA.deprecated_add(parent);
                 await appA.uiA.update();
                 let parentUi = appA.uiA.content.uiA.listG.uisOfListItems[0];
                 assertFalse(await parentUi.uiA.listG.uisOfListItems[0].uiA.hasContextAsSubitem());
@@ -183,8 +183,8 @@ export class AppA_TesterA {
             let object = await app.createList();
             let dependency = await app.createList();
             let dependencyOfDependency = await app.createText('dependencyOfDependency');
-            await object.listA.add(dependency);
-            await dependency.listA.add(dependencyOfDependency);
+            await object.listA.deprecated_add(dependency);
+            await dependency.listA.deprecated_add(dependencyOfDependency);
 
             let dependencies = await object.getDependencies();
 
@@ -198,7 +198,7 @@ export class AppA_TesterA {
             object.text = 'foo';
             object.collapsible = true;
             let dependency = await app.createList();
-            await object.listA.add(dependency);
+            await object.listA.deprecated_add(dependency);
 
             let copy : Entity = await object.shallowCopy();
 
@@ -212,7 +212,7 @@ export class AppA_TesterA {
             object.text = 'foo';
             object.collapsible = true;
             let dependency = await app.createText('dependency');
-            await object.listA.add(dependency);
+            await object.listA.deprecated_add(dependency);
 
             let copy : Entity = await object.deepCopy().run();
 
@@ -278,7 +278,7 @@ export class AppA_TesterA {
             container.installContainerA();
             app.appA.currentContainer = container;
             let subitemAndContained = await app.appA.createText('subitem + contained');
-            await container.listA.add(subitemAndContained);
+            await container.listA.deprecated_add(subitemAndContained);
 
             let exported = await container.export();
 

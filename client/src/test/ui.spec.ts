@@ -21,15 +21,6 @@ describe('ui', () => {
         expect(json.content.list).toEqual([]);
     });
 
-    it('can flat import to content', async () => {
-        let app = StarterA.createAppWithUI();
-        app.appA.uiA.input.input.text = '{"list":[["..","0"]],"dependencies":[{"name":"0","text":"new item"}]}';
-
-        await app.appA.uiA.globalEventG.flatImportToContent();
-
-        expect(app.containerA.mapNameEntity.size).toBe(1);
-    });
-
     test('At beginning the app object has the focus', async () => {
         let app = StarterA.createAppWithUI();
 

@@ -52,7 +52,7 @@ export class AppA_TesterA_UiTestG {
             let appA = appUi.entity.appA;
             let child = await appA.createText('child');
             let parent = await appA.createList();
-            await parent.listA.add(child);
+            await parent.listA.deprecated_add(child);
             child.context = child.getPath(parent);
             let parentUi = appUi.createUiFor_typed(parent);
             await parentUi.update();
@@ -74,7 +74,7 @@ export class AppA_TesterA_UiTestG {
             markedContainer.installListA();
             appA.entity.containerA.bind(markedContainer,'sa9llaMlry'); // TODO should not be hardcoded
             markedContainer.text = 'marked container';
-            await appUi.content.listA.add(markedContainer);
+            await appUi.content.listA.deprecated_add(markedContainer);
 
             let ui = appUi.createUiFor_typed(markedContainer);
 
@@ -86,7 +86,7 @@ export class AppA_TesterA_UiTestG {
             let subitem = await appA.createText('subitem');
             let parent = await appA.createList();
             parent.installListA();
-            await parent.listA.add(subitem);
+            await parent.listA.deprecated_add(subitem);
             let uiParent = appUi.createUiFor_typed(parent);
             await uiParent.update();
             let uiSubitem = uiParent.listG.uisOfListItems[0].uiA;
@@ -102,7 +102,7 @@ export class AppA_TesterA_UiTestG {
             let subitem = await appA.createText('subitem');
             let parent = await appA.createList();
             parent.installListA();
-            await parent.listA.add(subitem);
+            await parent.listA.deprecated_add(subitem);
             subitem.context = subitem.getPath(parent);
             let uiParent = appUi.createUiFor_typed(parent);
             await uiParent.update();

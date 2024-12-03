@@ -122,10 +122,8 @@ export class StarterA {
         this.createData();
         let website = await this.data.listA.findByText(this.hostname())
         let start = await website.listA.findByText('start');
-        for (let i = 0; i < start.listA.jsList.length; i++) {
-            await this.createdApp.appA.uiA.content.listA.add(
-                await start.listA.getResolved(i)
-            );
+        for (let resolved of await start.listA.getResolvedList()) {
+            this.createdApp.appA.uiA.content.listA.add(resolved);
         }
         if (this.getEnvironment().setTitle)  {
             this.getEnvironment().setTitle((await (await website.listA.findByText('title'))?.listA.getResolved(0)).text);
@@ -149,7 +147,7 @@ export class StarterA {
         this.createAppWithUI();
         this.createData();
         let listOfNames = ['..', this.data.name, ...pathString.split('-')];
-        this.createdApp.appA.uiA.content.listA.add_path(listOfNames);
+        this.createdApp.appA.uiA.content.listA.addByListOfNames(listOfNames);
         await this.createdApp.updateUi();
         await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
         return this.createdApp;

@@ -44,10 +44,10 @@ export class UiA_TestG {
                 }
             }
             await updateLogFunc();
-            await this.bodyContent.listA.add(appA.unboundG.createCollapsible('log',
+            await this.bodyContent.listA.deprecated_add(appA.unboundG.createCollapsible('log',
                 log,
                 appA.unboundG.createButton('update log', updateLogFunc)));
-            await this.bodyContent.listA.add(appA.unboundG.createCollapsible('ui',
+            await this.bodyContent.listA.deprecated_add(appA.unboundG.createCollapsible('ui',
                 this.getObject().test_app));
         }
         this.bodyContent.uiA = new UiA(this.bodyContent);
