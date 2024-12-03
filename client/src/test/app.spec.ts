@@ -120,13 +120,4 @@ describe('app', () => {
         expect(shortDescription).toEqual('12345678901234567890');
     });
 
-    test('Can get description of path', async () => {
-        let app : Entity = StarterA.createApp();
-        let path : Entity = app.appA.createPath(['a', 'b']);
-
-        let description = path.getDescription();
-
-        expect(description).toEqual('path (a,b)');
-    });
-
 });

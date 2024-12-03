@@ -290,7 +290,7 @@ export class AppA_TesterA {
         test.testG_nestedTestsA.add('jsonWithoutContainedObjects', async run => {
             let app = tester.appA.createStarter().createApp();
             let object = app.appA.unboundG.createTextWithList('object');
-            object.context = app.appA.createPath(['aName']);
+            object.context = app.appA.createPath(['aName'], object);
 
             let json = object.json_withoutContainedObjects();
 
