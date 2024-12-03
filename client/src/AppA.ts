@@ -61,7 +61,7 @@ export class AppA {
         return path;
     }
 
-    createPath_direct(entity : Entity) {
+    direct(entity : Entity) {
         let path = this.createEntityWithApp();
         path.installPathA();
         path.pathA.direct = entity;

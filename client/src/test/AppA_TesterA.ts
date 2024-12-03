@@ -335,7 +335,7 @@ export class AppA_TesterA {
         pathTest.testG_nestedTestsA.add('direct', async test => {
             let appA = tester.appA.createStarter().createApp_typed();
             let entity = appA.createEntityWithApp();
-            let path = appA.createPath_direct(entity);
+            let path = appA.direct(entity);
 
             let resolved = await path.pathA.resolve();
 
@@ -357,7 +357,7 @@ export class AppA_TesterA {
             appA.logG.toListOfStrings = true;
             let list : Entity = appA.unboundG.createList();
             let subitem = appA.unboundG.createText('findMe');
-            list.listA.jsList.push(appA.createPath_direct(subitem));
+            list.listA.jsList.push(appA.direct(subitem));
 
             let found = await list.listA.findByText('findMe');
 
