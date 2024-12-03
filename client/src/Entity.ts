@@ -102,12 +102,16 @@ export class Entity {
     }
 
     async resolve(path: Entity) : Promise<Entity> {
-        if (path.pathA.listOfNames.length === 0) {
+        return this.resolveListOfNames(path.pathA.listOfNames);
+    }
+
+    async resolveListOfNames(listOfNames : Array<string>) : Promise<Entity> {
+        if (listOfNames.length === 0) {
             return this;
-        } else if (path.pathA.listOfNames.at(0) === '..') {
-            return this.container.resolve(path.pathA.withoutFirst());
+        } else if (listOfNames.at(0) === '..') {
+            return this.container.resolveListOfNames(listOfNames.slice(1));
         } else {
-            return this.containerA.mapNameEntity.get(path.pathA.listOfNames[0]).resolve(path.pathA.withoutFirst());
+            return this.containerA.mapNameEntity.get(listOfNames[0]).resolveListOfNames(listOfNames.slice(1));
         }
     }
 
