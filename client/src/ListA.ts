@@ -20,6 +20,10 @@ export class ListA {
         }
     }
 
+    add_path(path : Array<string>) {
+        this.jsList.push(this.entity.getApp_typed().createPath(path, this.entity));
+    }
+
     json_withoutContainedObjects() {
         return this.jsList.map(entity => {
             if (entity.pathA) {

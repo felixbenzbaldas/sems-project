@@ -60,16 +60,16 @@ export class AppA_UnboundG {
         entity.link = json.link;
         entity.editable = json.editable;
         if (notNullUndefined(json.context)) {
-            entity.context = this.entity.appA.createPath(json.context);
+            entity.context = this.entity.appA.createPath(json.context, entity);
         }
         if (notNullUndefined(json.list)) {
             entity.installListA();
             entity.listA.jsList = [];
             for (let current of json.list) {
                 if (current instanceof Array) {
-                    entity.listA.jsList.push(this.entity.appA.createPath(current));
+                    entity.listA.jsList.push(this.entity.appA.createPath(current, entity));
                 } else {
-                    entity.listA.jsList.push(this.createFromJson(current));
+                    entity.listA.jsList.push(this.createFromJson(current)); // TODO use direct
                 }
             }
         }

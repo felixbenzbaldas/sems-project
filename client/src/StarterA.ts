@@ -150,7 +150,7 @@ export class StarterA {
         this.createAppWithUI();
         this.createData();
         let listOfNames = ['..', this.data.name, ...pathString.split('-')];
-        await this.createdApp.appA.uiA.content.listA.add(this.createdApp.appA.createPath(listOfNames));
+        this.createdApp.appA.uiA.content.listA.add_path(listOfNames);
         await this.createdApp.updateUi();
         await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
         return this.createdApp;
