@@ -136,18 +136,6 @@ export class AppA_TestA {
                 app.log('path = ' + list.listA.jsList.at(0).getShortDescription());
                 return await list.deprecated_resolve(list.listA.jsList.at(0)) === listItem;
             }),
-            this.createTest('list_findByText', async test => {
-                test.test_app = this.appA.createStarter().createApp();
-                let app = test.test_app;
-                app.appA.logG.toListOfStrings = true;
-                let list : Entity = await app.appA.createList();
-                let subitem = await app.appA.createText('findMe');
-                await list.listA.add(subitem);
-
-                let found = await list.listA.findByText('findMe');
-
-                assert_sameAs(found, subitem);
-            }),
             this.createTest('createStarter', async test => {
                 let starterApplication = new Entity();
                 starterApplication.appA = new AppA(starterApplication);

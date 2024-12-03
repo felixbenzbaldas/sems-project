@@ -352,6 +352,17 @@ export class AppA_TesterA {
 
             assert_sameAs(resolved, contained);
         });
+        test.testG_nestedTestsA.add('list-findByText', async test => {
+            let appA = tester.appA.createStarter().createApp_typed();
+            appA.logG.toListOfStrings = true;
+            let list : Entity = appA.unboundG.createList();
+            let subitem = appA.unboundG.createText('findMe');
+            list.listA.jsList.push(appA.createPath_direct(subitem));
+
+            let found = await list.listA.findByText('findMe');
+
+            assert_sameAs(found, subitem);
+        });
         return test;
     }
 }

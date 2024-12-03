@@ -32,7 +32,7 @@ export class ListA {
     async getResolved(index : number) : Promise<Entity> {
         let entity = this.jsList[index];
         if (entity.pathA) {
-            return await this.entity.deprecated_resolve(entity);
+            return await entity.pathA.resolve();
         } else {
             return entity;
         }
@@ -41,7 +41,7 @@ export class ListA {
     async getResolvedList() : Promise<Array<Entity>> {
         let resolvedListItems = [];
         for (let current of this.jsList) {
-            let currentResolved = current.pathA ? await this.entity.deprecated_resolve(current) : current;
+            let currentResolved = current.pathA ? await current.pathA.resolve() : current;
             resolvedListItems.push(currentResolved);
         }
         return resolvedListItems;
