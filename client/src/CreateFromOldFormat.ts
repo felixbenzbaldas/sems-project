@@ -32,7 +32,7 @@ export class CreateFromOldFormat {
             }
         }
         entity.listA.jsList.push(this.entity.appA.createPath([
-            this.splitPathString(json.rootObject)[1]]));
+            this.splitPathString(json.rootObject)[1]], entity));
         return entity;
     }
 
@@ -43,9 +43,9 @@ export class CreateFromOldFormat {
     createPath(object : Entity, oldPath : string) : Entity {
         let splitted = this.splitPathString(oldPath);
         if (this.houseName === splitted[0]) {
-            return this.entity.appA.createPath(['..', splitted[1]]);
+            return this.entity.appA.createPath(['..', splitted[1]], object);
         } else {
-            return this.entity.appA.createPath(['..', '..', splitted[0], splitted[1]]);
+            return this.entity.appA.createPath(['..', '..', splitted[0], splitted[1]], object);
         }
     }
 }
