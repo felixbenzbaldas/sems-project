@@ -59,6 +59,13 @@ export class AppA {
         return path;
     }
 
+    createPath_direct(entity : Entity) {
+        let path = this.createEntityWithApp();
+        path.pathA = new PathA(undefined);
+        path.pathA.direct = entity;
+        return path;
+    }
+
     async addAllToListFromRawData(list: Entity, rawData: any) {
         for (let path of rawData.list) {
             let dependencyValue = (rawData.dependencies as Array<any>).find((dependency : any) =>

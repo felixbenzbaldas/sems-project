@@ -329,6 +329,18 @@ export class AppA_TesterA {
 
             assert_sameAs(container.text, 'demo website (container)');
         });
+        let pathTest = test.testG_nestedTestsA.add('path-resolve', async test => {});
+        pathTest.testG_installNestedTestsA();
+        pathTest.installContainerA();
+        pathTest.testG_nestedTestsA.add('direct', async test => {
+            let appA = tester.appA.createStarter().createApp_typed();
+            let entity = appA.createEntityWithApp();
+            let path = appA.createPath_direct(entity);
+
+            let resolved = await path.pathA.resolve();
+
+            assert_sameAs(resolved, entity);
+        });
         return test;
     }
 }
