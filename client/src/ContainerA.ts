@@ -30,15 +30,6 @@ export class ContainerA {
         return list;
     }
 
-    async createCollapsible(text: string, ...jsList : Array<Entity>) {
-        let collapsible = this.entity.getApp().appA.unboundG.createCollapsible(text);
-        this.bind(collapsible);
-        for (let entity of jsList) {
-            await collapsible.listA.deprecated_add(entity);
-        }
-        return collapsible;
-    }
-
     async createLink(href: string, text?: string) {
         let entity = this.entity.getApp().appA.unboundG.createLink(href, text);
         this.bind(entity);
