@@ -5,13 +5,11 @@ export class PathA {
     listOfNames : Array<string>;
     direct: Entity;
 
-    constructor(listOfNames : Array<string>) {
-        this.listOfNames = listOfNames;
+    constructor(public entity : Entity) {
     }
 
     withoutFirst() {
-        let entity = new Entity();
-        entity.pathA = new PathA(this.listOfNames.slice(1, this.listOfNames.length));
+        let entity = this.entity.getApp_typed().createPath(this.listOfNames.slice(1, this.listOfNames.length));
         return entity;
     }
 

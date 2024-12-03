@@ -55,13 +55,14 @@ export class AppA {
 
     createPath(listOfNames: Array<string>) {
         let path = this.createEntityWithApp();
-        path.pathA = new PathA(listOfNames);
+        path.installPathA();
+        path.pathA.listOfNames = listOfNames;
         return path;
     }
 
     createPath_direct(entity : Entity) {
         let path = this.createEntityWithApp();
-        path.pathA = new PathA(undefined);
+        path.installPathA();
         path.pathA.direct = entity;
         return path;
     }

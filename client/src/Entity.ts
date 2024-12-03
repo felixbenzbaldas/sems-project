@@ -30,6 +30,9 @@ export class Entity {
         this.listA = new ListA(this);
     }
     pathA: PathA;
+    installPathA() {
+        this.pathA = new PathA(this);
+    }
     appA: AppA;
     containerA: ContainerA;
     installContainerA() {
