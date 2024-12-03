@@ -1,4 +1,5 @@
 import type {Entity} from "@/Entity";
+import type {PathA} from "@/PathA";
 
 export class ListA {
 
@@ -49,6 +50,10 @@ export class ListA {
 
     async insertPathOrDirectAtPosition(object: Entity, position: number) {
         this.jsList.splice(position, 0, this.entity.pathOrObject(object));
+    }
+
+    async insertPathAtPosition(path: PathA, position: number) {
+        this.jsList.splice(position, 0, path.entity);
     }
 
     async findByText(text: string) : Promise<Entity> {

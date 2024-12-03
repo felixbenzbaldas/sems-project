@@ -363,6 +363,15 @@ export class AppA_TesterA {
 
             assert_sameAs(found, subitem);
         });
+        test.testG_nestedTestsA.add('list-insertPathAtPosition', async test => {
+            let appA = tester.appA.createStarter().createApp_typed();
+            let list : Entity = await appA.createList();
+            let listItem : Entity = await appA.createText('subitem');
+
+            await list.listA.insertPathAtPosition(appA.direct(listItem).pathA, 0);
+
+            return await list.listA.jsList[0].pathA.resolve() === listItem;
+        });
         return test;
     }
 }

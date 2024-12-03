@@ -61,11 +61,15 @@ export class AppA {
         return path;
     }
 
-    direct(entity : Entity) {
+    direct(entity : Entity) : Entity {
         let path = this.createEntityWithApp();
         path.installPathA();
         path.pathA.direct = entity;
         return path;
+    }
+
+    direct_typed(entity : Entity) : PathA {
+        return this.direct(entity).pathA;
     }
 
     async addAllToListFromRawData(list: Entity, rawData: any) {
