@@ -67,9 +67,9 @@ export class AppA_UnboundG {
             entity.listA.jsList = [];
             for (let current of json.list) {
                 if (current instanceof Array) {
-                    entity.listA.jsList.push(this.entity.appA.createPath(current, entity));
+                    entity.listA.add_path(current);
                 } else {
-                    entity.listA.jsList.push(this.createFromJson(current)); // TODO use direct
+                    entity.listA.add_direct(this.createFromJson(current));
                 }
             }
         }

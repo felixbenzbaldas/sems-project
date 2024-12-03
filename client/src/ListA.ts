@@ -24,6 +24,10 @@ export class ListA {
         this.jsList.push(this.entity.getApp_typed().createPath(path, this.entity));
     }
 
+    add_direct(entity: Entity) {
+        this.jsList.push(this.entity.getApp_typed().direct(this.entity));
+    }
+
     json_withoutContainedObjects() {
         return this.jsList.map(entity => {
             if (entity.pathA) {
