@@ -134,7 +134,7 @@ export class AppA_TestA {
                 await list.listA.insertObjectAtPosition(listItem, 0);
 
                 app.log('path = ' + list.listA.jsList.at(0).getShortDescription());
-                return await list.resolve(list.listA.jsList.at(0)) === listItem;
+                return await list.deprecated_resolve(list.listA.jsList.at(0)) === listItem;
             }),
             this.createTest('list_findByText', async test => {
                 test.test_app = this.appA.createStarter().createApp();

@@ -79,7 +79,7 @@ export class AppA_TestA_PathG {
                 let otherObject: Entity = await app.appA.createText('foo');
                 let pathOfOther: Entity = object.getPath(otherObject);
 
-                let resolved: Entity = await object.resolve(pathOfOther);
+                let resolved: Entity = await object.deprecated_resolve(pathOfOther);
 
                 return resolved === otherObject;
             }),
@@ -93,7 +93,7 @@ export class AppA_TestA_PathG {
                 let text = await app.appA.createText('foo');
                 let path = text.getPath(containedContained);
 
-                let resolved: Entity = await text.resolve(path);
+                let resolved: Entity = await text.deprecated_resolve(path);
 
                 return resolved === containedContained;
             }),

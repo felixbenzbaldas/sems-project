@@ -49,7 +49,7 @@ export class StarterA {
         this.createTester2(this.getEnvironment().testCreator)
         let pathParam : string = this.getEnvironment().queryParams.get('run');
         let path = this.createdApp.appA.createPath(pathParam.split('_'));
-        let run : Entity = await (await this.createdApp.resolve(path)).testG_run();
+        let run : Entity = await (await this.createdApp.deprecated_resolve(path)).testG_run();
         this.createdApp.appA.uiA.content.listA.jsList.push(run);
         return this.createdApp;
     }

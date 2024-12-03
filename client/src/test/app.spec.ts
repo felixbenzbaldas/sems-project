@@ -97,7 +97,7 @@ describe('app', () => {
         await app.appA.addAllToListFromRawData(list, rawData);
 
         expect(list.listA.jsList.length).toBe(1);
-        expect((await list.resolve(list.listA.jsList.at(0))).text).toEqual('new item');
+        expect((await list.deprecated_resolve(list.listA.jsList.at(0))).text).toEqual('new item');
     });
 
     it('can log', async () => {

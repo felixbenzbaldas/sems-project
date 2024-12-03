@@ -43,7 +43,7 @@ export class UiA_BodyG {
     }
 
     async createContextAsSubitem() : Promise<HTMLElement> {
-        let contextObj = await this.getObject().resolve(this.getObject().context);
+        let contextObj = await this.getObject().deprecated_resolve(this.getObject().context);
         let contextAsSubitem = this.entity.getApp_typed().unboundG.createTextWithList('[context]', contextObj);
         contextAsSubitem.collapsible = true;
         contextAsSubitem.editable = false;
