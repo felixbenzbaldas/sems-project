@@ -18,10 +18,19 @@ public class AppA_DeployG {
     public void deployAndRun() throws IOException {
         this.deleteOldFiles();
         this.buildClient();
-        Utils.copyFolder(Path.of("client/dist"), Path.of(this.path + "/heroku/sems"));
-        this.replace(this.path + "/data/PUBLIC-replacement-website.txt",
-            "marker-dr53hifhh4-website");
+        this.copy();
+        this.replace();
         this.run();
+    }
+    public void replaceAndRun() throws IOException {
+        this.deleteOldFiles();
+        this.copy();
+        this.replace();
+        this.run();
+    }
+
+    public void copy() throws IOException {
+        Utils.copyFolder(Path.of("client/dist"), Path.of(this.path + "/heroku/sems"));
     }
 
     private void deleteOldFiles() throws IOException {
@@ -39,6 +48,11 @@ public class AppA_DeployG {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void replace() throws IOException {
+        this.replace(this.path + "/data/PUBLIC-replacement-website.txt",
+            "marker-dr53hifhh4-website");
     }
 
     public void replace(String pathOfReplacement, String toReplace) throws IOException {

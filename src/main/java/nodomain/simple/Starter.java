@@ -29,6 +29,7 @@ public class Starter {
                 case "test" -> test();
                 case "run" -> run();
                 case "deployAndRun" -> deployAndRun();
+                case "replaceAndRun" -> replaceAndRun();
                 case "publish" -> publish();
             }
         }
@@ -42,6 +43,11 @@ public class Starter {
     static void deployAndRun() throws IOException {
         Entity app = createDeployer(deploymentPath);
         app.appA.deployG.deployAndRun();
+    }
+
+    static void replaceAndRun() throws IOException {
+        Entity app = createDeployer(deploymentPath);
+        app.appA.deployG.replaceAndRun();
     }
 
     // login to heroku at first
