@@ -70,7 +70,7 @@ export class UiA_ListG {
         let created = await this.entity.getApp().appA.createText('');
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         let listA = this.getObject().listA;
-        await listA.insertObjectAtPosition(created, position);
+        await listA.insertPathOrDirectAtPosition(created, position);
         if (notNullUndefined(this.getObject().text)) {
             created.context = created.getPath(this.getObject());
         }
@@ -81,7 +81,7 @@ export class UiA_ListG {
     async pasteNextOnSubitem(subitem: Entity) {
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         let listA = this.getObject().listA;
-        await listA.insertObjectAtPosition(this.entity.getApp().appA.uiA.clipboard, position);
+        await listA.insertPathOrDirectAtPosition(this.entity.getApp().appA.uiA.clipboard, position);
         await listA.entity.uis_update_addedListItem(position);
         this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
     }

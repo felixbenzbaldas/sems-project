@@ -46,7 +46,7 @@ export class AppA_UiA {
         let created = await this.getApp().createText('');
         let position = 0;
         let listA = this.content.listA;
-        await listA.insertObjectAtPosition(created, position);
+        await listA.insertPathOrDirectAtPosition(created, position);
         await this.content.uiA.listG.update_addedListItem(position);
         this.entity.getApp().appA.uiA.focus(this.content.uiA.listG.uisOfListItems.at(position));
     }
@@ -55,7 +55,7 @@ export class AppA_UiA {
         await this.ensureInstalled();
         let position = 0;
         let listA = this.content.listA;
-        await listA.insertObjectAtPosition(this.clipboard, position);
+        await listA.insertPathOrDirectAtPosition(this.clipboard, position);
         await this.content.uiA.listG.update_addedListItem(position);
         this.entity.getApp().appA.uiA.focus(this.content.uiA.listG.uisOfListItems.at(position));
     }

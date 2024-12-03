@@ -131,7 +131,7 @@ export class AppA_TestA {
                 let list : Entity = await app.appA.createList();
                 let listItem : Entity = await app.appA.createText('subitem');
 
-                await list.listA.insertObjectAtPosition(listItem, 0);
+                await list.listA.insertPathOrDirectAtPosition(listItem, 0);
 
                 app.log('path = ' + list.listA.jsList.at(0).getShortDescription());
                 return await list.deprecated_resolve(list.listA.jsList.at(0)) === listItem;

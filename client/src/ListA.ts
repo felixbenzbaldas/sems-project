@@ -47,7 +47,7 @@ export class ListA {
         return resolvedListItems;
     }
 
-    async insertObjectAtPosition(object: Entity, position: number) {
+    async insertPathOrDirectAtPosition(object: Entity, position: number) {
         this.jsList.splice(position, 0, this.entity.pathOrObject(object));
     }
 
