@@ -53,10 +53,11 @@ export class AppA {
         return this.currentContainer.containerA.createList();
     }
 
-    createPath(listOfNames: Array<string>) {
+    createPath(listOfNames: Array<string>, subject? : Entity) {
         let path = this.createEntityWithApp();
         path.installPathA();
         path.pathA.listOfNames = listOfNames;
+        path.pathA.subject = subject;
         return path;
     }
 

@@ -341,6 +341,17 @@ export class AppA_TesterA {
 
             assert_sameAs(resolved, entity);
         });
+        pathTest.testG_nestedTestsA.add('listOfNames', async test => {
+            let appA = tester.appA.createStarter().createApp_typed();
+            let container = appA.createEntityWithApp();
+            container.installContainerA();
+            let contained = await container.containerA.createBoundEntity();
+            let path = container.getPath(contained);
+
+            let resolved = await path.pathA.resolve();
+
+            assert_sameAs(resolved, contained);
+        });
         return test;
     }
 }

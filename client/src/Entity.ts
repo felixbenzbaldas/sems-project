@@ -76,15 +76,17 @@ export class Entity {
 
     getPath(object: Entity) : Entity {
         this.logInfo('getPath of ' + object.getShortDescription());
+        let listOfNames : Array<string>;
         if (this.contains(object)) {
             if (this === object) {
-                return this.getApp().appA.createPath([]);
+                listOfNames = [];
             } else {
-                return this.getApp().appA.createPath([...this.getPath(object.container).pathA.listOfNames, object.name]);
+                listOfNames = [...this.getPath(object.container).pathA.listOfNames, object.name];
             }
         } else {
-            return this.getApp().appA.createPath(['..', ...this.container.getPath(object).pathA.listOfNames]);
+            listOfNames = ['..', ...this.container.getPath(object).pathA.listOfNames];
         }
+        return this.getApp_typed().createPath(listOfNames, this);
     }
 
     contains(object : Entity) : boolean {
