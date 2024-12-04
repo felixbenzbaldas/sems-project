@@ -172,7 +172,7 @@ export class AppA_TesterA_UiTestG {
             let createdUi = appUi.content.uiA.listG.uisOfListItems[1];
             assert_sameAs(appUi.focused, createdUi);
         });
-        this.addTest('tester2-run', async outerRun => {
+        let runTest = this.test.testG_nestedTestsA.add('tester2-run', async outerRun => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             let test = appA.entity.createCode('dummyTest', ()=>{});
@@ -182,7 +182,9 @@ export class AppA_TesterA_UiTestG {
 
             assert(ui.collapsed);
         });
-        this.addTest('tester2-run-failingNestedTest', async outerRun => {
+        runTest.testG_installNestedTestsA();
+        runTest.installContainerA();
+        runTest.testG_nestedTestsA.add('failingNestedTest', async outerRun => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             let test = appA.entity.createCode('dummyTest', ()=>{});
