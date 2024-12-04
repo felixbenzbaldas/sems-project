@@ -376,7 +376,6 @@ export class AppA_TesterA {
                 return await list.listA.jsList[0].pathA.resolve() === listItem;
             });
         });
-
         return test;
     }
 }

@@ -5,7 +5,7 @@ export class TestG_NestedTestsA {
 
     nestedTests : Entity;
 
-    constructor(private entity : Entity) {
+    constructor(public entity : Entity) {
     }
 
     install() {
