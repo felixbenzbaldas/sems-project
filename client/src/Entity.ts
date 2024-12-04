@@ -101,10 +101,6 @@ export class Entity {
         }
     }
 
-    async deprecated_resolve(path: Entity) : Promise<Entity> {
-        return this.resolveListOfNames(path.pathA.listOfNames);
-    }
-
     async resolveListOfNames(listOfNames : Array<string>) : Promise<Entity> {
         if (listOfNames.length === 0) {
             return this;

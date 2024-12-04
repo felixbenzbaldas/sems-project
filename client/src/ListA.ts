@@ -9,17 +9,11 @@ export class ListA {
         this.jsList = jsList;
     }
 
-    async deprecated_add(...items : Array<Entity>) {
-        for (let item of items) {
-            this.jsList.push(this.entity.pathOrObject(item));
-        }
-    }
-
     async add(object: Entity) {
         this.jsList.push(this.entity.getPath(object));
     }
 
-    addByListOfNames(listOfNames : Array<string>) {
+    async addByListOfNames(listOfNames : Array<string>) {
         this.jsList.push(this.entity.getApp_typed().createPath(listOfNames, this.entity));
     }
 
