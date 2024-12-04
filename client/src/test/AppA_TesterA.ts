@@ -373,7 +373,7 @@ export class AppA_TesterA {
 
                 await list.listA.insertPathAtPosition(appA.direct(listItem).pathA, 0);
 
-                return await list.listA.jsList[0].pathA.resolve() === listItem;
+                assert_sameAs(await list.listA.jsList[0].pathA.resolve(), listItem);
             });
         });
         return test;
