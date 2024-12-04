@@ -144,11 +144,10 @@ export class AppA_TestA {
 
                 let starter : StarterA = starterApplication.appA.createStarter();
 
-                return starter && starter.entity.app === starterApplication;
+                assert(notNullUndefined(starter));
+                assert_sameAs(starter.entity.app, starterApplication);
             }),
             this.createTest('nullUndefined', async test => {
-                test.test_app = this.appA.createStarter().createApp();
-                let app = test.test_app;
                 assert(nullUndefined(null));
                 assert(nullUndefined(undefined));
                 assert(!nullUndefined(42));
@@ -159,27 +158,34 @@ export class AppA_TestA {
                     assert(false);
                 } catch (throwable) {
                     let error = throwable as Error;
-                    return error.message === 'AssertionError: condition must be fulfilled';
+                    assert_sameAs(error.message, 'AssertionError: condition must be fulfilled');
+                    return;
                 }
-                return false;
+                throw new Error();
             }),
             this.createTest('assert_sameAs', async test => {
                 try {
                     assert_sameAs(42, 43);
                 } catch (throwable) {
                     let error = throwable as Error;
-                    return error.message === 'AssertionError: 42 !== 43';
+                    if (error.message !== 'AssertionError: 42 !== 43') {
+                        throw new Error();
+                    }
+                    return;
                 }
-                return false;
+                throw new Error();
             }),
             this.createTest('assert_notSameAs', async test => {
                 try {
                     assert_notSameAs(42, 42);
                 } catch (throwable) {
                     let error = throwable as Error;
-                    return error.message === 'AssertionError: 42 === 42';
+                    if (error.message !== 'AssertionError: 42 === 42') {
+                        throw new Error();
+                    }
+                    return;
                 }
-                return false;
+                throw new Error();
             }),
             this.createTest('code', async test => {
                 let app : Entity = this.appA.createStarter().createApp();
