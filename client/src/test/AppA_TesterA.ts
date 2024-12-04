@@ -115,10 +115,11 @@ export class AppA_TesterA {
                 appA.entity.log('human-test: outOfContext shows "contextAsSubitem"');
             });
             semiGroup.testG_nestedTestsA.add('upload',  async run => {
-                let appA = tester.appA.createStarter().createAppWithUI().appA;
-                run.testRunA.appUi = appA.uiA;
+                let appUi = tester.appA.createStarter().createAppWithUI_typed();
+                let appA = appUi.getApp();
+                run.testRunA.appUi = appUi;
                 let html = appA.createEntityWithApp();
-                appA.uiA.content.listA.jsList.push(html);
+                appA.uiA.content.listA.addDirect(html);
                 html.codeG_html = textFileInput((contents : any) => {
                     appA.uiA.content.listA.jsList.push(appA.unboundG.createText(contents));
                     appA.uiA.update();
@@ -127,10 +128,11 @@ export class AppA_TesterA {
                 appA.entity.log('human-test: The text of the file appears.');
             });
             semiGroup.testG_nestedTestsA.add('download',  async run => {
-                let appA = tester.appA.createStarter().createAppWithUI().appA;
-                run.testRunA.appUi = appA.uiA;
+                let appUi = tester.appA.createStarter().createAppWithUI_typed();
+                let appA = appUi.getApp();
+                run.testRunA.appUi = appUi;
                 let html = appA.createEntityWithApp();
-                appA.uiA.content.listA.jsList.push(html);
+                appA.uiA.content.listA.addDirect(html);
                 const fileContent = 'foo123';
                 const fileName = 'testfile.txt';
                 html.codeG_html = downloadText(fileContent, fileName, 'download');
@@ -139,10 +141,10 @@ export class AppA_TesterA {
                 appA.entity.log('human-test: The content of the downloaded file is ' + fileContent);
             });
             semiGroup.testG_nestedTestsA.add('setWidth',  async run => {
-                let appA = tester.appA.createStarter().createAppWithUI().appA;
-                run.testRunA.appUi = appA.uiA;
+                run.testRunA.appUi = tester.appA.createStarter().createAppWithUI_typed();
+                let appA = run.testRunA.appUi.getApp();
                 let html = appA.createEntityWithApp();
-                appA.uiA.content.listA.jsList.push(html);
+                appA.uiA.content.listA.addDirect(html);
                 html.codeG_html = document.createElement('div');
                 let left = document.createElement('div');
                 html.codeG_html.appendChild(left);
@@ -183,8 +185,8 @@ export class AppA_TesterA {
             let object = await app.createList();
             let dependency = await app.createList();
             let dependencyOfDependency = await app.createText('dependencyOfDependency');
-            await object.listA.deprecated_add(dependency);
-            await dependency.listA.deprecated_add(dependencyOfDependency);
+            await object.listA.add(dependency);
+            await dependency.listA.add(dependencyOfDependency);
 
             let dependencies = await object.getDependencies();
 
@@ -198,7 +200,7 @@ export class AppA_TesterA {
             object.text = 'foo';
             object.collapsible = true;
             let dependency = await app.createList();
-            await object.listA.deprecated_add(dependency);
+            await object.listA.add(dependency);
 
             let copy : Entity = await object.shallowCopy();
 
@@ -212,7 +214,7 @@ export class AppA_TesterA {
             object.text = 'foo';
             object.collapsible = true;
             let dependency = await app.createText('dependency');
-            await object.listA.deprecated_add(dependency);
+            await object.listA.add(dependency);
 
             let copy : Entity = await object.deepCopy().run();
 
@@ -278,7 +280,7 @@ export class AppA_TesterA {
             container.installContainerA();
             app.appA.currentContainer = container;
             let subitemAndContained = await app.appA.createText('subitem + contained');
-            await container.listA.deprecated_add(subitemAndContained);
+            await container.listA.add(subitemAndContained);
 
             let exported = await container.export();
 
@@ -317,7 +319,7 @@ export class AppA_TesterA {
             assert_sameAs(containedAndSub.text, 'contained + subitem');
             assert_sameAs(containedAndSub.container, container);
             assert_sameAs(containedAndSub.name, container.containerA.mapNameEntity.keys().next().value);
-            assert_sameAs(await containedAndSub.deprecated_resolve(containedAndSub.context), container);
+            assert_sameAs(await containedAndSub.context.pathA.resolve(), container);
             assert(notNullUndefined(container.listA.jsList.at(0).pathA));
         });
         createFromJsonTest.testG_installNestedTestsA();
