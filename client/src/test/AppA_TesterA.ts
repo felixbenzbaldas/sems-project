@@ -39,11 +39,8 @@ export class AppA_TesterA {
             });
         }
         this.uiTestG.addTo(test);
-        {
-            let semiGroup = test.testG_nestedTestsA.add('semi', () => {});
-            semiGroup.installContainerA();
-            semiGroup.testG_installNestedTestsA();
-            semiGroup.testG_nestedTestsA.add('keyboardEvent',  async run => {
+        test.testG_nestedTestsA.addNestedTests('semi', semi => {
+            semi.add('keyboardEvent',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
                 run.testRunA.appUi = appA.uiA;
@@ -61,7 +58,7 @@ export class AppA_TesterA {
                 appA.entity.log('human-action: click \'switch off testMode\'');
                 appA.entity.log('human-test: now the keys are not logged.');
             });
-            semiGroup.testG_nestedTestsA.add('contextIcon',  async run => {
+            semi.add('contextIcon',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
                 run.testRunA.appUi = appA.uiA;
@@ -87,7 +84,7 @@ export class AppA_TesterA {
                 appA.entity.log('human-test: The item withContext should show the appropriate contextIcon -');
                 appA.entity.log('human-test: The contextIcon always appears left of the content - also for the long text.');
             });
-            semiGroup.testG_nestedTestsA.add('contextAsSubitem',  async run => {
+            semi.add('contextAsSubitem',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
                 run.testRunA.appUi = appA.uiA;
@@ -114,7 +111,7 @@ export class AppA_TesterA {
                 assert(await parentUi.uiA.listG.uisOfListItems[1].uiA.headerBodyG.hasBodyContent());
                 appA.entity.log('human-test: outOfContext shows "contextAsSubitem"');
             });
-            semiGroup.testG_nestedTestsA.add('upload',  async run => {
+            semi.add('upload',  async run => {
                 let appUi = tester.appA.createStarter().createAppWithUI_typed();
                 let appA = appUi.getApp();
                 run.testRunA.appUi = appUi;
@@ -127,7 +124,7 @@ export class AppA_TesterA {
                 appA.entity.log('human-action: Click on upload -> choose a text file');
                 appA.entity.log('human-test: The text of the file appears.');
             });
-            semiGroup.testG_nestedTestsA.add('download',  async run => {
+            semi.add('download',  async run => {
                 let appUi = tester.appA.createStarter().createAppWithUI_typed();
                 let appA = appUi.getApp();
                 run.testRunA.appUi = appUi;
@@ -140,7 +137,7 @@ export class AppA_TesterA {
                 appA.entity.log('human-test: A text file is downloaded.');
                 appA.entity.log('human-test: The content of the downloaded file is ' + fileContent);
             });
-            semiGroup.testG_nestedTestsA.add('setWidth',  async run => {
+            semi.add('setWidth',  async run => {
                 run.testRunA.appUi = tester.appA.createStarter().createAppWithUI_typed();
                 let appA = run.testRunA.appUi.getApp();
                 let html = appA.createEntityWithApp();
@@ -165,7 +162,7 @@ export class AppA_TesterA {
                 appA.entity.log('human-action: write multiple lines in the text field');
                 appA.entity.log('human-test: The text does not move.');
             });
-        }
+        });
         test.testG_nestedTestsA.add('paste', async run => {
             let appUi = await tester.appA.createStarter().createAppWithUI_typed();
             await appUi.getApp().uiA.update(); // TODO should not be necessary
