@@ -23,7 +23,11 @@ export class UiA_TestRunG {
         this.headerContent_htmlElement.style.color = this.getTestRun().resultG_success ? 'green' : 'red';
         let runInOwnWindow = document.createElement('a');
         runInOwnWindow.href = this.entity.getApp_typed().environment.url.origin + '/?run=' + this.getPathString();
-        runInOwnWindow.innerText = ' ->';
+        runInOwnWindow.innerText = '[open]';
+        runInOwnWindow.style.marginLeft = '0.6rem';
+        runInOwnWindow.style.fontSize = '0.7rem';
+        runInOwnWindow.style.color = 'grey';
+        runInOwnWindow.style.textDecoration = "none";
         this.headerContent_htmlElement.appendChild(runInOwnWindow);
     }
 
