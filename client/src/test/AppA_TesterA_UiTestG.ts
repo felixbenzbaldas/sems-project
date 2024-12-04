@@ -172,6 +172,16 @@ export class AppA_TesterA_UiTestG {
             let createdUi = appUi.content.uiA.listG.uisOfListItems[1];
             assert_sameAs(appUi.focused, createdUi);
         });
+        this.addTest('tester2-run', async outerRun => {
+            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+            let appA = appUi.entity.appA;
+            let test = appA.entity.createCode('dummyTest', ()=>{});
+            let run = await test.testG_run();
+            let ui = appUi.createUiFor_typed(run);
+            await ui.update();
+
+            assert(ui.collapsed);
+        });
     }
 
     addTest(name : string, jsFunction: (testRun: Entity) => void) {

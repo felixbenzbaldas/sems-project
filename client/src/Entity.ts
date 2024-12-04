@@ -295,11 +295,11 @@ export class Entity {
         return code;
     }
 
-    async testG_run() {
-        let testRun : Entity = new Entity();
-        testRun.app = this.getApp();
+    async testG_run() : Promise<Entity> {
+        let testRun : Entity = this.getApp_typed().createEntityWithApp();
         testRun.installTestRunA();
         testRun.testRunA.test = this;
+        testRun.collapsible = true;
         if (this.testG_nestedTestsA) {
             testRun.testRunA.nestedRuns = this.getApp().appA.unboundG.createList();
             for (let nestedTest of await (this.testG_nestedTestsA.nestedTests.listA.getResolvedList())) {
