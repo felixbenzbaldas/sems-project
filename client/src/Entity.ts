@@ -172,7 +172,7 @@ export class Entity {
         if (this.listA) {
             for (let current of this.listA.jsList) {
                 if (current.pathA) {
-                    let currentObject = await this.deprecated_resolve(current);
+                    let currentObject = await current.pathA.resolve();
                     if (!set.has(currentObject)) {
                         set.add(currentObject);
                         await currentObject.addDependencies(set);
@@ -337,9 +337,9 @@ export class Entity {
             copy.installListA();
             for (let listItem of this.listA.jsList) {
                 if (listItem.pathA) {
-                    copy.listA.jsList.push(copy.getPath(await this.deprecated_resolve(listItem)));
+                    copy.listA.jsList.push(copy.getPath(await listItem.pathA.resolve()));
                 } else {
-                    copy.listA.jsList.push(listItem);
+                    copy.listA.jsList.push(listItem); // TODO remove this
                 }
             }
         }

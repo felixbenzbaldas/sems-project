@@ -23,7 +23,7 @@ export class AppA_TesterA {
 
     async run() {
         let run = await this.test.testG_run();
-        await this.entity.appA.uiA.content.listA.deprecated_add(run);
+        this.entity.appA.uiA.content.listA.addDirect(run);
     }
 
     createTestForSimpleSoftware() : Entity {

@@ -224,7 +224,7 @@ export class UiA {
         let position = uiListItems.indexOf(this.entity);
         let contextObj = uiContext.getObject();
         if (notNullUndefined(obj.context)) {
-            if (await obj.deprecated_resolve(obj.context) === contextObj) {
+            if (await obj.context.pathA.resolve() === contextObj) {
                 obj.context = null;
                 await obj.uis_update_context();
             }
@@ -321,7 +321,7 @@ export class UiA {
     }
 
     async inContext() : Promise<boolean> {
-        return this.context.uiA.getObject() === await this.getObject().deprecated_resolve(this.getObject().context);
+        return this.context.uiA.getObject() === await this.getObject().context.pathA.resolve();
     }
 
     async hasContextAsSubitem() : Promise<boolean> {

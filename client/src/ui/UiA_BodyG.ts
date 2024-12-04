@@ -43,13 +43,13 @@ export class UiA_BodyG {
     }
 
     async createContextAsSubitem() : Promise<HTMLElement> {
-        let contextObj = await this.getObject().deprecated_resolve(this.getObject().context);
+        let contextObj = await this.getObject().context.pathA.resolve();
         let contextAsSubitem = this.entity.getApp_typed().unboundG.createTextWithList('[context]', contextObj);
         contextAsSubitem.collapsible = true;
         contextAsSubitem.editable = false;
         let ui = this.entity.getApp_typed().uiA.createUiFor_typed(contextAsSubitem);
         ui.editable = this.getUiA().editable;
-        await ui.update()
+        await ui.update();
         ui.htmlElement.style.marginBottom = '0.1rem';
         ui.headerG.htmlElement.style.color = 'grey';
         return ui.htmlElement;
