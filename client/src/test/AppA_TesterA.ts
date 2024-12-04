@@ -300,7 +300,7 @@ export class AppA_TesterA {
             assert_sameAs(json.text, 'object');
             assert_sameAs(json.context[0], 'aName');
         });
-        let createFromJsonTest = test.testG_nestedTestsA.add('createFromJson', async test => {
+        test.testG_nestedTestsA.addTestWithNestedTests('createFromJson', async run => {
             let app = tester.appA.createStarter().createApp();
             let json = {
                 text: 'container + parent',
@@ -314,45 +314,44 @@ export class AppA_TesterA {
             let container = app.appA.unboundG.createFromJson(json);
 
             let containedAndSub = await container.listA.getResolved(0);
-
             assert_sameAs(container.text, 'container + parent');
             assert_sameAs(containedAndSub.text, 'contained + subitem');
             assert_sameAs(containedAndSub.container, container);
             assert_sameAs(containedAndSub.name, container.containerA.mapNameEntity.keys().next().value);
             assert_sameAs(await containedAndSub.context.pathA.resolve(), container);
             assert(notNullUndefined(container.listA.jsList.at(0).pathA));
+        }, createFromJson => {
+            createFromJson.add('testData', async run => {
+                let app = tester.appA.createStarter().createApp();
+
+                let container = app.appA.unboundG.createFromJson(testData);
+
+                assert_sameAs(container.text, 'demo website (container)');
+            });
         });
-        createFromJsonTest.testG_installNestedTestsA();
-        createFromJsonTest.installContainerA();
-        createFromJsonTest.testG_nestedTestsA.add('testData', async test => {
-            let app = tester.appA.createStarter().createApp();
+        test.testG_nestedTestsA.addNestedTests('path', path => {
+            path.addNestedTests('resolve', path_resolve => {
+                path_resolve.add('direct', async run => {
+                    let appA = tester.appA.createStarter().createApp_typed();
+                    let entity = appA.createEntityWithApp();
+                    let path = appA.direct(entity);
 
-            let container = app.appA.unboundG.createFromJson(testData);
+                    let resolved = await path.pathA.resolve();
 
-            assert_sameAs(container.text, 'demo website (container)');
-        });
-        let pathTest = test.testG_nestedTestsA.add('path-resolve', async test => {});
-        pathTest.testG_installNestedTestsA();
-        pathTest.installContainerA();
-        pathTest.testG_nestedTestsA.add('direct', async test => {
-            let appA = tester.appA.createStarter().createApp_typed();
-            let entity = appA.createEntityWithApp();
-            let path = appA.direct(entity);
+                    assert_sameAs(resolved, entity);
+                });
+                path_resolve.add('listOfNames', async run => {
+                    let appA = tester.appA.createStarter().createApp_typed();
+                    let container = appA.createEntityWithApp();
+                    container.installContainerA();
+                    let contained = await container.containerA.createBoundEntity();
+                    let path = container.getPath(contained);
 
-            let resolved = await path.pathA.resolve();
+                    let resolved = await path.pathA.resolve();
 
-            assert_sameAs(resolved, entity);
-        });
-        pathTest.testG_nestedTestsA.add('listOfNames', async test => {
-            let appA = tester.appA.createStarter().createApp_typed();
-            let container = appA.createEntityWithApp();
-            container.installContainerA();
-            let contained = await container.containerA.createBoundEntity();
-            let path = container.getPath(contained);
-
-            let resolved = await path.pathA.resolve();
-
-            assert_sameAs(resolved, contained);
+                    assert_sameAs(resolved, contained);
+                });
+            });
         });
         test.testG_nestedTestsA.addNestedTests('list', list => {
             list.add('findByText', async test => {
