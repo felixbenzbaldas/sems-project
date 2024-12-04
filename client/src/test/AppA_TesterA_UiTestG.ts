@@ -112,7 +112,7 @@ export class AppA_TesterA_UiTestG {
 
             assert(nullUndefined(subitem.context));
         });
-        let newSubitemTest = this.test.testG_nestedTestsA.add('newSubitem', async run => {
+        this.test.testG_nestedTestsA.addTestWithNestedTests('newSubitem', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             await appUi.entity.uiA.update();
@@ -126,22 +126,21 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs((await created.context.pathA.resolve()), firstObj);
             let createdUi = appUi.content.uiA.listG.uisOfListItems[0].uiA.listG.uisOfListItems[0];
             assert_sameAs(appUi.focused, createdUi);
-        });
-        newSubitemTest.testG_installNestedTestsA();
-        newSubitemTest.installContainerA();
-        newSubitemTest.testG_nestedTestsA.add('onApp', async run => {
-            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
-            await appUi.entity.uiA.update();
+        }, newSubitem => {
+            newSubitem.add('onApp', async run => {
+                let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+                await appUi.entity.uiA.update();
 
-            await appUi.globalEventG.newSubitem();
+                await appUi.globalEventG.newSubitem();
 
-            let created = await appUi.content.listA.getResolved(0);
-            assert(notNullUndefined(created));
-            assert(nullUndefined(created.context));
-            let createdUi = appUi.content.uiA.listG.uisOfListItems[0];
-            assert_sameAs(appUi.focused, createdUi);
+                let created = await appUi.content.listA.getResolved(0);
+                assert(notNullUndefined(created));
+                assert(nullUndefined(created.context));
+                let createdUi = appUi.content.uiA.listG.uisOfListItems[0];
+                assert_sameAs(appUi.focused, createdUi);
+            });
         });
-        let defaultActionTest = this.test.testG_nestedTestsA.add('defaultAction', async run => {
+        this.test.testG_nestedTestsA.addTestWithNestedTests('defaultAction', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             await appUi.entity.uiA.update();
@@ -156,21 +155,20 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs((await created.context.pathA.resolve()), firstObj);
             let createdUi = appUi.content.uiA.listG.uisOfListItems[0].uiA.listG.uisOfListItems[1];
             assert_sameAs(appUi.focused, createdUi);
-        });
-        defaultActionTest.testG_installNestedTestsA();
-        defaultActionTest.installContainerA();
-        defaultActionTest.testG_nestedTestsA.add('withAppAsParent', async run => {
-            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
-            await appUi.entity.uiA.update();
-            await appUi.globalEventG.newSubitem();
+        }, defaultActionTest => {
+            defaultActionTest.add('withAppAsParent', async run => {
+                let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+                await appUi.entity.uiA.update();
+                await appUi.globalEventG.newSubitem();
 
-            await appUi.globalEventG.defaultAction();
+                await appUi.globalEventG.defaultAction();
 
-            let created = await appUi.content.listA.getResolved(1);
-            assert(notNullUndefined(created));
-            assert(nullUndefined(created.context));
-            let createdUi = appUi.content.uiA.listG.uisOfListItems[1];
-            assert_sameAs(appUi.focused, createdUi);
+                let created = await appUi.content.listA.getResolved(1);
+                assert(notNullUndefined(created));
+                assert(nullUndefined(created.context));
+                let createdUi = appUi.content.uiA.listG.uisOfListItems[1];
+                assert_sameAs(appUi.focused, createdUi);
+            });
         });
         this.test.testG_nestedTestsA.addNestedTests('tester', (tester) => {
             tester.addTestWithNestedTests('run', async outerRun => {
