@@ -1,9 +1,9 @@
 import {Entity} from "@/Entity";
-import {ContainerA} from "@/ContainerA";
 import {
     assert,
     assert_notSameAs,
-    assert_sameAs, assertFalse,
+    assert_sameAs,
+    assertFalse,
     downloadText,
     notNullUndefined,
     setWidth,
@@ -32,7 +32,7 @@ export class AppA_TesterA {
         });
         test.installContainerA();
         test.testG_installNestedTestsA();
-        if (tester.appA.environment.queryParams.has('withFailingDemoTest')) {
+        if (tester.appA.environment.url.searchParams.has('withFailingDemoTest')) {
             test.testG_nestedTestsA.add('failingDemoTest', async (run : Entity) => {
                 run.testRunA.appUi = tester.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
                 assert(false);

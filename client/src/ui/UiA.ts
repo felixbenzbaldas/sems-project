@@ -313,7 +313,7 @@ export class UiA {
     }
 
     showContainerMark() {
-        if (this.entity.getApp().appA.environment.hostname === 'localhost') {
+        if (this.entity.getApp().appA.environment.url?.hostname === 'localhost') {
             return this.getObject().containerMark();
         } else {
             return false;

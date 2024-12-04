@@ -18,15 +18,15 @@ export class StarterA {
     }
 
     async fullStart() : Promise<HTMLElement> {
-        if (this.getEnvironment().queryParams.has('client-app')) {
+        if (this.getEnvironment().url.searchParams.has('client-app')) {
             return this.fullStartG.clientApp();
-        } else if (this.getEnvironment().queryParams.has('test')) {
+        } else if (this.getEnvironment().url.searchParams.has('test')) {
             return this.fullStartG.oldTester();
-        } else if (this.getEnvironment().queryParams.has('tester2')) {
+        } else if (this.getEnvironment().url.searchParams.has('tester2')) {
             return this.fullStartG.tester();
-        } else if (this.getEnvironment().queryParams.has('path')) {
+        } else if (this.getEnvironment().url.searchParams.has('path')) {
             return this.fullStartG.objectViewer();
-        } else if (this.getEnvironment().queryParams.has('run')) {
+        } else if (this.getEnvironment().url.searchParams.has('run')) {
             return this.fullStartG.testRun();
         } else {
             if (this.isPublicWeb()) {
@@ -47,7 +47,7 @@ export class StarterA {
 
     async run() : Promise<Entity> {
         this.createTester2(this.getEnvironment().testCreator)
-        let pathParam : string = this.getEnvironment().queryParams.get('run');
+        let pathParam : string = this.getEnvironment().url.searchParams.get('run');
         let run : Entity = await (await this.createdApp.resolveListOfNames(pathParam.split('_'))).testG_run(true);
         this.createdApp.appA.uiA.content.listA.jsList.push(run);
         return this.createdApp;
@@ -58,7 +58,7 @@ export class StarterA {
     }
 
     testMode() {
-        if (this.getEnvironment().queryParams.has('testMode')) {
+        if (this.getEnvironment().url.searchParams.has('testMode')) {
             this.createdApp.appA.logG.toConsole = true;
         }
     }
@@ -132,14 +132,14 @@ export class StarterA {
     }
 
     hostname() : string {
-        if (this.getEnvironment().hostname === 'localhost') {
-            if (this.getEnvironment().queryParams?.has('virtualHostname')) {
-                return this.getEnvironment().queryParams.get('virtualHostname');
+        if (this.getEnvironment().url.hostname === 'localhost') {
+            if (this.getEnvironment().url.searchParams?.has('virtualHostname')) {
+                return this.getEnvironment().url.searchParams.get('virtualHostname');
             } else {
                 return 'localhost';
             }
         } else {
-            return this.getEnvironment().hostname;
+            return this.getEnvironment().url.hostname;
         }
     }
 

@@ -10,13 +10,11 @@ import {
     notNullUndefined,
     nullUndefined
 } from "@/utils";
-import {ContainerA} from "@/ContainerA";
 import {AppA_TestA_UiG} from "@/test/AppA_TestA_UiG";
 import {AppA_TestA_ModelG} from "@/test/AppA_TestA_ModelG";
 import {AppA_TestA_SemiG} from "@/test/AppA_TestA_SemiG";
 import {AppA_TestA_PathG} from "@/test/AppA_TestA_PathG";
 import {Environment} from "@/Environment";
-import {testData} from "@/testData";
 
 class TestResults {
     successful : Array<Entity> = [];

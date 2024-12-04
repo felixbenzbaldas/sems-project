@@ -1,7 +1,7 @@
 import type {Entity} from "@/Entity";
 import {Environment} from "@/Environment";
 import {testData} from "@/testData";
-import {assert} from "@/utils";
+import {assert, localhostWithQueryParams} from "@/utils";
 
 export class AppA_TestA_ModelG {
 
@@ -103,7 +103,7 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_website', async test => {
                 let environment = new Environment();
                 environment.jsonData = testData;
-                environment.hostname = 'testdomain1.org';
+                environment.url = new URL('https://testdomain1.org');
                 let settedTitle : string;
                 environment.setTitle = (text) => {
                     settedTitle = text;
@@ -128,8 +128,7 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_website_virtualHostname', async test => {
                 let environment = new Environment();
                 environment.jsonData = testData;
-                environment.hostname = 'localhost';
-                environment.queryParams = new URLSearchParams('virtualHostname=testdomain2.org');
+                environment.url = new URL('http://localhost:1234/?virtualHostname=testdomain2.org');
 
                 let website = await environment.createApp().appA.createStarter().createWebsite();
 
@@ -231,7 +230,7 @@ export class AppA_TestA_ModelG {
             }),
             this.createTest('modelTest_fullStart_tester2', async test => {
                 let environment = new Environment();
-                environment.queryParams = new URLSearchParams('tester2');
+                environment.url = localhostWithQueryParams('tester2');
                 environment.jsonData = testData;
                 environment.testCreator = (app : Entity) => {
                     return app.createCode('aTestTest', (run : Entity) =>  {});
@@ -245,7 +244,7 @@ export class AppA_TestA_ModelG {
             }),
             this.createTest('modelTest_runInOwnWindow', async (test : Entity) => {
                 let environment = new Environment();
-                environment.queryParams = new URLSearchParams('run=isolatedRun');
+                environment.url = localhostWithQueryParams('run=isolatedRun');
                 environment.testCreator = (app : Entity) => {
                     return app.createCode('isolatedRun', (run : Entity) => {});
                 }

@@ -115,3 +115,7 @@ export function textElem(text : string) : HTMLDivElement {
     html.innerText = text;
     return html;
 }
+
+export function localhostWithQueryParams(paramsAsString : string) : URL {
+    return new URL('http:localhost:1234/?' + paramsAsString);
+}

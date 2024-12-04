@@ -4,16 +4,15 @@ import {testData} from "@/testData";
 
 export class Environment {
 
-    queryParams : URLSearchParams;
     activeApp: Entity;
     jsonData : any;
-    hostname: string;
+    url : URL;
     setTitle: (text: string) => void;
     testCreator: (app: Entity) => Entity;
 
     static create() : Environment {
         let environment = new Environment();
-        environment.queryParams = new URLSearchParams(window.location.search);
+        environment.url = new URL(window.location.toString());
         environment.adjustRemSizes();
         let placeholder_jsonString = 'marker-dr53hifhh4-website'; // note: placeholder_jsonString will be replaced during deployment
         if (placeholder_jsonString.startsWith('marker')) {
@@ -21,7 +20,6 @@ export class Environment {
         } else {
             environment.jsonData = JSON.parse(placeholder_jsonString);
         }
-        environment.hostname = window.location.hostname;
         environment.setTitle = text => {
             document.title = text;
         }

@@ -8,7 +8,7 @@ export class StarterA_FullStartG {
         let starter = this.getStarter();
         await starter.createTest();
         starter.testMode();
-        if (starter.getEnvironment().queryParams.has('withFailingDemoTest')) {
+        if (starter.getEnvironment().url.searchParams.has('withFailingDemoTest')) {
             starter.createdApp.appA.testA.withFailingDemoTest = true;
         }
         await starter.createdApp.appA.testA.createRunAndDisplay();
@@ -35,7 +35,7 @@ export class StarterA_FullStartG {
     }
     async objectViewer() {
         let starter = this.getStarter();
-        await starter.createObjectViewer(starter.getEnvironment().queryParams.get('path'));
+        await starter.createObjectViewer(starter.getEnvironment().url.searchParams.get('path'));
         starter.testMode();
         starter.getEnvironment().activeApp = starter.createdApp;
         starter.createdApp.appA.uiA.withPlaceholderArea = true;
