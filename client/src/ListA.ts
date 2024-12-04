@@ -15,7 +15,7 @@ export class ListA {
         }
     }
 
-    add(object: Entity) {
+    async add(object: Entity) {
         this.jsList.push(this.entity.getPath(object));
     }
 
