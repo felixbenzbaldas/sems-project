@@ -169,13 +169,13 @@ export class AppA_TesterA {
             await appUi.getApp().uiA.update(); // TODO should not be necessary
             await appUi.globalEventG.defaultAction();
             let uiForParent : Entity = appUi.content.uiA.listG.uisOfListItems[0];
-            let toPaste = appUi.getApp().unboundG.createText('toPaste');
+            let toPaste = await appUi.getApp().createText('toPaste');
             appUi.clipboard = toPaste;
 
             await appUi.globalEventG.paste();
 
-            assert_sameAs(uiForParent.getObject().listA.jsList.at(0), toPaste);
-            assert_sameAs(uiForParent.uiA.listG.uisOfListItems.at(0).uiA.object, toPaste);
+            assert_sameAs(await uiForParent.getObject().listA.getResolved(0), toPaste);
+            assert_sameAs(uiForParent.uiA.listG.uisOfListItems[0].uiA.object, toPaste);
             assert_sameAs(appUi.focused.uiA.object, toPaste);
         });
         test.testG_nestedTestsA.add('dependencies', async run => {
