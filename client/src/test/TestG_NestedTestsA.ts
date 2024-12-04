@@ -17,4 +17,15 @@ export class TestG_NestedTestsA {
         this.nestedTests.listA.jsList.push(nestedTest);
         return nestedTest;
     }
+
+    addTestWithNestedTests(name: string, jsFunction : (testRun: Entity) => void, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
+        let test = this.add(name, jsFunction);
+        test.testG_installNestedTestsA();
+        test.installContainerA();
+        creator(test.testG_nestedTestsA);
+    }
+
+    addNestedTests(name: string, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
+        this.addTestWithNestedTests(name, ()=>{}, creator);
+    }
 }

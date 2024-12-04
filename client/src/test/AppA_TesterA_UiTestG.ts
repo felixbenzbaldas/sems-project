@@ -172,31 +172,32 @@ export class AppA_TesterA_UiTestG {
             let createdUi = appUi.content.uiA.listG.uisOfListItems[1];
             assert_sameAs(appUi.focused, createdUi);
         });
-        let runTest = this.test.testG_nestedTestsA.add('tester2-run', async outerRun => {
-            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
-            let appA = appUi.entity.appA;
-            let test = appA.entity.createCode('dummyTest', ()=>{});
-            let run = await test.testG_run();
-            let ui = appUi.createUiFor_typed(run);
-            await ui.update();
+        this.test.testG_nestedTestsA.addNestedTests('tester', (tester) => {
+            tester.addTestWithNestedTests('run', async outerRun => {
+                let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+                let appA = appUi.entity.appA;
+                let test = appA.entity.createCode('dummyTest', ()=>{});
+                let run = await test.testG_run();
+                let ui = appUi.createUiFor_typed(run);
+                await ui.update();
 
-            assert(ui.collapsed);
-        });
-        runTest.testG_installNestedTestsA();
-        runTest.installContainerA();
-        runTest.testG_nestedTestsA.add('failingNestedTest', async outerRun => {
-            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
-            let appA = appUi.entity.appA;
-            let test = appA.entity.createCode('dummyTest', ()=>{});
-            test.testG_installNestedTestsA();
-            test.testG_nestedTestsA.add('failingNestedTest', () => {
-                assert(false);
+                assert(ui.collapsed);
+            }, (runTest) => {
+                runTest.add('failingNestedTest', async outerRun => {
+                    let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+                    let appA = appUi.entity.appA;
+                    let test = appA.entity.createCode('dummyTest', ()=>{});
+                    test.testG_installNestedTestsA();
+                    test.testG_nestedTestsA.add('failingNestedTest', () => {
+                        assert(false);
+                    });
+                    let run = await test.testG_run();
+                    let ui = appUi.createUiFor_typed(run);
+                    await ui.update();
+
+                    assertFalse(ui.collapsed);
+                });
             });
-            let run = await test.testG_run();
-            let ui = appUi.createUiFor_typed(run);
-            await ui.update();
-
-            assertFalse(ui.collapsed);
         });
     }
 
