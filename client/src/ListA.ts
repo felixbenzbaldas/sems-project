@@ -23,8 +23,8 @@ export class ListA {
         this.jsList.push(this.entity.getApp_typed().createPath(listOfNames, this.entity));
     }
 
-    addDirect(entity: Entity) {
-        this.jsList.push(this.entity.getApp_typed().direct(this.entity));
+    addDirect(...entities: Array<Entity>) {
+        this.jsList.push(...entities.map((entity : Entity) => this.entity.getApp_typed().direct(entity)));
     }
 
     json_withoutContainedObjects() {

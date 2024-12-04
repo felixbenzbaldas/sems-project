@@ -47,7 +47,7 @@ export class AppA_TesterA {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
                 run.testRunA.appUi = appA.uiA;
-                await appA.uiA.content.listA.deprecated_add(
+                appA.uiA.content.listA.addDirect(
                     appA.unboundG.createButton('activate test-app', () => {
                     }),
                     appA.unboundG.createButton('switch off testMode', () => {
