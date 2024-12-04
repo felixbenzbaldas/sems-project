@@ -1,4 +1,5 @@
 import type {Entity} from "@/Entity";
+import type {PathA} from "@/PathA";
 
 export class DeepCopyA {
 
@@ -33,9 +34,9 @@ export class DeepCopyA {
             emptyEntity.installListA();
             for (let listItem of object.listA.jsList) {
                 if (listItem.pathA) {
-                    emptyEntity.listA.jsList.push(emptyEntity.getPath(this.map.get(await object.deprecated_resolve(listItem))));
+                    emptyEntity.listA.jsList.push(emptyEntity.getPath(this.map.get(await listItem.pathA.resolve())));
                 } else {
-                    emptyEntity.listA.jsList.push(listItem);
+                    emptyEntity.listA.jsList.push(listItem); // TODO remove this
                 }
             }
         }
