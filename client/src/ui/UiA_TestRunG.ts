@@ -2,7 +2,6 @@ import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
 import type {TestRunA} from "@/test/TestRunA";
 import {notNullUndefined} from "@/utils";
-import {run} from "vue-tsc";
 
 export class UiA_TestRunG {
 
