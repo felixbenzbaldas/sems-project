@@ -90,7 +90,7 @@ export class AppA_TestA_SemiG {
                 html.codeG_html.style.width = '15rem';
                 let collapsible = appA.unboundG.createCollapsible('scroll down and then collapse me', html);
                 collapsible.editable = false;
-                appA.uiA.content.listA.jsList.push(collapsible);
+                appA.uiA.content.listA.addDirect(collapsible);
                 appA.logG.toListOfStrings = true;
                 test.test_app.log('info: The placeholder-area is an area which is inserted at the bottom of the site. ' +
                     'It is necessary to avoid unwanted movements when collapsing a big item.');

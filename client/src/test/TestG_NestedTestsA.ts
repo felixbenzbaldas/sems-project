@@ -14,7 +14,7 @@ export class TestG_NestedTestsA {
 
     add(name: string, jsFunction: (testRun: Entity) => void) : Entity {
         let nestedTest : Entity = this.entity.createCode(name, jsFunction);
-        this.nestedTests.listA.jsList.push(nestedTest);
+        this.nestedTests.listA.addDirect(nestedTest);
         return nestedTest;
     }
 

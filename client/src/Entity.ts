@@ -304,7 +304,7 @@ export class Entity {
             testRun.testRunA.nestedRuns = this.getApp().appA.unboundG.createList();
             for (let nestedTest of await (this.testG_nestedTestsA.nestedTests.listA.getResolvedList())) {
                 let nestedTestRun = await nestedTest.testG_run();
-                testRun.testRunA.nestedRuns.listA.jsList.push(nestedTestRun);
+                testRun.testRunA.nestedRuns.listA.addDirect(nestedTestRun);
                 if (!nestedTestRun.testRunA.resultG_success) {
                     testRun.testRunA.resultG_success = false;
                 }

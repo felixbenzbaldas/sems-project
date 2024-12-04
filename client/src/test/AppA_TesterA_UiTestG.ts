@@ -24,7 +24,7 @@ export class AppA_TesterA_UiTestG {
             let list = appUi.getApp().unboundG.createList_typed();
             let uiForList = appUi.createUiFor_typed(list.entity);
             await uiForList.update();
-            list.jsList.push(appUi.getApp().unboundG.createText('subitem'));
+            list.addDirect(appUi.getApp().unboundG.createText('subitem'));
 
             await list.entity.uis_update_addedListItem(0);
 
@@ -34,8 +34,8 @@ export class AppA_TesterA_UiTestG {
         this.addTest('updateRemovedSubitem', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let list = appUi.getApp().unboundG.createList_typed();
-            list.jsList.push(appUi.getApp().unboundG.createText('subitem-one'));
-            list.jsList.push(appUi.getApp().unboundG.createText('subitem-two'));
+            list.addDirect(appUi.getApp().unboundG.createText('subitem-one'));
+            list.addDirect(appUi.getApp().unboundG.createText('subitem-two'));
             let uiForList = appUi.createUiFor_typed(list.entity);
             await uiForList.update();
             list.jsList.splice(0, 1);

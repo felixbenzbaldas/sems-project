@@ -121,7 +121,7 @@ export class AppA_TesterA {
                 let html = appA.createEntityWithApp();
                 appA.uiA.content.listA.addDirect(html);
                 html.codeG_html = textFileInput((contents : any) => {
-                    appA.uiA.content.listA.jsList.push(appA.unboundG.createText(contents));
+                    appA.uiA.content.listA.addDirect(appA.unboundG.createText(contents));
                     appA.uiA.update();
                 });
                 appA.entity.log('human-action: Click on upload -> choose a text file');
@@ -359,7 +359,7 @@ export class AppA_TesterA {
             appA.logG.toListOfStrings = true;
             let list : Entity = appA.unboundG.createList();
             let subitem = appA.unboundG.createText('findMe');
-            list.listA.jsList.push(appA.direct(subitem));
+            list.listA.addDirect(subitem);
 
             let found = await list.listA.findByText('findMe');
 
