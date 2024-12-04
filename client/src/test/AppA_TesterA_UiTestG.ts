@@ -52,7 +52,7 @@ export class AppA_TesterA_UiTestG {
             let appA = appUi.entity.appA;
             let child = await appA.createText('child');
             let parent = await appA.createList();
-            await parent.listA.deprecated_add(child);
+            await parent.listA.add(child);
             child.context = child.getPath(parent);
             let parentUi = appUi.createUiFor_typed(parent);
             await parentUi.update();
@@ -74,7 +74,7 @@ export class AppA_TesterA_UiTestG {
             markedContainer.installListA();
             appA.entity.containerA.bind(markedContainer,'sa9llaMlry'); // TODO should not be hardcoded
             markedContainer.text = 'marked container';
-            await appUi.content.listA.deprecated_add(markedContainer);
+            appUi.content.listA.addDirect(markedContainer);
 
             let ui = appUi.createUiFor_typed(markedContainer);
 
@@ -86,7 +86,7 @@ export class AppA_TesterA_UiTestG {
             let subitem = await appA.createText('subitem');
             let parent = await appA.createList();
             parent.installListA();
-            await parent.listA.deprecated_add(subitem);
+            await parent.listA.add(subitem);
             let uiParent = appUi.createUiFor_typed(parent);
             await uiParent.update();
             let uiSubitem = uiParent.listG.uisOfListItems[0].uiA;
@@ -94,7 +94,7 @@ export class AppA_TesterA_UiTestG {
             uiSubitem.setContext();
 
             assert(notNullUndefined(subitem.context));
-            assert_sameAs(await subitem.deprecated_resolve(subitem.context), parent);
+            assert_sameAs(await subitem.context.pathA.resolve(), parent);
         });
         this.addTest('removeContext', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
@@ -102,7 +102,7 @@ export class AppA_TesterA_UiTestG {
             let subitem = await appA.createText('subitem');
             let parent = await appA.createList();
             parent.installListA();
-            await parent.listA.deprecated_add(subitem);
+            await parent.listA.add(subitem);
             subitem.context = subitem.getPath(parent);
             let uiParent = appUi.createUiFor_typed(parent);
             await uiParent.update();
@@ -123,7 +123,7 @@ export class AppA_TesterA_UiTestG {
             let firstObj = await appUi.content.listA.getResolved(0);
             let created = await firstObj.listA.getResolved(0);
             assert(notNullUndefined(created));
-            assert_sameAs((await created.deprecated_resolve(created.context)), firstObj);
+            assert_sameAs((await created.context.pathA.resolve()), firstObj);
             let createdUi = appUi.content.uiA.listG.uisOfListItems[0].uiA.listG.uisOfListItems[0];
             assert_sameAs(appUi.focused, createdUi);
         });
@@ -153,7 +153,7 @@ export class AppA_TesterA_UiTestG {
             let firstObj = await appUi.content.listA.getResolved(0);
             let created = await firstObj.listA.getResolved(1);
             assert(notNullUndefined(created));
-            assert_sameAs((await created.deprecated_resolve(created.context)), firstObj);
+            assert_sameAs((await created.context.pathA.resolve()), firstObj);
             let createdUi = appUi.content.uiA.listG.uisOfListItems[0].uiA.listG.uisOfListItems[1];
             assert_sameAs(appUi.focused, createdUi);
         });
