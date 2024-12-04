@@ -182,6 +182,20 @@ export class AppA_TesterA_UiTestG {
 
             assert(ui.collapsed);
         });
+        this.addTest('tester2-run-failingNestedTest', async outerRun => {
+            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+            let appA = appUi.entity.appA;
+            let test = appA.entity.createCode('dummyTest', ()=>{});
+            test.testG_installNestedTestsA();
+            test.testG_nestedTestsA.add('failingNestedTest', () => {
+                assert(false);
+            });
+            let run = await test.testG_run();
+            let ui = appUi.createUiFor_typed(run);
+            await ui.update();
+
+            assertFalse(ui.collapsed);
+        });
     }
 
     addTest(name : string, jsFunction: (testRun: Entity) => void) {

@@ -7,16 +7,25 @@ export class UiA_HeaderBodyG {
     }
 
     async install() {
-        if (this.entity.uiA.getObject().collapsible) {
-            this.entity.uiA.collapsed = true;
+        let object = this.entity.uiA.getObject();
+        if (object.collapsible) {
+            if (object.testRunA) {
+                if (object.testRunA.resultG_success) {
+                    this.entity.uiA.collapsed = true;
+                } else {
+                    this.entity.uiA.collapsed = false;
+                }
+            } else {
+                this.entity.uiA.collapsed = true;
+            }
         }
-        if (this.entity.uiA.getObject().isTest) {
+        if (object.isTest) {
             await this.entity.uiA.testG.update();
             await this.entity.uiA.headerG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
             await this.entity.uiA.bodyG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
-        } else if (this.entity.uiA.getObject().testRunA) {
+        } else if (object.testRunA) {
             await this.entity.uiA.testRunG.update();
             await this.entity.uiA.headerG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
