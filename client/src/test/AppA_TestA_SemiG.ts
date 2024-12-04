@@ -31,7 +31,7 @@ export class AppA_TestA_SemiG {
                 let html = test.test_app.appA.createEntityWithApp();
                 html.codeG_html = document.createElement('div');
                 html.codeG_html.innerText = 'show me';
-                await test.test_app.appA.uiA.content.listA.deprecated_add(html);
+                test.test_app.appA.uiA.content.listA.addDirect(html);
                 await test.test_app.updateUi();
                 test.test_app.appA.logG.toListOfStrings = true;
                 test.test_app.log('human-test: the text "show me" appears');
@@ -44,7 +44,7 @@ export class AppA_TestA_SemiG {
                 html.codeG_html.innerText = 'test';
                 html.codeG_html.contentEditable = 'true';
                 html.codeG_html.style.margin = '1rem';
-                await test.test_app.appA.uiA.content.listA.deprecated_add(html, test.test_app.appA.unboundG.createButton('setCaret', () => {
+                test.test_app.appA.uiA.content.listA.addDirect(html, test.test_app.appA.unboundG.createButton('setCaret', () => {
 
                     setCaret(html.codeG_html, 2);
 
@@ -163,7 +163,7 @@ export class AppA_TestA_SemiG {
                 let html = appA.createEntityWithApp();
                 html.codeG_html = document.createElement('div');
                 html.codeG_html.innerText = 'hello\nworld';
-                await appA.uiA.content.listA.deprecated_add(
+                appA.uiA.content.listA.addDirect(
                     appA.unboundG.createButton('select text', () => {selectAllTextOfDiv(html.codeG_html);}),
                     html,
                     appA.unboundG.createText('')
@@ -177,7 +177,7 @@ export class AppA_TestA_SemiG {
                 let appA = test.test_app.appA;
                 test.test_app.uiA.editable = true;
                 let text = appA.unboundG.createText('');
-                await appA.uiA.content.listA.deprecated_add(
+                appA.uiA.content.listA.addDirect(
                     appA.unboundG.createButton('get selected text', async () => {
                         text.text = getSelectedText();
                         await text.uis_update();
@@ -198,7 +198,7 @@ export class AppA_TestA_SemiG {
                 let test : Entity = app.createCode(name, (testRun : Entity) => {
                 });
                 let testRun : Entity = await test.testG_run();
-                await app.appA.uiA.content.listA.deprecated_add(testRun);
+                app.appA.uiA.content.listA.addDirect(testRun);
                 app.appA.logG.toListOfStrings = true;
                 outerTest.test_app.log('human-test: the test run \'testName\' is displayed (green)');
                 return true;
@@ -212,7 +212,7 @@ export class AppA_TestA_SemiG {
                     assert(false);
                 });
                 let testRun : Entity = await test.testG_run();
-                await app.appA.uiA.content.listA.deprecated_add(testRun);
+                app.appA.uiA.content.listA.addDirect(testRun);
                 app.appA.logG.toListOfStrings = true;
                 outerTest.test_app.log('human-test: the test run \'testName\' is displayed (red)');
                 return true;
