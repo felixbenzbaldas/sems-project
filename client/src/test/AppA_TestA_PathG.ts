@@ -1,6 +1,7 @@
 import {StarterA} from "@/StarterA";
 import type {Entity} from "@/Entity";
 import {ContainerA} from "@/ContainerA";
+import {assert_sameAs} from "@/utils";
 
 export class AppA_TestA_PathG {
 
@@ -79,9 +80,9 @@ export class AppA_TestA_PathG {
                 let otherObject: Entity = await app.appA.createText('foo');
                 let pathOfOther: Entity = object.getPath(otherObject);
 
-                let resolved: Entity = await object.deprecated_resolve(pathOfOther);
+                let resolved: Entity = await pathOfOther.pathA.resolve();
 
-                return resolved === otherObject;
+                assert_sameAs(resolved, otherObject);
             }),
             this.createTest('resolve contained of contained of container', async test => {
                 test.test_app = this.entity.appA.createStarter().createApp();
@@ -93,9 +94,9 @@ export class AppA_TestA_PathG {
                 let text = await app.appA.createText('foo');
                 let path = text.getPath(containedContained);
 
-                let resolved: Entity = await text.deprecated_resolve(path);
+                let resolved: Entity = await path.pathA.resolve();
 
-                return resolved === containedContained;
+                assert_sameAs(resolved, containedContained);
             }),
         ];
     }
