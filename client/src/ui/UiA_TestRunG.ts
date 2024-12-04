@@ -2,6 +2,7 @@ import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
 import type {TestRunA} from "@/test/TestRunA";
 import {notNullUndefined} from "@/utils";
+import {run} from "vue-tsc";
 
 export class UiA_TestRunG {
 
@@ -20,6 +21,10 @@ export class UiA_TestRunG {
         this.headerContent_htmlElement = document.createElement('div');
         this.headerContent_htmlElement.innerText = this.header_getText();
         this.headerContent_htmlElement.style.color = this.getTestRun().resultG_success ? 'green' : 'red';
+        let runInOwnWindow = document.createElement('a');
+        runInOwnWindow.href = this.entity.getApp_typed().environment.url.origin + '/?run=' + this.getPathString();
+        runInOwnWindow.innerText = ' ->';
+        this.headerContent_htmlElement.appendChild(runInOwnWindow);
     }
 
     async updateBodyContent() {
