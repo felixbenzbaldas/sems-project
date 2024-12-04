@@ -354,26 +354,29 @@ export class AppA_TesterA {
 
             assert_sameAs(resolved, contained);
         });
-        test.testG_nestedTestsA.add('list-findByText', async test => {
-            let appA = tester.appA.createStarter().createApp_typed();
-            appA.logG.toListOfStrings = true;
-            let list : Entity = appA.unboundG.createList();
-            let subitem = appA.unboundG.createText('findMe');
-            list.listA.addDirect(subitem);
+        test.testG_nestedTestsA.addNestedTests('list', list => {
+            list.add('findByText', async test => {
+                let appA = tester.appA.createStarter().createApp_typed();
+                appA.logG.toListOfStrings = true;
+                let list : Entity = appA.unboundG.createList();
+                let subitem = appA.unboundG.createText('findMe');
+                list.listA.addDirect(subitem);
 
-            let found = await list.listA.findByText('findMe');
+                let found = await list.listA.findByText('findMe');
 
-            assert_sameAs(found, subitem);
+                assert_sameAs(found, subitem);
+            });
+            list.add('insertPathAtPosition', async test => {
+                let appA = tester.appA.createStarter().createApp_typed();
+                let list : Entity = await appA.createList();
+                let listItem : Entity = await appA.createText('subitem');
+
+                await list.listA.insertPathAtPosition(appA.direct(listItem).pathA, 0);
+
+                return await list.listA.jsList[0].pathA.resolve() === listItem;
+            });
         });
-        test.testG_nestedTestsA.add('list-insertPathAtPosition', async test => {
-            let appA = tester.appA.createStarter().createApp_typed();
-            let list : Entity = await appA.createList();
-            let listItem : Entity = await appA.createText('subitem');
 
-            await list.listA.insertPathAtPosition(appA.direct(listItem).pathA, 0);
-
-            return await list.listA.jsList[0].pathA.resolve() === listItem;
-        });
         return test;
     }
 }
