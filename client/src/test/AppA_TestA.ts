@@ -48,10 +48,10 @@ export class AppA_TestA {
         this.appA.uiA.content.listA.jsList = [];
         let testResults : TestResults = await this.run(tests);
         if (testResults.failed.length > 0) {
-            await this.appA.uiA.content.listA.deprecated_add(this.appA.unboundG.createTextWithList('failed tests (' + testResults.failed.length + ')',
+            this.appA.uiA.content.listA.addDirect(this.appA.unboundG.createTextWithList('failed tests (' + testResults.failed.length + ')',
                 ...testResults.failed));
         }
-        await this.appA.uiA.content.listA.deprecated_add(
+        this.appA.uiA.content.listA.addDirect(
             this.appA.unboundG.createCollapsible('successful tests (' + testResults.successful.length + ')',
                 ...testResults.successful),
             this.appA.unboundG.createText(''),
@@ -131,10 +131,10 @@ export class AppA_TestA {
                 let list : Entity = await app.appA.createList();
                 let listItem : Entity = await app.appA.createText('subitem');
 
-                await list.listA.insertPathOrDirectAtPosition(listItem, 0);
+                await list.listA.insertObjectAtPosition(listItem, 0);
 
                 app.log('path = ' + list.listA.jsList.at(0).getShortDescription());
-                return await list.deprecated_resolve(list.listA.jsList.at(0)) === listItem;
+                assert_sameAs(await list.listA.getResolved(0), listItem);
             }),
             this.createTest('createStarter', async test => {
                 let starterApplication = new Entity();

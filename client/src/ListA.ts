@@ -63,6 +63,10 @@ export class ListA {
         this.jsList.splice(position, 0, path.entity);
     }
 
+    async insertObjectAtPosition(listItem: Entity, position: number) {
+        await this.insertPathAtPosition(this.entity.getPath(listItem).pathA, position);
+    }
+
     async findByText(text: string) : Promise<Entity> {
         for (let item of (await this.getResolvedList())) {
             if (item.text === text) {
