@@ -44,6 +44,9 @@ export class AppA_UiA_KeyG {
         this.map.set('F11', async keyboardEvent => {
             await this.entity.appA.uiA.globalEventG.load();
         });
+        this.map.set('ctrl+o', async keyboardEvent => {
+            await this.entity.appA.uiA.globalEventG.focusUiContext();
+        });
     }
 
     async keyboardEvent(keyboardEvent: KeyboardEvent) {

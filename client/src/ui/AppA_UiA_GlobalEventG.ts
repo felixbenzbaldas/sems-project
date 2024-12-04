@@ -141,4 +141,8 @@ export class AppA_UiA_GlobalEventG {
     async script_setContextForAllObjectsInContainer() {
         await this.getUiA().focused.uiA.getObject().script_setContextForAllObjectsInContainer();
     }
+
+    async focusUiContext() {
+        this.entity.getApp_typed().uiA.focus(this.getUiA().focused.uiA.context);
+    }
 }
