@@ -114,7 +114,7 @@ export class AppA_TesterA_UiTestG {
             assert(nullUndefined(subitem.context));
             assert_sameAs(uiParent.listG.uisOfListItems[0].uiA.headerG.contextIcon.innerText, '');
         }, removeContextTest => {
-            removeContextTest.add('whenOutOfContext', async run => {
+            removeContextTest.addTestWithNestedTests('whenOutOfContext', async run => {
                 let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
                 let appA = appUi.entity.appA;
                 let subject = await appA.createText('subject');
@@ -127,6 +127,24 @@ export class AppA_TesterA_UiTestG {
                 await uiSubject.removeContext();
 
                 assert(uiSubject.collapsed);
+            }, whenOutOfContext => {
+                whenOutOfContext.add('withSubitem', async run => {
+                    let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+                    let appA = appUi.entity.appA;
+                    let subject = await appA.createText('subject');
+                    let oldContext = await appA.createText('oldContext')
+                    subject.context = subject.getPath(oldContext);
+                    subject.installListA();
+                    await subject.listA.add(await appA.createText('dummySubitem'))
+                    let uiSubject = appUi.createUiFor_typed(subject);
+                    await uiSubject.update();
+                    assertFalse(uiSubject.collapsed);
+
+                    await uiSubject.removeContext();
+
+                    assertFalse(uiSubject.collapsed);
+                    assert_sameAs(uiSubject.bodyG.content_contextAsSubitem_htmlElement.innerHTML, '');
+                });
             });
         });
         this.test.testG_nestedTestsA.addTestWithNestedTests('newSubitem', async run => {

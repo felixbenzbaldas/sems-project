@@ -312,9 +312,10 @@ export class UiA {
         await this.headerG.updateContextIcon();
         if (this.collapsed) {
         } else {
-            if (!await this.headerBodyG.hasBodyContent()) {
-                await this.ensureCollapsed();
+            if (await this.headerBodyG.hasBodyContent()) {
+                await this.bodyG.updateContextAsSubitem();
             } else {
+                await this.ensureCollapsed();
             }
         }
     }
