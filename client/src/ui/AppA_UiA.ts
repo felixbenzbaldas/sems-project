@@ -293,11 +293,8 @@ export class AppA_UiA {
             this.getApp().unboundG.createButton('focus root', async () => {
                 await this.globalEventG.focusRoot();
             }),
-            this.getApp().unboundG.createButton('set context', async () => {
-                await this.globalEventG.setContext();
-            }),
-            this.getApp().unboundG.createButton('remove context', async () => {
-                await this.globalEventG.removeContext();
+            this.getApp().unboundG.createButton('toggle context', async () => {
+                await this.globalEventG.toggleContext();
             }),
             lowPriorityCommands
         );

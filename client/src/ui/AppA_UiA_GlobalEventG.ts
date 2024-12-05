@@ -130,12 +130,13 @@ export class AppA_UiA_GlobalEventG {
         this.getUiA().clipboard = await this.getUiA().focused.getObject().deepCopy().run();
     }
 
-    async setContext() {
-        await this.getUiA().focused.uiA.setContext();
-    }
-
-    async removeContext() {
-        await this.getUiA().focused.uiA.removeContext();
+    async toggleContext() {
+        let focused = this.getUiA().focused.uiA;
+        if (focused.getObject().context) {
+            await focused.removeContext();
+        } else {
+            await focused.setContext();
+        }
     }
 
     async script_setContextForAllObjectsInContainer() {
