@@ -310,6 +310,7 @@ export class UiA {
 
     async update_context() {
         await this.headerG.updateContextIcon();
+        await this.bodyG.updateContextAsSubitem();
     }
 
     showContainerMark() {
@@ -330,11 +331,11 @@ export class UiA {
 
     async setContext() {
         this.getObject().context = this.getObject().getPath(this.context.uiA.getObject());
-        await this.update_context();
+        await this.getObject().uis_update_context();
     }
 
     async removeContext() {
         this.getObject().context = undefined;
-        await this.update_context();
+        await this.getObject().uis_update_context();
     }
 }
