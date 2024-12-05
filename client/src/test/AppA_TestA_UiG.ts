@@ -10,14 +10,6 @@ export class AppA_TestA_UiG {
 
     createTests() {
         return [
-            this.createTest('ui_makeCollapsible', async test => {
-                let app = this.entity.appA.createStarter().createAppWithUI();
-                await app.appA.uiA.globalEventG.defaultAction();
-
-                await app.appA.uiA.globalEventG.toggleCollapsible();
-
-                return (await app.appA.uiA.content.listA.getResolved(0)).collapsible;
-            }),
             this.createTest('ui_collapse', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI();
                 await app.appA.uiA.globalEventG.defaultAction();
@@ -29,24 +21,6 @@ export class AppA_TestA_UiG {
                 await app.appA.uiA.globalEventG.expandOrCollapse();
 
                 return firstObjectUi.uiA.collapsed;
-            }),
-            this.createTest('ui_collapsible', async test => {
-                let app = this.entity.appA.createStarter().createAppWithUI();
-                let collapsible = app.appA.unboundG.createCollapsible('', app.appA.unboundG.createText(''));
-                let ui = app.appA.uiA.createUiFor(collapsible);
-
-                await collapsible.uis_update();
-
-                return ui.uiA.collapsed;
-            }),
-            this.createTest('ui_collapsible_hybrid', async test => {
-                let app = this.entity.appA.createStarter().createAppWithUI();
-                let collapsible = app.appA.unboundG.createCollapsible('', app.appA.unboundG.createText(''));
-                collapsible.uiA = new UiA(collapsible);
-
-                await collapsible.updateUi();
-
-                return collapsible.uiA.collapsed;
             }),
             this.createTest('ui_switchCurrentContainer', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI()

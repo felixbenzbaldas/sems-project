@@ -257,9 +257,7 @@ export class UiA {
 
     async toggleCollapsible() {
         this.getObject().collapsible = !this.getObject().collapsible;
-        await this.headerG.updateCursorStyle();
-        await this.headerG.updateBodyIcon();
-        await this.ensureExpanded();
+        await this.getObject().uis_update_collapsible();
     }
 
     async expandOrCollapse() {
@@ -306,6 +304,14 @@ export class UiA {
 
     async update_text() {
         await this.textG.update();
+    }
+
+    async update_collapsible() {
+        await this.headerG.updateCursorStyle();
+        await this.headerG.updateBodyIcon();
+        if (!this.getObject().collapsible) {
+            await this.ensureExpanded();
+        }
     }
 
     async update_context() {

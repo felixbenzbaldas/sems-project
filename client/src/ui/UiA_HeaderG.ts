@@ -93,13 +93,14 @@ export class UiA_HeaderG {
 
     async updateBodyIcon() {
         this.bodyIcon.style.display = 'inline-block';
-        this.bodyIcon.style.marginLeft = '0.7rem';
         if (this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
             this.bodyIcon.style.display = 'default';
             if (this.entity.uiA.collapsed) {
                 this.bodyIcon.innerText = '[...]';
+                this.bodyIcon.style.marginLeft = '0.7rem';
             } else {
-                this.bodyIcon.innerText = ' _';
+                this.bodyIcon.innerText = '_';
+                this.bodyIcon.style.marginLeft = '1rem';
             }
         } else {
             this.bodyIcon.style.display = 'none';

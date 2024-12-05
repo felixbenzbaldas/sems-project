@@ -80,6 +80,37 @@ export class AppA_TesterA_UiTestG {
 
             assert(ui.showContainerMark());
         });
+        this.test.testG_nestedTestsA.addTestWithNestedTests('toggleCollapsible', async run => {
+            let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+            let appA = appUi.entity.appA;
+            let parent = await appA.createText('parent');
+            parent.installListA();
+            let subitem = await appA.createText('subitem');
+            await parent.listA.add(subitem);
+            let uiParent = appUi.createUiFor_typed(parent);
+            await uiParent.update();
+
+            await uiParent.toggleCollapsible();
+
+            assert(uiParent.getObject().collapsible);
+            assert_sameAs(uiParent.headerG.bodyIcon.innerText, '_');
+        }, collapsibleTest => {
+            collapsibleTest.add('makeNonCollapsible', async run => {
+                let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+                let appA = appUi.entity.appA;
+                let parent = await appA.createText('parent');
+                parent.collapsible = true; // <-- important
+                parent.installListA();
+                let subitem = await appA.createText('subitem');
+                await parent.listA.add(subitem);
+                let uiParent = appUi.createUiFor_typed(parent);
+                await uiParent.update();
+
+                await uiParent.toggleCollapsible();
+
+                assert(uiParent.headerBodyG.bodyIsVisible());
+            });
+        });
         this.addTest('setContext', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;

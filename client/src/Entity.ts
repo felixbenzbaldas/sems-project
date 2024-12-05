@@ -269,6 +269,12 @@ export class Entity {
         }
     }
 
+    async uis_update_collapsible() {
+        for (let ui of this.getAllUis()) {
+            await ui.update_collapsible();
+        }
+    }
+
     async uis_update_context() {
         for (let ui of this.getAllUis()) {
             await ui.update_context();
