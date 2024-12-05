@@ -131,11 +131,11 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async setContext() {
-        this.getUiA().focused.uiA.setContext();
+        await this.getUiA().focused.uiA.setContext();
     }
 
     async removeContext() {
-        this.getUiA().focused.uiA.removeContext();
+        await this.getUiA().focused.uiA.removeContext();
     }
 
     async script_setContextForAllObjectsInContainer() {

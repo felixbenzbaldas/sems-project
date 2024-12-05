@@ -91,10 +91,11 @@ export class AppA_TesterA_UiTestG {
             await uiParent.update();
             let uiSubitem = uiParent.listG.uisOfListItems[0].uiA;
 
-            uiSubitem.setContext();
+            await uiSubitem.setContext();
 
             assert(notNullUndefined(subitem.context));
             assert_sameAs(await subitem.context.pathA.resolve(), parent);
+            assert_sameAs(uiParent.listG.uisOfListItems[0].uiA.headerG.contextIcon.innerText, '-');
         });
         this.addTest('removeContext', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
@@ -108,9 +109,10 @@ export class AppA_TesterA_UiTestG {
             await uiParent.update();
             let uiSubitem = uiParent.listG.uisOfListItems[0].uiA;
 
-            uiSubitem.removeContext();
+            await uiSubitem.removeContext();
 
             assert(nullUndefined(subitem.context));
+            assert_sameAs(uiParent.listG.uisOfListItems[0].uiA.headerG.contextIcon.innerText, '');
         });
         this.test.testG_nestedTestsA.addTestWithNestedTests('newSubitem', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();

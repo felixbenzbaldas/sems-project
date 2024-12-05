@@ -328,11 +328,13 @@ export class UiA {
         return this.getObject().context && !await this.inContext();
     }
 
-    setContext() {
+    async setContext() {
         this.getObject().context = this.getObject().getPath(this.context.uiA.getObject());
+        await this.update_context();
     }
 
-    removeContext() {
+    async removeContext() {
         this.getObject().context = undefined;
+        await this.update_context();
     }
 }
