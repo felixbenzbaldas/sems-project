@@ -90,12 +90,15 @@ export class AppA_TesterA_UiTestG {
             let uiParent = appUi.createUiFor_typed(parent);
             await uiParent.update();
             let uiSubitem = uiParent.listG.uisOfListItems[0].uiA;
+            let secondUiSubitem = appUi.createUiFor_typed(subitem);
+            await secondUiSubitem.update();
 
             await uiSubitem.toggleContext();
 
             assert(notNullUndefined(subitem.context));
             assert_sameAs(await subitem.context.pathA.resolve(), parent);
-            assert_sameAs(uiParent.listG.uisOfListItems[0].uiA.headerG.contextIcon.innerText, '-');
+            assert_sameAs(uiSubitem.headerG.contextIcon.innerText, '-');
+            assert(secondUiSubitem.headerBodyG.bodyIsVisible());
         });
         this.test.testG_nestedTestsA.addTestWithNestedTests('removeContext', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();

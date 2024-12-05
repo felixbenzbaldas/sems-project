@@ -310,7 +310,10 @@ export class UiA {
 
     async update_context() {
         await this.headerG.updateContextIcon();
-        if (this.collapsed) {
+        if (!this.headerBodyG.bodyIsVisible()) {
+            if (await this.headerBodyG.showBody()) {
+                await this.ensureExpanded();
+            }
         } else {
             if (await this.headerBodyG.hasBodyContent()) {
                 await this.bodyG.updateContextAsSubitem();

@@ -99,4 +99,8 @@ export class UiA_HeaderBodyG {
     getObject() : Entity {
         return this.entity.uiA.getObject();
     }
+
+    bodyIsVisible() : boolean {
+        return this.entity.uiA.bodyG.htmlElement.style.display !== 'none';
+    }
 }
