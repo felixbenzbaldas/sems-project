@@ -310,6 +310,7 @@ export class UiA {
 
     async update_context() {
         await this.headerG.updateContextIcon();
+        await this.headerG.updateBodyIcon();
         if (this.headerBodyG.bodyIsVisible()) {
             if (await this.headerBodyG.hasBodyContent()) {
                 await this.bodyG.updateContextAsSubitem();
