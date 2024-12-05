@@ -84,7 +84,7 @@ export class AppA_TesterA_UiTestG {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             let subitem = await appA.createText('subitem');
-            let parent = await appA.createList();
+            let parent = await appA.createText('parent');
             parent.installListA();
             await parent.listA.add(subitem);
             let uiParent = appUi.createUiFor_typed(parent);
@@ -101,7 +101,7 @@ export class AppA_TesterA_UiTestG {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             let subitem = await appA.createText('subitem');
-            let parent = await appA.createList();
+            let parent = await appA.createText('parent');
             parent.installListA();
             await parent.listA.add(subitem);
             subitem.context = subitem.getPath(parent);
