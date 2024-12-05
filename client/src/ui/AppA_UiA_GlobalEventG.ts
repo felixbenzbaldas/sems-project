@@ -131,12 +131,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async toggleContext() {
-        let focused = this.getUiA().focused.uiA;
-        if (focused.getObject().context) {
-            await focused.removeContext();
-        } else {
-            await focused.setContext();
-        }
+        await this.getUiA().focused.uiA.toggleContext()
     }
 
     async script_setContextForAllObjectsInContainer() {

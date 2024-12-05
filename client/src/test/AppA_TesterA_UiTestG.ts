@@ -91,7 +91,7 @@ export class AppA_TesterA_UiTestG {
             await uiParent.update();
             let uiSubitem = uiParent.listG.uisOfListItems[0].uiA;
 
-            await uiSubitem.setContext();
+            await uiSubitem.toggleContext();
 
             assert(notNullUndefined(subitem.context));
             assert_sameAs(await subitem.context.pathA.resolve(), parent);
@@ -109,7 +109,7 @@ export class AppA_TesterA_UiTestG {
             await uiParent.update();
             let uiSubitem = uiParent.listG.uisOfListItems[0].uiA;
 
-            await uiSubitem.removeContext();
+            await uiSubitem.toggleContext();
 
             assert(nullUndefined(subitem.context));
             assert_sameAs(uiParent.listG.uisOfListItems[0].uiA.headerG.contextIcon.innerText, '');
@@ -124,7 +124,7 @@ export class AppA_TesterA_UiTestG {
                 await uiSubject.update();
                 assertFalse(uiSubject.collapsed);
 
-                await uiSubject.removeContext();
+                await uiSubject.toggleContext();
 
                 assert(uiSubject.collapsed);
             }, whenOutOfContext => {
@@ -140,7 +140,7 @@ export class AppA_TesterA_UiTestG {
                     await uiSubject.update();
                     assertFalse(uiSubject.collapsed);
 
-                    await uiSubject.removeContext();
+                    await uiSubject.toggleContext();
 
                     assertFalse(uiSubject.collapsed);
                     assert_sameAs(uiSubject.bodyG.content_contextAsSubitem_htmlElement.innerHTML, '');
