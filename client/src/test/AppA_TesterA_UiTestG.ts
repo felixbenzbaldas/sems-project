@@ -97,7 +97,7 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs(await subitem.context.pathA.resolve(), parent);
             assert_sameAs(uiParent.listG.uisOfListItems[0].uiA.headerG.contextIcon.innerText, '-');
         });
-        this.addTest('removeContext', async run => {
+        this.test.testG_nestedTestsA.addTestWithNestedTests('removeContext', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             let subitem = await appA.createText('subitem');
@@ -113,6 +113,21 @@ export class AppA_TesterA_UiTestG {
 
             assert(nullUndefined(subitem.context));
             assert_sameAs(uiParent.listG.uisOfListItems[0].uiA.headerG.contextIcon.innerText, '');
+        }, removeContextTest => {
+            removeContextTest.add('whenOutOfContext', async run => {
+                let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+                let appA = appUi.entity.appA;
+                let subject = await appA.createText('subject');
+                let oldContext = await appA.createText('oldContext')
+                subject.context = subject.getPath(oldContext);
+                let uiSubject = appUi.createUiFor_typed(subject);
+                await uiSubject.update();
+                assertFalse(uiSubject.collapsed);
+
+                await uiSubject.removeContext();
+
+                assert(uiSubject.collapsed);
+            });
         });
         this.test.testG_nestedTestsA.addTestWithNestedTests('newSubitem', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();

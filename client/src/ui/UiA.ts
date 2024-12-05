@@ -310,7 +310,13 @@ export class UiA {
 
     async update_context() {
         await this.headerG.updateContextIcon();
-        await this.bodyG.updateContextAsSubitem();
+        if (this.collapsed) {
+        } else {
+            if (!await this.headerBodyG.hasBodyContent()) {
+                await this.ensureCollapsed();
+            } else {
+            }
+        }
     }
 
     showContainerMark() {
@@ -322,7 +328,15 @@ export class UiA {
     }
 
     async inContext() : Promise<boolean> {
-        return this.context.uiA.getObject() === await this.getObject().context.pathA.resolve();
+        if (notNullUndefined(this.getObject().context)) {
+            if (notNullUndefined(this.context)) {
+                return this.context.uiA.getObject() === await this.getObject().context.pathA.resolve();
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
     }
 
     async hasContextAsSubitem() : Promise<boolean> {
