@@ -53,7 +53,7 @@ export class UiA_BodyG {
             ui.editable = this.getUiA().editable;
             await ui.update();
             ui.htmlElement.style.marginBottom = '0.1rem';
-            ui.htmlElement.style.fontSize = '0.8rem';
+            ui.headerG.htmlElement.style.fontSize = '0.8rem';
             ui.headerG.htmlElement.style.color = 'grey';
             this.content_contextAsSubitem_htmlElement.appendChild(ui.htmlElement);
         }
