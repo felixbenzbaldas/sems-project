@@ -21,7 +21,7 @@ export class AppA_TesterA_UiTestG {
     }
 
     addTests() {
-        this.addTest('updateAddedSubitem', async run => {
+        this.tests.add('updateAddedSubitem', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let list = appUi.getApp().unboundG.createList_typed();
             let uiForList = appUi.createUiFor_typed(list.entity);
@@ -33,7 +33,7 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs(1, uiForList.listG.uisOfListItems.length);
             assert(uiForList.htmlElement.innerHTML.includes('subitem'), 'update html');
         });
-        this.addTest('updateRemovedSubitem', async run => {
+        this.tests.add('updateRemovedSubitem', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let list = appUi.getApp().unboundG.createList_typed();
             list.addDirect(appUi.getApp().unboundG.createText('subitem-one'));
@@ -95,7 +95,7 @@ export class AppA_TesterA_UiTestG {
                 assertFalse(appUi.clipboard_lostContext);
             });
         });
-        this.addTest('showContainerMark', async run => {
+        this.tests.add('showContainerMark', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             run.testRunA.appUi = appUi;
             let appA = appUi.entity.appA;
@@ -141,7 +141,7 @@ export class AppA_TesterA_UiTestG {
                 assert(uiParent.headerBodyG.bodyIsVisible());
             });
         });
-        this.addTest('setContext', async run => {
+        this.tests.add('setContext', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             let subitem = await appA.createText('subitem');
@@ -296,9 +296,5 @@ export class AppA_TesterA_UiTestG {
                 });
             });
         });
-    }
-
-    addTest(name : string, jsFunction: (testRun: Entity) => void) {
-        this.tests.add(name, jsFunction);
     }
 }

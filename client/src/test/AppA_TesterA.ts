@@ -28,18 +28,18 @@ export class AppA_TesterA {
 
     createTestForSimpleSoftware() : Entity {
         let tester = this.entity;
-        let test = tester.createCode('test', (run : Entity) => {
-        });
+        let test = tester.createCode('test', () => {});
         test.installContainerA();
         test.testG_installNestedTestsA();
+        let tests = test.testG_nestedTestsA;
         if (tester.appA.environment.url.searchParams.has('withFailingDemoTest')) {
-            test.testG_nestedTestsA.add('failingDemoTest', async (run : Entity) => {
+            tests.add('failingDemoTest', async (run : Entity) => {
                 run.testRunA.appUi = tester.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
                 assert(false);
             });
         }
         this.uiTestG.addTo(test);
-        test.testG_nestedTestsA.addNestedTests('semi', semi => {
+        tests.addNestedTests('semi', semi => {
             semi.add('keyboardEvent',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
@@ -163,7 +163,7 @@ export class AppA_TesterA {
                 appA.entity.log('human-test: The text does not move.');
             });
         });
-        test.testG_nestedTestsA.add('paste', async run => {
+        tests.add('paste', async run => {
             let appUi = await tester.appA.createStarter().createAppWithUI_typed();
             await appUi.getApp().uiA.update(); // TODO should not be necessary
             await appUi.globalEventG.defaultAction();
@@ -177,7 +177,7 @@ export class AppA_TesterA {
             assert_sameAs(uiForParent.uiA.listG.uisOfListItems[0].uiA.object, toPaste);
             assert_sameAs(appUi.focused.uiA.object, toPaste);
         });
-        test.testG_nestedTestsA.add('dependencies', async run => {
+        tests.add('dependencies', async run => {
             let app = tester.appA.createStarter().createApp_typed();
             let object = await app.createList();
             let dependency = await app.createList();
@@ -191,7 +191,7 @@ export class AppA_TesterA {
             assert(dependencies.has(dependency), 'has dependency');
             assert(dependencies.has(dependencyOfDependency));
         });
-        test.testG_nestedTestsA.add('shallowCopy', async run => {
+        tests.add('shallowCopy', async run => {
             let app = tester.appA.createStarter().createApp_typed();
             let object = await app.createList();
             object.text = 'foo';
@@ -205,7 +205,7 @@ export class AppA_TesterA {
             assert_sameAs(copy.text, object.text);
             assert_sameAs(copy.collapsible, object.collapsible);
         });
-        test.testG_nestedTestsA.add('deepCopy', async run => {
+        tests.add('deepCopy', async run => {
             let app = tester.appA.createStarter().createApp_typed();
             let object = await app.createList();
             object.text = 'foo';
@@ -221,7 +221,7 @@ export class AppA_TesterA {
             assert_notSameAs(await copy.listA.getResolved(0), dependency);
             assert_sameAs(copy.container, app.entity);
         });
-        test.testG_nestedTestsA.add('createBoundEntity', async run => {
+        tests.add('createBoundEntity', async run => {
             let app = tester.appA.createStarter().createApp_typed();
 
             let entity = await app.createBoundEntity();
@@ -229,7 +229,7 @@ export class AppA_TesterA {
             assert_sameAs(app.entity.getPath(entity).pathA.listOfNames[0], entity.name);
             assert_sameAs(app.entity, entity.container);
         });
-        test.testG_nestedTestsA.add('createFromOldJson', async run => {
+        tests.add('createFromOldJson', async run => {
             let app = tester.appA.createStarter().createApp();
             let json = {
                 "rootObject":"AHouse-0",
@@ -271,7 +271,7 @@ export class AppA_TesterA {
             assert_sameAs(root.listA.jsList[1].pathA.listOfNames[2], 'AnotherHouse');
             assert_sameAs(root.listA.jsList[1].pathA.listOfNames[3], '789');
         });
-        test.testG_nestedTestsA.add('export', async run => {
+        tests.add('export', async run => {
             let app = tester.appA.createStarter().createApp();
             let container = app.appA.unboundG.createTextWithList('the container');
             container.installContainerA();
@@ -286,7 +286,7 @@ export class AppA_TesterA {
             assert_sameAs(exported.list.length, 1);
             assert_sameAs(exported.objects[exported.list[0][0].toString()].text, 'subitem + contained');
         });
-        test.testG_nestedTestsA.add('jsonWithoutContainedObjects', async run => {
+        tests.add('jsonWithoutContainedObjects', async run => {
             let app = tester.appA.createStarter().createApp();
             let object = app.appA.unboundG.createTextWithList('object');
             object.context = app.appA.createPath(['aName'], object);
@@ -297,7 +297,7 @@ export class AppA_TesterA {
             assert_sameAs(json.text, 'object');
             assert_sameAs(json.context[0], 'aName');
         });
-        test.testG_nestedTestsA.addTestWithNestedTests('createFromJson', async run => {
+        tests.addTestWithNestedTests('createFromJson', async run => {
             let app = tester.appA.createStarter().createApp();
             let json = {
                 text: 'container + parent',
@@ -326,7 +326,7 @@ export class AppA_TesterA {
                 assert_sameAs(container.text, 'demo website (container)');
             });
         });
-        test.testG_nestedTestsA.addNestedTests('path', path => {
+        tests.addNestedTests('path', path => {
             path.addNestedTests('resolve', path_resolve => {
                 path_resolve.add('direct', async run => {
                     let appA = tester.appA.createStarter().createApp_typed();
@@ -350,7 +350,7 @@ export class AppA_TesterA {
                 });
             });
         });
-        test.testG_nestedTestsA.addNestedTests('list', list => {
+        tests.addNestedTests('list', list => {
             list.add('findByText', async test => {
                 let appA = tester.appA.createStarter().createApp_typed();
                 appA.logG.toListOfStrings = true;
