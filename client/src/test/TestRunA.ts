@@ -9,6 +9,6 @@ export class TestRunA {
     nestedRuns : Entity;
     appUi: AppA_UiA;
 
-    constructor(private entity : Entity) {
+    constructor(public entity : Entity) {
     }
 }
