@@ -48,7 +48,6 @@ export class AppA_TesterA_UiTestG {
         });
         this.addTest('cut', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
-            run.testRunA.appUi = appUi;
             let appA = appUi.entity.appA;
             let child = await appA.createText('child');
             let parent = await appA.createList();
@@ -65,6 +64,7 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs(parent.listA.jsList.length, 0);
             assert_sameAs(child.text, 'unsaved text');
             assert_sameAs(child.context, null);
+            assert(appUi.clipboard_lostContext);
         });
         this.addTest('showContainerMark', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();

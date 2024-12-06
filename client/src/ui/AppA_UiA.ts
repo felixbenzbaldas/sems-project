@@ -23,6 +23,7 @@ export class AppA_UiA {
     withPlaceholderArea: boolean;
     showMeta : boolean;
     clipboard: Entity;
+    clipboard_lostContext: boolean;
     webMeta: Entity;
     keyG: AppA_UiA_KeyG;
 

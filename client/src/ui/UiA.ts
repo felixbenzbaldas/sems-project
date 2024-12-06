@@ -216,9 +216,10 @@ export class UiA {
     }
 
     async cut() {
+        let appUi = this.entity.getApp_typed().uiA;
         this.textG.save();
         let obj = this.getObject();
-        this.entity.getApp().appA.uiA.clipboard = obj;
+        appUi.clipboard = obj;
         let uiContext = this.context;
         let uiListItems = uiContext.uiA.listG.uisOfListItems;
         let position = uiListItems.indexOf(this.entity);
@@ -226,6 +227,7 @@ export class UiA {
         if (notNullUndefined(obj.context)) {
             if (await obj.context.pathA.resolve() === contextObj) {
                 obj.context = null;
+                appUi.clipboard_lostContext = true;
                 await obj.uis_update_context();
             }
         }
@@ -233,9 +235,9 @@ export class UiA {
         await contextObj.uis_update_removedListItem(position);
         if (contextObj.listA.jsList.length > 0) {
             let focusPosition = Math.min(uiListItems.length - 1, position);
-            this.entity.getApp_typed().uiA.focus(uiListItems[focusPosition]);
+            appUi.focus(uiListItems[focusPosition]);
         } else {
-            this.entity.getApp_typed().uiA.focus(uiContext);
+            appUi.focus(uiContext);
         }
     }
 
