@@ -371,4 +371,8 @@ export class UiA {
         }
         await this.getObject().uis_update_context();
     }
+
+    async pasteNext() {
+        await this.context.uiA.pasteNextOnSubitem(this.entity);
+    }
 }

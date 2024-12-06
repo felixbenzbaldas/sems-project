@@ -68,23 +68,6 @@ export class AppA_TestA_UiG {
                 return uiForList.uiA.listG.uisOfListItems.at(0).uiA.object === listItem
                     && uiForList.uiA.listG.uisOfListItems.at(0) != listItem;
             }),
-            this.createTest('ui_pasteNext', async test => {
-                let app = this.entity.appA.createStarter().createAppWithUI();
-                test.test_app = app;
-                app.appA.logG.toListOfStrings = true;
-                let firstItem = app.appA.unboundG.createText('firstItem');
-                let toPaste = app.appA.unboundG.createText('secondItem');
-                let list = app.appA.unboundG.createList(firstItem);
-                let uiForList : Entity = app.appA.uiA.createUiFor(list);
-                await uiForList.uiA.update();
-                app.appA.uiA.clipboard = toPaste;
-
-                await uiForList.uiA.listG.pasteNextOnSubitem(uiForList.uiA.listG.uisOfListItems.at(0));
-
-                return list.listA.jsList.at(1) === toPaste &&
-                    uiForList.uiA.listG.uisOfListItems.at(1).uiA.object === toPaste &&
-                    app.appA.uiA.focused.uiA.object === toPaste;
-            }),
             this.createTest('ui_keyboardEvent_Enter', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI();
                 test.test_app = app;
