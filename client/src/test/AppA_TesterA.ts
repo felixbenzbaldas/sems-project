@@ -33,8 +33,8 @@ export class AppA_TesterA {
         test.testG_installNestedTestsA();
         let tests = test.testG_nestedTestsA;
         if (tester.appA.environment.url.searchParams.has('withFailingDemoTest')) {
-            tests.add('failingDemoTest', async (run : Entity) => {
-                run.testRunA.appUi = tester.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
+            tests.add('failingDemoTest', async run => {
+                run.appUi = tester.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
                 assert(false);
             });
         }
@@ -43,7 +43,7 @@ export class AppA_TesterA {
             semi.add('keyboardEvent',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
-                run.testRunA.appUi = appA.uiA;
+                run.appUi = appA.uiA;
                 appA.uiA.content.listA.addDirect(
                     appA.unboundG.createButton('activate test-app', () => {
                     }),
@@ -61,7 +61,7 @@ export class AppA_TesterA {
             semi.add('contextIcon',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
-                run.testRunA.appUi = appA.uiA;
+                run.appUi = appA.uiA;
                 let parent = await appA.createText('parent');
                 parent.installListA();
                 let inContext = await appA.createText('inContext');
@@ -87,7 +87,7 @@ export class AppA_TesterA {
             semi.add('contextAsSubitem',  async run => {
                 let appA = tester.appA.createStarter().createAppWithUI().appA;
                 appA.testMode = true;
-                run.testRunA.appUi = appA.uiA;
+                run.appUi = appA.uiA;
                 appA.entity.uiA.editable = true;
                 let parent = await appA.createText('parent');
                 parent.installListA();
@@ -114,7 +114,7 @@ export class AppA_TesterA {
             semi.add('upload',  async run => {
                 let appUi = tester.appA.createStarter().createAppWithUI_typed();
                 let appA = appUi.getApp();
-                run.testRunA.appUi = appUi;
+                run.appUi = appUi;
                 let html = appA.createEntityWithApp();
                 appA.uiA.content.listA.addDirect(html);
                 html.codeG_html = textFileInput((contents : any) => {
@@ -127,7 +127,7 @@ export class AppA_TesterA {
             semi.add('download',  async run => {
                 let appUi = tester.appA.createStarter().createAppWithUI_typed();
                 let appA = appUi.getApp();
-                run.testRunA.appUi = appUi;
+                run.appUi = appUi;
                 let html = appA.createEntityWithApp();
                 appA.uiA.content.listA.addDirect(html);
                 const fileContent = 'foo123';
@@ -138,8 +138,8 @@ export class AppA_TesterA {
                 appA.entity.log('human-test: The content of the downloaded file is ' + fileContent);
             });
             semi.add('setWidth',  async run => {
-                run.testRunA.appUi = tester.appA.createStarter().createAppWithUI_typed();
-                let appA = run.testRunA.appUi.getApp();
+                run.appUi = tester.appA.createStarter().createAppWithUI_typed();
+                let appA = run.appUi.getApp();
                 let html = appA.createEntityWithApp();
                 appA.uiA.content.listA.addDirect(html);
                 html.codeG_html = document.createElement('div');

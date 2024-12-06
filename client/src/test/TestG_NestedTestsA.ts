@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import type {ContainerA} from "@/ContainerA";
+import type {TestRunA} from "@/test/TestRunA";
 
 export class TestG_NestedTestsA {
 
@@ -12,13 +13,13 @@ export class TestG_NestedTestsA {
         this.nestedTests = this.entity.getApp().appA.unboundG.createList();
     }
 
-    add(name: string, jsFunction: (testRun: Entity) => void) : Entity {
+    add(name: string, jsFunction: (run: TestRunA) => void) : Entity {
         let nestedTest : Entity = this.entity.createCode(name, jsFunction);
         this.nestedTests.listA.addDirect(nestedTest);
         return nestedTest;
     }
 
-    addTestWithNestedTests(name: string, jsFunction : (testRun: Entity) => void, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
+    addTestWithNestedTests(name: string, jsFunction : (run: TestRunA) => void, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
         let test = this.add(name, jsFunction);
         test.testG_installNestedTestsA();
         test.installContainerA();

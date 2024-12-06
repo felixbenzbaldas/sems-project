@@ -97,7 +97,7 @@ export class AppA_TesterA_UiTestG {
         });
         this.tests.add('showContainerMark', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
-            run.testRunA.appUi = appUi;
+            run.appUi = appUi;
             let appA = appUi.entity.appA;
             let markedContainer = appA.createEntityWithApp();
             markedContainer.installContainerA();
