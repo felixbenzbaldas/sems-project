@@ -224,7 +224,7 @@ export class UiA {
         let uiListItems = uiContext.uiA.listG.uisOfListItems;
         let position = uiListItems.indexOf(this.entity);
         let contextObj = uiContext.getObject();
-        if (this.hasContext() && await this.inContext()) {
+        if (this.objectHasContext() && await this.inContext()) {
             obj.context = null;
             appUi.clipboard_lostContext = true;
             await obj.uis_update_context();
@@ -340,24 +340,21 @@ export class UiA {
         }
     }
 
-    hasContext() : boolean {
+    objectHasContext() : boolean {
         return notNullUndefined(this.getObject().context);
     }
 
+    // check objectHasContext() before calling this method
     async inContext() : Promise<boolean> {
-        if (this.hasContext()) {
-            if (notNullUndefined(this.context)) {
-                return this.context.uiA.getObject() === await this.getObject().context.pathA.resolve();
-            } else {
-                return false;
-            }
+        if (notNullUndefined(this.context)) {
+            return this.context.uiA.getObject() === await this.getObject().context.pathA.resolve();
         } else {
-            return true;
+            return false;
         }
     }
 
     async hasContextAsSubitem() : Promise<boolean> {
-        return this.getObject().context && !await this.inContext();
+        return this.objectHasContext() && !await this.inContext();
     }
 
     async toggleContext() {

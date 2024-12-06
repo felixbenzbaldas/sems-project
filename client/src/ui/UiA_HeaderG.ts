@@ -52,7 +52,7 @@ export class UiA_HeaderG {
     async updateContextIcon() {
         this.contextIcon.style.display = 'block';
         setWidth(this.contextIcon, '0.4rem');
-        if (this.getObject().context) {
+        if (this.getUiA().objectHasContext()) {
             if (await this.getUiA().inContext()) {
                 this.contextIcon.innerText = '-';
             } else {
