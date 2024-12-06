@@ -1,5 +1,4 @@
 import type {Entity} from "@/Entity";
-import type {ContainerA} from "@/ContainerA";
 import type {TestRunA} from "@/test/TestRunA";
 
 export class TestG_NestedTestsA {
@@ -13,20 +12,57 @@ export class TestG_NestedTestsA {
         this.nestedTests = this.entity.getApp().appA.unboundG.createList();
     }
 
-    add(name: string, jsFunction: (run: TestRunA) => void) : Entity {
+    add_withoutApp(name: string, jsFunction: (run: TestRunA) => void) : Entity {
         let nestedTest : Entity = this.entity.createCode(name, jsFunction);
         this.nestedTests.listA.addDirect(nestedTest);
         return nestedTest;
     }
 
-    addTestWithNestedTests(name: string, jsFunction : (run: TestRunA) => void, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
-        let test = this.add(name, jsFunction);
+    add(name: string, jsFunction: (run: TestRunA) => void) : Entity {
+        return this.add_withoutApp(name, _run => {
+           _run.app =  this.entity.getApp_typed().createStarter().createApp_typed();
+           jsFunction(_run);
+        });
+    }
+
+    addUiTest(name: string, uiJsFunction: (uiRun: TestRunA) => void) : Entity {
+        return this.add_withoutApp(name, async run => {
+            this.prepareUi(run);
+            await uiJsFunction(run);
+        });
+    }
+
+    prepareApp(run : TestRunA) {
+        run.app = this.entity.getApp_typed().createStarter().createApp_typed();
+    }
+
+    prepareUi(run: TestRunA) {
+        run.appUi = this.entity.getApp_typed().createStarter().createAppWithUI_typed();
+        run.app = run.appUi.getApp();
+    }
+
+    addTestWithNestedTests_withoutApp(name: string, jsFunction : (run: TestRunA) => void, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
+        let test = this.add_withoutApp(name, jsFunction);
         test.testG_installNestedTestsA();
         test.installContainerA();
         creator(test.testG_nestedTestsA);
     }
 
+    addUiTestWithNestedTests(name: string, uiJsFunction: (uiRun: TestRunA) => void, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
+        this.addTestWithNestedTests_withoutApp(name, async run => {
+            this.prepareUi(run);
+            await uiJsFunction(run);
+        }, creator);
+    }
+
+    addTestWithNestedTests(name: string, jsFunction : (run: TestRunA) => void, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
+        this.addTestWithNestedTests_withoutApp(name, async _run => {
+            this.prepareApp(_run);
+            await jsFunction(_run);
+        }, creator);
+    }
+
     addNestedTests(name: string, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
-        this.addTestWithNestedTests(name, ()=>{}, creator);
+        this.addTestWithNestedTests_withoutApp(name, ()=>{}, creator);
     }
 }

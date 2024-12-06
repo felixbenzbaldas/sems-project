@@ -33,112 +33,98 @@ export class AppA_TesterA {
         test.testG_installNestedTestsA();
         let tests = test.testG_nestedTestsA;
         if (tester.appA.environment.url.searchParams.has('withFailingDemoTest')) {
-            tests.add('failingDemoTest', async run => {
+            tests.add_withoutApp('failingDemoTest', async run => {
                 run.appUi = tester.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
                 assert(false);
             });
         }
         this.uiTestG.addTo(test);
         tests.addNestedTests('semi', semi => {
-            semi.add('keyboardEvent',  async run => {
-                let appA = tester.appA.createStarter().createAppWithUI().appA;
-                appA.testMode = true;
-                run.appUi = appA.uiA;
-                appA.uiA.content.listA.addDirect(
-                    appA.unboundG.createButton('activate test-app', () => {
+            semi.addUiTest('keyboardEvent',  async run => {
+                run.appUi.content.listA.addDirect(
+                    run.app.unboundG.createButton('activate test-app', () => {
                     }),
-                    appA.unboundG.createButton('switch off testMode', () => {
-                        appA.testMode = false;
+                    run.app.unboundG.createButton('switch off testMode', () => {
+                        run.app.testMode = false;
                     })
                 );
-                appA.logG.toListOfStrings = true;
-                appA.logG.toConsole = true;
-                appA.entity.log('human-action: click \'activate test-app\'');
-                appA.entity.log('human-test: when pressing keys, the according key events are logged.');
-                appA.entity.log('human-action: click \'switch off testMode\'');
-                appA.entity.log('human-test: now the keys are not logged.');
+                run.app.logG.toListOfStrings = true;
+                run.app.logG.toConsole = true;
+                run.app.entity.log('human-action: click \'activate test-app\'');
+                run.app.entity.log('human-test: when pressing keys, the according key events are logged.');
+                run.app.entity.log('human-action: click \'switch off testMode\'');
+                run.app.entity.log('human-test: now the keys are not logged.');
             });
-            semi.add('contextIcon',  async run => {
-                let appA = tester.appA.createStarter().createAppWithUI().appA;
-                appA.testMode = true;
-                run.appUi = appA.uiA;
-                let parent = await appA.createText('parent');
+            semi.addUiTest('contextIcon',  async run => {
+                run.app.testMode = true;
+                let parent = await run.app.createText('parent');
                 parent.installListA();
-                let inContext = await appA.createText('inContext');
-                let withoutContext = await appA.createText('withoutContext');
-                let outOfContext = await appA.createText('outOfContext');
-                let longText = await appA.createText('longText-'.repeat(25));
+                let inContext = await run.app.createText('inContext');
+                let withoutContext = await run.app.createText('withoutContext');
+                let outOfContext = await run.app.createText('outOfContext');
+                let longText = await run.app.createText('longText-'.repeat(25));
                 inContext.context = inContext.getPath(parent);
                 longText.context = longText.getPath(parent);
-                outOfContext.context = outOfContext.getPath(await appA.createText('aDummyContext'));
+                outOfContext.context = outOfContext.getPath(await run.app.createText('aDummyContext'));
                 await parent.listA.add(inContext);
                 await parent.listA.add(outOfContext);
                 await parent.listA.add(withoutContext);
                 await parent.listA.add(longText);
-                await appA.uiA.content.listA.add(parent);
-                await appA.uiA.update();
-                let parentUi = appA.uiA.content.uiA.listG.uisOfListItems[0];
+                await run.appUi.content.listA.add(parent);
+                await run.appUi.update();
+                let parentUi = run.appUi.content.uiA.listG.uisOfListItems[0];
                 assert_sameAs(parentUi.uiA.listG.uisOfListItems[0].uiA.headerG.contextIcon.innerText, '-');
                 assert_sameAs(parentUi.uiA.listG.uisOfListItems[1].uiA.headerG.contextIcon.innerText, '/');
                 assert_sameAs(parentUi.uiA.listG.uisOfListItems[2].uiA.headerG.contextIcon.innerText, '');
-                appA.entity.log('human-test: The item withContext should show the appropriate contextIcon -');
-                appA.entity.log('human-test: The contextIcon always appears left of the content - also for the long text.');
+                run.app.entity.log('human-test: The item withContext should show the appropriate contextIcon -');
+                run.app.entity.log('human-test: The contextIcon always appears left of the content - also for the long text.');
             });
-            semi.add('contextAsSubitem',  async run => {
-                let appA = tester.appA.createStarter().createAppWithUI().appA;
-                appA.testMode = true;
-                run.appUi = appA.uiA;
-                appA.entity.uiA.editable = true;
-                let parent = await appA.createText('parent');
+            semi.addUiTest('contextAsSubitem',  async run => {
+                run.app.testMode = true;
+                run.app.entity.uiA.editable = true;
+                let parent = await run.app.createText('parent');
                 parent.installListA();
-                let inContext = await appA.createText('inContext');
-                let withoutContext = await appA.createText('withoutContext');
-                let outOfContext = await appA.createText('outOfContext');
+                let inContext = await run.app.createText('inContext');
+                let withoutContext = await run.app.createText('withoutContext');
+                let outOfContext = await run.app.createText('outOfContext');
                 inContext.context = inContext.getPath(parent);
-                outOfContext.context = outOfContext.getPath(await appA.createText('aDummyContext'));
+                outOfContext.context = outOfContext.getPath(await run.app.createText('aDummyContext'));
                 outOfContext.installListA();
-                await outOfContext.listA.add(await appA.createText('aDummySubitem'));
+                await outOfContext.listA.add(await run.app.createText('aDummySubitem'));
                 await parent.listA.add(inContext);
                 await parent.listA.add(outOfContext);
                 await parent.listA.add(withoutContext);
-                await appA.uiA.content.listA.add(parent);
-                await appA.uiA.update();
-                let parentUi = appA.uiA.content.uiA.listG.uisOfListItems[0];
+                await run.appUi.content.listA.add(parent);
+                await run.appUi.update();
+                let parentUi = run.appUi.content.uiA.listG.uisOfListItems[0];
                 assertFalse(await parentUi.uiA.listG.uisOfListItems[0].uiA.hasContextAsSubitem());
                 assert(await parentUi.uiA.listG.uisOfListItems[1].uiA.hasContextAsSubitem());
                 assertFalse(await parentUi.uiA.listG.uisOfListItems[2].uiA.hasContextAsSubitem());
                 //
                 assert(await parentUi.uiA.listG.uisOfListItems[1].uiA.headerBodyG.hasBodyContent());
-                appA.entity.log('human-test: outOfContext shows "contextAsSubitem"');
+                run.app.entity.log('human-test: outOfContext shows "contextAsSubitem"');
             });
-            semi.add('upload',  async run => {
-                let appUi = tester.appA.createStarter().createAppWithUI_typed();
-                let appA = appUi.getApp();
-                run.appUi = appUi;
-                let html = appA.createEntityWithApp();
-                appA.uiA.content.listA.addDirect(html);
+            semi.addUiTest('upload',  async run => {
+                let html = run.app.createEntityWithApp();
+                run.appUi.content.listA.addDirect(html);
                 html.codeG_html = textFileInput((contents : any) => {
-                    appA.uiA.content.listA.addDirect(appA.unboundG.createText(contents));
-                    appA.uiA.update();
+                    run.appUi.content.listA.addDirect(run.app.unboundG.createText(contents));
+                    run.appUi.update();
                 });
-                appA.entity.log('human-action: Click on upload -> choose a text file');
-                appA.entity.log('human-test: The text of the file appears.');
+                run.app.entity.log('human-action: Click on upload -> choose a text file');
+                run.app.entity.log('human-test: The text of the file appears.');
             });
-            semi.add('download',  async run => {
-                let appUi = tester.appA.createStarter().createAppWithUI_typed();
-                let appA = appUi.getApp();
-                run.appUi = appUi;
-                let html = appA.createEntityWithApp();
-                appA.uiA.content.listA.addDirect(html);
+            semi.addUiTest('download',  async run => {
+                let html = run.app.createEntityWithApp();
+                run.appUi.content.listA.addDirect(html);
                 const fileContent = 'foo123';
                 const fileName = 'testfile.txt';
                 html.codeG_html = downloadText(fileContent, fileName, 'download');
-                appA.entity.log('human-action: Click on download');
-                appA.entity.log('human-test: A text file is downloaded.');
-                appA.entity.log('human-test: The content of the downloaded file is ' + fileContent);
+                run.app.entity.log('human-action: Click on download');
+                run.app.entity.log('human-test: A text file is downloaded.');
+                run.app.entity.log('human-test: The content of the downloaded file is ' + fileContent);
             });
-            semi.add('setWidth',  async run => {
-                run.appUi = tester.appA.createStarter().createAppWithUI_typed();
+            semi.addUiTest('setWidth',  async run => {
                 let appA = run.appUi.getApp();
                 let html = appA.createEntityWithApp();
                 appA.uiA.content.listA.addDirect(html);
@@ -163,25 +149,23 @@ export class AppA_TesterA {
                 appA.entity.log('human-test: The text does not move.');
             });
         });
-        tests.add('paste', async run => {
-            let appUi = await tester.appA.createStarter().createAppWithUI_typed();
-            await appUi.getApp().uiA.update(); // TODO should not be necessary
-            await appUi.globalEventG.defaultAction();
-            let uiForParent : Entity = appUi.content.uiA.listG.uisOfListItems[0];
-            let toPaste = await appUi.getApp().createText('toPaste');
-            appUi.clipboard = toPaste;
+        tests.addUiTest('paste', async run => {
+            await run.appUi.getApp().uiA.update(); // TODO should not be necessary
+            await run.appUi.globalEventG.defaultAction();
+            let uiForParent : Entity = run.appUi.content.uiA.listG.uisOfListItems[0];
+            let toPaste = await run.appUi.getApp().createText('toPaste');
+            run.appUi.clipboard = toPaste;
 
-            await appUi.globalEventG.paste();
+            await run.appUi.globalEventG.paste();
 
             assert_sameAs(await uiForParent.getObject().listA.getResolved(0), toPaste);
             assert_sameAs(uiForParent.uiA.listG.uisOfListItems[0].uiA.object, toPaste);
-            assert_sameAs(appUi.focused.uiA.object, toPaste);
+            assert_sameAs(run.appUi.focused.uiA.object, toPaste);
         });
         tests.add('dependencies', async run => {
-            let app = tester.appA.createStarter().createApp_typed();
-            let object = await app.createList();
-            let dependency = await app.createList();
-            let dependencyOfDependency = await app.createText('dependencyOfDependency');
+            let object = await run.app.createList();
+            let dependency = await run.app.createList();
+            let dependencyOfDependency = await run.app.createText('dependencyOfDependency');
             await object.listA.add(dependency);
             await dependency.listA.add(dependencyOfDependency);
 
@@ -192,11 +176,10 @@ export class AppA_TesterA {
             assert(dependencies.has(dependencyOfDependency));
         });
         tests.add('shallowCopy', async run => {
-            let app = tester.appA.createStarter().createApp_typed();
-            let object = await app.createList();
+            let object = await run.app.createList();
             object.text = 'foo';
             object.collapsible = true;
-            let dependency = await app.createList();
+            let dependency = await run.app.createList();
             await object.listA.add(dependency);
 
             let copy : Entity = await object.shallowCopy();
@@ -206,11 +189,10 @@ export class AppA_TesterA {
             assert_sameAs(copy.collapsible, object.collapsible);
         });
         tests.add('deepCopy', async run => {
-            let app = tester.appA.createStarter().createApp_typed();
-            let object = await app.createList();
+            let object = await run.app.createList();
             object.text = 'foo';
             object.collapsible = true;
-            let dependency = await app.createText('dependency');
+            let dependency = await run.app.createText('dependency');
             await object.listA.add(dependency);
 
             let copy : Entity = await object.deepCopy().run();
@@ -219,18 +201,15 @@ export class AppA_TesterA {
             assert_sameAs(copy.collapsible, object.collapsible);
             assert_sameAs((await copy.listA.getResolved(0)).text, 'dependency');
             assert_notSameAs(await copy.listA.getResolved(0), dependency);
-            assert_sameAs(copy.container, app.entity);
+            assert_sameAs(copy.container, run.app.entity);
         });
         tests.add('createBoundEntity', async run => {
-            let app = tester.appA.createStarter().createApp_typed();
+            let entity = await run.app.createBoundEntity();
 
-            let entity = await app.createBoundEntity();
-
-            assert_sameAs(app.entity.getPath(entity).pathA.listOfNames[0], entity.name);
-            assert_sameAs(app.entity, entity.container);
+            assert_sameAs(run.app.entity.getPath(entity).pathA.listOfNames[0], entity.name);
+            assert_sameAs(run.app.entity, entity.container);
         });
         tests.add('createFromOldJson', async run => {
-            let app = tester.appA.createStarter().createApp();
             let json = {
                 "rootObject":"AHouse-0",
                 "objects":[
@@ -253,7 +232,7 @@ export class AppA_TesterA {
                 ]
             };
 
-            let container = await app.appA.unboundG.createFromOldJson(json);
+            let container = await run.app.unboundG.createFromOldJson(json);
 
             assert_sameAs(container.containerA.mapNameEntity.size, 2);
             assert_sameAs(container.listA.jsList.length, 1);
@@ -272,33 +251,30 @@ export class AppA_TesterA {
             assert_sameAs(root.listA.jsList[1].pathA.listOfNames[3], '789');
         });
         tests.add('export', async run => {
-            let app = tester.appA.createStarter().createApp();
-            let container = app.appA.unboundG.createTextWithList('the container');
+            let container = run.app.unboundG.createTextWithList('the container');
             container.installContainerA();
-            app.appA.currentContainer = container;
-            let subitemAndContained = await app.appA.createText('subitem + contained');
+            run.app.currentContainer = container;
+            let subitemAndContained = await run.app.createText('subitem + contained');
             await container.listA.add(subitemAndContained);
 
             let exported = await container.export();
 
-            app.log('exported: ' + JSON.stringify(exported, null, 4));
+            run.app.entity.log('exported: ' + JSON.stringify(exported, null, 4));
             assert_sameAs(exported.text, 'the container');
             assert_sameAs(exported.list.length, 1);
             assert_sameAs(exported.objects[exported.list[0][0].toString()].text, 'subitem + contained');
         });
         tests.add('jsonWithoutContainedObjects', async run => {
-            let app = tester.appA.createStarter().createApp();
-            let object = app.appA.unboundG.createTextWithList('object');
-            object.context = app.appA.createPath(['aName'], object);
+            let object = run.app.unboundG.createTextWithList('object');
+            object.context = run.app.createPath(['aName'], object);
 
             let json = object.json_withoutContainedObjects();
 
-            app.log('json: ' + JSON.stringify(json, null, 4));
+            run.app.entity.log('json: ' + JSON.stringify(json, null, 4));
             assert_sameAs(json.text, 'object');
             assert_sameAs(json.context[0], 'aName');
         });
         tests.addTestWithNestedTests('createFromJson', async run => {
-            let app = tester.appA.createStarter().createApp();
             let json = {
                 text: 'container + parent',
                 list: [['0']],
@@ -308,7 +284,7 @@ export class AppA_TesterA {
                 }}
             };
 
-            let container = app.appA.unboundG.createFromJson(json);
+            let container = run.app.unboundG.createFromJson(json);
 
             let containedAndSub = await container.listA.getResolved(0);
             assert_sameAs(container.text, 'container + parent');
@@ -319,9 +295,7 @@ export class AppA_TesterA {
             assert(notNullUndefined(container.listA.jsList.at(0).pathA));
         }, createFromJson => {
             createFromJson.add('testData', async run => {
-                let app = tester.appA.createStarter().createApp();
-
-                let container = app.appA.unboundG.createFromJson(testData);
+                let container = run.app.unboundG.createFromJson(testData);
 
                 assert_sameAs(container.text, 'demo website (container)');
             });
@@ -329,17 +303,15 @@ export class AppA_TesterA {
         tests.addNestedTests('path', path => {
             path.addNestedTests('resolve', path_resolve => {
                 path_resolve.add('direct', async run => {
-                    let appA = tester.appA.createStarter().createApp_typed();
-                    let entity = appA.createEntityWithApp();
-                    let path = appA.direct(entity);
+                    let entity = run.app.createEntityWithApp();
+                    let path = run.app.direct(entity);
 
                     let resolved = await path.pathA.resolve();
 
                     assert_sameAs(resolved, entity);
                 });
                 path_resolve.add('listOfNames', async run => {
-                    let appA = tester.appA.createStarter().createApp_typed();
-                    let container = appA.createEntityWithApp();
+                    let container = run.app.createEntityWithApp();
                     container.installContainerA();
                     let contained = await container.containerA.createBoundEntity();
                     let path = container.getPath(contained);
@@ -351,23 +323,21 @@ export class AppA_TesterA {
             });
         });
         tests.addNestedTests('list', list => {
-            list.add('findByText', async test => {
-                let appA = tester.appA.createStarter().createApp_typed();
-                appA.logG.toListOfStrings = true;
-                let list : Entity = appA.unboundG.createList();
-                let subitem = appA.unboundG.createText('findMe');
+            list.add('findByText', async run => {
+                run.app.logG.toListOfStrings = true;
+                let list : Entity = run.app.unboundG.createList();
+                let subitem = run.app.unboundG.createText('findMe');
                 list.listA.addDirect(subitem);
 
                 let found = await list.listA.findByText('findMe');
 
                 assert_sameAs(found, subitem);
             });
-            list.add('insertPathAtPosition', async test => {
-                let appA = tester.appA.createStarter().createApp_typed();
-                let list : Entity = await appA.createList();
-                let listItem : Entity = await appA.createText('subitem');
+            list.add('insertPathAtPosition', async run => {
+                let list : Entity = await run.app.createList();
+                let listItem : Entity = await run.app.createText('subitem');
 
-                await list.listA.insertPathAtPosition(appA.direct(listItem).pathA, 0);
+                await list.listA.insertPathAtPosition(run.app.direct(listItem).pathA, 0);
 
                 assert_sameAs(await list.listA.jsList[0].pathA.resolve(), listItem);
             });

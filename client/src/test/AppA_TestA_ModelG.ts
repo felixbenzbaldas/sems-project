@@ -2,6 +2,7 @@ import type {Entity} from "@/Entity";
 import {Environment} from "@/Environment";
 import {testData} from "@/testData";
 import {assert, localhostWithQueryParams} from "@/utils";
+import type {TestRunA} from "@/test/TestRunA";
 
 export class AppA_TestA_ModelG {
 
@@ -195,8 +196,8 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_testRun', async outerTest => {
                 let app : Entity = this.entity.appA.createStarter().createAppWithUI();
                 let name = 'testName';
-                let test : Entity = app.createCode(name, (testRun : Entity) => {
-                    testRun.testRunA.appUi = app.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
+                let test : Entity = app.createCode(name, (testRun : TestRunA) => {
+                    testRun.appUi = app.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
                     assert(false);
                 });
                 let testRun : Entity = await test.testG_run();
@@ -216,7 +217,7 @@ export class AppA_TestA_ModelG {
                 let test : Entity = app.createCode(name, (testRun : Entity) => {
                 });
                 test.testG_installNestedTestsA();
-                test.testG_nestedTestsA.add('nestedTest', () => {
+                test.testG_nestedTestsA.add_withoutApp('nestedTest', () => {
                     assert(false);
                 });
                 let testRun : Entity = await test.testG_run();
