@@ -61,6 +61,7 @@ export class AppA_TesterA_UiTestG {
 
             await childUi.cut();
 
+            assert_sameAs(appUi.clipboard, child);
             assert_sameAs(parent.listA.jsList.length, 0);
             assert_sameAs(child.text, 'unsaved text');
             assert_sameAs(child.context, null);
