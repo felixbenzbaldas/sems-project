@@ -56,7 +56,6 @@ export class AppA_TesterA {
                 run.app.entity.log('human-test: now the keys are not logged.');
             });
             semi.addUiTest('contextIcon',  async run => {
-                run.app.testMode = true;
                 let parent = await run.app.createText('parent');
                 parent.installListA();
                 let inContext = await run.app.createText('inContext');
@@ -80,7 +79,6 @@ export class AppA_TesterA {
                 run.app.entity.log('human-test: The contextIcon always appears left of the content - also for the long text.');
             });
             semi.addUiTest('contextAsSubitem',  async run => {
-                run.app.testMode = true;
                 run.app.entity.uiA.editable = true;
                 let parent = await run.app.createText('parent');
                 parent.installListA();
