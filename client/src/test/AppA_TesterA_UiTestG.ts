@@ -1,20 +1,22 @@
 import type {Entity} from "@/Entity";
 import {ContainerA} from "@/ContainerA";
 import {assert, assert_sameAs, assertFalse, notNullUndefined, nullUndefined} from "@/utils";
+import type {TestG_NestedTestsA} from "@/test/TestG_NestedTestsA";
 
 export class AppA_TesterA_UiTestG {
 
     name : string;
-    test : Entity;
+    tests : TestG_NestedTestsA;
 
     constructor(public entity : Entity) {
         this.name = 'ui';
     }
 
     addTo(boundParent : Entity) {
-        this.test = boundParent.testG_nestedTestsA.add(this.name, ()=>{});
-        this.test.installContainerA()
-        this.test.testG_installNestedTestsA();
+        let test = boundParent.testG_nestedTestsA.add(this.name, ()=>{});
+        test.installContainerA()
+        test.testG_installNestedTestsA();
+        this.tests = test.testG_nestedTestsA;
         this.addTests();
     }
 
@@ -46,7 +48,7 @@ export class AppA_TesterA_UiTestG {
             assert(!uiForList.htmlElement.innerHTML.includes('subitem-one'), 'update html');
             assert(uiForList.htmlElement.innerHTML.includes('subitem-two'), 'update html');
         });
-        this.test.testG_nestedTestsA.addTestWithNestedTests('cut', async run => {
+        this.tests.addTestWithNestedTests('cut', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             let child = await appA.createText('child');
@@ -108,7 +110,7 @@ export class AppA_TesterA_UiTestG {
 
             assert(ui.showContainerMark());
         });
-        this.test.testG_nestedTestsA.addTestWithNestedTests('toggleCollapsible', async run => {
+        this.tests.addTestWithNestedTests('toggleCollapsible', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             let parent = await appA.createText('parent');
@@ -159,7 +161,7 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs(uiSubitem.headerG.contextIcon.innerText, '-');
             assert(secondUiSubitem.headerBodyG.bodyIsVisible());
         });
-        this.test.testG_nestedTestsA.addTestWithNestedTests('removeContext', async run => {
+        this.tests.addTestWithNestedTests('removeContext', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             let subitem = await appA.createText('subitem');
@@ -209,7 +211,7 @@ export class AppA_TesterA_UiTestG {
                 });
             });
         });
-        this.test.testG_nestedTestsA.addTestWithNestedTests('newSubitem', async run => {
+        this.tests.addTestWithNestedTests('newSubitem', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             await appUi.entity.uiA.update();
@@ -237,7 +239,7 @@ export class AppA_TesterA_UiTestG {
                 assert_sameAs(appUi.focused, createdUi);
             });
         });
-        this.test.testG_nestedTestsA.addTestWithNestedTests('defaultAction', async run => {
+        this.tests.addTestWithNestedTests('defaultAction', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             await appUi.entity.uiA.update();
@@ -267,7 +269,7 @@ export class AppA_TesterA_UiTestG {
                 assert_sameAs(appUi.focused, createdUi);
             });
         });
-        this.test.testG_nestedTestsA.addNestedTests('tester', (tester) => {
+        this.tests.addNestedTests('tester', (tester) => {
             tester.addTestWithNestedTests('run', async outerRun => {
                 let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
                 let appA = appUi.entity.appA;
@@ -281,12 +283,12 @@ export class AppA_TesterA_UiTestG {
                 runTest.add('failingNestedTest', async outerRun => {
                     let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
                     let appA = appUi.entity.appA;
-                    let test = appA.entity.createCode('dummyTest', ()=>{});
-                    test.testG_installNestedTestsA();
-                    test.testG_nestedTestsA.add('failingNestedTest', () => {
+                    let dummyTest = appA.entity.createCode('dummyTest', ()=>{});
+                    dummyTest.testG_installNestedTestsA();
+                    dummyTest.testG_nestedTestsA.add('failingNestedTest', () => {
                         assert(false);
                     });
-                    let run = await test.testG_run();
+                    let run = await dummyTest.testG_run();
                     let ui = appUi.createUiFor_typed(run);
                     await ui.update();
 
@@ -297,6 +299,6 @@ export class AppA_TesterA_UiTestG {
     }
 
     addTest(name : string, jsFunction: (testRun: Entity) => void) {
-        this.test.testG_nestedTestsA.add(name, jsFunction);
+        this.tests.add(name, jsFunction);
     }
 }
