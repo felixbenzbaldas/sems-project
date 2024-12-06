@@ -224,7 +224,7 @@ export class UiA {
         let uiListItems = uiContext.uiA.listG.uisOfListItems;
         let position = uiListItems.indexOf(this.entity);
         let contextObj = uiContext.getObject();
-        if (await this.inContext()) {
+        if (this.hasContext() && await this.inContext()) {
             obj.context = null;
             appUi.clipboard_lostContext = true;
             await obj.uis_update_context();
@@ -340,8 +340,12 @@ export class UiA {
         }
     }
 
+    hasContext() : boolean {
+        return notNullUndefined(this.getObject().context);
+    }
+
     async inContext() : Promise<boolean> {
-        if (notNullUndefined(this.getObject().context)) {
+        if (this.hasContext()) {
             if (notNullUndefined(this.context)) {
                 return this.context.uiA.getObject() === await this.getObject().context.pathA.resolve();
             } else {

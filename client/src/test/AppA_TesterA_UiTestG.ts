@@ -46,7 +46,7 @@ export class AppA_TesterA_UiTestG {
             assert(!uiForList.htmlElement.innerHTML.includes('subitem-one'), 'update html');
             assert(uiForList.htmlElement.innerHTML.includes('subitem-two'), 'update html');
         });
-        this.addTest('cut', async run => {
+        this.test.testG_nestedTestsA.addTestWithNestedTests('cut', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             let child = await appA.createText('child');
@@ -65,6 +65,21 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs(child.text, 'unsaved text');
             assert_sameAs(child.context, null);
             assert(appUi.clipboard_lostContext);
+        }, cutTest => {
+            cutTest.add('withoutContext', async run => {
+                let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
+                let appA = appUi.entity.appA;
+                let child = await appA.createText('child');
+                let parent = await appA.createList();
+                await parent.listA.add(child);
+                let parentUi = appUi.createUiFor_typed(parent);
+                await parentUi.update();
+                let childUi = parentUi.listG.uisOfListItems[0].uiA;
+
+                await childUi.cut();
+
+                assertFalse(appUi.clipboard_lostContext);
+            });
         });
         this.addTest('showContainerMark', async run => {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
