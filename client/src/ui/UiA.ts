@@ -224,12 +224,12 @@ export class UiA {
         let uiListItems = uiContext.uiA.listG.uisOfListItems;
         let position = uiListItems.indexOf(this.entity);
         let contextObj = uiContext.getObject();
-        if (notNullUndefined(obj.context)) {
-            if (await obj.context.pathA.resolve() === contextObj) {
-                obj.context = null;
-                appUi.clipboard_lostContext = true;
-                await obj.uis_update_context();
-            }
+        if (await this.inContext()) {
+            obj.context = null;
+            appUi.clipboard_lostContext = true;
+            await obj.uis_update_context();
+        } else {
+            appUi.clipboard_lostContext = false;
         }
         contextObj.listA.jsList.splice(position, 1);
         await contextObj.uis_update_removedListItem(position);
