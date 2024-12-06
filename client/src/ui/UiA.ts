@@ -250,14 +250,7 @@ export class UiA {
             }
             let appUi = this.entity.getApp_typed().uiA;
             let position = 0;
-            let subject = appUi.clipboard;
-            let listA = this.getObject().listA;
-            await listA.insertObjectAtPosition(subject, position);
-            if (appUi.clipboard_lostContext) {
-                subject.context = subject.getPath(this.getObject());
-                appUi.clipboard_lostContext = false;
-            }
-            await listA.entity.uis_update_addedListItem(position);
+            await appUi.insertClipboardAtPosition(this.getObject(), position);
             await this.ensureExpanded();
             appUi.focus(this.entity.uiA.listG.uisOfListItems.at(position));
         }

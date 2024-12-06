@@ -312,4 +312,13 @@ export class AppA_UiA {
     getApp() : AppA {
         return this.entity.appA;
     }
+
+    async insertClipboardAtPosition(object: Entity, position: number) {
+        await object.listA.insertObjectAtPosition(this.clipboard, position);
+        if (this.clipboard_lostContext) {
+            this.clipboard.context = this.clipboard.getPath(object);
+            this.clipboard_lostContext = false;
+        }
+        await object.uis_update_addedListItem(position);
+    }
 }

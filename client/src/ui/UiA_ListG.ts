@@ -80,9 +80,7 @@ export class UiA_ListG {
 
     async pasteNextOnSubitem(subitem: Entity) {
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
-        let listA = this.getObject().listA;
-        await listA.insertPathOrDirectAtPosition(this.entity.getApp().appA.uiA.clipboard, position);
-        await listA.entity.uis_update_addedListItem(position);
+        await this.entity.getApp_typed().uiA.insertClipboardAtPosition(this.getObject(), position);
         this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
     }
 
