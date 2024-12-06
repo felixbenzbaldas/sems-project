@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined} from "@/utils";
+import {notNullUndefined, nullUndefined} from "@/utils";
 import {UiA_ListG} from "@/ui/UiA_ListG";
 import {UiA_TextG} from "@/ui/UiA_TextG";
 import {UiA_BodyG} from "@/ui/UiA_BodyG";
@@ -248,12 +248,18 @@ export class UiA {
             if (!this.getObject().listA) {
                 this.getObject().installListA();
             }
+            let appUi = this.entity.getApp_typed().uiA;
             let position = 0;
+            let subject = appUi.clipboard;
             let listA = this.getObject().listA;
-            await listA.insertPathOrDirectAtPosition(this.entity.getApp().appA.uiA.clipboard, position);
+            await listA.insertObjectAtPosition(subject, position);
+            if (appUi.clipboard_lostContext) {
+                subject.context = subject.getPath(this.getObject());
+                appUi.clipboard_lostContext = false;
+            }
             await listA.entity.uis_update_addedListItem(position);
             await this.ensureExpanded();
-            this.entity.getApp().appA.uiA.focus(this.entity.uiA.listG.uisOfListItems.at(position));
+            appUi.focus(this.entity.uiA.listG.uisOfListItems.at(position));
         }
     }
 
