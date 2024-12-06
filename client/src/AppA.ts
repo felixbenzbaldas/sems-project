@@ -53,6 +53,10 @@ export class AppA {
         return this.currentContainer.containerA.createList();
     }
 
+    async createTextWithList(text : string, ...jsList : Array<Entity>) : Promise<Entity> {
+        return this.currentContainer.containerA.createTextWithList(text, ...jsList);
+    }
+
     createPath(listOfNames: Array<string>, subject : Entity) {
         let path = this.createEntityWithApp();
         path.installPathA();

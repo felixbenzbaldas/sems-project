@@ -50,8 +50,7 @@ export class AppA_TesterA_UiTestG {
             let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
             let appA = appUi.entity.appA;
             let child = await appA.createText('child');
-            let parent = await appA.createList();
-            await parent.listA.add(child);
+            let parent = await appA.createTextWithList('parent', child);
             child.context = child.getPath(parent);
             let parentUi = appUi.createUiFor_typed(parent);
             await parentUi.update();
@@ -70,8 +69,7 @@ export class AppA_TesterA_UiTestG {
                 let appUi = this.entity.appA.createStarter().createAppWithUI_typed();
                 let appA = appUi.entity.appA;
                 let child = await appA.createText('child');
-                let parent = await appA.createList();
-                await parent.listA.add(child);
+                let parent = await appA.createTextWithList('parent', child);
                 let parentUi = appUi.createUiFor_typed(parent);
                 await parentUi.update();
                 let childUi = parentUi.listG.uisOfListItems[0].uiA;
@@ -85,8 +83,7 @@ export class AppA_TesterA_UiTestG {
                 let appA = appUi.entity.appA;
                 let child = await appA.createText('child');
                 child.context = child.getPath(await appA.createText('dummyContext'));
-                let parent = await appA.createList();
-                await parent.listA.add(child);
+                let parent = await appA.createTextWithList('parent', child);
                 let parentUi = appUi.createUiFor_typed(parent);
                 await parentUi.update();
                 let childUi = parentUi.listG.uisOfListItems[0].uiA;
