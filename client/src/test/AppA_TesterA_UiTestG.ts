@@ -2,6 +2,7 @@ import type {Entity} from "@/Entity";
 import {ContainerA} from "@/ContainerA";
 import {assert, assert_sameAs, assertFalse, notNullUndefined, nullUndefined} from "@/utils";
 import type {TestG_NestedTestsA} from "@/test/TestG_NestedTestsA";
+import type {UiA} from "@/ui/UiA";
 
 export class AppA_TesterA_UiTestG {
 
@@ -301,7 +302,7 @@ export class AppA_TesterA_UiTestG {
                 assert_sameAs(toPaste.context, undefined);
                 assert_sameAs(await run.appUi.content.listA.getResolved(0), toPaste);
             });
-            pasteTest.addUiTest('pasteNext', async run => {
+            pasteTest.addUiTestWithNestedTests('pasteNext', async run => {
                 let firstItem = await run.app.createText('firstItem');
                 let toPaste = await run.app.createText('toPaste');
                 let parent = await run.app.createTextWithList('parent', firstItem);
@@ -314,6 +315,21 @@ export class AppA_TesterA_UiTestG {
                 assert_sameAs(await parent.listA.getResolved(1), toPaste);
                 assert_sameAs(uiForParent.uiA.listG.uisOfListItems.at(1).uiA.object, toPaste);
                 assert_sameAs(run.appUi.focused.uiA.object, toPaste);
+            }, pasteNextTest => {
+                pasteNextTest.addUiTest('parentIsPlainList', async run => {
+                    let firstItem = await run.app.createText('firstItem');
+                    let toPaste = await run.app.createText('toPaste');
+                    let parent = await run.app.createList();
+                    await parent.listA.add(firstItem);
+                    let uiForParent : UiA = run.appUi.createUiFor_typed(parent);
+                    await uiForParent.update();
+                    run.appUi.clipboard = toPaste;
+                    run.appUi.clipboard_lostContext = true;
+
+                    await uiForParent.listG.uisOfListItems[0].uiA.pasteNext();
+
+                    assert(run.appUi.clipboard_lostContext);
+                });
             });
         });
     }

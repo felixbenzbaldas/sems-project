@@ -6,7 +6,7 @@ import {UiA} from "@/ui/UiA";
 import {ContainerA} from "@/ContainerA";
 import {AppA_UiA_KeyG} from "@/ui/AppA_UiA_KeyG";
 import type {AppA} from "@/AppA";
-import {textElem} from "@/utils";
+import {notNullUndefined, textElem} from "@/utils";
 
 export class AppA_UiA {
 
@@ -316,8 +316,10 @@ export class AppA_UiA {
     async insertClipboardAtPosition(object: Entity, position: number) {
         await object.listA.insertObjectAtPosition(this.clipboard, position);
         if (this.clipboard_lostContext) {
-            this.clipboard.context = this.clipboard.getPath(object);
-            this.clipboard_lostContext = false;
+            if (notNullUndefined(object.text)) {
+                this.clipboard.context = this.clipboard.getPath(object);
+                this.clipboard_lostContext = false;
+            }
         }
         await object.uis_update_addedListItem(position);
     }
