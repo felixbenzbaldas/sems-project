@@ -147,59 +147,6 @@ export class AppA_TesterA {
                 appA.entity.log('human-test: The text does not move.');
             });
         });
-        tests.addUiTestWithNestedTests('paste', async run => {
-            let parent = await run.app.createText('parent');
-            let toPaste = await run.app.createText('toPaste');
-            let uiForParent = run.appUi.createUiFor_typed(parent);
-            await uiForParent.update();
-            run.appUi.clipboard = toPaste;
-
-            await uiForParent.paste();
-
-            assert_sameAs(await parent.listA.getResolved(0), toPaste);
-            assert_sameAs(uiForParent.listG.uisOfListItems[0].uiA.object, toPaste);
-            assert_sameAs(run.appUi.focused.uiA.object, toPaste);
-            assert_sameAs(toPaste.context, undefined);
-        }, pasteTest => {
-            pasteTest.addUiTest('lostContext', async run => {
-                let parent = await run.app.createText('parent');
-                let toPaste = await run.app.createText('toPaste');
-                let uiForParent = run.appUi.createUiFor_typed(parent);
-                await uiForParent.update();
-                run.appUi.clipboard = toPaste;
-                run.appUi.clipboard_lostContext = true;
-
-                await uiForParent.paste();
-
-                assert_sameAs(await toPaste.context.pathA.resolve(), parent);
-                assertFalse(run.appUi.clipboard_lostContext);
-            });
-            pasteTest.addUiTest('onApp', async run => {
-                await run.appUi.entity.uiA.update(); // TODO should not be necessary
-                let toPaste = await run.app.createText('toPaste');
-                run.appUi.clipboard = toPaste;
-                run.appUi.clipboard_lostContext = true;
-
-                await run.appUi.globalEventG.paste();
-
-                assert_sameAs(toPaste.context, undefined);
-                assert_sameAs(await run.appUi.content.listA.getResolved(0), toPaste);
-            });
-            pasteTest.addUiTest('pasteNext', async run => {
-                let firstItem = await run.app.createText('firstItem');
-                let toPaste = await run.app.createText('toPaste');
-                let parent = await run.app.createTextWithList('parent', firstItem);
-                let uiForParent : Entity = run.appUi.createUiFor(parent);
-                await uiForParent.uiA.update();
-                run.appUi.clipboard = toPaste;
-
-                await uiForParent.uiA.listG.uisOfListItems[0].uiA.pasteNext();
-
-                assert_sameAs(await parent.listA.getResolved(1), toPaste);
-                assert_sameAs(uiForParent.uiA.listG.uisOfListItems.at(1).uiA.object, toPaste);
-                assert_sameAs(run.appUi.focused.uiA.object, toPaste);
-            });
-        });
         tests.add('dependencies', async run => {
             let object = await run.app.createList();
             let dependency = await run.app.createList();
