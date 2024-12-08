@@ -23,15 +23,15 @@ export class AppA_TesterA_UiTestG {
 
     addTests() {
         this.tests.addUiTest('updateAddedSubitem', async run => {
-            let list = run.appUi.getApp().unboundG.createList_typed();
-            let uiForList = run.appUi.createUiFor_typed(list.entity);
+            let list = run.app.unboundG.createTextWithList('parent');
+            let uiForList = run.appUi.createUiFor_typed(list);
             await uiForList.update();
-            list.addDirect(run.appUi.getApp().unboundG.createText('subitem'));
+            list.listA.addDirect(run.appUi.getApp().unboundG.createText('subitem'));
 
-            await list.entity.uis_update_addedListItem(0);
+            await list.uis_update_addedListItem(0);
 
             assert_sameAs(1, uiForList.listG.uisOfListItems.length);
-            assert(uiForList.htmlElement.innerHTML.includes('subitem'), 'update html');
+            assert(uiForList.headerBodyG.bodyIsVisible());
         });
         this.tests.addUiTest('updateRemovedSubitem', async run => {
             let list = run.appUi.getApp().unboundG.createList_typed();

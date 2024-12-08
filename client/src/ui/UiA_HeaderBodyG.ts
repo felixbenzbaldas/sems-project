@@ -45,10 +45,11 @@ export class UiA_HeaderBodyG {
 
     async update_addedListItem(position: number) {
         if (await this.showBody()) {
-            if (!this.isUiListInstalled()) {
-                await this.entity.uiA.listG.update();
+            if (this.bodyIsVisible()) {
+                await this.entity.uiA.listG.update_addedListItem(position);
+            } else {
+                await this.entity.uiA.ensureExpanded();
             }
-            await this.entity.uiA.listG.update_addedListItem(position);
         }
         await this.entity.uiA.headerG.updateBodyIcon();
     }
