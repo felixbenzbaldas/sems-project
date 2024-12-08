@@ -192,12 +192,27 @@ export class AppA_TesterA_UiTestG {
                     await subject.listA.add(await run.app.createText('dummySubitem'))
                     let uiSubject = run.appUi.createUiFor_typed(subject);
                     await uiSubject.update();
-                    assertFalse(uiSubject.collapsed);
 
                     await uiSubject.toggleContext();
 
                     assertFalse(uiSubject.collapsed);
                     assert_sameAs(uiSubject.bodyG.content_contextAsSubitem_htmlElement.innerHTML, '');
+                });
+                whenOutOfContext.addUiTest('andCollapsible', async run => {
+                    let subject = await run.app.createText('subject');
+                    let oldContext = await run.app.createText('oldContext')
+                    subject.context = subject.getPath(oldContext);
+                    subject.collapsible = true;
+                    let uiSubject = run.appUi.createUiFor_typed(subject);
+                    await uiSubject.update();
+                    assert(uiSubject.collapsed);
+                    assert_sameAs(uiSubject.headerG.divForContentAndBodyIcon.style.cursor, 'pointer');
+
+                    await uiSubject.toggleContext();
+
+                    assert(uiSubject.collapsed);
+                    assert_sameAs(uiSubject.headerG.divForContentAndBodyIcon.style.cursor, 'default');
+
                 });
             });
         });
