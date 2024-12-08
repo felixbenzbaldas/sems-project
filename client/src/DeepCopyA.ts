@@ -30,6 +30,9 @@ export class DeepCopyA {
         emptyEntity.collapsible = object.collapsible;
         emptyEntity.link = object.link;
         emptyEntity.editable = object.editable;
+        if (object.context) {
+            emptyEntity.context = emptyEntity.getPath(this.map.get(await object.context.pathA.resolve()));
+        }
         if (object.listA) {
             emptyEntity.installListA();
             for (let listItem of object.listA.jsList) {
