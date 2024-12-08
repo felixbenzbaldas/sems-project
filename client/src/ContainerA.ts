@@ -25,7 +25,11 @@ export class ContainerA {
     }
 
     async createTextWithList(text : string, ...jsList : Array<Entity>) : Promise<Entity> {
-        let entity = this.entity.getApp_typed().unboundG.createTextWithList(text, ...jsList);
+        let entity = this.entity.getApp_typed().unboundG.createText(text);
+        entity.installListA();
+        for (let listItem of jsList) {
+            await entity.listA.add(listItem);
+        }
         this.bind(entity);
         return entity;
     }
