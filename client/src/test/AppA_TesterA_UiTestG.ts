@@ -47,6 +47,16 @@ export class AppA_TesterA_UiTestG {
             assert(!uiForList.htmlElement.innerHTML.includes('subitem-one'), 'update html');
             assert(uiForList.htmlElement.innerHTML.includes('subitem-two'), 'update html');
         });
+        this.tests.addUiTest('mark', async run => {
+            await run.appUi.update();
+            let object = await run.app.createEntityWithApp();
+            let objectUi = run.appUi.createUiFor_typed(object);
+            await objectUi.update();
+
+            await objectUi.mark();
+
+            assert_sameAs(run.appUi.clipboard, object);
+        });
         this.tests.addUiTestWithNestedTests('cut', async run => {
             let child = await run.app.createText('child');
             let parent = await run.app.createTextWithList('parent', child);

@@ -215,6 +215,14 @@ export class UiA {
         }
     }
 
+
+    async mark() {
+        let appUi = this.entity.getApp_typed().uiA;
+        this.textG.save();
+        appUi.clipboard = this.getObject();
+        appUi.signal('marked: ' + appUi.clipboard.getShortDescription());
+    }
+
     async cut() {
         let appUi = this.entity.getApp_typed().uiA;
         this.textG.save();

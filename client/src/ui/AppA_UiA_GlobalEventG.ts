@@ -105,9 +105,7 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async mark() {
-        this.getUiA().clipboard = this.getUiA().focused.getObject();
-        this.getUiA().focused.uiA.textG.save();
-        this.getUiA().signal('marked: ' + this.getUiA().clipboard.getShortDescription());
+        await this.getUiA().focused.uiA.mark();
     }
 
     async pasteNext() {
