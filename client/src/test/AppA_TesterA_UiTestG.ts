@@ -189,7 +189,7 @@ export class AppA_TesterA_UiTestG {
                     let oldContext = await run.app.createText('oldContext')
                     subject.context = subject.getPath(oldContext);
                     subject.installListA();
-                    await subject.listA.add(await run.app.createText('dummySubitem'))
+                    await subject.listA.add(await run.app.createText('dummySubitem'));
                     let uiSubject = run.appUi.createUiFor_typed(subject);
                     await uiSubject.update();
 
