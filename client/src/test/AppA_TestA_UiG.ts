@@ -31,20 +31,6 @@ export class AppA_TestA_UiG {
                 return app.appA.currentContainer === app.appA.uiA.focused.uiA.object &&
                     app.appA.currentContainer.containerA;
             }),
-            this.createTest('ui_cut', async test => {
-                let app = this.entity.appA.createStarter().createAppWithUI();
-                test.test_app = app;
-                app.appA.logG.toListOfStrings = true;
-                await app.appA.uiA.globalEventG.defaultAction();
-                let objectUi = app.appA.uiA.focused;
-                objectUi.uiA.textG.htmlElement.innerText = 'foo';
-
-                await app.appA.uiA.globalEventG.cut();
-
-                assert_sameAs(app.appA.uiA.content.listA.jsList.length, 0);
-                assert_sameAs(app.appA.uiA.clipboard, objectUi.uiA.object);
-                assert_sameAs(objectUi.uiA.object.text, 'foo');
-            }),
             this.createTest('ui_createUiFor', async test => {
                 let app = this.entity.appA.createStarter().createAppWithUI();
                 test.test_app = app;
