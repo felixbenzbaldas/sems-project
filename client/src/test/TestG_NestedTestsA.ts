@@ -12,20 +12,20 @@ export class TestG_NestedTestsA {
         this.nestedTests = this.entity.getApp().appA.unboundG.createList();
     }
 
-    add_withoutApp(name: string, jsFunction: (run: TestRunA) => void) : Entity {
+    add_withoutApp(name: string, jsFunction: (run: TestRunA) => Promise<void>) : Entity {
         let nestedTest : Entity = this.entity.createCode(name, jsFunction);
         this.nestedTests.listA.addDirect(nestedTest);
         return nestedTest;
     }
 
-    add(name: string, jsFunction: (run: TestRunA) => void) : Entity {
-        return this.add_withoutApp(name, _run => {
+    add(name: string, jsFunction: (run: TestRunA) => Promise<void>) : Entity {
+        return this.add_withoutApp(name, async _run => {
            _run.app =  this.entity.getApp_typed().createStarter().createApp_typed();
-           jsFunction(_run);
+           await jsFunction(_run);
         });
     }
 
-    addUiTest(name: string, uiJsFunction: (uiRun: TestRunA) => void) : Entity {
+    addUiTest(name: string, uiJsFunction: (uiRun: TestRunA) => Promise<void>) : Entity {
         return this.add_withoutApp(name, async run => {
             this.prepareUi(run);
             await uiJsFunction(run);
@@ -41,21 +41,21 @@ export class TestG_NestedTestsA {
         run.app = run.appUi.getApp();
     }
 
-    addTestWithNestedTests_withoutApp(name: string, jsFunction : (run: TestRunA) => void, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
+    addTestWithNestedTests_withoutApp(name: string, jsFunction : (run: TestRunA) => Promise<void>, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
         let test = this.add_withoutApp(name, jsFunction);
         test.testG_installNestedTestsA();
         test.installContainerA();
         creator(test.testG_nestedTestsA);
     }
 
-    addUiTestWithNestedTests(name: string, uiJsFunction: (uiRun: TestRunA) => void, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
+    addUiTestWithNestedTests(name: string, uiJsFunction: (uiRun: TestRunA) => Promise<void>, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
         this.addTestWithNestedTests_withoutApp(name, async run => {
             this.prepareUi(run);
             await uiJsFunction(run);
         }, creator);
     }
 
-    addTestWithNestedTests(name: string, jsFunction : (run: TestRunA) => void, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
+    addTestWithNestedTests(name: string, jsFunction : (run: TestRunA) => Promise<void>, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
         this.addTestWithNestedTests_withoutApp(name, async _run => {
             this.prepareApp(_run);
             await jsFunction(_run);
@@ -63,6 +63,6 @@ export class TestG_NestedTestsA {
     }
 
     addNestedTests(name: string, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
-        this.addTestWithNestedTests_withoutApp(name, ()=>{}, creator);
+        this.addTestWithNestedTests_withoutApp(name, async ()=>{}, creator);
     }
 }
