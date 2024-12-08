@@ -215,11 +215,11 @@ export class UiA {
         }
     }
 
-
     async mark() {
         let appUi = this.entity.getApp_typed().uiA;
         this.textG.save();
         appUi.clipboard = this.getObject();
+        appUi.clipboard_lostContext = false;
         appUi.signal('marked: ' + appUi.clipboard.getShortDescription());
     }
 

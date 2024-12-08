@@ -49,6 +49,7 @@ export class AppA_TesterA_UiTestG {
         });
         this.tests.addUiTest('mark', async run => {
             await run.appUi.update();
+            run.appUi.clipboard_lostContext = true;
             let object = await run.app.createEntityWithApp();
             let objectUi = run.appUi.createUiFor_typed(object);
             await objectUi.update();
@@ -56,6 +57,7 @@ export class AppA_TesterA_UiTestG {
             await objectUi.mark();
 
             assert_sameAs(run.appUi.clipboard, object);
+            assertFalse(run.appUi.clipboard_lostContext);
         });
         this.tests.addUiTestWithNestedTests('cut', async run => {
             let child = await run.app.createText('child');
