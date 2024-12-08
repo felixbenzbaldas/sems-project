@@ -125,7 +125,9 @@ export class AppA_UiA_GlobalEventG {
     }
 
     async deepCopy() {
-        this.getUiA().clipboard = await this.getUiA().focused.getObject().deepCopy().run();
+        let focusedObject = this.getUiA().focused.getObject();
+        this.getUiA().clipboard = await focusedObject.deepCopy().run();
+        this.getUiA().signal('copied deep: ' + this.getUiA().clipboard.getShortDescription());
     }
 
     async toggleContext() {

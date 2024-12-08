@@ -31,7 +31,9 @@ export class DeepCopyA {
         emptyEntity.link = object.link;
         emptyEntity.editable = object.editable;
         if (object.context) {
-            emptyEntity.context = emptyEntity.getPath(this.map.get(await object.context.pathA.resolve()));
+            if (object !== this.entity) {
+                emptyEntity.context = emptyEntity.getPath(this.map.get(await object.context.pathA.resolve()));
+            }
         }
         if (object.listA) {
             emptyEntity.installListA();

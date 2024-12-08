@@ -179,6 +179,7 @@ export class AppA_TesterA {
             object.collapsible = true;
             let dependency = await run.app.createText('dependency');
             await object.listA.add(dependency);
+            object.context = object.getPath(await run.app.createText('dummyContext'));
             let dependencyWithContext = await run.app.createText('dependency with context');
             await object.listA.add(dependencyWithContext);
             dependencyWithContext.context = dependencyWithContext.getPath(object);
@@ -187,6 +188,7 @@ export class AppA_TesterA {
 
             assert_sameAs(copy.text, object.text);
             assert_sameAs(copy.collapsible, object.collapsible);
+            assert_sameAs(copy.context, undefined);
             assert_sameAs((await copy.listA.getResolved(0)).text, 'dependency');
             assert_notSameAs(await copy.listA.getResolved(0), dependency);
             assert_sameAs(await (await copy.listA.getResolved(1)).context.pathA.resolve(), copy);
