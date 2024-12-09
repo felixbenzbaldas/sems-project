@@ -14,7 +14,7 @@ export class AppA_TesterA_UiTestG {
     }
 
     addTo(boundParent : Entity) {
-        let test = boundParent.testG_nestedTestsA.add_withoutApp(this.name, ()=>{});
+        let test = boundParent.testG_nestedTestsA.add_withoutApp(this.name, async ()=>{});
         test.installContainerA()
         test.testG_installNestedTestsA();
         this.tests = test.testG_nestedTestsA;
@@ -280,7 +280,7 @@ export class AppA_TesterA_UiTestG {
                 runTest.addUiTest('failingNestedTest', async outerRun => {
                     let dummyTest = outerRun.app.entity.createCode('dummyTest', ()=>{});
                     dummyTest.testG_installNestedTestsA();
-                    dummyTest.testG_nestedTestsA.add_withoutApp('failingNestedTest', () => {
+                    dummyTest.testG_nestedTestsA.add_withoutApp('failingNestedTest', async () => {
                         assert(false);
                     });
                     let run = await dummyTest.testG_run();

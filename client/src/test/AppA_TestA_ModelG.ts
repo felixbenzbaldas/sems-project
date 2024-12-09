@@ -217,7 +217,7 @@ export class AppA_TestA_ModelG {
                 let test : Entity = app.createCode(name, (testRun : Entity) => {
                 });
                 test.testG_installNestedTestsA();
-                test.testG_nestedTestsA.add_withoutApp('nestedTest', () => {
+                test.testG_nestedTestsA.add_withoutApp('nestedTest', async () => {
                     assert(false);
                 });
                 let testRun : Entity = await test.testG_run();

@@ -212,7 +212,7 @@ export class AppA_TestA {
                 let name = 'testName';
                 let test : Entity = app.createCode(name, () => {});
                 test.testG_installNestedTestsA();
-                let nestedTest = test.testG_nestedTestsA.add_withoutApp('nestedTest', () => {});
+                let nestedTest = test.testG_nestedTestsA.add_withoutApp('nestedTest', async () => {});
 
                 let testRun : Entity = await test.testG_run();
 
@@ -226,7 +226,7 @@ export class AppA_TestA {
                 let app : Entity = this.appA.createStarter().createApp();
                 let test : Entity = app.createCode('foo', () => {});
                 test.testG_installNestedTestsA();
-                test.testG_nestedTestsA.add_withoutApp('nestedTest', () => {
+                test.testG_nestedTestsA.add_withoutApp('nestedTest', async () => {
                     assert(false);
                 });
 
