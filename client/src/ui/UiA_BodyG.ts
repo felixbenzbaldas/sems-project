@@ -8,6 +8,7 @@ export class UiA_BodyG {
     htmlElement : HTMLElement = document.createElement('div');
     content_htmlElement : HTMLElement;
     content_contextAsSubitem_htmlElement : HTMLElement = document.createElement('div');
+    content_meta_htmlElement : HTMLElement = document.createElement('div');
 
     constructor(private entity: Entity) {
     }
@@ -35,6 +36,7 @@ export class UiA_BodyG {
         } else {
             this.content_htmlElement.appendChild(this.content_contextAsSubitem_htmlElement);
             await this.updateContextAsSubitem();
+            this.content_htmlElement.appendChild(this.content_meta_htmlElement);
             if (this.getObject().listA && !this.getObject().testRunA) {
                 await this.getUiA().listG.update();
                 this.content_htmlElement.appendChild(this.getUiA().listG.htmlElement);
@@ -86,5 +88,12 @@ export class UiA_BodyG {
             }
         }
         return '';
+    }
+
+    showMeta() {
+        this.content_meta_htmlElement.innerHTML = null;
+        this.content_meta_htmlElement.innerText = this.getUiA().getUrl();
+        this.content_meta_htmlElement.style.marginLeft = '0.5rem';
+        this.content_meta_htmlElement.style.borderLeft = '0.3rem solid blue';
     }
 }

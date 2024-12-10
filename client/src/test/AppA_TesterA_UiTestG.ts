@@ -371,18 +371,26 @@ export class AppA_TesterA_UiTestG {
 
             assert_sameAs(url, 'https://testdomain1.org/?path=testName');
         });
-        this.tests.addUiTest('showUi', async run => {
+        this.tests.addUiTest('showMeta-semi', async run => {
             let createUi : () => Promise<HTMLElement> = async () => {
                 let environment = new Environment();
+                environment.url = new URL('https://testdomain1.org');
                 let appUi = environment.createApp().appA.createStarter().createAppWithUI_typed();
                 environment.ensureActive(appUi.entity);
                 await appUi.entity.uiA.update();
-                await appUi.globalEventG.defaultAction();
-                return appUi.htmlElement;
+                let app = appUi.getApp();
+                let object = await app.createTextWithList('test', await app.createText('subitem'));
+                let ui = appUi.createUiFor_typed(object);
+                await ui.update();
+
+                await ui.showMeta();
+
+                return ui.htmlElement;
             }
             let html = await run.app.createBoundEntity();
             html.codeG_html = await createUi();
             await run.appUi.content.listA.add(html);
+            run.app.entity.log('human-test: the meta is displayed');
         });
     }
 }

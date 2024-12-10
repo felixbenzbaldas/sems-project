@@ -383,4 +383,8 @@ export class UiA {
         let pathAsString = app.entity.getPath(this.getObject()).pathA.asString();
         return app.environment.url.origin + '/?path=' + pathAsString;
     }
+
+    async showMeta() {
+        this.bodyG.showMeta();
+    }
 }
