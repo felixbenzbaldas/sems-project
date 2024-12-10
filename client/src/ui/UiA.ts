@@ -390,6 +390,10 @@ export class UiA {
         await this.headerG.updateBodyIcon();
     }
 
+    hideMeta() {
+        this.bodyG.hideMeta();
+    }
+
     metaIsDisplayed() {
         return this.headerBodyG.bodyIsVisible() && this.bodyG.content_meta_htmlElement.innerHTML !== '';
     }

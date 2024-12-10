@@ -100,7 +100,7 @@ export class UiA_BodyG {
         this.content_meta_htmlElement.style.borderLeft = '0.3rem solid blue';
         let hideButton : HTMLButtonElement = document.createElement('button');
         hideButton.onclick = () => {
-            alert('hide meta');
+            this.getUiA().hideMeta();
         }
         hideButton.innerText = ' - ';
         hideButton.style.marginLeft = '0.4rem';
@@ -112,5 +112,9 @@ export class UiA_BodyG {
         let ui = app.uiA.createUiFor_typed(meta);
         await ui.update();
         this.content_meta_htmlElement.appendChild(ui.htmlElement);
+    }
+
+    hideMeta() {
+        this.content_meta_htmlElement.innerHTML = null;
     }
 }
