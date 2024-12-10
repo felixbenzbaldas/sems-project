@@ -282,12 +282,10 @@ export class UiA {
     }
 
     async ensureExpanded() {
-        if (this.isHeaderBody() && await this.headerBodyG.hasBodyContent()) {
-            if (!this.headerBodyG.bodyIsVisible()) {
-                this.collapsed = false;
-                await this.headerG.updateBodyIcon();
-                await this.bodyG.update();
-            }
+        if (!this.headerBodyG.bodyIsVisible()) {
+            this.collapsed = false;
+            await this.headerG.updateBodyIcon();
+            await this.bodyG.update();
         }
     }
 
