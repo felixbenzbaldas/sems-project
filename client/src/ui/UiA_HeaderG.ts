@@ -42,6 +42,10 @@ export class UiA_HeaderG {
                 await this.clickEvent();
             }
         };
+        this.htmlElement.oncontextmenu = async (event) => {
+            await this.getUiA().showMeta();
+            event.preventDefault();
+        }
         this.divForContentAndBodyIcon.style.border = 'solid';
         this.divForContentAndBodyIcon.style.borderWidth = '0.1rem';
         this.focusStyle_update();
