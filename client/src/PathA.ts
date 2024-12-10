@@ -16,4 +16,8 @@ export class PathA {
             return await this.subject.resolveListOfNames(this.listOfNames);
         }
     }
+
+    asString() : string {
+        return this.listOfNames.join('_');
+    }
 }

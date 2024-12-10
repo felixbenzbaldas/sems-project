@@ -379,4 +379,10 @@ export class UiA {
     async pasteNext() {
         await this.context.uiA.pasteNextOnSubitem(this.entity);
     }
+
+    getUrl() : string {
+        let app = this.entity.getApp_typed();
+        let pathAsString = app.entity.getPath(this.getObject()).pathA.asString();
+        return app.environment.url.origin + '/?path=' + pathAsString;
+    }
 }

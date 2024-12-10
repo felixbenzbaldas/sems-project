@@ -3,6 +3,8 @@ import {ContainerA} from "@/ContainerA";
 import {assert, assert_sameAs, assertFalse, notNullUndefined, nullUndefined} from "@/utils";
 import type {TestG_NestedTestsA} from "@/test/TestG_NestedTestsA";
 import type {UiA} from "@/ui/UiA";
+import {Environment} from "@/Environment";
+import {testData} from "@/testData";
 
 export class AppA_TesterA_UiTestG {
 
@@ -358,6 +360,16 @@ export class AppA_TesterA_UiTestG {
                     assert(run.appUi.clipboard_lostContext);
                 });
             });
+        });
+        this.tests.add_withoutApp('getUrl', async run => {
+            let environment = new Environment();
+            environment.url = new URL('https://testdomain1.org');
+            let appUi = environment.createApp().appA.createStarter().createAppWithUI_typed();
+            let object = await appUi.entity.containerA.createBoundEntity('testName');
+
+            let url = appUi.createUiFor_typed(object).getUrl();
+
+            assert_sameAs(url, 'https://testdomain1.org/?path=testName');
         });
     }
 }
