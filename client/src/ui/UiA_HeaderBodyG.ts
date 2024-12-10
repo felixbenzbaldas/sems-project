@@ -89,11 +89,8 @@ export class UiA_HeaderBodyG {
         } else if (this.getObject().isTest) {
             return notNullUndefined(this.getObject().test_result);
         } else {
-            if (await this.entity.uiA.hasContextAsSubitem()) {
-                return true;
-            } else {
-                return this.getObject().listA && this.getObject().listA.jsList.length > 0;
-            }
+            return await this.entity.uiA.hasContextAsSubitem()  ||
+                this.hasAListItem();
         }
     }
 
@@ -103,5 +100,9 @@ export class UiA_HeaderBodyG {
 
     bodyIsVisible() : boolean {
         return this.entity.uiA.bodyG.htmlElement.style.display !== 'none';
+    }
+
+    hasAListItem() : boolean{
+        return this.getObject().listA && this.getObject().listA.jsList.length > 0;
     }
 }
