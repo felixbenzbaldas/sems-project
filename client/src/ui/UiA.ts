@@ -285,7 +285,7 @@ export class UiA {
         if (!this.headerBodyG.bodyIsVisible()) {
             this.collapsed = false;
             await this.headerG.updateBodyIcon();
-            await this.bodyG.update();
+            await this.bodyG.displayBody();
         }
     }
 
@@ -385,6 +385,7 @@ export class UiA {
     }
 
     async showMeta() {
+        await this.ensureExpanded();
         this.bodyG.showMeta();
     }
 
