@@ -371,5 +371,18 @@ export class AppA_TesterA_UiTestG {
 
             assert_sameAs(url, 'https://testdomain1.org/?path=testName');
         });
+        this.tests.addUiTest('showUi', async run => {
+            let createUi : () => Promise<HTMLElement> = async () => {
+                let environment = new Environment();
+                let appUi = environment.createApp().appA.createStarter().createAppWithUI_typed();
+                environment.ensureActive(appUi.entity);
+                await appUi.entity.uiA.update();
+                await appUi.globalEventG.defaultAction();
+                return appUi.htmlElement;
+            }
+            let html = await run.app.createBoundEntity();
+            html.codeG_html = await createUi();
+            await run.appUi.content.listA.add(html);
+        });
     }
 }
