@@ -411,6 +411,7 @@ export class AppA_TesterA_UiTestG {
                     html.codeG_html = await createUi();
                     await run.appUi.content.listA.add(html);
                     run.app.entity.log('human-test: the meta is displayed');
+                    run.app.entity.log('human-test: the meta contains a hide button');
                 }, showMetaSemiTest => {
                     showMetaSemiTest.addUiTest('byContextmenu', async run => {
                         let createUi: () => Promise<HTMLElement> = async () => {

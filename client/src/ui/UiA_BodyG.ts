@@ -96,8 +96,21 @@ export class UiA_BodyG {
 
     async showMeta() {
         this.content_meta_htmlElement.innerHTML = null;
-        this.content_meta_htmlElement.innerText = this.getUiA().getUrl();
-        this.content_meta_htmlElement.style.marginLeft = '0.5rem';
+        this.content_meta_htmlElement.style.marginLeft = '0.7rem';
         this.content_meta_htmlElement.style.borderLeft = '0.3rem solid blue';
+        let hideButton : HTMLButtonElement = document.createElement('button');
+        hideButton.onclick = () => {
+            alert('hide meta');
+        }
+        hideButton.innerText = ' - ';
+        hideButton.style.marginLeft = '0.4rem';
+        this.content_meta_htmlElement.appendChild(hideButton);
+        let app = this.entity.getApp_typed();
+        let meta = app.unboundG.createList();
+        let url = this.getUiA().getUrl();
+        meta.listA.addDirect(app.unboundG.createLink(url));
+        let ui = app.uiA.createUiFor_typed(meta);
+        await ui.update();
+        this.content_meta_htmlElement.appendChild(ui.htmlElement);
     }
 }
