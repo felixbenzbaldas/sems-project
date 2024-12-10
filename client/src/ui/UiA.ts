@@ -390,8 +390,11 @@ export class UiA {
         await this.headerG.updateBodyIcon();
     }
 
-    hideMeta() {
+    async hideMeta() {
         this.bodyG.hideMeta();
+        if (!await this.headerBodyG.hasBodyContent()) {
+            await this.ensureCollapsed();
+        }
     }
 
     metaIsDisplayed() {

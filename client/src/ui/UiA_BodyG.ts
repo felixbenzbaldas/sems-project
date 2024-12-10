@@ -99,8 +99,8 @@ export class UiA_BodyG {
         this.content_meta_htmlElement.style.marginLeft = '0.7rem';
         this.content_meta_htmlElement.style.borderLeft = '0.3rem solid blue';
         let hideButton : HTMLButtonElement = document.createElement('button');
-        hideButton.onclick = () => {
-            this.getUiA().hideMeta();
+        hideButton.onclick = async () => {
+            await this.getUiA().hideMeta();
         }
         hideButton.innerText = ' - ';
         hideButton.style.marginLeft = '0.4rem';

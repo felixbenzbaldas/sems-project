@@ -437,6 +437,16 @@ export class AppA_TesterA_UiTestG {
                     });
                 });
             });
+            metaTests.addUiTest('hide', async run => {
+                let object = await run.app.createText('test');
+                let ui = run.appUi.createUiFor_typed(object);
+                await ui.update();
+                await ui.showMeta();
+
+                await ui.hideMeta();
+
+                assert(!ui.headerBodyG.bodyIsVisible());
+            });
         });
     }
 }
