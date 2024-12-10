@@ -290,9 +290,9 @@ export class UiA {
     }
 
     async ensureCollapsed() {
-        this.collapsed = true;
-        await this.headerG.updateBodyIcon();
+        this.collapsed = true; // TODO this flag is redundant
         await this.bodyG.update();
+        await this.headerG.updateBodyIcon();
     }
 
     async update_addedListItem(position: number) {
@@ -386,10 +386,11 @@ export class UiA {
 
     async showMeta() {
         await this.ensureExpanded();
-        this.bodyG.showMeta();
+        await this.bodyG.showMeta();
+        await this.headerG.updateBodyIcon();
     }
 
     metaIsDisplayed() {
-        return this.bodyG.content_meta_htmlElement.innerHTML !== '';
+        return this.headerBodyG.bodyIsVisible() && this.bodyG.content_meta_htmlElement.innerHTML !== '';
     }
 }

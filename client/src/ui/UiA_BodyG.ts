@@ -94,7 +94,7 @@ export class UiA_BodyG {
         return '';
     }
 
-    showMeta() {
+    async showMeta() {
         this.content_meta_htmlElement.innerHTML = null;
         this.content_meta_htmlElement.innerText = this.getUiA().getUrl();
         this.content_meta_htmlElement.style.marginLeft = '0.5rem';
