@@ -391,12 +391,11 @@ export class AppA_TesterA_UiTestG {
                     assert(ui.headerBodyG.bodyIsVisible());
                     assert(ui.metaIsDisplayed());
                 });
-                showMetaTest.addUiTestWithNestedTests('semi', async run => {
+                showMetaTest.addUiTest('semi', async run => {
                     let createUi: () => Promise<HTMLElement> = async () => {
                         let environment = new Environment();
                         environment.url = new URL('https://testdomain1.org');
                         let appUi = environment.createApp().appA.createStarter().createAppWithUI_typed();
-                        environment.ensureActive(appUi.entity);
                         await appUi.entity.uiA.update();
                         let app = appUi.getApp();
                         let object = await app.createTextWithList('test', await app.createText('subitem'));
@@ -413,28 +412,7 @@ export class AppA_TesterA_UiTestG {
                     run.app.entity.log('human-test: the meta is displayed');
                     run.app.entity.log('human-test: the meta contains a hide button');
                     run.app.entity.log('human-test: when clicking the button, the meta disappears (the subitem stays)');
-                }, showMetaSemiTest => {
-                    showMetaSemiTest.addUiTest('byContextmenu', async run => {
-                        let createUi: () => Promise<HTMLElement> = async () => {
-                            let environment = new Environment();
-                            environment.url = new URL('https://testdomain1.org');
-                            let appUi = environment.createApp().appA.createStarter().createAppWithUI_typed();
-                            environment.ensureActive(appUi.entity);
-                            await appUi.entity.uiA.update();
-                            let app = appUi.getApp();
-                            let object = await app.createTextWithList('test', await app.createText('subitem'));
-                            let ui = appUi.createUiFor_typed(object);
-                            await ui.update();
-                            return ui.htmlElement;
-                        }
-                        let html = await run.app.createBoundEntity();
-                        html.codeG_html = await createUi();
-                        await run.appUi.content.listA.add(html);
-
-                        run.app.entity.log('human-action: context-click on "test"');
-
-                        run.app.entity.log('human-test: the meta is displayed');
-                    });
+                    run.app.entity.log('human-test: with context-click the meta appears');
                 });
             });
             metaTests.addUiTest('hide', async run => {
