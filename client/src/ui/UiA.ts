@@ -387,4 +387,8 @@ export class UiA {
     async showMeta() {
         this.bodyG.showMeta();
     }
+
+    metaIsDisplayed() {
+        return this.bodyG.content_meta_htmlElement.innerHTML !== '';
+    }
 }
