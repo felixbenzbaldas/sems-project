@@ -1,5 +1,5 @@
 import type {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
-import {assert, assert_sameAs, assertFalse, notNullUndefined, nullUndefined} from "@/utils";
+import {assert, assert_notSameAs, assert_sameAs, assertFalse, notNullUndefined, nullUndefined} from "@/utils";
 import type {Entity} from "@/Entity";
 import type {UiA} from "@/ui/UiA";
 import {Environment} from "@/Environment";
@@ -431,6 +431,44 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
             let html = await run.app.createBoundEntity();
             html.codeG_html = await createUi();
             await run.appUi.content.listA.add(html);
+        });
+        uiTests.addUiTest('collapse', async run => {
+            await run.appUi.globalEventG.defaultAction();
+            await run.appUi.globalEventG.toggleCollapsible();
+            await run.appUi.globalEventG.newSubitem();
+            let firstObjectUi = run.appUi.content.uiA.listG.uisOfListItems.at(0);
+            run.appUi.focus(firstObjectUi);
+
+            await run.appUi.globalEventG.expandOrCollapse();
+
+            assert(firstObjectUi.uiA.collapsed);
+        });
+        uiTests.addUiTest('createUiFor', async run => {
+            let object = run.app.unboundG.createText('');
+
+            let ui : Entity = run.appUi.createUiFor(object);
+
+            assert_sameAs(ui.uiA.object, object);
+            assert_sameAs(object.uis[0], ui.uiA);
+        });
+        uiTests.addUiTest('list', async run => {
+            let listItem = run.app.unboundG.createText('listItem');
+            let list = run.app.unboundG.createList(listItem);
+            let uiForList : Entity = run.appUi.createUiFor(list);
+            await uiForList.uiA.update();
+
+            assert_sameAs(uiForList.uiA.listG.uisOfListItems.at(0).uiA.object, listItem);
+        });
+        uiTests.addUiTest('keyboardEvent-Enter', async run => {
+            await run.appUi.globalEventG.defaultAction();
+            let firstObjectUi = run.appUi.content.uiA.listG.uisOfListItems[0];
+            firstObjectUi.uiA.textG.htmlElement.innerText = 'foo';
+            let firstObject = firstObjectUi.getObject();
+            await run.appUi.keyG.keyboardEvent(new KeyboardEvent('keyup', {
+                key: 'Enter'
+            }));
+            assert_sameAs(firstObject.text, 'foo');
+            assert(run.appUi.content.listA.jsList.length === 2);
         });
     });
 }
