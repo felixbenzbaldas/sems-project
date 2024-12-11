@@ -28,4 +28,9 @@ export class InputA {
     get() : string {
         return this.input.text;
     }
+
+    async clear() {
+        this.input.text = '';
+        await this.input.uis_update_text();
+    }
 }

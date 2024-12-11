@@ -71,6 +71,7 @@ export class AppA_UiA_GlobalEventG {
     async load() {
         (document.activeElement as HTMLElement).blur();
         let created = this.entity.appA.unboundG.createFromJson(JSON.parse(this.getUiA().input.get()));
+        await this.getUiA().input.clear();
         this.entity.containerA.bind(created);
         await this.getUiA().content.listA.insertPathOrDirectAtPosition(created, 0);
         await this.getUiA().content.uis_update_addedListItem(0);
