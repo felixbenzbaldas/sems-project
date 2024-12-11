@@ -400,4 +400,9 @@ export class UiA {
     metaIsDisplayed() {
         return this.headerBodyG.bodyIsVisible() && this.bodyG.content_meta_htmlElement.innerHTML !== '';
     }
+
+    async setLink() {
+        this.getObject().link = this.entity.getApp_typed().uiA.input.get();
+        await this.getObject().uis_update();
+    }
 }

@@ -142,4 +142,8 @@ export class AppA_UiA_GlobalEventG {
     async focusUiContext() {
         this.entity.getApp_typed().uiA.focus(this.getUiA().focused.uiA.context);
     }
+
+    async setLink() {
+        await this.getUiA().focused.uiA.setLink();
+    }
 }

@@ -426,5 +426,26 @@ export class AppA_TesterA_UiTestG {
                 assert(!ui.headerBodyG.bodyIsVisible());
             });
         });
+        this.tests.addUiTest('setLink', async run => {
+            let createUi: () => Promise<HTMLElement> = async () => {
+                let appUi = new Environment().createApp().appA.createStarter().createAppWithUI_typed();
+                await appUi.entity.uiA.update();
+                let app = appUi.getApp();
+                let object = await app.createText('Link');
+                let ui = appUi.createUiFor_typed(object);
+                await ui.update();
+                let url = 'http://localhost:1234';
+                appUi.input.input.text = url;
+                appUi.focused = ui.entity;
+
+                await appUi.globalEventG.setLink();
+
+                assert_sameAs(object.link, url);
+                return ui.htmlElement;
+            }
+            let html = await run.app.createBoundEntity();
+            html.codeG_html = await createUi();
+            await run.appUi.content.listA.add(html);
+        });
     }
 }
