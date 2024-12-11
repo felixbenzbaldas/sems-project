@@ -441,6 +441,7 @@ export class AppA_TesterA_UiTestG {
                 await appUi.globalEventG.setLink();
 
                 assert_sameAs(object.link, url);
+                assert_sameAs(appUi.input.get(), '');
                 return ui.htmlElement;
             }
             let html = await run.app.createBoundEntity();

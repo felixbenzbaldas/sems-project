@@ -403,6 +403,7 @@ export class UiA {
 
     async setLink() {
         this.getObject().link = this.entity.getApp_typed().uiA.input.get();
+        await this.entity.getApp_typed().uiA.input.clear();
         await this.getObject().uis_update();
     }
 }
