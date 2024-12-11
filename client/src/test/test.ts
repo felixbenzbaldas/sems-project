@@ -107,8 +107,7 @@ export function test_add(tests : TestG_NestedTestsA) {
     tests.add('export', async run => {
         let container = run.app.unboundG.createTextWithList('the container');
         container.installContainerA();
-        run.app.currentContainer = container;
-        let subitemAndContained = await run.app.createText('subitem + contained');
+        let subitemAndContained = await container.containerA.createText('subitem + contained');
         await container.listA.add(subitemAndContained);
 
         let exported = await container.export();
@@ -199,5 +198,20 @@ export function test_add(tests : TestG_NestedTestsA) {
 
             assert_sameAs(await list.listA.jsList[0].pathA.resolve(), listItem);
         });
+    });
+    tests.add('log', async run => {
+        run.app.logG.toListOfStrings = true;
+        let object = await run.app.createText('foo');
+
+        object.log('Good morning!');
+
+        assert_sameAs(run.app.logG.listOfStrings.join(), 'foo /// Good morning!');
+    });
+    tests.add('shortDescription', async run => {
+        let text : Entity = run.app.unboundG.createText('1234567890'.repeat(3));
+
+        let shortDescription = text.getShortDescription();
+
+        assert_sameAs(shortDescription, '12345678901234567890');
     });
 }
