@@ -98,7 +98,6 @@ export class AppA_TestA {
 
     createTests() : Array<Entity> {
         let tests = [
-
             this.createTest('tester', async test => {
                 let tester = await this.appA.createStarter().createTest();
 
@@ -109,25 +108,13 @@ export class AppA_TestA {
                     dummyTestRun.test_app.appA.logG.listOfStrings.join().includes('a dummy log') &&
                     testResults.successful.length == 0;
             }),
-            this.createTest('create random string', async test => {
-                test.test_app = this.appA.createStarter().createApp();
-                let app = test.test_app;
-                app.appA.logG.toListOfStrings = true;
-                return createRandomString().length == 10 &&
-                    createRandomString() != createRandomString();
-            }),
-            this.createTest('list_insertObjectAtPosition', async test => {
-                test.test_app = this.appA.createStarter().createApp();
-                let app = test.test_app;
-                app.appA.logG.toListOfStrings = true;
-                let list : Entity = await app.appA.createList();
-                let listItem : Entity = await app.appA.createText('subitem');
 
-                await list.listA.insertObjectAtPosition(listItem, 0);
 
-                app.log('path = ' + list.listA.jsList.at(0).getShortDescription());
-                assert_sameAs(await list.listA.getResolved(0), listItem);
-            }),
+
+
+
+
+
             this.createTest('createStarter', async test => {
                 let starterApplication = new Entity();
                 starterApplication.appA = new AppA(starterApplication);

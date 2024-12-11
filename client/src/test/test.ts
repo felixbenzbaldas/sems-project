@@ -1,7 +1,7 @@
 import type {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
 import {test_tester_add} from "@/test/test_tester";
 import {test_semi_add} from "@/test/test_semi";
-import {assert, assert_notSameAs, assert_sameAs, notNullUndefined} from "@/utils";
+import {assert, assert_notSameAs, assert_sameAs, createRandomString, notNullUndefined} from "@/utils";
 import {Entity} from "@/Entity";
 import {testData} from "@/testData";
 import {test_ui_add} from "@/test/test_ui";
@@ -194,11 +194,19 @@ export function test_add(tests : TestG_NestedTestsA) {
         });
         list.add('insertPathAtPosition', async run => {
             let list : Entity = await run.app.createList();
-            let listItem : Entity = await run.app.createText('subitem');
+            let listItem : Entity = run.app.unboundG.createText('subitem');
 
             await list.listA.insertPathAtPosition(run.app.direct(listItem).pathA, 0);
 
             assert_sameAs(await list.listA.jsList[0].pathA.resolve(), listItem);
+        });
+        list.add('insertObjectAtPosition', async run => {
+            let list : Entity = await run.app.createList();
+            let listItem : Entity = await run.app.createText('subitem');
+
+            await list.listA.insertObjectAtPosition(listItem, 0);
+
+            assert_sameAs(await list.listA.getResolved(0), listItem);
         });
         list.add('jsonWithoutContainedObjects', async run => {
             let list = await run.app.createList();
@@ -232,5 +240,11 @@ export function test_add(tests : TestG_NestedTestsA) {
         let app = environment.createApp();
 
         assert_sameAs(app.environment, environment);
-    })
+    });
+    tests.addNestedTests('util', utilTests => {
+        utilTests.add('randomString', async run => {
+            assert_sameAs(createRandomString().length, 10);
+            assert_notSameAs(createRandomString(), createRandomString());
+        });
+    });
 }
