@@ -68,12 +68,12 @@ export class Environment {
         }
     }
 
-    createApp() : Entity {
+    createApp() : AppA {
         let app = new Entity();
         app.appA = new AppA(app);
         app.appA.environment = this;
         app.text = 'app (by environment)';
-        return app;
+        return app.appA;
     }
 
     warningBeforeLossOfUnsavedChanges() {

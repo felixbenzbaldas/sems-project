@@ -110,7 +110,7 @@ export class AppA_TestA_ModelG {
                     settedTitle = text;
                 }
 
-                let website = await environment.createApp().appA.createStarter().createWebsite();
+                let website = await environment.createApp().createStarter().createWebsite();
 
                 test.test_app = website;
                 website.appA.logG.toListOfStrings = true;
@@ -131,7 +131,7 @@ export class AppA_TestA_ModelG {
                 environment.jsonData = testData;
                 environment.url = new URL('http://localhost:1234/?virtualHostname=testdomain2.org');
 
-                let website = await environment.createApp().appA.createStarter().createWebsite();
+                let website = await environment.createApp().createStarter().createWebsite();
 
                 test.test_app = website;
                 website.appA.logG.toListOfStrings = true;
@@ -143,7 +143,7 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_objectViewer', async test => {
                 let environment = new Environment();
                 environment.jsonData = testData;
-                let objectViewer = await environment.createApp().appA.createStarter().createObjectViewer('2'); // see const testData
+                let objectViewer = await environment.createApp().createStarter().createObjectViewer('2'); // see const testData
                 test.test_app = objectViewer;
                 objectViewer.appA.logG.toListOfStrings = true;
                 let rawText = objectViewer.uiA.getRawText();
@@ -180,7 +180,7 @@ export class AppA_TestA_ModelG {
             this.createTest('modelTest_webMeta', async test => {
                 let environment = new Environment();
                 environment.jsonData = testData;
-                let starter = environment.createApp().appA.createStarter();
+                let starter = environment.createApp().createStarter();
                 let app = starter.createAppWithUI();
                 test.test_app = app;
                 app.appA.logG.toListOfStrings = true;
@@ -236,7 +236,7 @@ export class AppA_TestA_ModelG {
                 environment.testCreator = (app : Entity) => {
                     return app.createCode('aTestTest', (run : Entity) =>  {});
                 };
-                let starter = environment.createApp().appA.createStarter();
+                let starter = environment.createApp().createStarter();
 
                 await starter.fullStart();
 
@@ -249,7 +249,7 @@ export class AppA_TestA_ModelG {
                 environment.testCreator = (app : Entity) => {
                     return app.createCode('isolatedRun', (run : Entity) => {});
                 }
-                test.test_app  = environment.createApp();
+                test.test_app  = environment.createApp().entity;
                 test.test_app.appA.logG.toListOfStrings = true;
                 let starterA = test.test_app.appA.createStarter();
 

@@ -170,7 +170,7 @@ export class StarterA {
     // static methods
 
     static async createAppWithUIWithCommands_editable_updateUi() {
-        let starter = new Environment().createApp().appA.createStarter();
+        let starter = new Environment().createApp().createStarter();
         await starter.createAppWithUIWithCommands_editable_updateUi();
         return starter.createdApp;
     }
@@ -180,13 +180,13 @@ export class StarterA {
     }
 
     static async createTest() {
-        let starter = new Environment().createApp().appA.createStarter();
+        let starter = new Environment().createApp().createStarter();
         await starter.createTest();
         return starter.createdApp;
     }
 
     static createAppWithUI() {
-        let starter = new Environment().createApp().appA.createStarter();
+        let starter = new Environment().createApp().createStarter();
         starter.createAppWithUI();
         return starter.createdApp;
     }

@@ -348,7 +348,7 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
         uiTests.add_withoutApp('getUrl', async run => {
             let environment = new Environment();
             environment.url = new URL('https://testdomain1.org');
-            let appUi = environment.createApp().appA.createStarter().createAppWithUI_typed();
+            let appUi = environment.createApp().createStarter().createAppWithUI_typed();
             let object = await appUi.entity.containerA.createBoundEntity('testName');
 
             let url = appUi.createUiFor_typed(object).getUrl();
@@ -379,7 +379,7 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
                     let createUi: () => Promise<HTMLElement> = async () => {
                         let environment = new Environment();
                         environment.url = new URL('https://testdomain1.org');
-                        let appUi = environment.createApp().appA.createStarter().createAppWithUI_typed();
+                        let appUi = environment.createApp().createStarter().createAppWithUI_typed();
                         await appUi.entity.uiA.update();
                         let app = appUi.getApp();
                         let object = await app.createTextWithList('test', await app.createText('subitem'));
@@ -412,7 +412,7 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
         });
         uiTests.addUiTest('setLink', async run => {
             let createUi: () => Promise<HTMLElement> = async () => {
-                let appUi = new Environment().createApp().appA.createStarter().createAppWithUI_typed();
+                let appUi = new Environment().createApp().createStarter().createAppWithUI_typed();
                 await appUi.entity.uiA.update();
                 let app = appUi.getApp();
                 let object = await app.createText('Link');

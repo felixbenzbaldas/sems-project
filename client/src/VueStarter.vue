@@ -3,7 +3,7 @@
 import {Environment} from "@/Environment";
 
 async function init() {
-    let html = await Environment.create().createApp().appA.createStarter().fullStart();
+    let html = await Environment.create().createApp().createStarter().fullStart();
     document.body.innerHTML = null;
     document.body.appendChild(html);
 }

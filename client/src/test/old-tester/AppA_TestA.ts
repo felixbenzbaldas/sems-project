@@ -98,13 +98,7 @@ export class AppA_TestA {
 
     createTests() : Array<Entity> {
         let tests = [
-            this.createTest('environment_createApp', async test => {
-                let environment = new Environment();
 
-                let app = environment.createApp();
-
-                return app.appA.environment === environment;
-            }),
             this.createTest('tester', async test => {
                 let tester = await this.appA.createStarter().createTest();
 

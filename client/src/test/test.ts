@@ -5,6 +5,7 @@ import {assert, assert_notSameAs, assert_sameAs, notNullUndefined} from "@/utils
 import {Entity} from "@/Entity";
 import {testData} from "@/testData";
 import {test_ui_add} from "@/test/test_ui";
+import {Environment} from "@/Environment";
 
 export function test_add(tests : TestG_NestedTestsA) {
     test_tester_add(tests);
@@ -225,4 +226,11 @@ export function test_add(tests : TestG_NestedTestsA) {
 
         assert_sameAs(shortDescription, '12345678901234567890');
     });
+    tests.add('createAppFromEnvironment', async run => {
+        let environment = new Environment();
+
+        let app = environment.createApp();
+
+        assert_sameAs(app.environment, environment);
+    })
 }
