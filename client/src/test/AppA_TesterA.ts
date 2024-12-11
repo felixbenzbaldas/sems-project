@@ -79,6 +79,19 @@ export class AppA_TesterA {
                         assertFalse(testRun.testRunA.resultG_success);
                         assertFalse((await testRun.testRunA.nestedRuns.listA.getResolved(0)).testRunA.resultG_success);
                     });
+                    withNestedTest.add('runWithoutNestedTests', async run => {
+                        let test: Entity = run.app.entity.createCode('foo', () => {
+                        });
+                        test.testG_installNestedTestsA();
+                        test.testG_nestedTestsA.add_withoutApp('nestedTest', async () => {
+                            assert(false);
+                        });
+
+                        let testRun: Entity = await test.testG_run(true);
+
+                        assert(testRun.testRunA.resultG_success);
+                        assert_sameAs(testRun.testRunA.nestedRuns, undefined);
+                    });
                 });
                 runTest.add('failing', async run => {
                     let name = 'testName';
