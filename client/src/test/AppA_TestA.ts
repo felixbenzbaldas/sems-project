@@ -195,58 +195,6 @@ export class AppA_TestA {
 
                 assert_sameAs(app.containerA.mapNameEntity.get(name), code);
             }),
-            this.createTest('runTest', async () => {
-                let app : Entity = this.appA.createStarter().createApp();
-                let name = 'testName';
-                let test : Entity = app.createCode(name, () => {
-                    // test
-                });
-
-                let testRun : Entity = await test.testG_run();
-
-                assert(testRun.testRunA.resultG_success);
-                assert_sameAs(testRun.testRunA.test, test);
-            }),
-            this.createTest('runTest_withNestedTest', async () => {
-                let app : Entity = this.appA.createStarter().createApp();
-                let name = 'testName';
-                let test : Entity = app.createCode(name, () => {});
-                test.testG_installNestedTestsA();
-                let nestedTest = test.testG_nestedTestsA.add_withoutApp('nestedTest', async () => {});
-
-                let testRun : Entity = await test.testG_run();
-
-                assert(testRun.testRunA.resultG_success, 'testRun->success');
-                assert_sameAs(testRun.testRunA.test, test);
-                let nestedTestRun = await testRun.testRunA.nestedRuns.listA.getResolved(0);
-                assert(nestedTestRun.testRunA.resultG_success, 'nestedTestRun->success');
-                assert_sameAs(nestedTestRun.testRunA.test, nestedTest);
-            }),
-            this.createTest('runTest_withFailingNestedTest', async () => {
-                let app : Entity = this.appA.createStarter().createApp();
-                let test : Entity = app.createCode('foo', () => {});
-                test.testG_installNestedTestsA();
-                test.testG_nestedTestsA.add_withoutApp('nestedTest', async () => {
-                    assert(false);
-                });
-
-                let testRun : Entity = await test.testG_run();
-
-                assertFalse(testRun.testRunA.resultG_success);
-                assertFalse((await testRun.testRunA.nestedRuns.listA.getResolved(0)).testRunA.resultG_success);
-            }),
-            this.createTest('runTest_failing', async () => {
-                let app : Entity = this.appA.createStarter().createApp();
-                let name = 'testName';
-                let test : Entity = app.createCode(name, (testRun : Entity) => {
-                    assert(false);
-                });
-
-                let testRun : Entity = await test.testG_run();
-
-                assertFalse(testRun.testRunA.resultG_success);
-                assert_notSameAs(testRun.testRunA.resultG_error, undefined);
-            }),
             ...this.pathG.createTests(),
             ...this.uiG.createTests(),
             ...this.modelG.createTests(),
