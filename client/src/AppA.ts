@@ -3,12 +3,12 @@ import {ListA} from "@/ListA";
 import {PathA} from "@/PathA";
 import {Entity} from "@/Entity";
 import {LogG} from "@/LogG";
-import type {AppA_TestA} from "@/test/AppA_TestA";
+import type {AppA_TestA} from "@/test/old-tester/AppA_TestA";
 import {ContainerA} from "@/ContainerA";
 import {AppA_UnboundG} from "@/AppA_UnboundG";
 import {StarterA} from "@/StarterA";
 import type {Environment} from "@/Environment";
-import {AppA_TesterA} from "@/test/AppA_TesterA";
+import {AppA_TesterA} from "@/tester/AppA_TesterA";
 
 export class AppA {
 

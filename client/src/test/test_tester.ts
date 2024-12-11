@@ -1,8 +1,8 @@
-import type {TestG_NestedTestsA} from "@/test/TestG_NestedTestsA";
+import type {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
 import {Entity} from "@/Entity";
 import {assert, assert_notSameAs, assert_sameAs, assertFalse} from "@/utils";
 
-export function tester_tester_add(tests : TestG_NestedTestsA) {
+export function test_tester_add(tests : TestG_NestedTestsA) {
     tests.addNestedTests('tester', testerTests => {
         testerTests.addTestWithNestedTests('run', async run => {
             let name = 'testName';

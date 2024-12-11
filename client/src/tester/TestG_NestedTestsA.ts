@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import type {TestRunA} from "@/test/TestRunA";
+import type {TestRunA} from "@/tester/TestRunA";
 
 export class TestG_NestedTestsA {
 

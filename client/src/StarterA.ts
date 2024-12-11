@@ -1,7 +1,7 @@
 import {Entity} from "@/Entity";
 import {AppA_UiA} from "@/ui/AppA_UiA";
 import {AppA} from "@/AppA";
-import {AppA_TestA} from "@/test/AppA_TestA";
+import {AppA_TestA} from "@/test/old-tester/AppA_TestA";
 import {UiA} from "@/ui/UiA";
 import {Environment} from "@/Environment";
 import {notNullUndefined, nullUndefined} from "@/utils";

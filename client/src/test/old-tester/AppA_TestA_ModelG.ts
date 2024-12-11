@@ -2,7 +2,7 @@ import type {Entity} from "@/Entity";
 import {Environment} from "@/Environment";
 import {testData} from "@/testData";
 import {assert, localhostWithQueryParams} from "@/utils";
-import type {TestRunA} from "@/test/TestRunA";
+import type {TestRunA} from "@/tester/TestRunA";
 
 export class AppA_TestA_ModelG {
 

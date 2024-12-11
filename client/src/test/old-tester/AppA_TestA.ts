@@ -10,10 +10,10 @@ import {
     notNullUndefined,
     nullUndefined
 } from "@/utils";
-import {AppA_TestA_UiG} from "@/test/AppA_TestA_UiG";
-import {AppA_TestA_ModelG} from "@/test/AppA_TestA_ModelG";
-import {AppA_TestA_SemiG} from "@/test/AppA_TestA_SemiG";
-import {AppA_TestA_PathG} from "@/test/AppA_TestA_PathG";
+import {AppA_TestA_UiG} from "@/test/old-tester/AppA_TestA_UiG";
+import {AppA_TestA_ModelG} from "@/test/old-tester/AppA_TestA_ModelG";
+import {AppA_TestA_SemiG} from "@/test/old-tester/AppA_TestA_SemiG";
+import {AppA_TestA_PathG} from "@/test/old-tester/AppA_TestA_PathG";
 import {Environment} from "@/Environment";
 
 class TestResults {

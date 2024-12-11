@@ -5,8 +5,8 @@ import {ContainerA} from "@/ContainerA";
 import {UiA} from "@/ui/UiA";
 import {notNullUndefined, nullUndefined} from "@/utils";
 import type {StarterA} from "@/StarterA";
-import {TestG_NestedTestsA} from "@/test/TestG_NestedTestsA";
-import {TestRunA} from "@/test/TestRunA";
+import {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
+import {TestRunA} from "@/tester/TestRunA";
 import {DeepCopyA} from "@/DeepCopyA";
 
 export class Entity {

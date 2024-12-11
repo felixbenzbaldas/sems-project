@@ -1,30 +1,12 @@
-import type {Entity} from "@/Entity";
-import {ContainerA} from "@/ContainerA";
+import type {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
 import {assert, assert_sameAs, assertFalse, notNullUndefined, nullUndefined} from "@/utils";
-import type {TestG_NestedTestsA} from "@/test/TestG_NestedTestsA";
+import type {Entity} from "@/Entity";
 import type {UiA} from "@/ui/UiA";
 import {Environment} from "@/Environment";
-import {testData} from "@/testData";
 
-export class AppA_TesterA_UiTestG {
-
-    name : string;
-    tests : TestG_NestedTestsA;
-
-    constructor(public entity : Entity) {
-        this.name = 'ui';
-    }
-
-    addTo(boundParent : Entity) {
-        let test = boundParent.testG_nestedTestsA.add_withoutApp(this.name, async ()=>{});
-        test.installContainerA()
-        test.testG_installNestedTestsA();
-        this.tests = test.testG_nestedTestsA;
-        this.addTests();
-    }
-
-    addTests() {
-        this.tests.addUiTest('updateAddedSubitem', async run => {
+export function test_ui_add(tests : TestG_NestedTestsA) {
+    tests.addNestedTests('ui', uiTests => {
+        uiTests.addUiTest('updateAddedSubitem', async run => {
             let list = run.app.unboundG.createTextWithList('parent');
             let uiForList = run.appUi.createUiFor_typed(list);
             await uiForList.update();
@@ -35,7 +17,7 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs(1, uiForList.listG.uisOfListItems.length);
             assert(uiForList.headerBodyG.bodyIsVisible());
         });
-        this.tests.addUiTest('updateRemovedSubitem', async run => {
+        uiTests.addUiTest('updateRemovedSubitem', async run => {
             let list = run.appUi.getApp().unboundG.createList_typed();
             list.addDirect(run.appUi.getApp().unboundG.createText('subitem-one'));
             list.addDirect(run.appUi.getApp().unboundG.createText('subitem-two'));
@@ -49,7 +31,7 @@ export class AppA_TesterA_UiTestG {
             assert(!uiForList.htmlElement.innerHTML.includes('subitem-one'), 'update html');
             assert(uiForList.htmlElement.innerHTML.includes('subitem-two'), 'update html');
         });
-        this.tests.addUiTest('mark', async run => {
+        uiTests.addUiTest('mark', async run => {
             await run.appUi.update();
             run.appUi.clipboard_lostContext = true;
             let object = await run.app.createEntityWithApp();
@@ -61,7 +43,7 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs(run.appUi.clipboard, object);
             assertFalse(run.appUi.clipboard_lostContext);
         });
-        this.tests.addUiTestWithNestedTests('cut', async run => {
+        uiTests.addUiTestWithNestedTests('cut', async run => {
             let child = await run.app.createText('child');
             let parent = await run.app.createTextWithList('parent', child);
             child.context = child.getPath(parent);
@@ -102,11 +84,11 @@ export class AppA_TesterA_UiTestG {
                 assertFalse(run.appUi.clipboard_lostContext);
             });
         });
-        this.tests.addUiTest('showContainerMark', async run => {
+        uiTests.addUiTest('showContainerMark', async run => {
             let markedContainer = run.app.createEntityWithApp();
             markedContainer.installContainerA();
             markedContainer.installListA();
-            run.app.entity.containerA.bind(markedContainer,'sa9llaMlry'); // TODO should not be hardcoded
+            run.app.entity.containerA.bind(markedContainer, 'sa9llaMlry'); // TODO should not be hardcoded
             markedContainer.text = 'marked container';
             run.appUi.content.listA.addDirect(markedContainer);
 
@@ -114,7 +96,7 @@ export class AppA_TesterA_UiTestG {
 
             assert(ui.showContainerMark());
         });
-        this.tests.addUiTestWithNestedTests('toggleCollapsible', async run => {
+        uiTests.addUiTestWithNestedTests('toggleCollapsible', async run => {
             let parent = await run.app.createText('parent');
             parent.installListA();
             let subitem = await run.app.createText('subitem');
@@ -141,7 +123,7 @@ export class AppA_TesterA_UiTestG {
                 assert(uiParent.headerBodyG.bodyIsVisible());
             });
         });
-        this.tests.addUiTest('setContext', async run => {
+        uiTests.addUiTest('setContext', async run => {
             let subitem = await run.app.createText('subitem');
             let parent = await run.app.createText('parent');
             parent.installListA();
@@ -159,7 +141,7 @@ export class AppA_TesterA_UiTestG {
             assert_sameAs(uiSubitem.headerG.contextIcon.innerText, '-');
             assert(secondUiSubitem.headerBodyG.bodyIsVisible());
         });
-        this.tests.addUiTestWithNestedTests('removeContext', async run => {
+        uiTests.addUiTestWithNestedTests('removeContext', async run => {
             let subitem = await run.app.createText('subitem');
             let parent = await run.app.createText('parent');
             parent.installListA();
@@ -218,7 +200,7 @@ export class AppA_TesterA_UiTestG {
                 });
             });
         });
-        this.tests.addUiTestWithNestedTests('newSubitem', async run => {
+        uiTests.addUiTestWithNestedTests('newSubitem', async run => {
             await run.appUi.entity.uiA.update();
             await run.appUi.globalEventG.newSubitem();
 
@@ -243,7 +225,7 @@ export class AppA_TesterA_UiTestG {
                 assert_sameAs(run.appUi.focused, createdUi);
             });
         });
-        this.tests.addUiTestWithNestedTests('defaultAction', async run => {
+        uiTests.addUiTestWithNestedTests('defaultAction', async run => {
             await run.appUi.entity.uiA.update();
             await run.appUi.globalEventG.newSubitem();
             await run.appUi.globalEventG.newSubitem();
@@ -270,9 +252,10 @@ export class AppA_TesterA_UiTestG {
                 assert_sameAs(run.appUi.focused, createdUi);
             });
         });
-        this.tests.addNestedTests('tester', (tester) => {
+        uiTests.addNestedTests('tester', (tester) => {
             tester.addUiTestWithNestedTests('run', async outerRun => {
-                let test = outerRun.app.entity.createCode('dummyTest', ()=>{});
+                let test = outerRun.app.entity.createCode('dummyTest', () => {
+                });
                 let run = await test.testG_run();
                 let ui = outerRun.appUi.createUiFor_typed(run);
                 await ui.update();
@@ -280,7 +263,8 @@ export class AppA_TesterA_UiTestG {
                 assert(ui.collapsed);
             }, (runTest) => {
                 runTest.addUiTest('failingNestedTest', async outerRun => {
-                    let dummyTest = outerRun.app.entity.createCode('dummyTest', ()=>{});
+                    let dummyTest = outerRun.app.entity.createCode('dummyTest', () => {
+                    });
                     dummyTest.testG_installNestedTestsA();
                     dummyTest.testG_nestedTestsA.add_withoutApp('failingNestedTest', async () => {
                         assert(false);
@@ -293,7 +277,7 @@ export class AppA_TesterA_UiTestG {
                 });
             });
         });
-        this.tests.addUiTestWithNestedTests('paste', async run => {
+        uiTests.addUiTestWithNestedTests('paste', async run => {
             let parent = await run.app.createText('parent');
             let toPaste = await run.app.createText('toPaste');
             let uiForParent = run.appUi.createUiFor_typed(parent);
@@ -335,7 +319,7 @@ export class AppA_TesterA_UiTestG {
                 let firstItem = await run.app.createText('firstItem');
                 let toPaste = await run.app.createText('toPaste');
                 let parent = await run.app.createTextWithList('parent', firstItem);
-                let uiForParent : Entity = run.appUi.createUiFor(parent);
+                let uiForParent: Entity = run.appUi.createUiFor(parent);
                 await uiForParent.uiA.update();
                 run.appUi.clipboard = toPaste;
 
@@ -350,7 +334,7 @@ export class AppA_TesterA_UiTestG {
                     let toPaste = await run.app.createText('toPaste');
                     let parent = await run.app.createList();
                     await parent.listA.add(firstItem);
-                    let uiForParent : UiA = run.appUi.createUiFor_typed(parent);
+                    let uiForParent: UiA = run.appUi.createUiFor_typed(parent);
                     await uiForParent.update();
                     run.appUi.clipboard = toPaste;
                     run.appUi.clipboard_lostContext = true;
@@ -361,7 +345,7 @@ export class AppA_TesterA_UiTestG {
                 });
             });
         });
-        this.tests.add_withoutApp('getUrl', async run => {
+        uiTests.add_withoutApp('getUrl', async run => {
             let environment = new Environment();
             environment.url = new URL('https://testdomain1.org');
             let appUi = environment.createApp().appA.createStarter().createAppWithUI_typed();
@@ -371,7 +355,7 @@ export class AppA_TesterA_UiTestG {
 
             assert_sameAs(url, 'https://testdomain1.org/?path=testName');
         });
-        this.tests.addNestedTests('meta', metaTests => {
+        uiTests.addNestedTests('meta', metaTests => {
             metaTests.addUiTestWithNestedTests('show', async run => {
                 let object = await run.app.createTextWithList('test', await run.app.createText('subitem'));
                 let ui = run.appUi.createUiFor_typed(object);
@@ -426,7 +410,7 @@ export class AppA_TesterA_UiTestG {
                 assert(!ui.headerBodyG.bodyIsVisible());
             });
         });
-        this.tests.addUiTest('setLink', async run => {
+        uiTests.addUiTest('setLink', async run => {
             let createUi: () => Promise<HTMLElement> = async () => {
                 let appUi = new Environment().createApp().appA.createStarter().createAppWithUI_typed();
                 await appUi.entity.uiA.update();
@@ -448,5 +432,5 @@ export class AppA_TesterA_UiTestG {
             html.codeG_html = await createUi();
             await run.appUi.content.listA.add(html);
         });
-    }
+    });
 }

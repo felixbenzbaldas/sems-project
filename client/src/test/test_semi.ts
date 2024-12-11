@@ -1,7 +1,7 @@
-import type {TestG_NestedTestsA} from "@/test/TestG_NestedTestsA";
+import type {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
 import {assert, assert_sameAs, assertFalse, downloadText, setWidth, textFileInput} from "@/utils";
 
-export function tester_semi_add(tests : TestG_NestedTestsA) {
+export function test_semi_add(tests : TestG_NestedTestsA) {
     tests.addNestedTests('semi', semi => {
         semi.addUiTest('keyboardEvent',  async run => {
             run.appUi.content.listA.addDirect(

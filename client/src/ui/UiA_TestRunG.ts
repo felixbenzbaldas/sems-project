@@ -1,6 +1,6 @@
 import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
-import type {TestRunA} from "@/test/TestRunA";
+import type {TestRunA} from "@/tester/TestRunA";
 import {notNullUndefined} from "@/utils";
 
 export class UiA_TestRunG {
