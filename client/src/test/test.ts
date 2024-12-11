@@ -198,6 +198,16 @@ export function test_add(tests : TestG_NestedTestsA) {
 
             assert_sameAs(await list.listA.jsList[0].pathA.resolve(), listItem);
         });
+        list.add('jsonWithoutContainedObjects', async run => {
+            let list = await run.app.createList();
+            let item = await run.app.createText('bar');
+            await list.listA.add(item);
+
+            let json : any = list.json_withoutContainedObjects();
+
+            assert_sameAs(json.list.length, 1);
+            assert_sameAs(json.list[0][1], item.name);
+        });
     });
     tests.add('log', async run => {
         run.app.logG.toListOfStrings = true;
