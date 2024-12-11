@@ -180,6 +180,7 @@ export function test_add(tests : TestG_NestedTestsA) {
 
         assert_notSameAs(list.listA, undefined);
         assert_notSameAs(list.listA.jsList, undefined);
+        assert_sameAs(list.getShortDescription(), 'list (0)');
     }, list => {
         list.add('findByText', async run => {
             let list : Entity = run.app.unboundG.createList();
