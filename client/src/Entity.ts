@@ -136,20 +136,21 @@ export class Entity {
         return exported;
     }
 
-    async export_allDependenciesInOneContainer() {
-        let exported = this.json_withoutContainedObjects();
-        let dependencies = await this.getDependencies();
-        if (dependencies.size > 0) {
-            exported.dependencies = [];
-            for (let dependency of dependencies) {
-                exported.dependencies.push({
-                    name: dependency.name,
-                    ... dependency.json_withoutContainedObjects()
-                });
-            }
-        }
-        return exported;
-    }
+    // flat export (not used at the moment)
+    // async export_allDependenciesInOneContainer() {
+    //     let exported = this.json_withoutContainedObjects();
+    //     let dependencies = await this.getDependencies();
+    //     if (dependencies.size > 0) {
+    //         exported.dependencies = [];
+    //         for (let dependency of dependencies) {
+    //             exported.dependencies.push({
+    //                 name: dependency.name,
+    //                 ... dependency.json_withoutContainedObjects()
+    //             });
+    //         }
+    //     }
+    //     return exported;
+    // }
 
     async getObjectAndDependencies() : Promise<Set<Entity>> {
         let set = new Set<Entity>();

@@ -13,10 +13,6 @@ export class AppA_UiA_GlobalEventG {
         await this.getUiA().output.setAndUpdateUi(JSON.stringify(await this.entity.export(), null, 4));
     }
 
-    async flatExportContent() {
-        await this.getUiA().output.setAndUpdateUi(JSON.stringify(await this.getUiA().content.export_allDependenciesInOneContainer(), null, 4));
-    }
-
     async toggleCollapsible() {
         await this.getUiA().focused.uiA.toggleCollapsible();
     }
