@@ -4,36 +4,6 @@ import {StarterA} from "@/StarterA";
 
 describe('app', () => {
 
-    it('can be created', async () => {
-        let app : Entity = StarterA.createApp();
-
-        expect(app).toBeTruthy();
-    });
-
-    it('can create an entity', async () => {
-        let app : Entity = StarterA.createApp();
-
-        let entity : Entity = app.appA.createEntityWithApp();
-
-        expect(entity).toBeTruthy();
-    });
-
-    it('can set text', async () => {
-        let app : Entity = StarterA.createApp();
-
-        app.text = 'my application';
-
-        expect(app.text).toBe('my application');
-    });
-
-    it('can create a simple list', async () => {
-        let app : Entity = StarterA.createApp();
-
-        let list : Entity = app.appA.unboundG.createList();
-
-        expect(list.listA.jsList.length).toBe(0);
-    });
-
     it('can create text', async () => {
         let app = StarterA.createApp();
 

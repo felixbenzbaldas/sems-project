@@ -176,9 +176,13 @@ export function test_add(tests : TestG_NestedTestsA) {
             });
         });
     });
-    tests.addNestedTests('list', list => {
+    tests.addTestWithNestedTests('list', async run => {
+        let list : Entity = run.app.unboundG.createList();
+
+        assert_notSameAs(list.listA, undefined);
+        assert_notSameAs(list.listA.jsList, undefined);
+    }, list => {
         list.add('findByText', async run => {
-            run.app.logG.toListOfStrings = true;
             let list : Entity = run.app.unboundG.createList();
             let subitem = run.app.unboundG.createText('findMe');
             list.listA.addDirect(subitem);
