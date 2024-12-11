@@ -1,20 +1,8 @@
 import {Entity} from "@/Entity";
-import {StarterA} from "@/StarterA";
 import {AppA} from "@/AppA";
-import {
-    assert,
-    assert_notSameAs,
-    assert_sameAs,
-    assertFalse,
-    createRandomString,
-    notNullUndefined,
-    nullUndefined
-} from "@/utils";
 import {AppA_TestA_UiG} from "@/test/old-tester/AppA_TestA_UiG";
 import {AppA_TestA_ModelG} from "@/test/old-tester/AppA_TestA_ModelG";
 import {AppA_TestA_SemiG} from "@/test/old-tester/AppA_TestA_SemiG";
-import {AppA_TestA_PathG} from "@/test/old-tester/AppA_TestA_PathG";
-import {Environment} from "@/Environment";
 
 class TestResults {
     successful : Array<Entity> = [];
@@ -27,7 +15,6 @@ export class AppA_TestA {
     readonly uiG: AppA_TestA_UiG;
     readonly modelG: AppA_TestA_ModelG;
     readonly semiG: AppA_TestA_SemiG;
-    readonly pathG: AppA_TestA_PathG;
     withFailingDemoTest: boolean;
 
     constructor(private entity : Entity) {
@@ -35,7 +22,6 @@ export class AppA_TestA {
         this.uiG = new AppA_TestA_UiG(entity);
         this.modelG = new AppA_TestA_ModelG(entity);
         this.semiG = new AppA_TestA_SemiG(entity);
-        this.pathG = new AppA_TestA_PathG(entity);
     }
 
     async createRunAndDisplay() {
@@ -108,75 +94,6 @@ export class AppA_TestA {
                     dummyTestRun.test_app.appA.logG.listOfStrings.join().includes('a dummy log') &&
                     testResults.successful.length == 0;
             }),
-
-
-
-
-
-
-
-            this.createTest('createStarter', async test => {
-                let starterApplication = new Entity();
-                starterApplication.appA = new AppA(starterApplication);
-                starterApplication.appA.environment = new Environment();
-                starterApplication.text = 'starter app';
-
-                let starter : StarterA = starterApplication.appA.createStarter();
-
-                assert(notNullUndefined(starter));
-                assert_sameAs(starter.entity.app, starterApplication);
-            }),
-            this.createTest('nullUndefined', async test => {
-                assert(nullUndefined(null));
-                assert(nullUndefined(undefined));
-                assert(!nullUndefined(42));
-                assert(notNullUndefined(42));
-            }),
-            this.createTest('assert', async test => {
-                try {
-                    assert(false);
-                } catch (throwable) {
-                    let error = throwable as Error;
-                    assert_sameAs(error.message, 'AssertionError: condition must be fulfilled');
-                    return;
-                }
-                throw new Error();
-            }),
-            this.createTest('assert_sameAs', async test => {
-                try {
-                    assert_sameAs(42, 43);
-                } catch (throwable) {
-                    let error = throwable as Error;
-                    if (error.message !== 'AssertionError: 42 !== 43') {
-                        throw new Error();
-                    }
-                    return;
-                }
-                throw new Error();
-            }),
-            this.createTest('assert_notSameAs', async test => {
-                try {
-                    assert_notSameAs(42, 42);
-                } catch (throwable) {
-                    let error = throwable as Error;
-                    if (error.message !== 'AssertionError: 42 === 42') {
-                        throw new Error();
-                    }
-                    return;
-                }
-                throw new Error();
-            }),
-            this.createTest('code', async test => {
-                let app : Entity = this.appA.createStarter().createApp();
-                let name = 'nameOfCode';
-
-                let code : Entity = app.createCode(name, () => {
-                    // do something
-                });
-
-                assert_sameAs(app.containerA.mapNameEntity.get(name), code);
-            }),
-            ...this.pathG.createTests(),
             ...this.uiG.createTests(),
             ...this.modelG.createTests(),
             ...this.semiG.createTests()
