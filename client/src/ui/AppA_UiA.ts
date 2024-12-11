@@ -248,6 +248,9 @@ export class AppA_UiA {
             }),
             this.getApp().unboundG.createButton('script: set context for all objects in container', async () => {
                 await this.globalEventG.script_setContextForAllObjectsInContainer();
+            }),
+            this.getApp().unboundG.createButton('set link', async () => {
+                await this.globalEventG.setLink();
             })
         );
         lowPriorityCommands.collapsible = true;
