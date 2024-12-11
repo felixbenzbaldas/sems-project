@@ -101,12 +101,13 @@ export class UiA_HeaderG {
         this.bodyIcon.style.display = 'inline-block';
         if (this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
             this.bodyIcon.style.display = 'default';
+            this.bodyIcon.style.width = '1.5rem';
+            this.bodyIcon.style.textAlign = 'center';
+            this.bodyIcon.style.marginLeft = '0.7rem';
             if (this.entity.uiA.collapsed) {
                 this.bodyIcon.innerText = '[...]';
-                this.bodyIcon.style.marginLeft = '0.7rem';
             } else {
                 this.bodyIcon.innerText = '_';
-                this.bodyIcon.style.marginLeft = '1rem';
             }
         } else {
             this.bodyIcon.style.display = 'none';
