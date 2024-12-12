@@ -345,16 +345,6 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
                 });
             });
         });
-        uiTests.add_withoutApp('getUrl', async run => {
-            let environment = new Environment();
-            environment.url = new URL('https://testdomain1.org');
-            let appUi = environment.createApp().createStarter().createAppWithUI_typed();
-            let object = await appUi.entity.containerA.createBoundEntity('testName');
-
-            let url = appUi.createUiFor_typed(object).getUrl();
-
-            assert_sameAs(url, 'https://testdomain1.org/?path=testName');
-        });
         uiTests.addNestedTests('meta', metaTests => {
             metaTests.addUiTestWithNestedTests('show', async run => {
                 let object = await run.app.createTextWithList('test', await run.app.createText('subitem'));

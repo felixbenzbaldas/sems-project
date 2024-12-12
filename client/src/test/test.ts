@@ -287,5 +287,15 @@ export function test_add(tests : TestG_NestedTestsA) {
 
         assert_sameAs(run.app.entity.containerA.mapNameEntity.get(name), code);
         assert_sameAs(code.codeG_jsFunction, jsFunction);
-    })
+    });
+    tests.add('getUrl', async run => {
+        let container = await run.app.createText('#https://testdomain6.org');
+        container.installContainerA();
+        let object = await container.containerA.createBoundEntity('testName');
+        assert(object.hasUrl());
+
+        let url = object.getUrl();
+
+        assert_sameAs(url, 'https://testdomain6.org/?path=testName');
+    });
 }

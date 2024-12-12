@@ -375,4 +375,29 @@ export class Entity {
             }
         }
     }
+
+    getUrl() : string {
+        if (this.container) {
+            let containerWithUrl = this.container.getContainerWithFixedUrl();
+            return containerWithUrl.text.substring(1) + '/?path=' + containerWithUrl.getPath(this).pathA.asString();
+        } else {
+            return '';
+        }
+    }
+
+    getContainerWithFixedUrl() : Entity {
+        if (this.text?.startsWith('#http')) {
+            return this;
+        } else {
+            if (this.container) {
+                return this.container.getContainerWithFixedUrl();
+            } else {
+                return undefined;
+            }
+        }
+    }
+
+    hasUrl() {
+        return notNullUndefined(this.getContainerWithFixedUrl());
+    }
 }

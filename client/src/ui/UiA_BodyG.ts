@@ -1,5 +1,4 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined, textElem} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 // TODO the body aspect should only exist if showBody === true
@@ -107,8 +106,9 @@ export class UiA_BodyG {
         this.content_meta_htmlElement.appendChild(hideButton);
         let app = this.entity.getApp_typed();
         let meta = app.unboundG.createList();
-        let url = this.getUiA().getUrl();
-        meta.listA.addDirect(app.unboundG.createLink(url));
+        if (this.getObject().hasUrl()) {
+            meta.listA.addDirect(app.unboundG.createLink(this.getObject().getUrl()));
+        }
         let ui = app.uiA.createUiFor_typed(meta);
         await ui.update();
         this.content_meta_htmlElement.appendChild(ui.htmlElement);
