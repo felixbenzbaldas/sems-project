@@ -1,4 +1,4 @@
-export const testData = {
+export const testData : any = {
     "text": "demo website (container)",
     "list": [
         [
