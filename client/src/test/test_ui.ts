@@ -84,7 +84,11 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
                 assertFalse(run.appUi.clipboard_lostContext);
             });
         });
-        uiTests.addUiTest('showContainerMark', async run => {
+        uiTests.add_withoutApp('showContainerMark', async run => {
+            let environment = new Environment();
+            environment.url = new URL('http://localhost:1234');
+            run.appUi = environment.createApp().createStarter().createAppWithUI_typed();
+            run.app = run.appUi.getApp();
             let markedContainer = run.app.createEntityWithApp();
             markedContainer.installContainerA();
             markedContainer.installListA();
