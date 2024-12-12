@@ -8,6 +8,7 @@ export const testData = {
             "bVxq4DNobR"
         ]
     ],
+    "collapsible": true,
     "objects": {
         "0": {
             "text": "Hello! This is the demo website. It will be replaced in the deployment."
@@ -23,11 +24,14 @@ export const testData = {
                     "3"
                 ]
             ],
-            "collapsible": true,
-            "collapsed": true
+            "collapsible": true
         },
         "3": {
-            "text": "subitem"
+            "text": "subitem",
+            "context": [
+                "..",
+                "2"
+            ]
         },
         "4": {
             "text": ""
@@ -42,7 +46,11 @@ export const testData = {
             ]
         },
         "6": {
-            "text": "another subitem"
+            "text": "another subitem",
+            "context": [
+                "..",
+                "5"
+            ]
         },
         "7": {
             "text": ""
@@ -65,6 +73,10 @@ export const testData = {
                 [
                     "..",
                     "jgapYx8aBB"
+                ],
+                [
+                    "..",
+                    "HqUMnbb7qs"
                 ]
             ]
         },
@@ -102,7 +114,13 @@ export const testData = {
             ]
         },
         "101": {
-            "text": "subitem (webmeta)"
+            "text": "subitem (webmeta)",
+            "list": [],
+            "collapsible": false,
+            "context": [
+                "..",
+                "p5L6xkXZAO"
+            ]
         },
         "FObPP80aX9": {
             "text": "webMeta",
@@ -155,6 +173,12 @@ export const testData = {
         },
         "8GcqgBbINN": {
             "text": "demo title"
+        },
+        "szTdzkCgdj": {
+            "text": ""
+        },
+        "HqUMnbb7qs": {
+            "text": ""
         }
     }
 };
