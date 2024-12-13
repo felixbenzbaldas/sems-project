@@ -3,8 +3,8 @@
 import {Environment} from "@/Environment";
 
 async function init() {
+    document.body.innerHTML = null; // necessary for hot-deployment (npm run dev)
     let html = await Environment.create().createApp().createStarter().fullStart();
-    document.body.innerHTML = null;
     document.body.appendChild(html);
 }
 
