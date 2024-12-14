@@ -44,9 +44,9 @@ export class UiA_TextG {
 
     private updateEmptyMarker() {
         if (document.activeElement != this.htmlElement && this.getUiA().isEditable() && this.getObject().text.length === 0) {
-            this.htmlElement.style.borderLeftColor = 'black';
+            this.htmlElement.style.borderLeftColor = this.entity.getApp_typed().uiA.theme_fontColor;
         } else {
-            this.htmlElement.style.borderLeftColor = 'white';
+            this.htmlElement.style.borderLeftColor = this.entity.getApp_typed().uiA.theme_backgroundColor;
         }
     }
 

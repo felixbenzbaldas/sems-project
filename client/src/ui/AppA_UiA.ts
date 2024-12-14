@@ -26,6 +26,16 @@ export class AppA_UiA {
     clipboard_lostContext: boolean;
     webMeta: Entity;
     keyG: AppA_UiA_KeyG;
+    theme_backgroundColor : string = 'white';
+    theme_secondBackgroundColor: string = '#efefef';
+    theme_fontColor : string = 'black';
+    theme_buttonFontColor: string = 'grey';
+    theme_markColor: string = '#efefef';
+    theme_secondMarkColor : string = 'green';
+    theme_focusBorderColor: string = 'orange';
+    theme_highlight: string = 'green';
+    theme_success : string = 'green';
+    theme_failure : string = 'red';
 
     private isInstalled : boolean;
     private focusStyle_marker: HTMLElement;
@@ -78,6 +88,10 @@ export class AppA_UiA {
     }
 
     async update() : Promise<void> {
+        if (notNullUndefined(this.theme_fontColor)) {
+            this.htmlElement.style.backgroundColor = this.theme_backgroundColor;
+            this.htmlElement.style.color = this.theme_fontColor;
+        }
         if (this.showMeta) {
             await this.commands.updateUi();
             await this.input.getUi().updateUi();
@@ -105,7 +119,7 @@ export class AppA_UiA {
         this.scrollableArea.style.overflowY = 'auto';
         this.scrollableArea.style.paddingLeft = '0.2rem';
         this.scrollableArea.style.paddingRight = '0.2rem';
-        this.statusBar.style.backgroundColor = "#efefef";
+        this.statusBar.style.backgroundColor = this.theme_secondBackgroundColor;
         this.statusBar.style.minHeight = '1.2rem';
         this.statusBar.style.maxHeight = '1.2rem';
         if (this.showMeta) {
@@ -130,11 +144,11 @@ export class AppA_UiA {
         this.statusBar.innerHTML = null;
         let textHtmlElement = textElem(text);
         this.statusBar.appendChild(textHtmlElement);
-        textHtmlElement.style.backgroundColor = 'green';
+        textHtmlElement.style.backgroundColor = this.theme_highlight;
         textHtmlElement.style.display = 'inline';
         textHtmlElement.style.marginLeft = '0.5rem';
         setTimeout(()=> {
-            textHtmlElement.style.backgroundColor = "#efefef";
+            textHtmlElement.style.backgroundColor = this.theme_secondBackgroundColor;
         }, 800);
     }
 
@@ -210,9 +224,9 @@ export class AppA_UiA {
 
     focusStyle_update() {
         if (this.focused === this.entity && this.isActive()) {
-            this.focusStyle_marker.style.backgroundColor = 'orange';
+            this.focusStyle_marker.style.backgroundColor = this.theme_focusBorderColor;
         } else {
-            this.focusStyle_marker.style.backgroundColor = 'white';
+            this.focusStyle_marker.style.backgroundColor = this.theme_backgroundColor;
         }
     }
 

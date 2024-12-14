@@ -74,7 +74,7 @@ export class UiA_HeaderG {
         containerMark.style.display = 'block';
         setWidth(containerMark, '0.8rem');
         containerMark.innerText = 'O'
-        containerMark.style.color = 'green';
+        containerMark.style.color = this.entity.getApp_typed().uiA.theme_secondMarkColor;
         return containerMark;
     }
 
@@ -150,17 +150,17 @@ export class UiA_HeaderG {
 
     focusStyle_update() {
         if (this.entity.uiA.hasFocus() && this.entity.getApp().appA.uiA.isActive()) {
-            this.divForContentAndBodyIcon.style.borderColor = 'orange';
+            this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme_focusBorderColor;
         } else {
-            this.divForContentAndBodyIcon.style.borderColor = 'white';
+            this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme_backgroundColor;
         }
     }
 
     updateCurrentContainerStyle() {
         if (this.entity.getApp().appA.currentContainer === this.getObject()) {
-            this.divForContentAndBodyIcon.style.backgroundColor = '#efefef';
+            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp_typed().uiA.theme_markColor;
         } else {
-            this.divForContentAndBodyIcon.style.backgroundColor = 'white';
+            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp_typed().uiA.theme_backgroundColor;
         }
     }
 

@@ -59,7 +59,7 @@ export class UiA_BodyG {
             await ui.update();
             ui.htmlElement.style.marginBottom = '0.1rem';
             ui.headerG.htmlElement.style.fontSize = '0.8rem';
-            ui.headerG.htmlElement.style.color = 'grey';
+            ui.headerG.htmlElement.style.color = this.entity.getApp_typed().uiA.theme_buttonFontColor;
             this.content_contextAsSubitem_htmlElement.appendChild(ui.htmlElement);
         }
     }
