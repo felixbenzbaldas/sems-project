@@ -38,6 +38,8 @@ export class AppA_UiA {
     theme_success : string = 'green';
     theme_failure : string = 'red';
     theme_meta: string = 'blue';
+    theme_font: string = 'unset';
+    theme_fontSize: string = '1rem';
 
     private isInstalled : boolean;
     private focusStyle_marker: HTMLElement;

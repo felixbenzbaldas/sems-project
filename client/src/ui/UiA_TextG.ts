@@ -13,6 +13,8 @@ export class UiA_TextG {
     async update() {
         this.htmlElement.innerText = this.getObject().text;
         this.htmlElement.style.minHeight = '1rem';
+        this.htmlElement.style.fontFamily = this.entity.getApp_typed().uiA.theme_font;
+        this.htmlElement.style.fontSize = this.entity.getApp_typed().uiA.theme_fontSize;
         this.htmlElement.style.whiteSpace = 'pre-wrap';
         this.htmlElement.style.outline = "0px solid transparent"; // prevent JS focus
         this.htmlElement.onblur = async (event : any) => {
