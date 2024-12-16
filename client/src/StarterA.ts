@@ -6,6 +6,8 @@ import {UiA} from "@/ui/UiA";
 import {Environment} from "@/Environment";
 import {notNullUndefined, nullUndefined} from "@/utils";
 import {StarterA_FullStartG} from "@/StarterA_FullStartG";
+import {Color} from "@/ui/Color";
+import {Font} from "@/ui/Font";
 
 export class StarterA {
 
@@ -121,6 +123,7 @@ export class StarterA {
         this.createAppWithUI();
         this.createdApp.appA.uiA.isWebsite = true;
         this.createData();
+        this.themeElegant();
         let website = await this.data.listA.findByText(this.hostname())
         let start = await website.listA.findByText('start');
         for (let resolved of await start.listA.getResolvedList()) {
@@ -130,6 +133,12 @@ export class StarterA {
             this.getEnvironment().setTitle((await (await website.listA.findByText('title'))?.listA.getResolved(0)).text);
         }
         return this.createdApp;
+    }
+
+    private themeElegant() {
+        this.createdApp.appA.uiA.theme_backgroundColor = Color.LIGHT_BEIGE;
+        this.createdApp.appA.uiA.theme_fontColor = Color.NEW_DARK_VIOLETTE;
+        this.createdApp.appA.uiA.theme_font = Font.ELEGANT;
     }
 
     hostname() : string {
@@ -147,6 +156,7 @@ export class StarterA {
     async createObjectViewer(pathString: string) : Promise<Entity> {
         this.createAppWithUI();
         this.createData();
+        this.themeElegant();
         let listOfNames = ['..', this.data.name, ...pathString.split('-')];
         await this.createdApp.appA.uiA.content.listA.addByListOfNames(listOfNames);
         await this.createdApp.updateUi();
