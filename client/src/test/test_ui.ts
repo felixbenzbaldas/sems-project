@@ -505,6 +505,25 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
                 html.codeG_html = await createUi();
                 await run.appUi.content.listA.add(html);
             });
+            themes.addUiTest('simple', async run => {
+                let createUi: () => Promise<HTMLElement> = async () => {
+                    let environment = new Environment();
+                    environment.jsonData = testData;
+                    environment.url = new URL('https://testdomain1.org');
+                    let appUi = (await environment.createApp().createStarter().createWebsite()).appA.uiA;
+                    await appUi.entity.uiA.update();
+                    let app = appUi.getApp();
+                    appUi.theme_backgroundColor = Color.LIGHT_LIGHT_GREY;
+                    appUi.theme_fontColor = Color.MORE_GREYER;
+                    appUi.theme_font = Font.SIMPLE;
+
+                    await appUi.entity.uiA.update();
+                    return appUi.entity.uiA.htmlElement;
+                }
+                let html = await run.app.createBoundEntity();
+                html.codeG_html = await createUi();
+                await run.appUi.content.listA.add(html);
+            });
         })
     });
 }
