@@ -42,6 +42,10 @@ export const testData : any = {
                 [
                     "..",
                     "6"
+                ],
+                [
+                    "..",
+                    "3"
                 ]
             ]
         },
