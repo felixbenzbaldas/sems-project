@@ -7,6 +7,7 @@ import {ContainerA} from "@/ContainerA";
 import {AppA_UiA_KeyG} from "@/ui/AppA_UiA_KeyG";
 import type {AppA} from "@/AppA";
 import {notNullUndefined, textElem} from "@/utils";
+import {Color} from "@/ui/Color";
 
 export class AppA_UiA {
 
@@ -26,9 +27,9 @@ export class AppA_UiA {
     clipboard_lostContext: boolean;
     webMeta: Entity;
     keyG: AppA_UiA_KeyG;
+    theme_fontColor : string = 'unset';
     theme_backgroundColor : string = 'white';
-    theme_secondBackgroundColor: string = '#efefef';
-    theme_fontColor : string = 'black';
+    theme_secondBackgroundColor: string = Color.LIGHT_GREY;
     theme_buttonFontColor: string = 'grey';
     theme_markColor: string = '#efefef';
     theme_secondMarkColor : string = 'green';
@@ -36,6 +37,7 @@ export class AppA_UiA {
     theme_highlight: string = 'green';
     theme_success : string = 'green';
     theme_failure : string = 'red';
+    theme_meta: string = 'blue';
 
     private isInstalled : boolean;
     private focusStyle_marker: HTMLElement;

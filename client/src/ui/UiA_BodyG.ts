@@ -96,7 +96,7 @@ export class UiA_BodyG {
     async showMeta() {
         this.content_meta_htmlElement.innerHTML = null;
         this.content_meta_htmlElement.style.marginLeft = '0.7rem';
-        this.content_meta_htmlElement.style.borderLeft = '0.3rem solid blue';
+        this.content_meta_htmlElement.style.borderLeft = '0.3rem solid ' + this.entity.getApp_typed().uiA.theme_meta;
         let hideButton : HTMLButtonElement = document.createElement('button');
         hideButton.onclick = async () => {
             await this.getUiA().hideMeta();
