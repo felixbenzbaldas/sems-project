@@ -3,6 +3,7 @@ import {assert, assert_notSameAs, assert_sameAs, assertFalse, notNullUndefined, 
 import type {Entity} from "@/Entity";
 import type {UiA} from "@/ui/UiA";
 import {Environment} from "@/Environment";
+import {testData} from "@/testData";
 
 export function test_ui_add(tests : TestG_NestedTestsA) {
     tests.addNestedTests('ui', uiTests => {
@@ -464,5 +465,24 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
             assert_sameAs(firstObject.text, 'foo');
             assert(run.appUi.content.listA.jsList.length === 2);
         });
+        uiTests.addNestedTests('theme', themes => {
+            themes.addUiTest('redOnYellow', async run => {
+                let createUi: () => Promise<HTMLElement> = async () => {
+                    let environment = new Environment();
+                    environment.jsonData = testData;
+                    environment.url = new URL('https://testdomain1.org');
+                    let appUi = (await environment.createApp().createStarter().createWebsite()).appA.uiA;
+                    await appUi.entity.uiA.update();
+                    let app = appUi.getApp();
+                    appUi.theme_backgroundColor = 'yellow';
+                    appUi.theme_fontColor = 'red';
+                    await appUi.entity.uiA.update();
+                    return appUi.entity.uiA.htmlElement;
+                }
+                let html = await run.app.createBoundEntity();
+                html.codeG_html = await createUi();
+                await run.appUi.content.listA.add(html);
+            });
+        })
     });
 }
