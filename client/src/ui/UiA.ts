@@ -272,7 +272,9 @@ export class UiA {
     async expandOrCollapse() {
         if (this.getObject().collapsible) {
             if (this.collapsed) {
-                await this.ensureExpanded();
+                if (await this.headerBodyG.hasBodyContent()) {
+                    await this.ensureExpanded();
+                }
             } else {
                 await this.ensureCollapsed();
             }
