@@ -20,12 +20,15 @@ export function test_add(tests : TestG_NestedTestsA) {
         let dependencyOfDependency = await run.app.createText('dependencyOfDependency');
         await object.listA.add(dependency);
         await dependency.listA.add(dependencyOfDependency);
+        let context = await run.app.createText('context');
+        object.context = object.getPath(context);
 
         let dependencies = await object.getDependencies();
 
-        assert_sameAs(dependencies.size, 2);
         assert(dependencies.has(dependency), 'has dependency');
         assert(dependencies.has(dependencyOfDependency));
+        assert(dependencies.has(context));
+        assert_sameAs(dependencies.size, 3);
     });
     tests.add('shallowCopy', async run => {
         let object = await run.app.createList();
@@ -314,5 +317,16 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs(object.name, undefined);
         assert_sameAs(object.container, undefined);
         assert_sameAs(object.app, run.app.entity);
+    });
+    tests.add('shakeTree', async run => {
+        let container = await run.app.createText('container');
+        container.installContainerA();
+        await container.containerA.createText('willBeRemoved');
+        container.installListA();
+        await container.listA.add(await container.containerA.createText('subitem'));
+
+        await container.containerA.shakeTree();
+
+        assert_sameAs(container.containerA.mapNameEntity.size, 1);
     });
 }

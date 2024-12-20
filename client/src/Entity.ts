@@ -166,16 +166,21 @@ export class Entity {
     }
 
     async addDependencies(set: Set<Entity>) {
+        let add = async (set: Set<Entity>, toAdd : Entity) => {
+            if (!set.has(toAdd)) {
+                set.add(toAdd);
+                await toAdd.addDependencies(set);
+            }
+        }
         if (this.listA) {
             for (let current of this.listA.jsList) {
                 if (current.pathA) {
-                    let currentObject = await current.pathA.resolve();
-                    if (!set.has(currentObject)) {
-                        set.add(currentObject);
-                        await currentObject.addDependencies(set);
-                    }
+                    await add(set, await current.pathA.resolve());
                 }
             }
+        }
+        if (this.context) {
+            await add(set, await this.context.pathA.resolve());
         }
     }
 

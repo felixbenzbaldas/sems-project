@@ -51,4 +51,13 @@ export class ContainerA {
         entity.container = this.entity;
         this.mapNameEntity.set(entity.name, entity);
     }
+
+    async shakeTree() {
+        let keep : Set<Entity> = await this.entity.getDependencies();
+        for (let contained of this.mapNameEntity.values()) {
+            if (!keep.has(contained)) {
+                contained.remove();
+            }
+        }
+    }
 }
