@@ -225,7 +225,9 @@ export class UiA {
 
     async cut() {
         let appUi = this.entity.getApp_typed().uiA;
-        this.textG.save();
+        if (nullUndefined(this.getObject().link)) {
+            this.textG.save();
+        }
         let obj = this.getObject();
         appUi.clipboard = obj;
         let uiContext = this.context;
