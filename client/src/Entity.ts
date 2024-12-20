@@ -400,4 +400,16 @@ export class Entity {
     hasUrl() {
         return notNullUndefined(this.getContainerWithFixedUrl());
     }
+
+    remove() {
+        if (this.container) {
+            this.container.containerA.mapNameEntity.delete(this.name);
+        }
+        let app = this.getApp();
+        let object : any = this;
+        for (let key of Object.keys(object)) {
+            object[key] = undefined;
+        }
+        this.app = app;
+    }
 }

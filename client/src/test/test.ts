@@ -298,4 +298,21 @@ export function test_add(tests : TestG_NestedTestsA) {
 
         assert_sameAs(url, 'https://testdomain6.org/?path=testName');
     });
+    tests.add('remove', async run => {
+        let container = await run.app.createText('container');
+        container.installContainerA();
+        let object = await container.containerA.createText('willBeRemoved');
+        object.installListA();
+        object.installContainerA();
+
+        object.remove();
+
+        assert_sameAs(container.containerA.mapNameEntity.size, 0);
+        assert_sameAs(object.containerA, undefined);
+        assert_sameAs(object.listA, undefined);
+        assert_sameAs(object.text, undefined);
+        assert_sameAs(object.name, undefined);
+        assert_sameAs(object.container, undefined);
+        assert_sameAs(object.app, run.app.entity);
+    });
 }
