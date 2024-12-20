@@ -1,5 +1,5 @@
 import {Entity} from "@/Entity";
-import {createRandomString} from "@/utils";
+import {createRandomString, nullUndefined} from "@/utils";
 
 export class ContainerA {
 
@@ -52,10 +52,14 @@ export class ContainerA {
         this.mapNameEntity.set(entity.name, entity);
     }
 
-    async shakeTree() {
-        let keep : Set<Entity> = await this.entity.getDependencies();
+    async shakeTree(keep? : Set<Entity>) {
+        if (nullUndefined(keep)) {
+            keep = await this.entity.getDependencies();
+        }
         for (let contained of this.mapNameEntity.values()) {
-            if (!keep.has(contained)) {
+            if (keep.has(contained)) {
+                await contained.containerA?.shakeTree(keep);
+            } else {
                 contained.remove();
             }
         }

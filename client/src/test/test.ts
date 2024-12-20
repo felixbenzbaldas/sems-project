@@ -321,12 +321,18 @@ export function test_add(tests : TestG_NestedTestsA) {
     tests.add('shakeTree', async run => {
         let container = await run.app.createText('container');
         container.installContainerA();
-        await container.containerA.createText('willBeRemoved');
+        await container.containerA.createText('will be removed');
         container.installListA();
-        await container.listA.add(await container.containerA.createText('subitem'));
+        let subitemAndContainer = await container.containerA.createText('subitem and container');
+        await container.listA.add(subitemAndContainer);
+        subitemAndContainer.installContainerA();
+        await subitemAndContainer.containerA.createText('will also be removed');
+        let containendContained = await subitemAndContainer.containerA.createText('contained contained');
+        await container.listA.add(containendContained);
 
         await container.containerA.shakeTree();
 
         assert_sameAs(container.containerA.mapNameEntity.size, 1);
+        assert_sameAs(subitemAndContainer.containerA.mapNameEntity.size, 1);
     });
 }
