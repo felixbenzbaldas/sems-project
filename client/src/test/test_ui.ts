@@ -404,7 +404,7 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
 
                 await ui.hideMeta();
 
-                assert(!ui.headerBodyG.bodyIsVisible());
+                assertFalse(ui.headerBodyG.bodyIsVisible());
             });
         });
         uiTests.addUiTest('setLink', async run => {
