@@ -404,4 +404,15 @@ export class UiA {
         await this.entity.getApp_typed().uiA.input.clear();
         await this.getObject().uis_update();
     }
+
+    async shakeTree() {
+        let obj = this.getObject();
+        if (obj.containerA) {
+            let before = obj.containerA.mapNameEntity.size;
+            await obj.containerA?.shakeTree();
+            this.entity.getApp_typed().uiA.signal('shaked the tree (deleted ' + (before - obj.containerA.mapNameEntity.size) + ' entities)');
+        } else {
+            this.entity.getApp_typed().uiA.signal('not a container');
+        }
+    }
 }

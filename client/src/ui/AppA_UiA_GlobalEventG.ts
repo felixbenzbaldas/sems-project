@@ -142,4 +142,8 @@ export class AppA_UiA_GlobalEventG {
     async setLink() {
         await this.getUiA().focused.uiA.setLink();
     }
+
+    async shakeTree() {
+        await this.getUiA().focused.uiA.shakeTree();
+    }
 }

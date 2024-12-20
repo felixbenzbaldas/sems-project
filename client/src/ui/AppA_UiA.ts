@@ -318,6 +318,9 @@ export class AppA_UiA {
             this.getApp().unboundG.createButton('toggle context', async () => {
                 await this.globalEventG.toggleContext();
             }),
+            this.getApp().unboundG.createButton('shake tree', async () => {
+                await this.globalEventG.shakeTree();
+            }),
             lowPriorityCommands
         );
     }
