@@ -132,7 +132,7 @@ export function test_semi_add(tests : TestG_NestedTestsA) {
                 html
             );
         }, animatedExpand => {
-            animatedExpand.addUiTest('toContentHeight', async run => {
+            animatedExpand.addUiTestWithNestedTests('toContentHeight', async run => {
                 let animatedExpandAndCollapse = new AnimatedExpandAndCollapse();
                 let html = run.app.createEntityWithApp();
                 html.codeG_html = animatedExpandAndCollapse.outerDiv;
@@ -153,6 +153,31 @@ export function test_semi_add(tests : TestG_NestedTestsA) {
                     }),
                     html
                 );
+            }, toContentHeight => {
+                toContentHeight.addUiTest('slowly', async run => {
+                    let animatedExpandAndCollapse = new AnimatedExpandAndCollapse();
+                    animatedExpandAndCollapse.basisAnimationTime = 1;
+                    animatedExpandAndCollapse.maxAnimationTime = 5;
+                    let html = run.app.createEntityWithApp();
+                    html.codeG_html = animatedExpandAndCollapse.outerDiv;
+                    animatedExpandAndCollapse.innerDiv.innerText = 'foo bar bar foo bar '.repeat(40);
+                    animatedExpandAndCollapse.innerDiv.contentEditable = 'true';
+                    run.appUi.content.listA.addDirect(
+                        run.app.unboundG.createButton('expand', async () => {
+                            await animatedExpandAndCollapse.expand();
+                        }),
+                        run.app.unboundG.createButton('collapse', async () => {
+                            await animatedExpandAndCollapse.collapse();
+                        }),
+                        run.app.unboundG.createButton('expand without animation', async () => {
+                            animatedExpandAndCollapse.expandWithoutAnimation();
+                        }),
+                        run.app.unboundG.createButton('collapse without animation', async () => {
+                            animatedExpandAndCollapse.collapseWithoutAnimation();
+                        }),
+                        html
+                    );
+                });
             });
         });
     });

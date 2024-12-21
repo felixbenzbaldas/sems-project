@@ -6,6 +6,7 @@ export class AnimatedExpandAndCollapse {
     innerDiv : HTMLDivElement;
     basisAnimationTime : number = 0.1;
     basisHeight : number = 60;
+    maxAnimationTime: number = 2;
 
     isCollapsedFlag : boolean;
     private isBusyFlag : boolean = false;
@@ -45,7 +46,7 @@ export class AnimatedExpandAndCollapse {
 
     private setEffectiveAnimationTime() {
         // let effectiveAnimationTime = this.basisAnimationTime * Math.pow(this.innerDiv.offsetHeight / this.basisHeight, 1 / 3);
-        let effectiveAnimationTime = Math.min(this.basisAnimationTime * this.innerDiv.offsetHeight / this.basisHeight, 2);
+        let effectiveAnimationTime = Math.min(this.basisAnimationTime * this.innerDiv.offsetHeight / this.basisHeight, this.maxAnimationTime);
         this.outerDiv.style.transitionDuration = effectiveAnimationTime + "s";
         return effectiveAnimationTime;
     }
