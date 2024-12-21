@@ -286,8 +286,8 @@ export class UiA {
 
     async ensureExpanded() {
         if (!this.headerBodyG.bodyIsVisible()) {
-            await this.headerG.updateBodyIcon();
             await this.bodyG.displayBody();
+            await this.headerG.updateBodyIcon();
         }
     }
 

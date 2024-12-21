@@ -12,6 +12,7 @@ export class UiA_BodyG {
     animatedExpandAndCollapse : AnimatedExpandAndCollapse = new AnimatedExpandAndCollapse();
 
     constructor(private entity: Entity) {
+        this.htmlElement.style.display = 'none';
     }
 
     async update() {
