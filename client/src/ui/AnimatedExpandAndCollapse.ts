@@ -4,12 +4,12 @@ import {wait} from "@/utils";
 export class AnimatedExpandAndCollapse {
     outerDiv : HTMLDivElement;
     innerDiv : HTMLDivElement;
-    basisAnimationTime : number = 0.1;
-    basisHeight : number = 60;
-    maxAnimationTime: number = 2;
+    basisAnimationTime_inSeconds : number = 0.1;
+    basisHeight_inPixel : number = 60;
+    maxAnimationTime_inSeconds: number = 2;
 
     isCollapsedFlag : boolean;
-    private isBusyFlag : boolean = false;
+    isBusyFlag : boolean = false;
 
     constructor() {
         this.outerDiv = document.createElement("div");
@@ -20,16 +20,6 @@ export class AnimatedExpandAndCollapse {
         this.outerDiv.style.transitionProperty = "height";
         this.outerDiv.style.transitionTimingFunction = "linear";
         this.isCollapsedFlag = true;
-    }
-
-    public isBusy() : boolean {
-        return this.isBusyFlag;
-    }
-
-    private checkBusy() {
-        if (this.isBusyFlag) {
-            throw 'Error in AnimatedExpandAndCollapse - instance is busy!';
-        }
     }
 
     async expand() {
@@ -46,7 +36,7 @@ export class AnimatedExpandAndCollapse {
 
     private setEffectiveAnimationTime() {
         // let effectiveAnimationTime = this.basisAnimationTime * Math.pow(this.innerDiv.offsetHeight / this.basisHeight, 1 / 3);
-        let effectiveAnimationTime = Math.min(this.basisAnimationTime * this.innerDiv.offsetHeight / this.basisHeight, this.maxAnimationTime);
+        let effectiveAnimationTime = Math.min(this.basisAnimationTime_inSeconds * this.innerDiv.offsetHeight / this.basisHeight_inPixel, this.maxAnimationTime_inSeconds);
         this.outerDiv.style.transitionDuration = effectiveAnimationTime + "s";
         return effectiveAnimationTime;
     }
@@ -76,5 +66,11 @@ export class AnimatedExpandAndCollapse {
         this.outerDiv.style.height = "0px";
         this.outerDiv.style.overflow = "hidden";
         this.isCollapsedFlag = true;
+    }
+
+    private checkBusy() {
+        if (this.isBusyFlag) {
+            throw new Error('busy!');
+        }
     }
 }

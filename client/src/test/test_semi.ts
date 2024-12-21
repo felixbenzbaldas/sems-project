@@ -156,8 +156,8 @@ export function test_semi_add(tests : TestG_NestedTestsA) {
             }, toContentHeight => {
                 toContentHeight.addUiTest('slowly', async run => {
                     let animatedExpandAndCollapse = new AnimatedExpandAndCollapse();
-                    animatedExpandAndCollapse.basisAnimationTime = 1;
-                    animatedExpandAndCollapse.maxAnimationTime = 5;
+                    animatedExpandAndCollapse.basisAnimationTime_inSeconds = 1;
+                    animatedExpandAndCollapse.maxAnimationTime_inSeconds = 5;
                     let html = run.app.createEntityWithApp();
                     html.codeG_html = animatedExpandAndCollapse.outerDiv;
                     animatedExpandAndCollapse.innerDiv.innerText = 'foo bar bar foo bar '.repeat(40);
