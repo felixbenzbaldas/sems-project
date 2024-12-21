@@ -1,5 +1,9 @@
 import type {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
-import {assert, assert_sameAs, assertFalse, downloadText, setWidth, textFileInput} from "@/utils";
+import {assert, assert_sameAs, assertFalse, downloadText, setWidth, textFileInput, wait} from "@/utils";
+import {Environment} from "@/Environment";
+import {testData} from "@/testData";
+import {Color} from "@/ui/Color";
+import {Font} from "@/ui/Font";
 
 export function test_semi_add(tests : TestG_NestedTestsA) {
     tests.addNestedTests('semi', semi => {
@@ -108,6 +112,24 @@ export function test_semi_add(tests : TestG_NestedTestsA) {
 
             appA.entity.log('human-action: write multiple lines in the text field');
             appA.entity.log('human-test: The text does not move.');
+        });
+        semi.addUiTest('animatedExpand', async run => {
+            let html = run.app.createEntityWithApp();
+            html.codeG_html = document.createElement('div');
+            html.codeG_html.style.backgroundColor = 'gold';
+            html.codeG_html.style.transitionProperty = 'height';
+            html.codeG_html.style.transitionDuration = '2s';
+            html.codeG_html.style.height = '50px';
+            html.codeG_html.style.width = '5rem';
+            run.appUi.content.listA.addDirect(
+                run.app.unboundG.createButton('expand', () => {
+                    html.codeG_html.style.height = '300px';
+                }),
+                run.app.unboundG.createButton('collapse', () => {
+                    html.codeG_html.style.height = '50px';
+                }),
+                html
+            );
         });
     });
 }
