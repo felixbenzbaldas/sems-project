@@ -524,6 +524,6 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
                 html.codeG_html = await createUi();
                 await run.appUi.content.listA.add(html);
             });
-        })
+        });
     });
 }
