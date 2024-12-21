@@ -15,7 +15,12 @@ export class UiA_BodyG {
     }
 
     async update() {
-        await this.ensureCollapsed();
+        if (!this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
+            this.htmlElement.innerHTML = null;
+            await this.displayBody();
+        } else {
+            await this.ensureCollapsed();
+        }
     }
 
     async ensureCollapsed() {
