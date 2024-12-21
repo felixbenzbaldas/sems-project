@@ -8,17 +8,6 @@ export class UiA_HeaderBodyG {
 
     async install() {
         let object = this.entity.uiA.getObject();
-        if (object.collapsible) {
-            if (object.testRunA) {
-                if (object.testRunA.resultG_success) {
-                    this.entity.uiA.collapsed = true;
-                } else {
-                    this.entity.uiA.collapsed = false;
-                }
-            } else {
-                this.entity.uiA.collapsed = true;
-            }
-        }
         if (object.isTest) {
             await this.entity.uiA.testG.update();
             await this.entity.uiA.headerG.update();
@@ -31,6 +20,9 @@ export class UiA_HeaderBodyG {
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
             await this.entity.uiA.bodyG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
+            if (!object.testRunA.resultG_success) {
+                await this.entity.uiA.ensureExpanded();
+            }
         } else {
             await this.entity.uiA.headerG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
@@ -44,18 +36,16 @@ export class UiA_HeaderBodyG {
     }
 
     async update_addedListItem(position: number) {
-        if (await this.showBody()) {
-            if (this.bodyIsVisible()) {
-                await this.entity.uiA.listG.update_addedListItem(position);
-            } else {
-                await this.entity.uiA.ensureExpanded();
-            }
+        if (this.bodyIsVisible()) {
+            await this.entity.uiA.listG.update_addedListItem(position);
+        } else {
+            await this.entity.uiA.ensureExpanded();
         }
         await this.entity.uiA.headerG.updateBodyIcon();
     }
 
     async update_removedListItem(position: number) {
-        if (await this.showBody()) {
+        if (await this.hasBodyContent()) {
             await this.entity.uiA.listG.update_removedListItem(position);
         } else {
             await this.entity.uiA.headerG.updateBodyIcon();
@@ -70,7 +60,7 @@ export class UiA_HeaderBodyG {
     async showBody() : Promise<boolean> {
         if (await this.hasBodyContent()) {
             if (this.getObject().collapsible) {
-                if (this.entity.uiA.collapsed) {
+                if (this.entity.uiA.isCollapsed()) {
                     return false;
                 } else {
                     return true;
@@ -99,7 +89,11 @@ export class UiA_HeaderBodyG {
     }
 
     bodyIsVisible() : boolean {
-        return this.entity.uiA.bodyG.htmlElement.style.display !== 'none';
+        if (notNullUndefined(this.entity.uiA.bodyG.htmlElement)) {
+            return this.entity.uiA.bodyG.htmlElement.style.display !== 'none';
+        } else {
+            return false;
+        }
     }
 
     hasAListItem() : boolean{

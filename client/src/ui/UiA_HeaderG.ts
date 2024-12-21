@@ -104,7 +104,7 @@ export class UiA_HeaderG {
             this.bodyIcon.style.width = '1.5rem';
             this.bodyIcon.style.textAlign = 'center';
             this.bodyIcon.style.marginLeft = '0.7rem';
-            if (this.entity.uiA.collapsed) {
+            if (this.entity.uiA.isCollapsed()) {
                 this.bodyIcon.innerText = '[...]';
             } else {
                 this.bodyIcon.innerText = '_';

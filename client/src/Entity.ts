@@ -62,7 +62,6 @@ export class Entity {
             text: this.text,
             list: this.listA?.json_withoutContainedObjects(),
             collapsible: this.collapsible,
-            collapsed: this.uiA?.collapsed,
             link: this.link,
             editable: this.editable,
             content: this.appA?.uiA?.content.json_withoutContainedObjects(),

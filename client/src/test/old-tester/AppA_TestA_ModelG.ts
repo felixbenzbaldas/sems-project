@@ -61,7 +61,7 @@ export class AppA_TestA_ModelG {
 
                 await app.uiA.click('clickMe');
 
-                return app.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.collapsed === false;
+                return app.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.isCollapsed() === false;
             }),
             this.createTest('modelTest_tester', async test => {
                 let tester = await this.entity.appA.createStarter().createTest();

@@ -19,7 +19,6 @@ export class UiA {
     testG: UiA_TestG;
     object: Entity;
     context: Entity;
-    collapsed: boolean;
     headerBodyG: UiA_HeaderBodyG;
     testRunG: UiA_TestRunG;
 
@@ -132,7 +131,7 @@ export class UiA {
                     await this.headerG.clickEvent();
                 }
             }
-            if (!this.collapsed && await this.headerBodyG.hasBodyContent()) {
+            if (!this.isCollapsed() && await this.headerBodyG.hasBodyContent()) {
                 await this.listG.click(text);
             }
         } else if (this.getObject().listA) {
@@ -151,7 +150,7 @@ export class UiA {
                     counter++;
                 }
             }
-            if (this.getObject().listA && !this.collapsed) {
+            if (this.getObject().listA && !this.isCollapsed()) {
                 counter += this.listG.countEditableTexts();
             }
             return counter;
@@ -273,7 +272,7 @@ export class UiA {
 
     async expandOrCollapse() {
         if (this.getObject().collapsible) {
-            if (this.collapsed) {
+            if (this.isCollapsed()) {
                 if (await this.headerBodyG.hasBodyContent()) {
                     await this.ensureExpanded();
                 }
@@ -287,15 +286,13 @@ export class UiA {
 
     async ensureExpanded() {
         if (!this.headerBodyG.bodyIsVisible()) {
-            this.collapsed = false;
             await this.headerG.updateBodyIcon();
             await this.bodyG.displayBody();
         }
     }
 
     async ensureCollapsed() {
-        this.collapsed = true; // TODO this flag is redundant
-        await this.bodyG.update();
+        await this.bodyG.ensureCollapsed();
         await this.headerG.updateBodyIcon();
     }
 
@@ -338,7 +335,7 @@ export class UiA {
                 await this.ensureCollapsed();
             }
         } else {
-            if (await this.headerBodyG.showBody()) {
+            if (await this.hasContextAsSubitem()) {
                 await this.ensureExpanded();
             }
         }
@@ -414,5 +411,9 @@ export class UiA {
         } else {
             this.entity.getApp_typed().uiA.signal('not a container');
         }
+    }
+
+    isCollapsed() : boolean {
+        return !this.headerBodyG.bodyIsVisible();
     }
 }

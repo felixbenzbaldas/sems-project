@@ -15,12 +15,12 @@ export class UiA_BodyG {
     }
 
     async update() {
+        await this.ensureCollapsed();
+    }
+
+    async ensureCollapsed() {
         this.htmlElement.innerHTML = null;
-        if (!this.entity.uiA.collapsed && await this.getUiA().headerBodyG.hasBodyContent()) {
-            await this.displayBody();
-        } else {
-            this.htmlElement.style.display = 'none';
-        }
+        this.htmlElement.style.display = 'none';
     }
 
     async displayBody() {
@@ -84,7 +84,7 @@ export class UiA_BodyG {
         if (this.getObject().isTest) {
             return this.getUiA().testG.bodyContent.uiA.getRawText();
         } else if (this.getObject().listA && !this.getObject().testRunA) {
-            if (this.getUiA().collapsed) {
+            if (this.getUiA().isCollapsed()) {
                 return '';
             } else {
                 return this.getUiA().listG.getRawText();

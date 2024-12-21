@@ -12,13 +12,11 @@ export class UiA_ListG {
     }
 
     async update() {
-        if (!this.entity.uiA.collapsed) {
-            this.htmlElement.innerHTML = null;
-            this.htmlElement.style.display = 'flex';
-            this.htmlElement.style.flexWrap = 'wrap';
-            this.htmlElement.style.rowGap = '0.25rem';
-            await this.updateUisOfListItems();
-        }
+        this.htmlElement.innerHTML = null;
+        this.htmlElement.style.display = 'flex';
+        this.htmlElement.style.flexWrap = 'wrap';
+        this.htmlElement.style.rowGap = '0.25rem';
+        await this.updateUisOfListItems();
     }
 
     private async updateUisOfListItems() {

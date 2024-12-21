@@ -169,11 +169,11 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
                 subject.context = subject.getPath(oldContext);
                 let uiSubject = run.appUi.createUiFor_typed(subject);
                 await uiSubject.update();
-                assertFalse(uiSubject.collapsed);
+                assertFalse(uiSubject.isCollapsed());
 
                 await uiSubject.toggleContext();
 
-                assert(uiSubject.collapsed);
+                assert(uiSubject.isCollapsed());
             }, whenOutOfContext => {
                 whenOutOfContext.addUiTest('withSubitem', async run => {
                     let subject = await run.app.createText('subject');
@@ -186,7 +186,7 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
 
                     await uiSubject.toggleContext();
 
-                    assertFalse(uiSubject.collapsed);
+                    assertFalse(uiSubject.isCollapsed());
                     assert_sameAs(uiSubject.bodyG.content_contextAsSubitem_htmlElement.innerHTML, '');
                 });
                 whenOutOfContext.addUiTest('andCollapsible', async run => {
@@ -196,12 +196,12 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
                     subject.collapsible = true;
                     let uiSubject = run.appUi.createUiFor_typed(subject);
                     await uiSubject.update();
-                    assert(uiSubject.collapsed);
+                    assert(uiSubject.isCollapsed());
                     assert_sameAs(uiSubject.headerG.divForContentAndBodyIcon.style.cursor, 'pointer');
 
                     await uiSubject.toggleContext();
 
-                    assert(uiSubject.collapsed);
+                    assert(uiSubject.isCollapsed());
                     assert_sameAs(uiSubject.headerG.divForContentAndBodyIcon.style.cursor, 'default');
 
                 });
@@ -267,7 +267,7 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
                 let ui = outerRun.appUi.createUiFor_typed(run);
                 await ui.update();
 
-                assert(ui.collapsed);
+                assert(ui.isCollapsed());
             }, (runTest) => {
                 runTest.addUiTest('failingNestedTest', async outerRun => {
                     let dummyTest = outerRun.app.entity.createCode('dummyTest', () => {
@@ -280,7 +280,7 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
                     let ui = outerRun.appUi.createUiFor_typed(run);
                     await ui.update();
 
-                    assertFalse(ui.collapsed);
+                    assertFalse(ui.isCollapsed());
                 });
             });
         });
@@ -438,7 +438,7 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
 
             await run.appUi.globalEventG.expandOrCollapse();
 
-            assert(firstObjectUi.uiA.collapsed);
+            assert(firstObjectUi.uiA.isCollapsed());
         });
         uiTests.addUiTest('createUiFor', async run => {
             let object = run.app.unboundG.createText('');
