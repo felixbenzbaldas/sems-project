@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import type {UiA} from "@/ui/UiA";
+import {AnimatedExpandAndCollapse} from "@/ui/AnimatedExpandAndCollapse";
 
 // TODO the body aspect should only exist if showBody === true
 export class UiA_BodyG {
@@ -8,6 +9,7 @@ export class UiA_BodyG {
     content_htmlElement : HTMLElement;
     content_contextAsSubitem_htmlElement : HTMLElement = document.createElement('div');
     content_meta_htmlElement : HTMLElement = document.createElement('div');
+    animatedExpandAndCollapse : AnimatedExpandAndCollapse = new AnimatedExpandAndCollapse();
 
     constructor(private entity: Entity) {
     }
@@ -24,10 +26,12 @@ export class UiA_BodyG {
     async displayBody() {
         this.htmlElement.style.display = 'block';
         await this.content_update();
-        this.htmlElement.appendChild(this.content_htmlElement);
-        this.htmlElement.style.paddingLeft = '0.8rem';
-        this.htmlElement.style.paddingTop = '0.2rem';
-        this.htmlElement.style.paddingBottom = '0.2rem';
+        this.htmlElement.appendChild(this.animatedExpandAndCollapse.outerDiv);
+        this.animatedExpandAndCollapse.innerDiv.appendChild(this.content_htmlElement);
+        this.animatedExpandAndCollapse.innerDiv.style.paddingLeft = '0.8rem';
+        this.animatedExpandAndCollapse.innerDiv.style.paddingTop = '0.2rem';
+        this.animatedExpandAndCollapse.innerDiv.style.paddingBottom = '0.2rem';
+        this.animatedExpandAndCollapse.expandWithoutAnimation();
     }
 
     async content_update() {
