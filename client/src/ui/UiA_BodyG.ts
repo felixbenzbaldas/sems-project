@@ -15,6 +15,20 @@ export class UiA_BodyG {
         this.htmlElement.style.display = 'none';
     }
 
+    async expandWithAnimation() {
+        this.htmlElement.innerHTML = null;
+        this.htmlElement.style.display = 'block';
+        await this.content_update();
+        this.animatedExpandAndCollapse = new AnimatedExpandAndCollapse();
+        this.htmlElement.appendChild(this.animatedExpandAndCollapse.outerDiv);
+        this.animatedExpandAndCollapse.innerDiv.innerHTML = null;
+        this.animatedExpandAndCollapse.innerDiv.appendChild(this.content_htmlElement);
+        this.animatedExpandAndCollapse.innerDiv.style.paddingLeft = '0.8rem';
+        this.animatedExpandAndCollapse.innerDiv.style.paddingTop = '0.2rem';
+        this.animatedExpandAndCollapse.innerDiv.style.paddingBottom = '0.2rem';
+        await this.animatedExpandAndCollapse.expand();
+    }
+
     async update() {
         if (!this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
             this.htmlElement.innerHTML = null;

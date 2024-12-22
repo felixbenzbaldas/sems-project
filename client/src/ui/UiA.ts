@@ -274,7 +274,8 @@ export class UiA {
         if (this.getObject().collapsible) {
             if (this.isCollapsed()) {
                 if (await this.headerBodyG.hasBodyContent()) {
-                    await this.ensureExpanded();
+                    let promise = this.bodyG.expandWithAnimation();
+                    await this.headerG.updateBodyIcon();
                 }
             } else {
                 await this.ensureCollapsed();
