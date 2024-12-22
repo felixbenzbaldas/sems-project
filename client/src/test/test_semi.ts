@@ -179,6 +179,16 @@ export function test_semi_add(tests : TestG_NestedTestsA) {
                     );
                 });
             });
+            animatedExpand.addUiTest('object', async run => {
+                await run.appUi.globalEventG.newSubitem();
+                await run.appUi.globalEventG.newSubitem();
+                for (let i = 0; i < 15; i++) {
+                    await run.appUi.globalEventG.defaultAction();
+                }
+                let parent = (await run.appUi.content.listA.getResolved(0)).getObject();
+                parent.collapsible = true;
+                await parent.uis_update_collapsible();
+            });
         });
     });
 }
