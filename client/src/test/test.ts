@@ -329,10 +329,13 @@ export function test_add(tests : TestG_NestedTestsA) {
         await subitemAndContainer.containerA.createText('will also be removed');
         let containendContained = await subitemAndContainer.containerA.createText('contained contained');
         await container.listA.add(containendContained);
+        let standaloneContainer = await container.containerA.createText('standalone container');
+        standaloneContainer.installContainerA();
 
         await container.containerA.shakeTree();
 
-        assert_sameAs(container.containerA.mapNameEntity.size, 1);
+        assert(container.containerA.mapNameEntity.has(standaloneContainer.name));
+        assert_sameAs(container.containerA.mapNameEntity.size, 2);
         assert_sameAs(subitemAndContainer.containerA.mapNameEntity.size, 1);
     });
 }

@@ -57,10 +57,12 @@ export class ContainerA {
             keep = await this.entity.getDependencies();
         }
         for (let contained of this.mapNameEntity.values()) {
-            if (keep.has(contained)) {
+            if (contained.containerA) {
                 await contained.containerA?.shakeTree(keep);
             } else {
-                contained.remove();
+                if (!keep.has(contained)) {
+                    contained.remove();
+                }
             }
         }
     }
