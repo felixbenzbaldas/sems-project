@@ -29,6 +29,13 @@ export class UiA_BodyG {
         await this.animatedExpandAndCollapse.expand();
     }
 
+    async collapseWithAnimation() {
+        await this.animatedExpandAndCollapse.collapse().then(() => {
+            this.htmlElement.innerHTML = null;
+            this.htmlElement.style.display = 'none';
+        });
+    }
+
     async update() {
         if (!this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
             this.htmlElement.innerHTML = null;

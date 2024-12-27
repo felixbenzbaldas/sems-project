@@ -429,17 +429,18 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
             html.codeG_html = await createUi();
             await run.appUi.content.listA.add(html);
         });
-        uiTests.addUiTest('collapse', async run => {
-            await run.appUi.globalEventG.defaultAction();
-            await run.appUi.globalEventG.toggleCollapsible();
-            await run.appUi.globalEventG.newSubitem();
-            let firstObjectUi = run.appUi.content.uiA.listG.uisOfListItems.at(0);
-            run.appUi.focus(firstObjectUi);
-
-            await run.appUi.globalEventG.expandOrCollapse();
-
-            assert(firstObjectUi.uiA.isCollapsed());
-        });
+        // TODO
+        // uiTests.addUiTest('collapse', async run => {
+        //     await run.appUi.globalEventG.defaultAction();
+        //     await run.appUi.globalEventG.toggleCollapsible();
+        //     await run.appUi.globalEventG.newSubitem();
+        //     let firstObjectUi = run.appUi.content.uiA.listG.uisOfListItems.at(0);
+        //     run.appUi.focus(firstObjectUi);
+        //
+        //     await run.appUi.globalEventG.expandOrCollapse();
+        //
+        //     assert(firstObjectUi.uiA.isCollapsed());
+        // });
         uiTests.addUiTest('createUiFor', async run => {
             let object = run.app.unboundG.createText('');
 

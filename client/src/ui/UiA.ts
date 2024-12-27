@@ -274,15 +274,26 @@ export class UiA {
         if (this.getObject().collapsible) {
             if (this.isCollapsed()) {
                 if (await this.headerBodyG.hasBodyContent()) {
-                    let promise = this.bodyG.expandWithAnimation();
-                    await this.headerG.updateBodyIcon();
+                    await this.expandWithAnimation();
                 }
             } else {
-                await this.ensureCollapsed();
+                this.collapseWithAnimation();
             }
         } else {
             this.entity.log('warning: not collapsible!');
         }
+    }
+
+    collapseWithAnimation() {
+        let promise = this.bodyG.collapseWithAnimation();
+        promise.then(async () => {
+            await this.headerG.updateBodyIcon();
+        });
+    }
+
+    async expandWithAnimation() {
+        let promise = this.bodyG.expandWithAnimation();
+        await this.headerG.updateBodyIcon();
     }
 
     async ensureExpanded() {
