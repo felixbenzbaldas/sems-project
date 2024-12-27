@@ -405,7 +405,7 @@ export class Entity {
         return notNullUndefined(this.getContainerWithFixedUrl());
     }
 
-    remove() {
+    delete() {
         if (this.container) {
             this.container.containerA.mapNameEntity.delete(this.name);
         }

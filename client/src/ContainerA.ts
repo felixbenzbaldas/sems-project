@@ -52,16 +52,19 @@ export class ContainerA {
         this.mapNameEntity.set(entity.name, entity);
     }
 
-    async shakeTree(keep? : Set<Entity>) {
-        if (nullUndefined(keep)) {
-            keep = await this.entity.getDependencies();
-        }
+    async shakeTree() {
+        let keep = await this.entity.getDependencies();
+        await this.shakeTree_delete(keep);
+    }
+
+    // note: containers will not be deleted
+    async shakeTree_delete(keep : Set<Entity>) {
         for (let contained of this.mapNameEntity.values()) {
             if (contained.containerA) {
-                await contained.containerA?.shakeTree(keep);
+                await contained.containerA?.shakeTree_delete(keep);
             } else {
                 if (!keep.has(contained)) {
-                    contained.remove();
+                    contained.delete();
                 }
             }
         }

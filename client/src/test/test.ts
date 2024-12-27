@@ -301,14 +301,14 @@ export function test_add(tests : TestG_NestedTestsA) {
 
         assert_sameAs(url, 'https://testdomain6.org/?path=testName');
     });
-    tests.add('remove', async run => {
+    tests.add('delete', async run => {
         let container = await run.app.createText('container');
         container.installContainerA();
-        let object = await container.containerA.createText('willBeRemoved');
+        let object = await container.containerA.createText('willBeDeleted');
         object.installListA();
         object.installContainerA();
 
-        object.remove();
+        object.delete();
 
         assert_sameAs(container.containerA.mapNameEntity.size, 0);
         assert_sameAs(object.containerA, undefined);
