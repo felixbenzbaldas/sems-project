@@ -338,4 +338,18 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs(container.containerA.mapNameEntity.size, 2);
         assert_sameAs(subitemAndContainer.containerA.mapNameEntity.size, 1);
     });
+    tests.addNestedTests('container', containerTests => {
+        containerTests.add('countWithNestedEntities', async run => {
+            let container = await run.app.createText('container');
+            container.installContainerA();
+            let nestedContainer = await container.containerA.createText('nested');
+            nestedContainer.installContainerA();
+            await nestedContainer.containerA.createText('nestedNested');
+            await nestedContainer.containerA.createText('nestedNested2');
+
+            let count = container.containerA.countWithNestedEntities();
+
+            assert_sameAs(count, 3);
+        });
+    });
 }

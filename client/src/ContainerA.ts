@@ -69,4 +69,14 @@ export class ContainerA {
             }
         }
     }
+
+    countWithNestedEntities() : number {
+        let count = this.mapNameEntity.size;
+        for (let contained of this.mapNameEntity.values()) {
+            if (contained.containerA) {
+                count += contained.containerA.countWithNestedEntities();
+            }
+        }
+        return count;
+    }
 }

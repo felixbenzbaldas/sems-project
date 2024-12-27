@@ -417,9 +417,9 @@ export class UiA {
     async shakeTree() {
         let obj = this.getObject();
         if (obj.containerA) {
-            let before = obj.containerA.mapNameEntity.size;
-            await obj.containerA?.shakeTree();
-            this.entity.getApp_typed().uiA.signal('shaked the tree (deleted ' + (before - obj.containerA.mapNameEntity.size) + ' entities)');
+            let before = obj.containerA.countWithNestedEntities();
+            await obj.containerA.shakeTree();
+            this.entity.getApp_typed().uiA.signal('shaked the tree (deleted ' + (before - obj.containerA.countWithNestedEntities()) + ' entities)');
         } else {
             this.entity.getApp_typed().uiA.signal('not a container');
         }
