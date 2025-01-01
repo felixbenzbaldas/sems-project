@@ -22,7 +22,6 @@ export class AppA_TesterA {
         let tests = test.testG_nestedTestsA;
         if (tester.appA.environment.url.searchParams.has('withFailingDemoTest')) {
             tests.add_withoutApp('failingDemoTest', async run => {
-                run.appUi = tester.appA.createStarter().createAppWithUIWithCommands_editable().appA.uiA;
                 assert(false);
             });
         }

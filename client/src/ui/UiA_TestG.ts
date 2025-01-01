@@ -21,10 +21,6 @@ export class UiA_TestG {
         this.headerContent_htmlElement.appendChild(this.getUiA().textG.htmlElement);
     }
 
-    async click(text : string) {
-        await this.bodyContent.uiA.click(text);
-    }
-
     private async updateBodyContent() {
         let appA = this.entity.getApp().appA;
         this.bodyContent = appA.unboundG.createList();

@@ -22,13 +22,13 @@ export class UiA_TextG {
             await this.getObject().uis_update_text();
         }
         this.htmlElement.onfocus = () => {
-            if (this.entity.getApp().appA.uiA.focused != this.entity) {
-                this.entity.getApp().appA.uiA.focus(this.entity);
+            if (this.getUiA().findAppUi().focused != this.entity) {
+                this.getUiA().findAppUi().focus(this.entity);
             }
             this.updateEmptyMarker();
         };
         this.htmlElement.onclick = (event) => {
-            this.entity.getApp().appA.ensureActive();
+            this.getUiA().findAppUi().ensureActive();
             if (this.getUiA().isEditable()) {
                 event.stopPropagation();
             }

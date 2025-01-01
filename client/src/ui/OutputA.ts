@@ -9,14 +9,18 @@ export class OutputA {
     private readonly outputDownload : Entity;
 
     constructor(private entity : Entity) {
-        this.output = this.entity.appA.unboundG.createText('There is no output. Click on \'export\'');
-        this.outputDownload = this.entity.appA.createEntityWithApp();
+        let app = this.entity.getApp_typed();
+        this.output = app.unboundG.createText('There is no output. Click on \'export\'');
+        this.outputDownload = app.createEntityWithApp();
         this.outputDownload.codeG_html = document.createElement('div');
         this.outputDownload.codeG_html.style.margin = '0.5rem';
-        this.ui = this.entity.appA.unboundG.createTextWithList('output', this.outputDownload, this.entity.appA.unboundG.createButton('select', () => {
-            selectAllTextOfDiv(this.ui.uiA.listG.uisOfListItems.at(2).uiA.textG.htmlElement);
-        }), this.output);
+        this.ui = app.unboundG.createTextWithList('output',
+            this.outputDownload,
+            app.unboundG.createButton('select', () => {
+                selectAllTextOfDiv(this.ui.uiA.listG.uisOfListItems.at(2).uiA.textG.htmlElement);
+            }), this.output);
         this.ui.uiA = new UiA(this.ui);
+        this.ui.uiA.context = entity;
         this.ui.collapsible = true;
     }
 
@@ -31,4 +35,5 @@ export class OutputA {
     getUi() : Entity {
         return this.ui;
     }
+
 }

@@ -4,7 +4,7 @@ import {AppA} from "@/AppA";
 import {AppA_TestA} from "@/test/old-tester/AppA_TestA";
 import {UiA} from "@/ui/UiA";
 import {Environment} from "@/Environment";
-import {notNullUndefined, nullUndefined} from "@/utils";
+import {nullUndefined} from "@/utils";
 import {StarterA_FullStartG} from "@/StarterA_FullStartG";
 import {Color} from "@/ui/Color";
 import {Font} from "@/ui/Font";
@@ -89,21 +89,21 @@ export class StarterA {
         return this.createAppWithUI().appA.uiA;
     }
 
-    async createAppWithUIWithCommands_editable_updateUi() : Promise<Entity> {
-        this.createAppWithUIWithCommands_editable();
-        await this.createdApp.uiA.update();
-        return this.createdApp;
-    }
-
-
-    createAppWithUIWithCommands_editable() : Entity {
-        this.createAppWithUI();
-        this.createdApp.uiA.editable = true;
-        this.createdApp.appA.uiA.showMeta = true;
-        this.createdApp.appA.uiA.commands = this.createdApp.appA.uiA.createCommands();
-        this.createdApp.appA.uiA.commands.uiA = new UiA(this.createdApp.appA.uiA.commands);
-        return this.createdApp;
-    }
+    // async createAppWithUIWithCommands_editable_updateUi() : Promise<Entity> {
+    //     this.createAppWithUIWithCommands_editable();
+    //     await this.createdApp.uiA.update();
+    //     return this.createdApp;
+    // }
+    //
+    //
+    // createAppWithUIWithCommands_editable() : Entity {
+    //     this.createAppWithUI();
+    //     this.createdApp.uiA.editable = true;
+    //     this.createdApp.appA.uiA.showMeta = true;
+    //     this.createdApp.appA.uiA.commands = this.createdApp.appA.uiA.createCommands();
+    //     this.createdApp.appA.uiA.commands.uiA = new UiA(this.createdApp.appA.uiA.commands);
+    //     return this.createdApp;
+    // }
 
     async createTest() : Promise<Entity> {
         this.createAppWithUI();
@@ -153,17 +153,6 @@ export class StarterA {
         }
     }
 
-    async createObjectViewer(pathString: string) : Promise<Entity> {
-        this.createAppWithUI();
-        this.createData();
-        this.themeElegant();
-        let listOfNames = ['..', this.data.name, ...pathString.split('-')];
-        await this.createdApp.appA.uiA.content.listA.addByListOfNames(listOfNames);
-        await this.createdApp.updateUi();
-        await this.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
-        return this.createdApp;
-    }
-
     createData() {
         this.data = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
         this.createdApp.containerA.bind(this.data, 'data');
@@ -172,18 +161,11 @@ export class StarterA {
     async createUnboundWebMeta() : Promise<Entity> {
         let unboundData = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
         let unboundWebMeta = await (await (await unboundData.listA.getResolved(0)).listA.findByText('webMeta')).listA.getResolved(0);
-        unboundWebMeta.uiA = new UiA(unboundWebMeta);
         return unboundWebMeta;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
     // static methods
-
-    static async createAppWithUIWithCommands_editable_updateUi() {
-        let starter = new Environment().createApp().createStarter();
-        await starter.createAppWithUIWithCommands_editable_updateUi();
-        return starter.createdApp;
-    }
 
     static createApp() {
         return new Environment().createApp();

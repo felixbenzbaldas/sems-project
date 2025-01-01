@@ -1,57 +1,58 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
 
-export class AppA_UiA_KeyG {
+export class UiA_AppA_KeyG {
 
     map : Map<string, (keyboardEvent : KeyboardEvent) => Promise<void>> = new Map();
 
-    constructor(private entity: Entity) {
+    constructor(public entity: Entity) {
         this.map.set('Enter', async keyboardEvent => {
-            this.entity.appA.uiA.focused.uiA.textG.save();
-            await this.entity.appA.uiA.globalEventG.defaultAction();
+            this.entity.log('Enter');
+            // this.entity.uiA.appA.focused.uiA.textG.save();
+            await this.entity.uiA.appA.globalEventG.defaultAction();
         });
         this.map.set('alt+Enter', async keyboardEvent => {
-            this.entity.appA.uiA.focused.uiA.textG.save();
-            await this.entity.appA.uiA.globalEventG.newSubitem();
+            this.entity.uiA.appA.focused.uiA.textG.save();
+            await this.entity.uiA.appA.globalEventG.newSubitem();
         });
         this.map.set('ctrl+f', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.toggleCollapsible();
+            await this.entity.uiA.appA.globalEventG.toggleCollapsible();
         });
         this.map.set('ctrl+f', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.toggleCollapsible();
+            await this.entity.uiA.appA.globalEventG.toggleCollapsible();
         });
         this.map.set('ctrl+e', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.scaleDown();
+            await this.entity.uiA.appA.globalEventG.scaleDown();
         });
         this.map.set('ctrl+d', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.scaleUp();
+            await this.entity.uiA.appA.globalEventG.scaleUp();
         });
         this.map.set('ctrl+g', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.toggleContext();
+            await this.entity.uiA.appA.globalEventG.toggleContext();
         });
         this.map.set('ctrl+shift+X', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.cut();
+            await this.entity.uiA.appA.globalEventG.cut();
         });
         this.map.set('ctrl+shift+V', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.paste();
+            await this.entity.uiA.appA.globalEventG.paste();
         });
         this.map.set('F3', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.pasteNext();
+            await this.entity.uiA.appA.globalEventG.pasteNext();
         });
         this.map.set('ctrl+shift+D', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.mark();
+            await this.entity.uiA.appA.globalEventG.mark();
         });
         this.map.set('F11', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.load();
+            await this.entity.uiA.appA.globalEventG.load();
         });
         this.map.set('ctrl+o', async keyboardEvent => {
-            await this.entity.appA.uiA.globalEventG.focusUiContext();
+            await this.entity.uiA.appA.globalEventG.focusUiContext();
         });
     }
 
     async keyboardEvent(keyboardEvent: KeyboardEvent) {
         let compareString = this.createCompareString(keyboardEvent);
-        if (this.entity.appA.testMode) {
+        if (this.entity.getApp_typed().testMode) {
             this.entity.logInfo(compareString);
         }
         if (this.map.has(compareString)) {

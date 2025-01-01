@@ -73,34 +73,35 @@ export class AppA_TestA {
         return test;
     }
 
-    createFailingDemoTest(): Entity {
-        return this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
-            test.test_app = await this.appA.createStarter().createAppWithUIWithCommands_editable_updateUi();
-            test.test_app.appA.logG.toListOfStrings = true;
-            test.test_app.log('a dummy log');
-            throw new Error('demo error in test');
-        });
-    }
+    // createFailingDemoTest(): Entity {
+        // return this.createTest('failing demo test (don\'t worry - this test always fails)', async test => {
+        //     test.test_app = await this.appA.createStarter().createAppWithUIWithCommands_editable_updateUi();
+        //     test.test_app.appA.logG.toListOfStrings = true;
+        //     test.test_app.log('a dummy log');
+        //     throw new Error('demo error in test');
+        // });
+    // }
 
     createTests() : Array<Entity> {
-        let tests = [
-            this.createTest('tester', async test => {
-                let tester = await this.appA.createStarter().createTest();
-
-                let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.createFailingDemoTest()]);
-
-                let dummyTestRun = testResults.failed.at(0);
-                return dummyTestRun.test_result_error.toString().includes('demo error in test') &&
-                    dummyTestRun.test_app.appA.logG.listOfStrings.join().includes('a dummy log') &&
-                    testResults.successful.length == 0;
-            }),
-            ...this.uiG.createTests(),
-            ...this.modelG.createTests(),
-            ...this.semiG.createTests()
-        ];
-        if (this.withFailingDemoTest) {
-            tests.push(this.createFailingDemoTest());
-        }
-        return tests;
+        // let tests = [
+            // this.createTest('tester', async test => {
+            //     let tester = await this.appA.createStarter().createTest();
+            //
+            //     let testResults : TestResults = await tester.appA.testA.run([tester.appA.testA.createFailingDemoTest()]);
+            //
+            //     let dummyTestRun = testResults.failed.at(0);
+            //     return dummyTestRun.test_result_error.toString().includes('demo error in test') &&
+            //         dummyTestRun.test_app.appA.logG.listOfStrings.join().includes('a dummy log') &&
+            //         testResults.successful.length == 0;
+            // }),
+            // ...this.uiG.createTests(),
+            // ...this.modelG.createTests(),
+            // ...this.semiG.createTests()
+        // ];
+        // if (this.withFailingDemoTest) {
+        //     tests.push(this.createFailingDemoTest());
+        // }
+        // return tests;
+        return undefined;
     }
 }

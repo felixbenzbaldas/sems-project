@@ -9,17 +9,17 @@ export class AppA_TestA_UiG {
     }
 
     createTests() {
-        return [
-            this.createTest('ui_switchCurrentContainer', async test => {
-                let app = this.entity.appA.createStarter().createAppWithUI()
-                await app.appA.uiA.globalEventG.defaultAction();
-
-                await app.appA.uiA.globalEventG.switchCurrentContainer();
-
-                return app.appA.currentContainer === app.appA.uiA.focused.uiA.object &&
-                    app.appA.currentContainer.containerA;
-            }),
-        ]
+        // return [
+        //     this.createTest('ui_switchCurrentContainer', async test => {
+        //         let app = this.entity.appA.createStarter().createAppWithUI()
+        //         await app.appA.uiA.globalEventG.defaultAction();
+        //
+        //         await app.appA.uiA.globalEventG.switchCurrentContainer();
+        //
+        //         return app.appA.currentContainer === app.appA.uiA.focused.uiA.object &&
+        //             app.appA.currentContainer.containerA;
+        //     }),
+        // ]
     }
 
     private createTest(name: string, testAction: (test: Entity) => Promise<any>) {

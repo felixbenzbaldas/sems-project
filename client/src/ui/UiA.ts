@@ -7,6 +7,7 @@ import {UiA_HeaderG} from "@/ui/UiA_HeaderG";
 import {UiA_TestG} from "@/ui/UiA_TestG";
 import {UiA_HeaderBodyG} from "@/ui/UiA_HeaderBodyG";
 import {UiA_TestRunG} from "@/ui/UiA_TestRunG";
+import {UiA_AppA} from "@/ui/UiA_AppA";
 
 export class UiA {
 
@@ -21,6 +22,10 @@ export class UiA {
     context: Entity;
     headerBodyG: UiA_HeaderBodyG;
     testRunG: UiA_TestRunG;
+    appA : UiA_AppA;
+    installAppUi() {
+        this.appA = new UiA_AppA(this.entity);
+    }
 
     constructor(public entity : Entity) {
         this.headerBodyG = new UiA_HeaderBodyG(entity);
@@ -36,10 +41,13 @@ export class UiA {
         this.resetHtmlElement();
         if (this.getObject().codeG_html) {
             this.htmlElement.appendChild(this.getObject().codeG_html);
-        } else if (this.entity.appA?.uiA) {
-            await this.entity.appA.uiA.update();
+        } else if (this.getObject().appA) {
             this.htmlElement.style.height = '100%';
-            this.htmlElement.appendChild(this.entity.appA.uiA.htmlElement);
+            if (nullUndefined(this.appA)) {
+                this.installAppUi();
+            }
+            await this.appA.update();
+            this.htmlElement.appendChild(this.appA.htmlElement);
         } else if (this.isHeaderBody()) {
             await this.headerBodyG.install();
         } else if (this.isPlainList()) {
@@ -88,21 +96,6 @@ export class UiA {
         }
     }
 
-    getRawText() : string {
-        this.entity.log('getRawText');
-        if (this.getObject().codeG_html) {
-            return '';
-        } else if (this.entity.appA?.uiA) {
-            return this.entity.appA.uiA.getRawText();
-        } else if (this.isHeaderBody()) {
-            return this.headerBodyG.getRawText();
-        } else if (this.isPlainList()) {
-            return this.listG.getRawText();
-        } else {
-            return this.getObject().getDescription();
-        }
-    }
-
     getObject() : Entity {
         if (this.object) {
             return this.object;
@@ -111,55 +104,9 @@ export class UiA {
         }
     }
 
-    async click(text : string) {
-        this.entity.log('click ' + text);
-        if (this.entity.appA?.uiA) {
-            await this.entity.appA.uiA.click(text);
-        } else if (this.getObject().isTest) {
-            await this.testG.click(text);
-        } else if (this.getObject().testRunA) {
-            await this.testRunG.bodyContent.uiA.click(text);
-        } else if (this.getObject().action) {
-            if (this.getObject().text.includes(text)) {
-                await this.getObject().action();
-            }
-        } else if (notNullUndefined(this.getObject().text)) {
-            if (this.getObject().text.includes(text)) {
-                if (this.isEditable()) {
-                    this.entity.getApp().appA.uiA.focus(this.entity);
-                } else {
-                    await this.headerG.clickEvent();
-                }
-            }
-            if (!this.isCollapsed() && await this.headerBodyG.hasBodyContent()) {
-                await this.listG.click(text);
-            }
-        } else if (this.getObject().listA) {
-            await this.listG.click(text);
-        }
-    }
-
-    countEditableTexts() : number {
-        this.entity.log('countEditableTexts');
-        if (this.entity.appA?.uiA) {
-            return this.entity.appA.uiA.countEditableTexts();
-        } else {
-            let counter = 0;
-            if (notNullUndefined(this.getObject().text)) {
-                if (this.isEditable()) {
-                    counter++;
-                }
-            }
-            if (this.getObject().listA && !this.isCollapsed()) {
-                counter += this.listG.countEditableTexts();
-            }
-            return counter;
-        }
-    }
-
     updateFocusStyle() {
-        if (this.entity.appA?.uiA) {
-            this.entity.appA.uiA.focusStyle_update();
+        if (this.appA) {
+            this.appA.focusStyle_update();
         } else {
             this.headerG.focusStyle_update();
         }
@@ -174,14 +121,12 @@ export class UiA {
     }
 
     hasFocus() {
-        return this.entity.getApp().appA.uiA.focused === this.entity;
+        return this.findAppUi()?.focused === this.entity;
     }
 
     async defaultAction() {
-        if (this.entity.appA?.uiA) {
-            await this.entity.appA.uiA.newSubitem();
-        } else if (this.entity.action) {
-            throw 'not implemented yet';
+        if (this.appA) {
+            await this.appA.newSubitem();
         } else {
             await this.context.uiA.defaultActionOnSubitem(this.entity);
         }
@@ -197,8 +142,8 @@ export class UiA {
 
     async newSubitem() {
         this.entity.log('newSubitem');
-        if (this.entity.appA?.uiA) {
-            await this.entity.appA.uiA.newSubitem();
+        if (this.appA) {
+            await this.appA.newSubitem();
         } else {
             if (!this.getObject().listA) {
                 this.getObject().installListA();
@@ -210,7 +155,7 @@ export class UiA {
             created.context = created.getPath(this.getObject());
             await listA.entity.uis_update_addedListItem(position);
             await this.ensureExpanded();
-            this.entity.getApp().appA.uiA.focus(this.entity.uiA.listG.uisOfListItems.at(position));
+            this.findAppUi().focus(this.entity.uiA.listG.uisOfListItems.at(position));
         }
     }
 
@@ -218,51 +163,47 @@ export class UiA {
         let appUi = this.entity.getApp_typed().uiA;
         this.textG.save();
         appUi.clipboard = this.getObject();
-        appUi.clipboard_lostContext = false;
-        appUi.signal('marked: ' + appUi.clipboard.getShortDescription());
+        appUi.clipboard_lostContext = false; // important! TODO improve design
+        this.findAppUi().signal('marked: ' + appUi.clipboard.getShortDescription());
     }
 
     async cut() {
-        let appUi = this.entity.getApp_typed().uiA;
+        let appA_uiA = this.entity.getApp_typed().uiA;
         if (nullUndefined(this.getObject().link)) {
-            this.textG.save();
+            this.textG.save(); // important!
         }
         let obj = this.getObject();
-        appUi.clipboard = obj;
+        appA_uiA.clipboard = obj;
         let uiContext = this.context;
         let uiListItems = uiContext.uiA.listG.uisOfListItems;
         let position = uiListItems.indexOf(this.entity);
-        let contextObj = uiContext.getObject();
+        let uiContextObj = uiContext.getObject();
         if (this.objectHasContext() && await this.inContext()) {
             obj.context = null;
-            appUi.clipboard_lostContext = true;
+            appA_uiA.clipboard_lostContext = true;
             await obj.uis_update_context();
         } else {
-            appUi.clipboard_lostContext = false;
+            appA_uiA.clipboard_lostContext = false; // important!
         }
-        contextObj.listA.jsList.splice(position, 1);
-        await contextObj.uis_update_removedListItem(position);
-        if (contextObj.listA.jsList.length > 0) {
+        uiContextObj.listA.jsList.splice(position, 1);
+        await uiContextObj.uis_update_removedListItem(position);
+        if (uiContextObj.listA.jsList.length > 0) {
             let focusPosition = Math.min(uiListItems.length - 1, position);
-            appUi.focus(uiListItems[focusPosition]);
+            this.findAppUi().focus(uiListItems[focusPosition]);
         } else {
-            appUi.focus(uiContext);
+            this.findAppUi().focus(uiContext);
         }
     }
 
     async paste() {
-        if (this.entity.appA?.uiA) {
-            await this.entity.appA.uiA.paste();
-        } else {
-            if (!this.getObject().listA) {
-                this.getObject().installListA();
-            }
-            let appUi = this.entity.getApp_typed().uiA;
-            let position = 0;
-            await appUi.insertClipboardAtPosition(this.getObject(), position);
-            await this.ensureExpanded();
-            appUi.focus(this.entity.uiA.listG.uisOfListItems.at(position));
+        if (!this.getObject().listA) {
+            this.getObject().installListA();
         }
+        let appUi = this.entity.getApp_typed().uiA;
+        let position = 0;
+        await appUi.insertClipboardAtPosition(this.getObject(), position);
+        await this.ensureExpanded();
+        this.findAppUi().focus(this.entity.uiA.listG.uisOfListItems[position]);
     }
 
     async toggleCollapsible() {
@@ -409,8 +350,9 @@ export class UiA {
     }
 
     async setLink() {
-        this.getObject().link = this.entity.getApp_typed().uiA.input.get();
-        await this.entity.getApp_typed().uiA.input.clear();
+        let input = this.findAppUi().input;
+        this.getObject().link = input.get();
+        await input.clear();
         await this.getObject().uis_update();
     }
 
@@ -419,13 +361,37 @@ export class UiA {
         if (obj.containerA) {
             let before = obj.containerA.countWithNestedEntities();
             await obj.containerA.shakeTree();
-            this.entity.getApp_typed().uiA.signal('shaked the tree (deleted ' + (before - obj.containerA.countWithNestedEntities()) + ' entities)');
+            this.findAppUi().signal('shaked the tree (deleted ' + (before - obj.containerA.countWithNestedEntities()) + ' entities)');
         } else {
-            this.entity.getApp_typed().uiA.signal('not a container');
+            this.findAppUi().signal('not a container');
         }
     }
 
     isCollapsed() : boolean {
         return !this.headerBodyG.bodyIsVisible();
+    }
+
+    findAppUi() : UiA_AppA {
+        if (this.appA) {
+            return this.appA;
+        } else if (this.context) {
+            return this.context.uiA.findAppUi();
+        } else {
+            return undefined;
+        }
+    }
+
+    createUiFor(object: Entity) : Entity {
+        let ui : Entity = this.entity.getApp().appA.createEntityWithApp();
+        ui.uiA = new UiA(ui);
+        ui.uiA.object = object;
+        ui.uiA.context = this.entity;
+        ui.uiA.editable = this.editable;
+        object.uis_add(ui.uiA);
+        return ui;
+    }
+
+    createUiFor_typed(object: Entity) : UiA {
+        return this.createUiFor(object).uiA;
     }
 }

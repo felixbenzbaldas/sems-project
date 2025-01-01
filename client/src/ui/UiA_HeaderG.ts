@@ -37,7 +37,7 @@ export class UiA_HeaderG {
         this.divForContentAndBodyIcon.appendChild(this.content);
         this.divForContentAndBodyIcon.appendChild(this.bodyIcon);
         this.htmlElement.onclick = async (event) => {
-            this.entity.getApp().appA.ensureActive();
+            this.getUiA().findAppUi().ensureActive();
             if (!event.ctrlKey) {
                 await this.clickEvent();
             }
@@ -126,7 +126,7 @@ export class UiA_HeaderG {
         let button = document.createElement('button');
         button.innerText = this.getObject().text;
         button.onclick = (event) => {
-            this.entity.getApp().appA.ensureActive();
+            this.getUiA().findAppUi().ensureActive();
             this.getObject().action();
             event.stopPropagation();
         };
@@ -149,7 +149,7 @@ export class UiA_HeaderG {
     }
 
     focusStyle_update() {
-        if (this.entity.uiA.hasFocus() && this.entity.getApp().appA.uiA.isActive()) {
+        if (this.entity.uiA.hasFocus() && this.getUiA().findAppUi().isActive()) {
             this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme_focusBorderColor;
         } else {
             this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme_backgroundColor;
@@ -166,7 +166,7 @@ export class UiA_HeaderG {
 
     async clickEvent() {
         await this.entity.uiA.expandOrCollapse();
-        this.entity.getApp().appA.uiA.focus(this.entity);
+        this.getUiA().findAppUi().focus(this.entity);
     }
 
     getUiA() : UiA {

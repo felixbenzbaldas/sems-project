@@ -7,17 +7,19 @@ export class InputA {
     readonly ui : Entity;
     readonly input : Entity;
 
-    constructor(private entity : Entity) {
-        this.input = entity.appA.unboundG.createText('');
+    constructor(public entity : Entity) {
+        let app = entity.getApp_typed();
+        this.input = app.unboundG.createText('');
         this.input.editable = true;
         let html = entity.getApp_typed().createEntityWithApp();
         html.codeG_html = textFileInput(async text => {
             this.input.text = text;
             await this.input.uis_update();
         });
-        this.ui = entity.appA.unboundG.createTextWithList('input', this.input,
-            entity.appA.unboundG.createTextWithList('You can choose a text file as input:', html));
+        this.ui = app.unboundG.createTextWithList('input', this.input,
+            app.unboundG.createTextWithList('You can choose a text file as input:', html));
         this.ui.uiA = new UiA(this.ui);
+        this.ui.uiA.context = entity;
         this.ui.collapsible = true;
     }
 

@@ -1,10 +1,11 @@
 import {Entity} from "@/Entity";
 import {AppA} from "@/AppA";
 import {testData} from "@/testData";
+import type {UiA_AppA} from "@/ui/UiA_AppA";
 
 export class Environment {
 
-    activeApp: Entity;
+    activeAppUi: UiA_AppA;
     jsonData : any;
     url : URL;
     setTitle: (text: string) => void;
@@ -42,8 +43,8 @@ export class Environment {
 
     create_installWindowKeyListener() {
         let listener = async (keyboardEvent : KeyboardEvent) => {
-            if (this.activeApp.appA.uiA) {
-                await this.activeApp.appA.uiA.keyG.keyboardEvent(keyboardEvent);
+            if (this.activeAppUi) {
+                await this.activeAppUi.keyG.keyboardEvent(keyboardEvent);
             }
         };
         window.onkeyup = listener;
@@ -55,15 +56,15 @@ export class Environment {
         root.style.fontSize = '21px';
     }
 
-    ensureActive(app: Entity) {
-        if (app != this.activeApp) {
-            let previous = this.activeApp?.appA.uiA.focused;
-            this.activeApp = app;
+    ensureActive(appUi: UiA_AppA) {
+        if (appUi != this.activeAppUi) {
+            let previous = this.activeAppUi?.focused;
+            this.activeAppUi = appUi;
             if (previous) {
                 previous.uiA.updateFocusStyle();
             }
-            if (app.appA.uiA.focused) {
-                app.appA.uiA.focused.uiA.updateFocusStyle();
+            if (appUi.focused) {
+                appUi.focused.uiA.updateFocusStyle();
             }
         }
     }

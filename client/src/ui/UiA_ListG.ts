@@ -35,32 +35,8 @@ export class UiA_ListG {
             return listItem;
         } else {
             let ui;
-            ui = this.entity.getApp().appA.uiA.createUiFor(listItem);
-            ui.uiA.editable = this.entity.uiA.editable;
-            ui.uiA.context = this.entity;
+            ui = this.entity.uiA.createUiFor(listItem);
             return ui;
-        }
-    }
-
-    getRawText() : string {
-        if (notNullUndefined(this.getObject().listA)) {
-            return this.uisOfListItems.map(current => current.uiA.getRawText()).reduce((a, b) => a + b, '');
-        } else {
-            return '';
-        }
-    }
-
-    async click(text : string) {
-        if (this.getObject().listA) {
-            for (let current of this.uisOfListItems) {
-                await current.uiA.click(text);
-            }
-        }
-    }
-
-    countEditableTexts() : number {
-        if (this.getObject().listA) {
-            return this.uisOfListItems.map(current => current.uiA.countEditableTexts()).reduce((a, b) => a + b, 0);
         }
     }
 
@@ -73,13 +49,13 @@ export class UiA_ListG {
             created.context = created.getPath(this.getObject());
         }
         await listA.entity.uis_update_addedListItem(position);
-        this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
+        this.entity.uiA.findAppUi().focus(this.uisOfListItems[position]);
     }
 
     async pasteNextOnSubitem(subitem: Entity) {
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         await this.entity.getApp_typed().uiA.insertClipboardAtPosition(this.getObject(), position);
-        this.entity.getApp().appA.uiA.focus(this.uisOfListItems.at(position));
+        this.entity.uiA.findAppUi().focus(this.uisOfListItems[position]);
     }
 
     getObject() : Entity {

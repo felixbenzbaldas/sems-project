@@ -31,10 +31,6 @@ export class UiA_HeaderBodyG {
         }
     }
 
-    getRawText() : string {
-        return this.entity.uiA.headerG.getRawText() + this.entity.uiA.bodyG.getRawText();
-    }
-
     async update_addedListItem(position: number) {
         if (this.bodyIsVisible()) {
             await this.entity.uiA.listG.update_addedListItem(position);

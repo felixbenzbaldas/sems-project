@@ -85,8 +85,7 @@ export class UiA_BodyG {
             let contextAsSubitem = this.entity.getApp_typed().unboundG.createTextWithList('[context]', contextObj);
             contextAsSubitem.collapsible = true;
             contextAsSubitem.editable = false;
-            let ui = this.entity.getApp_typed().uiA.createUiFor_typed(contextAsSubitem);
-            ui.editable = this.getUiA().editable;
+            let ui = this.getUiA().createUiFor_typed(contextAsSubitem)
             await ui.update();
             ui.htmlElement.style.marginBottom = '0.1rem';
             ui.headerG.htmlElement.style.fontSize = '0.8rem';
@@ -105,23 +104,6 @@ export class UiA_BodyG {
         } else {
             return this.entity;
         }
-    }
-
-    getRawText() : string {
-        if (this.getObject().isTest) {
-            return this.getUiA().testG.bodyContent.uiA.getRawText();
-        } else if (this.getObject().listA && !this.getObject().testRunA) {
-            if (this.getUiA().isCollapsed()) {
-                return '';
-            } else {
-                return this.getUiA().listG.getRawText();
-            }
-        } else if (this.getObject().testRunA) {
-            if (this.getUiA().testRunG.bodyContent) {
-                return this.getUiA().testRunG.bodyContent.uiA.getRawText();
-            }
-        }
-        return '';
     }
 
     async showMeta() {
