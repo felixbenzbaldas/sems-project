@@ -7,34 +7,17 @@ import {Font} from "@/ui/Font";
 export class StarterA_FullStartG {
     constructor(public entity : Entity) {
     }
-    async oldTester() : Promise<any> {
-        // let starter = this.getStarter();
-        // await starter.createTest();
-        // starter.testMode();
-        // if (starter.getEnvironment().url.searchParams.has('withFailingDemoTest')) {
-        //     starter.createdApp.appA.testA.withFailingDemoTest = true;
-        // }
-        // await starter.createdApp.appA.testA.createRunAndDisplay();
-        // // starter.getEnvironment().activeApp = starter.createdApp;
-        // starter.createdApp.appA.uiA.withPlaceholderArea = true;
-        // if (starter.isPublicWeb()) {
-        //     starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
-        // }
-        // await starter.createdApp.uiA.update();
-        // return starter.createdApp.uiA.htmlElement;
-        return undefined;
-    }
     async tester() {
         let starter = this.getStarter();
-        starter.createTester2(starter.getEnvironment().testCreator);
+        starter.createTester(starter.getEnvironment().testCreator);
         starter.testMode();
         await starter.createdApp.appA.testerA.run();
-        let ui = starter.createdApp.appA.uiA.createUiFor_typed(starter.createdApp);
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
-        starter.getEnvironment().activeAppUi = ui.appA;
+        let ui = starter.createdApp.appA.uiA.createUiFor_typed(starter.createdApp);
         await ui.update();
+        starter.getEnvironment().activeAppUi = ui.appA;
         ui.appA.withPlaceholderArea = true;
         await ui.update();
         return ui.htmlElement;
@@ -146,5 +129,22 @@ export class StarterA_FullStartG {
     }
     getStarter() : StarterA {
         return this.entity.starterA;
+    }
+    async oldTester() : Promise<any> {
+        // let starter = this.getStarter();
+        // await starter.createTest();
+        // starter.testMode();
+        // if (starter.getEnvironment().url.searchParams.has('withFailingDemoTest')) {
+        //     starter.createdApp.appA.testA.withFailingDemoTest = true;
+        // }
+        // await starter.createdApp.appA.testA.createRunAndDisplay();
+        // // starter.getEnvironment().activeApp = starter.createdApp;
+        // starter.createdApp.appA.uiA.withPlaceholderArea = true;
+        // if (starter.isPublicWeb()) {
+        //     starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
+        // }
+        // await starter.createdApp.uiA.update();
+        // return starter.createdApp.uiA.htmlElement;
+        return undefined;
     }
 }

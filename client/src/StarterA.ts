@@ -48,7 +48,7 @@ export class StarterA {
     }
 
     async run() : Promise<Entity> {
-        this.createTester2(this.getEnvironment().testCreator)
+        this.createTester(this.getEnvironment().testCreator)
         let queryParams = this.getEnvironment().url.searchParams;
         let pathParam : string = queryParams.get('run');
         let run : Entity = await (await this.createdApp.resolveListOfNames(pathParam.split('_'))).testG_run(!queryParams.has('withNest'));
@@ -105,14 +105,7 @@ export class StarterA {
     //     return this.createdApp;
     // }
 
-    async createTest() : Promise<Entity> {
-        this.createAppWithUI();
-        this.createdApp.text = 'Tester';
-        this.createdApp.appA.testA = new AppA_TestA(this.createdApp);
-        return this.createdApp;
-    }
-
-    createTester2(testCreator: (app: Entity) => Entity) : Entity {
+    createTester(testCreator: (app: Entity) => Entity) : Entity {
         this.createAppWithUI();
         this.createdApp.appA.installTesterA();
         this.createdApp.appA.testerA.test = testCreator(this.createdApp);
@@ -169,12 +162,6 @@ export class StarterA {
 
     static createApp() {
         return new Environment().createApp();
-    }
-
-    static async createTest() {
-        let starter = new Environment().createApp().createStarter();
-        await starter.createTest();
-        return starter.createdApp;
     }
 
     static createAppWithUI() {
