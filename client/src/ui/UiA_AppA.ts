@@ -259,7 +259,7 @@ export class UiA_AppA {
     }
 
     isActive() : boolean {
-        if (this.getApp().environment) {
+        if (this.getApp().environment?.activeAppUi) {
             return this.getApp().environment.activeAppUi === this;
         } else {
             return true;

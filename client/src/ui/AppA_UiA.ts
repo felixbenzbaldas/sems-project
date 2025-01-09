@@ -1,6 +1,6 @@
 import {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
-import {notNullUndefined} from "@/utils";
+import {notNullUndefined, nullUndefined} from "@/utils";
 import {Color} from "@/ui/Color";
 
 export class AppA_UiA {
@@ -39,6 +39,19 @@ export class AppA_UiA {
 
     createUiFor_typed(object: Entity) : UiA {
         return this.createUiFor(object).uiA;
+    }
+
+    async createAppUi(withPlaceholderArea : boolean) {
+        let ui : Entity = this.entity.getApp().appA.createEntityWithApp();
+        ui.uiA = new UiA(ui);
+        ui.uiA.object = this.entity;
+        this.entity.uis_add(ui.uiA);
+        ui.uiA.htmlElement.style.height = '100%';
+        ui.uiA.installAppUi();
+        ui.uiA.appA.withPlaceholderArea = withPlaceholderArea;
+        await ui.uiA.appA.update();
+        ui.uiA.htmlElement.appendChild(ui.uiA.appA.htmlElement);
+        return ui.uiA.appA;
     }
 
     async insertClipboardAtPosition(object: Entity, position: number) {

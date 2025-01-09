@@ -15,12 +15,9 @@ export class StarterA_FullStartG {
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
-        let ui = starter.createdApp.appA.uiA.createUiFor_typed(starter.createdApp);
-        await ui.update();
-        starter.getEnvironment().activeAppUi = ui.appA;
-        ui.appA.withPlaceholderArea = true;
-        await ui.update();
-        return ui.htmlElement;
+        let appUi = await starter.createdApp.appA.uiA.createAppUi(true);
+        starter.getEnvironment().activeAppUi = appUi;
+        return appUi.entity.uiA.htmlElement;
     }
     async objectViewer() {
         let starter = this.getStarter();
