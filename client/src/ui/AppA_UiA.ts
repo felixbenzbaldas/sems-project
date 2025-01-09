@@ -2,6 +2,7 @@ import {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
 import {notNullUndefined, nullUndefined} from "@/utils";
 import {Color} from "@/ui/Color";
+import type {UiA_AppA} from "@/ui/UiA_AppA";
 
 export class AppA_UiA {
 
@@ -41,7 +42,7 @@ export class AppA_UiA {
         return this.createUiFor(object).uiA;
     }
 
-    async createAppUi(withPlaceholderArea : boolean) {
+    async createAppUi(withPlaceholderArea : boolean, editable? : boolean, withMeta? : boolean) : Promise<UiA_AppA> {
         let ui : Entity = this.entity.getApp().appA.createEntityWithApp();
         ui.uiA = new UiA(ui);
         ui.uiA.object = this.entity;
@@ -49,6 +50,13 @@ export class AppA_UiA {
         ui.uiA.htmlElement.style.height = '100%';
         ui.uiA.installAppUi();
         ui.uiA.appA.withPlaceholderArea = withPlaceholderArea;
+        ui.uiA.editable = editable;
+        if (withMeta) {
+            ui.uiA.appA.showMeta = true;
+            ui.uiA.appA.commands = ui.uiA.appA.createCommands();
+            ui.uiA.appA.commands.uiA = new UiA(ui.uiA.appA.commands);
+            ui.uiA.appA.commands.uiA.context = ui;
+        }
         await ui.uiA.appA.update();
         ui.uiA.htmlElement.appendChild(ui.uiA.appA.htmlElement);
         return ui.uiA.appA;

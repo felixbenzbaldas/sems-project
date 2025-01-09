@@ -29,34 +29,24 @@ export class StarterA_FullStartG {
         starter.createdApp.appA.uiA.theme_backgroundColor = Color.LIGHT_BEIGE;
         starter.createdApp.appA.uiA.theme_fontColor = Color.NEW_DARK_VIOLETTE;
         starter.createdApp.appA.uiA.theme_font = Font.ELEGANT;
-        let ui = starter.createdApp.uiA.createUiFor_typed(starter.createdApp);
-        await ui.update();
-        await starter.createdApp.appA.uiA.content.uiA.listG.uisOfListItems[0].uiA.ensureExpanded();
-        starter.testMode();
-        ui.appA.withPlaceholderArea = true;
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
-        await ui.update();
-        starter.getEnvironment().activeAppUi = ui.appA;
-        if (ui.appA.contentUi.listG.uisOfListItems.length === 1) {
-            await ui.appA.contentUi.listG.uisOfListItems[0].uiA.ensureExpanded();
-        }
-        return ui.htmlElement;
+        let appUi = await starter.createdApp.appA.uiA.createAppUi(true);
+        starter.testMode();
+        starter.getEnvironment().activeAppUi = appUi;
+        await appUi.contentUi.listG.uisOfListItems[0].uiA.ensureExpanded();
+        return appUi.entity.uiA.htmlElement;
     }
     async testRun() {
         let starter = this.getStarter();
         await starter.run();
-        let ui = starter.createdApp.uiA.createUiFor_typed(starter.createdApp);
-        await ui.update();
-        ui.appA.withPlaceholderArea = true;
-        starter.getEnvironment().activeAppUi = ui.appA;
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
-        ui.appA.withPlaceholderArea = true;
-        await ui.update();
-        return ui.htmlElement;
+        let appUi = await starter.createdApp.appA.uiA.createAppUi(true);
+        starter.getEnvironment().activeAppUi = appUi;
+        return appUi.entity.uiA.htmlElement;
     }
     async website() {
         let starter = this.getStarter();
@@ -75,54 +65,35 @@ export class StarterA_FullStartG {
             starter.getEnvironment().setTitle((await (await website.listA.findByText('title'))?.listA.getResolved(0)).text);
         }
         starter.testMode();
-        let ui = starter.createdApp.uiA.createUiFor_typed(starter.createdApp);
-        await ui.update();
-        starter.getEnvironment().activeAppUi = ui.appA;
-        ui.appA.withPlaceholderArea = true;
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
-        await ui.update();
-        let length = ui.appA.contentUi.listG.uisOfListItems.length;
+        let appUi = await starter.createdApp.appA.uiA.createAppUi(true);
+        starter.getEnvironment().activeAppUi = appUi;
+        let length = appUi.contentUi.listG.uisOfListItems.length;
         if (length === 1 || length === 2) {
-            await ui.appA.contentUi.listG.uisOfListItems[0].uiA.ensureExpanded();
+            await appUi.contentUi.listG.uisOfListItems[0].uiA.ensureExpanded();
         }
-        return ui.htmlElement;
+        return appUi.entity.uiA.htmlElement;
     }
     async localApp() {
         let starter = this.getStarter();
         starter.createAppWithUI();
         starter.testMode();
-        let ui = starter.createdApp.appA.uiA.createUiFor_typed(starter.createdApp);
-        await ui.update();
-        ui.editable = true;
-        ui.appA.showMeta = true;
-        ui.appA.commands = ui.appA.createCommands();
-        ui.appA.commands.uiA = new UiA(ui.appA.commands);
-        ui.appA.commands.uiA.context = ui.entity;
-        starter.getEnvironment().activeAppUi = ui.appA;
-        ui.appA.withPlaceholderArea = true;
-        await ui.update();
+        let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true, true);
+        starter.getEnvironment().activeAppUi = appUi;
         starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
-        return ui.htmlElement;
+        return appUi.entity.uiA.htmlElement;
     }
     async clientApp() {
         let starter = this.getStarter();
         starter.createAppWithUI();
         starter.testMode();
-        starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
-        let ui = starter.createdApp.appA.uiA.createUiFor_typed(starter.createdApp);
-        await ui.update();
-        ui.editable = true;
-        ui.appA.showMeta = true;
-        ui.appA.commands = ui.appA.createCommands();
-        ui.appA.commands.uiA = new UiA(ui.appA.commands);
-        ui.appA.commands.uiA.context = ui.entity;
-        starter.getEnvironment().activeAppUi = ui.appA;
-        ui.appA.withPlaceholderArea = true;
-        await ui.update();
+        starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta(); // important
+        let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true, true);
+        starter.getEnvironment().activeAppUi = appUi;
         starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
-        return ui.htmlElement;
+        return appUi.entity.uiA.htmlElement;
     }
     getStarter() : StarterA {
         return this.entity.starterA;
