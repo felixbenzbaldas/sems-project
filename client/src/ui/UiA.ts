@@ -381,17 +381,13 @@ export class UiA {
         }
     }
 
-    createUiFor(object: Entity) : Entity {
+    createSubUiFor(object: Entity) : UiA {
         let ui : Entity = this.entity.getApp().appA.createEntityWithApp();
         ui.uiA = new UiA(ui);
         ui.uiA.object = object;
         ui.uiA.context = this.entity;
         ui.uiA.editable = this.editable;
         object.uis_add(ui.uiA);
-        return ui;
-    }
-
-    createUiFor_typed(object: Entity) : UiA {
-        return this.createUiFor(object).uiA;
+        return ui.uiA;
     }
 }

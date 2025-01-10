@@ -22,20 +22,20 @@ export class UiA_ListG {
     private async updateUisOfListItems() {
         this.uisOfListItems = []; // TODO: do not always dismiss old uis
         for (let currentResolved of await this.getObject().listA.getResolvedList()) {
-            let currentUi = this.createUiFor(currentResolved);
+            let currentUi = this.createSubUiFor(currentResolved).entity;
             await currentUi.updateUi();
             this.uisOfListItems.push(currentUi);
             this.htmlElement.appendChild(currentUi.uiA.htmlElement);
         }
     }
 
-    createUiFor(listItem : Entity) : Entity {
+    createSubUiFor(listItem : Entity) : UiA {
         if (listItem.appA?.uiA) {
             listItem.uiA.context = this.entity;
-            return listItem;
+            return listItem.uiA;
         } else {
             let ui;
-            ui = this.entity.uiA.createUiFor(listItem);
+            ui = this.entity.uiA.createSubUiFor(listItem);
             return ui;
         }
     }
@@ -63,7 +63,7 @@ export class UiA_ListG {
     }
 
     async update_addedListItem(position: number) {
-        let ui = this.createUiFor(await this.getObject().listA.getResolved(position));
+        let ui = this.createSubUiFor(await this.getObject().listA.getResolved(position)).entity;
         this.uisOfListItems.splice(position, 0, ui);
         await ui.uiA.update();
         if (position + 1 === this.uisOfListItems.length) {

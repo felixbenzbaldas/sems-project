@@ -47,9 +47,7 @@ export class UiA_AppA {
             await this.input.getUi().updateUi();
             await this.output.getUi().updateUi();
         }
-        this.contentUi = app_uiA.createUiFor_typed(app_uiA.content);
-        this.contentUi.context = this.entity;
-        this.contentUi.editable = this.entity.uiA.editable;
+        this.contentUi = this.entity.uiA.createSubUiFor(app_uiA.content);
         this.focusStyle_update();
         await this.contentUi.update();
         if (app_uiA.webMeta) {

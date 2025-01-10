@@ -85,7 +85,7 @@ export class UiA_BodyG {
             let contextAsSubitem = this.entity.getApp_typed().unboundG.createTextWithList('[context]', contextObj);
             contextAsSubitem.collapsible = true;
             contextAsSubitem.editable = false;
-            let ui = this.getUiA().createUiFor_typed(contextAsSubitem)
+            let ui = this.getUiA().createSubUiFor(contextAsSubitem)
             await ui.update();
             ui.htmlElement.style.marginBottom = '0.1rem';
             ui.headerG.htmlElement.style.fontSize = '0.8rem';
@@ -122,7 +122,7 @@ export class UiA_BodyG {
         if (this.getObject().hasUrl()) {
             meta.listA.addDirect(app.unboundG.createLink(this.getObject().getUrl()));
         }
-        let ui = app.uiA.createUiFor_typed(meta);
+        let ui = this.getUiA().createSubUiFor(meta);
         await ui.update();
         this.content_meta_htmlElement.appendChild(ui.htmlElement);
     }
