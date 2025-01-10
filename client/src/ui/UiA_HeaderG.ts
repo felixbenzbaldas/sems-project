@@ -166,7 +166,7 @@ export class UiA_HeaderG {
 
     async clickEvent() {
         await this.entity.uiA.expandOrCollapse();
-        this.getUiA().findAppUi().focus(this.entity);
+        this.getUiA().findAppUi().focus(this.entity.uiA);
     }
 
     getUiA() : UiA {

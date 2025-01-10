@@ -12,7 +12,7 @@ export class UiA_AppA_KeyG {
             await this.entity.uiA.appA.globalEventG.defaultAction();
         });
         this.map.set('alt+Enter', async keyboardEvent => {
-            this.entity.uiA.appA.focused.uiA.textG.save();
+            this.entity.uiA.appA.focused.textG.save();
             await this.entity.uiA.appA.globalEventG.newSubitem();
         });
         this.map.set('ctrl+f', async keyboardEvent => {

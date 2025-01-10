@@ -22,8 +22,8 @@ export class UiA_TextG {
             await this.getObject().uis_update_text();
         }
         this.htmlElement.onfocus = () => {
-            if (this.getUiA().findAppUi().focused != this.entity) {
-                this.getUiA().findAppUi().focus(this.entity);
+            if (this.getUiA().findAppUi().focused != this.entity.uiA) {
+                this.getUiA().findAppUi().focus(this.entity.uiA);
             }
             this.updateEmptyMarker();
         };

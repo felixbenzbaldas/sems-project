@@ -17,11 +17,11 @@ export class OutputA {
         let uiData = app.unboundG.createTextWithList('output',
             this.outputDownload,
             app.unboundG.createButton('select', () => {
-                selectAllTextOfDiv(this.ui.uiA.listG.uisOfListItems.at(2).uiA.textG.htmlElement);
+                selectAllTextOfDiv(this.ui.uiA.listG.uisOfListItems[2].textG.htmlElement);
             }), this.output);
         uiData.collapsible = true;
         this.ui = app.uiA.createUiFor(uiData);
-        this.ui.uiA.context = entity;
+        this.ui.uiA.context = entity.uiA;
     }
 
     async setAndUpdateUi(string : string) {

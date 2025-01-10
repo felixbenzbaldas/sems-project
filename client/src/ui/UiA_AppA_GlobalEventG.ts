@@ -8,7 +8,7 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async defaultAction() {
-        await this.getAppUi().focused.uiA.defaultAction();
+        await this.getAppUi().focused.defaultAction();
     }
 
     async exportApp() {
@@ -16,24 +16,24 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async toggleCollapsible() {
-        await this.getAppUi().focused.uiA.toggleCollapsible();
+        await this.getAppUi().focused.toggleCollapsible();
     }
 
     async newSubitem() {
         this.entity.logInfo('newSubitem');
-        await this.getAppUi().focused.uiA.newSubitem();
+        await this.getAppUi().focused.newSubitem();
     }
 
     async paste() {
-        await this.getAppUi().focused.uiA.paste();
+        await this.getAppUi().focused.paste();
     }
 
     async expandOrCollapse() {
-        await this.getAppUi().focused.uiA.expandOrCollapse();
+        await this.getAppUi().focused.expandOrCollapse();
     }
 
     async switchCurrentContainer() {
-        this.getAppUi().switchCurrentContainer_AndUpdateStyles(this.getAppUi().focused.uiA.getObject());
+        this.getAppUi().switchCurrentContainer_AndUpdateStyles(this.getAppUi().focused.getObject());
 
     }
 
@@ -46,7 +46,7 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async export() {
-        let toExport = this.getAppUi().focused.uiA.object;
+        let toExport = this.getAppUi().focused.object;
         await this.getAppUi().output.setAndUpdateUi(JSON.stringify(await toExport.export(), null, 4));
     }
 
@@ -54,7 +54,7 @@ export class UiA_AppA_GlobalEventG {
         let focused = this.getAppUi().focused;
         let created = this.getApp().unboundG.createFromJson(JSON.parse(this.getAppUi().input.get()));
         this.getApp().currentContainer.containerA.bind(created);
-        let focusedObject = focused.uiA.getObject();
+        let focusedObject = focused.getObject();
         if (!focusedObject.listA) {
             focusedObject.installListA();
         }
@@ -62,8 +62,8 @@ export class UiA_AppA_GlobalEventG {
         let listA = focusedObject.listA;
         await listA.insertPathOrDirectAtPosition(created, position);
         await listA.entity.uis_update_addedListItem(position);
-        await focused.uiA.ensureExpanded();
-        this.getAppUi().focus(focused.uiA.listG.uisOfListItems.at(position));
+        await focused.ensureExpanded();
+        this.getAppUi().focus(focused.listG.uisOfListItems.at(position));
     }
 
     async load() {
@@ -83,7 +83,7 @@ export class UiA_AppA_GlobalEventG {
         let focused = this.getAppUi().focused;
         let created = await this.getApp().unboundG.createFromOldJson(JSON.parse(this.getAppUi().input.get()));
         this.getApp().currentContainer.containerA.bind(created);
-        let focusedObject = focused.uiA.getObject();
+        let focusedObject = focused.getObject();
         if (!focusedObject.listA) {
             focusedObject.installListA();
         }
@@ -91,35 +91,35 @@ export class UiA_AppA_GlobalEventG {
         let listA = focusedObject.listA;
         await listA.insertPathOrDirectAtPosition(created, position);
         await listA.entity.uis_update_addedListItem(position);
-        await focused.uiA.ensureExpanded();
-        this.getAppUi().focus(focused.uiA.listG.uisOfListItems.at(position));
+        await focused.ensureExpanded();
+        this.getAppUi().focus(focused.listG.uisOfListItems.at(position));
     }
 
     async focusRoot() {
-        this.getAppUi().focus(this.getAppUi().entity);
+        this.getAppUi().focus(this.getAppUi().entity.uiA);
     }
 
     async cut() {
-        await this.getAppUi().focused.uiA.cut();
+        await this.getAppUi().focused.cut();
     }
 
     async mark() {
-        await this.getAppUi().focused.uiA.mark();
+        await this.getAppUi().focused.mark();
     }
 
     async pasteNext() {
-        await this.getAppUi().focused.uiA.pasteNext();
+        await this.getAppUi().focused.pasteNext();
     }
 
     async scaleUp() {
         if (this.getAppUi().focused.getObject().collapsible) {
-            await this.getAppUi().focused.uiA.expandWithAnimation();
+            await this.getAppUi().focused.expandWithAnimation();
         }
     }
 
     async scaleDown() {
         if (this.getAppUi().focused.getObject().collapsible) {
-            await this.getAppUi().focused.uiA.collapseWithAnimation();
+            await this.getAppUi().focused.collapseWithAnimation();
         }
     }
 
@@ -130,23 +130,23 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async toggleContext() {
-        await this.getAppUi().focused.uiA.toggleContext()
+        await this.getAppUi().focused.toggleContext()
     }
 
     async script_setContextForAllObjectsInContainer() {
-        await this.getAppUi().focused.uiA.getObject().script_setContextForAllObjectsInContainer();
+        await this.getAppUi().focused.getObject().script_setContextForAllObjectsInContainer();
     }
 
     async focusUiContext() {
-        this.getAppUi().focus(this.getAppUi().focused.uiA.context);
+        this.getAppUi().focus(this.getAppUi().focused.context);
     }
 
     async setLink() {
-        await this.getAppUi().focused.uiA.setLink();
+        await this.getAppUi().focused.setLink();
     }
 
     async shakeTree() {
-        await this.getAppUi().focused.uiA.shakeTree();
+        await this.getAppUi().focused.shakeTree();
     }
 
     getApp() : AppA {

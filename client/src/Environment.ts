@@ -61,10 +61,10 @@ export class Environment {
             let previous = this.activeAppUi?.focused;
             this.activeAppUi = appUi;
             if (previous) {
-                previous.uiA.updateFocusStyle();
+                previous.updateFocusStyle();
             }
             if (appUi.focused) {
-                appUi.focused.uiA.updateFocusStyle();
+                appUi.focused.updateFocusStyle();
             }
         }
     }

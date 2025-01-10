@@ -5,7 +5,7 @@ import {UiA} from "@/ui/UiA";
 // TODO should be an aspect not a group. Then: entity.uiA.getObject().listA <==> entity.uiA.listA
 export class UiA_ListG {
 
-    uisOfListItems : Array<Entity>;
+    uisOfListItems : Array<UiA>;
     htmlElement : HTMLDivElement = document.createElement('div');
 
     constructor(private entity : Entity) {
@@ -22,25 +22,18 @@ export class UiA_ListG {
     private async updateUisOfListItems() {
         this.uisOfListItems = []; // TODO: do not always dismiss old uis
         for (let currentResolved of await this.getObject().listA.getResolvedList()) {
-            let currentUi = this.createSubUiFor(currentResolved).entity;
-            await currentUi.updateUi();
+            let currentUi = this.createSubUiFor(currentResolved);
+            await currentUi.update();
             this.uisOfListItems.push(currentUi);
-            this.htmlElement.appendChild(currentUi.uiA.htmlElement);
+            this.htmlElement.appendChild(currentUi.htmlElement);
         }
     }
 
     createSubUiFor(listItem : Entity) : UiA {
-        if (listItem.appA?.uiA) {
-            listItem.uiA.context = this.entity;
-            return listItem.uiA;
-        } else {
-            let ui;
-            ui = this.entity.uiA.createSubUiFor(listItem);
-            return ui;
-        }
+        return this.entity.uiA.createSubUiFor(listItem);
     }
 
-    async defaultActionOnSubitem(subitem: Entity) {
+    async defaultActionOnSubitem(subitem: UiA) {
         let created = await this.entity.getApp().appA.createText('');
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         let listA = this.getObject().listA;
@@ -52,7 +45,7 @@ export class UiA_ListG {
         this.entity.uiA.findAppUi().focus(this.uisOfListItems[position]);
     }
 
-    async pasteNextOnSubitem(subitem: Entity) {
+    async pasteNextOnSubitem(subitem: UiA) {
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         await this.entity.getApp_typed().uiA.insertClipboardAtPosition(this.getObject(), position);
         this.entity.uiA.findAppUi().focus(this.uisOfListItems[position]);
@@ -63,18 +56,18 @@ export class UiA_ListG {
     }
 
     async update_addedListItem(position: number) {
-        let ui = this.createSubUiFor(await this.getObject().listA.getResolved(position)).entity;
+        let ui = this.createSubUiFor(await this.getObject().listA.getResolved(position));
         this.uisOfListItems.splice(position, 0, ui);
-        await ui.uiA.update();
+        await ui.update();
         if (position + 1 === this.uisOfListItems.length) {
-            this.htmlElement.appendChild(ui.uiA.htmlElement);
+            this.htmlElement.appendChild(ui.htmlElement);
         } else {
-            this.htmlElement.insertBefore(ui.uiA.htmlElement, this.uisOfListItems[position + 1].uiA.htmlElement);
+            this.htmlElement.insertBefore(ui.htmlElement, this.uisOfListItems[position + 1].htmlElement);
         }
     }
 
     async update_removedListItem(position: number) {
-        let removedUi : Entity = this.uisOfListItems.splice(position, 1)[0];
-        this.htmlElement.removeChild(removedUi.uiA.htmlElement);
+        let removedUi : UiA = this.uisOfListItems.splice(position, 1)[0];
+        this.htmlElement.removeChild(removedUi.htmlElement);
     }
 }

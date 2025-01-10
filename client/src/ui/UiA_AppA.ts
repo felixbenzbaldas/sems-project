@@ -15,7 +15,7 @@ export class UiA_AppA {
     readonly output : OutputA;
     readonly input : InputA;
     commands: Entity;
-    focused : Entity;
+    focused : UiA;
     scrollableArea : HTMLElement;
     statusBar: HTMLDivElement;
     globalEventG: UiA_AppA_GlobalEventG;
@@ -33,7 +33,7 @@ export class UiA_AppA {
         this.input = new InputA(entity);
         this.globalEventG = new UiA_AppA_GlobalEventG(entity);
         this.keyG = new UiA_AppA_KeyG(entity);
-        this.focused = entity;
+        this.focused = this.entity.uiA;
         this.focusStyle_marker = this.focusStyle_createMarker();
     }
 
@@ -53,7 +53,7 @@ export class UiA_AppA {
         await this.contentUi.update();
         if (app_uiA.webMeta) {
             this.webMetaUi = app_uiA.createUiFor_typed(app_uiA.webMeta);
-            this.webMetaUi.context = this.entity;
+            this.webMetaUi.context = this.entity.uiA;
             await this.webMetaUi.update();
         }
         this.updateUiElement();
@@ -80,7 +80,7 @@ export class UiA_AppA {
         let listA = this.getObject().appA.uiA.content.listA;
         await listA.insertObjectAtPosition(this.getObject().appA.uiA.clipboard, position);
         await this.contentUi.update_addedListItem(position);
-        this.focus(this.contentUi.listG.uisOfListItems.at(position));
+        this.focus(this.contentUi.listG.uisOfListItems[position]);
     }
 
     private async ensureInstalled() { // TODO this should not be necessary
@@ -89,14 +89,14 @@ export class UiA_AppA {
         }
     }
 
-    focus(entity: Entity) {
+    focus(ui : UiA) {
         let focusedPrevious = this.focused;
-        this.focused = entity;
+        this.focused = ui;
         if (focusedPrevious) {
-            focusedPrevious.uiA.updateFocusStyle();
+            focusedPrevious.updateFocusStyle();
         }
-        this.focused.uiA.updateFocusStyle();
-        this.focused.uiA.takeCaret();
+        this.focused.updateFocusStyle();
+        this.focused.takeCaret();
     }
 
     private updateUiElement() {
@@ -171,7 +171,7 @@ export class UiA_AppA {
     }
 
     focusStyle_update() {
-        if (this.focused === this.entity && this.isActive()) {
+        if (this.focused === this.entity.uiA && this.isActive()) {
             this.focusStyle_marker.style.backgroundColor = this.getApp().uiA.theme_focusBorderColor;
         } else {
             this.focusStyle_marker.style.backgroundColor = this.getApp().uiA.theme_backgroundColor;

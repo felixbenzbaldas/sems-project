@@ -19,7 +19,7 @@ export class UiA {
     bodyG: UiA_BodyG;
     testG: UiA_TestG;
     object: Entity;
-    context: Entity;
+    context: UiA;
     headerBodyG: UiA_HeaderBodyG;
     testRunG: UiA_TestRunG;
     appA : UiA_AppA;
@@ -121,22 +121,22 @@ export class UiA {
     }
 
     hasFocus() {
-        return this.findAppUi()?.focused === this.entity;
+        return this.findAppUi()?.focused === this;
     }
 
     async defaultAction() {
         if (this.appA) {
             await this.appA.newSubitem();
         } else {
-            await this.context.uiA.defaultActionOnSubitem(this.entity);
+            await this.context.defaultActionOnSubitem(this);
         }
     }
 
-    async defaultActionOnSubitem(subitem : Entity) {
+    async defaultActionOnSubitem(subitem : UiA) {
         await this.listG.defaultActionOnSubitem(subitem);
     }
 
-    async pasteNextOnSubitem(subitem: Entity) {
+    async pasteNextOnSubitem(subitem: UiA) {
         await this.listG.pasteNextOnSubitem(subitem);
     }
 
@@ -175,8 +175,8 @@ export class UiA {
         let obj = this.getObject();
         appA_uiA.clipboard = obj;
         let uiContext = this.context;
-        let uiListItems = uiContext.uiA.listG.uisOfListItems;
-        let position = uiListItems.indexOf(this.entity);
+        let uiListItems = uiContext.listG.uisOfListItems;
+        let position = uiListItems.indexOf(this);
         let uiContextObj = uiContext.getObject();
         if (this.objectHasContext() && await this.inContext()) {
             obj.context = null;
@@ -309,7 +309,7 @@ export class UiA {
     // check objectHasContext() before calling this method
     async inContext() : Promise<boolean> {
         if (notNullUndefined(this.context)) {
-            return this.context.uiA.getObject() === await this.getObject().context.pathA.resolve();
+            return this.context.getObject() === await this.getObject().context.pathA.resolve();
         } else {
             return false;
         }
@@ -323,13 +323,13 @@ export class UiA {
         if (this.getObject().context) {
             this.getObject().context = undefined;
         } else {
-            this.getObject().context = this.getObject().getPath(this.context.uiA.getObject());
+            this.getObject().context = this.getObject().getPath(this.context.getObject());
         }
         await this.getObject().uis_update_context();
     }
 
     async pasteNext() {
-        await this.context.uiA.pasteNextOnSubitem(this.entity);
+        await this.context.pasteNextOnSubitem(this);
     }
 
     async showMeta() {
@@ -375,7 +375,7 @@ export class UiA {
         if (this.appA) {
             return this.appA;
         } else if (this.context) {
-            return this.context.uiA.findAppUi();
+            return this.context.findAppUi();
         } else {
             return undefined;
         }
@@ -383,7 +383,7 @@ export class UiA {
 
     createSubUiFor(object: Entity) : UiA {
         let ui = this.entity.getApp_typed().uiA.createUiFor_typed(object);
-        ui.context = this.entity;
+        ui.context = this;
         ui.editable = this.editable;
         return ui;
     }
