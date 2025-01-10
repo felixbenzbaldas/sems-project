@@ -104,12 +104,12 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs(root.context.listOfNames[1], '345');
         assert_sameAs(root.collapsible, false);
         assert_sameAs(root.listA.jsList.length, 2);
-        assert_sameAs(root.listA.jsList[0].pathA.listOfNames[0], '..');
-        assert_sameAs(root.listA.jsList[0].pathA.listOfNames[1], '567');
-        assert_sameAs(root.listA.jsList[1].pathA.listOfNames[0], '..');
-        assert_sameAs(root.listA.jsList[1].pathA.listOfNames[1], '..');
-        assert_sameAs(root.listA.jsList[1].pathA.listOfNames[2], 'AnotherHouse');
-        assert_sameAs(root.listA.jsList[1].pathA.listOfNames[3], '789');
+        assert_sameAs(root.listA.jsList[0].listOfNames[0], '..');
+        assert_sameAs(root.listA.jsList[0].listOfNames[1], '567');
+        assert_sameAs(root.listA.jsList[1].listOfNames[0], '..');
+        assert_sameAs(root.listA.jsList[1].listOfNames[1], '..');
+        assert_sameAs(root.listA.jsList[1].listOfNames[2], 'AnotherHouse');
+        assert_sameAs(root.listA.jsList[1].listOfNames[3], '789');
     });
     tests.add('export', async run => {
         let container = run.app.unboundG.createTextWithList('the container');
@@ -152,7 +152,7 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs(containedAndSub.container, container);
         assert_sameAs(containedAndSub.name, container.containerA.mapNameEntity.keys().next().value);
         assert_sameAs(await containedAndSub.context.resolve(), container);
-        assert(notNullUndefined(container.listA.jsList.at(0).pathA));
+        assert(notNullUndefined(container.listA.jsList[0]));
     }, createFromJson => {
         createFromJson.add('testData', async run => {
             let container = run.app.unboundG.createFromJson(testData);
@@ -182,7 +182,7 @@ export function test_add(tests : TestG_NestedTestsA) {
 
             await list.listA.insertPathAtPosition(run.app.direct(listItem).pathA, 0);
 
-            assert_sameAs(await list.listA.jsList[0].pathA.resolve(), listItem);
+            assert_sameAs(await list.listA.jsList[0].resolve(), listItem);
         });
         list.add('insertObjectAtPosition', async run => {
             let list : Entity = await run.app.createList();

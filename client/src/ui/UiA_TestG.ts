@@ -22,32 +22,32 @@ export class UiA_TestG {
     }
 
     private async updateBodyContent() {
-        let appA = this.entity.getApp().appA;
-        let bodyContent = appA.unboundG.createList();
-        if (this.getObject().test_result_error) {
-            let errorUi = appA.unboundG.createCollapsible('failed with ' + this.getObject().test_result_error.toString());
-            if (this.getObject().test_result_error.stack) {
-                errorUi.listA.jsList.push(appA.unboundG.createTextWithList('stacktrace:', appA.unboundG.createText(this.getObject().test_result_error.stack)));
-            }
-            bodyContent.listA.jsList.push(errorUi);
-        }
-        if (this.getObject().test_app) {
-            let log = appA.unboundG.createText('');
-            let updateLogFunc = async () => {
-                log.text = this.getObject().test_app.appA.logG.listOfStrings.join('\n');
-                if (log.uiA) {
-                    await log.updateUi();
-                }
-            }
-            await updateLogFunc();
-            bodyContent.listA.addDirect(appA.unboundG.createCollapsible('log',
-                log,
-                appA.unboundG.createButton('update log', updateLogFunc)));
-            bodyContent.listA.addDirect(appA.unboundG.createCollapsible('ui',
-                this.getObject().test_app));
-        }
-        this.bodyContentUi = this.getUiA().createSubUiFor(bodyContent);
-        await this.bodyContentUi.update();
+        // let appA = this.entity.getApp().appA;
+        // let bodyContent = appA.unboundG.createList();
+        // if (this.getObject().test_result_error) {
+        //     let errorUi = appA.unboundG.createCollapsible('failed with ' + this.getObject().test_result_error.toString());
+        //     if (this.getObject().test_result_error.stack) {
+        //         errorUi.listA.jsList.push(appA.unboundG.createTextWithList('stacktrace:', appA.unboundG.createText(this.getObject().test_result_error.stack)));
+        //     }
+        //     bodyContent.listA.jsList.push(errorUi);
+        // }
+        // if (this.getObject().test_app) {
+        //     let log = appA.unboundG.createText('');
+        //     let updateLogFunc = async () => {
+        //         log.text = this.getObject().test_app.appA.logG.listOfStrings.join('\n');
+        //         if (log.uiA) {
+        //             await log.updateUi();
+        //         }
+        //     }
+        //     await updateLogFunc();
+        //     bodyContent.listA.addDirect(appA.unboundG.createCollapsible('log',
+        //         log,
+        //         appA.unboundG.createButton('update log', updateLogFunc)));
+        //     bodyContent.listA.addDirect(appA.unboundG.createCollapsible('ui',
+        //         this.getObject().test_app));
+        // }
+        // this.bodyContentUi = this.getUiA().createSubUiFor(bodyContent);
+        // await this.bodyContentUi.update();
 
     }
 

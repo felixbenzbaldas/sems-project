@@ -110,11 +110,11 @@ export class Entity {
         }
     }
 
-    pathOrObject(object : Entity) : Entity {
+    pathOrDirect(object : Entity) : PathA {
         if (object.isUnbound()) {
-            return object;
+            return this.getApp_typed().direct_typed(object);
         } else {
-            return this.getPath(object).entity;
+            return this.getPath(object);
         }
     }
 
@@ -173,9 +173,7 @@ export class Entity {
         }
         if (this.listA) {
             for (let current of this.listA.jsList) {
-                if (current.pathA) {
-                    await add(set, await current.pathA.resolve());
-                }
+                await add(set, await current.resolve());
             }
         }
         if (this.context) {
@@ -344,11 +342,7 @@ export class Entity {
         if (this.listA) {
             copy.installListA();
             for (let listItem of this.listA.jsList) {
-                if (listItem.pathA) {
-                    copy.listA.jsList.push(copy.getPath(await listItem.pathA.resolve()).entity);
-                } else {
-                    copy.listA.jsList.push(listItem); // TODO remove this
-                }
+                copy.listA.jsList.push(copy.getPath(await listItem.resolve()));
             }
         }
         return copy;

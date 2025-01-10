@@ -12,7 +12,9 @@ export class AppA_UnboundG {
 
     createList(...jsList : Array<Entity>) : Entity {
         let list = this.entity.appA.createEntityWithApp();
-        list.listA = new ListA(list, ...jsList);
+        list.listA = new ListA(list, ...(jsList.map(entity => {
+            return this.entity.appA.direct_typed(entity);
+        })));
         return list;
     }
 
@@ -36,7 +38,9 @@ export class AppA_UnboundG {
     createTextWithList(text : string, ...jsList : Array<Entity>) : Entity {
         let entity = this.entity.appA.createEntityWithApp();
         entity.text = text;
-        entity.listA = new ListA(entity, ...jsList);
+        entity.listA = new ListA(entity, ...(jsList.map(entity => {
+            return this.entity.appA.direct_typed(entity);
+        })));
         return entity;
     }
 

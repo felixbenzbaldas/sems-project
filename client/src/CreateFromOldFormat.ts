@@ -28,11 +28,11 @@ export class CreateFromOldFormat {
                 }
                 current.installListA();
                 for (let detail of jsonObject.details) {
-                    current.listA.jsList.push(this.createPath(current, detail));
+                    current.listA.jsList.push(this.createPath_typed(current, detail));
                 }
             }
         }
-        entity.listA.jsList.push(this.entity.appA.createPath([
+        entity.listA.jsList.push(this.entity.appA.createPath_typed([
             this.splitPathString(json.rootObject)[1]], entity));
         return entity;
     }

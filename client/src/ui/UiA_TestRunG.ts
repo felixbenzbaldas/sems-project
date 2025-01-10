@@ -37,17 +37,18 @@ export class UiA_TestRunG {
         if (this.getTestRun().resultG_error) {
             let error = appA.unboundG.createCollapsible('failed with ' + this.getTestRun().resultG_error.message);
             if (this.getTestRun().resultG_error.stack) {
-                error.listA.jsList.push(appA.unboundG.createTextWithList('stacktrace:',
-                    appA.unboundG.createText(this.getTestRun().resultG_error.stack)));
+                error.listA.addDirect(
+                    appA.unboundG.createTextWithList('stacktrace:',
+                        appA.unboundG.createText(this.getTestRun().resultG_error.stack)));
             }
-            bodyContent.listA.jsList.push(error);
+            bodyContent.listA.addDirect(error);
         }
         if (this.getObject().testRunA.app_uiA) {
-            bodyContent.listA.jsList.push(
+            bodyContent.listA.addDirect(
                 this.entity.getApp().appA.unboundG.createCollapsible('ui', this.getObject().testRunA.app_uiA.entity));
         }
         if (this.getObject().testRunA.nestedRuns) {
-            bodyContent.listA.jsList.push(this.getObject().testRunA.nestedRuns);
+            bodyContent.listA.addDirect(this.getObject().testRunA.nestedRuns);
         }
         this.bodyContentUi = this.entity.uiA.createSubUiFor(bodyContent);
         await this.bodyContentUi.update();
