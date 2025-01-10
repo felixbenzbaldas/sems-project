@@ -64,9 +64,9 @@ export class UiA_BodyG {
     async content_update() {
         this.content_htmlElement = document.createElement('div');
         if (this.getObject().isTest) {
-            this.content_htmlElement.appendChild(this.getUiA().testG.bodyContent.uiA.htmlElement);
+            this.content_htmlElement.appendChild(this.getUiA().testG.bodyContentUi.htmlElement);
         } else if (this.getObject().testRunA) {
-            this.content_htmlElement = this.getUiA().testRunG.bodyContent.uiA.htmlElement;
+            this.content_htmlElement = this.getUiA().testRunG.bodyContentUi.htmlElement;
         } else {
             this.content_htmlElement.appendChild(this.content_contextAsSubitem_htmlElement);
             await this.updateContextAsSubitem();

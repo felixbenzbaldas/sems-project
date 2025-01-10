@@ -23,6 +23,7 @@ export class UiA_AppA {
     showMeta : boolean;
     contentUi : UiA;
     webMetaUi : UiA;
+    commandsUi: UiA;
     withPlaceholderArea: boolean;
     focusStyle_marker: HTMLElement;
     isInstalled : boolean;
@@ -43,7 +44,7 @@ export class UiA_AppA {
             this.htmlElement.style.color = app_uiA.theme_fontColor;
         }
         if (this.showMeta) {
-            await this.commands.updateUi();
+            await this.commandsUi.update();
             await this.input.getUi().updateUi();
             await this.output.getUi().updateUi();
         }
@@ -114,8 +115,8 @@ export class UiA_AppA {
         this.statusBar.style.minHeight = '1.2rem';
         this.statusBar.style.maxHeight = '1.2rem';
         if (this.showMeta) {
-            if (this.commands) {
-                this.scrollableArea.appendChild(this.commands.uiA.htmlElement);
+            if (this.commandsUi) {
+                this.scrollableArea.appendChild(this.commandsUi.htmlElement);
             }
             this.scrollableArea.appendChild(this.input.getUi().uiA.htmlElement);
             this.scrollableArea.appendChild(this.output.getUi().uiA.htmlElement);

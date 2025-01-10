@@ -14,14 +14,14 @@ export class OutputA {
         this.outputDownload = app.createEntityWithApp();
         this.outputDownload.codeG_html = document.createElement('div');
         this.outputDownload.codeG_html.style.margin = '0.5rem';
-        this.ui = app.unboundG.createTextWithList('output',
+        let uiData = app.unboundG.createTextWithList('output',
             this.outputDownload,
             app.unboundG.createButton('select', () => {
                 selectAllTextOfDiv(this.ui.uiA.listG.uisOfListItems.at(2).uiA.textG.htmlElement);
             }), this.output);
-        this.ui.uiA = new UiA(this.ui);
+        uiData.collapsible = true;
+        this.ui = app.uiA.createUiFor(uiData);
         this.ui.uiA.context = entity;
-        this.ui.collapsible = true;
     }
 
     async setAndUpdateUi(string : string) {

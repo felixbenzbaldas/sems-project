@@ -4,7 +4,7 @@ import {UiA} from "@/ui/UiA";
 export class UiA_TestG {
 
     headerContent_htmlElement: HTMLElement = document.createElement('div');
-    bodyContent: Entity;
+    bodyContentUi : UiA;
 
     constructor(private entity : Entity) {
     }
@@ -23,13 +23,13 @@ export class UiA_TestG {
 
     private async updateBodyContent() {
         let appA = this.entity.getApp().appA;
-        this.bodyContent = appA.unboundG.createList();
+        let bodyContent = appA.unboundG.createList();
         if (this.getObject().test_result_error) {
             let errorUi = appA.unboundG.createCollapsible('failed with ' + this.getObject().test_result_error.toString());
             if (this.getObject().test_result_error.stack) {
                 errorUi.listA.jsList.push(appA.unboundG.createTextWithList('stacktrace:', appA.unboundG.createText(this.getObject().test_result_error.stack)));
             }
-            this.bodyContent.listA.jsList.push(errorUi);
+            bodyContent.listA.jsList.push(errorUi);
         }
         if (this.getObject().test_app) {
             let log = appA.unboundG.createText('');
@@ -40,14 +40,15 @@ export class UiA_TestG {
                 }
             }
             await updateLogFunc();
-            this.bodyContent.listA.addDirect(appA.unboundG.createCollapsible('log',
+            bodyContent.listA.addDirect(appA.unboundG.createCollapsible('log',
                 log,
                 appA.unboundG.createButton('update log', updateLogFunc)));
-            this.bodyContent.listA.addDirect(appA.unboundG.createCollapsible('ui',
+            bodyContent.listA.addDirect(appA.unboundG.createCollapsible('ui',
                 this.getObject().test_app));
         }
-        this.bodyContent.uiA = new UiA(this.bodyContent);
-        await this.bodyContent.uiA.update();
+        this.bodyContentUi = this.getUiA().createSubUiFor(bodyContent);
+        await this.bodyContentUi.update();
+
     }
 
     getUiA() : UiA {

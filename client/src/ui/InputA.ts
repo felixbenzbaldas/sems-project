@@ -1,5 +1,4 @@
 import type {Entity} from "@/Entity";
-import {UiA} from "@/ui/UiA";
 import {textFileInput} from "@/utils";
 
 export class InputA {
@@ -16,11 +15,11 @@ export class InputA {
             this.input.text = text;
             await this.input.uis_update();
         });
-        this.ui = app.unboundG.createTextWithList('input', this.input,
+        let uiData = app.unboundG.createTextWithList('input', this.input,
             app.unboundG.createTextWithList('You can choose a text file as input:', html));
-        this.ui.uiA = new UiA(this.ui);
+        uiData.collapsible = true;
+        this.ui = app.uiA.createUiFor_typed(uiData).entity;
         this.ui.uiA.context = entity;
-        this.ui.collapsible = true;
     }
 
     getUi() : Entity {

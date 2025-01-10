@@ -51,8 +51,8 @@ export class AppA_UiA {
         if (withMeta) {
             ui.appA.showMeta = true;
             ui.appA.commands = ui.appA.createCommands();
-            ui.appA.commands.uiA = new UiA(ui.appA.commands);
-            ui.appA.commands.uiA.context = ui.entity;
+            ui.appA.commandsUi = this.createUiFor_typed(ui.appA.commands);
+            ui.appA.commandsUi.context = ui.entity;
         }
         await ui.appA.update();
         ui.htmlElement.appendChild(ui.appA.htmlElement);

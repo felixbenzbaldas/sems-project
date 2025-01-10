@@ -5,7 +5,7 @@ import {notNullUndefined} from "@/utils";
 
 export class UiA_TestRunG {
 
-    bodyContent: Entity;
+    bodyContentUi: UiA;
     headerContent_htmlElement: HTMLElement;
 
     constructor(private entity : Entity) {
@@ -33,25 +33,24 @@ export class UiA_TestRunG {
 
     async updateBodyContent() {
         let appA = this.entity.getApp().appA;
-        this.bodyContent = appA.unboundG.createList();
+        let bodyContent = appA.unboundG.createList();
         if (this.getTestRun().resultG_error) {
             let error = appA.unboundG.createCollapsible('failed with ' + this.getTestRun().resultG_error.message);
             if (this.getTestRun().resultG_error.stack) {
                 error.listA.jsList.push(appA.unboundG.createTextWithList('stacktrace:',
                     appA.unboundG.createText(this.getTestRun().resultG_error.stack)));
             }
-            this.bodyContent.listA.jsList.push(error);
+            bodyContent.listA.jsList.push(error);
         }
         if (this.getObject().testRunA.app_uiA) {
-            this.bodyContent.listA.jsList.push(
+            bodyContent.listA.jsList.push(
                 this.entity.getApp().appA.unboundG.createCollapsible('ui', this.getObject().testRunA.app_uiA.entity));
         }
         if (this.getObject().testRunA.nestedRuns) {
-            this.bodyContent.listA.jsList.push(this.getObject().testRunA.nestedRuns);
+            bodyContent.listA.jsList.push(this.getObject().testRunA.nestedRuns);
         }
-        this.bodyContent.uiA = new UiA(this.bodyContent);
-        this.bodyContent.uiA.context = this.entity;
-        await this.bodyContent.uiA.update();
+        this.bodyContentUi = this.entity.uiA.createSubUiFor(bodyContent);
+        await this.bodyContentUi.update();
     }
 
     getTestRun() : TestRunA {
