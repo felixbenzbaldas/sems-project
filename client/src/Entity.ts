@@ -85,7 +85,7 @@ export class Entity {
         } else {
             listOfNames = ['..', ...this.container.getPath(object).listOfNames];
         }
-        return this.getApp_typed().createPath_typed(listOfNames, this);
+        return this.getApp_typed().createPath(listOfNames, this);
     }
 
     contains(object : Entity) : boolean {

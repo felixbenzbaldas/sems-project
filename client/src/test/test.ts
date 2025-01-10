@@ -126,7 +126,7 @@ export function test_add(tests : TestG_NestedTestsA) {
     });
     tests.add('jsonWithoutContainedObjects', async run => {
         let object = run.app.unboundG.createTextWithList('object');
-        object.context = run.app.createPath_typed(['aName'], object);
+        object.context = run.app.createPath(['aName'], object);
 
         let json = object.json_withoutContainedObjects();
 

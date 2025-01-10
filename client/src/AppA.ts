@@ -57,16 +57,12 @@ export class AppA {
         return this.currentContainer.containerA.createTextWithList(text, ...jsList);
     }
 
-    createPath(listOfNames: Array<string>, subject : Entity) {
+    createPath(listOfNames: Array<string>, subject : Entity) : PathA {
         let path = this.createEntityWithApp();
         path.installPathA();
         path.pathA.listOfNames = listOfNames;
         path.pathA.subject = subject;
-        return path;
-    }
-
-    createPath_typed(listOfNames: Array<string>, subject : Entity) : PathA {
-        return this.createPath(listOfNames, subject).pathA;
+        return path.pathA;
     }
 
     direct(entity : Entity) : Entity {

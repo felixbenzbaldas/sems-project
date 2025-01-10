@@ -14,7 +14,7 @@ export class ListA {
     }
 
     async addByListOfNames(listOfNames : Array<string>) {
-        this.jsList.push(this.entity.getApp_typed().createPath_typed(listOfNames, this.entity));
+        this.jsList.push(this.entity.getApp_typed().createPath(listOfNames, this.entity));
     }
 
     addDirect(...entities: Array<Entity>) {

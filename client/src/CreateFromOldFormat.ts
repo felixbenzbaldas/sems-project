@@ -20,7 +20,7 @@ export class CreateFromOldFormat {
             let properties = jsonObject.properties;
             current.text = properties.text;
             if (properties.context) {
-                current.context = this.createPath_typed(current, properties.context);
+                current.context = this.createPath(current, properties.context);
             }
             if (jsonObject.details && jsonObject.details.length > 0) {
                 if (notNullUndefined(properties.defaultExpanded)) {
@@ -28,11 +28,11 @@ export class CreateFromOldFormat {
                 }
                 current.installListA();
                 for (let detail of jsonObject.details) {
-                    current.listA.jsList.push(this.createPath_typed(current, detail));
+                    current.listA.jsList.push(this.createPath(current, detail));
                 }
             }
         }
-        entity.listA.jsList.push(this.entity.appA.createPath_typed([
+        entity.listA.jsList.push(this.entity.appA.createPath([
             this.splitPathString(json.rootObject)[1]], entity));
         return entity;
     }
@@ -41,16 +41,12 @@ export class CreateFromOldFormat {
         return oldPath.split('-');
     }
 
-    createPath(object : Entity, oldPath : string) : Entity {
+    createPath(object: Entity, oldPath : string) : PathA{
         let splitted = this.splitPathString(oldPath);
         if (this.houseName === splitted[0]) {
             return this.entity.appA.createPath(['..', splitted[1]], object);
         } else {
             return this.entity.appA.createPath(['..', '..', splitted[0], splitted[1]], object);
         }
-    }
-
-    createPath_typed(object: Entity, oldPath : string) : PathA{
-        return this.createPath(object, oldPath).pathA;
     }
 }
