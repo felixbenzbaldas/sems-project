@@ -382,12 +382,9 @@ export class UiA {
     }
 
     createSubUiFor(object: Entity) : UiA {
-        let ui : Entity = this.entity.getApp().appA.createEntityWithApp();
-        ui.uiA = new UiA(ui);
-        ui.uiA.object = object;
-        ui.uiA.context = this.entity;
-        ui.uiA.editable = this.editable;
-        object.uis_add(ui.uiA);
-        return ui.uiA;
+        let ui = this.entity.getApp_typed().uiA.createUiFor_typed(object);
+        ui.context = this.entity;
+        ui.editable = this.editable;
+        return ui;
     }
 }
