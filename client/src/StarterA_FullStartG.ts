@@ -26,9 +26,7 @@ export class StarterA_FullStartG {
         let pathString = starter.getEnvironment().url.searchParams.get('path');
         let listOfNames = ['..', starter.data.name, ...pathString.split('-')];
         await starter.createdApp.appA.uiA.content.listA.addByListOfNames(listOfNames);
-        starter.createdApp.appA.uiA.theme_backgroundColor = Color.LIGHT_BEIGE;
-        starter.createdApp.appA.uiA.theme_fontColor = Color.NEW_DARK_VIOLETTE;
-        starter.createdApp.appA.uiA.theme_font = Font.ELEGANT;
+        starter.themeElegant();
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
@@ -53,9 +51,7 @@ export class StarterA_FullStartG {
         starter.createAppWithUI();
         starter.createdApp.appA.uiA.isWebsite = true;
         starter.createData();
-        starter.createdApp.appA.uiA.theme_backgroundColor = Color.LIGHT_BEIGE;
-        starter.createdApp.appA.uiA.theme_fontColor = Color.NEW_DARK_VIOLETTE;
-        starter.createdApp.appA.uiA.theme_font = Font.ELEGANT;
+        starter.themeElegant();
         let website = await starter.data.listA.findByText(starter.hostname())
         let start = await website.listA.findByText('start');
         for (let resolved of await start.listA.getResolvedList()) {

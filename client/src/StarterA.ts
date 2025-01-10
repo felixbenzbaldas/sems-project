@@ -112,23 +112,7 @@ export class StarterA {
         return this.createdApp;
     }
 
-    async createWebsite() : Promise<Entity> {
-        this.createAppWithUI();
-        this.createdApp.appA.uiA.isWebsite = true;
-        this.createData();
-        this.themeElegant();
-        let website = await this.data.listA.findByText(this.hostname())
-        let start = await website.listA.findByText('start');
-        for (let resolved of await start.listA.getResolvedList()) {
-            await this.createdApp.appA.uiA.content.listA.add(resolved);
-        }
-        if (this.getEnvironment().setTitle)  {
-            this.getEnvironment().setTitle((await (await website.listA.findByText('title'))?.listA.getResolved(0)).text);
-        }
-        return this.createdApp;
-    }
-
-    private themeElegant() {
+    themeElegant() {
         this.createdApp.appA.uiA.theme_backgroundColor = Color.LIGHT_BEIGE;
         this.createdApp.appA.uiA.theme_fontColor = Color.NEW_DARK_VIOLETTE;
         this.createdApp.appA.uiA.theme_font = Font.ELEGANT;
