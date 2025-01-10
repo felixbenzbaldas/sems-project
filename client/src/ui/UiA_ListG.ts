@@ -39,7 +39,7 @@ export class UiA_ListG {
         let listA = this.getObject().listA;
         await listA.insertPathOrDirectAtPosition(created, position);
         if (notNullUndefined(this.getObject().text)) {
-            created.context = created.getPath(this.getObject());
+            created.context = created.getPath_typed(this.getObject());
         }
         await listA.entity.uis_update_addedListItem(position);
         this.entity.uiA.findAppUi().focus(this.uisOfListItems[position]);

@@ -152,7 +152,7 @@ export class UiA {
             let position = 0;
             let listA = this.getObject().listA;
             await listA.insertPathOrDirectAtPosition(created, position);
-            created.context = created.getPath(this.getObject());
+            created.context = created.getPath_typed(this.getObject());
             await listA.entity.uis_update_addedListItem(position);
             await this.ensureExpanded();
             this.findAppUi().focus(this.entity.uiA.listG.uisOfListItems.at(position));
@@ -309,7 +309,7 @@ export class UiA {
     // check objectHasContext() before calling this method
     async inContext() : Promise<boolean> {
         if (notNullUndefined(this.context)) {
-            return this.context.getObject() === await this.getObject().context.pathA.resolve();
+            return this.context.getObject() === await this.getObject().context.resolve();
         } else {
             return false;
         }
@@ -323,7 +323,7 @@ export class UiA {
         if (this.getObject().context) {
             this.getObject().context = undefined;
         } else {
-            this.getObject().context = this.getObject().getPath(this.context.getObject());
+            this.getObject().context = this.getObject().getPath_typed(this.context.getObject());
         }
         await this.getObject().uis_update_context();
     }

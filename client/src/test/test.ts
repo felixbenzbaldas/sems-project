@@ -21,7 +21,7 @@ export function test_add(tests : TestG_NestedTestsA) {
         await object.listA.add(dependency);
         await dependency.listA.add(dependencyOfDependency);
         let context = await run.app.createText('context');
-        object.context = object.getPath(context);
+        object.context = object.getPath_typed(context);
 
         let dependencies = await object.getDependencies();
 
@@ -49,10 +49,10 @@ export function test_add(tests : TestG_NestedTestsA) {
         object.collapsible = true;
         let dependency = await run.app.createText('dependency');
         await object.listA.add(dependency);
-        object.context = object.getPath(await run.app.createText('dummyContext'));
+        object.context = object.getPath_typed(await run.app.createText('dummyContext'));
         let dependencyWithContext = await run.app.createText('dependency with context');
         await object.listA.add(dependencyWithContext);
-        dependencyWithContext.context = dependencyWithContext.getPath(object);
+        dependencyWithContext.context = dependencyWithContext.getPath_typed(object);
 
         let copy : Entity = await object.deepCopy().run();
 
@@ -61,7 +61,7 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs(copy.context, undefined);
         assert_sameAs((await copy.listA.getResolved(0)).text, 'dependency');
         assert_notSameAs(await copy.listA.getResolved(0), dependency);
-        assert_sameAs(await (await copy.listA.getResolved(1)).context.pathA.resolve(), copy);
+        assert_sameAs(await (await copy.listA.getResolved(1)).context.resolve(), copy);
         assert_sameAs(copy.container, run.app.entity);
     });
     tests.add('createBoundEntity', async run => {
@@ -100,8 +100,8 @@ export function test_add(tests : TestG_NestedTestsA) {
         let root : Entity = await container.listA.getResolved(0);
         assert_sameAs(root.text, 'foo bar');
         assert_sameAs(root.name, '0');
-        assert_sameAs(root.context.pathA.listOfNames[0], '..');
-        assert_sameAs(root.context.pathA.listOfNames[1], '345');
+        assert_sameAs(root.context.listOfNames[0], '..');
+        assert_sameAs(root.context.listOfNames[1], '345');
         assert_sameAs(root.collapsible, false);
         assert_sameAs(root.listA.jsList.length, 2);
         assert_sameAs(root.listA.jsList[0].pathA.listOfNames[0], '..');
@@ -126,7 +126,7 @@ export function test_add(tests : TestG_NestedTestsA) {
     });
     tests.add('jsonWithoutContainedObjects', async run => {
         let object = run.app.unboundG.createTextWithList('object');
-        object.context = run.app.createPath(['aName'], object);
+        object.context = run.app.createPath_typed(['aName'], object);
 
         let json = object.json_withoutContainedObjects();
 
@@ -151,7 +151,7 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs(containedAndSub.text, 'contained + subitem');
         assert_sameAs(containedAndSub.container, container);
         assert_sameAs(containedAndSub.name, container.containerA.mapNameEntity.keys().next().value);
-        assert_sameAs(await containedAndSub.context.pathA.resolve(), container);
+        assert_sameAs(await containedAndSub.context.resolve(), container);
         assert(notNullUndefined(container.listA.jsList.at(0).pathA));
     }, createFromJson => {
         createFromJson.add('testData', async run => {

@@ -81,7 +81,7 @@ export class UiA_BodyG {
     async updateContextAsSubitem() {
         this.content_contextAsSubitem_htmlElement.innerHTML = null;
         if (await this.getUiA().hasContextAsSubitem()) {
-            let contextObj = await this.getObject().context.pathA.resolve();
+            let contextObj = await this.getObject().context.resolve();
             let contextAsSubitem = this.entity.getApp_typed().unboundG.createTextWithList('[context]', contextObj);
             contextAsSubitem.collapsible = true;
             contextAsSubitem.editable = false;

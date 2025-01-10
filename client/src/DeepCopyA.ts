@@ -32,7 +32,7 @@ export class DeepCopyA {
         emptyEntity.editable = object.editable;
         if (object.context) {
             if (object !== this.entity) {
-                emptyEntity.context = emptyEntity.getPath(this.map.get(await object.context.pathA.resolve()));
+                emptyEntity.context = emptyEntity.getPath_typed(this.map.get(await object.context.resolve()));
             }
         }
         if (object.listA) {

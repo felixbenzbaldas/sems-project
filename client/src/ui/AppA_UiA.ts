@@ -63,7 +63,7 @@ export class AppA_UiA {
         await object.listA.insertObjectAtPosition(this.clipboard, position);
         if (this.clipboard_lostContext) {
             if (notNullUndefined(object.text)) {
-                this.clipboard.context = this.clipboard.getPath(object);
+                this.clipboard.context = this.clipboard.getPath_typed(object);
                 this.clipboard_lostContext = false;
             }
         }

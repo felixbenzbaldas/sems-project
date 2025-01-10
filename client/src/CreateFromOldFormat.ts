@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import {notNullUndefined} from "@/utils";
+import type {PathA} from "@/PathA";
 
 export class CreateFromOldFormat {
 
@@ -19,7 +20,7 @@ export class CreateFromOldFormat {
             let properties = jsonObject.properties;
             current.text = properties.text;
             if (properties.context) {
-                current.context = this.createPath(current, properties.context);
+                current.context = this.createPath_typed(current, properties.context);
             }
             if (jsonObject.details && jsonObject.details.length > 0) {
                 if (notNullUndefined(properties.defaultExpanded)) {
@@ -47,5 +48,9 @@ export class CreateFromOldFormat {
         } else {
             return this.entity.appA.createPath(['..', '..', splitted[0], splitted[1]], object);
         }
+    }
+
+    createPath_typed(object: Entity, oldPath : string) : PathA{
+        return this.createPath(object, oldPath).pathA;
     }
 }

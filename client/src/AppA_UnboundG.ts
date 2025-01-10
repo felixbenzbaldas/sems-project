@@ -60,7 +60,7 @@ export class AppA_UnboundG {
         entity.link = json.link;
         entity.editable = json.editable;
         if (notNullUndefined(json.context)) {
-            entity.context = this.entity.appA.createPath(json.context, entity);
+            entity.context = this.entity.appA.createPath_typed(json.context, entity);
         }
         if (notNullUndefined(json.list)) {
             entity.installListA();

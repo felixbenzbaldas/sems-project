@@ -21,7 +21,7 @@ export class Entity {
     collapsible: boolean;
     codeG_html: HTMLElement;
     uis: Array<UiA>;
-    context: Entity;
+    context: PathA;
 
     codeG_jsFunction: Function;
 
@@ -65,7 +65,7 @@ export class Entity {
             link: this.link,
             editable: this.editable,
             content: this.appA?.uiA?.content.json_withoutContainedObjects(),
-            context: this.context?.pathA.listOfNames
+            context: this.context?.listOfNames
         };
         if (this.appA?.currentContainer) {
             obj.currentContainerText = this.appA.currentContainer.text;
@@ -86,6 +86,10 @@ export class Entity {
             listOfNames = ['..', ...this.container.getPath(object).pathA.listOfNames];
         }
         return this.getApp_typed().createPath(listOfNames, this);
+    }
+
+    getPath_typed(object : Entity) {
+        return this.getPath(object).pathA;
     }
 
     contains(object : Entity) : boolean {
@@ -179,7 +183,7 @@ export class Entity {
             }
         }
         if (this.context) {
-            await add(set, await this.context.pathA.resolve());
+            await add(set, await this.context.resolve());
         }
     }
 
@@ -374,7 +378,7 @@ export class Entity {
         for (let value of [this, ...this.containerA.mapNameEntity.values()]) {
             if (value.listA) {
                 (await value.listA.getResolvedList()).forEach((subitem : Entity) => {
-                    subitem.context = subitem.getPath(value);
+                    subitem.context = subitem.getPath_typed(value);
                 });
             }
         }
