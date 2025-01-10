@@ -43,23 +43,20 @@ export class AppA_UiA {
     }
 
     async createAppUi(withPlaceholderArea : boolean, editable? : boolean, withMeta? : boolean) : Promise<UiA_AppA> {
-        let ui : Entity = this.entity.getApp().appA.createEntityWithApp();
-        ui.uiA = new UiA(ui);
-        ui.uiA.object = this.entity;
-        this.entity.uis_add(ui.uiA);
-        ui.uiA.htmlElement.style.height = '100%';
-        ui.uiA.installAppUi();
-        ui.uiA.appA.withPlaceholderArea = withPlaceholderArea;
-        ui.uiA.editable = editable;
+        let ui = this.createUiFor_typed(this.entity);
+        ui.htmlElement.style.height = '100%';
+        ui.installAppUi();
+        ui.appA.withPlaceholderArea = withPlaceholderArea;
+        ui.editable = editable;
         if (withMeta) {
-            ui.uiA.appA.showMeta = true;
-            ui.uiA.appA.commands = ui.uiA.appA.createCommands();
-            ui.uiA.appA.commands.uiA = new UiA(ui.uiA.appA.commands);
-            ui.uiA.appA.commands.uiA.context = ui;
+            ui.appA.showMeta = true;
+            ui.appA.commands = ui.appA.createCommands();
+            ui.appA.commands.uiA = new UiA(ui.appA.commands);
+            ui.appA.commands.uiA.context = ui.entity;
         }
-        await ui.uiA.appA.update();
-        ui.uiA.htmlElement.appendChild(ui.uiA.appA.htmlElement);
-        return ui.uiA.appA;
+        await ui.appA.update();
+        ui.htmlElement.appendChild(ui.appA.htmlElement);
+        return ui.appA;
     }
 
     async insertClipboardAtPosition(object: Entity, position: number) {
