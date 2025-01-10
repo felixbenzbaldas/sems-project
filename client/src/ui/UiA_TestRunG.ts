@@ -42,9 +42,9 @@ export class UiA_TestRunG {
             }
             this.bodyContent.listA.jsList.push(error);
         }
-        if (this.getObject().testRunA.appUi) {
+        if (this.getObject().testRunA.app_uiA) {
             this.bodyContent.listA.jsList.push(
-                this.entity.getApp().appA.unboundG.createCollapsible('ui', this.getObject().testRunA.appUi.entity));
+                this.entity.getApp().appA.unboundG.createCollapsible('ui', this.getObject().testRunA.app_uiA.entity));
         }
         if (this.getObject().testRunA.nestedRuns) {
             this.bodyContent.listA.jsList.push(this.getObject().testRunA.nestedRuns);
@@ -73,6 +73,6 @@ export class UiA_TestRunG {
     hasBodyContent() : boolean {
         return notNullUndefined(this.getTestRun().resultG_error) ||
             notNullUndefined(this.getTestRun().nestedRuns) ||
-            notNullUndefined(this.getTestRun().appUi);
+            notNullUndefined(this.getTestRun().app_uiA);
     }
 }

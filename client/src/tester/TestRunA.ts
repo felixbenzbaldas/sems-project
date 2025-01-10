@@ -8,7 +8,7 @@ export class TestRunA {
     resultG_success : boolean;
     resultG_error : Error;
     nestedRuns : Entity;
-    appUi: AppA_UiA;
+    app_uiA: AppA_UiA;
     app: AppA;
 
     constructor(public entity : Entity) {

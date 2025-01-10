@@ -37,8 +37,8 @@ export class TestG_NestedTestsA {
     }
 
     prepareUi(run: TestRunA) {
-        run.appUi = this.entity.getApp_typed().createStarter().createAppWithUI_typed();
-        run.app = run.appUi.entity.getApp_typed();
+        run.app_uiA = this.entity.getApp_typed().createStarter().createAppWithUI_typed();
+        run.app = run.app_uiA.entity.getApp_typed();
     }
 
     addTestWithNestedTests_withoutApp(name: string, jsFunction : (run: TestRunA) => Promise<void>, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {
