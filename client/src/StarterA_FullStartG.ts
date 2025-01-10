@@ -1,8 +1,5 @@
 import type {Entity} from "@/Entity";
 import type {StarterA} from "@/StarterA";
-import {UiA} from "@/ui/UiA";
-import {Color} from "@/ui/Color";
-import {Font} from "@/ui/Font";
 
 export class StarterA_FullStartG {
     constructor(public entity : Entity) {
@@ -10,7 +7,7 @@ export class StarterA_FullStartG {
     async tester() {
         let starter = this.getStarter();
         starter.createTester(starter.getEnvironment().testCreator);
-        starter.testMode();
+        starter.checkTestMode();
         await starter.createdApp.appA.testerA.run();
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
@@ -31,7 +28,7 @@ export class StarterA_FullStartG {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
         let appUi = await starter.createdApp.appA.uiA.createAppUi(true);
-        starter.testMode();
+        starter.checkTestMode();
         starter.getEnvironment().activeAppUi = appUi;
         await appUi.contentUi.listG.uisOfListItems[0].uiA.ensureExpanded();
         return appUi.entity.uiA.htmlElement;
@@ -60,7 +57,7 @@ export class StarterA_FullStartG {
         if (starter.getEnvironment().setTitle)  {
             starter.getEnvironment().setTitle((await (await website.listA.findByText('title'))?.listA.getResolved(0)).text);
         }
-        starter.testMode();
+        starter.checkTestMode();
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
@@ -75,7 +72,7 @@ export class StarterA_FullStartG {
     async localApp() {
         let starter = this.getStarter();
         starter.createAppWithUI();
-        starter.testMode();
+        starter.checkTestMode();
         let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true, true);
         starter.getEnvironment().activeAppUi = appUi;
         starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
@@ -84,7 +81,7 @@ export class StarterA_FullStartG {
     async clientApp() {
         let starter = this.getStarter();
         starter.createAppWithUI();
-        starter.testMode();
+        starter.checkTestMode();
         starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta(); // important
         let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true, true);
         starter.getEnvironment().activeAppUi = appUi;

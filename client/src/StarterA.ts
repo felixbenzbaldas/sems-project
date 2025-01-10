@@ -60,7 +60,7 @@ export class StarterA {
         return this.entity.getApp().appA.environment;
     }
 
-    testMode() {
+    checkTestMode() {
         if (this.getEnvironment().url.searchParams.has('testMode')) {
             this.createdApp.appA.logG.toConsole = true;
         }
@@ -139,18 +139,5 @@ export class StarterA {
         let unboundData = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
         let unboundWebMeta = await (await (await unboundData.listA.getResolved(0)).listA.findByText('webMeta')).listA.getResolved(0);
         return unboundWebMeta;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // static methods
-
-    static createApp() {
-        return new Environment().createApp();
-    }
-
-    static createAppWithUI() {
-        let starter = new Environment().createApp().createStarter();
-        starter.createAppWithUI();
-        return starter.createdApp;
     }
 }
