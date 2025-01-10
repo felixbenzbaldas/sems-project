@@ -39,7 +39,7 @@ export class DeepCopyA {
             emptyEntity.installListA();
             for (let listItem of object.listA.jsList) {
                 if (listItem.pathA) {
-                    emptyEntity.listA.jsList.push(emptyEntity.getPath(this.map.get(await listItem.pathA.resolve())));
+                    emptyEntity.listA.jsList.push(emptyEntity.getPath_typed(this.map.get(await listItem.pathA.resolve())).entity);
                 } else {
                     emptyEntity.listA.jsList.push(listItem); // TODO remove this
                 }

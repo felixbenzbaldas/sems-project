@@ -73,23 +73,19 @@ export class Entity {
         return obj;
     }
 
-    getPath(object: Entity) : Entity {
+    getPath_typed(object: Entity) : PathA {
         this.logInfo('getPath of ' + object.getShortDescription());
         let listOfNames : Array<string>;
         if (this.contains(object)) {
             if (this === object) {
                 listOfNames = [];
             } else {
-                listOfNames = [...this.getPath(object.container).pathA.listOfNames, object.name];
+                listOfNames = [...this.getPath_typed(object.container).listOfNames, object.name];
             }
         } else {
-            listOfNames = ['..', ...this.container.getPath(object).pathA.listOfNames];
+            listOfNames = ['..', ...this.container.getPath_typed(object).listOfNames];
         }
-        return this.getApp_typed().createPath(listOfNames, this);
-    }
-
-    getPath_typed(object : Entity) {
-        return this.getPath(object).pathA;
+        return this.getApp_typed().createPath_typed(listOfNames, this);
     }
 
     contains(object : Entity) : boolean {
@@ -118,7 +114,7 @@ export class Entity {
         if (object.isUnbound()) {
             return object;
         } else {
-            return this.getPath(object);
+            return this.getPath_typed(object).entity;
         }
     }
 
@@ -349,7 +345,7 @@ export class Entity {
             copy.installListA();
             for (let listItem of this.listA.jsList) {
                 if (listItem.pathA) {
-                    copy.listA.jsList.push(copy.getPath(await listItem.pathA.resolve()));
+                    copy.listA.jsList.push(copy.getPath_typed(await listItem.pathA.resolve()).entity);
                 } else {
                     copy.listA.jsList.push(listItem); // TODO remove this
                 }
@@ -387,7 +383,7 @@ export class Entity {
     getUrl() : string {
         if (this.container) {
             let containerWithUrl = this.container.getContainerWithFixedUrl();
-            return containerWithUrl.text.substring(1) + '/?path=' + containerWithUrl.getPath(this).pathA.asString();
+            return containerWithUrl.text.substring(1) + '/?path=' + containerWithUrl.getPath_typed(this).asString();
         } else {
             return '';
         }

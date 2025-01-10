@@ -67,7 +67,7 @@ export function test_add(tests : TestG_NestedTestsA) {
     tests.add('createBoundEntity', async run => {
         let entity = await run.app.createBoundEntity();
 
-        assert_sameAs(run.app.entity.getPath(entity).pathA.listOfNames[0], entity.name);
+        assert_sameAs(run.app.entity.getPath_typed(entity).listOfNames[0], entity.name);
         assert_sameAs(run.app.entity, entity.container);
     });
     tests.add('createFromOldJson', async run => {

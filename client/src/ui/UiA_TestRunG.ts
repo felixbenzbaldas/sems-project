@@ -62,7 +62,7 @@ export class UiA_TestRunG {
     }
 
     getPathString() : string {
-        return this.entity.getApp().getPath(this.getTestRun().test).pathA.listOfNames.join('_');
+        return this.entity.getApp().getPath_typed(this.getTestRun().test).listOfNames.join('_');
     }
 
     header_getText() : string {
