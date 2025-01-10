@@ -9,7 +9,7 @@ export function test_path_add(tests : TestG_NestedTestsA) {
             getPathTest.add('ofContained', async run => {
                 let text = await run.app.createText('');
 
-                let path: PathA = run.app.entity.getPath_typed(text);
+                let path: PathA = run.app.entity.getPath(text);
 
                 assert_sameAs(path.listOfNames.length, 1);
                 assert_sameAs(path.listOfNames.at(0), text.name);
@@ -19,7 +19,7 @@ export function test_path_add(tests : TestG_NestedTestsA) {
                 container.installContainerA();
                 let containedContained = await container.containerA.createText('containedContained');
 
-                let path : PathA = run.app.entity.getPath_typed(containedContained);
+                let path : PathA = run.app.entity.getPath(containedContained);
 
                 assert_sameAs(path.listOfNames.length, 2);
                 assert_sameAs(path.listOfNames.at(0), container.name);
@@ -28,7 +28,7 @@ export function test_path_add(tests : TestG_NestedTestsA) {
             getPathTest.add('ofContainer', async run => {
                 let text = await run.app.createText('');
 
-                let path: PathA = text.getPath_typed(run.app.entity);
+                let path: PathA = text.getPath(run.app.entity);
 
                 assert_sameAs(path.listOfNames.length, 1);
                 assert_sameAs(path.listOfNames[0], '..');
@@ -39,7 +39,7 @@ export function test_path_add(tests : TestG_NestedTestsA) {
                 let containedContained = await container.containerA.createText('containedContained');
                 let text = await run.app.createText('foo');
 
-                let path : PathA = text.getPath_typed(containedContained);
+                let path : PathA = text.getPath(containedContained);
 
                 assert_sameAs(path.listOfNames.length, 3);
                 assert_sameAs(path.listOfNames[0], '..');
@@ -52,7 +52,7 @@ export function test_path_add(tests : TestG_NestedTestsA) {
                 let containedContained = await container.containerA.createText('containedContained');
                 let text = await run.app.createText('foo');
 
-                let path: PathA = containedContained.getPath_typed(container);
+                let path: PathA = containedContained.getPath(container);
 
                 assert_sameAs(path.listOfNames.length, 1);
                 assert_sameAs(path.listOfNames[0], '..');
@@ -71,7 +71,7 @@ export function test_path_add(tests : TestG_NestedTestsA) {
                 let container = run.app.createEntityWithApp();
                 container.installContainerA();
                 let contained = await container.containerA.createBoundEntity();
-                let path = container.getPath_typed(contained);
+                let path = container.getPath(contained);
 
                 let resolved = await path.resolve();
 
@@ -80,7 +80,7 @@ export function test_path_add(tests : TestG_NestedTestsA) {
                 listOfNamesTests.add('containedOfContainer', async run => {
                     let object: Entity = await run.app.createText('bar');
                     let otherObject: Entity = await run.app.createText('foo');
-                    let pathOfOther: PathA = object.getPath_typed(otherObject);
+                    let pathOfOther: PathA = object.getPath(otherObject);
 
                     let resolved: Entity = await pathOfOther.resolve();
 
@@ -91,7 +91,7 @@ export function test_path_add(tests : TestG_NestedTestsA) {
                     container.installContainerA();
                     let containedContained = await container.containerA.createText('containedContained');
                     let text = await run.app.createText('foo');
-                    let path = text.getPath_typed(containedContained);
+                    let path = text.getPath(containedContained);
 
                     let resolved: Entity = await path.resolve();
 

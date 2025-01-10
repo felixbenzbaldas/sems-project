@@ -21,7 +21,7 @@ export function test_add(tests : TestG_NestedTestsA) {
         await object.listA.add(dependency);
         await dependency.listA.add(dependencyOfDependency);
         let context = await run.app.createText('context');
-        object.context = object.getPath_typed(context);
+        object.context = object.getPath(context);
 
         let dependencies = await object.getDependencies();
 
@@ -49,10 +49,10 @@ export function test_add(tests : TestG_NestedTestsA) {
         object.collapsible = true;
         let dependency = await run.app.createText('dependency');
         await object.listA.add(dependency);
-        object.context = object.getPath_typed(await run.app.createText('dummyContext'));
+        object.context = object.getPath(await run.app.createText('dummyContext'));
         let dependencyWithContext = await run.app.createText('dependency with context');
         await object.listA.add(dependencyWithContext);
-        dependencyWithContext.context = dependencyWithContext.getPath_typed(object);
+        dependencyWithContext.context = dependencyWithContext.getPath(object);
 
         let copy : Entity = await object.deepCopy().run();
 
@@ -67,7 +67,7 @@ export function test_add(tests : TestG_NestedTestsA) {
     tests.add('createBoundEntity', async run => {
         let entity = await run.app.createBoundEntity();
 
-        assert_sameAs(run.app.entity.getPath_typed(entity).listOfNames[0], entity.name);
+        assert_sameAs(run.app.entity.getPath(entity).listOfNames[0], entity.name);
         assert_sameAs(run.app.entity, entity.container);
     });
     tests.add('createFromOldJson', async run => {

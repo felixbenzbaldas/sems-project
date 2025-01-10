@@ -73,17 +73,17 @@ export class Entity {
         return obj;
     }
 
-    getPath_typed(object: Entity) : PathA {
+    getPath(object: Entity) : PathA {
         this.logInfo('getPath of ' + object.getShortDescription());
         let listOfNames : Array<string>;
         if (this.contains(object)) {
             if (this === object) {
                 listOfNames = [];
             } else {
-                listOfNames = [...this.getPath_typed(object.container).listOfNames, object.name];
+                listOfNames = [...this.getPath(object.container).listOfNames, object.name];
             }
         } else {
-            listOfNames = ['..', ...this.container.getPath_typed(object).listOfNames];
+            listOfNames = ['..', ...this.container.getPath(object).listOfNames];
         }
         return this.getApp_typed().createPath_typed(listOfNames, this);
     }
@@ -114,7 +114,7 @@ export class Entity {
         if (object.isUnbound()) {
             return object;
         } else {
-            return this.getPath_typed(object).entity;
+            return this.getPath(object).entity;
         }
     }
 
@@ -345,7 +345,7 @@ export class Entity {
             copy.installListA();
             for (let listItem of this.listA.jsList) {
                 if (listItem.pathA) {
-                    copy.listA.jsList.push(copy.getPath_typed(await listItem.pathA.resolve()).entity);
+                    copy.listA.jsList.push(copy.getPath(await listItem.pathA.resolve()).entity);
                 } else {
                     copy.listA.jsList.push(listItem); // TODO remove this
                 }
@@ -374,7 +374,7 @@ export class Entity {
         for (let value of [this, ...this.containerA.mapNameEntity.values()]) {
             if (value.listA) {
                 (await value.listA.getResolvedList()).forEach((subitem : Entity) => {
-                    subitem.context = subitem.getPath_typed(value);
+                    subitem.context = subitem.getPath(value);
                 });
             }
         }
@@ -383,7 +383,7 @@ export class Entity {
     getUrl() : string {
         if (this.container) {
             let containerWithUrl = this.container.getContainerWithFixedUrl();
-            return containerWithUrl.text.substring(1) + '/?path=' + containerWithUrl.getPath_typed(this).asString();
+            return containerWithUrl.text.substring(1) + '/?path=' + containerWithUrl.getPath(this).asString();
         } else {
             return '';
         }

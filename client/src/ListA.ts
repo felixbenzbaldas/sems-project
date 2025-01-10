@@ -10,7 +10,7 @@ export class ListA {
     }
 
     async add(object: Entity) {
-        this.jsList.push(this.entity.getPath_typed(object).entity);
+        this.jsList.push(this.entity.getPath(object).entity);
     }
 
     async addByListOfNames(listOfNames : Array<string>) {
@@ -58,7 +58,7 @@ export class ListA {
     }
 
     async insertObjectAtPosition(listItem: Entity, position: number) {
-        await this.insertPathAtPosition(this.entity.getPath_typed(listItem), position);
+        await this.insertPathAtPosition(this.entity.getPath(listItem), position);
     }
 
     async findByText(text: string) : Promise<Entity> {
