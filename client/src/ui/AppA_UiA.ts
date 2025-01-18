@@ -1,27 +1,15 @@
 import {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
-import {notNullUndefined, nullUndefined} from "@/utils";
-import {Color} from "@/ui/Color";
+import {notNullUndefined} from "@/utils";
 import {UiA_AppA} from "@/ui/UiA_AppA";
+import {Theme} from "@/ui/Theme";
 
 export class AppA_UiA {
 
     readonly content: Entity;
     clipboard: Entity;
     clipboard_lostContext: boolean;
-    theme_fontColor : string = 'unset';
-    theme_backgroundColor : string = 'white';
-    theme_secondBackgroundColor: string = Color.LIGHT_GREY;
-    theme_buttonFontColor: string = 'grey';
-    theme_markColor: string = '#efefef';
-    theme_secondMarkColor : string = 'green';
-    theme_focusBorderColor: string = 'orange';
-    theme_highlight: string = 'green';
-    theme_success : string = 'green';
-    theme_failure : string = 'red';
-    theme_meta: string = 'blue';
-    theme_font: string = 'unset';
-    theme_fontSize: string = '1rem';
+    theme : Theme = Theme.default();
     webMeta: Entity;
     isWebsite: boolean;
 

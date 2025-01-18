@@ -112,9 +112,9 @@ export class StarterA {
     }
 
     themeElegant() {
-        this.createdApp.appA.uiA.theme_backgroundColor = Color.LIGHT_BEIGE;
-        this.createdApp.appA.uiA.theme_fontColor = Color.NEW_DARK_VIOLETTE;
-        this.createdApp.appA.uiA.theme_font = Font.ELEGANT;
+        this.createdApp.appA.uiA.theme.backgroundColor = Color.LIGHT_BEIGE;
+        this.createdApp.appA.uiA.theme.fontColor = Color.NEW_DARK_VIOLETTE;
+        this.createdApp.appA.uiA.theme.font = Font.ELEGANT;
     }
 
     hostname() : string {

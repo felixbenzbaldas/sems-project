@@ -38,10 +38,8 @@ export class UiA_AppA {
 
     async install(showMeta? : boolean, withPlaceholderArea? : boolean) : Promise<void> {
         let app_uiA = this.getApp().uiA;
-        if (notNullUndefined(app_uiA.theme_fontColor)) {
-            this.htmlElement.style.backgroundColor = app_uiA.theme_backgroundColor;
-            this.htmlElement.style.color = app_uiA.theme_fontColor;
-        }
+        this.htmlElement.style.backgroundColor = app_uiA.theme.backgroundColor;
+        this.htmlElement.style.color = app_uiA.theme.fontColor;
         if (showMeta) {
             this.commands = this.createCommands();
             this.commandsUi = this.entity.uiA.createSubUiFor(this.commands);
@@ -68,7 +66,7 @@ export class UiA_AppA {
         this.scrollableArea.style.overflowY = 'auto';
         this.scrollableArea.style.paddingLeft = '0.2rem';
         this.scrollableArea.style.paddingRight = '0.2rem';
-        this.statusBar.style.backgroundColor = this.getApp().uiA.theme_secondBackgroundColor;
+        this.statusBar.style.backgroundColor = this.getApp().uiA.theme.secondBackgroundColor;
         this.statusBar.style.minHeight = '1.2rem';
         this.statusBar.style.maxHeight = '1.2rem';
         this.scrollableArea.appendChild(this.meta_htmlElement);
@@ -125,11 +123,11 @@ export class UiA_AppA {
         this.statusBar.innerHTML = null;
         let textHtmlElement = textElem(text);
         this.statusBar.appendChild(textHtmlElement);
-        textHtmlElement.style.backgroundColor = this.getApp().uiA.theme_highlight;
+        textHtmlElement.style.backgroundColor = this.getApp().uiA.theme.highlight;
         textHtmlElement.style.display = 'inline';
         textHtmlElement.style.marginLeft = '0.5rem';
         setTimeout(()=> {
-            textHtmlElement.style.backgroundColor = this.getApp().uiA.theme_secondBackgroundColor;
+            textHtmlElement.style.backgroundColor = this.getApp().uiA.theme.secondBackgroundColor;
         }, 800);
     }
 
@@ -161,9 +159,9 @@ export class UiA_AppA {
 
     focusStyle_update() {
         if (this.focused === this.entity.uiA && this.isActive()) {
-            this.focusStyle_marker.style.backgroundColor = this.getApp().uiA.theme_focusBorderColor;
+            this.focusStyle_marker.style.backgroundColor = this.getApp().uiA.theme.focusBorderColor;
         } else {
-            this.focusStyle_marker.style.backgroundColor = this.getApp().uiA.theme_backgroundColor;
+            this.focusStyle_marker.style.backgroundColor = this.getApp().uiA.theme.backgroundColor;
         }
     }
 

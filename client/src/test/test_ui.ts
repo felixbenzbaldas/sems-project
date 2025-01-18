@@ -477,8 +477,8 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
         //             let appUi = (await environment.createApp().createStarter().createWebsite()).appA.uiA;
         //             await appUi.entity.uiA.update();
         //             let app = appUi.getApp();
-        //             appUi.theme_backgroundColor = 'yellow';
-        //             appUi.theme_fontColor = 'red';
+        //             appUi.theme.backgroundColor = 'yellow';
+        //             appUi.theme.fontColor = 'red';
         //             await appUi.entity.uiA.update();
         //             return appUi.entity.uiA.htmlElement;
         //         }
@@ -494,10 +494,10 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
         //             let appUi = (await environment.createApp().createStarter().createWebsite()).appA.uiA;
         //             await appUi.entity.uiA.update();
         //             let app = appUi.getApp();
-        //             appUi.theme_backgroundColor = Color.LIGHT_BEIGE;
-        //             appUi.theme_fontColor = Color.NEW_DARK_VIOLETTE;
-        //             appUi.theme_font = Font.ELEGANT;
-        //             appUi.theme_fontSize = '1.2rem';
+        //             appUi.theme.backgroundColor = Color.LIGHT_BEIGE;
+        //             appUi.theme.fontColor = Color.NEW_DARK_VIOLETTE;
+        //             appUi.theme.font = Font.ELEGANT;
+        //             appUi.theme.fontSize = '1.2rem';
         //
         //             await appUi.entity.uiA.update();
         //             return appUi.entity.uiA.htmlElement;
@@ -514,9 +514,9 @@ export function test_ui_add(tests : TestG_NestedTestsA) {
         //             let appUi = (await environment.createApp().createStarter().createWebsite()).appA.uiA;
         //             await appUi.entity.uiA.update();
         //             let app = appUi.getApp();
-        //             appUi.theme_backgroundColor = Color.LIGHT_LIGHT_GREY;
-        //             appUi.theme_fontColor = Color.MORE_GREYER;
-        //             appUi.theme_font = Font.SIMPLE;
+        //             appUi.theme.backgroundColor = Color.LIGHT_LIGHT_GREY;
+        //             appUi.theme.fontColor = Color.MORE_GREYER;
+        //             appUi.theme.font = Font.SIMPLE;
         //
         //             await appUi.entity.uiA.update();
         //             return appUi.entity.uiA.htmlElement;

@@ -74,7 +74,7 @@ export class UiA_HeaderG {
         containerMark.style.display = 'block';
         setWidth(containerMark, '0.8rem');
         containerMark.innerText = 'O'
-        containerMark.style.color = this.entity.getApp_typed().uiA.theme_secondMarkColor;
+        containerMark.style.color = this.entity.getApp_typed().uiA.theme.secondMarkColor;
         return containerMark;
     }
 
@@ -150,17 +150,17 @@ export class UiA_HeaderG {
 
     focusStyle_update() {
         if (this.entity.uiA.hasFocus() && this.getUiA().findAppUi().isActive()) {
-            this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme_focusBorderColor;
+            this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme.focusBorderColor;
         } else {
-            this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme_backgroundColor;
+            this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme.backgroundColor;
         }
     }
 
     updateCurrentContainerStyle() {
         if (this.entity.getApp().appA.currentContainer === this.getObject()) {
-            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp_typed().uiA.theme_markColor;
+            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp_typed().uiA.theme.markColor;
         } else {
-            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp_typed().uiA.theme_backgroundColor;
+            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp_typed().uiA.theme.backgroundColor;
         }
     }
 

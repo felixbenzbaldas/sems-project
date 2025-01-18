@@ -13,8 +13,8 @@ export class UiA_TextG {
     async update() {
         this.htmlElement.innerText = this.getObject().text;
         this.htmlElement.style.minHeight = '1rem';
-        this.htmlElement.style.fontFamily = this.entity.getApp_typed().uiA.theme_font;
-        // this.htmlElement.style.fontSize = this.entity.getApp_typed().uiA.theme_fontSize;
+        this.htmlElement.style.fontFamily = this.entity.getApp_typed().uiA.theme.font;
+        // this.htmlElement.style.fontSize = this.entity.getApp_typed().uiA.theme.fontSize;
         this.htmlElement.style.whiteSpace = 'pre-wrap';
         this.htmlElement.style.outline = "0px solid transparent"; // prevent JS focus
         this.htmlElement.onblur = async (event : any) => {
@@ -46,9 +46,9 @@ export class UiA_TextG {
 
     private updateEmptyMarker() {
         if (document.activeElement != this.htmlElement && this.getUiA().isEditable() && this.getObject().text.length === 0) {
-            this.htmlElement.style.borderLeftColor = this.entity.getApp_typed().uiA.theme_fontColor;
+            this.htmlElement.style.borderLeftColor = this.entity.getApp_typed().uiA.theme.fontColor;
         } else {
-            this.htmlElement.style.borderLeftColor = this.entity.getApp_typed().uiA.theme_backgroundColor;
+            this.htmlElement.style.borderLeftColor = this.entity.getApp_typed().uiA.theme.backgroundColor;
         }
     }
 

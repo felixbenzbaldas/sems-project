@@ -89,7 +89,7 @@ export class UiA_BodyG {
             await ui.update();
             ui.htmlElement.style.marginBottom = '0.1rem';
             ui.headerG.htmlElement.style.fontSize = '0.8rem';
-            ui.headerG.htmlElement.style.color = this.entity.getApp_typed().uiA.theme_buttonFontColor;
+            ui.headerG.htmlElement.style.color = this.entity.getApp_typed().uiA.theme.buttonFontColor;
             this.content_contextAsSubitem_htmlElement.appendChild(ui.htmlElement);
         }
     }
@@ -109,7 +109,7 @@ export class UiA_BodyG {
     async showMeta() {
         this.content_meta_htmlElement.innerHTML = null;
         this.content_meta_htmlElement.style.marginLeft = '0.7rem';
-        this.content_meta_htmlElement.style.borderLeft = '0.3rem solid ' + this.entity.getApp_typed().uiA.theme_meta;
+        this.content_meta_htmlElement.style.borderLeft = '0.3rem solid ' + this.entity.getApp_typed().uiA.theme.meta;
         let hideButton : HTMLButtonElement = document.createElement('button');
         hideButton.onclick = async () => {
             await this.getUiA().hideMeta();
