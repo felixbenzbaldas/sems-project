@@ -8,7 +8,7 @@ export class OutputA {
     private readonly output : Entity;
     private readonly outputDownload : Entity;
 
-    constructor(private entity : Entity) {
+    constructor(public entity : Entity) {
         let app = this.entity.getApp_typed();
         this.output = app.unboundG.createText('There is no output. Click on \'export\'');
         this.outputDownload = app.createEntityWithApp();
@@ -20,8 +20,7 @@ export class OutputA {
                 selectAllTextOfDiv(this.ui.uiA.listG.uisOfListItems[2].textG.htmlElement);
             }), this.output);
         uiData.collapsible = true;
-        this.ui = app.uiA.createUiFor(uiData);
-        this.ui.uiA.context = entity.uiA;
+        this.ui = entity.uiA.createSubUiFor(uiData).entity;
     }
 
     async setAndUpdateUi(string : string) {

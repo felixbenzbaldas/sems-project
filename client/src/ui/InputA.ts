@@ -18,8 +18,7 @@ export class InputA {
         let uiData = app.unboundG.createTextWithList('input', this.input,
             app.unboundG.createTextWithList('You can choose a text file as input:', html));
         uiData.collapsible = true;
-        this.ui = app.uiA.createUiFor_typed(uiData).entity;
-        this.ui.uiA.context = entity.uiA;
+        this.ui = entity.uiA.createSubUiFor(uiData).entity;
     }
 
     getUi() : Entity {
