@@ -163,7 +163,7 @@ export class UiA {
         let appUi = this.entity.getApp_typed().uiA;
         this.textG.save();
         appUi.clipboard = this.getObject();
-        appUi.clipboard_lostContext = false; // important! TODO improve design
+        appUi.clipboard_lostContext = false; // important!
         this.findAppUi().signal('marked: ' + appUi.clipboard.getShortDescription());
     }
 
