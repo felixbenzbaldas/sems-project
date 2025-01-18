@@ -42,12 +42,7 @@ export class UiA {
         if (this.getObject().codeG_html) {
             this.htmlElement.appendChild(this.getObject().codeG_html);
         } else if (this.getObject().appA) {
-            this.htmlElement.style.height = '100%';
-            if (nullUndefined(this.appA)) {
-                this.installAppUi();
-            }
-            await this.appA.update();
-            this.htmlElement.appendChild(this.appA.htmlElement);
+            this.htmlElement.innerText = "type: application";
         } else if (this.isHeaderBody()) {
             await this.headerBodyG.install();
         } else if (this.isPlainList()) {
