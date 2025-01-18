@@ -50,7 +50,7 @@ export class AppA_UiA {
         ui.uiA.htmlElement.style.height = '100%';
         ui.uiA.editable = editable;
         ui.uiA.appA = new UiA_AppA(ui);
-        await ui.uiA.appA.update(withMeta, withPlaceholderArea);
+        await ui.uiA.appA.install(withMeta, withPlaceholderArea);
         ui.uiA.htmlElement.appendChild(ui.uiA.appA.htmlElement);
         return ui.uiA.appA;
     }

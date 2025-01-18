@@ -36,7 +36,7 @@ export class UiA_AppA {
         this.focusStyle_marker = this.focusStyle_createMarker();
     }
 
-    async update(showMeta? : boolean, withPlaceholderArea? : boolean) : Promise<void> {
+    async install(showMeta? : boolean, withPlaceholderArea? : boolean) : Promise<void> {
         let app_uiA = this.getApp().uiA;
         if (notNullUndefined(app_uiA.theme_fontColor)) {
             this.htmlElement.style.backgroundColor = app_uiA.theme_backgroundColor;
@@ -57,50 +57,6 @@ export class UiA_AppA {
             this.webMetaUi.context = this.entity.uiA;
             await this.webMetaUi.update();
         }
-        this.updateUiElement(showMeta, withPlaceholderArea);
-        this.isInstalled = true;
-    }
-
-    getObject() : Entity {
-        return this.entity.uiA.getObject();
-    }
-
-    async newSubitem() {
-        await this.ensureInstalled();
-        let created = await this.getApp().createText('');
-        let position = 0;
-        let listA = this.getObject().appA.uiA.content.listA;
-        await listA.insertObjectAtPosition(created, position);
-        await this.getObject().appA.uiA.content.uis_update_addedListItem(position);
-        this.focus(this.contentUi.listG.uisOfListItems[position]);
-    }
-
-    async paste() {
-        await this.ensureInstalled();
-        let position = 0;
-        let listA = this.getObject().appA.uiA.content.listA;
-        await listA.insertObjectAtPosition(this.getObject().appA.uiA.clipboard, position);
-        await this.contentUi.update_addedListItem(position);
-        this.focus(this.contentUi.listG.uisOfListItems[position]);
-    }
-
-    private async ensureInstalled() { // TODO this should not be necessary
-        if (!this.isInstalled) {
-            await this.update();
-        }
-    }
-
-    focus(ui : UiA) {
-        let focusedPrevious = this.focused;
-        this.focused = ui;
-        if (focusedPrevious) {
-            focusedPrevious.updateFocusStyle();
-        }
-        this.focused.updateFocusStyle();
-        this.focused.takeCaret();
-    }
-
-    private updateUiElement(showMeta? : boolean, withPlaceholderArea? : boolean) {
         this.htmlElement.innerHTML = null;
         this.htmlElement.style.height = '100%';
         this.htmlElement.style.display = 'flex';
@@ -132,6 +88,37 @@ export class UiA_AppA {
         if (this.webMetaUi) {
             this.scrollableArea.appendChild(this.webMetaUi.htmlElement);
         }
+    }
+
+    getObject() : Entity {
+        return this.entity.uiA.getObject();
+    }
+
+    async newSubitem() {
+        let created = await this.getApp().createText('');
+        let position = 0;
+        let listA = this.getObject().appA.uiA.content.listA;
+        await listA.insertObjectAtPosition(created, position);
+        await this.getObject().appA.uiA.content.uis_update_addedListItem(position);
+        this.focus(this.contentUi.listG.uisOfListItems[position]);
+    }
+
+    async paste() {
+        let position = 0;
+        let listA = this.getObject().appA.uiA.content.listA;
+        await listA.insertObjectAtPosition(this.getObject().appA.uiA.clipboard, position);
+        await this.contentUi.update_addedListItem(position);
+        this.focus(this.contentUi.listG.uisOfListItems[position]);
+    }
+
+    focus(ui : UiA) {
+        let focusedPrevious = this.focused;
+        this.focused = ui;
+        if (focusedPrevious) {
+            focusedPrevious.updateFocusStyle();
+        }
+        this.focused.updateFocusStyle();
+        this.focused.takeCaret();
     }
 
     signal(text : string) {
