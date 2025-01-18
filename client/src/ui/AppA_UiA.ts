@@ -2,7 +2,7 @@ import {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
 import {notNullUndefined, nullUndefined} from "@/utils";
 import {Color} from "@/ui/Color";
-import type {UiA_AppA} from "@/ui/UiA_AppA";
+import {UiA_AppA} from "@/ui/UiA_AppA";
 
 export class AppA_UiA {
 
@@ -49,7 +49,7 @@ export class AppA_UiA {
         this.entity.uis_add(ui.uiA);
         ui.uiA.htmlElement.style.height = '100%';
         ui.uiA.editable = editable;
-        ui.uiA.installAppUi();
+        ui.uiA.appA = new UiA_AppA(ui);
         await ui.uiA.appA.update(withMeta, withPlaceholderArea);
         ui.uiA.htmlElement.appendChild(ui.uiA.appA.htmlElement);
         return ui.uiA.appA;

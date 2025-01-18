@@ -23,9 +23,6 @@ export class UiA {
     headerBodyG: UiA_HeaderBodyG;
     testRunG: UiA_TestRunG;
     appA : UiA_AppA;
-    installAppUi() {
-        this.appA = new UiA_AppA(this.entity);
-    }
 
     constructor(public entity : Entity) {
         this.headerBodyG = new UiA_HeaderBodyG(entity);
