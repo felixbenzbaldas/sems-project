@@ -20,13 +20,13 @@ export class UiA_AppA {
     statusBar: HTMLDivElement;
     globalEventG: UiA_AppA_GlobalEventG;
     keyG: UiA_AppA_KeyG;
-    showMeta : boolean;
     contentUi : UiA;
     webMetaUi : UiA;
     commandsUi: UiA;
     withPlaceholderArea: boolean;
     focusStyle_marker: HTMLElement;
     isInstalled : boolean;
+    meta_htmlElement: HTMLElement = document.createElement('div');
 
     constructor(public entity: Entity) {
         this.output = new OutputA(entity);
@@ -37,13 +37,15 @@ export class UiA_AppA {
         this.focusStyle_marker = this.focusStyle_createMarker();
     }
 
-    async update() : Promise<void> {
+    async update(showMeta? : boolean) : Promise<void> {
         let app_uiA = this.getApp().uiA;
         if (notNullUndefined(app_uiA.theme_fontColor)) {
             this.htmlElement.style.backgroundColor = app_uiA.theme_backgroundColor;
             this.htmlElement.style.color = app_uiA.theme_fontColor;
         }
-        if (this.showMeta) {
+        if (showMeta) {
+            this.commands = this.createCommands();
+            this.commandsUi = this.entity.uiA.createSubUiFor(this.commands);
             await this.commandsUi.update();
             await this.input.getUi().updateUi();
             await this.output.getUi().updateUi();
@@ -56,7 +58,7 @@ export class UiA_AppA {
             this.webMetaUi.context = this.entity.uiA;
             await this.webMetaUi.update();
         }
-        this.updateUiElement();
+        this.updateUiElement(showMeta);
         this.isInstalled = true;
     }
 
@@ -99,7 +101,7 @@ export class UiA_AppA {
         this.focused.takeCaret();
     }
 
-    private updateUiElement() {
+    private updateUiElement(showMeta? : boolean) {
         this.htmlElement.innerHTML = null;
         this.htmlElement.style.height = '100%';
         this.htmlElement.style.display = 'flex';
@@ -114,13 +116,14 @@ export class UiA_AppA {
         this.statusBar.style.backgroundColor = this.getApp().uiA.theme_secondBackgroundColor;
         this.statusBar.style.minHeight = '1.2rem';
         this.statusBar.style.maxHeight = '1.2rem';
-        if (this.showMeta) {
+        this.scrollableArea.appendChild(this.meta_htmlElement);
+        if (showMeta) {
             if (this.commandsUi) {
-                this.scrollableArea.appendChild(this.commandsUi.htmlElement);
+                this.meta_htmlElement.appendChild(this.commandsUi.htmlElement);
             }
-            this.scrollableArea.appendChild(this.input.getUi().uiA.htmlElement);
-            this.scrollableArea.appendChild(this.output.getUi().uiA.htmlElement);
-            this.scrollableArea.appendChild(this.separatorLine());
+            this.meta_htmlElement.appendChild(this.input.getUi().uiA.htmlElement);
+            this.meta_htmlElement.appendChild(this.output.getUi().uiA.htmlElement);
+            this.meta_htmlElement.appendChild(this.separatorLine());
         }
         this.scrollableArea.appendChild(this.focusStyle_marker);
         this.scrollableArea.appendChild(this.contentUi.htmlElement);

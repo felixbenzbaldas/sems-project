@@ -48,13 +48,7 @@ export class AppA_UiA {
         ui.installAppUi();
         ui.appA.withPlaceholderArea = withPlaceholderArea;
         ui.editable = editable;
-        if (withMeta) {
-            ui.appA.showMeta = true;
-            ui.appA.commands = ui.appA.createCommands();
-            ui.appA.commandsUi = this.createUiFor_typed(ui.appA.commands);
-            ui.appA.commandsUi.context = ui;
-        }
-        await ui.appA.update();
+        await ui.appA.update(withMeta);
         ui.htmlElement.appendChild(ui.appA.htmlElement);
         return ui.appA;
     }
