@@ -23,7 +23,6 @@ export class UiA_AppA {
     contentUi : UiA;
     webMetaUi : UiA;
     commandsUi: UiA;
-    withPlaceholderArea: boolean;
     focusStyle_marker: HTMLElement;
     isInstalled : boolean;
     meta_htmlElement: HTMLElement = document.createElement('div');
@@ -37,7 +36,7 @@ export class UiA_AppA {
         this.focusStyle_marker = this.focusStyle_createMarker();
     }
 
-    async update(showMeta? : boolean) : Promise<void> {
+    async update(showMeta? : boolean, withPlaceholderArea? : boolean) : Promise<void> {
         let app_uiA = this.getApp().uiA;
         if (notNullUndefined(app_uiA.theme_fontColor)) {
             this.htmlElement.style.backgroundColor = app_uiA.theme_backgroundColor;
@@ -58,7 +57,7 @@ export class UiA_AppA {
             this.webMetaUi.context = this.entity.uiA;
             await this.webMetaUi.update();
         }
-        this.updateUiElement(showMeta);
+        this.updateUiElement(showMeta, withPlaceholderArea);
         this.isInstalled = true;
     }
 
@@ -101,7 +100,7 @@ export class UiA_AppA {
         this.focused.takeCaret();
     }
 
-    private updateUiElement(showMeta? : boolean) {
+    private updateUiElement(showMeta? : boolean, withPlaceholderArea? : boolean) {
         this.htmlElement.innerHTML = null;
         this.htmlElement.style.height = '100%';
         this.htmlElement.style.display = 'flex';
@@ -127,7 +126,7 @@ export class UiA_AppA {
         }
         this.scrollableArea.appendChild(this.focusStyle_marker);
         this.scrollableArea.appendChild(this.contentUi.htmlElement);
-        if (this.withPlaceholderArea) {
+        if (withPlaceholderArea) {
             this.scrollableArea.appendChild(this.createPlaceholderArea());
         }
         if (this.webMetaUi) {

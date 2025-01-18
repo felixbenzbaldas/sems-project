@@ -43,14 +43,16 @@ export class AppA_UiA {
     }
 
     async createAppUi(withPlaceholderArea : boolean, editable? : boolean, withMeta? : boolean) : Promise<UiA_AppA> {
-        let ui = this.createUiFor_typed(this.entity);
-        ui.htmlElement.style.height = '100%';
-        ui.installAppUi();
-        ui.appA.withPlaceholderArea = withPlaceholderArea;
-        ui.editable = editable;
-        await ui.appA.update(withMeta);
-        ui.htmlElement.appendChild(ui.appA.htmlElement);
-        return ui.appA;
+        let ui : Entity = this.entity.appA.createEntityWithApp();
+        ui.uiA = new UiA(ui);
+        ui.uiA.object = this.entity;
+        this.entity.uis_add(ui.uiA);
+        ui.uiA.htmlElement.style.height = '100%';
+        ui.uiA.editable = editable;
+        ui.uiA.installAppUi();
+        await ui.uiA.appA.update(withMeta, withPlaceholderArea);
+        ui.uiA.htmlElement.appendChild(ui.uiA.appA.htmlElement);
+        return ui.uiA.appA;
     }
 
     async insertClipboardAtPosition(object: Entity, position: number) {
