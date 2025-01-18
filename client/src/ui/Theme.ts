@@ -1,4 +1,5 @@
 import {Color} from "@/ui/Color";
+import {Font} from "@/ui/Font";
 
 export class Theme {
     fontColor : string;
@@ -29,6 +30,24 @@ export class Theme {
         theme.failure = 'red';
         theme.meta = 'blue';
         theme.font = 'unset';
+        theme.fontSize = '1rem';
+        return theme;
+    }
+
+    static elegant() : Theme {
+        let theme = new Theme();
+        theme.fontColor = Color.NEW_DARK_VIOLETTE;
+        theme.backgroundColor = Color.LIGHT_BEIGE;
+        theme.secondBackgroundColor = Color.LIGHT_GREY;
+        theme.buttonFontColor = 'grey';
+        theme.markColor = '#efefef';
+        theme.secondMarkColor = 'green';
+        theme.focusBorderColor = 'orange';
+        theme.highlight = 'green';
+        theme.success = 'green';
+        theme.failure = 'red';
+        theme.meta = 'blue';
+        theme.font = Font.ELEGANT;
         theme.fontSize = '1rem';
         return theme;
     }

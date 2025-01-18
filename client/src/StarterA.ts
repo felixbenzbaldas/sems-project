@@ -111,12 +111,6 @@ export class StarterA {
         return this.createdApp;
     }
 
-    themeElegant() {
-        this.createdApp.appA.uiA.theme.backgroundColor = Color.LIGHT_BEIGE;
-        this.createdApp.appA.uiA.theme.fontColor = Color.NEW_DARK_VIOLETTE;
-        this.createdApp.appA.uiA.theme.font = Font.ELEGANT;
-    }
-
     hostname() : string {
         if (this.getEnvironment().url.hostname === 'localhost') {
             if (this.getEnvironment().url.searchParams?.has('virtualHostname')) {

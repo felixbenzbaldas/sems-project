@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import type {StarterA} from "@/StarterA";
+import {Theme} from "@/ui/Theme";
 
 export class StarterA_FullStartG {
     constructor(public entity : Entity) {
@@ -23,7 +24,7 @@ export class StarterA_FullStartG {
         let pathString = starter.getEnvironment().url.searchParams.get('path');
         let listOfNames = ['..', starter.data.name, ...pathString.split('-')];
         await starter.createdApp.appA.uiA.content.listA.addByListOfNames(listOfNames);
-        starter.themeElegant();
+        starter.createdApp.appA.uiA.theme = Theme.elegant();
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
@@ -48,7 +49,7 @@ export class StarterA_FullStartG {
         starter.createAppWithUI();
         starter.createdApp.appA.uiA.isWebsite = true;
         starter.createData();
-        starter.themeElegant();
+        starter.createdApp.appA.uiA.theme = Theme.elegant();
         let website = await starter.data.listA.findByText(starter.hostname())
         let start = await website.listA.findByText('start');
         for (let resolved of await start.listA.getResolvedList()) {
