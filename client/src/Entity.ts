@@ -223,10 +223,6 @@ export class Entity {
         return description.substring(0, Math.min(description.length, 20));
     }
 
-    async updateUi() {
-        await this.uiA.update();
-    }
-
     getObject() : Entity {
         if (this.uiA?.object) {
             return this.uiA.object;

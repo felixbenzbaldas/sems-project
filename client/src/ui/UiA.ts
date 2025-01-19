@@ -36,6 +36,10 @@ export class UiA {
 
     async update() {
         this.resetHtmlElement();
+        await this.install();
+    }
+
+    async install() {
         if (this.getObject().codeG_html) {
             this.htmlElement.appendChild(this.getObject().codeG_html);
         } else if (this.getObject().appA) {
@@ -377,14 +381,14 @@ export class UiA {
         let ui = this.entity.getApp_typed().uiA.prepareUiFor(object);
         ui.context = this;
         ui.editable = this.editable;
-        await ui.update();
+        await ui.install();
         return ui;
     }
 
     async createSubUiFor(object: Entity) : Promise<UiA> {
         let ui = this.entity.getApp_typed().uiA.prepareUiFor(object);
         ui.context = this;
-        await ui.update();
+        await ui.install();
         return ui;
     }
 }

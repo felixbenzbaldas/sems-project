@@ -17,7 +17,7 @@ export class InputA {
         let html = entity.getApp_typed().createEntityWithApp();
         html.codeG_html = textFileInput(async text => {
             inputA.input.text = text;
-            await inputA.input.uis_update();
+            await inputA.input.uis_update_text();
         });
         let uiData = app.unboundG.createTextWithList('input', inputA.input,
             app.unboundG.createTextWithList('You can choose a text file as input:', html));

@@ -30,14 +30,16 @@ export class OutputA {
 
     async setAndUpdateUi(string : string) {
         this.output.text = string;
+        await this.output.uis_update_text();
+        //
         this.outputDownload.codeG_html.innerHTML = null;
         this.outputDownload.codeG_html.appendChild(downloadText(string, 'output.txt', 'download output'));
-        await this.ui.uiA.update();
+        await this.outputDownload.uis_update();
+        //
         await this.ui.uiA.ensureExpanded();
     }
 
     getUi() : Entity {
         return this.ui;
     }
-
 }

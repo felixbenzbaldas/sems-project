@@ -29,18 +29,18 @@ export class AppA_TestA {
     }
 
     async runAndDisplay(tests : Array<Entity>) {
-        this.appA.uiA.content.listA.jsList = [];
-        let testResults : TestResults = await this.run(tests);
-        if (testResults.failed.length > 0) {
-            this.appA.uiA.content.listA.addDirect(this.appA.unboundG.createTextWithList('failed tests (' + testResults.failed.length + ')',
-                ...testResults.failed));
-        }
-        this.appA.uiA.content.listA.addDirect(
-            this.appA.unboundG.createCollapsible('successful tests (' + testResults.successful.length + ')',
-                ...testResults.successful),
-            this.appA.unboundG.createText(''),
-            this.appA.unboundG.createText('Note: There are also (old) tests which can be run with JUnit/Vitest.'));
-        await this.appA.uiA.content.updateUi();
+        // this.appA.uiA.content.listA.jsList = [];
+        // let testResults : TestResults = await this.run(tests);
+        // if (testResults.failed.length > 0) {
+        //     this.appA.uiA.content.listA.addDirect(this.appA.unboundG.createTextWithList('failed tests (' + testResults.failed.length + ')',
+        //         ...testResults.failed));
+        // }
+        // this.appA.uiA.content.listA.addDirect(
+        //     this.appA.unboundG.createCollapsible('successful tests (' + testResults.successful.length + ')',
+        //         ...testResults.successful),
+        //     this.appA.unboundG.createText(''),
+        //     this.appA.unboundG.createText('Note: There are also (old) tests which can be run with JUnit/Vitest.'));
+        // await this.appA.uiA.content.updateUi();
     }
 
     async run(tests : Array<Entity>) : Promise<TestResults> {
