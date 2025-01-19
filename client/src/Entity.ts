@@ -338,8 +338,8 @@ export class Entity {
         return copy;
     }
 
-    deepCopy() : DeepCopyA {
-        return new DeepCopyA(this);
+    deepCopy(targetContainer : ContainerA) : DeepCopyA {
+        return new DeepCopyA(this, targetContainer);
     }
 
     containerMark() : boolean {

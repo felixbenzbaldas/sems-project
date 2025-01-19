@@ -210,7 +210,7 @@ export class UiA_AppA {
             this.getApp().unboundG.createButton('cut', async () => {
                 await this.globalEventG.cut();
             }),
-            this.getApp().unboundG.createButton('deep copy', async () => {
+            this.getApp().unboundG.createButton('deep copy (marked object will be copied into focused container)', async () => {
                 await this.globalEventG.deepCopy();
             }),
             this.getApp().unboundG.createButton('paste', async () => {

@@ -45,6 +45,8 @@ export function test_add(tests : TestG_NestedTestsA) {
     });
     tests.add('deepCopy', async run => {
         let object = await run.app.createList();
+        let targetContainer = await run.app.createBoundEntity();
+        targetContainer.installContainerA();
         object.text = 'foo';
         object.collapsible = true;
         let dependency = await run.app.createText('dependency');
@@ -54,7 +56,7 @@ export function test_add(tests : TestG_NestedTestsA) {
         await object.listA.add(dependencyWithContext);
         dependencyWithContext.context = dependencyWithContext.getPath(object);
 
-        let copy : Entity = await object.deepCopy().run();
+        let copy : Entity = await object.deepCopy(targetContainer.containerA).run();
 
         assert_sameAs(copy.text, object.text);
         assert_sameAs(copy.collapsible, object.collapsible);
@@ -62,7 +64,7 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs((await copy.listA.getResolved(0)).text, 'dependency');
         assert_notSameAs(await copy.listA.getResolved(0), dependency);
         assert_sameAs(await (await copy.listA.getResolved(1)).context.resolve(), copy);
-        assert_sameAs(copy.container, run.app.entity);
+        assert_sameAs(copy.container, targetContainer);
     });
     tests.add('createBoundEntity', async run => {
         let entity = await run.app.createBoundEntity();

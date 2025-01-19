@@ -125,8 +125,17 @@ export class UiA_AppA_GlobalEventG {
 
     async deepCopy() {
         let focusedObject = this.getAppUi().focused.getObject();
-        this.getAppUi().getObject().appA.uiA.clipboard = await focusedObject.deepCopy().run();
-        this.getAppUi().signal('copied deep: ' + this.getAppUi().getObject().appA.uiA.clipboard.getShortDescription());
+        if (focusedObject.containerA) {
+            let app_uiA = this.entity.getApp_typed().uiA;
+            if (app_uiA.clipboard) {
+                app_uiA.clipboard = await app_uiA.clipboard.deepCopy(focusedObject.containerA).run();
+                this.getAppUi().signal('copied deep: ' + app_uiA.clipboard.getShortDescription());
+            } else {
+                this.getAppUi().signal('Error: no object in clipboard (will be copied)');
+            }
+        } else {
+            this.getAppUi().signal('Error: the target is not a container (target = focus)');
+        }
     }
 
     async toggleContext() {

@@ -25,7 +25,7 @@ export class Theme {
         theme.markColor = '#efefef';
         theme.secondMarkColor = 'green';
         theme.focusBorderColor = 'orange';
-        theme.highlight = 'green';
+        theme.highlight = Color.LIGHT_BEIGE;
         theme.success = 'green';
         theme.failure = 'red';
         theme.meta = 'blue';

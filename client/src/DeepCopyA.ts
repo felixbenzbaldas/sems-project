@@ -1,12 +1,13 @@
 import type {Entity} from "@/Entity";
 import type {PathA} from "@/PathA";
+import type {ContainerA} from "@/ContainerA";
 
 export class DeepCopyA {
 
     map : Map<Entity, Entity>;
     objectAndDependencies : Set<Entity>;
 
-    constructor(public entity : Entity) {
+    constructor(public entity : Entity, public targetContainer : ContainerA) {
     }
 
     async run() : Promise<Entity> {
@@ -21,7 +22,7 @@ export class DeepCopyA {
     async createBoundEmptyEntities() {
         this.map = new Map();
         for (let object of this.objectAndDependencies) {
-            this.map.set(object, await this.entity.getApp_typed().createBoundEntity());
+            this.map.set(object, await this.targetContainer.createBoundEntity());
         }
     }
 
