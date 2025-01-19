@@ -33,7 +33,7 @@ export class UiA_ListG {
     }
 
     async defaultActionOnSubitem(subitem: UiA) {
-        let created = await this.entity.getApp().appA.createText('');
+        let created = await subitem.getObject().findContainer().createText('');
         let position : number = this.uisOfListItems.indexOf(subitem) + 1;
         let listA = this.getObject().listA;
         await listA.insertPathOrDirectAtPosition(created, position);
