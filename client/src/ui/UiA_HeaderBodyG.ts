@@ -8,13 +8,7 @@ export class UiA_HeaderBodyG {
 
     async install() {
         let object = this.entity.uiA.getObject();
-        if (object.isTest) {
-            await this.entity.uiA.testG.update();
-            await this.entity.uiA.headerG.update();
-            this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
-            await this.entity.uiA.bodyG.update();
-            this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
-        } else if (object.testRunA) {
+        if (object.testRunA) {
             await this.entity.uiA.testRunG.install();
             await this.entity.uiA.headerG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
