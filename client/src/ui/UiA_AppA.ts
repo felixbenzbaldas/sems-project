@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {div, textElem} from "@/utils";
+import {div, nullUndefined, textElem} from "@/utils";
 import {OutputA} from "@/ui/OutputA";
 import {InputA} from "@/ui/InputA";
 import {UiA} from "@/ui/UiA";
@@ -153,18 +153,15 @@ export class UiA_AppA {
         }
     }
 
-    switchCurrentContainer_AndUpdateStyles(newContainer: Entity) {
-        let previous = this.getApp().currentContainer;
-        this.getApp().switchCurrentContainer(newContainer);
-        previous.uis_update_currentContainerStyle();
-        this.getApp().currentContainer.uis_update_currentContainerStyle();
+    ensureContainer_AndUpdateStyle(entity: Entity) {
+        if (nullUndefined(entity.containerA)) {
+            entity.installContainerA();
+        }
+        entity.uis_update_containerStyle();
     }
 
     createCommands() : Entity {
         let lowPriorityCommands = this.getApp().unboundG.createTextWithList('mehr',
-            this.getApp().unboundG.createButton('switch to app container', async () => {
-                await this.globalEventG.switchToAppContainer();
-            }),
             this.getApp().unboundG.createButton('export app', async () => {
                 await this.globalEventG.exportApp();
             }),
@@ -177,8 +174,8 @@ export class UiA_AppA {
             this.getApp().unboundG.createButton('set link', async () => {
                 await this.globalEventG.setLink();
             }),
-            this.getApp().unboundG.createButton('switch current container', async () => {
-                await this.globalEventG.switchCurrentContainer();
+            this.getApp().unboundG.createButton('ensure container', async () => {
+                await this.globalEventG.ensureContainer();
             }),
             this.getApp().unboundG.createButton('import', async () => {
                 await this.globalEventG.import();

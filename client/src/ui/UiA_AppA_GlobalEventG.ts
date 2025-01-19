@@ -32,17 +32,13 @@ export class UiA_AppA_GlobalEventG {
         await this.getAppUi().focused.expandOrCollapse();
     }
 
-    async switchCurrentContainer() {
-        this.getAppUi().switchCurrentContainer_AndUpdateStyles(this.getAppUi().focused.getObject());
+    async ensureContainer() {
+        this.getAppUi().ensureContainer_AndUpdateStyle(this.getAppUi().focused.getObject());
 
     }
 
     private getAppUi() : UiA_AppA {
         return this.entity.uiA.appA;
-    }
-
-    async switchToAppContainer() {
-        this.getAppUi().switchCurrentContainer_AndUpdateStyles(this.entity.getApp());
     }
 
     async export() {
@@ -51,19 +47,9 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async import() {
-        let focused = this.getAppUi().focused;
         let created = this.getApp().unboundG.createFromJson(JSON.parse(this.getAppUi().input.get()));
-        this.getApp().currentContainer.containerA.bind(created);
-        let focusedObject = focused.getObject();
-        if (!focusedObject.listA) {
-            focusedObject.installListA();
-        }
-        let position = 0;
-        let listA = focusedObject.listA;
-        await listA.insertPathOrDirectAtPosition(created, position);
-        await listA.entity.uis_update_addedListItem(position);
-        await focused.ensureExpanded();
-        this.getAppUi().focus(focused.listG.uisOfListItems.at(position));
+        this.getAppUi().focused.getObject().containerA.bind(created);
+        this.getApp().uiA.clipboard = created;
     }
 
     async load() {
@@ -76,23 +62,13 @@ export class UiA_AppA_GlobalEventG {
         this.getAppUi().focus(this.getAppUi().contentUi.listG.uisOfListItems[0]);
         await this.getAppUi().input.ui.uiA.ensureCollapsed();
         window.scroll(0, 0);
-        await this.switchCurrentContainer();
+        await this.ensureContainer();
     }
 
     async importOldJson() {
-        let focused = this.getAppUi().focused;
         let created = await this.getApp().unboundG.createFromOldJson(JSON.parse(this.getAppUi().input.get()));
-        this.getApp().currentContainer.containerA.bind(created);
-        let focusedObject = focused.getObject();
-        if (!focusedObject.listA) {
-            focusedObject.installListA();
-        }
-        let position = 0;
-        let listA = focusedObject.listA;
-        await listA.insertPathOrDirectAtPosition(created, position);
-        await listA.entity.uis_update_addedListItem(position);
-        await focused.ensureExpanded();
-        this.getAppUi().focus(focused.listG.uisOfListItems.at(position));
+        this.getAppUi().focused.getObject().containerA.bind(created);
+        this.getApp().uiA.clipboard = created;
     }
 
     async focusRoot() {

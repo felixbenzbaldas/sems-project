@@ -15,6 +15,7 @@ export class Theme {
     meta: string;
     font: string;
     fontSize: string;
+    containerColor: string;
 
     static default() : Theme {
         let theme = new Theme();
@@ -31,6 +32,7 @@ export class Theme {
         theme.meta = 'blue';
         theme.font = 'unset';
         theme.fontSize = '1rem';
+        theme.containerColor = Color.LIGHT_GREY;
         return theme;
     }
 
@@ -40,7 +42,7 @@ export class Theme {
         theme.backgroundColor = Color.LIGHT_BEIGE;
         theme.secondBackgroundColor = Color.LIGHT_GREY;
         theme.buttonFontColor = 'grey';
-        theme.markColor = '#efefef';
+        theme.markColor = Color.LIGHT_GREY;
         theme.secondMarkColor = 'green';
         theme.focusBorderColor = 'orange';
         theme.highlight = 'green';
@@ -49,6 +51,7 @@ export class Theme {
         theme.meta = 'blue';
         theme.font = Font.ELEGANT;
         theme.fontSize = '1rem';
+        theme.containerColor = Color.LIGHT_GREY;
         return theme;
     }
 }

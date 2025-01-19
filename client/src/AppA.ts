@@ -1,9 +1,7 @@
 import type {AppA_UiA} from "@/ui/AppA_UiA";
-import {ListA} from "@/ListA";
 import {PathA} from "@/PathA";
 import {Entity} from "@/Entity";
 import {LogG} from "@/LogG";
-import {ContainerA} from "@/ContainerA";
 import {AppA_UnboundG} from "@/AppA_UnboundG";
 import {StarterA} from "@/StarterA";
 import type {Environment} from "@/Environment";
@@ -11,7 +9,6 @@ import {AppA_TesterA} from "@/tester/AppA_TesterA";
 
 export class AppA {
 
-    currentContainer: Entity;
     environment: Environment;
     readonly logG: LogG;
     readonly unboundG : AppA_UnboundG;
@@ -26,7 +23,6 @@ export class AppA {
         this.unboundG = new AppA_UnboundG(entity);
         this.logG = new LogG(entity);
         entity.installContainerA();
-        this.currentContainer = entity;
     }
 
     createEntityWithApp() {
@@ -40,19 +36,19 @@ export class AppA {
     }
 
     async createBoundEntity(name? : string) : Promise<Entity> {
-        return await this.currentContainer.containerA.createBoundEntity(name);
+        return await this.entity.containerA.createBoundEntity(name);
     }
 
     async createText(text: string) : Promise<Entity> {
-        return this.currentContainer.containerA.createText(text);
+        return this.entity.containerA.createText(text);
     }
 
     async createList() : Promise<Entity> {
-        return this.currentContainer.containerA.createList();
+        return this.entity.containerA.createList();
     }
 
     async createTextWithList(text : string, ...jsList : Array<Entity>) : Promise<Entity> {
-        return this.currentContainer.containerA.createTextWithList(text, ...jsList);
+        return this.entity.containerA.createTextWithList(text, ...jsList);
     }
 
     createPath(listOfNames: Array<string>, subject : Entity) : PathA {
@@ -75,14 +71,7 @@ export class AppA {
     }
 
     async createLink(href: string, text?: string) {
-        return await this.currentContainer.containerA.createLink(href, text);
-    }
-
-    switchCurrentContainer(entity: Entity) {
-        this.currentContainer = entity;
-        if (!this.currentContainer.containerA) {
-            this.currentContainer.installContainerA();
-        }
+        return await this.entity.containerA.createLink(href, text);
     }
 
     createStarter() : StarterA {

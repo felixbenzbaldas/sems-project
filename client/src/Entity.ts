@@ -61,9 +61,6 @@ export class Entity {
             content: this.appA?.uiA?.content.json_withoutContainedObjects(),
             context: this.context?.listOfNames
         };
-        if (this.appA?.currentContainer) {
-            obj.currentContainerText = this.appA.currentContainer.text;
-        }
         return obj;
     }
 
@@ -238,9 +235,9 @@ export class Entity {
         }
     }
 
-    uis_update_currentContainerStyle() {
+    uis_update_containerStyle() {
         for (let ui of this.getAllUis()) {
-            ui.headerG.updateCurrentContainerStyle();
+            ui.headerG.updateContainerStyle();
         }
     }
 

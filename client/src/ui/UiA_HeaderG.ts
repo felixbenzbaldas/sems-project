@@ -49,7 +49,7 @@ export class UiA_HeaderG {
         this.divForContentAndBodyIcon.style.borderWidth = '0.1rem';
         this.focusStyle_update();
         await this.updateCursorStyle();
-        this.updateCurrentContainerStyle();
+        this.updateContainerStyle();
     }
 
     async updateContextIcon() {
@@ -150,9 +150,9 @@ export class UiA_HeaderG {
         }
     }
 
-    updateCurrentContainerStyle() {
-        if (this.entity.getApp().appA.currentContainer === this.getObject()) {
-            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp_typed().uiA.theme.markColor;
+    updateContainerStyle() {
+        if (this.getObject().containerA) {
+            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp_typed().uiA.theme.containerColor;
         } else {
             this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp_typed().uiA.theme.backgroundColor;
         }
