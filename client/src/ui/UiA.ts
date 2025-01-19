@@ -373,10 +373,16 @@ export class UiA {
         }
     }
 
-    createSubUiFor(object: Entity) : UiA {
+    createSubUiFor_transmitEditability(object: Entity) : UiA {
         let ui = this.entity.getApp_typed().uiA.createUiFor_typed(object);
         ui.context = this;
         ui.editable = this.editable;
+        return ui;
+    }
+
+    createSubUiFor(object: Entity) : UiA {
+        let ui = this.entity.getApp_typed().uiA.createUiFor_typed(object);
+        ui.context = this;
         return ui;
     }
 }

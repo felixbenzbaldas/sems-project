@@ -30,7 +30,7 @@ export class UiA_ListG {
     }
 
     createSubUiFor(listItem : Entity) : UiA {
-        return this.entity.uiA.createSubUiFor(listItem);
+        return this.entity.uiA.createSubUiFor_transmitEditability(listItem);
     }
 
     async defaultActionOnSubitem(subitem: UiA) {

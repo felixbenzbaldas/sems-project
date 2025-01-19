@@ -38,24 +38,19 @@ export class UiA_AppA {
 
     async install(showMeta? : boolean, withPlaceholderArea? : boolean) : Promise<void> {
         let app_uiA = this.getApp().uiA;
-        this.htmlElement.style.backgroundColor = app_uiA.theme.backgroundColor;
-        this.htmlElement.style.color = app_uiA.theme.fontColor;
         if (showMeta) {
-            this.commands = this.createCommands();
-            this.commandsUi = this.entity.uiA.createSubUiFor(this.commands);
-            await this.commandsUi.update();
-            await this.input.getUi().updateUi();
-            await this.output.getUi().updateUi();
+            await this.installMeta();
         }
-        this.contentUi = this.entity.uiA.createSubUiFor(app_uiA.content);
+        this.contentUi = this.entity.uiA.createSubUiFor_transmitEditability(app_uiA.content);
         this.focusStyle_update();
         await this.contentUi.update();
         if (app_uiA.webMeta) {
-            this.webMetaUi = app_uiA.createUiFor_typed(app_uiA.webMeta);
-            this.webMetaUi.context = this.entity.uiA;
+            this.webMetaUi = this.entity.uiA.createSubUiFor(app_uiA.webMeta);
             await this.webMetaUi.update();
         }
         this.htmlElement.innerHTML = null;
+        this.htmlElement.style.backgroundColor = app_uiA.theme.backgroundColor;
+        this.htmlElement.style.color = app_uiA.theme.fontColor;
         this.htmlElement.style.height = '100%';
         this.htmlElement.style.display = 'flex';
         this.htmlElement.style.flexDirection = 'column';
@@ -66,18 +61,10 @@ export class UiA_AppA {
         this.scrollableArea.style.overflowY = 'auto';
         this.scrollableArea.style.paddingLeft = '0.2rem';
         this.scrollableArea.style.paddingRight = '0.2rem';
-        this.statusBar.style.backgroundColor = this.getApp().uiA.theme.secondBackgroundColor;
+        this.statusBar.style.backgroundColor = app_uiA.theme.secondBackgroundColor;
         this.statusBar.style.minHeight = '1.2rem';
         this.statusBar.style.maxHeight = '1.2rem';
         this.scrollableArea.appendChild(this.meta_htmlElement);
-        if (showMeta) {
-            if (this.commandsUi) {
-                this.meta_htmlElement.appendChild(this.commandsUi.htmlElement);
-            }
-            this.meta_htmlElement.appendChild(this.input.getUi().uiA.htmlElement);
-            this.meta_htmlElement.appendChild(this.output.getUi().uiA.htmlElement);
-            this.meta_htmlElement.appendChild(this.separatorLine());
-        }
         this.scrollableArea.appendChild(this.focusStyle_marker);
         this.scrollableArea.appendChild(this.contentUi.htmlElement);
         if (withPlaceholderArea) {
@@ -86,6 +73,20 @@ export class UiA_AppA {
         if (this.webMetaUi) {
             this.scrollableArea.appendChild(this.webMetaUi.htmlElement);
         }
+    }
+
+    private async installMeta() {
+        this.commands = this.createCommands();
+        this.commandsUi = this.entity.uiA.createSubUiFor(this.commands);
+        await this.commandsUi.update();
+        await this.input.getUi().updateUi();
+        await this.output.getUi().updateUi();
+        if (this.commandsUi) {
+            this.meta_htmlElement.appendChild(this.commandsUi.htmlElement);
+        }
+        this.meta_htmlElement.appendChild(this.input.getUi().uiA.htmlElement);
+        this.meta_htmlElement.appendChild(this.output.getUi().uiA.htmlElement);
+        this.meta_htmlElement.appendChild(this.separatorLine());
     }
 
     getObject() : Entity {

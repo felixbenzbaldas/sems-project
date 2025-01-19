@@ -85,7 +85,7 @@ export class UiA_BodyG {
             let contextAsSubitem = this.entity.getApp_typed().unboundG.createTextWithList('[context]', contextObj);
             contextAsSubitem.collapsible = true;
             contextAsSubitem.editable = false;
-            let ui = this.getUiA().createSubUiFor(contextAsSubitem)
+            let ui = this.getUiA().createSubUiFor_transmitEditability(contextAsSubitem); // it is important to transmit the editability for the subsubitems
             await ui.update();
             ui.htmlElement.style.marginBottom = '0.1rem';
             ui.headerG.htmlElement.style.fontSize = '0.8rem';
@@ -122,7 +122,7 @@ export class UiA_BodyG {
         if (this.getObject().hasUrl()) {
             meta.listA.addDirect(app.unboundG.createLink(this.getObject().getUrl()));
         }
-        let ui = this.getUiA().createSubUiFor(meta);
+        let ui = this.getUiA().createSubUiFor_transmitEditability(meta);
         await ui.update();
         this.content_meta_htmlElement.appendChild(ui.htmlElement);
     }
