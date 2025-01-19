@@ -145,7 +145,7 @@ export class UiA {
             if (!this.getObject().listA) {
                 this.getObject().installListA();
             }
-            let created = await this.entity.getApp().appA.createText('');
+            let created = await this.getObject().findContainer().createText('');
             let position = 0;
             let listA = this.getObject().listA;
             await listA.insertPathOrDirectAtPosition(created, position);

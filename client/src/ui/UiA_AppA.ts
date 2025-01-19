@@ -81,7 +81,7 @@ export class UiA_AppA {
     }
 
     async newSubitem() {
-        let created = await this.getApp().createText('');
+        let created = await this.getObject().findContainer().createText('');
         let position = 0;
         let listA = this.getObject().appA.uiA.content.listA;
         await listA.insertObjectAtPosition(created, position);

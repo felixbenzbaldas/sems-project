@@ -400,4 +400,14 @@ export class Entity {
         }
         this.app = app;
     }
+
+    findContainer() : ContainerA {
+        if (this.containerA) {
+            return this.containerA;
+        } else if (this.container) {
+            return this.container.containerA;
+        } else {
+            throw new Error('found no container!');
+        }
+    }
 }
