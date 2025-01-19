@@ -77,9 +77,7 @@ export class UiA_HeaderG {
 
     async updateContent() {
         this.content.innerHTML = null;
-        if (this.getObject().isTest) {
-            this.content.appendChild(this.getUiA().testG.headerContent_htmlElement);
-        } else if (this.getObject().action) {
+        if (this.getObject().action) {
             this.content.appendChild(this.action_getUiElement());
         } else if (notNullUndefined(this.getObject().link)) {
             let link = document.createElement('a');
@@ -112,11 +110,7 @@ export class UiA_HeaderG {
     }
 
     ownRow() : boolean {
-        if (this.getObject().isTest) {
-            return true;
-        } else {
-            return !this.getObject().action;
-        }
+        return !this.getObject().action;
     }
     
     action_getUiElement() {
@@ -178,18 +172,6 @@ export class UiA_HeaderG {
             return this.getUiA().object;
         } else {
             return this.entity;
-        }
-    }
-
-    getRawText() : string {
-        if (this.getObject().isTest) {
-            return this.getUiA().testG.header_getRawText();
-        } else if (notNullUndefined(this.getObject().link)) {
-            return this.link_getText();
-        } else if (notNullUndefined(this.getObject().text)) {
-            return this.getObject().text;
-        } else if (notNullUndefined(this.getObject().testRunA)) {
-            return this.getUiA().testRunG.header_getText();
         }
     }
 }

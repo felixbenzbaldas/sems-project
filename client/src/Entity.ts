@@ -45,12 +45,6 @@ export class Entity {
         this.testRunA = new TestRunA(this);
     }
 
-    // deprecated
-    test_result_error: any;
-    test_result: boolean;
-    test_app: Entity;
-    isTest: boolean;
-
     testG_nestedTestsA : TestG_NestedTestsA;
     testG_installNestedTestsA() {
         this.testG_nestedTestsA = new TestG_NestedTestsA(this);

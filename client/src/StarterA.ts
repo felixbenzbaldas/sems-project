@@ -1,13 +1,9 @@
 import {Entity} from "@/Entity";
 import {AppA_UiA} from "@/ui/AppA_UiA";
 import {AppA} from "@/AppA";
-import {AppA_TestA} from "@/test/old-tester/AppA_TestA";
-import {UiA} from "@/ui/UiA";
 import {Environment} from "@/Environment";
 import {nullUndefined} from "@/utils";
 import {StarterA_FullStartG} from "@/StarterA_FullStartG";
-import {Color} from "@/ui/Color";
-import {Font} from "@/ui/Font";
 
 export class StarterA {
 
@@ -22,8 +18,6 @@ export class StarterA {
     async fullStart() : Promise<HTMLElement> {
         if (this.getEnvironment().url.searchParams.has('client-app')) {
             return this.fullStartG.clientApp();
-        } else if (this.getEnvironment().url.searchParams.has('test')) {
-            return this.fullStartG.oldTester();
         } else if (this.getEnvironment().url.searchParams.has('tester2')) {
             return this.fullStartG.tester();
         } else if (this.getEnvironment().url.searchParams.has('path')) {

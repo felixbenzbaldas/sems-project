@@ -68,8 +68,6 @@ export class UiA_HeaderBodyG {
     async hasBodyContent() : Promise<boolean> {
         if (this.getObject().testRunA) {
             return this.entity.uiA.testRunG.hasBodyContent();
-        } else if (this.getObject().isTest) {
-            return notNullUndefined(this.getObject().test_result);
         } else {
             return await this.entity.uiA.hasContextAsSubitem()  ||
                 this.hasAListItem();

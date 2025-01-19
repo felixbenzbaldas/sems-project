@@ -4,7 +4,6 @@ import {UiA_ListG} from "@/ui/UiA_ListG";
 import {UiA_TextG} from "@/ui/UiA_TextG";
 import {UiA_BodyG} from "@/ui/UiA_BodyG";
 import {UiA_HeaderG} from "@/ui/UiA_HeaderG";
-import {UiA_TestG} from "@/ui/UiA_TestG";
 import {UiA_HeaderBodyG} from "@/ui/UiA_HeaderBodyG";
 import {UiA_TestRunG} from "@/ui/UiA_TestRunG";
 import {UiA_AppA} from "@/ui/UiA_AppA";
@@ -17,7 +16,6 @@ export class UiA {
     textG : UiA_TextG;
     headerG : UiA_HeaderG;
     bodyG: UiA_BodyG;
-    testG: UiA_TestG;
     object: Entity;
     context: UiA;
     headerBodyG: UiA_HeaderBodyG;
@@ -57,7 +55,6 @@ export class UiA {
         this.textG = new UiA_TextG(this.entity);
         this.headerG = new UiA_HeaderG(this.entity);
         this.bodyG = new UiA_BodyG(this.entity);
-        this.testG = new UiA_TestG(this.entity);
         this.testRunG = new UiA_TestRunG(this.entity);
     }
 
@@ -66,8 +63,7 @@ export class UiA {
     }
 
     isHeaderBody() : boolean {
-        return this.getObject().isTest ||
-            notNullUndefined(this.getObject().action) ||
+        return notNullUndefined(this.getObject().action) ||
             notNullUndefined(this.getObject().link) ||
             notNullUndefined(this.getObject().text) ||
             notNullUndefined(this.getObject().testRunA);

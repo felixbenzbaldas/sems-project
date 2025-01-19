@@ -3,7 +3,6 @@ import {ListA} from "@/ListA";
 import {PathA} from "@/PathA";
 import {Entity} from "@/Entity";
 import {LogG} from "@/LogG";
-import type {AppA_TestA} from "@/test/old-tester/AppA_TestA";
 import {ContainerA} from "@/ContainerA";
 import {AppA_UnboundG} from "@/AppA_UnboundG";
 import {StarterA} from "@/StarterA";
@@ -17,7 +16,6 @@ export class AppA {
     readonly logG: LogG;
     readonly unboundG : AppA_UnboundG;
     uiA: AppA_UiA;
-    testA : AppA_TestA; // deprecated
     testMode: boolean;
     testerA: AppA_TesterA;
     installTesterA() {

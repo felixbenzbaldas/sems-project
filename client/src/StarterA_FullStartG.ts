@@ -92,21 +92,4 @@ export class StarterA_FullStartG {
     getStarter() : StarterA {
         return this.entity.starterA;
     }
-    async oldTester() : Promise<any> {
-        // let starter = this.getStarter();
-        // await starter.createTest();
-        // starter.testMode();
-        // if (starter.getEnvironment().url.searchParams.has('withFailingDemoTest')) {
-        //     starter.createdApp.appA.testA.withFailingDemoTest = true;
-        // }
-        // await starter.createdApp.appA.testA.createRunAndDisplay();
-        // // starter.getEnvironment().activeApp = starter.createdApp;
-        // starter.createdApp.appA.uiA.withPlaceholderArea = true;
-        // if (starter.isPublicWeb()) {
-        //     starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
-        // }
-        // await starter.createdApp.uiA.update();
-        // return starter.createdApp.uiA.htmlElement;
-        return undefined;
-    }
 }
