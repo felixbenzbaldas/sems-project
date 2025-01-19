@@ -48,7 +48,7 @@ export class UiA_HeaderG {
         this.divForContentAndBodyIcon.style.border = 'solid';
         this.divForContentAndBodyIcon.style.borderWidth = '0.1rem';
         this.focusStyle_update();
-        await this.updateCursorStyle();
+        await this.updateCursorStyle_onlyHeader();
         this.updateContainerStyle();
     }
 
@@ -132,13 +132,15 @@ export class UiA_HeaderG {
     }
 
     async updateCursorStyle() {
+        await this.updateCursorStyle_onlyHeader();
+        await this.getUiA().textG.updateCursorStyle();
+    }
+
+    private async updateCursorStyle_onlyHeader() {
         if (this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
             this.divForContentAndBodyIcon.style.cursor = 'pointer';
         } else {
             this.divForContentAndBodyIcon.style.cursor = 'default';
-        }
-        if (this.getUiA().textG) {
-            await this.getUiA().textG.updateCursorStyle();
         }
     }
 
