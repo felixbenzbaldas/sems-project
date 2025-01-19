@@ -34,18 +34,12 @@ export class UiA_AppA {
     }
 
     async install(showMeta? : boolean, withPlaceholderArea? : boolean) : Promise<void> {
-        this.output = await OutputA.create(this.entity);
-        this.input = await InputA.create(this.entity);
         let app_uiA = this.getApp().uiA;
         if (showMeta) {
             await this.installMeta();
         }
         this.contentUi = await this.entity.uiA.createSubUiFor_transmitEditability(app_uiA.content);
         this.focusStyle_update();
-        if (app_uiA.webMeta) {
-            this.webMetaUi = await this.entity.uiA.createSubUiFor(app_uiA.webMeta);
-        }
-        this.htmlElement.innerHTML = null;
         this.htmlElement.style.backgroundColor = app_uiA.theme.backgroundColor;
         this.htmlElement.style.color = app_uiA.theme.fontColor;
         this.htmlElement.style.height = '100%';
@@ -65,7 +59,8 @@ export class UiA_AppA {
         if (withPlaceholderArea) {
             this.scrollableArea.appendChild(this.createPlaceholderArea());
         }
-        if (this.webMetaUi) {
+        if (app_uiA.webMeta) {
+            this.webMetaUi = await this.entity.uiA.createSubUiFor(app_uiA.webMeta);
             this.scrollableArea.appendChild(this.webMetaUi.htmlElement);
         }
     }
@@ -73,6 +68,8 @@ export class UiA_AppA {
     private async installMeta() {
         this.commands = this.createCommands();
         this.commandsUi = await this.entity.uiA.createSubUiFor(this.commands);
+        this.output = await OutputA.create(this.entity);
+        this.input = await InputA.create(this.entity);
         this.meta_htmlElement.appendChild(this.commandsUi.htmlElement);
         this.meta_htmlElement.appendChild(this.input.getUi().uiA.htmlElement);
         this.meta_htmlElement.appendChild(this.output.getUi().uiA.htmlElement);
