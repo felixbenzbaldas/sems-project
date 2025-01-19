@@ -15,7 +15,7 @@ export class UiA_HeaderBodyG {
             await this.entity.uiA.bodyG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
         } else if (object.testRunA) {
-            await this.entity.uiA.testRunG.update();
+            await this.entity.uiA.testRunG.install();
             await this.entity.uiA.headerG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
             await this.entity.uiA.bodyG.update();

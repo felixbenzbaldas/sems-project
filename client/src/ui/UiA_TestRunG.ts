@@ -11,12 +11,12 @@ export class UiA_TestRunG {
     constructor(private entity : Entity) {
     }
 
-    async update() {
-        this.updateHeaderContent();
-        await this.updateBodyContent();
+    async install() {
+        this.installHeaderContent();
+        await this.installBodyContent();
     }
 
-    updateHeaderContent() {
+    installHeaderContent() {
         this.headerContent_htmlElement = div();
         this.headerContent_htmlElement.innerText = this.header_getText();
         this.headerContent_htmlElement.style.color = this.getTestRun().resultG_success ?
@@ -31,7 +31,7 @@ export class UiA_TestRunG {
         this.headerContent_htmlElement.appendChild(runInOwnWindow);
     }
 
-    async updateBodyContent() {
+    async installBodyContent() {
         let appA = this.entity.getApp().appA;
         let bodyContent = appA.unboundG.createList();
         if (this.getTestRun().resultG_error) {
