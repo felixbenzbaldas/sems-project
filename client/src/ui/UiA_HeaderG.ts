@@ -1,14 +1,14 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined, setWidth} from "@/utils";
+import {div, notNullUndefined, setWidth} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_HeaderG {
 
-    htmlElement: HTMLElement = document.createElement('div');
-    divForContentAndBodyIcon : HTMLElement = document.createElement('div');
-    content: HTMLElement = document.createElement('div');
-    bodyIcon : HTMLElement = document.createElement('div');
-    contextIcon : HTMLElement = document.createElement('div');
+    htmlElement: HTMLElement = div();
+    divForContentAndBodyIcon : HTMLElement = div();
+    content: HTMLElement = div();
+    bodyIcon : HTMLElement = div();
+    contextIcon : HTMLElement = div();
 
 
     constructor(private entity: Entity) {
@@ -70,7 +70,7 @@ export class UiA_HeaderG {
     }
 
     createContainerMark() {
-        let containerMark = document.createElement('div');
+        let containerMark = div();
         containerMark.style.display = 'block';
         setWidth(containerMark, '0.8rem');
         containerMark.innerText = 'O'

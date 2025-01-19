@@ -1,6 +1,6 @@
 import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
-import {downloadText, selectAllTextOfDiv} from "@/utils";
+import {div, downloadText, selectAllTextOfDiv} from "@/utils";
 
 export class OutputA {
 
@@ -12,7 +12,7 @@ export class OutputA {
         let app = this.entity.getApp_typed();
         this.output = app.unboundG.createText('There is no output. Click on \'export\'');
         this.outputDownload = app.createEntityWithApp();
-        this.outputDownload.codeG_html = document.createElement('div');
+        this.outputDownload.codeG_html = div();
         this.outputDownload.codeG_html.style.margin = '0.5rem';
         let uiData = app.unboundG.createTextWithList('output',
             this.outputDownload,

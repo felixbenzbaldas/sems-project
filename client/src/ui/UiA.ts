@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined, nullUndefined} from "@/utils";
+import {div, notNullUndefined, nullUndefined} from "@/utils";
 import {UiA_ListG} from "@/ui/UiA_ListG";
 import {UiA_TextG} from "@/ui/UiA_TextG";
 import {UiA_BodyG} from "@/ui/UiA_BodyG";
@@ -12,7 +12,7 @@ import {UiA_AppA} from "@/ui/UiA_AppA";
 export class UiA {
 
     editable: boolean;
-    htmlElement : HTMLElement = document.createElement('div');
+    htmlElement : HTMLElement = div();
     listG: UiA_ListG;
     textG : UiA_TextG;
     headerG : UiA_HeaderG;
@@ -46,9 +46,9 @@ export class UiA {
             await this.entity.uiA.listG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.listG.htmlElement);
         } else {
-            let div = document.createElement('div');
-            div.innerText = this.getObject().getDescription();
-            this.htmlElement.appendChild(div);
+            let divElement = div();
+            divElement.innerText = this.getObject().getDescription();
+            this.htmlElement.appendChild(divElement);
         }
     }
 

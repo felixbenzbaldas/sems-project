@@ -1,5 +1,5 @@
 // The expand- and collapse-methods throw an exception when called while instance is busy.
-import {wait} from "@/utils";
+import {div, wait} from "@/utils";
 
 export class AnimatedExpandAndCollapse {
     outerDiv : HTMLDivElement;
@@ -12,8 +12,8 @@ export class AnimatedExpandAndCollapse {
     isBusyFlag : boolean = false;
 
     constructor() {
-        this.outerDiv = document.createElement("div");
-        this.innerDiv = document.createElement("div");
+        this.outerDiv = div();
+        this.innerDiv = div();
         this.outerDiv.appendChild(this.innerDiv);
         this.outerDiv.style.overflow = "hidden";
         this.outerDiv.style.height = "0px";

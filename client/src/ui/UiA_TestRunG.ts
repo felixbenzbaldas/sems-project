@@ -1,7 +1,7 @@
 import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
 import type {TestRunA} from "@/tester/TestRunA";
-import {notNullUndefined} from "@/utils";
+import {div, notNullUndefined} from "@/utils";
 
 export class UiA_TestRunG {
 
@@ -17,7 +17,7 @@ export class UiA_TestRunG {
     }
 
     updateHeaderContent() {
-        this.headerContent_htmlElement = document.createElement('div');
+        this.headerContent_htmlElement = div();
         this.headerContent_htmlElement.innerText = this.header_getText();
         this.headerContent_htmlElement.style.color = this.getTestRun().resultG_success ?
             this.entity.getApp_typed().uiA.theme.success : this.entity.getApp_typed().uiA.theme.failure;

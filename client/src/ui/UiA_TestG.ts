@@ -1,9 +1,10 @@
 import type {Entity} from "@/Entity";
 import {UiA} from "@/ui/UiA";
+import {div} from "@/utils";
 
 export class UiA_TestG {
 
-    headerContent_htmlElement: HTMLElement = document.createElement('div');
+    headerContent_htmlElement: HTMLElement = div();
     bodyContentUi : UiA;
 
     constructor(private entity : Entity) {

@@ -111,11 +111,15 @@ export function setWidth(htmlElement : HTMLElement, width : string) {
 }
 
 export function textElem(text : string) : HTMLDivElement {
-    let html = document.createElement('div');
+    let html = div();
     html.innerText = text;
     return html;
 }
 
 export function localhostWithQueryParams(paramsAsString : string) : URL {
     return new URL('http:localhost:1234/?' + paramsAsString);
+}
+
+export function div() : HTMLDivElement {
+    return document.createElement('div');
 }

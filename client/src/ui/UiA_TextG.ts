@@ -1,10 +1,10 @@
 import type {Entity} from "@/Entity";
-import {setCaret} from "@/utils";
+import {div, setCaret} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_TextG {
 
-    htmlElement : HTMLElement = document.createElement('div');
+    htmlElement : HTMLElement = div();
 
     constructor(private entity : Entity) {
         this.htmlElement.style.borderLeft = 'solid';

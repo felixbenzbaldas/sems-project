@@ -1,6 +1,5 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined, textElem} from "@/utils";
-import {Color} from "@/ui/Color";
+import {div, textElem} from "@/utils";
 import {OutputA} from "@/ui/OutputA";
 import {InputA} from "@/ui/InputA";
 import {UiA} from "@/ui/UiA";
@@ -10,7 +9,7 @@ import {UiA_AppA_KeyG} from "@/ui/UiA_AppA_KeyG";
 
 export class UiA_AppA {
 
-    htmlElement: HTMLElement = document.createElement('div');
+    htmlElement: HTMLElement = div();
 
     readonly output : OutputA;
     readonly input : InputA;
@@ -25,7 +24,7 @@ export class UiA_AppA {
     commandsUi: UiA;
     focusStyle_marker: HTMLElement;
     isInstalled : boolean;
-    meta_htmlElement: HTMLElement = document.createElement('div');
+    meta_htmlElement: HTMLElement = div();
 
     constructor(public entity: Entity) {
         this.output = new OutputA(entity);
@@ -54,8 +53,8 @@ export class UiA_AppA {
         this.htmlElement.style.height = '100%';
         this.htmlElement.style.display = 'flex';
         this.htmlElement.style.flexDirection = 'column';
-        this.scrollableArea = document.createElement('div');
-        this.statusBar = document.createElement('div');
+        this.scrollableArea = div();
+        this.statusBar = div();
         this.htmlElement.appendChild(this.statusBar);
         this.htmlElement.appendChild(this.scrollableArea);
         this.scrollableArea.style.overflowY = 'auto';
@@ -133,7 +132,7 @@ export class UiA_AppA {
     }
 
     private separatorLine() : HTMLElement {
-        let line: HTMLDivElement = document.createElement('div');
+        let line: HTMLDivElement = div();
         line.style.marginBottom = '0.5rem';
         line.style.paddingBottom = '0.5rem';
         line.style.borderBottom = 'dashed';
@@ -141,7 +140,7 @@ export class UiA_AppA {
     }
 
     private createPlaceholderArea() : HTMLElement {
-        let placeholderAreaDiv = document.createElement('div');
+        let placeholderAreaDiv = div();
         let updatePlaceholderArea = () => {
             placeholderAreaDiv.style.height = (window.innerHeight - window.innerHeight * 0.15) + 'px';
         };
@@ -153,9 +152,9 @@ export class UiA_AppA {
     }
 
     private focusStyle_createMarker() : HTMLElement {
-        let div = document.createElement('div');
-        div.style.height = '0.2rem';
-        return div;
+        let divElement = div();
+        divElement.style.height = '0.2rem';
+        return divElement;
     }
 
     focusStyle_update() {

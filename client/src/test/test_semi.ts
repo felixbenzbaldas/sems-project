@@ -94,10 +94,10 @@ export function test_semi_add(tests : TestG_NestedTestsA) {
         //     let appA = run.appUi.getApp();
         //     let html = appA.createEntityWithApp();
         //     appA.uiA.content.listA.addDirect(html);
-        //     html.codeG_html = document.createElement('div');
-        //     let left = document.createElement('div');
+        //     html.codeG_html = div();
+        //     let left = div();
         //     html.codeG_html.appendChild(left);
-        //     let right = document.createElement('div');
+        //     let right = div();
         //     html.codeG_html.appendChild(right);
         //     html.codeG_html.style.display = 'flex';
         //     html.codeG_html.style.width = '30rem';
@@ -116,7 +116,7 @@ export function test_semi_add(tests : TestG_NestedTestsA) {
         // });
         // semi.addUiTestWithNestedTests('animatedExpand', async run => {
         //     let html = run.app.createEntityWithApp();
-        //     html.codeG_html = document.createElement('div');
+        //     html.codeG_html = div();
         //     html.codeG_html.style.backgroundColor = 'gold';
         //     html.codeG_html.style.transitionProperty = 'height';
         //     html.codeG_html.style.transitionDuration = '2s';

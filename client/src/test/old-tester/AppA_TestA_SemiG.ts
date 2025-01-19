@@ -29,7 +29,7 @@ export class AppA_TestA_SemiG {
         //     this.createTest('semiAutomatedTest_html', async test => {
         //         test.test_app = this.entity.appA.createStarter().createAppWithUI();
         //         let html = test.test_app.appA.createEntityWithApp();
-        //         html.codeG_html = document.createElement('div');
+        //         html.codeG_html = div();
         //         html.codeG_html.innerText = 'show me';
         //         test.test_app.appA.uiA.content.listA.addDirect(html);
         //         await test.test_app.updateUi();
@@ -40,7 +40,7 @@ export class AppA_TestA_SemiG {
         //     this.createTest('semiAutomatedTest_setCaret', async test => {
         //         test.test_app = this.entity.appA.createStarter().createAppWithUI();
         //         let html = test.test_app.appA.createEntityWithApp();
-        //         html.codeG_html = document.createElement('div');
+        //         html.codeG_html = div();
         //         html.codeG_html.innerText = 'test';
         //         html.codeG_html.contentEditable = 'true';
         //         html.codeG_html.style.margin = '1rem';
@@ -84,7 +84,7 @@ export class AppA_TestA_SemiG {
         //         test.test_app = await this.entity.appA.createStarter().createAppWithUIWithCommands_editable_updateUi();
         //         let appA = test.test_app.appA;
         //         let html = appA.createEntityWithApp();
-        //         html.codeG_html = document.createElement('div');
+        //         html.codeG_html = div();
         //         html.codeG_html.style.height = '15rem';
         //         html.codeG_html.style.backgroundColor = 'gold';
         //         html.codeG_html.style.width = '15rem';
@@ -161,7 +161,7 @@ export class AppA_TestA_SemiG {
         //         let appA = test.test_app.appA;
         //         test.test_app.uiA.editable = true;
         //         let html = appA.createEntityWithApp();
-        //         html.codeG_html = document.createElement('div');
+        //         html.codeG_html = div();
         //         html.codeG_html.innerText = 'hello\nworld';
         //         appA.uiA.content.listA.addDirect(
         //             appA.unboundG.createButton('select text', () => {selectAllTextOfDiv(html.codeG_html);}),
