@@ -25,17 +25,11 @@ export class UiA {
     appA : UiA_AppA;
 
     constructor(public entity : Entity) {
-        this.headerBodyG = new UiA_HeaderBodyG(entity);
-        this.listG = new UiA_ListG(entity);
-        this.textG = new UiA_TextG(entity);
-        this.headerG = new UiA_HeaderG(entity);
-        this.bodyG = new UiA_BodyG(entity);
-        this.testG = new UiA_TestG(entity);
-        this.testRunG = new UiA_TestRunG(entity);
+        this.reset();
     }
 
     async update() {
-        this.resetHtmlElement();
+        this.reset();
         await this.install();
     }
 
@@ -54,6 +48,17 @@ export class UiA {
             divElement.innerText = this.getObject().getDescription();
             this.htmlElement.appendChild(divElement);
         }
+    }
+
+    reset() {
+        this.resetHtmlElement();
+        this.headerBodyG = new UiA_HeaderBodyG(this.entity);
+        this.listG = new UiA_ListG(this.entity);
+        this.textG = new UiA_TextG(this.entity);
+        this.headerG = new UiA_HeaderG(this.entity);
+        this.bodyG = new UiA_BodyG(this.entity);
+        this.testG = new UiA_TestG(this.entity);
+        this.testRunG = new UiA_TestRunG(this.entity);
     }
 
     resetHtmlElement() {

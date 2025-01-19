@@ -32,6 +32,7 @@ export class UiA_HeaderBodyG {
             await this.entity.uiA.ensureExpanded();
         }
         await this.entity.uiA.headerG.updateBodyIcon();
+        await this.entity.uiA.headerG.updateCursorStyle();
     }
 
     async update_removedListItem(position: number) {
