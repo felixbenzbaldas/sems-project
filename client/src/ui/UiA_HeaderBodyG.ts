@@ -10,7 +10,7 @@ export class UiA_HeaderBodyG {
         let object = this.entity.uiA.getObject();
         if (object.testRunA) {
             await this.entity.uiA.testRunG.install();
-            await this.entity.uiA.headerG.update();
+            await this.entity.uiA.headerG.install();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
             await this.entity.uiA.bodyG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
@@ -18,7 +18,7 @@ export class UiA_HeaderBodyG {
                 await this.entity.uiA.ensureExpanded();
             }
         } else {
-            await this.entity.uiA.headerG.update();
+            await this.entity.uiA.headerG.install();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
             await this.entity.uiA.bodyG.update();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);

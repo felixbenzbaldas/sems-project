@@ -10,13 +10,10 @@ export class UiA_HeaderG {
     bodyIcon : HTMLElement = div();
     contextIcon : HTMLElement = div();
 
-
     constructor(private entity: Entity) {
     }
 
-    async update() {
-        this.htmlElement.innerHTML = null;
-        this.divForContentAndBodyIcon.innerHTML = null;
+    async install() {
         await this.updateContextIcon();
         await this.updateContent();
         await this.updateBodyIcon();
