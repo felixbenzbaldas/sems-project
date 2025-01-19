@@ -39,7 +39,8 @@ export class UiA_HeaderBodyG {
             await this.entity.uiA.listG.update_removedListItem(position);
         } else {
             await this.entity.uiA.headerG.updateBodyIcon();
-            await this.entity.uiA.bodyG.update();
+            await this.entity.uiA.headerG.updateCursorStyle();
+            await this.entity.uiA.bodyG.ensureCollapsed();
         }
     }
 

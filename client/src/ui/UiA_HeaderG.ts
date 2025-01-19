@@ -143,6 +143,9 @@ export class UiA_HeaderG {
         } else {
             this.divForContentAndBodyIcon.style.cursor = 'default';
         }
+        if (this.getUiA().textG) {
+            await this.getUiA().textG.updateCursorStyle();
+        }
     }
 
     focusStyle_update() {
