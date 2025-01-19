@@ -11,8 +11,8 @@ export class UiA_AppA {
 
     htmlElement: HTMLElement = div();
 
-    readonly output : OutputA;
-    readonly input : InputA;
+    output : OutputA;
+    input : InputA;
     commands: Entity;
     focused : UiA;
     scrollableArea : HTMLElement = div();
@@ -27,8 +27,6 @@ export class UiA_AppA {
     meta_htmlElement: HTMLElement = div();
 
     constructor(public entity: Entity) {
-        this.output = new OutputA(entity);
-        this.input = new InputA(entity);
         this.globalEventG = new UiA_AppA_GlobalEventG(entity);
         this.keyG = new UiA_AppA_KeyG(entity);
         this.focused = this.entity.uiA;
@@ -36,6 +34,8 @@ export class UiA_AppA {
     }
 
     async install(showMeta? : boolean, withPlaceholderArea? : boolean) : Promise<void> {
+        this.output = await OutputA.create(this.entity);
+        this.input = await InputA.create(this.entity);
         let app_uiA = this.getApp().uiA;
         if (showMeta) {
             await this.installMeta();

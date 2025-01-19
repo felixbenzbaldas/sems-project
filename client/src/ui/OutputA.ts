@@ -4,23 +4,28 @@ import {div, downloadText, selectAllTextOfDiv} from "@/utils";
 
 export class OutputA {
 
-    private readonly ui : Entity;
-    private readonly output : Entity;
-    private readonly outputDownload : Entity;
+    private ui : Entity;
+    private output : Entity;
+    private outputDownload : Entity;
 
     constructor(public entity : Entity) {
-        let app = this.entity.getApp_typed();
-        this.output = app.unboundG.createText('There is no output. Click on \'export\'');
-        this.outputDownload = app.createEntityWithApp();
-        this.outputDownload.codeG_html = div();
-        this.outputDownload.codeG_html.style.margin = '0.5rem';
+    }
+
+    static async create(entity : Entity) : Promise<OutputA> {
+        let outputA = new OutputA(entity);
+        let app = outputA.entity.getApp_typed();
+        outputA.output = app.unboundG.createText('There is no output. Click on \'export\'');
+        outputA.outputDownload = app.createEntityWithApp();
+        outputA.outputDownload.codeG_html = div();
+        outputA.outputDownload.codeG_html.style.margin = '0.5rem';
         let uiData = app.unboundG.createTextWithList('output',
-            this.outputDownload,
+            outputA.outputDownload,
             app.unboundG.createButton('select', () => {
-                selectAllTextOfDiv(this.ui.uiA.listG.uisOfListItems[2].textG.htmlElement);
-            }), this.output);
+                selectAllTextOfDiv(outputA.ui.uiA.listG.uisOfListItems[2].textG.htmlElement);
+            }), outputA.output);
         uiData.collapsible = true;
-        this.ui = entity.uiA.createSubUiFor(uiData).entity;
+        outputA.ui = entity.uiA.createSubUiFor(uiData).entity;
+        return outputA;
     }
 
     async setAndUpdateUi(string : string) {
