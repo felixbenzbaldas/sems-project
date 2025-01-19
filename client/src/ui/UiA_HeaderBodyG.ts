@@ -12,7 +12,7 @@ export class UiA_HeaderBodyG {
             await this.entity.uiA.testRunG.install();
             await this.entity.uiA.headerG.install();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
-            await this.entity.uiA.bodyG.update();
+            await this.entity.uiA.bodyG.install();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
             if (!object.testRunA.resultG_success) {
                 await this.entity.uiA.ensureExpanded();
@@ -20,7 +20,7 @@ export class UiA_HeaderBodyG {
         } else {
             await this.entity.uiA.headerG.install();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
-            await this.entity.uiA.bodyG.update();
+            await this.entity.uiA.bodyG.install();
             this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
         }
     }

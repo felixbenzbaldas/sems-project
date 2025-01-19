@@ -37,7 +37,7 @@ export class UiA_BodyG {
         });
     }
 
-    async update() {
+    async install() {
         if (!this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
             this.htmlElement.innerHTML = null;
             await this.displayBody();
