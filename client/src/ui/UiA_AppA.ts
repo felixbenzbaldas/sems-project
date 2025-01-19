@@ -15,8 +15,8 @@ export class UiA_AppA {
     readonly input : InputA;
     commands: Entity;
     focused : UiA;
-    scrollableArea : HTMLElement;
-    statusBar: HTMLDivElement;
+    scrollableArea : HTMLElement = div();
+    statusBar: HTMLDivElement = div();
     globalEventG: UiA_AppA_GlobalEventG;
     keyG: UiA_AppA_KeyG;
     contentUi : UiA;
@@ -53,8 +53,6 @@ export class UiA_AppA {
         this.htmlElement.style.height = '100%';
         this.htmlElement.style.display = 'flex';
         this.htmlElement.style.flexDirection = 'column';
-        this.scrollableArea = div();
-        this.statusBar = div();
         this.htmlElement.appendChild(this.statusBar);
         this.htmlElement.appendChild(this.scrollableArea);
         this.scrollableArea.style.overflowY = 'auto';
