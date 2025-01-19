@@ -39,8 +39,8 @@ export class UiA {
         } else if (this.isHeaderBody()) {
             await this.headerBodyG.install();
         } else if (this.isPlainList()) {
-            await this.entity.uiA.listG.update();
-            this.entity.uiA.htmlElement.appendChild(this.entity.uiA.listG.htmlElement);
+            await this.listG.update();
+            this.htmlElement.appendChild(this.listG.htmlElement);
         } else {
             let divElement = div();
             divElement.innerText = this.getObject().getDescription();
