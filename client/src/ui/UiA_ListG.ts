@@ -22,14 +22,13 @@ export class UiA_ListG {
     private async updateUisOfListItems() {
         this.uisOfListItems = []; // TODO: do not always dismiss old uis
         for (let currentResolved of await this.getObject().listA.getResolvedList()) {
-            let currentUi = this.createSubUiFor(currentResolved);
-            await currentUi.update();
+            let currentUi = await this.createSubUiFor(currentResolved);
             this.uisOfListItems.push(currentUi);
             this.htmlElement.appendChild(currentUi.htmlElement);
         }
     }
 
-    createSubUiFor(listItem : Entity) : UiA {
+    async createSubUiFor(listItem : Entity) : Promise<UiA> {
         return this.entity.uiA.createSubUiFor_transmitEditability(listItem);
     }
 
@@ -56,9 +55,8 @@ export class UiA_ListG {
     }
 
     async update_addedListItem(position: number) {
-        let ui = this.createSubUiFor(await this.getObject().listA.getResolved(position));
+        let ui = await this.createSubUiFor(await this.getObject().listA.getResolved(position));
         this.uisOfListItems.splice(position, 0, ui);
-        await ui.update();
         if (position + 1 === this.uisOfListItems.length) {
             this.htmlElement.appendChild(ui.htmlElement);
         } else {

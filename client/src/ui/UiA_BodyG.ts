@@ -86,8 +86,7 @@ export class UiA_BodyG {
             let contextAsSubitem = this.entity.getApp_typed().unboundG.createTextWithList('[context]', contextObj);
             contextAsSubitem.collapsible = true;
             contextAsSubitem.editable = false;
-            let ui = this.getUiA().createSubUiFor_transmitEditability(contextAsSubitem); // it is important to transmit the editability for the subsubitems
-            await ui.update();
+            let ui = await this.getUiA().createSubUiFor_transmitEditability(contextAsSubitem); // it is important to transmit the editability for the subsubitems
             ui.htmlElement.style.marginBottom = '0.1rem';
             ui.headerG.htmlElement.style.fontSize = '0.8rem';
             ui.headerG.htmlElement.style.color = this.entity.getApp_typed().uiA.theme.buttonFontColor;
@@ -123,8 +122,7 @@ export class UiA_BodyG {
         if (this.getObject().hasUrl()) {
             meta.listA.addDirect(app.unboundG.createLink(this.getObject().getUrl()));
         }
-        let ui = this.getUiA().createSubUiFor_transmitEditability(meta);
-        await ui.update();
+        let ui = await this.getUiA().createSubUiFor_transmitEditability(meta);
         this.content_meta_htmlElement.appendChild(ui.htmlElement);
     }
 

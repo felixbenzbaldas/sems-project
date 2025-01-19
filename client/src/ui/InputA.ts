@@ -22,7 +22,7 @@ export class InputA {
         let uiData = app.unboundG.createTextWithList('input', inputA.input,
             app.unboundG.createTextWithList('You can choose a text file as input:', html));
         uiData.collapsible = true;
-        inputA.ui = entity.uiA.createSubUiFor(uiData).entity;
+        inputA.ui = (await entity.uiA.createSubUiFor(uiData)).entity;
         return inputA;
     }
 

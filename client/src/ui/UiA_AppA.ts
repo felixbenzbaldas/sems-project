@@ -40,12 +40,10 @@ export class UiA_AppA {
         if (showMeta) {
             await this.installMeta();
         }
-        this.contentUi = this.entity.uiA.createSubUiFor_transmitEditability(app_uiA.content);
+        this.contentUi = await this.entity.uiA.createSubUiFor_transmitEditability(app_uiA.content);
         this.focusStyle_update();
-        await this.contentUi.update();
         if (app_uiA.webMeta) {
-            this.webMetaUi = this.entity.uiA.createSubUiFor(app_uiA.webMeta);
-            await this.webMetaUi.update();
+            this.webMetaUi = await this.entity.uiA.createSubUiFor(app_uiA.webMeta);
         }
         this.htmlElement.innerHTML = null;
         this.htmlElement.style.backgroundColor = app_uiA.theme.backgroundColor;
@@ -74,13 +72,8 @@ export class UiA_AppA {
 
     private async installMeta() {
         this.commands = this.createCommands();
-        this.commandsUi = this.entity.uiA.createSubUiFor(this.commands);
-        await this.commandsUi.update();
-        await this.input.getUi().updateUi();
-        await this.output.getUi().updateUi();
-        if (this.commandsUi) {
-            this.meta_htmlElement.appendChild(this.commandsUi.htmlElement);
-        }
+        this.commandsUi = await this.entity.uiA.createSubUiFor(this.commands);
+        this.meta_htmlElement.appendChild(this.commandsUi.htmlElement);
         this.meta_htmlElement.appendChild(this.input.getUi().uiA.htmlElement);
         this.meta_htmlElement.appendChild(this.output.getUi().uiA.htmlElement);
         this.meta_htmlElement.appendChild(this.separatorLine());

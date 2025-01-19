@@ -373,16 +373,18 @@ export class UiA {
         }
     }
 
-    createSubUiFor_transmitEditability(object: Entity) : UiA {
-        let ui = this.entity.getApp_typed().uiA.createUiFor_typed(object);
+    async createSubUiFor_transmitEditability(object: Entity) : Promise<UiA> {
+        let ui = this.entity.getApp_typed().uiA.prepareUiFor(object);
         ui.context = this;
         ui.editable = this.editable;
+        await ui.update();
         return ui;
     }
 
-    createSubUiFor(object: Entity) : UiA {
-        let ui = this.entity.getApp_typed().uiA.createUiFor_typed(object);
+    async createSubUiFor(object: Entity) : Promise<UiA> {
+        let ui = this.entity.getApp_typed().uiA.prepareUiFor(object);
         ui.context = this;
+        await ui.update();
         return ui;
     }
 }

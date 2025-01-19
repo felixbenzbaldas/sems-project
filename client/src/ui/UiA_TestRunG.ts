@@ -50,8 +50,7 @@ export class UiA_TestRunG {
         if (this.getObject().testRunA.nestedRuns) {
             bodyContent.listA.addDirect(this.getObject().testRunA.nestedRuns);
         }
-        this.bodyContentUi = this.entity.uiA.createSubUiFor(bodyContent);
-        await this.bodyContentUi.update();
+        this.bodyContentUi = await this.entity.uiA.createSubUiFor(bodyContent);
     }
 
     getTestRun() : TestRunA {

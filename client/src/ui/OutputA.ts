@@ -24,7 +24,7 @@ export class OutputA {
                 selectAllTextOfDiv(outputA.ui.uiA.listG.uisOfListItems[2].textG.htmlElement);
             }), outputA.output);
         uiData.collapsible = true;
-        outputA.ui = entity.uiA.createSubUiFor(uiData).entity;
+        outputA.ui = (await entity.uiA.createSubUiFor(uiData)).entity;
         return outputA;
     }
 
