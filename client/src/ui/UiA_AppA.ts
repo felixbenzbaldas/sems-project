@@ -176,6 +176,12 @@ export class UiA_AppA {
             }),
             this.getApp().unboundG.createButton('set link', async () => {
                 await this.globalEventG.setLink();
+            }),
+            this.getApp().unboundG.createButton('switch current container', async () => {
+                await this.globalEventG.switchCurrentContainer();
+            }),
+            this.getApp().unboundG.createButton('import', async () => {
+                await this.globalEventG.import();
             })
         );
         lowPriorityCommands.collapsible = true;
@@ -192,17 +198,11 @@ export class UiA_AppA {
             this.getApp().unboundG.createButton('expand/collapse', async () => {
                 await this.globalEventG.expandOrCollapse();
             }),
-            this.getApp().unboundG.createButton('switch current container', async () => {
-                await this.globalEventG.switchCurrentContainer();
-            }),
             this.getApp().unboundG.createButton('export', async () => {
                 await this.globalEventG.export();
             }),
             this.getApp().unboundG.createButton('load', async () => {
                 await this.globalEventG.load();
-            }),
-            this.getApp().unboundG.createButton('import', async () => {
-                await this.globalEventG.import();
             }),
             this.getApp().unboundG.createButton('mark', async () => {
                 await this.globalEventG.mark();
