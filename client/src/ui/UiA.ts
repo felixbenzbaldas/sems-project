@@ -34,6 +34,7 @@ export class UiA {
     async install() {
         this.htmlElement.classList.add('UI');
         if (this.getObject().codeG_html) {
+            this.fullWidth();
             this.htmlElement.appendChild(this.getObject().codeG_html);
         } else if (this.getObject().appA) {
             this.htmlElement.innerText = "type: application";
@@ -44,6 +45,7 @@ export class UiA {
             await this.listG.update();
             this.htmlElement.appendChild(this.listG.htmlElement);
         } else {
+            this.fullWidth();
             let divElement = div();
             divElement.innerText = this.getObject().getDescription();
             this.htmlElement.appendChild(divElement);
