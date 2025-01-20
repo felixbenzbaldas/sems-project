@@ -32,6 +32,7 @@ export class UiA {
     }
 
     async install() {
+        this.htmlElement.classList.add('UI');
         if (this.getObject().codeG_html) {
             this.htmlElement.appendChild(this.getObject().codeG_html);
         } else if (this.getObject().appA) {
@@ -39,6 +40,7 @@ export class UiA {
         } else if (this.isHeaderBody()) {
             await this.headerBodyG.install();
         } else if (this.isPlainList()) {
+            this.fullWidth();
             await this.listG.update();
             this.htmlElement.appendChild(this.listG.htmlElement);
         } else {
@@ -46,6 +48,10 @@ export class UiA {
             divElement.innerText = this.getObject().getDescription();
             this.htmlElement.appendChild(divElement);
         }
+    }
+
+    fullWidth() {
+        this.htmlElement.style.minWidth = '100%';
     }
 
     reset() {

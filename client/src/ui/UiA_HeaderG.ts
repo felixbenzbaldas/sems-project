@@ -18,9 +18,10 @@ export class UiA_HeaderG {
         await this.updateContent();
         await this.updateBodyIcon();
         if (this.ownRow()) {
-            this.getUiA().htmlElement.style.minWidth = '100%';
+            this.getUiA().fullWidth();
         }
         this.htmlElement.style.display = 'flex';
+        this.htmlElement.classList.add('header');
         this.divForContentAndBodyIcon.style.flexGrow = '2';
         this.divForContentAndBodyIcon.style.display = 'flex';
         this.divForContentAndBodyIcon.style.flexWrap = 'wrap';
