@@ -55,8 +55,13 @@ export class UiA_AppA {
         this.statusBar.style.maxHeight = '1.2rem';
         this.scrollableArea.appendChild(this.meta_htmlElement);
         this.scrollableArea.appendChild(this.focusStyle_marker);
+        let centerWrapper = div();
+        this.scrollableArea.appendChild(centerWrapper);
+        centerWrapper.style.display = 'flex';
+        centerWrapper.style.flexDirection = 'column';
+        centerWrapper.style.alignItems = 'center';
         let contentWrapper = div();
-        this.scrollableArea.appendChild(contentWrapper);
+        centerWrapper.appendChild(contentWrapper);
         contentWrapper.appendChild(this.contentUi.htmlElement);
         let updateWidth = () => {
             let maxContentWidth = 600;
