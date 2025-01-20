@@ -55,14 +55,16 @@ export class UiA_AppA {
         this.statusBar.style.maxHeight = '1.2rem';
         this.scrollableArea.appendChild(this.meta_htmlElement);
         this.scrollableArea.appendChild(this.focusStyle_marker);
-        this.scrollableArea.appendChild(this.contentUi.htmlElement);
+        let contentWrapper = div();
+        this.scrollableArea.appendChild(contentWrapper);
+        contentWrapper.appendChild(this.contentUi.htmlElement);
         let updateWidth = () => {
             let maxContentWidth = 600;
             let widthOfScrollbar = 30; // estimated
             if (window.innerWidth < maxContentWidth) {
-                this.contentUi.htmlElement.style.width = 'unset';
+                contentWrapper.style.width = 'unset';
             } else {
-                this.contentUi.htmlElement.style.width = maxContentWidth - widthOfScrollbar + 'px';
+                contentWrapper.style.width = maxContentWidth - widthOfScrollbar + 'px';
             }
         };
         updateWidth();
