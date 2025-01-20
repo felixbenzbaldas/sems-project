@@ -20,7 +20,6 @@ export class UiA_HeaderG {
         if (this.ownRow()) {
             this.getUiA().htmlElement.style.minWidth = '100%';
         }
-        this.htmlElement.style.maxWidth = '42rem';
         this.htmlElement.style.display = 'flex';
         this.divForContentAndBodyIcon.style.flexGrow = '2';
         this.divForContentAndBodyIcon.style.display = 'flex';

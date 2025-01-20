@@ -47,7 +47,7 @@ export class UiA_AppA {
         this.htmlElement.style.flexDirection = 'column';
         this.htmlElement.appendChild(this.statusBar);
         this.htmlElement.appendChild(this.scrollableArea);
-        this.scrollableArea.style.overflowY = 'auto';
+        this.scrollableArea.style.overflowY = 'scroll';
         this.scrollableArea.style.paddingLeft = '0.2rem';
         this.scrollableArea.style.paddingRight = '0.2rem';
         this.statusBar.style.backgroundColor = app_uiA.theme.secondBackgroundColor;
@@ -56,6 +56,17 @@ export class UiA_AppA {
         this.scrollableArea.appendChild(this.meta_htmlElement);
         this.scrollableArea.appendChild(this.focusStyle_marker);
         this.scrollableArea.appendChild(this.contentUi.htmlElement);
+        let updateWidth = () => {
+            let maxContentWidth = 600;
+            let widthOfScrollbar = 30; // estimated
+            if (window.innerWidth < maxContentWidth) {
+                this.contentUi.htmlElement.style.width = 'unset';
+            } else {
+                this.contentUi.htmlElement.style.width = maxContentWidth - widthOfScrollbar + 'px';
+            }
+        };
+        updateWidth();
+        window.addEventListener('resize', updateWidth);
         if (withPlaceholderArea) {
             this.scrollableArea.appendChild(this.createPlaceholderArea());
         }
