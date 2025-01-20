@@ -94,7 +94,7 @@ export class Entity {
     async resolveListOfNames(listOfNames : Array<string>) : Promise<Entity> {
         if (listOfNames.length === 0) {
             return this;
-        } else if (listOfNames.at(0) === '..') {
+        } else if (listOfNames[0] === '..') {
             return this.container.resolveListOfNames(listOfNames.slice(1));
         } else {
             return this.containerA.mapNameEntity.get(listOfNames[0]).resolveListOfNames(listOfNames.slice(1));

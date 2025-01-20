@@ -12,7 +12,7 @@ export function test_path_add(tests : TestG_NestedTestsA) {
                 let path: PathA = run.app.entity.getPath(text);
 
                 assert_sameAs(path.listOfNames.length, 1);
-                assert_sameAs(path.listOfNames.at(0), text.name);
+                assert_sameAs(path.listOfNames[0], text.name);
             });
             getPathTest.add('ofContainedOfContained', async run => {
                 let container = await run.app.createText('container');
@@ -22,8 +22,8 @@ export function test_path_add(tests : TestG_NestedTestsA) {
                 let path : PathA = run.app.entity.getPath(containedContained);
 
                 assert_sameAs(path.listOfNames.length, 2);
-                assert_sameAs(path.listOfNames.at(0), container.name);
-                assert_sameAs(path.listOfNames.at(1), containedContained.name);
+                assert_sameAs(path.listOfNames[0], container.name);
+                assert_sameAs(path.listOfNames[1], containedContained.name);
             });
             getPathTest.add('ofContainer', async run => {
                 let text = await run.app.createText('');

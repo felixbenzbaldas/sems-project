@@ -152,7 +152,7 @@ export class UiA {
             created.context = created.getPath(this.getObject());
             await listA.entity.uis_update_addedListItem(position);
             await this.ensureExpanded();
-            this.findAppUi().focus(this.entity.uiA.listG.uisOfListItems.at(position));
+            this.findAppUi().focus(this.entity.uiA.listG.uisOfListItems[position]);
         }
     }
 
