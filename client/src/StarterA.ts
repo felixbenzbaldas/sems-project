@@ -18,7 +18,7 @@ export class StarterA {
     async fullStart() : Promise<HTMLElement> {
         if (this.getEnvironment().url.searchParams.has('client-app')) {
             return this.fullStartG.clientApp();
-        } else if (this.getEnvironment().url.searchParams.has('tester2')) {
+        } else if (this.getEnvironment().url.searchParams.has('tester')) {
             return this.fullStartG.tester();
         } else if (this.getEnvironment().url.searchParams.has('path')) {
             return this.fullStartG.objectViewer();
