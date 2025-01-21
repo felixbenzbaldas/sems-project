@@ -23,7 +23,6 @@ export class UiA_AppA {
     webMetaUi : UiA;
     commandsUi: UiA;
     focusStyle_marker: HTMLElement;
-    isInstalled : boolean;
     meta_htmlElement: HTMLElement = div();
 
     constructor(public entity: Entity) {
