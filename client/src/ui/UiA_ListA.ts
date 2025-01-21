@@ -2,8 +2,7 @@ import type {Entity} from "@/Entity";
 import {div, notNullUndefined, nullUndefined} from "@/utils";
 import {UiA} from "@/ui/UiA";
 
-// TODO should be an aspect not a group. Then: entity.uiA.getObject().listA <==> entity.uiA.listA
-export class UiA_ListG {
+export class UiA_ListA {
 
     uisOfListItems : Array<UiA>;
     htmlElement : HTMLDivElement = div();

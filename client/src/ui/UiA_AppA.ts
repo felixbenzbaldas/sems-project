@@ -110,7 +110,7 @@ export class UiA_AppA {
         let listA = this.getObject().appA.uiA.content.listA;
         await listA.insertObjectAtPosition(created, position);
         await this.getObject().appA.uiA.content.uis_update_addedListItem(position);
-        this.focus(this.contentUi.listG.uisOfListItems[position]);
+        this.focus(this.contentUi.listA.uisOfListItems[position]);
     }
 
     async paste() {
@@ -118,7 +118,7 @@ export class UiA_AppA {
         let listA = this.getObject().appA.uiA.content.listA;
         await listA.insertObjectAtPosition(this.getObject().appA.uiA.clipboard, position);
         await this.contentUi.update_addedListItem(position);
-        this.focus(this.contentUi.listG.uisOfListItems[position]);
+        this.focus(this.contentUi.listA.uisOfListItems[position]);
     }
 
     focus(ui : UiA) {

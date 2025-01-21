@@ -59,7 +59,7 @@ export class UiA_AppA_GlobalEventG {
         this.entity.getApp().containerA.bind(created);
         await this.getApp().uiA.content.listA.insertPathOrDirectAtPosition(created, 0);
         await this.getApp().uiA.content.uis_update_addedListItem(0);
-        this.getAppUi().focus(this.getAppUi().contentUi.listG.uisOfListItems[0]);
+        this.getAppUi().focus(this.getAppUi().contentUi.listA.uisOfListItems[0]);
         await this.getAppUi().input.ui.uiA.ensureCollapsed();
         window.scroll(0, 0);
         await this.ensureContainer();

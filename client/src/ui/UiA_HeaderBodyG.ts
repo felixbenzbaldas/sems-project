@@ -27,7 +27,7 @@ export class UiA_HeaderBodyG {
 
     async update_addedListItem(position: number) {
         if (this.bodyIsVisible()) {
-            await this.entity.uiA.listG.update_addedListItem(position);
+            await this.entity.uiA.listA.update_addedListItem(position);
         } else {
             await this.entity.uiA.ensureExpanded();
         }
@@ -37,7 +37,9 @@ export class UiA_HeaderBodyG {
 
     async update_removedListItem(position: number) {
         if (await this.hasBodyContent()) {
-            await this.entity.uiA.listG.update_removedListItem(position);
+            if (this.bodyIsVisible()) {
+                await this.entity.uiA.listA.update_removedListItem(position);
+            }
         } else {
             await this.entity.uiA.headerG.updateBodyIcon();
             await this.entity.uiA.headerG.updateCursorStyle();
@@ -46,7 +48,7 @@ export class UiA_HeaderBodyG {
     }
 
     isUiListInstalled() {
-        return notNullUndefined(this.entity.uiA.listG.uisOfListItems);
+        return notNullUndefined(this.entity.uiA.listA.uisOfListItems);
     }
 
     async showBody() : Promise<boolean> {

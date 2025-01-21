@@ -71,8 +71,9 @@ export class UiA_BodyG {
             await this.updateContextAsSubitem();
             this.content_htmlElement.appendChild(this.content_meta_htmlElement);
             if (this.getObject().listA && !this.getObject().testRunA) {
-                await this.getUiA().listG.update();
-                this.content_htmlElement.appendChild(this.getUiA().listG.htmlElement);
+                this.getUiA().installListA();
+                await this.getUiA().listA.update();
+                this.content_htmlElement.appendChild(this.getUiA().listA.htmlElement);
             }
         }
     }

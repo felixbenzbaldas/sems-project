@@ -1,6 +1,6 @@
 import type {Entity} from "@/Entity";
 import {div, notNullUndefined, nullUndefined} from "@/utils";
-import {UiA_ListG} from "@/ui/UiA_ListG";
+import {UiA_ListA} from "@/ui/UiA_ListA";
 import {UiA_TextG} from "@/ui/UiA_TextG";
 import {UiA_BodyG} from "@/ui/UiA_BodyG";
 import {UiA_HeaderG} from "@/ui/UiA_HeaderG";
@@ -12,7 +12,10 @@ export class UiA {
 
     editable: boolean;
     htmlElement : HTMLElement = div();
-    listG: UiA_ListG;
+    listA: UiA_ListA;
+    installListA() {
+        this.listA = new UiA_ListA(this.entity);
+    }
     textG : UiA_TextG;
     headerG : UiA_HeaderG;
     bodyG: UiA_BodyG;
@@ -42,8 +45,9 @@ export class UiA {
             await this.headerBodyG.install();
         } else if (this.isPlainList()) {
             this.fullWidth();
-            await this.listG.update();
-            this.htmlElement.appendChild(this.listG.htmlElement);
+            this.installListA();
+            await this.listA.update();
+            this.htmlElement.appendChild(this.listA.htmlElement);
         } else {
             this.fullWidth();
             let divElement = div();
@@ -59,7 +63,6 @@ export class UiA {
     reset() {
         this.resetHtmlElement();
         this.headerBodyG = new UiA_HeaderBodyG(this.entity);
-        this.listG = new UiA_ListG(this.entity);
         this.textG = new UiA_TextG(this.entity);
         this.headerG = new UiA_HeaderG(this.entity);
         this.bodyG = new UiA_BodyG(this.entity);
@@ -138,11 +141,11 @@ export class UiA {
     }
 
     async defaultActionOnSubitem(subitem : UiA) {
-        await this.listG.defaultActionOnSubitem(subitem);
+        await this.listA.defaultActionOnSubitem(subitem);
     }
 
     async pasteNextOnSubitem(subitem: UiA) {
-        await this.listG.pasteNextOnSubitem(subitem);
+        await this.listA.pasteNextOnSubitem(subitem);
     }
 
     async newSubitem() {
@@ -160,7 +163,7 @@ export class UiA {
             created.context = created.getPath(this.getObject());
             await listA.entity.uis_update_addedListItem(position);
             await this.ensureExpanded();
-            this.findAppUi().focus(this.entity.uiA.listG.uisOfListItems[position]);
+            this.findAppUi().focus(this.entity.uiA.listA.uisOfListItems[position]);
         }
     }
 
@@ -180,7 +183,7 @@ export class UiA {
         let obj = this.getObject();
         appA_uiA.clipboard = obj;
         let uiContext = this.context;
-        let uiListItems = uiContext.listG.uisOfListItems;
+        let uiListItems = uiContext.listA.uisOfListItems;
         let position = uiListItems.indexOf(this);
         let uiContextObj = uiContext.getObject();
         if (this.objectHasContext() && await this.inContext()) {
@@ -208,7 +211,7 @@ export class UiA {
         let position = 0;
         await appUi.insertClipboardAtPosition(this.getObject(), position);
         await this.ensureExpanded();
-        this.findAppUi().focus(this.entity.uiA.listG.uisOfListItems[position]);
+        this.findAppUi().focus(this.entity.uiA.listA.uisOfListItems[position]);
     }
 
     async toggleCollapsible() {
@@ -258,7 +261,7 @@ export class UiA {
         if (this.isHeaderBody()) {
             await this.headerBodyG.update_addedListItem(position);
         } else if (this.isPlainList()) {
-            await this.listG.update_addedListItem(position);
+            await this.listA.update_addedListItem(position);
         }
     }
 
@@ -266,7 +269,7 @@ export class UiA {
         if (this.isHeaderBody()) {
             await this.headerBodyG.update_removedListItem(position);
         } else if (this.isPlainList()) {
-            await this.listG.update_removedListItem(position);
+            await this.listA.update_removedListItem(position);
         }
     }
 
