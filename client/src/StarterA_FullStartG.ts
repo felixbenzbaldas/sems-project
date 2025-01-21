@@ -20,6 +20,7 @@ export class StarterA_FullStartG {
     async objectViewer() {
         let starter = this.getStarter();
         starter.createAppWithUI();
+        starter.createdApp.appA.uiA.isWebsite = true;
         starter.createData();
         let pathString = starter.getEnvironment().url.searchParams.get('path');
         let listOfNames = ['..', starter.data.name, ...pathString.split('-')];

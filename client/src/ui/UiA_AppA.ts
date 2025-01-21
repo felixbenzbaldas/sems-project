@@ -28,7 +28,6 @@ export class UiA_AppA {
     constructor(public entity: Entity) {
         this.globalEventG = new UiA_AppA_GlobalEventG(entity);
         this.keyG = new UiA_AppA_KeyG(entity);
-        this.focused = this.entity.uiA;
         this.focusStyle_marker = this.focusStyle_createMarker();
     }
 
@@ -38,6 +37,9 @@ export class UiA_AppA {
             await this.installMeta();
         }
         this.contentUi = await this.entity.uiA.createSubUiFor_transmitEditability(app_uiA.content);
+        if (!app_uiA.isWebsite) {
+            this.focused = this.entity.uiA;
+        }
         this.focusStyle_update();
         this.htmlElement.style.backgroundColor = app_uiA.theme.backgroundColor;
         this.htmlElement.style.color = app_uiA.theme.fontColor;
@@ -54,16 +56,21 @@ export class UiA_AppA {
         this.statusBar.style.maxHeight = '1.2rem';
         this.scrollableArea.appendChild(this.meta_htmlElement);
         this.scrollableArea.appendChild(this.focusStyle_marker);
-        let centerWrapper = div();
-        this.scrollableArea.appendChild(centerWrapper);
-        centerWrapper.style.display = 'flex';
-        centerWrapper.style.flexDirection = 'column';
-        centerWrapper.style.alignItems = 'center';
         let contentWrapper = div();
-        centerWrapper.appendChild(contentWrapper);
+        if (app_uiA.isWebsite) {
+            let centerWrapper = div();
+            this.scrollableArea.appendChild(centerWrapper);
+            centerWrapper.style.display = 'flex';
+            centerWrapper.style.flexDirection = 'column';
+            centerWrapper.style.alignItems = 'center';
+            centerWrapper.appendChild(contentWrapper);
+            contentWrapper.style.paddingTop = '3rem';
+        } else {
+            this.scrollableArea.appendChild(contentWrapper);
+        }
         contentWrapper.appendChild(this.contentUi.htmlElement);
         let updateWidth = () => {
-            let maxContentWidth = 600;
+            let maxContentWidth = 700;
             let widthOfScrollbar = 30; // estimated
             if (window.innerWidth < maxContentWidth) {
                 contentWrapper.style.width = 'unset';
