@@ -47,10 +47,6 @@ export class UiA_HeaderBodyG {
         }
     }
 
-    isUiListInstalled() {
-        return notNullUndefined(this.entity.uiA.listA.uisOfListItems);
-    }
-
     async showBody() : Promise<boolean> {
         if (await this.hasBodyContent()) {
             if (this.getObject().collapsible) {
