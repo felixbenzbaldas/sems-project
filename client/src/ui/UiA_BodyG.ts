@@ -7,65 +7,54 @@ import {div} from "@/utils";
 export class UiA_BodyG {
 
     htmlElement : HTMLElement = div();
-    content_htmlElement : HTMLElement;
+    content_htmlElement : HTMLElement = div();
     content_contextAsSubitem_htmlElement : HTMLElement = div();
     content_meta_htmlElement : HTMLElement = div();
     animatedExpandAndCollapse : AnimatedExpandAndCollapse = new AnimatedExpandAndCollapse();
 
     constructor(private entity: Entity) {
         this.htmlElement.style.display = 'none';
+        this.content_htmlElement.style.paddingLeft = '0.8rem';
+        this.content_htmlElement.style.paddingTop = '0.2rem';
+        this.content_htmlElement.style.paddingBottom = '0.2rem';
+        this.htmlElement.appendChild(this.animatedExpandAndCollapse.outerDiv);
+        this.animatedExpandAndCollapse.innerDiv.appendChild(this.content_htmlElement);
     }
 
     async expandWithAnimation() {
-        this.htmlElement.innerHTML = null;
         this.htmlElement.style.display = 'block';
         await this.content_update();
-        this.animatedExpandAndCollapse = new AnimatedExpandAndCollapse();
-        this.htmlElement.appendChild(this.animatedExpandAndCollapse.outerDiv);
-        this.animatedExpandAndCollapse.innerDiv.innerHTML = null;
-        this.animatedExpandAndCollapse.innerDiv.appendChild(this.content_htmlElement);
-        this.animatedExpandAndCollapse.innerDiv.style.paddingLeft = '0.8rem';
-        this.animatedExpandAndCollapse.innerDiv.style.paddingTop = '0.2rem';
-        this.animatedExpandAndCollapse.innerDiv.style.paddingBottom = '0.2rem';
         await this.animatedExpandAndCollapse.expand();
     }
 
     async collapseWithAnimation() {
         await this.animatedExpandAndCollapse.collapse().then(() => {
-            this.htmlElement.innerHTML = null;
+            this.content_htmlElement.innerHTML = null;
             this.htmlElement.style.display = 'none';
         });
     }
 
     async install() {
         if (!this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
-            this.htmlElement.innerHTML = null;
             await this.displayBody();
-        } else {
-            await this.ensureCollapsed();
         }
     }
 
     async ensureCollapsed() {
-        this.htmlElement.innerHTML = null;
+        this.content_htmlElement.innerHTML = null;
         this.htmlElement.style.display = 'none';
     }
 
     async displayBody() {
         this.htmlElement.style.display = 'block';
         await this.content_update();
-        this.htmlElement.appendChild(this.animatedExpandAndCollapse.outerDiv);
-        this.animatedExpandAndCollapse.innerDiv.appendChild(this.content_htmlElement);
-        this.animatedExpandAndCollapse.innerDiv.style.paddingLeft = '0.8rem';
-        this.animatedExpandAndCollapse.innerDiv.style.paddingTop = '0.2rem';
-        this.animatedExpandAndCollapse.innerDiv.style.paddingBottom = '0.2rem';
         this.animatedExpandAndCollapse.expandWithoutAnimation();
     }
 
     async content_update() {
-        this.content_htmlElement = div();
+        this.content_htmlElement.innerHTML = null;
         if (this.getObject().testRunA) {
-            this.content_htmlElement = this.getUiA().testRunG.bodyContentUi.htmlElement;
+            this.content_htmlElement.appendChild(this.getUiA().testRunG.bodyContentUi.htmlElement);
         } else {
             this.content_htmlElement.appendChild(this.content_contextAsSubitem_htmlElement);
             await this.updateContextAsSubitem();

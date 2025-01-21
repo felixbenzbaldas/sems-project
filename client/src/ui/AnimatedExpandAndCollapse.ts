@@ -2,8 +2,8 @@
 import {div, wait} from "@/utils";
 
 export class AnimatedExpandAndCollapse {
-    outerDiv : HTMLDivElement;
-    innerDiv : HTMLDivElement;
+    outerDiv : HTMLDivElement = div();
+    innerDiv : HTMLDivElement = div();
     basisAnimationTime_inSeconds : number = 0.1;
     basisHeight_inPixel : number = 60;
     maxAnimationTime_inSeconds: number = 2;
@@ -12,8 +12,6 @@ export class AnimatedExpandAndCollapse {
     isBusyFlag : boolean = false;
 
     constructor() {
-        this.outerDiv = div();
-        this.innerDiv = div();
         this.outerDiv.appendChild(this.innerDiv);
         this.outerDiv.style.overflow = "hidden";
         this.outerDiv.style.height = "0px";
