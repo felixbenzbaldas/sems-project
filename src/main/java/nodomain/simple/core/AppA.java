@@ -55,10 +55,20 @@ public class AppA {
         }
     }
 
+    // "#" is the encoded "\"
     public String escapeJsonString(String jsonString) {
-        return jsonString
-            .replace("\"", "\\\"")
-            .replace("\\\\\"", "\\\\\\\"")
-            .replace("\\n", "\\\\n");
+        String encodedStar = "**";
+        String encodedHash = " * ";
+        String encodedJsonString = jsonString
+            .replace("*", encodedStar)
+            .replace("#", encodedHash);
+        String escapedEncodedJsonString = encodedJsonString
+            .replace("\\", "##")
+            .replace("\"", "#\"")
+            .replace("\n", "#\n");
+        return escapedEncodedJsonString
+            .replace("#", "\\")
+            .replace(encodedHash, "#")
+            .replace(encodedStar, "*");
     }
 }
