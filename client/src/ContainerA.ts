@@ -5,7 +5,7 @@ export class ContainerA {
 
     mapNameEntity: Map<string, Entity> = new Map();
 
-    constructor(private entity : Entity) {
+    constructor(public entity : Entity) {
     }
 
     getUniqueRandomName() : string {

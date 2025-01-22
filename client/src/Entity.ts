@@ -382,6 +382,16 @@ export class Entity {
         }
     }
 
+    getTopLevelContainer() : ContainerA {
+        if (this.container) {
+            return this.container.getTopLevelContainer();
+        } else if (this.containerA) {
+            return this.containerA;
+        } else {
+            return undefined;
+        }
+    }
+
     hasUrl() {
         return notNullUndefined(this.getContainerWithFixedUrl());
     }
