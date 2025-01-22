@@ -58,7 +58,7 @@ public class AppA_DeployG {
     public void replace(String pathOfReplacement, String toReplace) throws IOException {
         Object json = new ObjectMapper().readValue(new File(pathOfReplacement), Object.class);
         String jsonString = new ObjectMapper().writeValueAsString(json);
-        String replacement = this.entity.appA.escapeJsonString(jsonString);
+        String replacement = this.entity.appA.escape(jsonString);
         boolean found = false;
         for (File file : new File(this.path + "/heroku/sems/assets").listFiles()) {
             String oldText = Utils.readFromFile(file);

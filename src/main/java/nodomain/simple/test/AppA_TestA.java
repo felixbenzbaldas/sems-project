@@ -103,22 +103,10 @@ public class AppA_TestA {
                 String jsonString = new ObjectMapper().writeValueAsString(Map.of("text", "quote\" newline\n backslash\\end"));
                 System.out.println("jsonString        = " + jsonString);
 
-                String escapedJsonString = Starter.createApp().appA.escapeJsonString(jsonString);
+                String escapedJsonString = Starter.createApp().appA.escape(jsonString);
 
                 System.out.println("escapedJsonString = " + escapedJsonString);
                 String expected = "{\\\"text\\\":\\\"quote\\\\\\\" newline\\\\n backslash\\\\\\\\end\\\"}";
-                System.out.println("expected          = " + expected);
-                return expected.equals(escapedJsonString);
-            }),
-            this.createTest("escapeJsonString_decodeEncode", test -> {
-                System.out.println("Start test " + test.text);
-                String jsonString = new ObjectMapper().writeValueAsString(Map.of("text", "*# * **"));
-                System.out.println("jsonString        = " + jsonString);
-
-                String escapedJsonString = Starter.createApp().appA.escapeJsonString(jsonString);
-
-                System.out.println("escapedJsonString = " + escapedJsonString);
-                String expected = "{\\\"text\\\":\\\"*# * **\\\"}";
                 System.out.println("expected          = " + expected);
                 return expected.equals(escapedJsonString);
             })

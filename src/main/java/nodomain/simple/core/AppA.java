@@ -1,5 +1,7 @@
 package nodomain.simple.core;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.simple.AppA_DeployG;
 import nodomain.simple.Entity;
 import nodomain.simple.test.AppA_TestA;
@@ -55,20 +57,12 @@ public class AppA {
         }
     }
 
-    // "#" is the encoded "\"
-    public String escapeJsonString(String jsonString) {
-        String encodedStar = "**";
-        String encodedHash = " * ";
-        String encodedJsonString = jsonString
-            .replace("*", encodedStar)
-            .replace("#", encodedHash);
-        String escapedEncodedJsonString = encodedJsonString
-            .replace("\\", "##")
-            .replace("\"", "#\"")
-            .replace("\n", "#\n");
-        return escapedEncodedJsonString
-            .replace("#", "\\")
-            .replace(encodedHash, "#")
-            .replace(encodedStar, "*");
+    public String escape(String original) {
+        try {
+            String jsonString = new ObjectMapper().writeValueAsString(original);
+            return jsonString.substring(1, jsonString.length() - 1);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
