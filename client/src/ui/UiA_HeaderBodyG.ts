@@ -27,7 +27,11 @@ export class UiA_HeaderBodyG {
 
     async update_addedListItem(position: number) {
         if (this.bodyIsVisible()) {
-            await this.entity.uiA.listA.update_addedListItem(position);
+            if (this.entity.uiA.listA) {
+                await this.entity.uiA.listA.update_addedListItem(position);
+            } else {
+                await this.entity.uiA.bodyG.content_update();
+            }
         } else {
             await this.entity.uiA.ensureExpanded();
         }
