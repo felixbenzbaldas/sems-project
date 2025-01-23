@@ -63,6 +63,7 @@ export class UiA_AppA {
             centerWrapper.style.display = 'flex';
             centerWrapper.style.flexDirection = 'column';
             centerWrapper.style.alignItems = 'center';
+            centerWrapper.style.marginRight = '70px';
             centerWrapper.appendChild(contentWrapper);
             contentWrapper.style.paddingTop = '3rem';
         } else {
@@ -70,7 +71,7 @@ export class UiA_AppA {
         }
         contentWrapper.appendChild(this.contentUi.htmlElement);
         let updateWidth = () => {
-            let maxContentWidth = 700;
+            let maxContentWidth = 850;
             let widthOfScrollbar = 30; // estimated
             if (window.innerWidth < maxContentWidth) {
                 contentWrapper.style.width = 'unset';
