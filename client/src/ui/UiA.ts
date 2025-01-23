@@ -36,23 +36,63 @@ export class UiA {
 
     async install() {
         this.htmlElement.classList.add('UI');
-        if (this.getObject().codeG_html) {
+
+        if (this.wouldProvokeEndlessRecursion()) {
             this.fullWidth();
-            this.htmlElement.appendChild(this.getObject().codeG_html);
-        } else if (this.getObject().appA) {
-            this.htmlElement.innerText = "type: application";
-        } else if (this.isHeaderBody()) {
-            await this.headerBodyG.install();
-        } else if (this.isPlainList()) {
-            this.fullWidth();
-            this.installListA();
-            await this.listA.update();
-            this.htmlElement.appendChild(this.listA.htmlElement);
+            let warningText = 'This item cannot be displayed. It contains itself. ' +
+                'The rendering would result in an endless recursion. ' +
+                'Do you want to make it collapsible to solve the problem?';
+            let data = this.entity.getApp_typed().unboundG.createList(
+                this.entity.getApp_typed().unboundG.createText(warningText),
+                this.entity.getApp_typed().unboundG.createButton('make collapsible', async () => {
+                    this.getObject().collapsible = true;
+                    await this.getObject().uis_update_collapsible();
+                    await this.update();
+                })
+            );
+            let ui = await this.createSubUiFor(data);
+            this.htmlElement.appendChild(ui.htmlElement);
         } else {
-            this.fullWidth();
-            let divElement = div();
-            divElement.innerText = this.getObject().getDescription();
-            this.htmlElement.appendChild(divElement);
+            if (this.getObject().codeG_html) {
+                this.fullWidth();
+                this.htmlElement.appendChild(this.getObject().codeG_html);
+            } else if (this.getObject().appA) {
+                this.htmlElement.innerText = "type: application";
+            } else if (this.isHeaderBody()) {
+                await this.headerBodyG.install();
+            } else if (this.isPlainList()) {
+                this.fullWidth();
+                this.installListA();
+                await this.listA.update();
+                this.htmlElement.appendChild(this.listA.htmlElement);
+            } else {
+                this.fullWidth();
+                let divElement = div();
+                divElement.innerText = this.getObject().getDescription();
+                this.htmlElement.appendChild(divElement);
+            }
+        }
+    }
+
+    wouldProvokeEndlessRecursion() : boolean {
+        return !this.getObject().collapsible
+            && notNullUndefined(this.context)
+            && this.context.nonCollapsibleChainContains(this.getObject());
+    }
+
+    nonCollapsibleChainContains(toCheck : Entity) : boolean {
+        if (this.getObject().collapsible) {
+            return false;
+        } else {
+            if (this.getObject() == toCheck) {
+                return true;
+            } else {
+                if (this.context) {
+                    return this.context.nonCollapsibleChainContains(toCheck);
+                } else {
+                    return false;
+                }
+            }
         }
     }
 
