@@ -57,12 +57,9 @@ public class AppA {
         }
     }
 
-    public String escape(String original) {
-        try {
-            String jsonString = new ObjectMapper().writeValueAsString(original);
-            return jsonString.substring(1, jsonString.length() - 1);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+    public String escapeJsonString(String original) {
+        return original
+            .replace("\\", "\\\\")
+            .replace("\"", "\\\"");
     }
 }
