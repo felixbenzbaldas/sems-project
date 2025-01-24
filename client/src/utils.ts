@@ -140,3 +140,11 @@ export function getPathFromUrl(url: URL): string {
         }
     }
 }
+
+export function ensureEndsWithSlash(string : string) : string {
+    if (string.endsWith('/')) {
+        return string;
+    } else {
+        return string + '/';
+    }
+}

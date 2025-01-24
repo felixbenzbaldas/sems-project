@@ -304,12 +304,14 @@ export function test_add(tests : TestG_NestedTestsA) {
     tests.add('getUrl', async run => {
         let container = await run.app.createText('#https://testdomain6.org');
         container.installContainerA();
-        let object = await container.containerA.createBoundEntity('testName');
+        let subContainer = await container.containerA.createBoundEntity('foo');
+        subContainer.installContainerA();
+        let object = await subContainer.containerA.createBoundEntity('testName');
         assert(object.hasUrl());
 
         let url = object.getUrl();
 
-        assert_sameAs(url, 'https://testdomain6.org/?path=testName');
+        assert_sameAs(url, 'https://testdomain6.org/foo/testName');
     });
     tests.add('delete', async run => {
         let container = await run.app.createText('container');

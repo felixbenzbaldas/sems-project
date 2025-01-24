@@ -3,7 +3,7 @@ import {PathA} from "@/PathA";
 import {AppA} from "@/AppA";
 import {ContainerA} from "@/ContainerA";
 import {UiA} from "@/ui/UiA";
-import {notNullUndefined, nullUndefined} from "@/utils";
+import {ensureEndsWithSlash, notNullUndefined, nullUndefined} from "@/utils";
 import type {StarterA} from "@/StarterA";
 import {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
 import {TestRunA} from "@/tester/TestRunA";
@@ -364,7 +364,7 @@ export class Entity {
     getUrl() : string {
         if (this.container) {
             let containerWithUrl = this.container.getContainerWithFixedUrl();
-            return containerWithUrl.text.substring(1) + '/?path=' + containerWithUrl.getPath(this).asString();
+            return ensureEndsWithSlash(containerWithUrl.text.substring(1)) + containerWithUrl.getPath(this).listOfNames.join('/');
         } else {
             return '';
         }
