@@ -129,10 +129,14 @@ export function getPathFromUrl(url: URL): string {
         return url.searchParams.get('path');
     } else {
         let path = url.pathname.substring(1);
-        while (path.endsWith('/')) {
-            path = path.substring(0, path.length - 1);
+        if (path.startsWith('index.html')) {
+            return '';
+        } else {
+            while (path.endsWith('/')) {
+                path = path.substring(0, path.length - 1);
+            }
+            path = path.replace('/', '_');
+            return path;
         }
-        path = path.replace('/', '_');
-        return path;
     }
 }

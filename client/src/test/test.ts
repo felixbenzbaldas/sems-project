@@ -376,5 +376,12 @@ export function test_add(tests : TestG_NestedTestsA) {
 
             assert_sameAs(path, '');
         });
+        pathInUrlTests.add('index.html', async run => {
+            let url = new URL('https://einfaches-web.org/index.html');
+
+            let path = getPathFromUrl(url);
+
+            assert_sameAs(path, '');
+        });
     });
 }
