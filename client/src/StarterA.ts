@@ -20,7 +20,7 @@ export class StarterA {
             return this.fullStartG.clientApp();
         } else if (this.getEnvironment().url.searchParams.has('tester')) {
             return this.fullStartG.tester();
-        } else if (this.getEnvironment().url.searchParams.has('path')) {
+        } else if (this.getPath()) {
             return this.fullStartG.objectViewer();
         } else if (this.getEnvironment().url.searchParams.has('run')) {
             return this.fullStartG.testRun();
@@ -30,6 +30,19 @@ export class StarterA {
             } else {
                 return this.fullStartG.localApp();
             }
+        }
+    }
+
+    getPath() : string {
+        if (this.getEnvironment().url.searchParams.has('path')) {
+            return this.getEnvironment().url.searchParams.get('path');
+        } else {
+            let path = this.getEnvironment().url.pathname.substring(1);
+            while (path.endsWith('/'))  {
+                path = path.substring(0, path.length - 1);
+            }
+            path = path.replace('/', '_');
+            return path;
         }
     }
 

@@ -22,7 +22,7 @@ export class StarterA_FullStartG {
         starter.createAppWithUI();
         starter.createdApp.appA.uiA.isWebsite = true;
         starter.createData();
-        let pathString = starter.getEnvironment().url.searchParams.get('path');
+        let pathString = starter.getPath();
         let listOfNames = ['..', starter.data.name, ...pathString.split('-')];
         await starter.createdApp.appA.uiA.content.listA.addByListOfNames(listOfNames);
         starter.createdApp.appA.uiA.theme = Theme.elegant();
