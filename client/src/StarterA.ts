@@ -2,7 +2,7 @@ import {Entity} from "@/Entity";
 import {AppA_UiA} from "@/ui/AppA_UiA";
 import {AppA} from "@/AppA";
 import {Environment} from "@/Environment";
-import {nullUndefined} from "@/utils";
+import {getPathFromUrl, nullUndefined} from "@/utils";
 import {StarterA_FullStartG} from "@/StarterA_FullStartG";
 
 export class StarterA {
@@ -34,16 +34,7 @@ export class StarterA {
     }
 
     getPath() : string {
-        if (this.getEnvironment().url.searchParams.has('path')) {
-            return this.getEnvironment().url.searchParams.get('path');
-        } else {
-            let path = this.getEnvironment().url.pathname.substring(1);
-            while (path.endsWith('/'))  {
-                path = path.substring(0, path.length - 1);
-            }
-            path = path.replace('/', '_');
-            return path;
-        }
+        return getPathFromUrl(this.getEnvironment().url);
     }
 
     isPublicWeb() {

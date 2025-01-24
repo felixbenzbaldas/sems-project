@@ -123,3 +123,16 @@ export function localhostWithQueryParams(paramsAsString : string) : URL {
 export function div() : HTMLDivElement {
     return document.createElement('div');
 }
+
+export function getPathFromUrl(url: URL): string {
+    if (url.searchParams.has('path')) {
+        return url.searchParams.get('path');
+    } else {
+        let path = url.pathname.substring(1);
+        while (path.endsWith('/')) {
+            path = path.substring(0, path.length - 1);
+        }
+        path = path.replace('/', '_');
+        return path;
+    }
+}

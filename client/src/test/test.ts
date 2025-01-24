@@ -1,7 +1,15 @@
 import type {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
 import {test_tester_add} from "@/test/test_tester";
 import {test_semi_add} from "@/test/test_semi";
-import {assert, assert_notSameAs, assert_sameAs, createRandomString, notNullUndefined, nullUndefined} from "@/utils";
+import {
+    assert,
+    assert_notSameAs,
+    assert_sameAs,
+    createRandomString,
+    getPathFromUrl,
+    notNullUndefined,
+    nullUndefined
+} from "@/utils";
 import {Entity} from "@/Entity";
 import {testData} from "@/testData";
 import {test_ui_add} from "@/test/test_ui";
@@ -352,6 +360,21 @@ export function test_add(tests : TestG_NestedTestsA) {
             let count = container.containerA.countWithNestedEntities();
 
             assert_sameAs(count, 3);
+        });
+    });
+    tests.addTestWithNestedTests('pathInUrl', async run => {
+        let url = new URL('https://einfaches-web.org/test/foo/?dummyParam');
+
+        let path = getPathFromUrl(url);
+
+        assert_sameAs(path, 'test_foo');
+    }, pathInUrlTests => {
+        pathInUrlTests.add('empty', async run => {
+            let url = new URL('https://einfaches-web.org?dummyParam');
+
+            let path = getPathFromUrl(url);
+
+            assert_sameAs(path, '');
         });
     });
 }
