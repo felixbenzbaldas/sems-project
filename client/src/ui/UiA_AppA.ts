@@ -47,6 +47,7 @@ export class UiA_AppA {
         this.htmlElement.style.display = 'flex';
         this.htmlElement.style.flexDirection = 'column';
         this.htmlElement.appendChild(this.statusBar);
+        this.htmlElement.appendChild(this.meta_htmlElement);
         this.htmlElement.appendChild(this.scrollableArea);
         this.scrollableArea.style.overflowY = 'scroll';
         this.scrollableArea.style.paddingLeft = '0.2rem';
@@ -54,7 +55,6 @@ export class UiA_AppA {
         this.statusBar.style.backgroundColor = app_uiA.theme.secondBackgroundColor;
         this.statusBar.style.minHeight = '1.2rem';
         this.statusBar.style.maxHeight = '1.2rem';
-        this.scrollableArea.appendChild(this.meta_htmlElement);
         this.scrollableArea.appendChild(this.focusStyle_marker);
         let contentWrapper = div();
         if (app_uiA.isWebsite) {
