@@ -362,20 +362,16 @@ export class Entity {
     }
 
     getUrl() : string {
-        if (this.container) {
-            let containerWithUrl = this.container.getContainerWithFixedUrl();
-            return ensureEndsWithSlash(containerWithUrl.text.substring(1)) + containerWithUrl.getPath(this).listOfNames.join('/');
-        } else {
-            return '';
-        }
+        let superiorWithFixedUrl = this.getSuperiorWithFixedUrl();
+        return ensureEndsWithSlash(superiorWithFixedUrl.text.substring(1)) + superiorWithFixedUrl.getPath(this).listOfNames.join('/');
     }
 
-    getContainerWithFixedUrl() : Entity {
+    getSuperiorWithFixedUrl() : Entity {
         if (this.text?.startsWith('#http')) {
             return this;
         } else {
             if (this.container) {
-                return this.container.getContainerWithFixedUrl();
+                return this.container.getSuperiorWithFixedUrl();
             } else {
                 return undefined;
             }
@@ -393,7 +389,7 @@ export class Entity {
     }
 
     hasUrl() {
-        return notNullUndefined(this.getContainerWithFixedUrl());
+        return notNullUndefined(this.getSuperiorWithFixedUrl());
     }
 
     delete() {

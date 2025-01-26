@@ -109,11 +109,11 @@ export class UiA_BodyG {
         let meta = app.unboundG.createList();
         if (this.getObject().hasUrl()) {
             meta.listA.addDirect(app.unboundG.createLink(this.getObject().getUrl()));
-        } else {
-            let topLevelContainer = this.getObject().getTopLevelContainer();
-            if (topLevelContainer) {
-                meta.listA.addDirect(app.unboundG.createText(topLevelContainer.entity.getPath(this.getObject()).asString()));
-            }
+        }
+        let topLevelContainer = this.getObject().getTopLevelContainer();
+        if (topLevelContainer) {
+            meta.listA.addDirect(app.unboundG.createText(topLevelContainer.entity.getShortDescription() + ' > '
+                + topLevelContainer.entity.getPath(this.getObject()).asString()));
         }
         let ui = await this.getUiA().createSubUiFor_transmitEditability(meta);
         this.content_meta_htmlElement.appendChild(ui.htmlElement);
