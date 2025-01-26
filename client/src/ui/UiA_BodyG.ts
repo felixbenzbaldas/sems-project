@@ -1,7 +1,7 @@
 import type {Entity} from "@/Entity";
 import type {UiA} from "@/ui/UiA";
 import {AnimatedExpandAndCollapse} from "@/ui/AnimatedExpandAndCollapse";
-import {div} from "@/utils";
+import {div, notNullUndefined} from "@/utils";
 
 // TODO the body aspect should only exist if showBody === true
 export class UiA_BodyG {
@@ -107,12 +107,19 @@ export class UiA_BodyG {
         this.content_meta_htmlElement.appendChild(hideButton);
         let app = this.entity.getApp_typed();
         let meta = app.unboundG.createList();
-        if (this.getObject().hasUrl()) {
-            meta.listA.addDirect(app.unboundG.createLink(this.getObject().getUrl()));
+        let url = this.getObject().getUrl();
+        if (notNullUndefined(url)) {
+            meta.listA.addDirect(app.unboundG.createLink(url));
         }
         let topLevelContainer = this.getObject().getTopLevelContainer();
         if (topLevelContainer) {
-            meta.listA.addDirect(app.unboundG.createText(topLevelContainer.entity.getShortDescription() + ' > '
+            let root : string;
+            if (topLevelContainer.entity === this.entity.getApp()) {
+                root = 'App';
+            } else {
+                root = 'unbound! ' + topLevelContainer.entity.getShortDescription();
+            }
+            meta.listA.addDirect(app.unboundG.createText(root + ' > '
                 + topLevelContainer.entity.getPath(this.getObject()).asString()));
         }
         let ui = await this.getUiA().createSubUiFor_transmitEditability(meta);

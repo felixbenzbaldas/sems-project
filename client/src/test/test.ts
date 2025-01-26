@@ -307,7 +307,6 @@ export function test_add(tests : TestG_NestedTestsA) {
         let subContainer = await container.containerA.createBoundEntity('foo');
         subContainer.installContainerA();
         let object = await subContainer.containerA.createBoundEntity('testName');
-        assert(object.hasUrl());
 
         let url = object.getUrl();
 

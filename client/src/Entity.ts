@@ -362,19 +362,32 @@ export class Entity {
     }
 
     getUrl() : string {
-        let superiorWithFixedUrl = this.getSuperiorWithFixedUrl();
-        return ensureEndsWithSlash(superiorWithFixedUrl.text.substring(1)) + superiorWithFixedUrl.getPath(this).listOfNames.join('/');
+        if (this.getFixedUrl()) {
+            return this.getFixedUrl();
+        } else {
+            let superiorWithFixedUrl = this.getSuperiorWithFixedUrl();
+            if (superiorWithFixedUrl) {
+                return ensureEndsWithSlash(superiorWithFixedUrl.getFixedUrl()) + superiorWithFixedUrl.getPath(this).listOfNames.join('/');
+            }
+        }
+        return undefined;
+    }
+
+    getFixedUrl() : string {
+        if (this.text?.startsWith('#http')) {
+            return this.text.substring(1);
+        }
     }
 
     getSuperiorWithFixedUrl() : Entity {
-        if (this.text?.startsWith('#http')) {
-            return this;
-        } else {
-            if (this.container) {
-                return this.container.getSuperiorWithFixedUrl();
+        if (this.container) {
+            if (this.container.getFixedUrl()) {
+                return this.container;
             } else {
-                return undefined;
+                return this.container.getSuperiorWithFixedUrl();
             }
+        } else {
+            return undefined;
         }
     }
 
@@ -386,10 +399,6 @@ export class Entity {
         } else {
             return undefined;
         }
-    }
-
-    hasUrl() {
-        return notNullUndefined(this.getSuperiorWithFixedUrl());
     }
 
     delete() {
