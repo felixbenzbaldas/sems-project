@@ -30,5 +30,9 @@ export class UiA_ImageA {
                 this.fitWidthOnClick = true;
             }
         }
+        this.imgElement.oncontextmenu = (ev) => {
+            ev.preventDefault();
+            this.entity.uiA.update(true);
+        }
     }
 }

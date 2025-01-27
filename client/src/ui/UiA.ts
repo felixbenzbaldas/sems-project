@@ -35,12 +35,12 @@ export class UiA {
         this.reset();
     }
 
-    async update() {
+    async update(source? : boolean) {
         this.reset();
-        await this.install();
+        await this.install(source);
     }
 
-    async install() {
+    async install(source? : boolean) {
         this.htmlElement.classList.add('UI');
         if (this.wouldProvokeEndlessRecursion()) {
             this.fullWidth();
@@ -58,7 +58,7 @@ export class UiA {
             let ui = await this.createSubUiFor(data);
             this.htmlElement.appendChild(ui.htmlElement);
         } else {
-            if (this.getObject().text?.startsWith('#img')) {
+            if (this.getObject().text?.startsWith('#img') && !source) {
                 await this.installImageA();
                 this.htmlElement.appendChild(this.imageA.htmlElement);
             } else if (this.getObject().codeG_html) {
