@@ -7,47 +7,48 @@ export class UiA_AppA_KeyG {
 
     constructor(public entity: Entity) {
         this.map.set('Enter', async keyboardEvent => {
-            this.entity.log('Enter');
-            // this.entity.uiA.appA.focused.uiA.textG.save();
-            await this.entity.uiA.appA.globalEventG.defaultAction();
+            await this.getGlobalEventG().defaultAction();
         });
         this.map.set('alt+Enter', async keyboardEvent => {
-            this.entity.uiA.appA.focused.textG.save();
-            await this.entity.uiA.appA.globalEventG.newSubitem();
+            await this.getGlobalEventG().newSubitem();
         });
         this.map.set('ctrl+f', async keyboardEvent => {
-            await this.entity.uiA.appA.globalEventG.toggleCollapsible();
+            await this.getGlobalEventG().toggleCollapsible();
         });
         this.map.set('ctrl+f', async keyboardEvent => {
-            await this.entity.uiA.appA.globalEventG.toggleCollapsible();
+            await this.getGlobalEventG().toggleCollapsible();
         });
         this.map.set('ctrl+e', async keyboardEvent => {
-            await this.entity.uiA.appA.globalEventG.scaleDown();
+            await this.getGlobalEventG().scaleDown();
         });
         this.map.set('ctrl+d', async keyboardEvent => {
-            await this.entity.uiA.appA.globalEventG.scaleUp();
+            await this.getGlobalEventG().scaleUp();
         });
         this.map.set('ctrl+g', async keyboardEvent => {
-            await this.entity.uiA.appA.globalEventG.toggleContext();
+            await this.getGlobalEventG().toggleContext();
         });
         this.map.set('ctrl+shift+X', async keyboardEvent => {
-            await this.entity.uiA.appA.globalEventG.cut();
+            await this.getGlobalEventG().cut();
         });
         this.map.set('ctrl+shift+V', async keyboardEvent => {
-            await this.entity.uiA.appA.globalEventG.paste();
+            await this.getGlobalEventG().paste();
         });
         this.map.set('F3', async keyboardEvent => {
-            await this.entity.uiA.appA.globalEventG.pasteNext();
+            await this.getGlobalEventG().pasteNext();
         });
         this.map.set('ctrl+shift+D', async keyboardEvent => {
-            await this.entity.uiA.appA.globalEventG.mark();
+            await this.getGlobalEventG().mark();
         });
         this.map.set('F11', async keyboardEvent => {
-            await this.entity.uiA.appA.globalEventG.load();
+            await this.getGlobalEventG().load();
         });
         this.map.set('ctrl+o', async keyboardEvent => {
-            await this.entity.uiA.appA.globalEventG.focusUiContext();
+            await this.getGlobalEventG().focusUiContext();
         });
+    }
+
+    private getGlobalEventG() {
+        return this.entity.uiA.appA.globalEventG;
     }
 
     async keyboardEvent(keyboardEvent: KeyboardEvent) {
@@ -63,9 +64,8 @@ export class UiA_AppA_KeyG {
         if (this.map.has(compareString_withoutType)) {
             if (keyboardEvent.type === 'keyup') {
                 await this.map.get(compareString_withoutType)(keyboardEvent);
-            } else {
-                keyboardEvent.preventDefault();
             }
+            keyboardEvent.preventDefault();
         }
     }
 
