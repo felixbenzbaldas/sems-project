@@ -36,7 +36,6 @@ export class UiA {
 
     async install() {
         this.htmlElement.classList.add('UI');
-
         if (this.wouldProvokeEndlessRecursion()) {
             this.fullWidth();
             let warningText = 'This item cannot be displayed. It contains itself. ' +
