@@ -7,6 +7,7 @@ import {UiA_HeaderG} from "@/ui/UiA_HeaderG";
 import {UiA_HeaderBodyG} from "@/ui/UiA_HeaderBodyG";
 import {UiA_TestRunG} from "@/ui/UiA_TestRunG";
 import {UiA_AppA} from "@/ui/UiA_AppA";
+import {UiA_ImageA} from "@/ui/UiA_ImageA";
 
 export class UiA {
 
@@ -24,6 +25,11 @@ export class UiA {
     headerBodyG: UiA_HeaderBodyG;
     testRunG: UiA_TestRunG;
     appA : UiA_AppA;
+    imageA : UiA_ImageA;
+    async installImageA() {
+        this.imageA = new UiA_ImageA(this.entity);
+        await this.imageA.install();
+    }
 
     constructor(public entity : Entity) {
         this.reset();
@@ -52,7 +58,10 @@ export class UiA {
             let ui = await this.createSubUiFor(data);
             this.htmlElement.appendChild(ui.htmlElement);
         } else {
-            if (this.getObject().codeG_html) {
+            if (this.getObject().text?.startsWith('#img')) {
+                await this.installImageA();
+                this.htmlElement.appendChild(this.imageA.htmlElement);
+            } else if (this.getObject().codeG_html) {
                 this.fullWidth();
                 this.htmlElement.appendChild(this.getObject().codeG_html);
             } else if (this.getObject().appA) {
