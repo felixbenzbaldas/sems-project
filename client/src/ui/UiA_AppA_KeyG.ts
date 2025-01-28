@@ -27,17 +27,17 @@ export class UiA_AppA_KeyG {
         this.map.set('ctrl+g', async keyboardEvent => {
             await this.getGlobalEventG().toggleContext();
         });
-        this.map.set('ctrl+shift+X', async keyboardEvent => {
-            await this.getGlobalEventG().cut();
+        this.map.set('F1', async keyboardEvent => {
+            await this.getGlobalEventG().mark();
         });
-        this.map.set('ctrl+shift+V', async keyboardEvent => {
-            await this.getGlobalEventG().paste();
+        this.map.set('F2', async keyboardEvent => {
+            await this.getGlobalEventG().cut();
         });
         this.map.set('F3', async keyboardEvent => {
             await this.getGlobalEventG().pasteNext();
         });
-        this.map.set('ctrl+shift+D', async keyboardEvent => {
-            await this.getGlobalEventG().mark();
+        this.map.set('F4', async keyboardEvent => {
+            await this.getGlobalEventG().paste();
         });
         this.map.set('F11', async keyboardEvent => {
             await this.getGlobalEventG().load();
