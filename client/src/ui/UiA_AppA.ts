@@ -94,7 +94,7 @@ export class UiA_AppA {
     }
 
     private async installMeta() {
-        this.commands = this.createCommands();
+        this.commands = this.createButtons();
         this.commandsUi = await this.entity.uiA.createSubUiFor(this.commands);
         this.output = await OutputA.create(this.entity);
         this.input = await InputA.create(this.entity);
@@ -188,8 +188,8 @@ export class UiA_AppA {
         entity.uis_update_containerStyle();
     }
 
-    createCommands() : Entity {
-        let lowPriorityCommands = this.getApp().unboundG.createTextWithList('mehr',
+    createButtons() : Entity {
+        let lowPriorityButtons = this.getApp().unboundG.createTextWithList('mehr',
             this.getApp().unboundG.createButton('export app', async () => {
                 await this.globalEventG.exportApp();
             }),
@@ -209,49 +209,29 @@ export class UiA_AppA {
                 await this.globalEventG.import();
             })
         );
-        lowPriorityCommands.collapsible = true;
+        lowPriorityButtons.collapsible = true;
         return this.getApp().unboundG.createTextWithList('commands',
-            this.commandsA.enter.entity,
-            this.getApp().unboundG.createButton('new subitem', async () => {
-                await this.globalEventG.newSubitem();
-            }),
-            this.getApp().unboundG.createButton('toggle collapsible', async () => {
-                await this.globalEventG.toggleCollapsible();
-            }),
+            this.commandsA.defaultAction.entity,
+            this.commandsA.newSubitem.entity,
+            this.commandsA.toggleCollapsible.entity,
             this.getApp().unboundG.createButton('expand/collapse', async () => {
                 await this.globalEventG.expandOrCollapse();
             }),
             this.getApp().unboundG.createButton('export', async () => {
                 await this.globalEventG.export();
             }),
-            this.getApp().unboundG.createButton('load', async () => {
-                await this.globalEventG.load();
-            }),
-            this.getApp().unboundG.createButton('mark', async () => {
-                await this.globalEventG.mark();
-            }),
-            this.getApp().unboundG.createButton('cut', async () => {
-                await this.globalEventG.cut();
-            }),
-            this.getApp().unboundG.createButton('deep copy (marked object will be copied into focused container)', async () => {
-                await this.globalEventG.deepCopy();
-            }),
-            this.getApp().unboundG.createButton('paste', async () => {
-                await this.globalEventG.paste();
-            }),
-            this.getApp().unboundG.createButton('paste next', async () => {
-                await this.globalEventG.pasteNext();
-            }),
+            this.commandsA.load.entity,
+            this.commandsA.mark.entity,
+            this.commandsA.cut.entity,
+            this.commandsA.deepCopy.entity,
+            this.commandsA.paste.entity,
+            this.commandsA.pasteNext.entity,
             this.getApp().unboundG.createButton('focus root', async () => {
                 await this.globalEventG.focusRoot();
             }),
-            this.getApp().unboundG.createButton('toggle context', async () => {
-                await this.globalEventG.toggleContext();
-            }),
-            this.getApp().unboundG.createButton('shake tree', async () => {
-                await this.globalEventG.shakeTree();
-            }),
-            lowPriorityCommands
+            this.commandsA.toggleContext.entity,
+            this.commandsA.shakeTree.entity,
+            lowPriorityButtons
         );
     }
 
