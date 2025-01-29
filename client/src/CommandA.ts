@@ -7,6 +7,4 @@ export class CommandA {
 
     constructor(public entity : Entity) {
     }
-
-
 }

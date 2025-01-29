@@ -170,7 +170,7 @@ export class UiA_AppA_CommandsA {
             } else if (key === MetaKey.ALT) {
                 inputPattern.alt = true;
             } else {
-                inputPattern.key = key;
+                inputPattern.key = InputPattern.normalize(key);
             }
         }
         return inputPattern;

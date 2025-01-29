@@ -4,7 +4,7 @@ export class InputPattern {
     ctrl : boolean;
     alt : boolean;
     shift : boolean;
-    key : string;
+    key : string; // TODO private to ensure that it is normalized?
     type : string;
 
     createCompareString() : string {
@@ -19,7 +19,7 @@ export class InputPattern {
             list.push('alt');
         }
         if (notNullUndefined(this.key)) {
-            list.push(this.key);
+            list.push(InputPattern.normalize(this.key));
         }
         if (notNullUndefined(this.type)) {
             list.push(' (' + this.type + ')');
@@ -38,7 +38,17 @@ export class InputPattern {
         inputPattern.ctrl = keyboardEvent.ctrlKey;
         inputPattern.shift = keyboardEvent.shiftKey;
         inputPattern.alt = keyboardEvent.altKey;
-        inputPattern.key = keyboardEvent.key;
+        inputPattern.key = InputPattern.normalize(keyboardEvent.key);
         return inputPattern;
+    }
+
+    static normalize(key : string) {
+        if (notNullUndefined(key)) {
+            if (key.length === 1) {
+                return key.toLowerCase();
+            } else {
+                return key;
+            }
+        }
     }
 }
