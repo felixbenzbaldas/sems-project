@@ -211,9 +211,7 @@ export class UiA_AppA {
         );
         lowPriorityCommands.collapsible = true;
         return this.getApp().unboundG.createTextWithList('commands',
-            this.getApp().unboundG.createButton('default action', async () => {
-                await this.globalEventG.defaultAction();
-            }),
+            this.commandsA.enter.entity,
             this.getApp().unboundG.createButton('new subitem', async () => {
                 await this.globalEventG.newSubitem();
             }),

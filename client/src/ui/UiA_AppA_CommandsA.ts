@@ -17,7 +17,7 @@ export class UiA_AppA_CommandsA {
     installCommands() {
         this.enter = this.createAndRegisterCommand();
         this.enter.inputPatterns.push(this.pattern('Enter'));
-        this.enter.entity.codeG_jsFunction = async () => {
+        this.enter.entity.action = async () => {
             await this.getGlobalEventG().defaultAction();
         };
         this.enter.entity.text = 'default action';
@@ -70,16 +70,20 @@ export class UiA_AppA_CommandsA {
             this.entity.logInfo(compareString);
         }
         if (this.mapInputPatternToCommand.has(compareString)) {
-            await this.mapInputPatternToCommand.get(compareString).entity.codeG_jsFunction();
+            await this.runCommand(compareString);
             keyboardEvent.preventDefault();
         }
         let compareString_withoutType = InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent).createCompareString();
         if (this.mapInputPatternToCommand.has(compareString_withoutType)) {
             if (keyboardEvent.type === 'keyup') {
-                await this.mapInputPatternToCommand.get(compareString_withoutType).entity.codeG_jsFunction();
+                await this.runCommand(compareString_withoutType);
             }
             keyboardEvent.preventDefault();
         }
+    }
+
+    private async runCommand(compareString : string) {
+        await this.mapInputPatternToCommand.get(compareString).entity.action();
     }
 
     private createAndRegisterCommand() : CommandA {
