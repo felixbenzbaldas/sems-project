@@ -8,6 +8,7 @@ import type {StarterA} from "@/StarterA";
 import {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
 import {TestRunA} from "@/tester/TestRunA";
 import {DeepCopyA} from "@/DeepCopyA";
+import {CommandA} from "@/CommandA";
 
 export class Entity {
 
@@ -22,6 +23,10 @@ export class Entity {
     codeG_html: HTMLElement;
     uis: Array<UiA>;
     context: PathA;
+    commandA : CommandA;
+    installCommandA() {
+        this.commandA = new CommandA(this);
+    }
 
     codeG_jsFunction: Function;
 

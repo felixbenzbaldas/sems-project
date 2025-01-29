@@ -44,7 +44,7 @@ export class Environment {
     create_installWindowKeyListener() {
         let listener = async (keyboardEvent : KeyboardEvent) => {
             if (this.activeAppUi) {
-                await this.activeAppUi.keyG.keyboardEvent(keyboardEvent);
+                await this.activeAppUi.commandsA.keyboardEvent(keyboardEvent);
             }
         };
         window.onkeyup = listener;

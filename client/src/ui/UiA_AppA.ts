@@ -5,7 +5,7 @@ import {InputA} from "@/ui/InputA";
 import {UiA} from "@/ui/UiA";
 import type {AppA} from "@/AppA";
 import {UiA_AppA_GlobalEventG} from "@/ui/UiA_AppA_GlobalEventG";
-import {UiA_AppA_KeyG} from "@/ui/UiA_AppA_KeyG";
+import {UiA_AppA_CommandsA} from "@/ui/UiA_AppA_CommandsA";
 
 export class UiA_AppA {
 
@@ -18,7 +18,7 @@ export class UiA_AppA {
     scrollableArea : HTMLElement = div();
     statusBar: HTMLDivElement = div();
     globalEventG: UiA_AppA_GlobalEventG;
-    keyG: UiA_AppA_KeyG;
+    commandsA: UiA_AppA_CommandsA;
     contentUi : UiA;
     webMetaUi : UiA;
     commandsUi: UiA;
@@ -27,12 +27,15 @@ export class UiA_AppA {
 
     constructor(public entity: Entity) {
         this.globalEventG = new UiA_AppA_GlobalEventG(entity);
-        this.keyG = new UiA_AppA_KeyG(entity);
         this.focusStyle_marker = this.focusStyle_createMarker();
     }
 
     async install(showMeta? : boolean, withPlaceholderArea? : boolean) : Promise<void> {
         let app_uiA = this.getApp().uiA;
+        this.commandsA = new UiA_AppA_CommandsA(this.entity);
+        this.commandsA.installCommands();
+        this.commandsA.installMapForInputPatterns();
+
         if (showMeta) {
             await this.installMeta();
         }
