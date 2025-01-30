@@ -137,4 +137,8 @@ export class UiA_AppA_GlobalEventG {
     getApp() : AppA {
         return this.entity.getApp_typed();
     }
+
+    async editMode() {
+        await this.getAppUi().focused.enterEditMode();
+    }
 }

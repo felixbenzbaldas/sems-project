@@ -175,7 +175,7 @@ export class UiA_AppA {
 
     focusStyle_update() {
         if (this.focused === this.entity.uiA && this.isActive()) {
-            this.focusStyle_marker.style.backgroundColor = this.getApp().uiA.theme.focusBorderColor;
+            this.focusStyle_marker.style.backgroundColor = this.getApp().uiA.theme.focusBorderColor_viewMode;
         } else {
             this.focusStyle_marker.style.backgroundColor = this.getApp().uiA.theme.backgroundColor;
         }

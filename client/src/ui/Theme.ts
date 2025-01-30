@@ -8,7 +8,8 @@ export class Theme {
     buttonFontColor: string;
     markColor: string;
     secondMarkColor : string;
-    focusBorderColor: string;
+    focusBorderColor_viewMode: string;
+    focusBorderColor_editMode: string;
     highlight: string;
     success : string;
     failure : string;
@@ -25,7 +26,8 @@ export class Theme {
         theme.buttonFontColor = 'grey';
         theme.markColor = '#efefef';
         theme.secondMarkColor = 'green';
-        theme.focusBorderColor = 'orange';
+        theme.focusBorderColor_viewMode = 'orange';
+        theme.focusBorderColor_editMode = 'green';
         theme.highlight = Color.LIGHT_BEIGE;
         theme.success = 'green';
         theme.failure = 'red';
@@ -44,7 +46,8 @@ export class Theme {
         theme.buttonFontColor = 'grey';
         theme.markColor = Color.LIGHT_GREY;
         theme.secondMarkColor = 'green';
-        theme.focusBorderColor = 'orange';
+        theme.focusBorderColor_viewMode = 'orange';
+        theme.focusBorderColor_editMode = 'green';
         theme.highlight = 'green';
         theme.success = 'green';
         theme.failure = 'red';

@@ -23,6 +23,7 @@ export class UiA_AppA_CommandsA {
     focusUiContext : CommandA;
     deepCopy: CommandA;
     shakeTree: CommandA;
+    editMode: CommandA;
 
     constructor(public entity: Entity) {
     }
@@ -125,6 +126,13 @@ export class UiA_AppA_CommandsA {
             await this.getGlobalEventG().shakeTree();
         };
         this.shakeTree.entity.text = 'shake tree';
+
+        this.editMode = this.createAndRegisterCommand();
+        this.editMode.inputPatterns.push(this.pattern(MetaKey.CTRL, 'i'));
+        this.editMode.entity.action = async () => {
+            await this.getGlobalEventG().editMode();
+        };
+        this.editMode.entity.text = 'enter edit mode';
     }
 
     private getGlobalEventG() {

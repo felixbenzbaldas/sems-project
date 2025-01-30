@@ -146,7 +146,11 @@ export class UiA_HeaderG {
 
     focusStyle_update() {
         if (this.entity.uiA.hasFocus() && this.getUiA().findAppUi().isActive()) {
-            this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme.focusBorderColor;
+            if (this.entity.uiA.editMode) {
+                this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme.focusBorderColor_editMode;
+            } else {
+                this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme.focusBorderColor_viewMode;
+            }
         } else {
             this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme.backgroundColor;
         }

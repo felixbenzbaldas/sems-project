@@ -30,6 +30,7 @@ export class UiA {
         this.imageA = new UiA_ImageA(this.entity);
         await this.imageA.install();
     }
+    editMode : boolean;
 
     constructor(public entity : Entity) {
         this.reset();
@@ -450,5 +451,10 @@ export class UiA {
         ui.context = this;
         await ui.install();
         return ui;
+    }
+
+    async enterEditMode() {
+        this.editMode = true;
+        this.headerG.focusStyle_update();
     }
 }
