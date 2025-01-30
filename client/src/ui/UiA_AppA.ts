@@ -115,6 +115,7 @@ export class UiA_AppA {
         await listA.insertObjectAtPosition(created, position);
         await this.getObject().appA.uiA.content.uis_update_addedListItem(position);
         this.focus(this.contentUi.listA.uisOfListItems[position]);
+        this.focused.enterEditMode();
     }
 
     async paste() {

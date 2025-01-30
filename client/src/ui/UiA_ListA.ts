@@ -41,6 +41,7 @@ export class UiA_ListA {
         }
         await listA.entity.uis_update_addedListItem(position);
         this.entity.uiA.findAppUi().focus(this.uisOfListItems[position]);
+        this.entity.uiA.findAppUi().focused.enterEditMode();
     }
 
     async pasteNextOnSubitem(subitem: UiA) {

@@ -213,6 +213,7 @@ export class UiA {
             await listA.entity.uis_update_addedListItem(position);
             await this.ensureExpanded();
             this.findAppUi().focus(this.entity.uiA.listA.uisOfListItems[position]);
+            this.findAppUi().focused.enterEditMode();
         }
     }
 
@@ -453,7 +454,7 @@ export class UiA {
         return ui;
     }
 
-    async enterEditMode() {
+    enterEditMode() {
         this.editMode = true;
         this.headerG.focusStyle_update();
         this.textG.htmlElement.contentEditable = 'true';
