@@ -30,7 +30,7 @@ export class UiA_TextG {
         };
         this.htmlElement.onclick = (event) => {
             this.getUiA().findAppUi().ensureActive();
-            if (this.getUiA().isEditable()) {
+            if (this.getUiA().isEditable() && this.getUiA().editMode) {
                 event.stopPropagation();
             }
         }
@@ -53,7 +53,7 @@ export class UiA_TextG {
     }
 
     async updateCursorStyle() {
-        if (this.getUiA().isEditable()) {
+        if (this.getUiA().isEditable() && this.getUiA().editMode) {
             this.htmlElement.style.cursor = 'text';
         } else {
             if (this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {

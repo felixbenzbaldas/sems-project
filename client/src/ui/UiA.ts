@@ -457,6 +457,7 @@ export class UiA {
     enterEditMode() {
         this.editMode = true;
         this.headerG.focusStyle_update();
+        this.headerG.updateCursorStyle();
         this.textG.htmlElement.contentEditable = 'true';
         this.textG.takeCaret();
     }
@@ -464,6 +465,7 @@ export class UiA {
     leaveEditMode() {
         this.editMode = false;
         this.headerG.focusStyle_update();
+        this.headerG.updateCursorStyle();
         this.textG.htmlElement.contentEditable = 'false';
     }
 }
