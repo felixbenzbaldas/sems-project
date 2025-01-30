@@ -1,4 +1,5 @@
 import {notNullUndefined} from "@/utils";
+import type {AccessMode} from "@/ui/AccessMode";
 
 export class InputPattern {
     ctrl : boolean;
@@ -6,6 +7,7 @@ export class InputPattern {
     shift : boolean;
     key : string; // TODO private to ensure that it is normalized?
     type : string;
+    mode : 'view' | 'edit';
 
     createCompareString() : string {
         let list = [];
@@ -21,24 +23,29 @@ export class InputPattern {
         if (notNullUndefined(this.key)) {
             list.push(InputPattern.normalize(this.key));
         }
+        let compareString = list.join('+');
         if (notNullUndefined(this.type)) {
-            list.push(' (' + this.type + ')');
+            compareString += ' ' + this.type + '';
         }
-        return list.join('+');
+        if (notNullUndefined(this.mode)) {
+            compareString += ' ' + this.mode;
+        }
+        return compareString;
     }
 
-    static createFromKeyboardEvent(keyboardEvent : KeyboardEvent) : InputPattern {
-        let inputPattern = InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent);
+    static createFromKeyboardEvent(keyboardEvent : KeyboardEvent, mode? : AccessMode) : InputPattern {
+        let inputPattern = InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent, mode);
         inputPattern.type = keyboardEvent.type;
         return inputPattern;
     }
 
-    static createFromKeyboardEvent_withoutType(keyboardEvent : KeyboardEvent) : InputPattern {
+    static createFromKeyboardEvent_withoutType(keyboardEvent : KeyboardEvent, mode? : AccessMode) : InputPattern {
         let inputPattern = new InputPattern();
         inputPattern.ctrl = keyboardEvent.ctrlKey;
         inputPattern.shift = keyboardEvent.shiftKey;
         inputPattern.alt = keyboardEvent.altKey;
         inputPattern.key = InputPattern.normalize(keyboardEvent.key);
+        inputPattern.mode = mode;
         return inputPattern;
     }
 

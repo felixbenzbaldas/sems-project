@@ -1,6 +1,8 @@
 import type {Entity} from "@/Entity";
 import type {CommandA} from "@/CommandA";
 import {InputPattern} from "@/ui/InputPattern";
+import type {AccessMode} from "@/ui/AccessMode";
+import {notNullUndefined, nullUndefined} from "@/utils";
 
 export class UiA_AppA_CommandsA {
 
@@ -106,7 +108,7 @@ export class UiA_AppA_CommandsA {
         this.load.entity.text = 'load';
 
         this.focusUiContext = this.createAndRegisterCommand();
-        this.focusUiContext.inputPatterns.push(this.pattern(MetaKey.CTRL, 'o'));
+        this.focusUiContext.inputPatterns.push(this.pattern(MetaKey.CTRL, 'o'), this.pattern_viewMode('o'));
         this.focusUiContext.entity.action = async () => {
             await this.getGlobalEventG().focusUiContext();
         };
@@ -146,15 +148,30 @@ export class UiA_AppA_CommandsA {
     }
 
     shouldPreventDefault(keyboardEvent : KeyboardEvent) : boolean {
-        return this.mapInputPatternToCommand.has(InputPattern.createFromKeyboardEvent(keyboardEvent).createCompareString()) ||
-            this.mapInputPatternToCommand.has(InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent).createCompareString());
+        if (this.mapInputPatternToCommand.has(InputPattern.createFromKeyboardEvent(keyboardEvent).createCompareString()) ||
+            this.mapInputPatternToCommand.has(InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent).createCompareString())) {
+            return true;
+        } else {
+            let mode = this.getMode();
+            if (notNullUndefined(mode)) {
+                return this.mapInputPatternToCommand.has(InputPattern.createFromKeyboardEvent(keyboardEvent, mode).createCompareString()) ||
+                    this.mapInputPatternToCommand.has(InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent, mode).createCompareString());
+            }
+        }
     }
 
     async trigger(keyboardEvent: KeyboardEvent) {
         let triggers : Array<InputPattern> = [];
+        let mode = this.getMode();
         triggers.push(InputPattern.createFromKeyboardEvent(keyboardEvent));
+        if (notNullUndefined(mode)) {
+            triggers.push(InputPattern.createFromKeyboardEvent(keyboardEvent, mode));
+        }
         if (keyboardEvent.type === 'keyup') {
             triggers.push(InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent));
+            if (notNullUndefined(mode)) {
+                triggers.push(InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent, mode));
+            }
         }
         for (let trigger of triggers) {
             let compareString = trigger.createCompareString();
@@ -171,7 +188,7 @@ export class UiA_AppA_CommandsA {
         return command.commandA;
     }
 
-    private pattern(...keys: Array<string | MetaKey>) : InputPattern{
+    pattern(...keys: Array<string | MetaKey>) : InputPattern{
         let inputPattern = new InputPattern();
         for (let key of keys) {
             if (key === MetaKey.CTRL) {
@@ -191,6 +208,30 @@ export class UiA_AppA_CommandsA {
         for (let command of this.listOfStaticCommands) {
             for (let inputPattern of command.inputPatterns) {
                 this.mapInputPatternToCommand.set(inputPattern.createCompareString(), command);
+            }
+        }
+    }
+
+    pattern_editMode(...keys: Array<string | MetaKey>) : InputPattern {
+        let inputPattern = this.pattern(...keys);
+        inputPattern.mode = 'edit';
+        return inputPattern;
+    }
+
+    pattern_viewMode(...keys: Array<string | MetaKey>) : InputPattern {
+        let inputPattern = this.pattern(...keys);
+        inputPattern.mode = 'view';
+        return inputPattern;
+    }
+
+    getMode() : AccessMode {
+        if (nullUndefined(this.entity.uiA.appA.focused)) {
+            return undefined;
+        } else {
+            if (this.entity.uiA.appA.focused.editMode) {
+                return 'edit';
+            } else {
+                return 'view';
             }
         }
     }
