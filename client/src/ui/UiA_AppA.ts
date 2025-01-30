@@ -126,14 +126,16 @@ export class UiA_AppA {
     }
 
     focus(ui : UiA) {
-        let focusedPrevious = this.focused;
-        this.focused = ui;
-        if (notNullUndefined(focusedPrevious) && focusedPrevious !== ui) {
-            focusedPrevious.updateFocusStyle();
-            focusedPrevious.leaveEditMode();
+        if (ui !== this.focused) {
+            let focusedPrevious = this.focused;
+            this.focused = ui;
+            if (focusedPrevious) {
+                focusedPrevious.leaveEditMode();
+                focusedPrevious.updateFocusStyle();
+            }
+            this.focused.updateFocusStyle();
+            this.focused.takeCaret();
         }
-        this.focused.updateFocusStyle();
-        this.focused.takeCaret();
     }
 
     signal(text : string) {
