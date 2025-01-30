@@ -1,5 +1,4 @@
 import type {Entity} from "@/Entity";
-import {notNullUndefined} from "@/utils";
 import type {CommandA} from "@/CommandA";
 import {InputPattern} from "@/ui/InputPattern";
 
@@ -160,13 +159,9 @@ export class UiA_AppA_CommandsA {
         for (let trigger of triggers) {
             let compareString = trigger.createCompareString();
             if (this.mapInputPatternToCommand.has(compareString)) {
-                await this.runCommand(compareString);
+                await this.mapInputPatternToCommand.get(compareString).entity.action();
             }
         }
-    }
-
-    private async runCommand(compareString : string) {
-        await this.mapInputPatternToCommand.get(compareString).entity.action();
     }
 
     private createAndRegisterCommand() : CommandA {
