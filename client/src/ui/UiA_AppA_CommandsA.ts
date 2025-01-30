@@ -140,22 +140,18 @@ export class UiA_AppA_CommandsA {
     }
 
     async keyboardEvent(keyboardEvent: KeyboardEvent) {
-        this.keyboardEvent_preventDefault(keyboardEvent);
-        await this.keyboardEvent_triggers(keyboardEvent);
-    }
-
-    keyboardEvent_preventDefault(keyboardEvent: KeyboardEvent) {
-        let compareString = InputPattern.createFromKeyboardEvent(keyboardEvent).createCompareString();
-        if (this.mapInputPatternToCommand.has(compareString)) {
+        if (this.shouldPreventDefault(keyboardEvent)) {
             keyboardEvent.preventDefault();
         }
-        let compareString_withoutType = InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent).createCompareString();
-        if (this.mapInputPatternToCommand.has(compareString_withoutType)) {
-            keyboardEvent.preventDefault();
-        }
+        await this.trigger(keyboardEvent);
     }
 
-    async keyboardEvent_triggers(keyboardEvent: KeyboardEvent) {
+    shouldPreventDefault(keyboardEvent : KeyboardEvent) : boolean {
+        return this.mapInputPatternToCommand.has(InputPattern.createFromKeyboardEvent(keyboardEvent).createCompareString()) ||
+            this.mapInputPatternToCommand.has(InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent).createCompareString());
+    }
+
+    async trigger(keyboardEvent: KeyboardEvent) {
         let triggers : Array<InputPattern> = [];
         triggers.push(InputPattern.createFromKeyboardEvent(keyboardEvent));
         if (keyboardEvent.type === 'keyup') {
