@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {div, nullUndefined, textElem} from "@/utils";
+import {div, notNullUndefined, nullUndefined, textElem} from "@/utils";
 import {OutputA} from "@/ui/OutputA";
 import {InputA} from "@/ui/InputA";
 import {UiA} from "@/ui/UiA";
@@ -128,8 +128,9 @@ export class UiA_AppA {
     focus(ui : UiA) {
         let focusedPrevious = this.focused;
         this.focused = ui;
-        if (focusedPrevious) {
+        if (notNullUndefined(focusedPrevious) && focusedPrevious !== ui) {
             focusedPrevious.updateFocusStyle();
+            focusedPrevious.leaveEditMode();
         }
         this.focused.updateFocusStyle();
         this.focused.takeCaret();

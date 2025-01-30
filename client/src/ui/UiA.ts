@@ -456,5 +456,13 @@ export class UiA {
     async enterEditMode() {
         this.editMode = true;
         this.headerG.focusStyle_update();
+        this.textG.htmlElement.contentEditable = 'true';
+        this.textG.takeCaret();
+    }
+
+    leaveEditMode() {
+        this.editMode = false;
+        this.headerG.focusStyle_update();
+        this.textG.htmlElement.contentEditable = 'false';
     }
 }

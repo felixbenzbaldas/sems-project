@@ -20,6 +20,7 @@ export class UiA_TextG {
         this.htmlElement.onblur = async (event : any) => {
             this.save();
             await this.getObject().uis_update_text();
+            this.entity.uiA.leaveEditMode();
         }
         this.htmlElement.onfocus = () => {
             if (this.getUiA().findAppUi().focused != this.entity.uiA) {
@@ -33,7 +34,6 @@ export class UiA_TextG {
                 event.stopPropagation();
             }
         }
-        this.htmlElement.contentEditable = (this.getUiA().isEditable()) ? 'true' : 'false';
         this.updateEmptyMarker();
         this.htmlElement.style.display = 'inline-block';
         this.htmlElement.style.minWidth = '1rem';
