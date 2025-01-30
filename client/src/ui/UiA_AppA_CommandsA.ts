@@ -38,42 +38,42 @@ export class UiA_AppA_CommandsA {
         this.defaultAction.entity.text = 'default action';
 
         this.newSubitem = this.createAndRegisterCommand();
-        this.newSubitem.inputPatterns.push(this.pattern(MetaKey.ALT, 'Enter'));
+        this.newSubitem.inputPatterns.push(this.pattern(MetaKey.ALT, 'Enter'), this.pattern('Tab'));
         this.newSubitem.entity.action = async () => {
             await this.getGlobalEventG().newSubitem();
         };
         this.newSubitem.entity.text = 'new subitem';
 
         this.toggleCollapsible = this.createAndRegisterCommand();
-        this.toggleCollapsible.inputPatterns.push(this.pattern(MetaKey.CTRL, 'f'));
+        this.toggleCollapsible.inputPatterns.push(this.pattern(MetaKey.CTRL, 'f'), this.pattern_viewMode('c'));
         this.toggleCollapsible.entity.action = async () => {
             await this.getGlobalEventG().toggleCollapsible();
         };
         this.toggleCollapsible.entity.text = 'toggle collapsible';
 
         this.scaleDown = this.createAndRegisterCommand();
-        this.scaleDown.inputPatterns.push(this.pattern(MetaKey.CTRL, 'e'));
+        this.scaleDown.inputPatterns.push(this.pattern(MetaKey.CTRL, 'e'), this.pattern_viewMode('e'));
         this.scaleDown.entity.action = async () => {
             await this.getGlobalEventG().scaleDown();
         };
         this.scaleDown.entity.text = 'scale down';
 
         this.scaleUp = this.createAndRegisterCommand();
-        this.scaleUp.inputPatterns.push(this.pattern(MetaKey.CTRL, 'd'));
+        this.scaleUp.inputPatterns.push(this.pattern(MetaKey.CTRL, 'd'), this.pattern_viewMode('d'));
         this.scaleUp.entity.action = async () => {
             await this.getGlobalEventG().scaleUp();
         };
         this.scaleUp.entity.text = 'scale up';
 
         this.toggleContext = this.createAndRegisterCommand();
-        this.toggleContext.inputPatterns.push(this.pattern(MetaKey.CTRL, 'g'));
+        this.toggleContext.inputPatterns.push(this.pattern(MetaKey.CTRL, 'g'), this.pattern_viewMode('g'));
         this.toggleContext.entity.action = async () => {
             await this.getGlobalEventG().toggleContext();
         };
         this.toggleContext.entity.text = 'toggle context';
 
         this.mark = this.createAndRegisterCommand();
-        this.mark.inputPatterns.push(this.pattern('F1'));
+        this.mark.inputPatterns.push(this.pattern('F1'), this.pattern_viewMode('m'));
         this.mark.entity.action = async () => {
             await this.getGlobalEventG().mark();
         };
