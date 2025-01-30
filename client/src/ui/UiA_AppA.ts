@@ -35,7 +35,6 @@ export class UiA_AppA {
         this.commandsA = new UiA_AppA_CommandsA(this.entity);
         this.commandsA.installCommands();
         this.commandsA.installMapForInputPatterns();
-
         if (showMeta) {
             await this.installMeta();
         }

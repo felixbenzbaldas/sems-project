@@ -5,7 +5,7 @@ import {InputPattern} from "@/ui/InputPattern";
 
 export class UiA_AppA_CommandsA {
 
-    mapInputPatternToCommand : Map<string, CommandA> = new Map();
+    mapInputPatternToCommand : Map<string, CommandA> = new Map(); // TODO maybe map to Array<CommandA> ?
 
     listOfStaticCommands : Array<CommandA> = [];
 
@@ -140,20 +140,32 @@ export class UiA_AppA_CommandsA {
     }
 
     async keyboardEvent(keyboardEvent: KeyboardEvent) {
+        this.keyboardEvent_preventDefault(keyboardEvent);
+        await this.keyboardEvent_triggers(keyboardEvent);
+    }
+
+    keyboardEvent_preventDefault(keyboardEvent: KeyboardEvent) {
         let compareString = InputPattern.createFromKeyboardEvent(keyboardEvent).createCompareString();
-        if (this.entity.getApp_typed().testMode) {
-            this.entity.logInfo(compareString);
-        }
         if (this.mapInputPatternToCommand.has(compareString)) {
-            await this.runCommand(compareString);
             keyboardEvent.preventDefault();
         }
         let compareString_withoutType = InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent).createCompareString();
         if (this.mapInputPatternToCommand.has(compareString_withoutType)) {
-            if (keyboardEvent.type === 'keyup') {
-                await this.runCommand(compareString_withoutType);
-            }
             keyboardEvent.preventDefault();
+        }
+    }
+
+    async keyboardEvent_triggers(keyboardEvent: KeyboardEvent) {
+        let triggers : Array<InputPattern> = [];
+        triggers.push(InputPattern.createFromKeyboardEvent(keyboardEvent));
+        if (keyboardEvent.type === 'keyup') {
+            triggers.push(InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent));
+        }
+        for (let trigger of triggers) {
+            let compareString = trigger.createCompareString();
+            if (this.mapInputPatternToCommand.has(compareString)) {
+                await this.runCommand(compareString);
+            }
         }
     }
 
