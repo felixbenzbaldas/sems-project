@@ -25,6 +25,7 @@ export class UiA_AppA_CommandsA {
     deepCopy: CommandA;
     shakeTree: CommandA;
     editMode: CommandA;
+    focusNext: CommandA;
 
     constructor(public entity: Entity) {
     }
@@ -134,6 +135,13 @@ export class UiA_AppA_CommandsA {
             await this.getGlobalEventG().editMode();
         };
         this.editMode.entity.text = 'enter edit mode';
+
+        this.focusNext = this.createAndRegisterCommand();
+        this.focusNext.inputPatterns.push(this.pattern_viewMode('k'), this.pattern(MetaKey.CTRL, 'k'));
+        this.focusNext.entity.action = async () => {
+            await this.getGlobalEventG().focusNext();
+        };
+        this.focusNext.entity.text = 'focus next';
     }
 
     private getGlobalEventG() {

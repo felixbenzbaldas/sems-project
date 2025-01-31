@@ -468,4 +468,44 @@ export class UiA {
         this.headerG.updateCursorStyle();
         this.textG.htmlElement.contentEditable = 'false';
     }
+
+    async getListOfChildren() : Promise<Array<UiA>> {
+        return this.bodyG.getListOfChildren();
+    }
+
+    async focusNext() {
+        let next = await this.getNext();
+        if (next != null) {
+            next.focus();
+        }
+    }
+
+    async getNext() : Promise<UiA> {
+        let listOfChildren = await this.getListOfChildren();
+        if (listOfChildren.length > 0) {
+            return listOfChildren[0];
+        } else {
+            return this.getNext_skippingChildren();
+        }
+    }
+
+    // returns the next ui skipping the children of this
+    async getNext_skippingChildren() : Promise<UiA> {
+        if (nullUndefined(this.context)) {
+            return undefined;
+        } else {
+            let parent = this.context;
+            let childrenOfParent : Array<UiA> = await parent.getListOfChildren();
+            let position = childrenOfParent.indexOf(this);
+            if (position + 1 < childrenOfParent.length) {
+                return childrenOfParent[position + 1];
+            } else {
+                return parent.getNext_skippingChildren();
+            }
+        }
+    }
+
+    focus() {
+        this.findAppUi().focus(this);
+    }
 }

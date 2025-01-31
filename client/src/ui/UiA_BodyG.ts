@@ -11,6 +11,7 @@ export class UiA_BodyG {
     content_contextAsSubitem_htmlElement : HTMLElement = div();
     content_meta_htmlElement : HTMLElement = div();
     animatedExpandAndCollapse : AnimatedExpandAndCollapse = new AnimatedExpandAndCollapse();
+    contextAsSubitemUi: UiA;
 
     constructor(private entity: Entity) {
         this.htmlElement.style.display = 'none';
@@ -74,11 +75,11 @@ export class UiA_BodyG {
             let contextAsSubitem = this.entity.getApp_typed().unboundG.createTextWithList('[context]', contextObj);
             contextAsSubitem.collapsible = true;
             contextAsSubitem.editable = false;
-            let ui = await this.getUiA().createSubUiFor_transmitEditability(contextAsSubitem); // it is important to transmit the editability for the subsubitems
-            ui.htmlElement.style.marginBottom = '0.1rem';
-            ui.headerG.htmlElement.style.fontSize = '0.8rem';
-            ui.headerG.htmlElement.style.color = this.entity.getApp_typed().uiA.theme.buttonFontColor;
-            this.content_contextAsSubitem_htmlElement.appendChild(ui.htmlElement);
+            this.contextAsSubitemUi = await this.getUiA().createSubUiFor_transmitEditability(contextAsSubitem); // it is important to transmit the editability for the subsubitems
+            this.contextAsSubitemUi.htmlElement.style.marginBottom = '0.1rem';
+            this.contextAsSubitemUi.headerG.htmlElement.style.fontSize = '0.8rem';
+            this.contextAsSubitemUi.headerG.htmlElement.style.color = this.entity.getApp_typed().uiA.theme.buttonFontColor;
+            this.content_contextAsSubitem_htmlElement.appendChild(this.contextAsSubitemUi.htmlElement);
         }
     }
 
@@ -128,5 +129,18 @@ export class UiA_BodyG {
 
     hideMeta() {
         this.content_meta_htmlElement.innerHTML = null;
+    }
+
+    async getListOfChildren() : Promise<Array<UiA>> {
+        let list : Array<UiA> = [];
+        if (this.getUiA().headerBodyG.bodyIsVisible()) { // TODO plain list has no headerBody ...
+            if (await this.getUiA().hasContextAsSubitem()) {
+                list.push(this.contextAsSubitemUi);
+            }
+            if (this.getUiA().listA) {
+                list.push(...this.getUiA().listA.uisOfListItems);
+            }
+        }
+        return list;
     }
 }
