@@ -105,7 +105,7 @@ export class UiA_AppA_CommandsA {
         this.load = this.createAndRegisterCommand();
         this.load.inputPatterns.push(this.pattern('F11'));
         this.load.entity.action = async () => {
-            await this.getGlobalEventG().scaleDown();
+            await this.getGlobalEventG().load();
         };
         this.load.entity.text = 'load';
 
