@@ -142,6 +142,10 @@ export class UiA_AppA_GlobalEventG {
         await this.getAppUi().focused.enterEditMode();
     }
 
+    async focusPrevious() {
+        await this.getAppUi().focused.focusPrevious();
+    }
+
     async focusNext() {
         await this.getAppUi().focused.focusNext();
     }

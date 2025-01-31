@@ -512,4 +512,39 @@ export class UiA {
     focus() {
         this.findAppUi().focus(this);
     }
+
+    async focusPrevious() {
+        let previous = await this.getPrevious();
+        if (notNullUndefined(previous)) {
+            previous.focus();
+        }
+    }
+
+    async getPrevious() : Promise<UiA> {
+        if (nullUndefined(this.context)) {
+            return undefined;
+        } else {
+            return await this.context.getPreviousOfChild(this);
+        }
+    }
+
+    async getPreviousOfChild(child : UiA) {
+        let children : Array<UiA> = await this.getListOfChildren();
+        let position = children.indexOf(child);
+        if (position > 0) {
+            return children[position - 1].getLast();
+        } else {
+            return this;
+        }
+    }
+
+    // Returns the last ui that belongs to this. If no child is available, then this is returned.
+    async getLast() : Promise<UiA> {
+        let children : Array<UiA> = await this.getListOfChildren();
+        if (children.length > 0) {
+            return children[children.length - 1].getLast();
+        } else {
+            return this;
+        }
+    }
 }

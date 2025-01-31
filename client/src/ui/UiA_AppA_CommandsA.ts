@@ -26,6 +26,7 @@ export class UiA_AppA_CommandsA {
     shakeTree: CommandA;
     editMode: CommandA;
     focusNext: CommandA;
+    focusPrevious: CommandA;
 
     constructor(public entity: Entity) {
     }
@@ -136,8 +137,15 @@ export class UiA_AppA_CommandsA {
         };
         this.editMode.entity.text = 'enter edit mode';
 
+        this.focusPrevious = this.createAndRegisterCommand();
+        this.focusPrevious.inputPatterns.push(this.pattern_viewMode('i'), this.pattern(MetaKey.ALT, 'i'));
+        this.focusPrevious.entity.action = async () => {
+            await this.getGlobalEventG().focusPrevious();
+        };
+        this.focusPrevious.entity.text = 'focus previous';
+
         this.focusNext = this.createAndRegisterCommand();
-        this.focusNext.inputPatterns.push(this.pattern_viewMode('k'), this.pattern(MetaKey.CTRL, 'k'));
+        this.focusNext.inputPatterns.push(this.pattern_viewMode('k'), this.pattern(MetaKey.ALT, 'k'));
         this.focusNext.entity.action = async () => {
             await this.getGlobalEventG().focusNext();
         };
