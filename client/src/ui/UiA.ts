@@ -470,7 +470,11 @@ export class UiA {
     }
 
     async getListOfChildren() : Promise<Array<UiA>> {
-        return this.bodyG.getListOfChildren();
+        if (this.isHeaderBody()) {
+            return this.bodyG.getListOfChildren();
+        } else if (this.isPlainList()) {
+            return this.listA.uisOfListItems;
+        }
     }
 
     async focusNext() {

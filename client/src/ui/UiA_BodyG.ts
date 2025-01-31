@@ -133,7 +133,7 @@ export class UiA_BodyG {
 
     async getListOfChildren() : Promise<Array<UiA>> {
         let list : Array<UiA> = [];
-        if (this.getUiA().headerBodyG.bodyIsVisible()) { // TODO plain list has no headerBody ...
+        if (this.getUiA().headerBodyG.bodyIsVisible()) {
             if (await this.getUiA().hasContextAsSubitem()) {
                 list.push(this.contextAsSubitemUi);
             }
