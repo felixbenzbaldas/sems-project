@@ -153,6 +153,16 @@ export class UiA_AppA_CommandsA {
             this.pattern_viewMode('k'),
             this.pattern(MetaKey.ALT, 'k')
         );
+
+        this.addCommand(
+            'to end of list',
+            async () => {
+                await this.getGlobalEventG().toEndOfList();
+            },
+            command => {},
+            this.pattern_viewMode('l'),
+            this.pattern(MetaKey.ALT, 'l')
+        );
     }
 
     addCommand(text : string, action : Function, setField : (command : CommandA) => void, ...patterns : Array<InputPattern>) {

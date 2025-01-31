@@ -547,4 +547,18 @@ export class UiA {
             return this;
         }
     }
+
+    async toEndOfList() {
+        let children : Array<UiA> = await this.getListOfChildren();
+        if (children.length > 0) {
+            children.at(-1).focus();
+        } else if (this.context) {
+            let childrenOfParent = await this.context.getListOfChildren();
+            if (this === childrenOfParent.at(-1)) {
+                await this.defaultAction();
+            } else {
+                childrenOfParent.at(-1).focus();
+            }
+        }
+    }
 }

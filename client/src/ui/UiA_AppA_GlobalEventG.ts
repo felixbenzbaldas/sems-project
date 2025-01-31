@@ -149,4 +149,8 @@ export class UiA_AppA_GlobalEventG {
     async focusNext() {
         await this.getAppUi().focused.focusNext();
     }
+
+    async toEndOfList() {
+        await this.getAppUi().focused.toEndOfList();
+    }
 }
