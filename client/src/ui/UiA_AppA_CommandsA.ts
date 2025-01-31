@@ -144,12 +144,23 @@ export class UiA_AppA_CommandsA {
         };
         this.focusPrevious.entity.text = 'focus previous';
 
-        this.focusNext = this.createAndRegisterCommand();
-        this.focusNext.inputPatterns.push(this.pattern_viewMode('k'), this.pattern(MetaKey.ALT, 'k'));
-        this.focusNext.entity.action = async () => {
-            await this.getGlobalEventG().focusNext();
-        };
-        this.focusNext.entity.text = 'focus next';
+        this.addCommand(
+            'focus next',
+            async () => {
+                await this.getGlobalEventG().focusNext();
+            },
+            command => { this.focusNext = command; },
+            this.pattern_viewMode('k'),
+            this.pattern(MetaKey.ALT, 'k')
+        );
+    }
+
+    addCommand(text : string, action : Function, setField : (command : CommandA) => void, ...patterns : Array<InputPattern>) {
+        let command = this.createAndRegisterCommand();
+        setField(command);
+        command.inputPatterns.push(...patterns);
+        command.entity.action = action;
+        command.entity.text = text;
     }
 
     private getGlobalEventG() {
