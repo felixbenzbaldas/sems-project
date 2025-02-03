@@ -30,13 +30,24 @@ export class UiA_TextG {
         };
         this.htmlElement.onclick = (event) => {
             this.getUiA().findAppUi().ensureActive();
-            if (this.getUiA().isEditable() && this.getUiA().editMode) {
+            if (this.getUiA().isEditable()) {
                 event.stopPropagation();
+                if (!this.getUiA().editMode) {
+                    this.getUiA().focus();
+                }
+            } else {
+                this.getUiA().focus();
+            }
+        }
+        this.htmlElement.ondblclick = (event) => {
+            if (this.getUiA().isEditable()) {
+                this.getUiA().enterEditMode();
             }
         }
         this.updateEmptyMarker();
         this.htmlElement.style.display = 'inline-block';
         this.htmlElement.style.minWidth = '1rem';
+        this.htmlElement.contentEditable = (this.getUiA().isEditable()) ? 'true' : 'false';
         await this.updateCursorStyle();
     }
 
@@ -53,8 +64,12 @@ export class UiA_TextG {
     }
 
     async updateCursorStyle() {
-        if (this.getUiA().isEditable() && this.getUiA().editMode) {
-            this.htmlElement.style.cursor = 'text';
+        if (this.getUiA().isEditable()) {
+            if (this.getUiA().editMode) {
+                this.htmlElement.style.cursor = 'text';
+            } else {
+                this.htmlElement.style.cursor = 'default';
+            }
         } else {
             if (this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
                 this.htmlElement.style.cursor = 'pointer';
