@@ -157,4 +157,11 @@ export class UiA_AppA_GlobalEventG {
     leaveEditMode() {
         this.getAppUi().focused.leaveEditMode();
     }
+
+    async exportProfile() {
+
+    }
+
+    async importProfile() {
+    }
 }

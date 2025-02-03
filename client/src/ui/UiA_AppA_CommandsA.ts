@@ -27,6 +27,8 @@ export class UiA_AppA_CommandsA {
     editMode: CommandA;
     focusNext: CommandA;
     focusPrevious: CommandA;
+    exportProfile: CommandA;
+    importProfile: CommandA;
 
     constructor(public entity: Entity) {
     }
@@ -171,6 +173,26 @@ export class UiA_AppA_CommandsA {
             },
             undefined,
             this.pattern('Escape')
+        );
+
+        this.addCommand(
+            'import profile',
+            () => {
+                this.getGlobalEventG().importProfile();
+            },
+            command => {
+                this.importProfile = command;
+            }
+        );
+
+        this.addCommand(
+            'export profile',
+            () => {
+                this.getGlobalEventG().exportProfile();
+            },
+            command => {
+                this.exportProfile = command;
+            }
         );
     }
 
