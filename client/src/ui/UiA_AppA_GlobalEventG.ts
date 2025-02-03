@@ -159,9 +159,21 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async exportProfile() {
-
+        let toExport = this.entity.getApp().containerA.mapNameEntity.get('profile');
+        await this.getAppUi().output.setAndUpdateUi(JSON.stringify(await toExport.export(), null, 4));
     }
 
     async importProfile() {
+        (document.activeElement as HTMLElement).blur();
+        let created = this.getApp().unboundG.createFromJson(JSON.parse(this.getAppUi().input.get()));
+        await this.getAppUi().input.clear();
+        this.entity.getApp().containerA.bind(created, 'profile');
+        await this.getApp().uiA.content.listA.insertPathOrDirectAtPosition(created, 0);
+        await this.getApp().uiA.content.uis_update_addedListItem(0);
+        this.getAppUi().focus(this.getAppUi().contentUi.listA.uisOfListItems[0]);
+        await this.getAppUi().input.ui.uiA.ensureCollapsed();
+        window.scroll(0, 0);
+        await this.ensureContainer();
     }
+
 }
