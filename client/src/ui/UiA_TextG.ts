@@ -1,17 +1,24 @@
 import type {Entity} from "@/Entity";
-import {div, setCaret} from "@/utils";
+import {div, setCaret, textElem} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_TextG {
 
     htmlElement : HTMLElement = div();
+    veryLongText : boolean;
 
     constructor(private entity : Entity) {
         this.htmlElement.style.borderLeft = 'solid';
     }
 
     async update() {
-        this.htmlElement.innerText = this.getObject().text;
+        if (this.getObject().text.length > 2000000) {
+            this.veryLongText = true;
+            this.htmlElement.innerText = '*** the text is very long and is not displayed here ***';
+        } else {
+            this.veryLongText = false;
+            this.htmlElement.innerText = this.getObject().text;
+        }
         this.htmlElement.style.minHeight = '1rem';
         this.htmlElement.style.fontFamily = this.entity.getApp_typed().uiA.theme.font;
         // this.htmlElement.style.fontSize = this.entity.getApp_typed().uiA.theme.fontSize;
@@ -51,7 +58,11 @@ export class UiA_TextG {
     }
 
     save() {
-        this.getObject().text = this.htmlElement.innerText.trim();
+        if (this.veryLongText) {
+            throw new Error('very long text');
+        } else {
+            this.getObject().text = this.htmlElement.innerText.trim();
+        }
     }
 
     private updateEmptyMarker() {
