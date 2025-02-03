@@ -40,7 +40,7 @@ export class UiA_AppA_CommandsA {
         this.defaultAction.entity.text = 'default action';
 
         this.newSubitem = this.createAndRegisterCommand();
-        this.newSubitem.inputPatterns.push(this.pattern(MetaKey.ALT, 'Enter'), this.pattern('Tab'));
+        this.newSubitem.inputPatterns.push(this.pattern(MetaKey.ALT, 'Enter'), this.pattern_keydown('Tab'));
         this.newSubitem.entity.action = async () => {
             await this.getGlobalEventG().newSubitem();
         };
