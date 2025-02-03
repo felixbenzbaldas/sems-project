@@ -138,7 +138,7 @@ export class UiA_AppA_CommandsA {
         this.editMode.entity.text = 'enter edit mode';
 
         this.focusPrevious = this.createAndRegisterCommand();
-        this.focusPrevious.inputPatterns.push(this.pattern_viewMode('i'), this.pattern(MetaKey.ALT, 'i'));
+        this.focusPrevious.inputPatterns.push(this.pattern_viewMode_keydown('i'), this.pattern_keydown(MetaKey.ALT, 'i'));
         this.focusPrevious.entity.action = async () => {
             await this.getGlobalEventG().focusPrevious();
         };
@@ -150,8 +150,8 @@ export class UiA_AppA_CommandsA {
                 await this.getGlobalEventG().focusNext();
             },
             command => { this.focusNext = command; },
-            this.pattern_viewMode('k'),
-            this.pattern(MetaKey.ALT, 'k')
+            this.pattern_viewMode_keydown('k'),
+            this.pattern_keydown(MetaKey.ALT, 'k')
         );
 
         this.addCommand(
@@ -261,6 +261,12 @@ export class UiA_AppA_CommandsA {
         return inputPattern;
     }
 
+    pattern_viewMode_keydown(...keys: Array<string | MetaKey>) : InputPattern {
+        let inputPattern = this.pattern_keydown(...keys);
+        inputPattern.mode = 'view';
+        return inputPattern;
+    }
+
     getMode() : AccessMode {
         if (nullUndefined(this.entity.uiA.appA.focused)) {
             return undefined;
@@ -271,6 +277,12 @@ export class UiA_AppA_CommandsA {
                 return 'view';
             }
         }
+    }
+
+    pattern_keydown( ...keys: (string | MetaKey)[]) {
+        let inputPattern = this.pattern(...keys);
+        inputPattern.type = 'keydown';
+        return inputPattern;
     }
 }
 
