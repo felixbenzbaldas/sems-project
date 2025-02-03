@@ -153,4 +153,8 @@ export class UiA_AppA_GlobalEventG {
     async toEndOfList() {
         await this.getAppUi().focused.toEndOfList();
     }
+
+    leaveEditMode() {
+        this.getAppUi().focused.leaveEditMode();
+    }
 }

@@ -163,11 +163,22 @@ export class UiA_AppA_CommandsA {
             this.pattern_viewMode('l'),
             this.pattern(MetaKey.ALT, 'l')
         );
+
+        this.addCommand(
+            'leave edit mode',
+            () => {
+                this.getGlobalEventG().leaveEditMode();
+            },
+            undefined,
+            this.pattern('Escape')
+        );
     }
 
     addCommand(text : string, action : Function, setField : (command : CommandA) => void, ...patterns : Array<InputPattern>) {
         let command = this.createAndRegisterCommand();
-        setField(command);
+        if (setField) {
+            setField(command);
+        }
         command.inputPatterns.push(...patterns);
         command.entity.action = action;
         command.entity.text = text;
