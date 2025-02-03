@@ -160,6 +160,11 @@ export class UiA_AppA_GlobalEventG {
 
     async exportProfile() {
         let toExport = this.entity.getApp().containerA.mapNameEntity.get('profile');
+        let forContent = await toExport.listA.findByText('#content');
+        forContent.listA.jsList = [];
+        for (let resolved of await this.entity.getApp_typed().uiA.content.listA.getResolvedList()) {
+            await forContent.listA.add(resolved);
+        }
         await this.getAppUi().output.setAndUpdateUi(JSON.stringify(await toExport.export(), null, 4));
     }
 
@@ -168,12 +173,13 @@ export class UiA_AppA_GlobalEventG {
         let created = this.getApp().unboundG.createFromJson(JSON.parse(this.getAppUi().input.get()));
         await this.getAppUi().input.clear();
         this.entity.getApp().containerA.bind(created, 'profile');
-        await this.getApp().uiA.content.listA.insertPathOrDirectAtPosition(created, 0);
-        await this.getApp().uiA.content.uis_update_addedListItem(0);
+        let forContent = await created.listA.findByText('#content');
+        for (let resolved of await forContent.listA.getResolvedList()) {
+            await this.getApp().uiA.content.listA.add(resolved);
+        }
+        await this.getApp().uiA.content.uis_update();
         this.getAppUi().focus(this.getAppUi().contentUi.listA.uisOfListItems[0]);
         await this.getAppUi().input.ui.uiA.ensureCollapsed();
         window.scroll(0, 0);
-        await this.ensureContainer();
     }
-
 }
