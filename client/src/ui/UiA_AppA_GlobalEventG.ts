@@ -147,13 +147,16 @@ export class UiA_AppA_GlobalEventG {
 
     async exportProfileWithClear() {
         let profile = this.entity.getApp_typed().getProfile();
-        await this.getAppUi().clearLastRemoved();
-        let deletions =  await profile.containerA.shakeTree_withDeletionsCount();
         let forContent = await profile.listA.findByText('#content');
         forContent.listA.jsList = [];
-        for (let resolved of await this.entity.getApp_typed().uiA.content.listA.getResolvedList()) {
+        let content = this.entity.getApp_typed().uiA.content;
+        for (let resolved of await content.listA.getResolvedList()) {
             await forContent.listA.add(resolved);
         }
+        content.listA.jsList = [];
+        await content.uis_update();
+        await this.getAppUi().clearLastRemoved();
+        let deletions =  await profile.containerA.shakeTree_withDeletionsCount();
         await this.getAppUi().output.setAndUpdateUi(JSON.stringify(await profile.export(), null, 4));
         this.getAppUi().signal('exported the profile (shake-tree-deletions: ' + deletions + ')');
     }
