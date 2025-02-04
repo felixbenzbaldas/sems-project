@@ -209,6 +209,9 @@ export class UiA_AppA {
             this.getApp().unboundG.createButton('ensure container', async () => {
                 await this.globalEventG.ensureContainer();
             }),
+            this.getApp().unboundG.createButton('export', async () => {
+                await this.globalEventG.export();
+            }),
             this.getApp().unboundG.createButton('import', async () => {
                 await this.globalEventG.import();
             })
@@ -222,9 +225,6 @@ export class UiA_AppA {
             this.commandsA.toggleCollapsible.entity,
             this.getApp().unboundG.createButton('expand/collapse', async () => {
                 await this.globalEventG.expandOrCollapse();
-            }),
-            this.getApp().unboundG.createButton('export', async () => {
-                await this.globalEventG.export();
             }),
             this.commandsA.mark.entity,
             this.commandsA.cut.entity,
