@@ -145,8 +145,9 @@ export class UiA_AppA_GlobalEventG {
         this.getAppUi().focused.leaveEditMode();
     }
 
-    async exportProfileWithTreeShaking() {
+    async exportProfileWithClear() {
         let profile = this.entity.getApp_typed().getProfile();
+        await this.getAppUi().clearLastRemoved();
         let deletions =  await profile.containerA.shakeTree_withDeletionsCount();
         let forContent = await profile.listA.findByText('#content');
         forContent.listA.jsList = [];

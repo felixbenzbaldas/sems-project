@@ -216,7 +216,7 @@ export class UiA_AppA {
         lowPriorityButtons.collapsible = true;
         return this.getApp().unboundG.createTextWithList('commands',
             this.commandsA.importProfile.entity,
-            this.commandsA.exportProfileWithTreeShaking.entity,
+            this.commandsA.exportProfileWithClear.entity,
             this.commandsA.defaultAction.entity,
             this.commandsA.newSubitem.entity,
             this.commandsA.toggleCollapsible.entity,
@@ -261,7 +261,9 @@ export class UiA_AppA {
     async addToLastRemoved(entity: Entity) {
         let profile = this.getApp().getProfile();
         if (profile) {
-            await (await profile.listA.findByText(this.lastRemovedString)).listA.add(entity);
+            let lastRemoved = await profile.listA.findByText(this.lastRemovedString);
+            await lastRemoved.listA.add(entity);
+            await lastRemoved.uis_update();
         } else {
             console.error('no profile!');
         }
