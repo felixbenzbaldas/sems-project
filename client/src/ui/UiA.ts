@@ -560,4 +560,8 @@ export class UiA {
             }
         }
     }
+
+    save() {
+        this.textG.save();
+    }
 }

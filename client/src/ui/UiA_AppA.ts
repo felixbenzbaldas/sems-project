@@ -225,7 +225,6 @@ export class UiA_AppA {
             this.getApp().unboundG.createButton('export', async () => {
                 await this.globalEventG.export();
             }),
-            this.commandsA.load.entity,
             this.commandsA.mark.entity,
             this.commandsA.cut.entity,
             this.commandsA.deepCopy.entity,

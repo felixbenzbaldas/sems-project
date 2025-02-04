@@ -20,7 +20,6 @@ export class UiA_AppA_CommandsA {
     cut : CommandA;
     pasteNext : CommandA;
     paste : CommandA;
-    load : CommandA;
     focusUiContext : CommandA;
     deepCopy: CommandA;
     shakeTree: CommandA;
@@ -103,13 +102,6 @@ export class UiA_AppA_CommandsA {
             await this.getGlobalEventG().paste();
         };
         this.paste.entity.text = 'paste';
-
-        this.load = this.createAndRegisterCommand();
-        this.load.inputPatterns.push(this.pattern('F11'));
-        this.load.entity.action = async () => {
-            await this.getGlobalEventG().load();
-        };
-        this.load.entity.text = 'load';
 
         this.focusUiContext = this.createAndRegisterCommand();
         this.focusUiContext.inputPatterns.push(this.pattern(MetaKey.CTRL, 'o'), this.pattern_viewMode('o'));

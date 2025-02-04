@@ -31,6 +31,7 @@ export class InputA {
     }
 
     get() : string {
+        this.entity.uiA.appA.focused.save();
         return this.input.text;
     }
 

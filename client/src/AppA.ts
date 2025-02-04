@@ -79,4 +79,8 @@ export class AppA {
         starter.starterA = new StarterA(starter);
         return starter.starterA;
     }
+
+    getProfile() : Entity {
+        return this.entity.containerA.mapNameEntity.get('profile');
+    }
 }
