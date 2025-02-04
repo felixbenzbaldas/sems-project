@@ -417,9 +417,8 @@ export class UiA {
     async shakeTree() {
         let obj = this.getObject();
         if (obj.containerA) {
-            let before = obj.containerA.countWithNestedEntities();
-            await obj.containerA.shakeTree();
-            this.findAppUi().signal('shaked the tree (deleted ' + (before - obj.containerA.countWithNestedEntities()) + ' entities)');
+            let deletions = await obj.containerA.shakeTree_withDeletionsCount();
+            this.findAppUi().signal('shaked the tree (deleted ' + deletions + ' entities)');
         } else {
             this.findAppUi().signal('not a container');
         }

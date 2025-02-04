@@ -214,6 +214,8 @@ export class UiA_AppA {
         );
         lowPriorityButtons.collapsible = true;
         return this.getApp().unboundG.createTextWithList('commands',
+            this.commandsA.importProfile.entity,
+            this.commandsA.exportProfileWithTreeShaking.entity,
             this.commandsA.defaultAction.entity,
             this.commandsA.newSubitem.entity,
             this.commandsA.toggleCollapsible.entity,
@@ -234,8 +236,6 @@ export class UiA_AppA {
             }),
             this.commandsA.toggleContext.entity,
             this.commandsA.shakeTree.entity,
-            this.commandsA.importProfile.entity,
-            this.commandsA.exportProfile.entity,
             lowPriorityButtons
         );
     }

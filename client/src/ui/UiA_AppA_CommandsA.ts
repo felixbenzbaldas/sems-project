@@ -27,7 +27,7 @@ export class UiA_AppA_CommandsA {
     editMode: CommandA;
     focusNext: CommandA;
     focusPrevious: CommandA;
-    exportProfile: CommandA;
+    exportProfileWithTreeShaking: CommandA;
     importProfile: CommandA;
 
     constructor(public entity: Entity) {
@@ -186,12 +186,12 @@ export class UiA_AppA_CommandsA {
         );
 
         this.addCommand(
-            'export profile',
+            'export profile with tree shaking',
             () => {
-                this.getGlobalEventG().exportProfile();
+                this.getGlobalEventG().exportProfileWithTreeShaking();
             },
             command => {
-                this.exportProfile = command;
+                this.exportProfileWithTreeShaking = command;
             }
         );
     }

@@ -158,14 +158,16 @@ export class UiA_AppA_GlobalEventG {
         this.getAppUi().focused.leaveEditMode();
     }
 
-    async exportProfile() {
+    async exportProfileWithTreeShaking() {
         let toExport = this.entity.getApp().containerA.mapNameEntity.get('profile');
+        let deletions =  await toExport.containerA.shakeTree_withDeletionsCount();
         let forContent = await toExport.listA.findByText('#content');
         forContent.listA.jsList = [];
         for (let resolved of await this.entity.getApp_typed().uiA.content.listA.getResolvedList()) {
             await forContent.listA.add(resolved);
         }
         await this.getAppUi().output.setAndUpdateUi(JSON.stringify(await toExport.export(), null, 4));
+        this.getAppUi().signal('exported the profile (shake-tree-deletions: ' + deletions + ')');
     }
 
     async importProfile() {
