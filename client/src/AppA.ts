@@ -83,4 +83,8 @@ export class AppA {
     getProfile() : Entity {
         return this.entity.containerA.mapNameEntity.get('profile');
     }
+
+    setProfile(profile: Entity) {
+        this.entity.containerA.bind(profile, 'profile');
+    }
 }

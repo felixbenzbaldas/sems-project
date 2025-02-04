@@ -159,8 +159,8 @@ export class UiA_AppA_GlobalEventG {
 
     async importProfile() {
         let created = this.getApp().unboundG.createFromJson(JSON.parse(this.getAppUi().input.get()));
+        this.entity.getApp_typed().setProfile(created);
         await this.getAppUi().input.clear();
-        this.entity.getApp().containerA.bind(created, 'profile');
         let forContent = await created.listA.findByText('#content');
         for (let resolved of await forContent.listA.getResolvedList()) {
             await this.getApp().uiA.content.listA.add(resolved);
