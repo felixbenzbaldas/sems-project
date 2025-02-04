@@ -41,14 +41,14 @@ export class UiA_AppA_CommandsA {
         this.defaultAction.entity.text = 'default action';
 
         this.newSubitem = this.createAndRegisterCommand();
-        this.newSubitem.inputPatterns.push(this.pattern(MetaKey.ALT, 'Enter'), this.pattern_keydown('Tab'));
+        this.newSubitem.inputPatterns.push(this.pattern(MetaKey.ALT, 'Enter'), this.pattern('Tab'));
         this.newSubitem.entity.action = async () => {
             await this.getGlobalEventG().newSubitem();
         };
         this.newSubitem.entity.text = 'new subitem';
 
         this.toggleCollapsible = this.createAndRegisterCommand();
-        this.toggleCollapsible.inputPatterns.push(this.pattern(MetaKey.CTRL, 'f'), this.pattern_viewMode('c'));
+        this.toggleCollapsible.inputPatterns.push(this.pattern(MetaKey.CTRL, 'f'), this.pattern_viewMode('c'), this.pattern('F11'));
         this.toggleCollapsible.entity.action = async () => {
             await this.getGlobalEventG().toggleCollapsible();
         };
@@ -125,14 +125,14 @@ export class UiA_AppA_CommandsA {
         this.shakeTree.entity.text = 'shake tree';
 
         this.editMode = this.createAndRegisterCommand();
-        this.editMode.inputPatterns.push(this.pattern(MetaKey.CTRL, 'i'));
+        this.editMode.inputPatterns.push(this.pattern(MetaKey.CTRL, 'i'), this.pattern('F12'));
         this.editMode.entity.action = async () => {
             await this.getGlobalEventG().editMode();
         };
         this.editMode.entity.text = 'enter edit mode';
 
         this.focusPrevious = this.createAndRegisterCommand();
-        this.focusPrevious.inputPatterns.push(this.pattern_viewMode_keydown('i'), this.pattern_keydown(MetaKey.ALT, 'i'));
+        this.focusPrevious.inputPatterns.push(this.pattern_viewMode('i'), this.pattern(MetaKey.ALT, 'i'));
         this.focusPrevious.entity.action = async () => {
             await this.getGlobalEventG().focusPrevious();
         };
@@ -144,8 +144,8 @@ export class UiA_AppA_CommandsA {
                 await this.getGlobalEventG().focusNext();
             },
             command => { this.focusNext = command; },
-            this.pattern_viewMode_keydown('k'),
-            this.pattern_keydown(MetaKey.ALT, 'k')
+            this.pattern_viewMode('k'),
+            this.pattern(MetaKey.ALT, 'k')
         );
 
         this.addCommand(
@@ -229,7 +229,7 @@ export class UiA_AppA_CommandsA {
         if (notNullUndefined(mode)) {
             triggers.push(InputPattern.createFromKeyboardEvent(keyboardEvent, mode));
         }
-        if (keyboardEvent.type === 'keyup') {
+        if (keyboardEvent.type === 'keydown') {
             triggers.push(InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent));
             if (notNullUndefined(mode)) {
                 triggers.push(InputPattern.createFromKeyboardEvent_withoutType(keyboardEvent, mode));
@@ -286,12 +286,6 @@ export class UiA_AppA_CommandsA {
         return inputPattern;
     }
 
-    pattern_viewMode_keydown(...keys: Array<string | MetaKey>) : InputPattern {
-        let inputPattern = this.pattern_keydown(...keys);
-        inputPattern.mode = 'view';
-        return inputPattern;
-    }
-
     getMode() : AccessMode {
         if (nullUndefined(this.entity.uiA.appA.focused)) {
             return undefined;
@@ -302,12 +296,6 @@ export class UiA_AppA_CommandsA {
                 return 'view';
             }
         }
-    }
-
-    pattern_keydown( ...keys: (string | MetaKey)[]) {
-        let inputPattern = this.pattern(...keys);
-        inputPattern.type = 'keydown';
-        return inputPattern;
     }
 }
 
