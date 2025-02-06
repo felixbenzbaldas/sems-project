@@ -48,7 +48,7 @@ export class UiA_AppA_CommandsA {
         this.newSubitem.entity.text = 'new subitem';
 
         this.toggleCollapsible = this.createAndRegisterCommand();
-        this.toggleCollapsible.inputPatterns.push(this.pattern(MetaKey.CTRL, 'f'), this.pattern_viewMode('c'), this.pattern('F11'));
+        this.toggleCollapsible.inputPatterns.push(this.pattern(MetaKey.CTRL, 'f'), this.pattern_viewMode('c'), this.pattern('F10'));
         this.toggleCollapsible.entity.action = async () => {
             await this.getGlobalEventG().toggleCollapsible();
         };
