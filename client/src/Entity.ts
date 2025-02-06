@@ -149,8 +149,7 @@ export class Entity {
 
     async getObjectAndDependencies() : Promise<Set<Entity>> {
         let set = new Set<Entity>();
-        set.add(this);
-        await this.addDependencies(set);
+        await this.addObjectAndDependencies_onlyIfNotContained(set);
         return set;
     }
 
@@ -160,20 +159,17 @@ export class Entity {
         return set;
     }
 
-    async addDependencies(set: Set<Entity>) {
-        let add = async (set: Set<Entity>, toAdd : Entity) => {
-            if (!set.has(toAdd)) {
-                set.add(toAdd);
-                await toAdd.addDependencies(set);
+    private async addObjectAndDependencies_onlyIfNotContained(set: Set<Entity>) {
+        if (!set.has(this)) {
+            set.add(this);
+            if (this.listA) {
+                for (let current of this.listA.jsList) {
+                    await (await current.resolve()).addObjectAndDependencies_onlyIfNotContained(set);
+                }
             }
-        }
-        if (this.listA) {
-            for (let current of this.listA.jsList) {
-                await add(set, await current.resolve());
+            if (this.context) {
+                await (await this.context.resolve()).addObjectAndDependencies_onlyIfNotContained(set);
             }
-        }
-        if (this.context) {
-            await add(set, await this.context.resolve());
         }
     }
 
