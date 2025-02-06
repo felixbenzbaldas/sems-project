@@ -48,7 +48,9 @@ export class UiA_TextG {
         }
         this.htmlElement.ondblclick = (event) => {
             if (this.getUiA().isEditable()) {
-                this.getUiA().enterEditMode();
+                if (!this.getUiA().editMode) {
+                    this.getUiA().enterEditMode();
+                }
             }
         }
         this.updateEmptyMarker();
