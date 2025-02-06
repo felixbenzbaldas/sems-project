@@ -26,8 +26,9 @@ export class UiA_AppA_CommandsA {
     editMode: CommandA;
     focusNext: CommandA;
     focusPrevious: CommandA;
-    exportProfileWithClear: CommandA;
+    exportProfile: CommandA;
     importProfile: CommandA;
+    clear: CommandA;
 
     constructor(public entity: Entity) {
     }
@@ -160,7 +161,7 @@ export class UiA_AppA_CommandsA {
 
         this.addCommand(
             'leave edit mode',
-            () => {
+            async () => {
                 this.getGlobalEventG().leaveEditMode();
             },
             undefined,
@@ -169,8 +170,8 @@ export class UiA_AppA_CommandsA {
 
         this.addCommand(
             'import profile',
-            () => {
-                this.getGlobalEventG().importProfile();
+            async () => {
+                await this.getGlobalEventG().importProfile();
             },
             command => {
                 this.importProfile = command;
@@ -178,14 +179,24 @@ export class UiA_AppA_CommandsA {
         );
 
         this.addCommand(
-            'export profile with clear',
-            () => {
-                this.getGlobalEventG().exportProfileWithClear();
+            'export profile',
+            async () => {
+                await this.getGlobalEventG().exportProfile();
             },
             command => {
-                this.exportProfileWithClear = command;
+                this.exportProfile = command;
             }
         );
+
+        this.addCommand(
+            'clear',
+            async () => {
+                await this.getGlobalEventG().clear();
+            },
+            command => {
+                this.clear = command;
+            }
+        )
     }
 
     addCommand(text : string, action : Function, setField : (command : CommandA) => void, ...patterns : Array<InputPattern>) {

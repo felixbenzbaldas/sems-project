@@ -219,7 +219,8 @@ export class UiA_AppA {
         lowPriorityButtons.collapsible = true;
         return this.getApp().unboundG.createTextWithList('commands',
             this.commandsA.importProfile.entity,
-            this.commandsA.exportProfileWithClear.entity,
+            this.commandsA.exportProfile.entity,
+            this.commandsA.clear.entity,
             this.commandsA.defaultAction.entity,
             this.commandsA.newSubitem.entity,
             this.commandsA.toggleCollapsible.entity,
@@ -274,5 +275,13 @@ export class UiA_AppA {
         let lastRemoved = await profile.listA.findByText(this.lastRemovedString);
         lastRemoved.listA.jsList = [];
         await lastRemoved.uis_update();
+    }
+
+    async clear() {
+        await this.clearLastRemoved();
+        let roots = [];
+        roots.push(this.getApp().getProfile());
+        roots.push(...await this.getApp().uiA.content.listA.getResolvedList());
+        await this.getApp().shakeTree_withMultipleRoots(roots, this.getApp().getProfile().containerA);
     }
 }

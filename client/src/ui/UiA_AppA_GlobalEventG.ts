@@ -145,7 +145,11 @@ export class UiA_AppA_GlobalEventG {
         this.getAppUi().focused.leaveEditMode();
     }
 
-    async exportProfileWithClear() {
+    async clear() {
+        await this.getAppUi().clear();
+    }
+
+    async exportProfile() {
         let profile = this.entity.getApp_typed().getProfile();
         let forContent = await profile.listA.findByText('#content');
         forContent.listA.jsList = [];
@@ -153,12 +157,8 @@ export class UiA_AppA_GlobalEventG {
         for (let resolved of await content.listA.getResolvedList()) {
             await forContent.listA.add(resolved);
         }
-        content.listA.jsList = [];
-        await content.uis_update();
-        await this.getAppUi().clearLastRemoved();
-        let deletions =  await profile.containerA.shakeTree_withDeletionsCount();
         await this.getAppUi().output.setAndUpdateUi(JSON.stringify(await profile.export(), null, 4));
-        this.getAppUi().signal('exported the profile (shake-tree-deletions: ' + deletions + ')');
+        this.getAppUi().signal('exported the profile');
     }
 
     async importProfile() {
@@ -170,6 +170,7 @@ export class UiA_AppA_GlobalEventG {
             await this.getApp().uiA.content.listA.add(resolved);
         }
         await this.getApp().uiA.content.uis_update();
+        forContent.listA.jsList = [];
         this.getAppUi().focus(this.getAppUi().contentUi.listA.uisOfListItems[0]);
         await this.getAppUi().input.ui.uiA.ensureCollapsed();
         window.scroll(0, 0);
