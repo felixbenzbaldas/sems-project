@@ -6,6 +6,7 @@ import {AppA_UnboundG} from "@/AppA_UnboundG";
 import {StarterA} from "@/StarterA";
 import type {Environment} from "@/Environment";
 import {AppA_TesterA} from "@/tester/AppA_TesterA";
+import type {ContainerA} from "@/ContainerA";
 
 export class AppA {
 
@@ -86,5 +87,17 @@ export class AppA {
 
     setProfile(profile: Entity) {
         this.entity.containerA.bind(profile, 'profile');
+    }
+
+    async shakeTree_withMultipleRoots(roots : Array<Entity>, ...containers : Array<ContainerA>) {
+        let keep : Set<Entity> = new Set();
+        for (let root of roots) {
+            for (let dependency of await root.getObjectAndDependencies()) {
+                keep.add(dependency);
+            }
+        }
+        for (let container of containers) {
+            await container.shakeTree_delete(keep);
+        }
     }
 }

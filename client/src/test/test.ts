@@ -329,7 +329,7 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs(object.container, undefined);
         assert_sameAs(object.app, run.app.entity);
     });
-    tests.add('shakeTree', async run => {
+    tests.addTestWithNestedTests('shakeTree', async run => {
         let container = await run.app.createText('container');
         container.installContainerA();
         await container.containerA.createText('will be removed');
@@ -348,6 +348,16 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert(container.containerA.mapNameEntity.has(standaloneContainer.name));
         assert_sameAs(container.containerA.mapNameEntity.size, 2);
         assert_sameAs(subitemAndContainer.containerA.mapNameEntity.size, 1);
+    }, shakeTreeTests => {
+        shakeTreeTests.add('withMultipleRoots', async run => {
+            let container = await run.app.createText('container');
+            container.installContainerA();
+            let secondRoot = await container.containerA.createText('secondRoot');
+
+            await run.app.shakeTree_withMultipleRoots([container, secondRoot], container.containerA);
+
+            assert_sameAs(container.containerA.mapNameEntity.values().next().value, secondRoot);
+        });
     });
     tests.addNestedTests('container', containerTests => {
         containerTests.add('countWithNestedEntities', async run => {

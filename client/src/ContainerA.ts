@@ -53,8 +53,7 @@ export class ContainerA {
     }
 
     async shakeTree() {
-        let keep = await this.entity.getDependencies();
-        await this.shakeTree_delete(keep);
+        await this.entity.getApp_typed().shakeTree_withMultipleRoots([this.entity], this.entity.containerA);
     }
 
     // note: containers will not be deleted
