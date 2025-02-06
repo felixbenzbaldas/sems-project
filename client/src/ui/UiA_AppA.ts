@@ -280,8 +280,12 @@ export class UiA_AppA {
     async clear() {
         await this.clearLastRemoved();
         let roots = [];
-        roots.push(this.getApp().getProfile());
+        let profile = this.getApp().getProfile();
+        roots.push(profile);
         roots.push(...await this.getApp().uiA.content.listA.getResolvedList());
-        await this.getApp().shakeTree_withMultipleRoots(roots, this.getApp().getProfile().containerA);
+        let before = profile.containerA.countWithNestedEntities();
+        await this.getApp().shakeTree_withMultipleRoots(roots, profile.containerA);
+        let deletions = before - profile.containerA.countWithNestedEntities();
+        this.signal('cleared (' + deletions + ' deletions)');
     }
 }

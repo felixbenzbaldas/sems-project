@@ -78,10 +78,4 @@ export class ContainerA {
         }
         return count;
     }
-
-    async shakeTree_withDeletionsCount() : Promise<number> {
-        let before = this.countWithNestedEntities();
-        await this.shakeTree();
-        return before - this.countWithNestedEntities();
-    }
 }
