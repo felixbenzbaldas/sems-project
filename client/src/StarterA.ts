@@ -133,17 +133,4 @@ export class StarterA {
         let unboundWebMeta = await (await (await unboundData.listA.getResolved(0)).listA.findByText('webMeta')).listA.getResolved(0);
         return unboundWebMeta;
     }
-
-    async createProfile() {
-        let profile = this.createdApp.appA.unboundG.createText('profile');
-        profile.installListA();
-        profile.installContainerA();
-        let lastRemoved = await profile.containerA.createText(UiA_AppA.LAST_REMOVED_STRING);
-        await profile.listA.add(lastRemoved);
-        lastRemoved.installListA();
-        let content = await profile.containerA.createText('#content');
-        await profile.listA.add(content);
-        content.installListA();
-        await this.createdApp.appA.setProfile(profile);
-    }
 }

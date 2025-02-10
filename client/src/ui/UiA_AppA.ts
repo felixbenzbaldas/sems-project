@@ -25,8 +25,6 @@ export class UiA_AppA {
     focusStyle_marker: HTMLElement;
     meta_htmlElement: HTMLElement = div();
 
-    static LAST_REMOVED_STRING : string = '#lastRemoved';
-
     constructor(public entity: Entity) {
         this.globalEventG = new UiA_AppA_GlobalEventG(entity);
         this.focusStyle_marker = this.focusStyle_createMarker();
@@ -260,28 +258,10 @@ export class UiA_AppA {
         }
     }
 
-    async addToLastRemoved(entity: Entity) {
-        let profile = this.getApp().getProfile();
-        if (profile) {
-            let lastRemoved = await profile.listA.findByText(UiA_AppA.LAST_REMOVED_STRING);
-            await lastRemoved.listA.add(entity);
-            await lastRemoved.uis_update();
-        } else {
-            console.error('no profile!');
-        }
-    }
-
-    async clearLastRemoved() {
-        let profile = this.getApp().getProfile();
-        let lastRemoved = await profile.listA.findByText(UiA_AppA.LAST_REMOVED_STRING);
-        lastRemoved.listA.jsList = [];
-        await lastRemoved.uis_update();
-    }
-
     async clear() {
-        await this.clearLastRemoved();
+        await this.getApp().profileG.clearLastRemoved();
         let roots = [];
-        let profile = this.getApp().getProfile();
+        let profile = this.getApp().profileG.getProfile();
         roots.push(profile);
         roots.push(...await this.getApp().uiA.content.listA.getResolvedList());
         let before = profile.containerA.countWithNestedEntities();

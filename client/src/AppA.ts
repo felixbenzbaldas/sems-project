@@ -7,6 +7,7 @@ import {StarterA} from "@/StarterA";
 import type {Environment} from "@/Environment";
 import {AppA_TesterA} from "@/tester/AppA_TesterA";
 import type {ContainerA} from "@/ContainerA";
+import {AppA_ProfileG} from "@/AppA_ProfileG";
 
 export class AppA {
 
@@ -19,9 +20,11 @@ export class AppA {
     installTesterA() {
         this.testerA = new AppA_TesterA(this.entity);
     }
+    profileG : AppA_ProfileG;
 
     constructor(public entity : Entity) {
         this.unboundG = new AppA_UnboundG(entity);
+        this.profileG = new AppA_ProfileG(entity);
         this.logG = new LogG(entity);
         entity.installContainerA();
     }
@@ -79,14 +82,6 @@ export class AppA {
         let starter = this.createEntityWithApp();
         starter.starterA = new StarterA(starter);
         return starter.starterA;
-    }
-
-    getProfile() : Entity {
-        return this.entity.containerA.mapNameEntity.get('profile');
-    }
-
-    setProfile(profile: Entity) {
-        this.entity.containerA.bind(profile, 'profile');
     }
 
     async shakeTree_withMultipleRoots(roots : Array<Entity>, ...containers : Array<ContainerA>) {

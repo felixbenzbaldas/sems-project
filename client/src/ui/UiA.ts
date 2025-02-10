@@ -231,7 +231,7 @@ export class UiA {
             this.textG.save(); // important!
         }
         let obj = this.getObject();
-        await this.findAppUi().addToLastRemoved(obj);
+        await this.entity.getApp_typed().profileG.addToLastRemoved(obj);
         appA_uiA.clipboard = obj;
         let uiContext = this.context;
         let uiListItems = uiContext.listA.uisOfListItems;

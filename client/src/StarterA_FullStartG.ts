@@ -78,7 +78,7 @@ export class StarterA_FullStartG {
         let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true, true);
         starter.getEnvironment().ensureActive(appUi);
         starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
-        await starter.createProfile();
+        await starter.createdApp.appA.profileG.createProfile();
         return appUi.entity.uiA.htmlElement;
     }
     async clientApp() {
@@ -89,7 +89,7 @@ export class StarterA_FullStartG {
         let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true, true);
         starter.getEnvironment().ensureActive(appUi);
         starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
-        await starter.createProfile();
+        await starter.createdApp.appA.profileG.createProfile();
         return appUi.entity.uiA.htmlElement;
     }
     getStarter() : StarterA {
