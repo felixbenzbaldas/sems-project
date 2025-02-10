@@ -4,6 +4,8 @@ import {AppA} from "@/AppA";
 import {Environment} from "@/Environment";
 import {getPathFromUrl, nullUndefined} from "@/utils";
 import {StarterA_FullStartG} from "@/StarterA_FullStartG";
+import {UiA_AppA_GlobalEventG} from "@/ui/UiA_AppA_GlobalEventG";
+import {UiA_AppA} from "@/ui/UiA_AppA";
 
 export class StarterA {
 
@@ -130,5 +132,18 @@ export class StarterA {
         let unboundData = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
         let unboundWebMeta = await (await (await unboundData.listA.getResolved(0)).listA.findByText('webMeta')).listA.getResolved(0);
         return unboundWebMeta;
+    }
+
+    async createProfile() {
+        let profile = this.createdApp.appA.unboundG.createText('profile');
+        profile.installListA();
+        profile.installContainerA();
+        let lastRemoved = await profile.containerA.createText(UiA_AppA.LAST_REMOVED_STRING);
+        await profile.listA.add(lastRemoved);
+        lastRemoved.installListA();
+        let content = await profile.containerA.createText('#content');
+        await profile.listA.add(content);
+        content.installListA();
+        await this.createdApp.appA.setProfile(profile);
     }
 }

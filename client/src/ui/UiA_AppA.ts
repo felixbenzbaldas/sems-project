@@ -24,7 +24,8 @@ export class UiA_AppA {
     commandsUi: UiA;
     focusStyle_marker: HTMLElement;
     meta_htmlElement: HTMLElement = div();
-    lastRemovedString : string = '#lastRemoved';
+
+    static LAST_REMOVED_STRING : string = '#lastRemoved';
 
     constructor(public entity: Entity) {
         this.globalEventG = new UiA_AppA_GlobalEventG(entity);
@@ -262,7 +263,7 @@ export class UiA_AppA {
     async addToLastRemoved(entity: Entity) {
         let profile = this.getApp().getProfile();
         if (profile) {
-            let lastRemoved = await profile.listA.findByText(this.lastRemovedString);
+            let lastRemoved = await profile.listA.findByText(UiA_AppA.LAST_REMOVED_STRING);
             await lastRemoved.listA.add(entity);
             await lastRemoved.uis_update();
         } else {
@@ -272,7 +273,7 @@ export class UiA_AppA {
 
     async clearLastRemoved() {
         let profile = this.getApp().getProfile();
-        let lastRemoved = await profile.listA.findByText(this.lastRemovedString);
+        let lastRemoved = await profile.listA.findByText(UiA_AppA.LAST_REMOVED_STRING);
         lastRemoved.listA.jsList = [];
         await lastRemoved.uis_update();
     }
