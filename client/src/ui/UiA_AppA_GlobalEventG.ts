@@ -158,7 +158,7 @@ export class UiA_AppA_GlobalEventG {
             await forContent.listA.add(resolved);
         }
         await this.getAppUi().output.setAndUpdateUi(JSON.stringify(await profile.export(), null, 4));
-        this.getAppUi().signal('exported the profile');
+        this.getAppUi().signal('Download the export from the output!');
     }
 
     async importProfile() {
