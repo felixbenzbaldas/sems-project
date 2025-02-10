@@ -4,6 +4,7 @@ import {UiA_AppA} from "@/ui/UiA_AppA";
 export class AppA_ProfileG {
 
     private lastRemovedString : string = '#lastRemoved';
+    private contentString : string = '#content';
 
     constructor(public entity : Entity) {
     }
@@ -23,7 +24,7 @@ export class AppA_ProfileG {
         let lastRemoved = await profile.containerA.createText(this.lastRemovedString);
         await profile.listA.add(lastRemoved);
         lastRemoved.installListA();
-        let content = await profile.containerA.createText('#content');
+        let content = await profile.containerA.createText(this.contentString);
         await profile.listA.add(content);
         content.installListA();
         await this.setProfile(profile);
@@ -49,7 +50,7 @@ export class AppA_ProfileG {
 
     async exportProfile() : Promise<any> {
         let profile = this.getProfile();
-        let forContent = await profile.listA.findByText('#content');
+        let forContent = await profile.listA.findByText(this.contentString);
         forContent.listA.jsList = [];
         let content = this.entity.appA.uiA.content;
         for (let resolved of await content.listA.getResolvedList()) {
@@ -61,7 +62,7 @@ export class AppA_ProfileG {
     async importProfile(json : any) {
         let created = this.entity.appA.unboundG.createFromJson(json);
         this.setProfile(created);
-        let forContent = await created.listA.findByText('#content');
+        let forContent = await created.listA.findByText(this.contentString);
         for (let resolved of await forContent.listA.getResolvedList()) {
             await this.entity.appA.uiA.content.listA.add(resolved);
         }
