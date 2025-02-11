@@ -7,6 +7,7 @@ export class AnimatedExpandAndCollapse {
     basisAnimationTime_inSeconds : number = 0.1;
     basisHeight_inPixel : number = 60;
     maxAnimationTime_inSeconds: number = 2;
+    animationTimeCalculation : 'linear' | 'root' = 'root';
 
     isCollapsedFlag : boolean;
     isBusyFlag : boolean = false;
@@ -33,8 +34,15 @@ export class AnimatedExpandAndCollapse {
     }
 
     private setEffectiveAnimationTime() {
-        // let effectiveAnimationTime = this.basisAnimationTime * Math.pow(this.innerDiv.offsetHeight / this.basisHeight, 1 / 3);
-        let effectiveAnimationTime = Math.min(this.basisAnimationTime_inSeconds * this.innerDiv.offsetHeight / this.basisHeight_inPixel, this.maxAnimationTime_inSeconds);
+        let effectiveAnimationTime : number;
+        if (this.animationTimeCalculation === 'root') {
+            effectiveAnimationTime = this.basisAnimationTime_inSeconds * Math.pow(this.innerDiv.offsetHeight / this.basisHeight_inPixel, 1 / 3);
+        } else {
+            effectiveAnimationTime = this.basisAnimationTime_inSeconds * this.innerDiv.offsetHeight / this.basisHeight_inPixel;
+        }
+        if (this.maxAnimationTime_inSeconds > 0) {
+            effectiveAnimationTime = Math.min(effectiveAnimationTime, this.maxAnimationTime_inSeconds);
+        }
         this.outerDiv.style.transitionDuration = effectiveAnimationTime + "s";
         return effectiveAnimationTime;
     }
