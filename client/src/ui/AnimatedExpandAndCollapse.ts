@@ -1,13 +1,24 @@
 // The expand- and collapse-methods throw an exception when called while instance is busy.
 import {div, wait} from "@/utils";
 
+type AnimationStyle = 'linear' | 'natural';
+
 export class AnimatedExpandAndCollapse {
     outerDiv : HTMLDivElement = div();
     innerDiv : HTMLDivElement = div();
-    basisAnimationTime_inSeconds : number = 0.1;
-    basisHeight_inPixel : number = 60;
+    basisAnimationTime_inSeconds : number = 0.2;
+    basisHeight_inPixel : number = 120;
     maxAnimationTime_inSeconds: number = 2;
-    animationTimeCalculation : 'linear' | 'root' = 'root';
+    private animationStyle : AnimationStyle = 'natural';
+    setAnimationStyle(animationStyle : AnimationStyle) {
+        if (animationStyle === 'natural') {
+            this.animationStyle = animationStyle;
+            this.outerDiv.style.transitionTimingFunction = 'ease';
+        } else if (animationStyle === 'linear') {
+            this.animationStyle = animationStyle;
+            this.outerDiv.style.transitionTimingFunction = 'linear';
+        }
+    }
 
     isCollapsedFlag : boolean;
     isBusyFlag : boolean = false;
@@ -17,7 +28,6 @@ export class AnimatedExpandAndCollapse {
         this.outerDiv.style.overflow = "hidden";
         this.outerDiv.style.height = "0px";
         this.outerDiv.style.transitionProperty = "height";
-        this.outerDiv.style.transitionTimingFunction = "linear";
         this.isCollapsedFlag = true;
     }
 
@@ -35,7 +45,7 @@ export class AnimatedExpandAndCollapse {
 
     private setEffectiveAnimationTime() {
         let effectiveAnimationTime : number;
-        if (this.animationTimeCalculation === 'root') {
+        if (this.animationStyle === 'natural') {
             effectiveAnimationTime = this.basisAnimationTime_inSeconds * Math.pow(this.innerDiv.offsetHeight / this.basisHeight_inPixel, 1 / 3);
         } else {
             effectiveAnimationTime = this.basisAnimationTime_inSeconds * this.innerDiv.offsetHeight / this.basisHeight_inPixel;
