@@ -59,7 +59,15 @@ export class UiA_AppA {
         } else {
             let columnsDiv = div();
             this.htmlElement.appendChild(columnsDiv);
-            columnsDiv.innerText = 'columns div';
+            columnsDiv.style.flexGrow = '2';
+            columnsDiv.style.minHeight = '0'; // this is necessary to prevent this div from overflowing (it is weird ...)
+            let focusColumn = div();
+            columnsDiv.appendChild(focusColumn);
+            focusColumn.style.height = '100%';
+            focusColumn.style.overflowY = 'scroll';
+            focusColumn.style.width = '800px';
+            focusColumn.appendChild(this.contentUi.htmlElement);
+            focusColumn.appendChild(this.createPlaceholderArea());
         }
     }
 
