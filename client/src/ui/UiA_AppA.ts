@@ -172,7 +172,7 @@ export class UiA_AppA {
     private createPlaceholderArea() : HTMLElement {
         let placeholderAreaDiv = div();
         let updatePlaceholderArea = () => {
-            placeholderAreaDiv.style.height = (window.innerHeight - window.innerHeight * 0.15) + 'px';
+            placeholderAreaDiv.style.height = (window.innerHeight * 0.85) + 'px';
         };
         updatePlaceholderArea();
         window.addEventListener('resize', event => {
