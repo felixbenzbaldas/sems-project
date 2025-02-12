@@ -8,13 +8,13 @@ export class UiA_ListA {
     htmlElement : HTMLDivElement = div();
 
     constructor(private entity : Entity) {
+        this.htmlElement.style.display = 'flex';
+        this.htmlElement.style.flexWrap = 'wrap';
+        this.htmlElement.style.rowGap = '0.25rem';
     }
 
     async update() {
         this.htmlElement.innerHTML = null;
-        this.htmlElement.style.display = 'flex';
-        this.htmlElement.style.flexWrap = 'wrap';
-        this.htmlElement.style.rowGap = '0.25rem';
         await this.updateUisOfListItems();
     }
 
