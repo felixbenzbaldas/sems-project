@@ -160,6 +160,5 @@ export class UiA_AppA_GlobalEventG {
         this.getAppUi().focus(this.getAppUi().contentUi.listA.uisOfListItems[0]);
         await this.getAppUi().input.clear();
         await this.getAppUi().input.ui.uiA.ensureCollapsed();
-        this.getAppUi().scrollableArea.scroll(0, 0);
     }
 }

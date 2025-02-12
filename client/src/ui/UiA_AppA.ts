@@ -16,7 +16,7 @@ export class UiA_AppA {
     input : InputA;
     commands: Entity;
     focused : UiA;
-    scrollableArea : HTMLElement = div();
+    website_scrollableArea : HTMLElement = div();
     statusBar: HTMLDivElement = div();
     globalEventG: UiA_AppA_GlobalEventG;
     commandsA: UiA_AppA_CommandsA;
@@ -51,27 +51,34 @@ export class UiA_AppA {
         this.htmlElement.style.flexDirection = 'column';
         this.htmlElement.appendChild(this.statusBar);
         this.htmlElement.appendChild(this.meta_htmlElement);
-        this.htmlElement.appendChild(this.scrollableArea);
-        this.scrollableArea.style.overflowY = 'scroll';
-        this.scrollableArea.style.paddingLeft = '0.2rem';
-        this.scrollableArea.style.paddingRight = '0.2rem';
         this.statusBar.style.backgroundColor = app_uiA.theme.secondBackgroundColor;
         this.statusBar.style.minHeight = '1.2rem';
         this.statusBar.style.maxHeight = '1.2rem';
-        this.scrollableArea.appendChild(this.focusStyle_marker);
-        let contentWrapper = div();
         if (app_uiA.isWebsite) {
-            let centerWrapper = div();
-            this.scrollableArea.appendChild(centerWrapper);
-            centerWrapper.style.display = 'flex';
-            centerWrapper.style.flexDirection = 'column';
-            centerWrapper.style.alignItems = 'center';
-            centerWrapper.style.marginRight = '70px';
-            centerWrapper.appendChild(contentWrapper);
-            contentWrapper.style.paddingTop = '3rem';
+            await this.install_website(withPlaceholderArea);
         } else {
-            this.scrollableArea.appendChild(contentWrapper);
+            let columnsDiv = div();
+            this.htmlElement.appendChild(columnsDiv);
+            columnsDiv.innerText = 'columns div';
         }
+    }
+
+    private async install_website(withPlaceholderArea: boolean) {
+        let app_uiA = this.getApp().uiA;
+        let contentWrapper = div();
+        this.htmlElement.appendChild(this.website_scrollableArea);
+        this.website_scrollableArea.style.overflowY = 'scroll';
+        this.website_scrollableArea.style.paddingLeft = '0.2rem';
+        this.website_scrollableArea.style.paddingRight = '0.2rem';
+        this.website_scrollableArea.appendChild(this.focusStyle_marker);
+        let centerWrapper = div();
+        this.website_scrollableArea.appendChild(centerWrapper);
+        centerWrapper.style.display = 'flex';
+        centerWrapper.style.flexDirection = 'column';
+        centerWrapper.style.alignItems = 'center';
+        centerWrapper.style.marginRight = '70px';
+        centerWrapper.appendChild(contentWrapper);
+        contentWrapper.style.paddingTop = '3rem';
         contentWrapper.appendChild(this.contentUi.htmlElement);
         let updateWidth = () => {
             let maxContentWidth = 850;
@@ -85,11 +92,11 @@ export class UiA_AppA {
         updateWidth();
         window.addEventListener('resize', updateWidth);
         if (withPlaceholderArea) {
-            this.scrollableArea.appendChild(this.createPlaceholderArea());
+            this.website_scrollableArea.appendChild(this.createPlaceholderArea());
         }
         if (app_uiA.webMeta) {
             this.webMetaUi = await this.entity.uiA.createSubUiFor(app_uiA.webMeta);
-            this.scrollableArea.appendChild(this.webMetaUi.htmlElement);
+            this.website_scrollableArea.appendChild(this.webMetaUi.htmlElement);
         }
     }
 
