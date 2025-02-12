@@ -15,15 +15,19 @@ export class UiA_ListA {
 
     async update() {
         this.htmlElement.innerHTML = null;
-        await this.updateUisOfListItems();
+        if (this.entity.uiA.object) {
+            await this.updateElementsFromObject();
+        }
+        for (let ui of this.uisOfListItems) {
+            this.htmlElement.appendChild(ui.htmlElement);
+        }
     }
 
-    private async updateUisOfListItems() {
+    private async updateElementsFromObject() {
         this.uisOfListItems = []; // TODO: do not always dismiss old uis
         for (let currentResolved of await this.getObject().listA.getResolvedList()) {
             let currentUi = await this.createSubUiFor(currentResolved);
             this.uisOfListItems.push(currentUi);
-            this.htmlElement.appendChild(currentUi.htmlElement);
         }
     }
 

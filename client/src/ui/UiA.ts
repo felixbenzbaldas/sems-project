@@ -34,6 +34,7 @@ export class UiA {
 
     constructor(public entity : Entity) {
         this.reset();
+        this.htmlElement.classList.add('UI');
     }
 
     async update(source? : boolean) {
@@ -42,7 +43,18 @@ export class UiA {
     }
 
     async install(source? : boolean) {
-        this.htmlElement.classList.add('UI');
+        if (nullUndefined(this.object)) {
+            if (this.listA) {
+                this.fullWidth();
+                await this.listA.update();
+                this.htmlElement.appendChild(this.listA.htmlElement);
+            }
+        } else {
+            await this.install_withObject(source);
+        }
+    }
+
+    async install_withObject(source? : boolean) {
         if (this.wouldProvokeEndlessRecursion()) {
             this.fullWidth();
             let warningText = 'This item cannot be displayed. It contains itself. ' +
@@ -90,16 +102,20 @@ export class UiA {
     }
 
     nonCollapsibleChainContains(toCheck : Entity) : boolean {
-        if (this.getObject().collapsible) {
+        if (nullUndefined(this.object)) {
             return false;
         } else {
-            if (this.getObject() == toCheck) {
-                return true;
+            if (this.getObject().collapsible) {
+                return false;
             } else {
-                if (this.context) {
-                    return this.context.nonCollapsibleChainContains(toCheck);
+                if (this.getObject() == toCheck) {
+                    return true;
                 } else {
-                    return false;
+                    if (this.context) {
+                        return this.context.nonCollapsibleChainContains(toCheck);
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
@@ -123,14 +139,22 @@ export class UiA {
     }
 
     isHeaderBody() : boolean {
-        return notNullUndefined(this.getObject().action) ||
-            notNullUndefined(this.getObject().link) ||
-            notNullUndefined(this.getObject().text) ||
-            notNullUndefined(this.getObject().testRunA);
+        if (this.object) {
+            return notNullUndefined(this.getObject().action) ||
+                notNullUndefined(this.getObject().link) ||
+                notNullUndefined(this.getObject().text) ||
+                notNullUndefined(this.getObject().testRunA);
+        } else {
+            return false; // TODO
+        }
     }
 
     isPlainList() {
-        return this.entity.uiA.getObject().listA && !this.isHeaderBody();
+        if (this.object) {
+            return this.entity.uiA.getObject().listA && !this.isHeaderBody();
+        } else {
+            return true; // TODO
+        }
     }
 
     isEditable() {

@@ -6,6 +6,7 @@ import {UiA} from "@/ui/UiA";
 import type {AppA} from "@/AppA";
 import {UiA_AppA_GlobalEventG} from "@/ui/UiA_AppA_GlobalEventG";
 import {UiA_AppA_CommandsA} from "@/ui/UiA_AppA_CommandsA";
+import {UiA_ListA} from "@/ui/UiA_ListA";
 
 export class UiA_AppA {
 
@@ -93,13 +94,23 @@ export class UiA_AppA {
     }
 
     private async installMeta() {
+        let list = this.getApp().createEntityWithApp();
+        list.uiA = new UiA(list);
+        list.uiA.context = this.entity.uiA;
+        list.uiA.installListA();
+        let listA = list.uiA.listA;
+
         this.commands = this.createButtons();
-        this.commandsUi = await this.entity.uiA.createSubUiFor(this.commands);
+        this.commandsUi = await list.uiA.createSubUiFor(this.commands);
         this.output = await OutputA.create(this.entity);
+        this.output.getUi().uiA.context = list.uiA;
         this.input = await InputA.create(this.entity);
-        this.meta_htmlElement.appendChild(this.commandsUi.htmlElement);
-        this.meta_htmlElement.appendChild(this.input.getUi().uiA.htmlElement);
-        this.meta_htmlElement.appendChild(this.output.getUi().uiA.htmlElement);
+        this.input.getUi().uiA.context = list.uiA;
+
+        listA.uisOfListItems = [];
+        listA.uisOfListItems.push(this.commandsUi, this.input.getUi().uiA, this.output.getUi().uiA);
+        await list.uiA.install();
+        this.meta_htmlElement.appendChild(list.uiA.htmlElement);
         this.meta_htmlElement.appendChild(this.separatorLine());
     }
 
