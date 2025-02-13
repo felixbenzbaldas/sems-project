@@ -124,6 +124,13 @@ export function div() : HTMLDivElement {
     return document.createElement('div');
 }
 
+export function dummyDiv(importance : number) {
+    let divElement = div();
+    divElement.style.flexShrink = '1000';
+    divElement.style.flexBasis = importance + '%';
+    return divElement;
+}
+
 export function getPathFromUrl(url: URL): string {
     if (url.searchParams.has('path')) {
         return url.searchParams.get('path');

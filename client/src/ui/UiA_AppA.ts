@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {div, notNullUndefined, nullUndefined, textElem} from "@/utils";
+import {div, dummyDiv, notNullUndefined, nullUndefined, textElem} from "@/utils";
 import {OutputA} from "@/ui/OutputA";
 import {InputA} from "@/ui/InputA";
 import {UiA} from "@/ui/UiA";
@@ -58,6 +58,7 @@ export class UiA_AppA {
             columnsDiv.style.flexGrow = '2';
             columnsDiv.style.minHeight = '0%'; // this is necessary to prevent this div from overflowing (it is weird ...)
             columnsDiv.style.display = 'flex';
+            columnsDiv.appendChild(dummyDiv(30));
             let supportColumnDiv = div();
             supportColumnDiv.style.height = '100%';
             supportColumnDiv.style.overflowY = 'scroll';
@@ -75,6 +76,7 @@ export class UiA_AppA {
             focusColumnDiv.style.flexBasis = '40rem';
             focusColumnDiv.appendChild(this.contentUi.htmlElement);
             focusColumnDiv.appendChild(this.createPlaceholderArea());
+            columnsDiv.appendChild(dummyDiv(50));
         }
     }
 
@@ -97,7 +99,9 @@ export class UiA_AppA {
         this.website_scrollableArea.appendChild(this.focusStyle_marker);
         let centerWrapper = div();
         this.website_scrollableArea.appendChild(centerWrapper);
+        centerWrapper.appendChild(dummyDiv(35));
         centerWrapper.appendChild(contentWrapper);
+        centerWrapper.appendChild(dummyDiv(50));
         contentWrapper.style.paddingTop = '3rem';
         contentWrapper.appendChild(this.contentUi.htmlElement);
         centerWrapper.style.display = 'flex';
@@ -105,10 +109,6 @@ export class UiA_AppA {
         contentWrapper.style.flexBasis = '35rem';
         contentWrapper.style.flexShrink = '1';
         contentWrapper.style.flexGrow = '0';
-        let dummyDiv = div(); // push the contentWrapper a little bit to the left
-        centerWrapper.appendChild(dummyDiv);
-        dummyDiv.style.flexBasis = '10%';
-        dummyDiv.style.flexShrink = '1000';
         if (withPlaceholderArea) {
             this.website_scrollableArea.appendChild(this.createPlaceholderArea());
         }
