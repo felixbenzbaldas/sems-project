@@ -60,7 +60,7 @@ export class UiA_AppA {
             let columnsDiv = div();
             this.htmlElement.appendChild(columnsDiv);
             columnsDiv.style.flexGrow = '2';
-            columnsDiv.style.minHeight = '0'; // this is necessary to prevent this div from overflowing (it is weird ...)
+            columnsDiv.style.minHeight = '0%'; // this is necessary to prevent this div from overflowing (it is weird ...)
             let focusColumn = div();
             columnsDiv.appendChild(focusColumn);
             focusColumn.style.height = '100%';
