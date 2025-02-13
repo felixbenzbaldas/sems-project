@@ -173,14 +173,6 @@ export class UiA_AppA {
         }, 800);
     }
 
-    private separatorLine() : HTMLElement {
-        let line: HTMLDivElement = div();
-        line.style.marginBottom = '0.5rem';
-        line.style.paddingBottom = '0.5rem';
-        line.style.borderBottom = 'dashed';
-        return line;
-    }
-
     private createPlaceholderArea() : HTMLElement {
         let placeholderAreaDiv = div();
         let updatePlaceholderArea = () => {
