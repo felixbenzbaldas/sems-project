@@ -45,11 +45,13 @@ export class UiA_AppA {
         this.htmlElement.style.height = '100%';
         this.htmlElement.style.display = 'flex';
         this.htmlElement.style.flexDirection = 'column';
-        this.htmlElement.appendChild(this.statusBar);
+        if (!app_uiA.isWebsite) {
+            this.htmlElement.appendChild(this.statusBar);
+            this.statusBar.style.backgroundColor = app_uiA.theme.secondBackgroundColor;
+            this.statusBar.style.minHeight = '1.2rem';
+            this.statusBar.style.maxHeight = '1.2rem';
+        }
         this.htmlElement.appendChild(this.meta_htmlElement);
-        this.statusBar.style.backgroundColor = app_uiA.theme.secondBackgroundColor;
-        this.statusBar.style.minHeight = '1.2rem';
-        this.statusBar.style.maxHeight = '1.2rem';
         if (app_uiA.isWebsite) {
             await this.install_website();
         } else {
