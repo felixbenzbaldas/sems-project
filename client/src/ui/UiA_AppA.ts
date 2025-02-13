@@ -68,9 +68,15 @@ export class UiA_AppA {
             supportColumnDiv.style.flexBasis = '15rem';
             supportColumnDiv.style.scrollbarWidth = 'thin';
             columnsDiv.appendChild(supportColumnDiv);
+            let list : Array<UiA> = [];
             if (showMeta) {
-                supportColumnDiv.appendChild(await this.createMeta());
+                list.push(await this.createMeta());
             }
+            let supportColumn = await app_uiA.createUiList(...list);
+            supportColumn.context = this.entity.uiA;
+            supportColumnDiv.appendChild(supportColumn.htmlElement);
+
+
             let focusColumnDiv = div();
             columnsDiv.appendChild(focusColumnDiv);
             focusColumnDiv.style.height = '100%';
@@ -82,13 +88,13 @@ export class UiA_AppA {
         }
     }
 
-    private async createMeta() : Promise<HTMLElement> {
+    private async createMeta() : Promise<UiA> {
         this.commandsUi = await this.getApp().uiA.createUiFor(this.createButtons());
         this.output = await OutputA.create(this.entity);
         this.input = await InputA.create(this.entity);
         let uiList = await this.getApp().uiA.createUiList(this.commandsUi, this.input.getUi().uiA, this.output.getUi().uiA);
         uiList.context = this.entity.uiA;
-        return uiList.htmlElement;
+        return uiList;
     }
 
     private async install_website() {
