@@ -14,7 +14,6 @@ export class UiA_AppA {
 
     output : OutputA;
     input : InputA;
-    commands: Entity;
     focused : UiA;
     website_scrollableArea : HTMLElement = div();
     statusBar: HTMLDivElement = div();
@@ -76,23 +75,12 @@ export class UiA_AppA {
     }
 
     private async createMeta() : Promise<HTMLElement> {
-        let list = this.getApp().createEntityWithApp();
-        list.uiA = new UiA(list);
-        list.uiA.context = this.entity.uiA;
-        list.uiA.installListA();
-        let listA = list.uiA.listA;
-
-        this.commands = this.createButtons();
-        this.commandsUi = await list.uiA.createSubUiFor(this.commands);
+        this.commandsUi = await this.getApp().uiA.createUiFor(this.createButtons());
         this.output = await OutputA.create(this.entity);
-        this.output.getUi().uiA.context = list.uiA;
         this.input = await InputA.create(this.entity);
-        this.input.getUi().uiA.context = list.uiA;
-
-        listA.uisOfListItems = [];
-        listA.uisOfListItems.push(this.commandsUi, this.input.getUi().uiA, this.output.getUi().uiA);
-        await list.uiA.install();
-        return list.uiA.htmlElement;
+        let uiList = await this.getApp().uiA.createUiList(this.commandsUi, this.input.getUi().uiA, this.output.getUi().uiA);
+        uiList.context = this.entity.uiA;
+        return uiList.htmlElement;
     }
 
     private async install_website(withPlaceholderArea: boolean) {

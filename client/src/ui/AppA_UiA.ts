@@ -3,6 +3,8 @@ import {UiA} from "@/ui/UiA";
 import {notNullUndefined} from "@/utils";
 import {UiA_AppA} from "@/ui/UiA_AppA";
 import {Theme} from "@/ui/Theme";
+import {OutputA} from "@/ui/OutputA";
+import {InputA} from "@/ui/InputA";
 
 export class AppA_UiA {
 
@@ -45,5 +47,24 @@ export class AppA_UiA {
             }
         }
         await object.uis_update_addedListItem(position);
+    }
+
+    async createUiFor(object : Entity) {
+        let ui = this.prepareUiFor(object);
+        await ui.install();
+        return ui;
+    }
+
+    async createUiList(...uis : Array<UiA>) : Promise<UiA> {
+        let entity = this.entity.appA.createEntityWithApp();
+        entity.uiA = new UiA(entity);
+        entity.uiA.installListA();
+        let list = entity.uiA.listA;
+        for (let ui of uis) {
+            ui.context = entity.uiA;
+        }
+        list.uisOfListItems = [...uis];
+        await entity.uiA.install();
+        return entity.uiA;
     }
 }
