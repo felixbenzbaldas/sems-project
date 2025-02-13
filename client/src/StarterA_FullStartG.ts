@@ -13,7 +13,7 @@ export class StarterA_FullStartG {
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
-        let appUi = await starter.createdApp.appA.uiA.createAppUi(true);
+        let appUi = await starter.createdApp.appA.uiA.createAppUi();
         starter.getEnvironment().ensureActive(appUi);
         return appUi.entity.uiA.htmlElement;
     }
@@ -29,7 +29,7 @@ export class StarterA_FullStartG {
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
-        let appUi = await starter.createdApp.appA.uiA.createAppUi(true);
+        let appUi = await starter.createdApp.appA.uiA.createAppUi();
         starter.checkTestMode();
         starter.getEnvironment().ensureActive(appUi);
         await appUi.contentUi.listA.uisOfListItems[0].ensureExpanded();
@@ -41,7 +41,7 @@ export class StarterA_FullStartG {
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
-        let appUi = await starter.createdApp.appA.uiA.createAppUi(true);
+        let appUi = await starter.createdApp.appA.uiA.createAppUi();
         starter.getEnvironment().ensureActive(appUi);
         return appUi.entity.uiA.htmlElement;
     }
@@ -63,7 +63,7 @@ export class StarterA_FullStartG {
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
-        let appUi = await starter.createdApp.appA.uiA.createAppUi(true);
+        let appUi = await starter.createdApp.appA.uiA.createAppUi();
         starter.getEnvironment().ensureActive(appUi);
         let length = appUi.contentUi.listA.uisOfListItems.length;
         if (length === 1 || length === 2) {
@@ -75,7 +75,7 @@ export class StarterA_FullStartG {
         let starter = this.getStarter();
         starter.createAppWithUI();
         starter.checkTestMode();
-        let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true, true);
+        let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true);
         starter.getEnvironment().ensureActive(appUi);
         starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
         await starter.createdApp.appA.profileG.createProfile();
@@ -86,7 +86,7 @@ export class StarterA_FullStartG {
         starter.createAppWithUI();
         starter.checkTestMode();
         starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta(); // important
-        let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true, true);
+        let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true);
         starter.getEnvironment().ensureActive(appUi);
         starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
         await starter.createdApp.appA.profileG.createProfile();

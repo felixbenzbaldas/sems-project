@@ -30,7 +30,7 @@ export class UiA_AppA {
         this.focusStyle_marker = this.focusStyle_createMarker();
     }
 
-    async install(showMeta? : boolean, withPlaceholderArea? : boolean) : Promise<void> {
+    async install(showMeta? : boolean) : Promise<void> {
         let app_uiA = this.getApp().uiA;
         this.commandsA = new UiA_AppA_CommandsA(this.entity);
         this.commandsA.installCommands();
@@ -51,7 +51,7 @@ export class UiA_AppA {
         this.statusBar.style.minHeight = '1.2rem';
         this.statusBar.style.maxHeight = '1.2rem';
         if (app_uiA.isWebsite) {
-            await this.install_website(withPlaceholderArea);
+            await this.install_website();
         } else {
             let columnsDiv = div();
             this.htmlElement.appendChild(columnsDiv);
@@ -89,7 +89,7 @@ export class UiA_AppA {
         return uiList.htmlElement;
     }
 
-    private async install_website(withPlaceholderArea: boolean) {
+    private async install_website() {
         let app_uiA = this.getApp().uiA;
         let contentWrapper = div();
         this.htmlElement.appendChild(this.website_scrollableArea);
@@ -109,9 +109,7 @@ export class UiA_AppA {
         contentWrapper.style.flexBasis = '35rem';
         contentWrapper.style.flexShrink = '1';
         contentWrapper.style.flexGrow = '0';
-        if (withPlaceholderArea) {
-            this.website_scrollableArea.appendChild(this.createPlaceholderArea());
-        }
+        this.website_scrollableArea.appendChild(this.createPlaceholderArea());
         if (app_uiA.webMeta) {
             this.webMetaUi = await this.entity.uiA.createSubUiFor(app_uiA.webMeta);
             this.website_scrollableArea.appendChild(this.webMetaUi.htmlElement);
