@@ -74,7 +74,7 @@ export class UiA_AppA {
                 list.push(await this.createMeta());
             }
             this.supportColumn_freeSpace = await this.getApp().createList();
-            let supportColumn_freeSpace_ui = await app_uiA.createUiFor(this.supportColumn_freeSpace);
+            let supportColumn_freeSpace_ui = await app_uiA.createUiFor(this.supportColumn_freeSpace, true);
             list.push(supportColumn_freeSpace_ui);
             let supportColumn = await app_uiA.createUiList(...list);
             supportColumn.context = this.entity.uiA;

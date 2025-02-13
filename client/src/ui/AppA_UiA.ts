@@ -49,8 +49,9 @@ export class AppA_UiA {
         await object.uis_update_addedListItem(position);
     }
 
-    async createUiFor(object : Entity) {
+    async createUiFor(object : Entity, editable? : boolean) {
         let ui = this.prepareUiFor(object);
+        ui.editable = editable;
         await ui.install();
         return ui;
     }
