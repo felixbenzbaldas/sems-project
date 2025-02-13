@@ -160,5 +160,11 @@ export class UiA_AppA_GlobalEventG {
         this.getAppUi().focus(this.getAppUi().contentUi.listA.uisOfListItems[0]);
         await this.getAppUi().input.clear();
         await this.getAppUi().input.ui.uiA.ensureCollapsed();
+        let rootProperty = await this.entity.getApp_typed().profileG.getProfile().listA.findByText('#root');
+        if (rootProperty) {
+            let root = await rootProperty.listA.getResolved(0);
+            await this.entity.uiA.appA.supportColumn_freeSpace.listA.add(root);
+            await this.entity.uiA.appA.supportColumn_freeSpace.uis_update();
+        }
     }
 }

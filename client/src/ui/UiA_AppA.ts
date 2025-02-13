@@ -24,6 +24,7 @@ export class UiA_AppA {
     commandsUi: UiA;
     focusStyle_marker: HTMLElement;
     meta_htmlElement: HTMLElement = div();
+    supportColumn_freeSpace: Entity;
 
     constructor(public entity: Entity) {
         this.globalEventG = new UiA_AppA_GlobalEventG(entity);
@@ -72,11 +73,12 @@ export class UiA_AppA {
             if (showMeta) {
                 list.push(await this.createMeta());
             }
+            this.supportColumn_freeSpace = await this.getApp().createList();
+            let supportColumn_freeSpace_ui = await app_uiA.createUiFor(this.supportColumn_freeSpace);
+            list.push(supportColumn_freeSpace_ui);
             let supportColumn = await app_uiA.createUiList(...list);
             supportColumn.context = this.entity.uiA;
             supportColumnDiv.appendChild(supportColumn.htmlElement);
-
-
             let focusColumnDiv = div();
             columnsDiv.appendChild(focusColumnDiv);
             focusColumnDiv.style.height = '100%';
