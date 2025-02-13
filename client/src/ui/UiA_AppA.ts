@@ -61,12 +61,12 @@ export class UiA_AppA {
             columnsDiv.style.flexGrow = '2';
             columnsDiv.style.minHeight = '0%'; // this is necessary to prevent this div from overflowing (it is weird ...)
             columnsDiv.style.display = 'flex';
-            columnsDiv.appendChild(dummyDiv(30));
+            columnsDiv.appendChild(dummyDiv(15));
             let supportColumnDiv = div();
             supportColumnDiv.style.height = '100%';
             supportColumnDiv.style.overflowY = 'scroll';
             supportColumnDiv.style.overflowX = 'hidden';
-            supportColumnDiv.style.flexBasis = '15rem';
+            supportColumnDiv.style.flexBasis = '25rem';
             supportColumnDiv.style.scrollbarWidth = 'thin';
             columnsDiv.appendChild(supportColumnDiv);
             let list : Array<UiA> = [];
