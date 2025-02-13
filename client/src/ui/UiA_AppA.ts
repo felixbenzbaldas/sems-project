@@ -36,9 +36,6 @@ export class UiA_AppA {
         this.commandsA = new UiA_AppA_CommandsA(this.entity);
         this.commandsA.installCommands();
         this.commandsA.installMapForInputPatterns();
-        if (showMeta) {
-            await this.installMeta();
-        }
         this.contentUi = await this.entity.uiA.createSubUiFor_transmitEditability(app_uiA.content);
         if (!app_uiA.isWebsite) {
             this.focused = this.entity.uiA;
@@ -61,14 +58,41 @@ export class UiA_AppA {
             this.htmlElement.appendChild(columnsDiv);
             columnsDiv.style.flexGrow = '2';
             columnsDiv.style.minHeight = '0%'; // this is necessary to prevent this div from overflowing (it is weird ...)
-            let focusColumn = div();
-            columnsDiv.appendChild(focusColumn);
-            focusColumn.style.height = '100%';
-            focusColumn.style.overflowY = 'scroll';
-            focusColumn.style.width = '800px';
-            focusColumn.appendChild(this.contentUi.htmlElement);
-            focusColumn.appendChild(this.createPlaceholderArea());
+            columnsDiv.style.display = 'flex';
+            let supportColumnDiv = div();
+            columnsDiv.appendChild(supportColumnDiv);
+            if (showMeta) {
+                supportColumnDiv.appendChild(await this.createMeta());
+            }
+            supportColumnDiv.style.flexBasis = '15rem';
+            let focusColumnDiv = div();
+            columnsDiv.appendChild(focusColumnDiv);
+            focusColumnDiv.style.height = '100%';
+            focusColumnDiv.style.overflowY = 'scroll';
+            focusColumnDiv.style.width = '800px';
+            focusColumnDiv.appendChild(this.contentUi.htmlElement);
+            focusColumnDiv.appendChild(this.createPlaceholderArea());
         }
+    }
+
+    private async createMeta() : Promise<HTMLElement> {
+        let list = this.getApp().createEntityWithApp();
+        list.uiA = new UiA(list);
+        list.uiA.context = this.entity.uiA;
+        list.uiA.installListA();
+        let listA = list.uiA.listA;
+
+        this.commands = this.createButtons();
+        this.commandsUi = await list.uiA.createSubUiFor(this.commands);
+        this.output = await OutputA.create(this.entity);
+        this.output.getUi().uiA.context = list.uiA;
+        this.input = await InputA.create(this.entity);
+        this.input.getUi().uiA.context = list.uiA;
+
+        listA.uisOfListItems = [];
+        listA.uisOfListItems.push(this.commandsUi, this.input.getUi().uiA, this.output.getUi().uiA);
+        await list.uiA.install();
+        return list.uiA.htmlElement;
     }
 
     private async install_website(withPlaceholderArea: boolean) {
@@ -100,27 +124,6 @@ export class UiA_AppA {
             this.webMetaUi = await this.entity.uiA.createSubUiFor(app_uiA.webMeta);
             this.website_scrollableArea.appendChild(this.webMetaUi.htmlElement);
         }
-    }
-
-    private async installMeta() {
-        let list = this.getApp().createEntityWithApp();
-        list.uiA = new UiA(list);
-        list.uiA.context = this.entity.uiA;
-        list.uiA.installListA();
-        let listA = list.uiA.listA;
-
-        this.commands = this.createButtons();
-        this.commandsUi = await list.uiA.createSubUiFor(this.commands);
-        this.output = await OutputA.create(this.entity);
-        this.output.getUi().uiA.context = list.uiA;
-        this.input = await InputA.create(this.entity);
-        this.input.getUi().uiA.context = list.uiA;
-
-        listA.uisOfListItems = [];
-        listA.uisOfListItems.push(this.commandsUi, this.input.getUi().uiA, this.output.getUi().uiA);
-        await list.uiA.install();
-        this.meta_htmlElement.appendChild(list.uiA.htmlElement);
-        this.meta_htmlElement.appendChild(this.separatorLine());
     }
 
     getObject() : Entity {
