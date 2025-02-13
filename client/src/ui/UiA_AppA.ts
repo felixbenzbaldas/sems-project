@@ -81,24 +81,18 @@ export class UiA_AppA {
         this.website_scrollableArea.appendChild(this.focusStyle_marker);
         let centerWrapper = div();
         this.website_scrollableArea.appendChild(centerWrapper);
-        centerWrapper.style.display = 'flex';
-        centerWrapper.style.flexDirection = 'column';
-        centerWrapper.style.alignItems = 'center';
-        centerWrapper.style.marginRight = '70px';
         centerWrapper.appendChild(contentWrapper);
         contentWrapper.style.paddingTop = '3rem';
         contentWrapper.appendChild(this.contentUi.htmlElement);
-        let updateWidth = () => {
-            let maxContentWidth = 850;
-            let widthOfScrollbar = 30; // estimated
-            if (window.innerWidth < maxContentWidth) {
-                contentWrapper.style.width = 'unset';
-            } else {
-                contentWrapper.style.width = maxContentWidth - widthOfScrollbar + 'px';
-            }
-        };
-        updateWidth();
-        window.addEventListener('resize', updateWidth);
+        centerWrapper.style.display = 'flex';
+        centerWrapper.style.justifyContent = 'center';
+        contentWrapper.style.flexBasis = '35rem';
+        contentWrapper.style.flexShrink = '1';
+        contentWrapper.style.flexGrow = '0';
+        let dummyDiv = div(); // push the contentWrapper a little bit to the left
+        centerWrapper.appendChild(dummyDiv);
+        dummyDiv.style.flexBasis = '10%';
+        dummyDiv.style.flexShrink = '1000';
         if (withPlaceholderArea) {
             this.website_scrollableArea.appendChild(this.createPlaceholderArea());
         }
