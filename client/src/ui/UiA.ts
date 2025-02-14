@@ -47,7 +47,6 @@ export class UiA {
     async install(source? : boolean) {
         if (nullUndefined(this.object)) {
             if (this.listA) {
-                this.fullWidth();
                 await this.listA.update();
                 this.htmlElement.appendChild(this.listA.htmlElement);
             }
@@ -84,7 +83,9 @@ export class UiA {
             } else if (this.isHeaderBody()) {
                 await this.headerBodyG.install();
             } else if (this.isPlainList()) {
-                this.fullWidth();
+                if (!this.isColumn) {
+                    this.fullWidth();
+                }
                 this.installListA();
                 await this.listA.update();
                 this.htmlElement.appendChild(this.listA.htmlElement);
@@ -610,5 +611,14 @@ export class UiA {
                 this.focus();
             }
         }
+    }
+
+    installColumnA() {
+        this.isColumn = true;
+        this.htmlElement.style.minWidth = 'unset'; // TODO should not be necessary
+        this.htmlElement.style.height = '100%';
+        this.htmlElement.style.overflowY = 'scroll';
+        this.htmlElement.style.overflowX = 'hidden';
+        this.htmlElement.appendChild(this.findAppUi().createPlaceholderArea());
     }
 }

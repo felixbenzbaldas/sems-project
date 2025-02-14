@@ -67,31 +67,22 @@ export class UiA_AppA {
             columnsDiv.style.minHeight = '0%'; // this is necessary to prevent this div from overflowing (it is weird ...)
             columnsDiv.style.display = 'flex';
             columnsDiv.appendChild(dummyDiv(15));
-            let supportColumnDiv = div();
-            supportColumnDiv.style.height = '100%';
-            supportColumnDiv.style.overflowY = 'scroll';
-            supportColumnDiv.style.overflowX = 'hidden';
-            supportColumnDiv.style.flexBasis = '25rem';
-            supportColumnDiv.style.scrollbarWidth = 'thin';
-            columnsDiv.appendChild(supportColumnDiv);
-            let list : Array<UiA> = [];
+            let uiElementsForSupportColumn : Array<UiA> = [];
             if (showMeta) {
-                list.push(await this.createMeta());
+                uiElementsForSupportColumn.push(await this.createMeta());
             }
             this.supportColumn_freeSpace = await this.getApp().createList();
             let supportColumn_freeSpace_ui = await app_uiA.createUiFor(this.supportColumn_freeSpace, true);
-            list.push(supportColumn_freeSpace_ui);
-            this.supportColumnUi = await app_uiA.createUiList(...list);
+            uiElementsForSupportColumn.push(supportColumn_freeSpace_ui);
+            this.supportColumnUi = await app_uiA.createUiList(...uiElementsForSupportColumn);
+            columnsDiv.appendChild(this.supportColumnUi.htmlElement);
             this.supportColumnUi.context = this.entity.uiA;
-            this.supportColumnUi.isColumn = true;
-            supportColumnDiv.appendChild(this.supportColumnUi.htmlElement);
-            let focusColumnDiv = div();
-            columnsDiv.appendChild(focusColumnDiv);
-            focusColumnDiv.style.height = '100%';
-            focusColumnDiv.style.overflowY = 'scroll';
-            focusColumnDiv.style.flexBasis = '40rem';
-            focusColumnDiv.appendChild(this.contentUi.htmlElement);
-            focusColumnDiv.appendChild(this.createPlaceholderArea());
+            this.supportColumnUi.installColumnA();
+            this.supportColumnUi.htmlElement.style.flexBasis = '25rem';
+            this.supportColumnUi.htmlElement.style.scrollbarWidth = 'thin';
+            columnsDiv.appendChild(this.contentUi.htmlElement);
+            this.contentUi.installColumnA();
+            this.contentUi.htmlElement.style.flexBasis = '40rem';
             columnsDiv.appendChild(dummyDiv(50));
             if (app_uiA.webMeta) {
                 let footerDiv = div();
@@ -191,7 +182,7 @@ export class UiA_AppA {
         }, 800);
     }
 
-    private createPlaceholderArea() : HTMLElement {
+    createPlaceholderArea() : HTMLElement {
         let placeholderAreaDiv = div();
         let updatePlaceholderArea = () => {
             placeholderAreaDiv.style.height = (window.innerHeight * 0.85) + 'px';
