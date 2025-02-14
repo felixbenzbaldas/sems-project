@@ -26,6 +26,9 @@ export class UiA_AppA {
     focusStyle_marker: HTMLElement;
     meta_htmlElement: HTMLElement = div();
     supportColumn_freeSpace: Entity;
+    supportColumn_lastFocused : UiA;
+    focusColumn_lastFocused : UiA;
+    supportColumnUi: UiA;
 
     constructor(public entity: Entity) {
         this.globalEventG = new UiA_AppA_GlobalEventG(entity);
@@ -77,9 +80,9 @@ export class UiA_AppA {
             this.supportColumn_freeSpace = await this.getApp().createList();
             let supportColumn_freeSpace_ui = await app_uiA.createUiFor(this.supportColumn_freeSpace, true);
             list.push(supportColumn_freeSpace_ui);
-            let supportColumn = await app_uiA.createUiList(...list);
-            supportColumn.context = this.entity.uiA;
-            supportColumnDiv.appendChild(supportColumn.htmlElement);
+            this.supportColumnUi = await app_uiA.createUiList(...list);
+            this.supportColumnUi.context = this.entity.uiA;
+            supportColumnDiv.appendChild(this.supportColumnUi.htmlElement);
             let focusColumnDiv = div();
             columnsDiv.appendChild(focusColumnDiv);
             focusColumnDiv.style.height = '100%';
@@ -161,6 +164,11 @@ export class UiA_AppA {
         if (ui !== this.focused) {
             let focusedPrevious = this.focused;
             this.focused = ui;
+            if (ui.isSupportColumn()) {
+                this.supportColumn_lastFocused = ui;
+            } else {
+                this.focusColumn_lastFocused = ui;
+            }
             if (focusedPrevious) {
                 focusedPrevious.leaveEditMode();
                 focusedPrevious.updateFocusStyle();

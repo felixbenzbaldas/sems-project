@@ -197,6 +197,15 @@ export class UiA_AppA_CommandsA {
                 this.clear = command;
             }
         )
+
+        this.addCommand(
+            'toggle column',
+            async () => {
+                await this.getGlobalEventG().toggleColumn();
+            },
+            undefined,
+            this.pattern_viewMode('j'), this.pattern('F7')
+        )
     }
 
     addCommand(text : string, action : Function, setField : (command : CommandA) => void, ...patterns : Array<InputPattern>) {

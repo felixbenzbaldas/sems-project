@@ -191,7 +191,7 @@ export class UiA {
 
     takeCaret() {
         if (!this.entity.appA) {
-            if (notNullUndefined(this.getObject().text)) {
+            if (notNullUndefined(this.object) && notNullUndefined(this.object.text)) {
                 this.textG.takeCaret();
             }
         }
@@ -586,5 +586,16 @@ export class UiA {
 
     save() {
         this.textG.save();
+    }
+
+    isSupportColumn() : boolean {
+        let appUi = this.findAppUi();
+        if (this === appUi.supportColumnUi) {
+            return true;
+        } else if (this === appUi.contentUi) {
+            return false;
+        } else {
+            return this.context.isSupportColumn();
+        }
     }
 }
