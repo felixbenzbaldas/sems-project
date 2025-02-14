@@ -7,6 +7,7 @@ import type {AppA} from "@/AppA";
 import {UiA_AppA_GlobalEventG} from "@/ui/UiA_AppA_GlobalEventG";
 import {UiA_AppA_CommandsA} from "@/ui/UiA_AppA_CommandsA";
 import {UiA_ListA} from "@/ui/UiA_ListA";
+import {Theme} from "@/ui/Theme";
 
 export class UiA_AppA {
 
@@ -87,6 +88,14 @@ export class UiA_AppA {
             focusColumnDiv.appendChild(this.contentUi.htmlElement);
             focusColumnDiv.appendChild(this.createPlaceholderArea());
             columnsDiv.appendChild(dummyDiv(50));
+            if (app_uiA.webMeta) {
+                let footerDiv = div();
+                footerDiv.style.borderTop = 'solid';
+                footerDiv.style.borderColor = app_uiA.theme.secondBackgroundColor;
+                this.htmlElement.appendChild(footerDiv);
+                this.webMetaUi = await this.entity.uiA.createSubUiFor(app_uiA.webMeta);
+                footerDiv.appendChild(this.webMetaUi.htmlElement);
+            }
         }
     }
 
