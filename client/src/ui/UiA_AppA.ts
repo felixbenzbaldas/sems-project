@@ -40,8 +40,8 @@ export class UiA_AppA {
         this.commandsA = new UiA_AppA_CommandsA(this.entity);
         this.commandsA.installCommands();
         this.commandsA.installMapForInputPatterns();
-        this.contentUi = await this.entity.uiA.createSubUiFor_transmitEditability(app_uiA.content);
-        this.contentUi.isColumn = true;
+        this.contentUi = await this.createColumnFor(app_uiA.content);
+        this.contentUi.context = this.entity.uiA;
         if (!app_uiA.isWebsite) {
             this.focused = this.entity.uiA;
         }
@@ -74,14 +74,12 @@ export class UiA_AppA {
             this.supportColumn_freeSpace = await this.getApp().createList();
             let supportColumn_freeSpace_ui = await app_uiA.createUiFor(this.supportColumn_freeSpace, true);
             uiElementsForSupportColumn.push(supportColumn_freeSpace_ui);
-            this.supportColumnUi = await app_uiA.createUiList(...uiElementsForSupportColumn);
+            this.supportColumnUi = await this.createColumn(...uiElementsForSupportColumn);
             columnsDiv.appendChild(this.supportColumnUi.htmlElement);
             this.supportColumnUi.context = this.entity.uiA;
-            this.supportColumnUi.installColumnA();
             this.supportColumnUi.htmlElement.style.flexBasis = '25rem';
             this.supportColumnUi.htmlElement.style.scrollbarWidth = 'thin';
             columnsDiv.appendChild(this.contentUi.htmlElement);
-            this.contentUi.installColumnA();
             this.contentUi.htmlElement.style.flexBasis = '40rem';
             columnsDiv.appendChild(dummyDiv(50));
             if (app_uiA.webMeta) {
@@ -124,7 +122,7 @@ export class UiA_AppA {
         contentWrapper.style.flexBasis = '35rem';
         contentWrapper.style.flexShrink = '1';
         contentWrapper.style.flexGrow = '0';
-        this.website_scrollableArea.appendChild(this.createPlaceholderArea());
+        this.website_scrollableArea.appendChild(UiA_AppA.createPlaceholderArea());
         if (app_uiA.webMeta) {
             this.webMetaUi = await this.entity.uiA.createSubUiFor(app_uiA.webMeta);
             this.website_scrollableArea.appendChild(this.webMetaUi.htmlElement);
@@ -182,7 +180,7 @@ export class UiA_AppA {
         }, 800);
     }
 
-    createPlaceholderArea() : HTMLElement {
+    static createPlaceholderArea() : HTMLElement {
         let placeholderAreaDiv = div();
         let updatePlaceholderArea = () => {
             placeholderAreaDiv.style.height = (window.innerHeight * 0.85) + 'px';
@@ -292,5 +290,27 @@ export class UiA_AppA {
         await this.getApp().shakeTree_withMultipleRoots(roots, profile.containerA);
         let deletions = before - profile.containerA.countWithNestedEntities();
         this.signal('cleared (' + deletions + ' deletions)');
+    }
+
+    async createColumnFor(object : Entity) {
+        let ui = this.entity.getApp_typed().uiA.prepareUiFor(object);
+        ui.editable = this.entity.uiA.editable;
+        ui.isColumn = true;
+        await ui.install();
+        return ui;
+    }
+
+    async createColumn(...uiElements : Array<UiA>) : Promise<UiA> {
+        let entity = this.getApp().createEntityWithApp();
+        entity.uiA = new UiA(entity);
+        entity.uiA.installListA();
+        let list = entity.uiA.listA;
+        for (let ui of uiElements) {
+            ui.context = entity.uiA;
+        }
+        list.uisOfListItems = [...uiElements];
+        entity.uiA.isColumn = true;
+        await entity.uiA.install();
+        return entity.uiA;
     }
 }

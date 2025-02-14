@@ -49,6 +49,10 @@ export class UiA {
             if (this.listA) {
                 await this.listA.update();
                 this.htmlElement.appendChild(this.listA.htmlElement);
+                if (this.isColumn) {
+                    this.columnA_setStyle();
+                    this.columnA_addPlaceholderArea();
+                }
             }
         } else {
             await this.install_withObject(source);
@@ -83,12 +87,15 @@ export class UiA {
             } else if (this.isHeaderBody()) {
                 await this.headerBodyG.install();
             } else if (this.isPlainList()) {
-                if (!this.isColumn) {
-                    this.fullWidth();
-                }
                 this.installListA();
                 await this.listA.update();
                 this.htmlElement.appendChild(this.listA.htmlElement);
+                if (this.isColumn) {
+                    this.columnA_setStyle();
+                    this.columnA_addPlaceholderArea();
+                } else {
+                    this.fullWidth();
+                }
             } else {
                 this.fullWidth();
                 let divElement = div();
@@ -96,6 +103,16 @@ export class UiA {
                 this.htmlElement.appendChild(divElement);
             }
         }
+    }
+
+    columnA_setStyle() {
+        this.htmlElement.style.height = '100%';
+        this.htmlElement.style.overflowY = 'scroll';
+        this.htmlElement.style.overflowX = 'hidden';
+    }
+
+    columnA_addPlaceholderArea() {
+        this.htmlElement.appendChild(UiA_AppA.createPlaceholderArea());
     }
 
     wouldProvokeEndlessRecursion() : boolean {
@@ -611,14 +628,5 @@ export class UiA {
                 this.focus();
             }
         }
-    }
-
-    installColumnA() {
-        this.isColumn = true;
-        this.htmlElement.style.minWidth = 'unset'; // TODO should not be necessary
-        this.htmlElement.style.height = '100%';
-        this.htmlElement.style.overflowY = 'scroll';
-        this.htmlElement.style.overflowX = 'hidden';
-        this.htmlElement.appendChild(this.findAppUi().createPlaceholderArea());
     }
 }
