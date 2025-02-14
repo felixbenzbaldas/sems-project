@@ -169,20 +169,10 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async toggleColumn() {
-        if (this.getAppUi().focused.isSupportColumn()) {
-            let lastFocused = this.getAppUi().focusColumn_lastFocused;
-            if (lastFocused) {
-                this.getAppUi().focus(lastFocused);
-            } else {
-                this.getAppUi().focus(this.getAppUi().contentUi);
-            }
+        if (this.getAppUi().focused.getColumn() === this.getAppUi().contentUi) {
+            this.getAppUi().supportColumnUi.columnA_takeFocus();
         } else {
-            let lastFocused = this.getAppUi().supportColumn_lastFocused;
-            if (lastFocused) {
-                this.getAppUi().focus(lastFocused);
-            } else {
-                this.getAppUi().focus(this.getAppUi().supportColumnUi);
-            }
+            this.getAppUi().contentUi.columnA_takeFocus();
         }
     }
 }

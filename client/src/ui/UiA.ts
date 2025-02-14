@@ -31,6 +31,8 @@ export class UiA {
         await this.imageA.install();
     }
     editMode : boolean;
+    isColumn : boolean;
+    lastFocused : UiA;
 
     constructor(public entity : Entity) {
         this.reset();
@@ -588,14 +590,25 @@ export class UiA {
         this.textG.save();
     }
 
-    isSupportColumn() : boolean {
-        let appUi = this.findAppUi();
-        if (this === appUi.supportColumnUi) {
-            return true;
-        } else if (this === appUi.contentUi) {
-            return false;
+    getColumn() : UiA {
+        if (this.isColumn) {
+            return this;
+        } else if (this.context) {
+            return this.context.getColumn();
         } else {
-            return this.context.isSupportColumn();
+            return undefined;
+        }
+    }
+
+    columnA_takeFocus() {
+        if (this.lastFocused) {
+            this.lastFocused.focus();
+        } else {
+            if (this.listA.uisOfListItems.length > 0) {
+                this.listA.uisOfListItems[0].focus();
+            } else {
+                this.focus();
+            }
         }
     }
 }

@@ -41,6 +41,7 @@ export class UiA_AppA {
         this.commandsA.installCommands();
         this.commandsA.installMapForInputPatterns();
         this.contentUi = await this.entity.uiA.createSubUiFor_transmitEditability(app_uiA.content);
+        this.contentUi.isColumn = true;
         if (!app_uiA.isWebsite) {
             this.focused = this.entity.uiA;
         }
@@ -82,6 +83,7 @@ export class UiA_AppA {
             list.push(supportColumn_freeSpace_ui);
             this.supportColumnUi = await app_uiA.createUiList(...list);
             this.supportColumnUi.context = this.entity.uiA;
+            this.supportColumnUi.isColumn = true;
             supportColumnDiv.appendChild(this.supportColumnUi.htmlElement);
             let focusColumnDiv = div();
             columnsDiv.appendChild(focusColumnDiv);
@@ -164,12 +166,11 @@ export class UiA_AppA {
         if (ui !== this.focused) {
             let focusedPrevious = this.focused;
             this.focused = ui;
-            if (ui.isSupportColumn()) {
-                this.supportColumn_lastFocused = ui;
-            } else {
-                this.focusColumn_lastFocused = ui;
-            }
             if (focusedPrevious) {
+                let focusedPrevious_column = focusedPrevious.getColumn();
+                if (focusedPrevious_column) {
+                    focusedPrevious_column.lastFocused = focusedPrevious;
+                }
                 focusedPrevious.leaveEditMode();
                 focusedPrevious.updateFocusStyle();
             }
