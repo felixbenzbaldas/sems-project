@@ -9,6 +9,7 @@ import {InputA} from "@/ui/InputA";
 export class AppA_UiA {
 
     mainColumnData: Entity;
+    presentationModeA_contentData : Entity;
     clipboard: Entity;
     clipboard_lostContext: boolean;
     theme : Theme = Theme.default();
@@ -18,6 +19,8 @@ export class AppA_UiA {
     constructor(public entity: Entity) {
         this.mainColumnData = entity.appA.unboundG.createList();
         this.mainColumnData.container = entity;
+        this.presentationModeA_contentData = entity.appA.unboundG.createList();
+        this.presentationModeA_contentData.container = entity;
     }
 
     prepareUiFor(object: Entity) : UiA {

@@ -24,7 +24,7 @@ export class StarterA_FullStartG {
         starter.createData();
         let pathString = starter.getPath();
         let listOfNames = ['..', starter.data.name, ...pathString.split('-')];
-        await starter.createdApp.appA.uiA.mainColumnData.listA.addByListOfNames(listOfNames);
+        await starter.createdApp.appA.uiA.presentationModeA_contentData.listA.addByListOfNames(listOfNames);
         starter.createdApp.appA.uiA.theme = Theme.elegant();
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
@@ -32,7 +32,7 @@ export class StarterA_FullStartG {
         let appUi = await starter.createdApp.appA.uiA.createAppUi();
         starter.checkTestMode();
         starter.getEnvironment().ensureActive(appUi);
-        await appUi.mainColumnUi.listA.uisOfListItems[0].ensureExpanded();
+        await appUi.presentationModeA_contentUi.listA.uisOfListItems[0].ensureExpanded();
         return appUi.entity.uiA.htmlElement;
     }
     async testRun() {
@@ -54,7 +54,7 @@ export class StarterA_FullStartG {
         let website = await starter.data.listA.findByText(starter.hostname())
         let start = await website.listA.findByText('start');
         for (let resolved of await start.listA.getResolvedList()) {
-            await starter.createdApp.appA.uiA.mainColumnData.listA.add(resolved);
+            await starter.createdApp.appA.uiA.presentationModeA_contentData.listA.add(resolved);
         }
         if (starter.getEnvironment().setTitle)  {
             starter.getEnvironment().setTitle((await (await website.listA.findByText('title'))?.listA.getResolved(0)).text);
@@ -65,9 +65,9 @@ export class StarterA_FullStartG {
         }
         let appUi = await starter.createdApp.appA.uiA.createAppUi();
         starter.getEnvironment().ensureActive(appUi);
-        let length = appUi.mainColumnUi.listA.uisOfListItems.length;
+        let length = appUi.presentationModeA_contentUi.listA.uisOfListItems.length;
         if (length === 1 || length === 2) {
-            await appUi.mainColumnUi.listA.uisOfListItems[0].ensureExpanded();
+            await appUi.presentationModeA_contentUi.listA.uisOfListItems[0].ensureExpanded();
         }
         return appUi.entity.uiA.htmlElement;
     }

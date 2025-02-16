@@ -1,13 +1,11 @@
 import type {Entity} from "@/Entity";
-import {div, dummyDiv, notNullUndefined, nullUndefined, textElem} from "@/utils";
+import {div, dummyDiv, nullUndefined, textElem} from "@/utils";
 import {OutputA} from "@/ui/OutputA";
 import {InputA} from "@/ui/InputA";
 import {UiA} from "@/ui/UiA";
 import type {AppA} from "@/AppA";
 import {UiA_AppA_GlobalEventG} from "@/ui/UiA_AppA_GlobalEventG";
 import {UiA_AppA_CommandsA} from "@/ui/UiA_AppA_CommandsA";
-import {UiA_ListA} from "@/ui/UiA_ListA";
-import {Theme} from "@/ui/Theme";
 
 export class UiA_AppA {
 
@@ -21,6 +19,7 @@ export class UiA_AppA {
     globalEventG: UiA_AppA_GlobalEventG;
     commandsA: UiA_AppA_CommandsA;
     mainColumnUi : UiA;
+    presentationModeA_contentUi : UiA;
     webMetaUi : UiA;
     commandsUi: UiA;
     focusStyle_marker: HTMLElement;
@@ -40,8 +39,6 @@ export class UiA_AppA {
         this.commandsA = new UiA_AppA_CommandsA(this.entity);
         this.commandsA.installCommands();
         this.commandsA.installMapForInputPatterns();
-        this.mainColumnUi = await this.createColumnFor(app_uiA.mainColumnData);
-        this.mainColumnUi.context = this.entity.uiA;
         if (!app_uiA.isWebsite) {
             this.focused = this.entity.uiA;
         }
@@ -79,6 +76,8 @@ export class UiA_AppA {
             this.supportColumnUi.context = this.entity.uiA;
             this.supportColumnUi.htmlElement.style.flexBasis = '25rem';
             this.supportColumnUi.htmlElement.style.scrollbarWidth = 'thin';
+            this.mainColumnUi = await this.createColumnFor(app_uiA.mainColumnData);
+            this.mainColumnUi.context = this.entity.uiA;
             columnsDiv.appendChild(this.mainColumnUi.htmlElement);
             this.mainColumnUi.htmlElement.style.flexBasis = '40rem';
             columnsDiv.appendChild(dummyDiv(50));
@@ -116,7 +115,8 @@ export class UiA_AppA {
         centerWrapper.appendChild(contentWrapper);
         centerWrapper.appendChild(dummyDiv(50));
         contentWrapper.style.paddingTop = '3rem';
-        contentWrapper.appendChild(this.mainColumnUi.htmlElement);
+        this.presentationModeA_contentUi = await this.entity.uiA.createSubUiFor_transmitEditability(app_uiA.presentationModeA_contentData);
+        contentWrapper.appendChild(this.presentationModeA_contentUi.htmlElement);
         centerWrapper.style.display = 'flex';
         centerWrapper.style.justifyContent = 'center';
         contentWrapper.style.flexBasis = '35rem';
