@@ -52,7 +52,7 @@ export class AppA_ProfileG {
         let profile = this.getProfile();
         let forContent = await profile.listA.findByText(this.contentString);
         forContent.listA.jsList = [];
-        let content = this.entity.appA.uiA.content;
+        let content = this.entity.appA.uiA.mainColumnData;
         for (let resolved of await content.listA.getResolvedList()) {
             await forContent.listA.add(resolved);
         }
@@ -64,9 +64,9 @@ export class AppA_ProfileG {
         this.setProfile(created);
         let forContent = await created.listA.findByText(this.contentString);
         for (let resolved of await forContent.listA.getResolvedList()) {
-            await this.entity.appA.uiA.content.listA.add(resolved);
+            await this.entity.appA.uiA.mainColumnData.listA.add(resolved);
         }
-        await this.entity.appA.uiA.content.uis_update();
+        await this.entity.appA.uiA.mainColumnData.uis_update();
         forContent.listA.jsList = [];
     }
 }

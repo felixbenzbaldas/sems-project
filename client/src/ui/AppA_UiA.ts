@@ -8,7 +8,7 @@ import {InputA} from "@/ui/InputA";
 
 export class AppA_UiA {
 
-    readonly content: Entity;
+    mainColumnData: Entity;
     clipboard: Entity;
     clipboard_lostContext: boolean;
     theme : Theme = Theme.default();
@@ -16,8 +16,8 @@ export class AppA_UiA {
     isWebsite: boolean;
 
     constructor(public entity: Entity) {
-        this.content = entity.appA.unboundG.createList();
-        this.content.container = entity;
+        this.mainColumnData = entity.appA.unboundG.createList();
+        this.mainColumnData.container = entity;
     }
 
     prepareUiFor(object: Entity) : UiA {

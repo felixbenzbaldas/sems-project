@@ -157,7 +157,7 @@ export class UiA_AppA_GlobalEventG {
 
     async importProfile() {
         await this.getApp().profileG.importProfile(JSON.parse(this.getAppUi().input.get()));
-        this.getAppUi().focus(this.getAppUi().contentUi.listA.uisOfListItems[0]);
+        this.getAppUi().focus(this.getAppUi().mainColumnUi.listA.uisOfListItems[0]);
         await this.getAppUi().input.clear();
         await this.getAppUi().input.ui.uiA.ensureCollapsed();
         let rootProperty = await this.entity.getApp_typed().profileG.getProfile().listA.findByText('#root');
@@ -169,10 +169,10 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async toggleColumn() {
-        if (this.getAppUi().focused.getColumn() === this.getAppUi().contentUi) {
+        if (this.getAppUi().focused.getColumn() === this.getAppUi().mainColumnUi) {
             this.getAppUi().supportColumnUi.columnA_takeFocus();
         } else {
-            this.getAppUi().contentUi.columnA_takeFocus();
+            this.getAppUi().mainColumnUi.columnA_takeFocus();
         }
     }
 }

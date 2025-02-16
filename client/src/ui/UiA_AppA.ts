@@ -20,7 +20,7 @@ export class UiA_AppA {
     statusBar: HTMLDivElement = div();
     globalEventG: UiA_AppA_GlobalEventG;
     commandsA: UiA_AppA_CommandsA;
-    contentUi : UiA;
+    mainColumnUi : UiA;
     webMetaUi : UiA;
     commandsUi: UiA;
     focusStyle_marker: HTMLElement;
@@ -40,8 +40,8 @@ export class UiA_AppA {
         this.commandsA = new UiA_AppA_CommandsA(this.entity);
         this.commandsA.installCommands();
         this.commandsA.installMapForInputPatterns();
-        this.contentUi = await this.createColumnFor(app_uiA.content);
-        this.contentUi.context = this.entity.uiA;
+        this.mainColumnUi = await this.createColumnFor(app_uiA.mainColumnData);
+        this.mainColumnUi.context = this.entity.uiA;
         if (!app_uiA.isWebsite) {
             this.focused = this.entity.uiA;
         }
@@ -79,8 +79,8 @@ export class UiA_AppA {
             this.supportColumnUi.context = this.entity.uiA;
             this.supportColumnUi.htmlElement.style.flexBasis = '25rem';
             this.supportColumnUi.htmlElement.style.scrollbarWidth = 'thin';
-            columnsDiv.appendChild(this.contentUi.htmlElement);
-            this.contentUi.htmlElement.style.flexBasis = '40rem';
+            columnsDiv.appendChild(this.mainColumnUi.htmlElement);
+            this.mainColumnUi.htmlElement.style.flexBasis = '40rem';
             columnsDiv.appendChild(dummyDiv(50));
             if (app_uiA.webMeta) {
                 let footerDiv = div();
@@ -116,7 +116,7 @@ export class UiA_AppA {
         centerWrapper.appendChild(contentWrapper);
         centerWrapper.appendChild(dummyDiv(50));
         contentWrapper.style.paddingTop = '3rem';
-        contentWrapper.appendChild(this.contentUi.htmlElement);
+        contentWrapper.appendChild(this.mainColumnUi.htmlElement);
         centerWrapper.style.display = 'flex';
         centerWrapper.style.justifyContent = 'center';
         contentWrapper.style.flexBasis = '35rem';
@@ -136,19 +136,19 @@ export class UiA_AppA {
     async newSubitem() {
         let created = await this.getObject().findContainer().createText('');
         let position = 0;
-        let listA = this.getObject().appA.uiA.content.listA;
+        let listA = this.getObject().appA.uiA.mainColumnData.listA;
         await listA.insertObjectAtPosition(created, position);
-        await this.getObject().appA.uiA.content.uis_update_addedListItem(position);
-        this.focus(this.contentUi.listA.uisOfListItems[position]);
+        await this.getObject().appA.uiA.mainColumnData.uis_update_addedListItem(position);
+        this.focus(this.mainColumnUi.listA.uisOfListItems[position]);
         this.focused.enterEditMode();
     }
 
     async paste() {
         let position = 0;
-        let listA = this.getObject().appA.uiA.content.listA;
+        let listA = this.getObject().appA.uiA.mainColumnData.listA;
         await listA.insertObjectAtPosition(this.getObject().appA.uiA.clipboard, position);
-        await this.contentUi.update_addedListItem(position);
-        this.focus(this.contentUi.listA.uisOfListItems[position]);
+        await this.mainColumnUi.update_addedListItem(position);
+        this.focus(this.mainColumnUi.listA.uisOfListItems[position]);
     }
 
     focus(ui : UiA) {
@@ -285,7 +285,7 @@ export class UiA_AppA {
         let roots = [];
         let profile = this.getApp().profileG.getProfile();
         roots.push(profile);
-        roots.push(...await this.getApp().uiA.content.listA.getResolvedList());
+        roots.push(...await this.getApp().uiA.mainColumnData.listA.getResolvedList());
         let before = profile.containerA.countWithNestedEntities();
         await this.getApp().shakeTree_withMultipleRoots(roots, profile.containerA);
         let deletions = before - profile.containerA.countWithNestedEntities();

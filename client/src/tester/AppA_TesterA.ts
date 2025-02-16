@@ -11,7 +11,7 @@ export class AppA_TesterA {
 
     async run() {
         let run = await this.test.testG_run();
-        this.entity.appA.uiA.content.listA.addDirect(run);
+        this.entity.appA.uiA.mainColumnData.listA.addDirect(run);
     }
 
     createTestForSimpleSoftware() : Entity {

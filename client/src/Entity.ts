@@ -63,7 +63,7 @@ export class Entity {
             collapsible: this.collapsible,
             link: this.link,
             editable: this.editable,
-            content: this.appA?.uiA?.content.json_withoutContainedObjects(),
+            content: this.appA?.uiA?.mainColumnData.json_withoutContainedObjects(),
             context: this.context?.listOfNames
         };
         return obj;
