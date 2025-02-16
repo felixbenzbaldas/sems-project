@@ -51,7 +51,7 @@ export class UiA {
                 this.htmlElement.appendChild(this.listA.htmlElement);
                 if (this.isColumn) {
                     this.columnA_setStyle();
-                    this.columnA_addPlaceholderArea();
+                    this.htmlElement.appendChild(this.createPlaceholderArea());
                 }
             }
         } else {
@@ -92,7 +92,7 @@ export class UiA {
                 this.htmlElement.appendChild(this.listA.htmlElement);
                 if (this.isColumn) {
                     this.columnA_setStyle();
-                    this.columnA_addPlaceholderArea();
+                    this.htmlElement.appendChild(this.createPlaceholderArea());
                 } else {
                     this.fullWidth();
                 }
@@ -111,8 +111,10 @@ export class UiA {
         this.htmlElement.style.overflowX = 'hidden';
     }
 
-    columnA_addPlaceholderArea() {
-        this.htmlElement.appendChild(UiA_AppA.createPlaceholderArea());
+    createPlaceholderArea() : HTMLElement {
+        let placeholderArea = div();
+        placeholderArea.style.height = '85%';
+        return placeholderArea;
     }
 
     wouldProvokeEndlessRecursion() : boolean {

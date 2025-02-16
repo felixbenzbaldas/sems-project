@@ -108,6 +108,7 @@ export class UiA_AppA {
         this.website_scrollableArea.style.overflowY = 'scroll';
         this.website_scrollableArea.style.paddingLeft = '0.2rem';
         this.website_scrollableArea.style.paddingRight = '0.2rem';
+        this.website_scrollableArea.style.flexGrow = '2';
         this.website_scrollableArea.appendChild(this.focusStyle_marker);
         let centerWrapper = div();
         this.website_scrollableArea.appendChild(centerWrapper);
@@ -122,7 +123,7 @@ export class UiA_AppA {
         contentWrapper.style.flexBasis = '35rem';
         contentWrapper.style.flexShrink = '1';
         contentWrapper.style.flexGrow = '0';
-        this.website_scrollableArea.appendChild(UiA_AppA.createPlaceholderArea());
+        this.website_scrollableArea.appendChild(this.entity.uiA.createPlaceholderArea());
         if (app_uiA.webMeta) {
             this.webMetaUi = await this.entity.uiA.createSubUiFor(app_uiA.webMeta);
             this.website_scrollableArea.appendChild(this.webMetaUi.htmlElement);
@@ -178,18 +179,6 @@ export class UiA_AppA {
         setTimeout(()=> {
             textHtmlElement.style.backgroundColor = this.getApp().uiA.theme.secondBackgroundColor;
         }, 800);
-    }
-
-    static createPlaceholderArea() : HTMLElement {
-        let placeholderAreaDiv = div();
-        let updatePlaceholderArea = () => {
-            placeholderAreaDiv.style.height = (window.innerHeight * 0.85) + 'px';
-        };
-        updatePlaceholderArea();
-        window.addEventListener('resize', event => {
-            updatePlaceholderArea();
-        });
-        return placeholderAreaDiv;
     }
 
     private focusStyle_createMarker() : HTMLElement {
