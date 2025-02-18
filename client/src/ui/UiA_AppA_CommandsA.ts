@@ -197,9 +197,9 @@ export class UiA_AppA_CommandsA {
 
     addCommand(text : string, action : Function, ...patterns : Array<InputPattern>) : CommandA {
         let command = this.createAndRegisterCommand();
-        command.inputPatterns.push(...patterns);
-        command.entity.action = action;
         command.entity.text = text;
+        command.entity.action = action;
+        command.inputPatterns.push(...patterns);
         return command;
     }
 
