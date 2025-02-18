@@ -139,12 +139,11 @@ export class UiA_AppA_CommandsA {
         };
         this.focusPrevious.entity.text = 'focus previous';
 
-        this.addCommand(
+        this.focusNext = this.addCommand(
             'focus next',
             async () => {
                 await this.getGlobalEventG().focusNext();
             },
-            command => { this.focusNext = command; },
             this.pattern_viewMode('k'),
             this.pattern(MetaKey.ALT, 'k')
         );
@@ -154,7 +153,6 @@ export class UiA_AppA_CommandsA {
             async () => {
                 await this.getGlobalEventG().toEndOfList();
             },
-            command => {},
             this.pattern_viewMode('l'),
             this.pattern(MetaKey.ALT, 'l')
         );
@@ -164,37 +162,27 @@ export class UiA_AppA_CommandsA {
             async () => {
                 this.getGlobalEventG().leaveEditMode();
             },
-            undefined,
             this.pattern('Escape')
         );
 
-        this.addCommand(
+        this.importProfile = this.addCommand(
             'import profile',
             async () => {
                 await this.getGlobalEventG().importProfile();
-            },
-            command => {
-                this.importProfile = command;
             }
         );
 
-        this.addCommand(
+        this.exportProfile = this.addCommand(
             'export profile',
             async () => {
                 await this.getGlobalEventG().exportProfile();
-            },
-            command => {
-                this.exportProfile = command;
             }
         );
 
-        this.addCommand(
+        this.clear = this.addCommand(
             'clear',
             async () => {
                 await this.getGlobalEventG().clear();
-            },
-            command => {
-                this.clear = command;
             }
         )
 
@@ -203,19 +191,16 @@ export class UiA_AppA_CommandsA {
             async () => {
                 await this.getGlobalEventG().toggleColumn();
             },
-            undefined,
             this.pattern_viewMode('j'), this.pattern('F7')
         )
     }
 
-    addCommand(text : string, action : Function, setField : (command : CommandA) => void, ...patterns : Array<InputPattern>) {
+    addCommand(text : string, action : Function, ...patterns : Array<InputPattern>) : CommandA {
         let command = this.createAndRegisterCommand();
-        if (setField) {
-            setField(command);
-        }
         command.inputPatterns.push(...patterns);
         command.entity.action = action;
         command.entity.text = text;
+        return command;
     }
 
     private getGlobalEventG() {
