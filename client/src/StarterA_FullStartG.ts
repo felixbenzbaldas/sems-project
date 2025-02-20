@@ -79,6 +79,7 @@ export class StarterA_FullStartG {
         starter.getEnvironment().ensureActive(appUi);
         starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
         await starter.createdApp.appA.profileG.createProfile();
+        appUi.focus(appUi.mainColumnUi);
         return appUi.entity.uiA.htmlElement;
     }
     async clientApp() {
@@ -90,6 +91,7 @@ export class StarterA_FullStartG {
         starter.getEnvironment().ensureActive(appUi);
         starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
         await starter.createdApp.appA.profileG.createProfile();
+        appUi.focus(appUi.mainColumnUi);
         return appUi.entity.uiA.htmlElement;
     }
     getStarter() : StarterA {

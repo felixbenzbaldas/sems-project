@@ -233,6 +233,8 @@ export class UiA {
     async defaultAction() {
         if (this.appA) {
             await this.appA.newSubitem();
+        } else if (this.isColumn) {
+            await this.newSubitem();
         } else {
             await this.context.defaultActionOnSubitem(this);
         }
