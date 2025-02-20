@@ -283,6 +283,7 @@ export class UiA_AppA {
     updateStatusBar() {
         this.statusBar.style.backgroundColor = this.getApp().uiA.theme.secondBackgroundColor;
         this.statusBar.style.flexBasis = '1.3rem';
+        this.statusBar.style.flexShrink = '0';
         if (this.getApp().uiA.isWebsite) {
             this.statusBar.style.display = 'none';
         } else {
