@@ -25,8 +25,6 @@ export class UiA_AppA {
     focusStyle_marker: HTMLElement;
     meta_htmlElement: HTMLElement = div();
     supportColumn_freeSpace: Entity;
-    supportColumn_lastFocused : UiA;
-    focusColumn_lastFocused : UiA;
     supportColumnUi: UiA;
 
     constructor(public entity: Entity) {
