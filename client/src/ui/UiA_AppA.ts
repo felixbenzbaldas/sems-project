@@ -15,7 +15,7 @@ export class UiA_AppA {
     input : InputA;
     focused : UiA;
     website_scrollableArea : HTMLElement = div();
-    statusBar: HTMLDivElement = div();
+    statusBar: HTMLElement = div();
     globalEventG: UiA_AppA_GlobalEventG;
     commandsA: UiA_AppA_CommandsA;
     mainColumnUi : UiA;
@@ -46,12 +46,8 @@ export class UiA_AppA {
         this.htmlElement.style.height = '100%';
         this.htmlElement.style.display = 'flex';
         this.htmlElement.style.flexDirection = 'column';
-        if (!app_uiA.isWebsite) {
-            this.htmlElement.appendChild(this.statusBar);
-            this.statusBar.style.backgroundColor = app_uiA.theme.secondBackgroundColor;
-            this.statusBar.style.minHeight = '1.2rem';
-            this.statusBar.style.maxHeight = '1.2rem';
-        }
+        this.updateStatusBar();
+        this.htmlElement.appendChild(this.statusBar);
         this.htmlElement.appendChild(this.meta_htmlElement);
         if (app_uiA.isWebsite) {
             await this.install_website();
@@ -299,5 +295,15 @@ export class UiA_AppA {
         entity.uiA.isColumn = true;
         await entity.uiA.install();
         return entity.uiA;
+    }
+
+    updateStatusBar() {
+        this.statusBar.style.backgroundColor = this.getApp().uiA.theme.secondBackgroundColor;
+        this.statusBar.style.flexBasis = '1.3rem';
+        if (this.getApp().uiA.isWebsite) {
+            this.statusBar.style.display = 'none';
+        } else {
+            this.statusBar.style.display = 'default';
+        }
     }
 }
