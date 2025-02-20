@@ -256,9 +256,13 @@ export class UiA {
             let position = 0;
             let listA = this.getObject().listA;
             await listA.insertPathOrDirectAtPosition(created, position);
-            created.context = created.getPath(this.getObject());
+            if (notNullUndefined(this.getObject().text)) {
+                created.context = created.getPath(this.getObject());
+            }
             await listA.entity.uis_update_addedListItem(position);
-            await this.ensureExpanded();
+            if (!this.isPlainList()) {
+                await this.ensureExpanded();
+            }
             this.findAppUi().focus(this.entity.uiA.listA.uisOfListItems[position]);
             this.findAppUi().focused.enterEditMode();
         }
