@@ -63,6 +63,7 @@ export class UiA_AppA {
             }
             this.supportColumn_freeSpace = await this.getApp().createList();
             this.supportColumn_freeSpace_ui = await app_uiA.createUiFor(this.supportColumn_freeSpace, true);
+            this.supportColumn_freeSpace_ui.useProfileContainer = true;
             uiElementsForSupportColumn.push(this.supportColumn_freeSpace_ui);
             this.supportColumnUi = await this.createColumn(...uiElementsForSupportColumn);
             columnsDiv.appendChild(this.supportColumnUi.htmlElement);
@@ -71,6 +72,7 @@ export class UiA_AppA {
             this.supportColumnUi.htmlElement.style.scrollbarWidth = 'thin';
             this.mainColumnUi = await this.createColumnFor(app_uiA.mainColumnData);
             this.mainColumnUi.context = this.entity.uiA;
+            this.mainColumnUi.useProfileContainer = true;
             columnsDiv.appendChild(this.mainColumnUi.htmlElement);
             this.mainColumnUi.htmlElement.style.flexBasis = '40rem';
             columnsDiv.appendChild(dummyDiv(50));

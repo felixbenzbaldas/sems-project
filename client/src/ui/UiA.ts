@@ -34,7 +34,7 @@ export class UiA {
     editMode : boolean;
     isColumn : boolean;
     lastFocused : UiA;
-    containerForNewSubitem : ContainerA;
+    useProfileContainer : boolean;
 
     constructor(public entity : Entity) {
         this.reset();
@@ -273,8 +273,8 @@ export class UiA {
     }
 
     findContainerForNewSubitem() : ContainerA {
-        if (this.containerForNewSubitem) {
-            return this.containerForNewSubitem;
+        if (this.useProfileContainer) {
+            return this.entity.getApp_typed().profileG.getProfile().containerA;
         } else {
             return this.getObject().findContainer();
         }
