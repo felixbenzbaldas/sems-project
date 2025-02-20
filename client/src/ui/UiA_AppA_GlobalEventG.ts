@@ -157,12 +157,13 @@ export class UiA_AppA_GlobalEventG {
 
     async importProfile() {
         await this.getApp().profileG.importProfile(JSON.parse(this.getAppUi().input.get()));
-        this.getAppUi().mainColumnUi.containerForNewSubitem = this.getApp().profileG.getProfile().containerA;
-        this.getAppUi().supportColumn_freeSpace_ui.containerForNewSubitem = this.getApp().profileG.getProfile().containerA;
+        let profile = this.getApp().profileG.getProfile();
+        this.getAppUi().mainColumnUi.containerForNewSubitem = profile.containerA;
+        this.getAppUi().supportColumn_freeSpace_ui.containerForNewSubitem = profile.containerA;
         this.getAppUi().focus(this.getAppUi().mainColumnUi.listA.uisOfListItems[0]);
         await this.getAppUi().input.clear();
         await this.getAppUi().input.ui.uiA.ensureCollapsed();
-        let rootProperty = await this.entity.getApp_typed().profileG.getProfile().listA.findByText('#root');
+        let rootProperty = await profile.listA.findByText('#root');
         if (rootProperty) {
             let root = await rootProperty.listA.getResolved(0);
             await this.entity.uiA.appA.supportColumn_freeSpace.listA.add(root);
