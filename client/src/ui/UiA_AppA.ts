@@ -25,6 +25,7 @@ export class UiA_AppA {
     focusStyle_marker: HTMLElement;
     meta_htmlElement: HTMLElement = div();
     supportColumn_freeSpace: Entity;
+    supportColumn_freeSpace_ui : UiA;
     supportColumnUi: UiA;
 
     constructor(public entity: Entity) {
@@ -61,8 +62,8 @@ export class UiA_AppA {
                 uiElementsForSupportColumn.push(await this.createMeta());
             }
             this.supportColumn_freeSpace = await this.getApp().createList();
-            let supportColumn_freeSpace_ui = await app_uiA.createUiFor(this.supportColumn_freeSpace, true);
-            uiElementsForSupportColumn.push(supportColumn_freeSpace_ui);
+            this.supportColumn_freeSpace_ui = await app_uiA.createUiFor(this.supportColumn_freeSpace, true);
+            uiElementsForSupportColumn.push(this.supportColumn_freeSpace_ui);
             this.supportColumnUi = await this.createColumn(...uiElementsForSupportColumn);
             columnsDiv.appendChild(this.supportColumnUi.htmlElement);
             this.supportColumnUi.context = this.entity.uiA;

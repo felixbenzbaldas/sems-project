@@ -8,6 +8,7 @@ import {UiA_HeaderBodyG} from "@/ui/UiA_HeaderBodyG";
 import {UiA_TestRunG} from "@/ui/UiA_TestRunG";
 import {UiA_AppA} from "@/ui/UiA_AppA";
 import {UiA_ImageA} from "@/ui/UiA_ImageA";
+import type {ContainerA} from "@/ContainerA";
 
 export class UiA {
 
@@ -33,6 +34,7 @@ export class UiA {
     editMode : boolean;
     isColumn : boolean;
     lastFocused : UiA;
+    containerForNewSubitem : ContainerA;
 
     constructor(public entity : Entity) {
         this.reset();
@@ -252,7 +254,7 @@ export class UiA {
             if (!this.getObject().listA) {
                 this.getObject().installListA();
             }
-            let created = await this.getObject().findContainer().createText('');
+            let created = await this.findContainerForNewSubitem().createText('');
             let position = 0;
             let listA = this.getObject().listA;
             await listA.insertPathOrDirectAtPosition(created, position);
@@ -265,6 +267,14 @@ export class UiA {
             }
             this.findAppUi().focus(this.entity.uiA.listA.uisOfListItems[position]);
             this.findAppUi().focused.enterEditMode();
+        }
+    }
+
+    findContainerForNewSubitem() : ContainerA {
+        if (this.containerForNewSubitem) {
+            return this.containerForNewSubitem;
+        } else {
+            return this.getObject().findContainer();
         }
     }
 

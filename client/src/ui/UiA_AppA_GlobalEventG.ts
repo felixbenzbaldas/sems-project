@@ -157,6 +157,8 @@ export class UiA_AppA_GlobalEventG {
 
     async importProfile() {
         await this.getApp().profileG.importProfile(JSON.parse(this.getAppUi().input.get()));
+        this.getAppUi().mainColumnUi.containerForNewSubitem = this.getApp().profileG.getProfile().containerA;
+        this.getAppUi().supportColumn_freeSpace_ui.containerForNewSubitem = this.getApp().profileG.getProfile().containerA;
         this.getAppUi().focus(this.getAppUi().mainColumnUi.listA.uisOfListItems[0]);
         await this.getAppUi().input.clear();
         await this.getAppUi().input.ui.uiA.ensureCollapsed();
