@@ -34,110 +34,125 @@ export class UiA_AppA_CommandsA {
     }
 
     installCommands() {
-        this.defaultAction = this.createAndRegisterCommand();
-        this.defaultAction.inputPatterns.push(this.pattern('Enter'));
-        this.defaultAction.entity.action = async () => {
-            await this.getGlobalEventG().defaultAction();
-        };
-        this.defaultAction.entity.text = 'default action';
+        this.defaultAction = this.addCommand(
+            'default action',
+            async () => {
+                await this.getGlobalEventG().defaultAction();
+            },
+            this.pattern('Enter')
+        );
 
-        this.newSubitem = this.createAndRegisterCommand();
-        this.newSubitem.inputPatterns.push(this.pattern(MetaKey.ALT, 'Enter'), this.pattern('Tab'));
-        this.newSubitem.entity.action = async () => {
-            await this.getGlobalEventG().newSubitem();
-        };
-        this.newSubitem.entity.text = 'new subitem';
+        this.newSubitem = this.addCommand(
+            'new subitem',
+            async () => {
+                await this.getGlobalEventG().newSubitem();
+            },
+            this.pattern(MetaKey.ALT, 'Enter'), this.pattern('Tab')
+        );
 
-        this.toggleCollapsible = this.createAndRegisterCommand();
-        this.toggleCollapsible.inputPatterns.push(this.pattern(MetaKey.CTRL, 'f'), this.pattern_viewMode('c'), this.pattern('F10'));
-        this.toggleCollapsible.entity.action = async () => {
-            await this.getGlobalEventG().toggleCollapsible();
-        };
-        this.toggleCollapsible.entity.text = 'toggle collapsible';
+        this.toggleCollapsible = this.addCommand(
+            'toggle collapsible',
+            async () => {
+                await this.getGlobalEventG().toggleCollapsible();
+            },
+            this.pattern(MetaKey.CTRL, 'f'), this.pattern_viewMode('c'), this.pattern('F10'),
+        );
 
-        this.scaleDown = this.createAndRegisterCommand();
-        this.scaleDown.inputPatterns.push(this.pattern(MetaKey.CTRL, 'e'), this.pattern_viewMode('e'));
-        this.scaleDown.entity.action = async () => {
-            await this.getGlobalEventG().scaleDown();
-        };
-        this.scaleDown.entity.text = 'scale down';
+        this.scaleDown = this.addCommand(
+            'scale down',
+            async () => {
+                await this.getGlobalEventG().scaleDown();
+            },
+            this.pattern(MetaKey.CTRL, 'e'), this.pattern_viewMode('e')
+        );
 
-        this.scaleUp = this.createAndRegisterCommand();
-        this.scaleUp.inputPatterns.push(this.pattern(MetaKey.CTRL, 'd'), this.pattern_viewMode('d'));
-        this.scaleUp.entity.action = async () => {
-            await this.getGlobalEventG().scaleUp();
-        };
-        this.scaleUp.entity.text = 'scale up';
+        this.scaleUp = this.addCommand(
+            'scale up',
+            async () => {
+                await this.getGlobalEventG().scaleUp();
+            },
+            this.pattern(MetaKey.CTRL, 'd'), this.pattern_viewMode('d')
+        );
 
-        this.toggleContext = this.createAndRegisterCommand();
-        this.toggleContext.inputPatterns.push(this.pattern(MetaKey.CTRL, 'g'), this.pattern_viewMode('g'));
-        this.toggleContext.entity.action = async () => {
-            await this.getGlobalEventG().toggleContext();
-        };
-        this.toggleContext.entity.text = 'toggle context';
+        this.toggleContext = this.addCommand(
+            'toggle context',
+            async () => {
+                await this.getGlobalEventG().toggleContext();
+            },
+            this.pattern(MetaKey.CTRL, 'g'), this.pattern_viewMode('g')
+        );
 
-        this.mark = this.createAndRegisterCommand();
-        this.mark.inputPatterns.push(this.pattern('F1'), this.pattern_viewMode('m'));
-        this.mark.entity.action = async () => {
-            await this.getGlobalEventG().mark();
-        };
-        this.mark.entity.text = 'mark';
+        this.mark = this.addCommand(
+            'mark',
+            async () => {
+                await this.getGlobalEventG().mark();
+            },
+            this.pattern('F1'), this.pattern_viewMode('m')
+        );
 
-        this.cut = this.createAndRegisterCommand();
-        this.cut.inputPatterns.push(this.pattern('F2'));
-        this.cut.entity.action = async () => {
-            await this.getGlobalEventG().cut();
-        };
-        this.cut.entity.text = 'cut';
+        this.cut = this.addCommand(
+            'cut',
+            async () => {
+                await this.getGlobalEventG().cut();
+            },
+            this.pattern('F2')
+        );
 
-        this.pasteNext = this.createAndRegisterCommand();
-        this.pasteNext.inputPatterns.push(this.pattern('F3'));
-        this.pasteNext.entity.action = async () => {
-            await this.getGlobalEventG().pasteNext();
-        };
-        this.pasteNext.entity.text = 'paste next';
+        this.pasteNext = this.addCommand(
+            'paste next',
+            async () => {
+                await this.getGlobalEventG().pasteNext();
+            },
+            this.pattern('F3'),
+        );
 
-        this.paste = this.createAndRegisterCommand();
-        this.paste.inputPatterns.push(this.pattern('F4'));
-        this.paste.entity.action = async () => {
-            await this.getGlobalEventG().paste();
-        };
-        this.paste.entity.text = 'paste';
+        this.paste = this.addCommand(
+            'paste',
+            async () => {
+                await this.getGlobalEventG().paste();
+            },
+            this.pattern('F4')
+        );
 
-        this.focusUiContext = this.createAndRegisterCommand();
-        this.focusUiContext.inputPatterns.push(this.pattern(MetaKey.CTRL, 'o'), this.pattern_viewMode('o'));
-        this.focusUiContext.entity.action = async () => {
-            await this.getGlobalEventG().focusUiContext();
-        };
-        this.focusUiContext.entity.text = 'focus ui context';
+        this.focusUiContext = this.addCommand(
+            'focus ui context',
+            async () => {
+                await this.getGlobalEventG().focusUiContext();
+            },
+            this.pattern(MetaKey.CTRL, 'o'), this.pattern_viewMode('o')
+        );
 
-        this.deepCopy = this.createAndRegisterCommand();
-        this.deepCopy.inputPatterns.push(this.pattern(MetaKey.CTRL, MetaKey.SHIFT, MetaKey.ALT, 'c'));
-        this.deepCopy.entity.action = async () => {
-            await this.getGlobalEventG().deepCopy();
-        };
-        this.deepCopy.entity.text = 'deep copy (marked object will be copied into focused container)';
+        this.deepCopy = this.addCommand(
+            'deep copy (marked object will be copied into focused container)',
+            async () => {
+                await this.getGlobalEventG().deepCopy();
+            },
+            this.pattern(MetaKey.CTRL, MetaKey.SHIFT, MetaKey.ALT, 'c')
+        );
 
-        this.shakeTree = this.createAndRegisterCommand();
-        this.shakeTree.inputPatterns.push(this.pattern(MetaKey.CTRL, MetaKey.SHIFT, MetaKey.ALT, 'q'));
-        this.shakeTree.entity.action = async () => {
-            await this.getGlobalEventG().shakeTree();
-        };
-        this.shakeTree.entity.text = 'shake tree';
+        this.shakeTree = this.addCommand(
+            'shake tree',
+            async () => {
+                await this.getGlobalEventG().shakeTree();
+            },
+            this.pattern(MetaKey.CTRL, MetaKey.SHIFT, MetaKey.ALT, 'q')
+        );
 
-        this.editMode = this.createAndRegisterCommand();
-        this.editMode.inputPatterns.push(this.pattern(MetaKey.CTRL, 'i'), this.pattern('F12'));
-        this.editMode.entity.action = async () => {
-            await this.getGlobalEventG().editMode();
-        };
-        this.editMode.entity.text = 'enter edit mode';
+        this.editMode = this.addCommand(
+            'enter edit mode',
+            async () => {
+                await this.getGlobalEventG().editMode();
+            },
+            this.pattern(MetaKey.CTRL, 'i'), this.pattern('F12')
+        );
 
-        this.focusPrevious = this.createAndRegisterCommand();
-        this.focusPrevious.inputPatterns.push(this.pattern_viewMode('i'), this.pattern(MetaKey.ALT, 'i'));
-        this.focusPrevious.entity.action = async () => {
-            await this.getGlobalEventG().focusPrevious();
-        };
-        this.focusPrevious.entity.text = 'focus previous';
+        this.focusPrevious = this.addCommand(
+            'focus previous',
+            async () => {
+                await this.getGlobalEventG().focusPrevious();
+            },
+            this.pattern_viewMode('i'), this.pattern(MetaKey.ALT, 'i')
+        );
 
         this.focusNext = this.addCommand(
             'focus next',
