@@ -205,7 +205,7 @@ export class UiA {
 
     updateFocusStyle() {
         if (this.appA) {
-            this.appA.focusStyle_update();
+            // do nothing
         } else {
             this.headerG.focusStyle_update();
         }

@@ -29,7 +29,6 @@ export class UiA_AppA {
 
     constructor(public entity: Entity) {
         this.globalEventG = new UiA_AppA_GlobalEventG(entity);
-        this.focusStyle_marker = this.focusStyle_createMarker();
     }
 
     async install(showMeta? : boolean) : Promise<void> {
@@ -40,7 +39,6 @@ export class UiA_AppA {
         if (!app_uiA.isWebsite) {
             this.focused = this.entity.uiA;
         }
-        this.focusStyle_update();
         this.htmlElement.style.backgroundColor = app_uiA.theme.backgroundColor;
         this.htmlElement.style.color = app_uiA.theme.fontColor;
         this.htmlElement.style.height = '100%';
@@ -103,7 +101,6 @@ export class UiA_AppA {
         this.website_scrollableArea.style.paddingLeft = '0.2rem';
         this.website_scrollableArea.style.paddingRight = '0.2rem';
         this.website_scrollableArea.style.flexGrow = '2';
-        this.website_scrollableArea.appendChild(this.focusStyle_marker);
         let centerWrapper = div();
         this.website_scrollableArea.appendChild(centerWrapper);
         centerWrapper.appendChild(dummyDiv(35));
@@ -173,20 +170,6 @@ export class UiA_AppA {
         setTimeout(()=> {
             textHtmlElement.style.backgroundColor = this.getApp().uiA.theme.secondBackgroundColor;
         }, 800);
-    }
-
-    private focusStyle_createMarker() : HTMLElement {
-        let divElement = div();
-        divElement.style.height = '0.2rem';
-        return divElement;
-    }
-
-    focusStyle_update() {
-        if (this.focused === this.entity.uiA && this.isActive()) {
-            this.focusStyle_marker.style.backgroundColor = this.getApp().uiA.theme.focusBorderColor_viewMode;
-        } else {
-            this.focusStyle_marker.style.backgroundColor = this.getApp().uiA.theme.backgroundColor;
-        }
     }
 
     ensureContainer_AndUpdateStyle(entity: Entity) {
