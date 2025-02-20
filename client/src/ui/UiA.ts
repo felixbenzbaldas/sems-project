@@ -204,10 +204,15 @@ export class UiA {
     }
 
     updateFocusStyle() {
-        if (this.appA) {
-            // do nothing
-        } else {
+        if (this.isHeaderBody()) {
             this.headerG.focusStyle_update();
+        } else {
+            if (this.hasFocus() && this.findAppUi().isActive()) {
+                this.htmlElement.style.border = 'solid';
+                this.htmlElement.style.borderColor = this.entity.getApp_typed().uiA.theme.focusBorderColor_viewMode;
+            } else {
+                this.htmlElement.style.border = 'none';
+            }
         }
     }
 
