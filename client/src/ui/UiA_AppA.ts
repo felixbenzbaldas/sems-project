@@ -128,16 +128,6 @@ export class UiA_AppA {
         return this.entity.uiA.getObject();
     }
 
-    async newSubitem() {
-        let created = await this.getObject().findContainer().createText('');
-        let position = 0;
-        let listA = this.getObject().appA.uiA.mainColumnData.listA;
-        await listA.insertObjectAtPosition(created, position);
-        await this.getObject().appA.uiA.mainColumnData.uis_update_addedListItem(position);
-        this.focus(this.mainColumnUi.listA.uisOfListItems[position]);
-        this.focused.enterEditMode();
-    }
-
     async paste() {
         let position = 0;
         let listA = this.getObject().appA.uiA.mainColumnData.listA;

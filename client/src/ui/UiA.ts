@@ -231,9 +231,7 @@ export class UiA {
     }
 
     async defaultAction() {
-        if (this.appA) {
-            await this.appA.newSubitem();
-        } else if (this.isColumn) {
+        if (this.isColumn) {
             await this.newSubitem();
         } else {
             await this.context.defaultActionOnSubitem(this);
@@ -249,27 +247,22 @@ export class UiA {
     }
 
     async newSubitem() {
-        this.entity.log('newSubitem');
-        if (this.appA) {
-            await this.appA.newSubitem();
-        } else {
-            if (!this.getObject().listA) {
-                this.getObject().installListA();
-            }
-            let created = await this.findContainerForNewSubitem().createText('');
-            let position = 0;
-            let listA = this.getObject().listA;
-            await listA.insertPathOrDirectAtPosition(created, position);
-            if (notNullUndefined(this.getObject().text)) {
-                created.context = created.getPath(this.getObject());
-            }
-            await listA.entity.uis_update_addedListItem(position);
-            if (!this.isPlainList()) {
-                await this.ensureExpanded();
-            }
-            this.findAppUi().focus(this.entity.uiA.listA.uisOfListItems[position]);
-            this.findAppUi().focused.enterEditMode();
+        if (!this.getObject().listA) {
+            this.getObject().installListA();
         }
+        let created = await this.findContainerForNewSubitem().createText('');
+        let position = 0;
+        let listA = this.getObject().listA;
+        await listA.insertPathOrDirectAtPosition(created, position);
+        if (notNullUndefined(this.getObject().text)) {
+            created.context = created.getPath(this.getObject());
+        }
+        await listA.entity.uis_update_addedListItem(position);
+        if (!this.isPlainList()) {
+            await this.ensureExpanded();
+        }
+        this.findAppUi().focus(this.entity.uiA.listA.uisOfListItems[position]);
+        this.findAppUi().focused.enterEditMode();
     }
 
     findContainerForNewSubitem() : ContainerA {
