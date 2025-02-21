@@ -77,7 +77,7 @@ export class UiA_HeaderG {
 
     async updateContent() {
         this.content.innerHTML = null;
-        if (this.getObject().action) {
+        if (this.getObject().codeG_jsFunction) {
             this.content.appendChild(this.action_getUiElement());
         } else if (notNullUndefined(this.getObject().link)) {
             let link = document.createElement('a');
@@ -110,7 +110,7 @@ export class UiA_HeaderG {
     }
 
     ownRow() : boolean {
-        return !this.getObject().action;
+        return !this.getObject().codeG_jsFunction;
     }
     
     action_getUiElement() {
@@ -118,7 +118,7 @@ export class UiA_HeaderG {
         button.innerText = this.getObject().text;
         button.onclick = (event) => {
             this.getUiA().findAppUi().ensureActive();
-            this.getObject().action();
+            this.getObject().codeG_jsFunction.call(null);
             event.stopPropagation();
         };
         button.style.margin = '0.3rem 0.3rem 0.3rem 0rem';

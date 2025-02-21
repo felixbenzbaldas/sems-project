@@ -53,7 +53,7 @@ export class AppA_UnboundG {
     createButton(label : string, func : Function) : Entity {
         let button = this.entity.appA.createEntityWithApp();
         button.text = label;
-        button.action = func;
+        button.codeG_jsFunction = func;
         return button;
     }
 

@@ -213,7 +213,7 @@ export class UiA_AppA_CommandsA {
     addCommand(text : string, action : Function, ...patterns : Array<InputPattern>) : CommandA {
         let command = this.createAndRegisterCommand();
         command.entity.text = text;
-        command.entity.action = action;
+        command.entity.codeG_jsFunction = action;
         command.inputPatterns.push(...patterns);
         return command;
     }
@@ -258,7 +258,7 @@ export class UiA_AppA_CommandsA {
         for (let trigger of triggers) {
             let compareString = trigger.createCompareString();
             if (this.mapInputPatternToCommand.has(compareString)) {
-                await this.mapInputPatternToCommand.get(compareString).entity.action();
+                await this.mapInputPatternToCommand.get(compareString).entity.codeG_jsFunction.call(null);
             }
         }
     }

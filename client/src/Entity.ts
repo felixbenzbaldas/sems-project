@@ -17,7 +17,6 @@ export class Entity {
     text: string;
     link: string;
     app: Entity;
-    action: Function;
     editable: boolean;
     collapsible: boolean;
     codeG_html: HTMLElement;
@@ -27,9 +26,7 @@ export class Entity {
     installCommandA() {
         this.commandA = new CommandA(this);
     }
-
     codeG_jsFunction: Function;
-
     listA: ListA;
     installListA() {
         this.listA = new ListA(this);
@@ -49,7 +46,6 @@ export class Entity {
     installTestRunA() {
         this.testRunA = new TestRunA(this);
     }
-
     testG_nestedTestsA : TestG_NestedTestsA;
     testG_installNestedTestsA() {
         this.testG_nestedTestsA = new TestG_NestedTestsA(this);
