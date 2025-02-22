@@ -37,13 +37,12 @@ export class UiA {
     useProfileContainer : boolean;
 
     constructor(public entity : Entity) {
-        this.withObjectA_reset();
+        this.headerBodyG = new UiA_HeaderBodyG(this.entity);
+        this.textG = new UiA_TextG(this.entity);
+        this.headerG = new UiA_HeaderG(this.entity);
+        this.bodyG = new UiA_BodyG(this.entity);
+        this.testRunG = new UiA_TestRunG(this.entity);
         this.htmlElement.classList.add('UI');
-    }
-
-    async withObjectA_update(source? : boolean) {
-        this.withObjectA_reset();
-        await this.withObjectA_install(source);
     }
 
     async install(source? : boolean) {
@@ -59,6 +58,11 @@ export class UiA {
         } else {
             await this.withObjectA_install(source);
         }
+    }
+
+    async withObjectA_update(source? : boolean) {
+        this.withObjectA_reset();
+        await this.withObjectA_install(source);
     }
 
     async withObjectA_install(source? : boolean) {
@@ -151,6 +155,7 @@ export class UiA {
 
     withObjectA_reset() {
         this.resetHtmlElement();
+        // TODO use aspects not groups?
         this.headerBodyG = new UiA_HeaderBodyG(this.entity);
         this.textG = new UiA_TextG(this.entity);
         this.headerG = new UiA_HeaderG(this.entity);
