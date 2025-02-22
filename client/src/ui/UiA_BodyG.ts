@@ -138,7 +138,7 @@ export class UiA_BodyG {
                 list.push(this.contextAsSubitemUi);
             }
             if (this.getUiA().listA) {
-                list.push(...this.getUiA().listA.uisOfListItems);
+                list.push(...this.getUiA().listA.elements);
             }
         }
         return list;

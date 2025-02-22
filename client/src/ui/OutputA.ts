@@ -21,7 +21,7 @@ export class OutputA {
         let uiData = app.unboundG.createTextWithList('output',
             outputA.outputDownload,
             app.unboundG.createButton('select', () => {
-                selectAllTextOfDiv(outputA.ui.uiA.listA.uisOfListItems[2].textG.htmlElement);
+                selectAllTextOfDiv(outputA.ui.uiA.listA.elements[2].textG.htmlElement);
             }), outputA.output);
         uiData.collapsible = true;
         outputA.ui = (await entity.uiA.createSubUiFor(uiData)).entity;

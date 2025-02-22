@@ -266,7 +266,7 @@ export class UiA {
         if (!this.isPlainList()) {
             await this.ensureExpanded();
         }
-        this.findAppUi().focus(this.entity.uiA.listA.uisOfListItems[position]);
+        this.findAppUi().focus(this.entity.uiA.listA.elements[position]);
         this.findAppUi().focused.enterEditMode();
     }
 
@@ -295,7 +295,7 @@ export class UiA {
         await this.entity.getApp_typed().profileG.addToLastRemoved(obj);
         appA_uiA.clipboard = obj;
         let uiContext = this.context;
-        let uiListItems = uiContext.listA.uisOfListItems;
+        let uiListItems = uiContext.listA.elements;
         let position = uiListItems.indexOf(this);
         let uiContextObj = uiContext.getObject();
         if (this.objectHasContext() && await this.inContext()) {
@@ -323,7 +323,7 @@ export class UiA {
         let position = 0;
         await appUi.insertClipboardAtPosition(this.getObject(), position);
         await this.ensureExpanded();
-        this.findAppUi().focus(this.entity.uiA.listA.uisOfListItems[position]);
+        this.findAppUi().focus(this.entity.uiA.listA.elements[position]);
     }
 
     async toggleCollapsible() {
@@ -536,7 +536,7 @@ export class UiA {
         if (this.isHeaderBody()) {
             return this.bodyG.getListOfChildren();
         } else if (this.isPlainList()) {
-            return this.listA.uisOfListItems;
+            return this.listA.elements;
         }
     }
 
@@ -643,8 +643,8 @@ export class UiA {
         if (this.lastFocused) {
             this.lastFocused.focus();
         } else {
-            if (this.listA.uisOfListItems.length > 0) {
-                this.listA.uisOfListItems[0].focus();
+            if (this.listA.elements.length > 0) {
+                this.listA.elements[0].focus();
             } else {
                 this.focus();
             }

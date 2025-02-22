@@ -133,7 +133,7 @@ export class UiA_AppA {
         let listA = this.getObject().appA.uiA.mainColumnData.listA;
         await listA.insertObjectAtPosition(this.getObject().appA.uiA.clipboard, position);
         await this.mainColumnUi.update_addedListItem(position);
-        this.focus(this.mainColumnUi.listA.uisOfListItems[position]);
+        this.focus(this.mainColumnUi.listA.elements[position]);
     }
 
     focus(ui : UiA) {
@@ -267,7 +267,7 @@ export class UiA_AppA {
         for (let ui of uiElements) {
             ui.context = entity.uiA;
         }
-        list.uisOfListItems = [...uiElements];
+        list.elements = [...uiElements];
         entity.uiA.isColumn = true;
         await entity.uiA.install();
         return entity.uiA;

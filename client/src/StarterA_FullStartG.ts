@@ -32,7 +32,7 @@ export class StarterA_FullStartG {
         let appUi = await starter.createdApp.appA.uiA.createAppUi();
         starter.checkTestMode();
         starter.getEnvironment().ensureActive(appUi);
-        await appUi.presentationModeA_contentUi.listA.uisOfListItems[0].ensureExpanded();
+        await appUi.presentationModeA_contentUi.listA.elements[0].ensureExpanded();
         return appUi.entity.uiA.htmlElement;
     }
     async testRun() {
@@ -65,9 +65,9 @@ export class StarterA_FullStartG {
         }
         let appUi = await starter.createdApp.appA.uiA.createAppUi();
         starter.getEnvironment().ensureActive(appUi);
-        let length = appUi.presentationModeA_contentUi.listA.uisOfListItems.length;
+        let length = appUi.presentationModeA_contentUi.listA.elements.length;
         if (length === 1 || length === 2) {
-            await appUi.presentationModeA_contentUi.listA.uisOfListItems[0].ensureExpanded();
+            await appUi.presentationModeA_contentUi.listA.elements[0].ensureExpanded();
         }
         return appUi.entity.uiA.htmlElement;
     }

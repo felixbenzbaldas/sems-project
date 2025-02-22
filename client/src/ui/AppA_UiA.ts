@@ -67,7 +67,7 @@ export class AppA_UiA {
         for (let ui of uis) {
             ui.context = entity.uiA;
         }
-        list.uisOfListItems = [...uis];
+        list.elements = [...uis];
         await entity.uiA.install();
         return entity.uiA;
     }

@@ -158,7 +158,7 @@ export class UiA_AppA_GlobalEventG {
     async importProfile() {
         await this.getApp().profileG.importProfile(JSON.parse(this.getAppUi().input.get()));
         let profile = this.getApp().profileG.getProfile();
-        this.getAppUi().focus(this.getAppUi().mainColumnUi.listA.uisOfListItems[0]);
+        this.getAppUi().focus(this.getAppUi().mainColumnUi.listA.elements[0]);
         await this.getAppUi().input.clear();
         await this.getAppUi().input.ui.uiA.ensureCollapsed();
         let rootProperty = await profile.listA.findByText('#root');
