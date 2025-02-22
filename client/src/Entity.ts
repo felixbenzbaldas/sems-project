@@ -228,7 +228,7 @@ export class Entity {
 
     async uis_update() {
         for (let ui of this.getAllUis()) {
-            await ui.update();
+            await ui.withObjectA_update();
         }
     }
 

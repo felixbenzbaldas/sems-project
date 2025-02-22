@@ -37,13 +37,13 @@ export class UiA {
     useProfileContainer : boolean;
 
     constructor(public entity : Entity) {
-        this.reset();
+        this.withObjectA_reset();
         this.htmlElement.classList.add('UI');
     }
 
-    async update(source? : boolean) {
-        this.reset();
-        await this.install(source);
+    async withObjectA_update(source? : boolean) {
+        this.withObjectA_reset();
+        await this.withObjectA_install(source);
     }
 
     async install(source? : boolean) {
@@ -57,11 +57,11 @@ export class UiA {
                 }
             }
         } else {
-            await this.install_withObject(source);
+            await this.withObjectA_install(source);
         }
     }
 
-    async install_withObject(source? : boolean) {
+    async withObjectA_install(source? : boolean) {
         if (this.wouldProvokeEndlessRecursion()) {
             this.fullWidth();
             let warningText = 'This item cannot be displayed. It contains itself. ' +
@@ -72,7 +72,7 @@ export class UiA {
                 this.entity.getApp_typed().unboundG.createButton('make collapsible', async () => {
                     this.getObject().collapsible = true;
                     await this.getObject().uis_update_collapsible();
-                    await this.update();
+                    await this.withObjectA_update();
                 })
             );
             let ui = await this.createSubUiFor(data);
@@ -149,7 +149,7 @@ export class UiA {
         this.htmlElement.style.minWidth = '100%';
     }
 
-    reset() {
+    withObjectA_reset() {
         this.resetHtmlElement();
         this.headerBodyG = new UiA_HeaderBodyG(this.entity);
         this.textG = new UiA_TextG(this.entity);

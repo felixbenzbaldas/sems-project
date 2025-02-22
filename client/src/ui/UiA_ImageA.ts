@@ -32,7 +32,7 @@ export class UiA_ImageA {
         }
         this.imgElement.oncontextmenu = (ev) => {
             ev.preventDefault();
-            this.entity.uiA.update(true);
+            this.entity.uiA.withObjectA_update(true);
         }
     }
 }
