@@ -14,13 +14,10 @@ export class UiA_ListA {
     }
 
     async update() {
-        this.htmlElement.innerHTML = null;
         if (this.entity.uiA.object) {
             await this.updateElementsFromObject();
         }
-        for (let ui of this.elements) {
-            this.htmlElement.appendChild(ui.htmlElement);
-        }
+        this.updateFromElements();
     }
 
     private async updateElementsFromObject() {
@@ -28,6 +25,13 @@ export class UiA_ListA {
         for (let currentResolved of await this.getObject().listA.getResolvedList()) {
             let currentUi = await this.createSubUiFor(currentResolved);
             this.elements.push(currentUi);
+        }
+    }
+
+    updateFromElements() {
+        this.htmlElement.innerHTML = null;
+        for (let ui of this.elements) {
+            this.htmlElement.appendChild(ui.htmlElement);
         }
     }
 
