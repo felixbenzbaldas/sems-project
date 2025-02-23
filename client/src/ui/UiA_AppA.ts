@@ -124,18 +124,6 @@ export class UiA_AppA {
         }
     }
 
-    getObject() : Entity {
-        return this.entity.uiA.getObject();
-    }
-
-    async paste() {
-        let position = 0;
-        let listA = this.getObject().appA.uiA.mainColumnData.listA;
-        await listA.insertObjectAtPosition(this.getObject().appA.uiA.clipboard, position);
-        await this.mainColumnUi.update_addedListItem(position);
-        this.focus(this.mainColumnUi.listA.elements[position]);
-    }
-
     focus(ui : UiA) {
         if (ui !== this.focused) {
             let focusedPrevious = this.focused;
