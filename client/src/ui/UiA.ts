@@ -224,10 +224,8 @@ export class UiA {
     }
 
     takeCaret() {
-        if (!this.entity.appA) {
-            if (notNullUndefined(this.object) && notNullUndefined(this.object.text)) {
-                this.textG.takeCaret();
-            }
+        if (notNullUndefined(this.object) && notNullUndefined(this.object.text)) {
+            this.textG.takeCaret();
         }
     }
 
