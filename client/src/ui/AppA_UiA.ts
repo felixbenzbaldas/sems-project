@@ -32,11 +32,9 @@ export class AppA_UiA {
 
     async createAppUi(editable? : boolean, withMeta? : boolean) : Promise<UiA_AppA> {
         let ui = this.createUi();
-        ui.htmlElement.style.height = '100%';
         ui.editable = editable;
         ui.appA = new UiA_AppA(ui.entity);
         await ui.appA.install(withMeta);
-        ui.htmlElement.appendChild(ui.appA.htmlElement);
         return ui.appA;
     }
 

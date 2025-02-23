@@ -9,7 +9,7 @@ import {UiA_AppA_CommandsA} from "@/ui/UiA_AppA_CommandsA";
 
 export class UiA_AppA {
 
-    htmlElement: HTMLElement = div();
+    htmlElement: HTMLElement;
 
     output : OutputA;
     input : InputA;
@@ -30,6 +30,7 @@ export class UiA_AppA {
 
     constructor(public entity: Entity) {
         this.globalEventG = new UiA_AppA_GlobalEventG(entity);
+        this.htmlElement = entity.uiA.htmlElement;
     }
 
     async install(showMeta? : boolean) : Promise<void> {
@@ -37,9 +38,6 @@ export class UiA_AppA {
         this.commandsA = new UiA_AppA_CommandsA(this.entity);
         this.commandsA.installCommands();
         this.commandsA.installMapForInputPatterns();
-        if (!app_uiA.isWebsite) {
-            this.focused = this.entity.uiA;
-        }
         this.htmlElement.style.backgroundColor = app_uiA.theme.backgroundColor;
         this.htmlElement.style.color = app_uiA.theme.fontColor;
         this.htmlElement.style.height = '100%';
