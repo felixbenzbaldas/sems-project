@@ -32,8 +32,6 @@ export class UiA_HeaderBodyG {
             } else {
                 await this.entity.uiA.bodyG.content_update();
             }
-        } else {
-            await this.entity.uiA.ensureExpanded();
         }
         await this.entity.uiA.headerG.updateBodyIcon();
         await this.entity.uiA.headerG.updateCursorStyle();
