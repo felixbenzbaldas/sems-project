@@ -650,29 +650,27 @@ export class UiA {
     }
 
     scrollIntoView() {
-        let rect;
-        if (this.isHeaderBody()) {
-            rect = this.headerG.htmlElement.getBoundingClientRect();
-        } else {
-            rect = this.htmlElement.getBoundingClientRect();
-        }
-        let scrollableRect = this.getColumn().htmlElement.getBoundingClientRect();
+        let rect = this.getMainArea().getBoundingClientRect();
+        let scrollableRect = this.getColumn().getMainArea().getBoundingClientRect();
         if (rect.top < scrollableRect.top) {
-            // above the viewport
-            this.htmlElement.scrollIntoView(
-                {
-                    block: 'start',
-                    behavior: 'smooth'
-                }
-            );
+            this.scrollTo('start');
         } else if (rect.bottom > scrollableRect.bottom) {
-            // below the viewport
-            this.htmlElement.scrollIntoView(
-                {
-                    block: 'end',
-                    behavior: 'smooth'
-                }
-            );
+            this.scrollTo('end');
+        }
+    }
+
+    scrollTo(position: 'start' | 'end') {
+        this.getMainArea().scrollIntoView({
+            block: position,
+            behavior: 'smooth'
+        });
+    }
+
+    getMainArea() : HTMLElement {
+        if (this.isHeaderBody()) {
+            return this.headerG.htmlElement;
+        } else {
+            return this.htmlElement;
         }
     }
 }
