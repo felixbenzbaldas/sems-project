@@ -663,7 +663,7 @@ export class UiA {
         if (this.entity.getApp_typed().uiA.isWebsite) {
             return this.findAppUi().website_scrollableArea.getBoundingClientRect();
         } else {
-            return this.getColumn().getMainArea().getBoundingClientRect();
+            return this.getColumn().htmlElement.getBoundingClientRect();
         }
     }
 
