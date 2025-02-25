@@ -651,11 +651,19 @@ export class UiA {
 
     scrollIntoView() {
         let rect = this.getMainArea().getBoundingClientRect();
-        let scrollableRect = this.getColumn().getMainArea().getBoundingClientRect();
+        let scrollableRect = this.getScrollableRect();
         if (rect.top < scrollableRect.top) {
             this.scrollTo('start');
         } else if (rect.bottom > scrollableRect.bottom) {
             this.scrollTo('end');
+        }
+    }
+
+    getScrollableRect() {
+        if (this.entity.getApp_typed().uiA.isWebsite) {
+            return this.findAppUi().website_scrollableArea.getBoundingClientRect();
+        } else {
+            return this.getColumn().getMainArea().getBoundingClientRect();
         }
     }
 
