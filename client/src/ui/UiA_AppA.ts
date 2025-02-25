@@ -146,12 +146,21 @@ export class UiA_AppA {
         let scrollableRect = scrollableDiv.getBoundingClientRect();
         if (focusedRect.top < scrollableRect.top) {
             // focused is above the viewport
-            this.focused.htmlElement.scrollIntoView(true);
+            this.focused.htmlElement.scrollIntoView(
+                {
+                    block: 'start',
+                    behavior: 'smooth'
+                }
+            );
         } else if (focusedRect.bottom > scrollableRect.bottom) {
             // focused is below the viewport
-            this.focused.htmlElement.scrollIntoView(false);
+            this.focused.htmlElement.scrollIntoView(
+                {
+                    block: 'end',
+                    behavior: 'smooth'
+                }
+            );
         }
-        // If the focused is already visible, no scrolling occurs
     }
 
     signal(text : string) {
