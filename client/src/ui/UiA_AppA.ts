@@ -136,7 +136,22 @@ export class UiA_AppA {
             }
             this.focused.updateFocusStyle();
             this.focused.takeCaret();
+            this.scrollFocusedIntoView();
         }
+    }
+
+    scrollFocusedIntoView() {
+        let scrollableDiv = this.focused.getColumn().htmlElement;
+        let focusedRect = this.focused.headerG.htmlElement.getBoundingClientRect();
+        let scrollableRect = scrollableDiv.getBoundingClientRect();
+        if (focusedRect.top < scrollableRect.top) {
+            // focused is above the viewport
+            this.focused.htmlElement.scrollIntoView(true);
+        } else if (focusedRect.bottom > scrollableRect.bottom) {
+            // focused is below the viewport
+            this.focused.htmlElement.scrollIntoView(false);
+        }
+        // If the focused is already visible, no scrolling occurs
     }
 
     signal(text : string) {
