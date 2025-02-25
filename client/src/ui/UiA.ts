@@ -648,4 +648,31 @@ export class UiA {
             }
         }
     }
+
+    scrollIntoView() {
+        let rect;
+        if (this.isHeaderBody()) {
+            rect = this.headerG.htmlElement.getBoundingClientRect();
+        } else {
+            rect = this.htmlElement.getBoundingClientRect();
+        }
+        let scrollableRect = this.getColumn().htmlElement.getBoundingClientRect();
+        if (rect.top < scrollableRect.top) {
+            // above the viewport
+            this.htmlElement.scrollIntoView(
+                {
+                    block: 'start',
+                    behavior: 'smooth'
+                }
+            );
+        } else if (rect.bottom > scrollableRect.bottom) {
+            // below the viewport
+            this.htmlElement.scrollIntoView(
+                {
+                    block: 'end',
+                    behavior: 'smooth'
+                }
+            );
+        }
+    }
 }
