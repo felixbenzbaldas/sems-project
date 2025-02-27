@@ -74,7 +74,7 @@ export class Theme {
         theme.success = 'green';
         theme.failure = 'red';
         theme.meta = Color.GREYER;
-        theme.font = Font.SIMPLE;
+        theme.font = Font.MINIMALISTIC;
         theme.fontSize = '1rem';
         theme.containerColor = Color.LIGHT_GREY;
         return theme;

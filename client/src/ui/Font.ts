@@ -1,5 +1,7 @@
 export class Font {
     static ELEGANT = 'garamond';
     static SERIOUS = 'Times New Roman';
-    static SIMPLE = 'Arial';
+    static SIMPLE = 'verdana';
+    static MINIMALISTIC = 'calibri';
+    static STRONG = 'Open Sans';
 }
