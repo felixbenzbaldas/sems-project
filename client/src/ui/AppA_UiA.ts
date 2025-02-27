@@ -12,7 +12,7 @@ export class AppA_UiA {
     presentationModeA_contentData : Entity;
     clipboard: Entity;
     clipboard_lostContext: boolean;
-    theme : Theme = Theme.default();
+    theme : Theme = Theme.blackWhite();
     webMeta: Entity;
     isWebsite: boolean;
 

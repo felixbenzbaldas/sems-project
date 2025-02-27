@@ -2,6 +2,7 @@ import {Color} from "@/ui/Color";
 import {Font} from "@/ui/Font";
 
 export class Theme {
+
     fontColor : string;
     backgroundColor : string;
     secondBackgroundColor: string;
@@ -18,13 +19,14 @@ export class Theme {
     fontSize: string;
     containerColor: string;
 
-    static default() : Theme {
+
+    static blackWhite() : Theme {
         let theme = new Theme();
         theme.fontColor = 'unset';
         theme.backgroundColor = 'white';
         theme.secondBackgroundColor = Color.LIGHT_GREY;
         theme.buttonFontColor = 'grey';
-        theme.markColor = '#efefef';
+        theme.markColor = Color.LIGHT_GREY;
         theme.secondMarkColor = 'green';
         theme.focusBorderColor_viewMode = 'orange';
         theme.focusBorderColor_editMode = 'green';
@@ -53,6 +55,26 @@ export class Theme {
         theme.failure = 'red';
         theme.meta = 'blue';
         theme.font = Font.ELEGANT;
+        theme.fontSize = '1rem';
+        theme.containerColor = Color.LIGHT_GREY;
+        return theme;
+    }
+
+    static simple() : Theme {
+        let theme = new Theme();
+        theme.fontColor = Color.DARK_GREY;
+        theme.backgroundColor = Color.LIGHT_LIGHT_GREY;
+        theme.secondBackgroundColor = Color.LIGHT_GREY;
+        theme.buttonFontColor = 'grey';
+        theme.markColor = Color.LIGHT_GREY;
+        theme.secondMarkColor = 'green';
+        theme.focusBorderColor_viewMode = Color.GREY;
+        theme.focusBorderColor_editMode = 'green';
+        theme.highlight = Color.LIGHT_BEIGE;
+        theme.success = 'green';
+        theme.failure = 'red';
+        theme.meta = Color.GREYER;
+        theme.font = Font.SIMPLE;
         theme.fontSize = '1rem';
         theme.containerColor = Color.LIGHT_GREY;
         return theme;

@@ -50,7 +50,17 @@ export class StarterA_FullStartG {
         starter.createAppWithUI();
         starter.createdApp.appA.uiA.isWebsite = true;
         starter.createData();
-        starter.createdApp.appA.uiA.theme = Theme.elegant();
+        if (starter.getEnvironment().url.searchParams.has('theme')) {
+            let theme = starter.getEnvironment().url.searchParams.get('theme');
+            let nameThemeMap : Map<string, () => Theme> = new Map([
+                ['elegant', () => { return Theme.elegant(); }],
+                ['simple', () => { return Theme.simple(); }],
+                ['blackWhite', () => { return Theme.blackWhite(); }],
+                ]);
+            starter.createdApp.appA.uiA.theme = nameThemeMap.get(theme).call(null);
+        } else  {
+            starter.createdApp.appA.uiA.theme = Theme.elegant();
+        }
         let website = await starter.data.listA.findByText(starter.hostname())
         let start = await website.listA.findByText('start');
         for (let resolved of await start.listA.getResolvedList()) {
