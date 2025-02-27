@@ -6,6 +6,7 @@ import {getPathFromUrl, nullUndefined} from "@/utils";
 import {StarterA_FullStartG} from "@/StarterA_FullStartG";
 import {UiA_AppA_GlobalEventG} from "@/ui/UiA_AppA_GlobalEventG";
 import {UiA_AppA} from "@/ui/UiA_AppA";
+import {Theme} from "@/ui/Theme";
 
 export class StarterA {
 
@@ -132,5 +133,25 @@ export class StarterA {
         let unboundData = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
         let unboundWebMeta = await (await (await unboundData.listA.getResolved(0)).listA.findByText('webMeta')).listA.getResolved(0);
         return unboundWebMeta;
+    }
+
+    theme() {
+        if (this.getEnvironment().url.searchParams.has('theme')) {
+            let theme = this.getEnvironment().url.searchParams.get('theme');
+            let nameThemeMap: Map<string, () => Theme> = new Map([
+                ['elegant', () => {
+                    return Theme.elegant();
+                }],
+                ['simple', () => {
+                    return Theme.simple();
+                }],
+                ['blackWhite', () => {
+                    return Theme.blackWhite();
+                }],
+            ]);
+            this.createdApp.appA.uiA.theme = nameThemeMap.get(theme).call(null);
+        } else {
+            this.createdApp.appA.uiA.theme = Theme.simple();
+        }
     }
 }

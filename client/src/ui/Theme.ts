@@ -68,7 +68,6 @@ export class Theme {
         theme.buttonFontColor = 'hsl(0,0%,54%)';
         theme.markColor = Color.LIGHT_GREY;
         theme.secondMarkColor = 'green';
-        // theme.focusBorderColor_viewMode = 'hsl(0,0%,70%)';
         theme.focusBorderColor_viewMode = 'hsl(200, 20%, 77%)';
         theme.focusBorderColor_editMode = 'green';
         theme.highlight = Color.LIGHT_BEIGE;

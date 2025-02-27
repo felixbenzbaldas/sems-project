@@ -25,7 +25,7 @@ export class StarterA_FullStartG {
         let pathString = starter.getPath();
         let listOfNames = ['..', starter.data.name, ...pathString.split('-')];
         await starter.createdApp.appA.uiA.presentationModeA_contentData.listA.addByListOfNames(listOfNames);
-        starter.createdApp.appA.uiA.theme = Theme.elegant();
+        starter.theme();
         if (starter.isPublicWeb()) {
             starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta();
         }
@@ -50,17 +50,7 @@ export class StarterA_FullStartG {
         starter.createAppWithUI();
         starter.createdApp.appA.uiA.isWebsite = true;
         starter.createData();
-        if (starter.getEnvironment().url.searchParams.has('theme')) {
-            let theme = starter.getEnvironment().url.searchParams.get('theme');
-            let nameThemeMap : Map<string, () => Theme> = new Map([
-                ['elegant', () => { return Theme.elegant(); }],
-                ['simple', () => { return Theme.simple(); }],
-                ['blackWhite', () => { return Theme.blackWhite(); }],
-                ]);
-            starter.createdApp.appA.uiA.theme = nameThemeMap.get(theme).call(null);
-        } else  {
-            starter.createdApp.appA.uiA.theme = Theme.elegant();
-        }
+        starter.theme();
         let website = await starter.data.listA.findByText(starter.hostname())
         let start = await website.listA.findByText('start');
         for (let resolved of await start.listA.getResolvedList()) {
@@ -81,6 +71,7 @@ export class StarterA_FullStartG {
         }
         return appUi.entity.uiA.htmlElement;
     }
+
     async localApp() {
         let starter = this.getStarter();
         starter.createAppWithUI();
