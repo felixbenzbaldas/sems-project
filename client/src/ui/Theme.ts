@@ -63,9 +63,9 @@ export class Theme {
     static simple() : Theme {
         let theme = new Theme();
         theme.fontColor = Color.DARK_GREY;
-        theme.backgroundColor = Color.LIGHT_LIGHT_GREY;
+        theme.backgroundColor = Color.LIGHT_GREY;
         theme.secondBackgroundColor = Color.LIGHT_GREY;
-        theme.buttonFontColor = 'grey';
+        theme.buttonFontColor = Color.GREYER;
         theme.markColor = Color.LIGHT_GREY;
         theme.secondMarkColor = 'green';
         theme.focusBorderColor_viewMode = Color.GREY;
