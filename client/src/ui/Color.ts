@@ -19,6 +19,7 @@ export class Color {
     static GREY = '#BFBEB8';
     static GREYER = 'rgb(176,175,168)';
     static MORE_GREYER = 'rgb(165,164,156)';
+    static MORE_MORE_GREYER = 'hsl(0,0%,42%)';
     static DARK_GREY = 'rgb(72,72,72)';
 
 

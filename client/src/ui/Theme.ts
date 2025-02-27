@@ -62,13 +62,14 @@ export class Theme {
 
     static simple() : Theme {
         let theme = new Theme();
-        theme.fontColor = Color.DARK_GREY;
+        theme.fontColor = Color.MORE_MORE_GREYER;
         theme.backgroundColor = Color.LIGHT_GREY;
         theme.secondBackgroundColor = Color.LIGHT_GREY;
-        theme.buttonFontColor = Color.GREYER;
+        theme.buttonFontColor = 'hsl(0,0%,54%)';
         theme.markColor = Color.LIGHT_GREY;
         theme.secondMarkColor = 'green';
-        theme.focusBorderColor_viewMode = Color.GREY;
+        // theme.focusBorderColor_viewMode = 'hsl(0,0%,70%)';
+        theme.focusBorderColor_viewMode = 'hsl(200, 20%, 77%)';
         theme.focusBorderColor_editMode = 'green';
         theme.highlight = Color.LIGHT_BEIGE;
         theme.success = 'green';
