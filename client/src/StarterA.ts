@@ -148,6 +148,9 @@ export class StarterA {
                 ['blackWhite', () => {
                     return Theme.blackWhite();
                 }],
+                ['dark', () => {
+                    return Theme.dark();
+                }]
             ]);
             this.createdApp.appA.uiA.theme = nameThemeMap.get(theme).call(null);
         } else {
