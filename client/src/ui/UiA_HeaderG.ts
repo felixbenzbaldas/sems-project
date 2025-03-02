@@ -83,6 +83,9 @@ export class UiA_HeaderG {
             let link = document.createElement('a');
             link.href = this.getObject().link;
             link.innerText = this.link_getText();
+            link.style.fontFamily = this.entity.getApp_typed().uiA.theme.font;
+            link.style.fontSize = this.entity.getApp_typed().uiA.theme.fontSize;
+            link.style.color = this.entity.getApp_typed().uiA.theme.linkFontColor;
             this.content.appendChild(link);
         } else if (notNullUndefined(this.getObject().text)) {
             await this.entity.uiA.textG.update();

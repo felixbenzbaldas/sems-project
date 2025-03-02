@@ -17,6 +17,7 @@ export class Theme {
     meta: string;
     font: string;
     fontSize: string;
+    linkFontColor: string;
     containerColor: string;
 
 
@@ -36,6 +37,7 @@ export class Theme {
         theme.meta = 'blue';
         theme.font = 'unset';
         theme.fontSize = '1rem';
+        theme.linkFontColor = 'default';
         theme.containerColor = Color.LIGHT_GREY;
         return theme;
     }
@@ -56,6 +58,7 @@ export class Theme {
         theme.meta = 'blue';
         theme.font = Font.ELEGANT;
         theme.fontSize = '1rem';
+        theme.linkFontColor = Color.DARK_BLUE;
         theme.containerColor = Color.LIGHT_GREY;
         return theme;
     }
@@ -76,6 +79,7 @@ export class Theme {
         theme.meta = Color.GREYER;
         theme.font = Font.MINIMALISTIC;
         theme.fontSize = '1rem';
+        theme.linkFontColor = Color.DARK_GREY;
         theme.containerColor = Color.LIGHT_GREY;
         return theme;
     }
