@@ -97,6 +97,10 @@ export class UiA_HeaderBodyG {
         for (let i = 0; i < listOfChildren.length; i++) {
             textsOfChildren.push(await listOfChildren[i].textG.getRawTextOfTree(level));
         }
-        return textsOfChildren.join('\n');
+        if (level === 1) {
+            return textsOfChildren.join('\n\n');
+        } else {
+            return textsOfChildren.join('\n');
+        }
     }
 }
