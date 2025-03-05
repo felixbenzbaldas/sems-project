@@ -111,9 +111,9 @@ export class UiA_TextG {
         }
     }
 
-    async getRawTextOfTree(level? : number) : Promise<string> {
+    async getRawTextOfTree(level : number) : Promise<string> {
         let text : string = "";
-        if (level === undefined) {
+        if (level === 0) {
             text += '[ ' + this.getText() + ' ]';
             text += '\n';
             if (!this.getUiA().isCollapsed()) {
