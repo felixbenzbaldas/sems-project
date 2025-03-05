@@ -178,7 +178,7 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async exportRawText() {
-        let rawText = await this.getAppUi().focused.textG.getRawTextOfTree(0);
+        let rawText = await this.getAppUi().focused.textG.getRawText(0);
         await this.getAppUi().output.setAndUpdateUi(rawText);
     }
 }

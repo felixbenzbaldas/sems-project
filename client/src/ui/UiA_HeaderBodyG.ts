@@ -95,7 +95,7 @@ export class UiA_HeaderBodyG {
         let listOfChildren = await this.entity.uiA.getListOfChildren();
         let textsOfChildren = [];
         for (let i = 0; i < listOfChildren.length; i++) {
-            textsOfChildren.push(await listOfChildren[i].textG.getRawTextOfTree(level));
+            textsOfChildren.push(await listOfChildren[i].textG.getRawText(level));
         }
         if (level === 1) {
             return textsOfChildren.join('\n\n');

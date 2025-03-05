@@ -111,7 +111,7 @@ export class UiA_TextG {
         }
     }
 
-    async getRawTextOfTree(level : number) : Promise<string> {
+    async getRawText(level : number) : Promise<string> {
         let text : string = "";
         if (level === 0) {
             text += '[ ' + this.getText() + ' ]';
