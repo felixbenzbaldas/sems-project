@@ -157,4 +157,11 @@ export class StarterA {
             this.createdApp.appA.uiA.theme = Theme.simple();
         }
     }
+
+    async playground() {
+        if (this.getEnvironment().url.searchParams.has('playground')) {
+            await this.createdApp.appA.uiA.mainColumnData.listA.add(await this.createdApp.appA.createText('Hello World!'));
+            await this.createdApp.appA.uiA.mainColumnData.uis_update();
+        }
+    }
 }

@@ -81,6 +81,7 @@ export class StarterA_FullStartG {
         starter.getEnvironment().warningBeforeLossOfUnsavedChanges();
         await starter.createdApp.appA.profileG.createProfile();
         appUi.focus(appUi.mainColumnUi);
+        await starter.playground();
         return appUi.entity.uiA.htmlElement;
     }
     async clientApp() {
