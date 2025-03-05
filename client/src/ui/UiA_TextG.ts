@@ -63,8 +63,12 @@ export class UiA_TextG {
         if (this.veryLongText) {
             throw new Error('very long text');
         } else {
-            this.getObject().text = this.htmlElement.innerText.trim();
+            this.getObject().text = this.getText();
         }
+    }
+
+    getText() {
+        return this.htmlElement.innerText.trim();
     }
 
     private updateEmptyMarker() {
@@ -105,5 +109,29 @@ export class UiA_TextG {
         } else {
             return this.entity;
         }
+    }
+
+    async getRawTextOfTree(level? : number) : Promise<string> {
+        let text : string = "";
+        if (level === undefined) {
+            text += this.getText();
+            text += '\n';
+            if (!this.getUiA().isCollapsed()) {
+                text += '\n';
+                text += await this.getUiA().headerBodyG.getRawTextOfBody(1);
+                text += '\n';
+            }
+        } else {
+            text += '  '.repeat(level - 1);
+            if (level > 1) {
+                text += '- ';
+            }
+            text += this.getText();
+            if (!this.getUiA().isCollapsed()) {
+                text += '\n';
+                text += await this.getUiA().headerBodyG.getRawTextOfBody(level + 1);
+            }
+        }
+        return text;
     }
 }

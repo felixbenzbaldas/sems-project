@@ -176,4 +176,9 @@ export class UiA_AppA_GlobalEventG {
             this.getAppUi().mainColumnUi.columnA_takeFocus();
         }
     }
+
+    async exportRawText() {
+        let rawText = await this.getAppUi().focused.textG.getRawTextOfTree();
+        await this.getAppUi().output.setAndUpdateUi(rawText);
+    }
 }

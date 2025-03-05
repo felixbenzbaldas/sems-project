@@ -89,4 +89,14 @@ export class UiA_HeaderBodyG {
     hasAListItem() : boolean{
         return this.getObject().listA && this.getObject().listA.jsList.length > 0;
     }
+
+    async getRawTextOfBody(level: number) {
+        let text : string = '';
+        let listOfChildren = await this.entity.uiA.getListOfChildren();
+        let textsOfChildren = [];
+        for (let i = 0; i < listOfChildren.length; i++) {
+            textsOfChildren.push(await listOfChildren[i].textG.getRawTextOfTree(level));
+        }
+        return textsOfChildren.join('\n');
+    }
 }

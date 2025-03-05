@@ -29,6 +29,7 @@ export class UiA_AppA_CommandsA {
     exportProfile: CommandA;
     importProfile: CommandA;
     clear: CommandA;
+    exportRawText: CommandA;
 
     constructor(public entity: Entity) {
     }
@@ -207,6 +208,13 @@ export class UiA_AppA_CommandsA {
                 await this.getGlobalEventG().toggleColumn();
             },
             this.pattern_viewMode('j'), this.pattern('F7')
+        )
+
+        this.exportRawText = this.addCommand(
+            'export raw text',
+            async () => {
+                await this.getGlobalEventG().exportRawText();
+            }
         )
     }
 

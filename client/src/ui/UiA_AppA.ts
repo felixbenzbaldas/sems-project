@@ -204,6 +204,7 @@ export class UiA_AppA {
             }),
             this.commandsA.toggleContext.entity,
             this.commandsA.shakeTree.entity,
+            this.commandsA.exportRawText.entity,
             lowPriorityButtons
         );
     }
