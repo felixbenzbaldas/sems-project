@@ -313,15 +313,44 @@ export class UiA {
         }
     }
 
-    async paste() {
-        if (!this.getObject().listA) {
-            this.getObject().installListA();
+    async remove() {
+        if (nullUndefined(this.getObject().link)) {
+            this.textG.save(); // important!
         }
-        let appUi = this.entity.getApp_typed().uiA;
-        let position = 0;
-        await appUi.insertClipboardAtPosition(this.getObject(), position);
-        await this.ensureExpanded();
-        this.findAppUi().focus(this.entity.uiA.listA.elements[position]);
+        let obj = this.getObject();
+        await this.entity.getApp_typed().profileG.addToLastRemoved(obj);
+        let uiContext = this.context;
+        let uiListItems = uiContext.listA.elements;
+        let position = uiListItems.indexOf(this);
+        let uiContextObj = uiContext.getObject();
+        if (this.objectHasContext() && await this.inContext()) {
+            obj.context = null;
+            await obj.uis_update_context();
+        }
+        uiContextObj.listA.jsList.splice(position, 1);
+        await uiContextObj.uis_update_removedListItem(position);
+        if (uiContextObj.listA.jsList.length > 0) {
+            let focusPosition = Math.min(uiListItems.length - 1, position);
+            this.findAppUi().focus(uiListItems[focusPosition]);
+        } else {
+            this.findAppUi().focus(uiContext);
+        }
+    }
+
+    async paste() {
+        if (this.textG.getText() === '' && !await this.headerBodyG.hasBodyContent()) {
+            await this.context.pasteNextOnSubitem(this);
+            await this.remove();
+        } else {
+            if (!this.getObject().listA) {
+                this.getObject().installListA();
+            }
+            let appUi = this.entity.getApp_typed().uiA;
+            let position = 0;
+            await appUi.insertClipboardAtPosition(this.getObject(), position);
+            await this.ensureExpanded();
+            this.findAppUi().focus(this.entity.uiA.listA.elements[position]);
+        }
     }
 
     async toggleCollapsible() {
