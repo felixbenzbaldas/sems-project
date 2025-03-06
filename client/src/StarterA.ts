@@ -7,6 +7,7 @@ import {StarterA_FullStartG} from "@/StarterA_FullStartG";
 import {UiA_AppA_GlobalEventG} from "@/ui/UiA_AppA_GlobalEventG";
 import {UiA_AppA} from "@/ui/UiA_AppA";
 import {Theme} from "@/ui/Theme";
+import type {ListA} from "@/ListA";
 
 export class StarterA {
 
@@ -164,7 +165,8 @@ export class StarterA {
             let object = await app.createText('object');
             await app.uiA.mainColumnData.listA.add(object);
             await object.set('aPropertyName', await app.createText('aValue'));
-
+            let plainList : ListA = (await app.createList()).listA;
+            await object.set('drinks', plainList.entity);
             await app.uiA.mainColumnData.uis_update();
         }
     }
