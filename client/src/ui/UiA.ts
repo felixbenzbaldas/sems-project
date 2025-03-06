@@ -9,6 +9,7 @@ import {UiA_TestRunG} from "@/ui/UiA_TestRunG";
 import {UiA_AppA} from "@/ui/UiA_AppA";
 import {UiA_ImageA} from "@/ui/UiA_ImageA";
 import type {ContainerA} from "@/ContainerA";
+import {UiA_RelationshipA} from "@/ui/RelationshipA";
 
 export class UiA {
 
@@ -17,6 +18,10 @@ export class UiA {
     listA: UiA_ListA;
     installListA() {
         this.listA = new UiA_ListA(this.entity);
+    }
+    relationshipA: UiA_RelationshipA;
+    installRelationshipA() {
+        this.relationshipA = new UiA_RelationshipA(this.entity);
     }
     textG : UiA_TextG;
     headerG : UiA_HeaderG;

@@ -54,7 +54,11 @@ export class UiA_BodyG {
 
     async content_update() {
         this.content_htmlElement.innerHTML = null;
-        if (this.getObject().testRunA) {
+        if (this.getObject().relationshipA) {
+            this.getUiA().installRelationshipA();
+            await this.getUiA().relationshipA.update();
+            this.content_htmlElement.appendChild(this.getUiA().relationshipA.bodyContentUi.htmlElement);
+        } else if (this.getObject().testRunA) {
             this.content_htmlElement.appendChild(this.getUiA().testRunG.bodyContentUi.htmlElement);
         } else {
             this.content_htmlElement.appendChild(this.content_contextAsSubitem_htmlElement);

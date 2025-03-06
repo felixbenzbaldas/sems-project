@@ -160,8 +160,12 @@ export class StarterA {
 
     async playground() {
         if (this.getEnvironment().url.searchParams.has('playground')) {
-            await this.createdApp.appA.uiA.mainColumnData.listA.add(await this.createdApp.appA.createText('Hello World!'));
-            await this.createdApp.appA.uiA.mainColumnData.uis_update();
+            let app = this.createdApp.appA;
+            let object = await app.createText('object');
+            await app.uiA.mainColumnData.listA.add(object);
+            await object.set('aPropertyName', await app.createText('aValue'));
+
+            await app.uiA.mainColumnData.uis_update();
         }
     }
 }
