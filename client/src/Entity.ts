@@ -9,6 +9,7 @@ import {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
 import {TestRunA} from "@/tester/TestRunA";
 import {DeepCopyA} from "@/DeepCopyA";
 import {CommandA} from "@/CommandA";
+import type {RelationshipA} from "@/RelationshipA";
 
 export class Entity {
 
@@ -51,6 +52,7 @@ export class Entity {
         this.testG_nestedTestsA = new TestG_NestedTestsA(this);
         this.testG_nestedTestsA.install();
     }
+    relationshipA: RelationshipA;
 
     json_withoutContainedObjects() : any {
         let obj: any = {
@@ -418,5 +420,31 @@ export class Entity {
         } else {
             throw new Error('found no container!');
         }
+    }
+
+    async set(propertyName: string, value: Entity) {
+        if (!this.listA) {
+            this.installListA();
+        }
+        let relationship : RelationshipA;
+        if (await this.has(propertyName)) {
+            relationship = (await this.listA.findByText(propertyName)).relationshipA;
+        } else {
+            relationship = this.getApp_typed().unboundG.createRelationship();
+            relationship.entity.text = propertyName;
+            this.listA.addDirect(relationship.entity);
+        }
+        relationship.to = value;
+    }
+
+    async has(propertyName : string) {
+        return notNullUndefined(await this.listA.findByText(propertyName));
+    }
+
+    async get(propertyName: string) : Promise<Entity> {
+        if (this.listA) {
+            return (await this.listA.findByText(propertyName)).relationshipA.to;
+        }
+        return null;
     }
 }

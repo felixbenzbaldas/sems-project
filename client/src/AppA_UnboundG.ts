@@ -3,6 +3,7 @@ import {ListA} from "@/ListA";
 import {notNullUndefined} from "@/utils";
 import {ContainerA} from "@/ContainerA";
 import {CreateFromOldFormat} from "@/CreateFromOldFormat";
+import {RelationshipA} from "@/RelationshipA";
 
 // / unbound means that the created object has no container and no name.
 export class AppA_UnboundG {
@@ -91,5 +92,9 @@ export class AppA_UnboundG {
 
     async createFromOldJson(json: any) : Promise<Entity> {
         return new CreateFromOldFormat(this.entity).run(json);
+    }
+
+    createRelationship() {
+        return RelationshipA.create(this.entity.appA);
     }
 }

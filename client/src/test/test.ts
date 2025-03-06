@@ -395,4 +395,14 @@ export function test_add(tests : TestG_NestedTestsA) {
             assert_sameAs(path, '');
         });
     });
+    tests.add('property', async run => {
+        let propertyName = 'aPropertyName';
+        let entity = run.app.createEntityWithApp();
+        let value = run.app.createEntityWithApp();
+        value.text = 'theValue';
+
+        await entity.set(propertyName, value);
+
+        assert_sameAs(value, await entity.get(propertyName));
+    });
 }
