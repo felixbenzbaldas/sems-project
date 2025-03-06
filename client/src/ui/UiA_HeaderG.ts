@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {div, notNullUndefined, setWidth} from "@/utils";
+import {div, notNullUndefined, setWidth, textElem} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_HeaderG {
@@ -89,7 +89,18 @@ export class UiA_HeaderG {
             this.content.appendChild(link);
         } else if (notNullUndefined(this.getObject().text)) {
             await this.entity.uiA.textG.update();
-            this.content.appendChild(this.getUiA().textG.htmlElement);
+            if (this.getUiA().relationshipA) {
+                this.content.style.display = 'flex';
+                this.content.appendChild(textElem('['));
+                this.content.appendChild(this.getUiA().textG.htmlElement);
+                let bracketRight = textElem(']');
+                bracketRight.style.marginLeft = '0.2rem';
+                this.content.appendChild(bracketRight);
+                this.content.style.fontSize = '0.8rem';
+                this.content.style.color = this.entity.getApp_typed().uiA.theme.buttonFontColor;
+            } else {
+                this.content.appendChild(this.getUiA().textG.htmlElement);
+            }
         } else if (notNullUndefined(this.getObject().testRunA)) {
             this.content.appendChild(this.getUiA().testRunG.headerContent_htmlElement);
         }

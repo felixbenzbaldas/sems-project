@@ -7,52 +7,56 @@ export class UiA_HeaderBodyG {
     }
 
     async install() {
-        let object = this.entity.uiA.getObject();
+        let object = this.getUiA().getObject();
         if (object.testRunA) {
-            await this.entity.uiA.testRunG.install();
-            await this.entity.uiA.headerG.install();
-            this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
-            await this.entity.uiA.bodyG.install();
-            this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
+            await this.getUiA().testRunG.install();
+            await this.getUiA().headerG.install();
+            this.getUiA().htmlElement.appendChild(this.getUiA().headerG.htmlElement);
+            await this.getUiA().bodyG.install();
+            this.getUiA().htmlElement.appendChild(this.getUiA().bodyG.htmlElement);
             if (!object.testRunA.resultG_success) {
-                await this.entity.uiA.ensureExpanded();
+                await this.getUiA().ensureExpanded();
             }
         } else {
-            await this.entity.uiA.headerG.install();
-            this.entity.uiA.htmlElement.appendChild(this.entity.uiA.headerG.htmlElement);
-            await this.entity.uiA.bodyG.install();
-            this.entity.uiA.htmlElement.appendChild(this.entity.uiA.bodyG.htmlElement);
+            if (object.relationshipA) {
+                this.getUiA().installRelationshipA();
+                await this.getUiA().relationshipA.update();
+            }
+            await this.getUiA().headerG.install();
+            this.getUiA().htmlElement.appendChild(this.getUiA().headerG.htmlElement);
+            await this.getUiA().bodyG.install();
+            this.getUiA().htmlElement.appendChild(this.getUiA().bodyG.htmlElement);
         }
     }
 
     async update_addedListItem(position: number) {
         if (this.bodyIsVisible()) {
-            if (this.entity.uiA.listA) {
-                await this.entity.uiA.listA.update_addedListItem(position);
+            if (this.getUiA().listA) {
+                await this.getUiA().listA.update_addedListItem(position);
             } else {
-                await this.entity.uiA.bodyG.content_update();
+                await this.getUiA().bodyG.content_update();
             }
         }
-        await this.entity.uiA.headerG.updateBodyIcon();
-        await this.entity.uiA.headerG.updateCursorStyle();
+        await this.getUiA().headerG.updateBodyIcon();
+        await this.getUiA().headerG.updateCursorStyle();
     }
 
     async update_removedListItem(position: number) {
         if (await this.hasBodyContent()) {
             if (this.bodyIsVisible()) {
-                await this.entity.uiA.listA.update_removedListItem(position);
+                await this.getUiA().listA.update_removedListItem(position);
             }
         } else {
-            await this.entity.uiA.headerG.updateBodyIcon();
-            await this.entity.uiA.headerG.updateCursorStyle();
-            await this.entity.uiA.bodyG.ensureCollapsed();
+            await this.getUiA().headerG.updateBodyIcon();
+            await this.getUiA().headerG.updateCursorStyle();
+            await this.getUiA().bodyG.ensureCollapsed();
         }
     }
 
     async showBody() : Promise<boolean> {
         if (await this.hasBodyContent()) {
             if (this.getObject().collapsible) {
-                if (this.entity.uiA.isCollapsed()) {
+                if (this.getUiA().isCollapsed()) {
                     return false;
                 } else {
                     return true;
@@ -69,20 +73,20 @@ export class UiA_HeaderBodyG {
         if (this.getObject().relationshipA) {
             return true;
         } else if (this.getObject().testRunA) {
-            return this.entity.uiA.testRunG.hasBodyContent();
+            return this.getUiA().testRunG.hasBodyContent();
         } else {
-            return await this.entity.uiA.hasContextAsSubitem()  ||
+            return await this.getUiA().hasContextAsSubitem()  ||
                 this.hasAListItem();
         }
     }
 
     getObject() : Entity {
-        return this.entity.uiA.getObject();
+        return this.getUiA().getObject();
     }
 
     bodyIsVisible() : boolean {
-        if (notNullUndefined(this.entity.uiA.bodyG.htmlElement)) {
-            return this.entity.uiA.bodyG.htmlElement.style.display !== 'none';
+        if (notNullUndefined(this.getUiA().bodyG.htmlElement)) {
+            return this.getUiA().bodyG.htmlElement.style.display !== 'none';
         } else {
             return false;
         }
@@ -94,7 +98,7 @@ export class UiA_HeaderBodyG {
 
     async getRawTextOfBody(level: number) {
         let text : string = '';
-        let listOfChildren = await this.entity.uiA.getListOfChildren();
+        let listOfChildren = await this.getUiA().getListOfChildren();
         let textsOfChildren = [];
         for (let i = 0; i < listOfChildren.length; i++) {
             textsOfChildren.push(await listOfChildren[i].textG.getRawText(level));
@@ -104,5 +108,9 @@ export class UiA_HeaderBodyG {
         } else {
             return textsOfChildren.join('\n');
         }
+    }
+
+    getUiA() {
+        return this.entity.uiA;
     }
 }
