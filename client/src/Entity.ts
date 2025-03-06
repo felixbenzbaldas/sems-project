@@ -428,7 +428,7 @@ export class Entity {
         }
         let relationship : RelationshipA;
         if (await this.has(propertyName)) {
-            relationship = (await this.listA.findByText(propertyName)).relationshipA;
+            relationship = await this.getProperty(propertyName);
         } else {
             relationship = this.getApp_typed().unboundG.createRelationship();
             relationship.entity.text = propertyName;
@@ -438,12 +438,20 @@ export class Entity {
     }
 
     async has(propertyName : string) {
-        return notNullUndefined(await this.listA.findByText(propertyName));
+        return notNullUndefined(await this.getProperty(propertyName));
+    }
+
+    async getProperty(propertyName : string) : Promise<RelationshipA> {
+        for (let item of (await this.listA.getResolvedList())) {
+            if (item.relationshipA && item.text === propertyName)  {
+                return item.relationshipA;
+            }
+        }
     }
 
     async get(propertyName: string) : Promise<Entity> {
         if (this.listA) {
-            return (await this.listA.findByText(propertyName)).relationshipA.to;
+            return (await this.getProperty(propertyName)).to;
         }
         return null;
     }

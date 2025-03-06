@@ -395,7 +395,7 @@ export function test_add(tests : TestG_NestedTestsA) {
             assert_sameAs(path, '');
         });
     });
-    tests.add('property', async run => {
+    tests.addTestWithNestedTests('property', async run => {
         let propertyName = 'aPropertyName';
         let entity = run.app.createEntityWithApp();
         let value = run.app.createEntityWithApp();
@@ -404,5 +404,29 @@ export function test_add(tests : TestG_NestedTestsA) {
         await entity.set(propertyName, value);
 
         assert_sameAs(value, await entity.get(propertyName));
+    }, propertyTests => {
+        propertyTests.add('setMultipleTimes', async run => {
+            let propertyName = 'foo';
+            let entity = run.app.createEntityWithApp();
+
+            await entity.set(propertyName, undefined);
+            await entity.set(propertyName, undefined);
+
+            assert_sameAs(entity.listA.jsList.length, 1);
+        });
+        propertyTests.add('otherSubWithSameText', async run => {
+            let propertyName = 'foo';
+            let entity = run.app.createEntityWithApp();
+            let otherSub = run.app.unboundG.createText(propertyName);
+            entity.installListA();
+            entity.listA.addDirect(otherSub);
+            let value = run.app.createEntityWithApp();
+            value.text = 'theValue';
+
+            await entity.set(propertyName, value);
+
+            assert_sameAs(entity.listA.jsList.length, 2);
+            assert_sameAs(await entity.get(propertyName), value);
+        });
     });
 }
