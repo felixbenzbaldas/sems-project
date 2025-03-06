@@ -141,6 +141,9 @@ export class UiA_BodyG {
             if (await this.getUiA().hasContextAsSubitem()) {
                 list.push(this.contextAsSubitemUi);
             }
+            if (this.getUiA().relationshipA) {
+                list.push(this.getUiA().relationshipA.bodyContentUi);
+            }
             if (this.getUiA().listA) {
                 list.push(...this.getUiA().listA.elements);
             }
