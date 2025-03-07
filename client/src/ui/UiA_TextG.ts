@@ -104,11 +104,7 @@ export class UiA_TextG {
     }
 
     getObject() : Entity {
-        if (this.getUiA().object) {
-            return this.getUiA().object;
-        } else {
-            return this.entity;
-        }
+        return this.getUiA().object;
     }
 
     async getRawText(level : number) : Promise<string> {
