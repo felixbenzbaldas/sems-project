@@ -45,6 +45,10 @@ export class UiA_HeaderG {
                 event.preventDefault();
             }
         }
+        if (this.getUiA().relationshipA) {
+            this.htmlElement.style.fontSize = '0.8rem';
+            this.htmlElement.style.color = this.entity.getApp_typed().uiA.theme.buttonFontColor;
+        }
         this.divForContentAndBodyIcon.style.border = 'solid';
         this.divForContentAndBodyIcon.style.borderWidth = '0.1rem';
         this.focusStyle_update();
@@ -96,8 +100,6 @@ export class UiA_HeaderG {
                 let bracketRight = textElem(']');
                 bracketRight.style.marginLeft = '0.2rem';
                 this.content.appendChild(bracketRight);
-                this.content.style.fontSize = '0.8rem';
-                this.content.style.color = this.entity.getApp_typed().uiA.theme.buttonFontColor;
             } else {
                 this.content.appendChild(this.getUiA().textG.htmlElement);
             }
