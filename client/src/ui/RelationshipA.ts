@@ -1,5 +1,4 @@
 import type {Entity} from "@/Entity";
-import {div} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_RelationshipA {
