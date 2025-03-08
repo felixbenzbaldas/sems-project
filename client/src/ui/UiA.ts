@@ -16,6 +16,7 @@ export class UiA {
     editable: boolean;
     htmlElement : HTMLElement = div();
     listA: UiA_ListA;
+    withoutObjectG_collapsible: boolean;
     installListA() {
         this.listA = new UiA_ListA(this.entity);
     }
@@ -52,7 +53,9 @@ export class UiA {
 
     async install(source? : boolean) {
         if (nullUndefined(this.object)) {
-            if (this.listA) {
+            if (this.relationshipA) {
+                await this.headerBodyG.installWithoutObject();
+            } else if (this.listA) {
                 await this.listA.update();
                 this.htmlElement.appendChild(this.listA.htmlElement);
                 if (this.isColumn) {
@@ -693,4 +696,13 @@ export class UiA {
             return this.htmlElement;
         }
     }
+
+    isCollapsible() : boolean {
+        if (this.object) {
+            return this.object.collapsible;
+        } else {
+            return this.withoutObjectG_collapsible;
+        }
+    }
+
 }

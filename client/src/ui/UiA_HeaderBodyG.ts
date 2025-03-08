@@ -29,6 +29,15 @@ export class UiA_HeaderBodyG {
         }
     }
 
+    async installWithoutObject() {
+        if (this.getUiA().relationshipA) {
+            await this.getUiA().headerG.install();
+            this.getUiA().htmlElement.appendChild(this.getUiA().headerG.htmlElement);
+            await this.getUiA().bodyG.install();
+            this.getUiA().htmlElement.appendChild(this.getUiA().bodyG.htmlElement);
+        }
+    }
+
     async update_addedListItem(position: number) {
         if (this.bodyIsVisible()) {
             if (this.getUiA().listA) {
@@ -70,13 +79,17 @@ export class UiA_HeaderBodyG {
     }
 
     async hasBodyContent() : Promise<boolean> {
-        if (this.getObject().relationshipA) {
-            return true;
-        } else if (this.getObject().testRunA) {
-            return this.getUiA().testRunG.hasBodyContent();
+        if (this.getUiA().object) {
+            if (this.getObject().relationshipA) {
+                return true;
+            } else if (this.getObject().testRunA) {
+                return this.getUiA().testRunG.hasBodyContent();
+            } else {
+                return await this.getUiA().hasContextAsSubitem()  ||
+                    this.hasAListItem();
+            }
         } else {
-            return await this.getUiA().hasContextAsSubitem()  ||
-                this.hasAListItem();
+            return true;
         }
     }
 

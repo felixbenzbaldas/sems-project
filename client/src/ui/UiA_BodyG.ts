@@ -36,7 +36,7 @@ export class UiA_BodyG {
     }
 
     async install() {
-        if (!this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
+        if (!this.getUiA().isCollapsible() && await this.getUiA().headerBodyG.hasBodyContent()) {
             await this.displayBody();
         }
     }
@@ -54,18 +54,24 @@ export class UiA_BodyG {
 
     async content_update() {
         this.content_htmlElement.innerHTML = null;
-        if (this.getObject().relationshipA) {
-            this.content_htmlElement.appendChild(this.getUiA().relationshipA.bodyContentUi.htmlElement);
-        } else if (this.getObject().testRunA) {
-            this.content_htmlElement.appendChild(this.getUiA().testRunG.bodyContentUi.htmlElement);
+        if (this.getUiA().object) {
+            if (this.getObject().relationshipA) {
+                this.content_htmlElement.appendChild(this.getUiA().relationshipA.bodyContentUi.htmlElement);
+            } else if (this.getObject().testRunA) {
+                this.content_htmlElement.appendChild(this.getUiA().testRunG.bodyContentUi.htmlElement);
+            } else {
+                this.content_htmlElement.appendChild(this.content_contextAsSubitem_htmlElement);
+                await this.updateContextAsSubitem();
+                this.content_htmlElement.appendChild(this.content_meta_htmlElement);
+                if (this.getObject().listA && !this.getObject().testRunA) {
+                    this.getUiA().installListA();
+                    await this.getUiA().listA.update();
+                    this.content_htmlElement.appendChild(this.getUiA().listA.htmlElement);
+                }
+            }
         } else {
-            this.content_htmlElement.appendChild(this.content_contextAsSubitem_htmlElement);
-            await this.updateContextAsSubitem();
-            this.content_htmlElement.appendChild(this.content_meta_htmlElement);
-            if (this.getObject().listA && !this.getObject().testRunA) {
-                this.getUiA().installListA();
-                await this.getUiA().listA.update();
-                this.content_htmlElement.appendChild(this.getUiA().listA.htmlElement);
+            if (this.getUiA().relationshipA) {
+                this.content_htmlElement.appendChild(this.getUiA().relationshipA.bodyContentUi.htmlElement);
             }
         }
     }

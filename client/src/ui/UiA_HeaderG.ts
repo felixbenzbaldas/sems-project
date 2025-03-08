@@ -14,7 +14,9 @@ export class UiA_HeaderG {
     }
 
     async install() {
-        await this.updateContextIcon();
+        if (this.withObject()) {
+            await this.updateContextIcon();
+        }
         await this.updateContent();
         await this.updateBodyIcon();
         if (this.ownRow()) {
@@ -27,8 +29,10 @@ export class UiA_HeaderG {
         this.divForContentAndBodyIcon.style.flexWrap = 'wrap';
         // this.divForContentAndBodyIcon.style.padding = '0.05rem';
         this.htmlElement.appendChild(this.contextIcon);
-        if (this.getUiA().showContainerMark()) {
-            this.htmlElement.appendChild(this.createContainerMark());
+        if (this.withObject()) {
+            if (this.getUiA().showContainerMark()) {
+                this.htmlElement.appendChild(this.createContainerMark());
+            }
         }
         this.htmlElement.appendChild(this.divForContentAndBodyIcon);
         this.divForContentAndBodyIcon.appendChild(this.content);
@@ -53,7 +57,13 @@ export class UiA_HeaderG {
         this.divForContentAndBodyIcon.style.borderWidth = '0.1rem';
         this.focusStyle_update();
         await this.updateCursorStyle_onlyHeader();
-        this.updateContainerStyle();
+        if (this.withObject()) {
+            this.updateContainerStyle();
+        }
+    }
+
+    withObject() : boolean {
+        return notNullUndefined(this.getUiA().object);
     }
 
     async updateContextIcon() {
@@ -81,36 +91,39 @@ export class UiA_HeaderG {
 
     async updateContent() {
         this.content.innerHTML = null;
-        if (this.getObject().codeG_jsFunction) {
-            this.content.appendChild(this.action_getUiElement());
-        } else if (notNullUndefined(this.getObject().link)) {
-            let link = document.createElement('a');
-            link.href = this.getObject().link;
-            link.innerText = this.link_getText();
-            link.style.fontFamily = this.entity.getApp_typed().uiA.theme.font;
-            link.style.fontSize = this.entity.getApp_typed().uiA.theme.fontSize;
-            link.style.color = this.entity.getApp_typed().uiA.theme.linkFontColor;
-            this.content.appendChild(link);
-        } else if (notNullUndefined(this.getObject().text)) {
-            await this.entity.uiA.textG.update();
-            if (this.getUiA().relationshipA) {
-                this.content.style.display = 'flex';
-                this.content.appendChild(textElem('['));
-                this.content.appendChild(this.getUiA().textG.htmlElement);
-                let bracketRight = textElem(']');
-                bracketRight.style.marginLeft = '0.2rem';
-                this.content.appendChild(bracketRight);
-            } else {
-                this.content.appendChild(this.getUiA().textG.htmlElement);
+        if (this.withObject()) {
+            if (this.getObject().codeG_jsFunction) {
+                this.content.appendChild(this.action_getUiElement());
+            } else if (notNullUndefined(this.getObject().link)) {
+                let link = document.createElement('a');
+                link.href = this.getObject().link;
+                link.innerText = this.link_getText();
+                link.style.fontFamily = this.entity.getApp_typed().uiA.theme.font;
+                link.style.fontSize = this.entity.getApp_typed().uiA.theme.fontSize;
+                link.style.color = this.entity.getApp_typed().uiA.theme.linkFontColor;
+                this.content.appendChild(link);
+            } else if (notNullUndefined(this.getObject().text)) {
+                await this.entity.uiA.textG.update();
+                if (this.getUiA().relationshipA) {
+                    await this.getUiA().relationshipA.headerContentG_update();
+                    this.content.appendChild(this.getUiA().relationshipA.headerContentG_htmlElementG);
+                } else {
+                    this.content.appendChild(this.getUiA().textG.htmlElement);
+                }
+            } else if (notNullUndefined(this.getObject().testRunA)) {
+                this.content.appendChild(this.getUiA().testRunG.headerContent_htmlElement);
             }
-        } else if (notNullUndefined(this.getObject().testRunA)) {
-            this.content.appendChild(this.getUiA().testRunG.headerContent_htmlElement);
+        } else {
+            if (this.getUiA().relationshipA) {
+                await this.getUiA().relationshipA.headerContentG_update();
+                this.content.appendChild(this.getUiA().relationshipA.headerContentG_htmlElementG);
+            }
         }
     }
 
     async updateBodyIcon() {
         this.bodyIcon.style.display = 'inline-block';
-        if (this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
+        if (this.getUiA().isCollapsible() && await this.getUiA().headerBodyG.hasBodyContent()) {
             this.bodyIcon.style.display = 'default';
             this.bodyIcon.style.width = '1.5rem';
             this.bodyIcon.style.textAlign = 'center';
@@ -126,7 +139,11 @@ export class UiA_HeaderG {
     }
 
     ownRow() : boolean {
-        return !this.getObject().codeG_jsFunction;
+        if (this.withObject()) {
+            return !this.getObject().codeG_jsFunction;
+        } else {
+            return true;
+        }
     }
     
     action_getUiElement() {
@@ -153,7 +170,7 @@ export class UiA_HeaderG {
     }
 
     private async updateCursorStyle_onlyHeader() {
-        if (this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
+        if (this.getUiA().isCollapsible() && await this.getUiA().headerBodyG.hasBodyContent()) {
             this.divForContentAndBodyIcon.style.cursor = 'pointer';
         } else {
             this.divForContentAndBodyIcon.style.cursor = 'default';
@@ -190,10 +207,6 @@ export class UiA_HeaderG {
     }
 
     getObject() : Entity {
-        if (this.getUiA().object) {
-            return this.getUiA().object;
-        } else {
-            return this.entity;
-        }
+        return this.getUiA().object;
     }
 }
