@@ -283,8 +283,8 @@ export class UiA_AppA {
     async createUiStringEntityProperty(propertyName: string, value: Entity, collapsible : boolean) : Promise<UiA_RelationshipA> {
         let entity = this.getApp().createEntityWithApp();
         entity.uiA = new UiA(entity);
-        entity.uiA.textG.htmlElement.innerText = propertyName;
         entity.uiA.installRelationshipA();
+        entity.uiA.relationshipA.withoutObjectA_text = propertyName;
         let valueUi = await this.getApp().uiA.createUiFor(value, true);
         entity.uiA.relationshipA.bodyContentUi = valueUi;
         valueUi.context = entity.uiA;

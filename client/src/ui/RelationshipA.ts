@@ -5,6 +5,7 @@ import {div, textElem} from "@/utils";
 export class UiA_RelationshipA {
     headerContentG_htmlElementG = div();
     bodyContentUi : UiA;
+    withoutObjectA_text : string;
     constructor(public entity : Entity) {
     }
 
@@ -15,9 +16,12 @@ export class UiA_RelationshipA {
     async headerContentG_update() {
         this.headerContentG_htmlElementG.style.display = 'flex';
         this.headerContentG_htmlElementG.appendChild(textElem('['));
-        this.headerContentG_htmlElementG.appendChild(this.entity.uiA.textG.htmlElement);
+        if (this.entity.uiA.object) {
+            this.headerContentG_htmlElementG.appendChild(this.entity.uiA.textG.htmlElement);
+        } else {
+            this.headerContentG_htmlElementG.appendChild(textElem(this.withoutObjectA_text));
+        }
         let bracketRight = textElem(']');
-        bracketRight.style.marginLeft = '0.2rem';
         this.headerContentG_htmlElementG.appendChild(bracketRight);
     }
 

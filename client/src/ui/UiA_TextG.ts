@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {div, setCaret, textElem} from "@/utils";
+import {div, notNullUndefined, setCaret, textElem} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_TextG {
@@ -8,7 +8,6 @@ export class UiA_TextG {
     veryLongText : boolean;
 
     constructor(private entity : Entity) {
-        this.htmlElement.style.borderLeft = 'solid';
     }
 
     async update() {
@@ -72,10 +71,23 @@ export class UiA_TextG {
     }
 
     private updateEmptyMarker() {
-        if (document.activeElement != this.htmlElement && this.getUiA().isEditable() && this.getObject().text.length === 0) {
-            this.htmlElement.style.borderLeftColor = this.entity.getApp_typed().uiA.theme.fontColor;
+        if (this.isRelationship()) {
+            this.htmlElement.style.borderLeft = 'none';
         } else {
-            this.htmlElement.style.borderLeftColor = this.entity.getApp_typed().uiA.theme.backgroundColor;
+            this.htmlElement.style.borderLeft = 'solid';
+            if (document.activeElement != this.htmlElement && this.getUiA().isEditable() && this.getObject().text.length === 0) {
+                this.htmlElement.style.borderLeftColor = this.entity.getApp_typed().uiA.theme.fontColor;
+            } else {
+                this.htmlElement.style.borderLeft = 'none';
+            }
+        }
+    }
+
+    isRelationship() : boolean {
+        if (this.getUiA().object && this.getUiA().object.relationshipA) {
+            return true;
+        } else {
+            return notNullUndefined(this.getUiA().relationshipA);
         }
     }
 
