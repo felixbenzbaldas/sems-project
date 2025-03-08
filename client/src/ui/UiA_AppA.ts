@@ -67,7 +67,7 @@ export class UiA_AppA {
 
             // playground XXX
             let object = await this.getApp().createText('object');
-            let uiStringEntityProperty : UiA_RelationshipA = await this.createUiStringEntityProperty('propName', object);
+            let uiStringEntityProperty : UiA_RelationshipA = await this.createUiStringEntityProperty('propName', object, true);
             uiElementsForSupportColumn.push(uiStringEntityProperty.entity.uiA);
 
 
@@ -280,7 +280,7 @@ export class UiA_AppA {
         }
     }
 
-    async createUiStringEntityProperty(propertyName: string, value: Entity) : Promise<UiA_RelationshipA> {
+    async createUiStringEntityProperty(propertyName: string, value: Entity, collapsible : boolean) : Promise<UiA_RelationshipA> {
         let entity = this.getApp().createEntityWithApp();
         entity.uiA = new UiA(entity);
         entity.uiA.textG.htmlElement.innerText = propertyName;
@@ -288,6 +288,7 @@ export class UiA_AppA {
         let valueUi = await this.getApp().uiA.createUiFor(value, true);
         entity.uiA.relationshipA.bodyContentUi = valueUi;
         valueUi.context = entity.uiA;
+        entity.uiA.withoutObjectG_collapsible = collapsible;
         await entity.uiA.install();
         return entity.uiA.relationshipA;
     }

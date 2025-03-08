@@ -345,7 +345,7 @@ export class UiA {
     }
 
     async expandOrCollapse() {
-        if (this.getObject().collapsible) {
+        if (this.isCollapsible()) {
             if (this.isCollapsed()) {
                 if (await this.headerBodyG.hasBodyContent()) {
                     await this.expandWithAnimation();
