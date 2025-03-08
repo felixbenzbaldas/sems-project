@@ -182,7 +182,7 @@ export class UiA {
                 notNullUndefined(this.getObject().text) ||
                 notNullUndefined(this.getObject().testRunA);
         } else {
-            return false; // TODO
+            return !this.listA;
         }
     }
 

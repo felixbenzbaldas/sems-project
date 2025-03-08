@@ -142,8 +142,10 @@ export class UiA_BodyG {
     async getListOfChildren() : Promise<Array<UiA>> {
         let list : Array<UiA> = [];
         if (this.getUiA().headerBodyG.bodyIsVisible()) {
-            if (await this.getUiA().hasContextAsSubitem()) {
-                list.push(this.contextAsSubitemUi);
+            if (this.getUiA().object) {
+                if (await this.getUiA().hasContextAsSubitem()) {
+                    list.push(this.contextAsSubitemUi);
+                }
             }
             if (this.getUiA().relationshipA) {
                 list.push(this.getUiA().relationshipA.bodyContentUi);
