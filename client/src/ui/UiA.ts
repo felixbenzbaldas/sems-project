@@ -539,10 +539,12 @@ export class UiA {
     }
 
     leaveEditMode() {
-        this.editMode = false;
-        this.headerG.focusStyle_update();
-        this.headerG.updateCursorStyle();
-        this.textG.htmlElement.contentEditable = 'false';
+        if (this.object) {
+            this.editMode = false;
+            this.headerG.focusStyle_update();
+            this.headerG.updateCursorStyle();
+            this.textG.htmlElement.contentEditable = 'false';
+        }
     }
 
     async getListOfChildren() : Promise<Array<UiA>> {
