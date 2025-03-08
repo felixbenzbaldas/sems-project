@@ -75,13 +75,13 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async scaleUp() {
-        if (this.getAppUi().focused.getObject().collapsible) {
+        if (this.getAppUi().focused.isCollapsible()) {
             await this.getAppUi().focused.expandWithAnimation();
         }
     }
 
     async scaleDown() {
-        if (this.getAppUi().focused.getObject().collapsible) {
+        if (this.getAppUi().focused.isCollapsible()) {
             await this.getAppUi().focused.collapseWithAnimation();
         }
     }
