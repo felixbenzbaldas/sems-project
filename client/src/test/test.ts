@@ -147,11 +147,21 @@ export function test_add(tests : TestG_NestedTestsA) {
     tests.addTestWithNestedTests('createFromJson', async run => {
         let json = {
             text: 'container + parent',
-            list: [['0']],
+            list: [
+                ['0'],
+                {
+                    text: 'propertyName',
+                    to: ['1']
+                }
+            ],
             objects: {'0': {
                     text: 'contained + subitem',
                     context: ['..']
-                }}
+                },
+                '1': {
+                    text: 'valueObject'
+                }
+            }
         };
 
         let container = run.app.unboundG.createFromJson(json);
@@ -163,6 +173,8 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs(containedAndSub.name, container.containerA.mapNameEntity.keys().next().value);
         assert_sameAs(await containedAndSub.context.resolve(), container);
         assert(notNullUndefined(container.listA.jsList[0]));
+        assert(await container.has('propertyName'));
+        assert_sameAs((await (await container.get('propertyName')).resolve()).text, 'valueObject');
     }, createFromJson => {
         createFromJson.add('testData', async run => {
             let container = run.app.unboundG.createFromJson(testData);
@@ -401,9 +413,9 @@ export function test_add(tests : TestG_NestedTestsA) {
         let value = run.app.createEntityWithApp();
         value.text = 'theValue';
 
-        await entity.set(propertyName, value);
+        await entity.set(propertyName, entity.getApp_typed().direct_typed(value));
 
-        assert_sameAs(value, await entity.get(propertyName));
+        assert_sameAs(value, await (await entity.get(propertyName)).resolve());
     }, propertyTests => {
         propertyTests.add('setMultipleTimes', async run => {
             let propertyName = 'foo';
@@ -423,10 +435,10 @@ export function test_add(tests : TestG_NestedTestsA) {
             let value = run.app.createEntityWithApp();
             value.text = 'theValue';
 
-            await entity.set(propertyName, value);
+            await entity.set(propertyName, entity.getApp_typed().direct_typed(value));
 
             assert_sameAs(entity.listA.jsList.length, 2);
-            assert_sameAs(await entity.get(propertyName), value);
+            assert_sameAs(await (await entity.get(propertyName)).resolve(), value);
         });
     });
 }

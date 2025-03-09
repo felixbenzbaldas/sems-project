@@ -1,6 +1,6 @@
 import {Entity} from "@/Entity";
 import {ListA} from "@/ListA";
-import {notNullUndefined} from "@/utils";
+import {notNullUndefined, nullUndefined} from "@/utils";
 import {ContainerA} from "@/ContainerA";
 import {CreateFromOldFormat} from "@/CreateFromOldFormat";
 import {RelationshipA} from "@/RelationshipA";
@@ -58,24 +58,23 @@ export class AppA_UnboundG {
         return button;
     }
 
-    createFromJson(json: any) : Entity {
+    createFromJson(json: any, subjectForPaths? : Entity) : Entity {
         let entity : Entity = this.entity.appA.createEntityWithApp();
+        if (nullUndefined(subjectForPaths)) {
+            subjectForPaths = entity;
+        }
         entity.text = json.text;
         entity.collapsible = json.collapsible;
         entity.link = json.link;
         entity.editable = json.editable;
         if (notNullUndefined(json.context)) {
-            entity.context = this.entity.appA.createPath(json.context, entity);
+            entity.context = this.getPathOrDirectForJson(json.context, subjectForPaths);
         }
         if (notNullUndefined(json.list)) {
             entity.installListA();
             entity.listA.jsList = [];
             for (let current of json.list) {
-                if (current instanceof Array) {
-                    entity.listA.addByListOfNames(current);
-                } else {
-                    entity.listA.addDirect(this.createFromJson(current));
-                }
+                entity.listA.jsList.push(this.getPathOrDirectForJson(current, subjectForPaths));
             }
         }
         if (notNullUndefined(json.objects)) {
@@ -87,7 +86,19 @@ export class AppA_UnboundG {
                 current.container = entity;
             }
         }
+        if (notNullUndefined(json.to)) {
+            entity.relationshipA = new RelationshipA(entity);
+            entity.relationshipA.to = this.getPathOrDirectForJson(json.to, subjectForPaths);
+        }
         return entity;
+    }
+
+    private getPathOrDirectForJson(json : any, subjectForPaths : Entity) {
+        if (json instanceof Array) {
+            return this.entity.appA.createPath(json, subjectForPaths);
+        } else {
+            return this.entity.appA.direct_typed(this.createFromJson(json, subjectForPaths));
+        }
     }
 
     async createFromOldJson(json: any) : Promise<Entity> {
