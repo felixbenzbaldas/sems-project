@@ -82,7 +82,8 @@ export class UiA_BodyG {
         this.content_contextAsSubitem_htmlElement.innerHTML = null;
         if (await this.getUiA().hasContextAsSubitem()) {
             let contextObj = await this.getObject().context.resolve();
-            this.contextAsSubitemUi = (await this.entity.getApp_typed().uiA.createUiStringEntityProperty('context', contextObj, true)).entity.uiA;
+            this.contextAsSubitemUi = (await this.entity.getApp_typed().uiA.createUiStringEntityProperty('context',
+                this.entity.getApp_typed().direct_typed(contextObj), true)).entity.uiA;
             this.contextAsSubitemUi.context = this.getUiA();
             this.content_contextAsSubitem_htmlElement.appendChild(this.contextAsSubitemUi.htmlElement);
         }

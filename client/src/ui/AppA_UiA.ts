@@ -7,6 +7,7 @@ import {OutputA} from "@/ui/OutputA";
 import {InputA} from "@/ui/InputA";
 import type {UiA_RelationshipA} from "@/ui/RelationshipA";
 import {RelationshipA} from "@/RelationshipA";
+import type {PathA} from "@/PathA";
 
 export class AppA_UiA {
 
@@ -77,10 +78,10 @@ export class AppA_UiA {
         return entity.uiA;
     }
 
-    async createUiStringEntityProperty(propertyName: string, value: Entity, collapsible : boolean) : Promise<UiA_RelationshipA> {
+    async createUiStringEntityProperty(propertyName: string, pathForValue: PathA, collapsible : boolean) : Promise<UiA_RelationshipA> {
         let object = this.entity.getApp_typed().unboundG.createText(propertyName);
         object.relationshipA = new RelationshipA(object);
-        object.relationshipA.to = object.pathOrDirect(value);
+        object.relationshipA.to = pathForValue;
         object.editable = false;
         object.collapsible = collapsible;
         let ui = await this.createUiFor(object, true);
