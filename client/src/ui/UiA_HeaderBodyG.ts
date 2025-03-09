@@ -7,7 +7,6 @@ export class UiA_HeaderBodyG {
     }
 
     async install() {
-        this.entity.log('HB->install');
         let object = this.getUiA().getObject();
         if (object.testRunA) {
             await this.getUiA().testRunG.install();
