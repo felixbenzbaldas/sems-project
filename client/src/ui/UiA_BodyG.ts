@@ -2,6 +2,7 @@ import type {Entity} from "@/Entity";
 import type {UiA} from "@/ui/UiA";
 import {AnimatedExpandAndCollapse} from "@/ui/AnimatedExpandAndCollapse";
 import {div, notNullUndefined} from "@/utils";
+import type {UiA_RelationshipA} from "@/ui/RelationshipA";
 
 // TODO the body aspect should only exist if showBody === true
 export class UiA_BodyG {
@@ -80,13 +81,8 @@ export class UiA_BodyG {
         this.content_contextAsSubitem_htmlElement.innerHTML = null;
         if (await this.getUiA().hasContextAsSubitem()) {
             let contextObj = await this.getObject().context.resolve();
-            let contextAsSubitem = this.entity.getApp_typed().unboundG.createTextWithList('[context]', contextObj);
-            contextAsSubitem.collapsible = true;
-            contextAsSubitem.editable = false;
-            this.contextAsSubitemUi = await this.getUiA().createSubUiFor_transmitEditability(contextAsSubitem); // it is important to transmit the editability for the subsubitems
-            this.contextAsSubitemUi.htmlElement.style.marginBottom = '0.1rem';
-            this.contextAsSubitemUi.headerG.htmlElement.style.fontSize = '0.8rem';
-            this.contextAsSubitemUi.headerG.htmlElement.style.color = this.entity.getApp_typed().uiA.theme.buttonFontColor;
+            this.contextAsSubitemUi = (await this.entity.getApp_typed().uiA.createUiStringEntityProperty('context', contextObj, this.getUiA().editable)).entity.uiA;
+            this.contextAsSubitemUi.context = this.getUiA();
             this.content_contextAsSubitem_htmlElement.appendChild(this.contextAsSubitemUi.htmlElement);
         }
     }

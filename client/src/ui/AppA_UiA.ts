@@ -5,6 +5,7 @@ import {UiA_AppA} from "@/ui/UiA_AppA";
 import {Theme} from "@/ui/Theme";
 import {OutputA} from "@/ui/OutputA";
 import {InputA} from "@/ui/InputA";
+import type {UiA_RelationshipA} from "@/ui/RelationshipA";
 
 export class AppA_UiA {
 
@@ -73,5 +74,18 @@ export class AppA_UiA {
         list.elements = [...uis];
         await entity.uiA.install();
         return entity.uiA;
+    }
+
+    async createUiStringEntityProperty(propertyName: string, value: Entity, collapsible : boolean) : Promise<UiA_RelationshipA> {
+        let entity = this.entity.getApp_typed().createEntityWithApp();
+        entity.uiA = new UiA(entity);
+        entity.uiA.installRelationshipA();
+        entity.uiA.relationshipA.withoutObjectA_text = propertyName;
+        let valueUi = await this.createUiFor(value, true);
+        entity.uiA.relationshipA.bodyContentUi = valueUi;
+        valueUi.context = entity.uiA;
+        entity.uiA.withoutObjectG_collapsible = collapsible;
+        await entity.uiA.install();
+        return entity.uiA.relationshipA;
     }
 }

@@ -64,13 +64,6 @@ export class UiA_AppA {
             this.supportColumn_freeSpace_ui = await app_uiA.createUiFor(this.supportColumn_freeSpace, true);
             this.supportColumn_freeSpace_ui.useProfileContainer = true;
             uiElementsForSupportColumn.push(this.supportColumn_freeSpace_ui);
-
-            // playground XXX
-            let object = await this.getApp().createText('object');
-            let uiStringEntityProperty : UiA_RelationshipA = await this.createUiStringEntityProperty('propName', object, true);
-            uiElementsForSupportColumn.push(uiStringEntityProperty.entity.uiA);
-
-
             this.supportColumnUi = await this.createColumn(...uiElementsForSupportColumn);
             columnsDiv.appendChild(this.supportColumnUi.htmlElement);
             this.supportColumnUi.context = this.entity.uiA;
@@ -278,18 +271,5 @@ export class UiA_AppA {
         } else {
             this.statusBar.style.display = 'default';
         }
-    }
-
-    async createUiStringEntityProperty(propertyName: string, value: Entity, collapsible : boolean) : Promise<UiA_RelationshipA> {
-        let entity = this.getApp().createEntityWithApp();
-        entity.uiA = new UiA(entity);
-        entity.uiA.installRelationshipA();
-        entity.uiA.relationshipA.withoutObjectA_text = propertyName;
-        let valueUi = await this.getApp().uiA.createUiFor(value, true);
-        entity.uiA.relationshipA.bodyContentUi = valueUi;
-        valueUi.context = entity.uiA;
-        entity.uiA.withoutObjectG_collapsible = collapsible;
-        await entity.uiA.install();
-        return entity.uiA.relationshipA;
     }
 }
