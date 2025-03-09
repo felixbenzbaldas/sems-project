@@ -164,9 +164,9 @@ export class StarterA {
             let app = this.createdApp.appA;
             let object = await app.createText('object');
             await app.uiA.mainColumnData.listA.add(object);
-            await object.set('aPropertyName', await app.createText('aValue'));
+            await object.set('aPropertyName', object.getPath(await app.createText('aValue')));
             let plainList : ListA = (await app.createList()).listA;
-            await object.set('drinks', plainList.entity);
+            await object.set('drinks', object.getPath(plainList.entity));
             await app.uiA.mainColumnData.uis_update();
         }
     }

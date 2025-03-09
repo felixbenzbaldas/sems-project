@@ -422,7 +422,7 @@ export class Entity {
         }
     }
 
-    async set(propertyName: string, value: Entity) {
+    async set(propertyName: string, pathOfValue: PathA) {
         if (!this.listA) {
             this.installListA();
         }
@@ -434,7 +434,7 @@ export class Entity {
             relationship.entity.text = propertyName;
             this.listA.addDirect(relationship.entity);
         }
-        relationship.to = this.pathOrDirect(value);
+        relationship.to = pathOfValue;
     }
 
     async has(propertyName : string) {
@@ -449,9 +449,9 @@ export class Entity {
         }
     }
 
-    async get(propertyName: string) : Promise<Entity> {
+    async get(propertyName: string) : Promise<PathA> {
         if (this.listA) {
-            return await (await this.getProperty(propertyName)).to.resolve();
+            return (await this.getProperty(propertyName)).to;
         }
         return null;
     }
