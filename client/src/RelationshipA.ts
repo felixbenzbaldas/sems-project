@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import type {AppA} from "@/AppA";
+import type {PathA} from "@/PathA";
 
 export class RelationshipA {
     static create(app : AppA) : RelationshipA {
@@ -9,5 +10,5 @@ export class RelationshipA {
     }
     constructor(public entity : Entity) {
     }
-    to : Entity;
+    to : PathA;
 }

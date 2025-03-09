@@ -434,7 +434,7 @@ export class Entity {
             relationship.entity.text = propertyName;
             this.listA.addDirect(relationship.entity);
         }
-        relationship.to = value;
+        relationship.to = this.pathOrDirect(value);
     }
 
     async has(propertyName : string) {
@@ -451,7 +451,7 @@ export class Entity {
 
     async get(propertyName: string) : Promise<Entity> {
         if (this.listA) {
-            return (await this.getProperty(propertyName)).to;
+            return await (await this.getProperty(propertyName)).to.resolve();
         }
         return null;
     }
