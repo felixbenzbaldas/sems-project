@@ -7,6 +7,7 @@ export class UiA_HeaderBodyG {
     }
 
     async install() {
+        this.entity.log('HB->install');
         let object = this.getUiA().getObject();
         if (object.testRunA) {
             await this.getUiA().testRunG.install();
@@ -20,7 +21,6 @@ export class UiA_HeaderBodyG {
         } else {
             if (object.relationshipA) {
                 this.getUiA().installRelationshipA();
-                await this.getUiA().relationshipA.update();
             }
             await this.getUiA().headerG.install();
             this.getUiA().htmlElement.appendChild(this.getUiA().headerG.htmlElement);

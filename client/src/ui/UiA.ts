@@ -52,6 +52,7 @@ export class UiA {
     }
 
     async install(source? : boolean) {
+        this.entity.log('UiA -> install');
         if (nullUndefined(this.object)) {
             if (this.relationshipA) {
                 await this.headerBodyG.installWithoutObject();
@@ -74,6 +75,7 @@ export class UiA {
     }
 
     async withObjectA_install(source? : boolean) {
+        this.entity.log('UiA -> withObjectA_install');
         if (this.wouldProvokeEndlessRecursion()) {
             this.fullWidth();
             let warningText = 'This item cannot be displayed. It contains itself. ' +

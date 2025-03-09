@@ -9,7 +9,7 @@ export class UiA_RelationshipA {
     constructor(public entity : Entity) {
     }
 
-    async update() {
+    async bodyContentG_update() {
         this.bodyContentUi = await this.entity.uiA.createSubUiFor_transmitEditability(this.entity.uiA.getObject().relationshipA.to);
     }
 
