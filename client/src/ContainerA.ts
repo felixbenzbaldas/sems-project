@@ -1,5 +1,6 @@
 import {Entity} from "@/Entity";
 import {createRandomString, nullUndefined} from "@/utils";
+import type {RelationshipA} from "@/RelationshipA";
 
 export class ContainerA {
 
@@ -77,5 +78,11 @@ export class ContainerA {
             }
         }
         return count;
+    }
+
+    async createRelationship() : Promise<RelationshipA> {
+        let rel = this.entity.getApp().appA.unboundG.createRelationship();
+        this.bind(rel.entity);
+        return rel;
     }
 }

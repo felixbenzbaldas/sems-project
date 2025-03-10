@@ -430,9 +430,9 @@ export class Entity {
         if (await this.has(propertyName)) {
             relationship = await this.getProperty(propertyName);
         } else {
-            relationship = this.getApp_typed().unboundG.createRelationship();
+            relationship = await this.findContainer().createRelationship();
             relationship.entity.text = propertyName;
-            this.listA.addDirect(relationship.entity);
+            await this.listA.add(relationship.entity);
         }
         relationship.to = pathOfValue;
     }

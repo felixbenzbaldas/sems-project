@@ -410,8 +410,8 @@ export function test_add(tests : TestG_NestedTestsA) {
     });
     tests.addTestWithNestedTests('property', async run => {
         let propertyName = 'aPropertyName';
-        let entity = run.app.createEntityWithApp();
-        let value = run.app.createEntityWithApp();
+        let entity = await run.app.createBoundEntity();
+        let value = await run.app.createBoundEntity();
         value.text = 'theValue';
 
         await entity.set(propertyName, entity.getApp_typed().direct_typed(value));
@@ -420,7 +420,7 @@ export function test_add(tests : TestG_NestedTestsA) {
     }, propertyTests => {
         propertyTests.add('setMultipleTimes', async run => {
             let propertyName = 'foo';
-            let entity = run.app.createEntityWithApp();
+            let entity = await run.app.createBoundEntity();
 
             await entity.set(propertyName, undefined);
             await entity.set(propertyName, undefined);
@@ -429,11 +429,11 @@ export function test_add(tests : TestG_NestedTestsA) {
         });
         propertyTests.add('otherSubWithSameText', async run => {
             let propertyName = 'foo';
-            let entity = run.app.createEntityWithApp();
+            let entity = await run.app.createBoundEntity();
             let otherSub = run.app.unboundG.createText(propertyName);
             entity.installListA();
             entity.listA.addDirect(otherSub);
-            let value = run.app.createEntityWithApp();
+            let value = await run.app.createBoundEntity();
             value.text = 'theValue';
 
             await entity.set(propertyName, entity.getApp_typed().direct_typed(value));
