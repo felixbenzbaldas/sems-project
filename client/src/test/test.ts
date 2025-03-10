@@ -149,16 +149,17 @@ export function test_add(tests : TestG_NestedTestsA) {
             text: 'container + parent',
             list: [
                 ['0'],
-                {
-                    text: 'propertyName',
-                    to: ['1']
-                }
+                ['1']
             ],
             objects: {'0': {
                     text: 'contained + subitem',
                     context: ['..']
                 },
                 '1': {
+                    text: 'propertyName',
+                    to: ['..','2']
+                },
+                '2': {
                     text: 'valueObject'
                 }
             }
