@@ -4,7 +4,7 @@ import {test_semi_add} from "@/test/test_semi";
 import {
     assert,
     assert_notSameAs,
-    assert_sameAs,
+    assert_sameAs, assertFalse,
     createRandomString,
     getPathFromUrl,
     notNullUndefined,
@@ -446,5 +446,15 @@ export function test_add(tests : TestG_NestedTestsA) {
             assert_sameAs(entity.listA.jsList.length, 2);
             assert_sameAs(await entity.get(propertyName), value);
         });
+    });
+    tests.add('contains', async run => {
+        let container = await run.app.createEntityWithApp();
+        container.installContainerA();
+        let contained = await container.containerA.createBoundEntity();
+        contained.installContainerA();
+        let containedContained = await contained.containerA.createBoundEntity();
+
+        assert(await container.contains(containedContained));
+        assertFalse(await container.contains(run.app.createEntityWithApp()));
     });
 }
