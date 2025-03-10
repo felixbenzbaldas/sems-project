@@ -169,6 +169,11 @@ export class Entity {
             if (this.context) {
                 await (await this.context.resolve()).addObjectAndDependencies_onlyIfNotContained(set);
             }
+            if (this.relationshipA) {
+                if (this.relationshipA.to) {
+                    await (await this.relationshipA.to.resolve()).addObjectAndDependencies_onlyIfNotContained(set);
+                }
+            }
         }
     }
 

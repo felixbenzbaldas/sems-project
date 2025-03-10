@@ -30,13 +30,16 @@ export function test_add(tests : TestG_NestedTestsA) {
         await dependency.listA.add(dependencyOfDependency);
         let context = await run.app.createText('context');
         object.context = object.getPath(context);
+        let propertyValue = await run.app.createText('value');
+        await object.set('propName', propertyValue);
 
         let dependencies = await object.getDependencies();
 
         assert(dependencies.has(dependency), 'has dependency');
         assert(dependencies.has(dependencyOfDependency));
         assert(dependencies.has(context));
-        assert_sameAs(dependencies.size, 3);
+        assert(dependencies.has(propertyValue));
+        assert_sameAs(dependencies.size, 5);
     });
     tests.add('shallowCopy', async run => {
         let object = await run.app.createList();
