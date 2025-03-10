@@ -431,8 +431,8 @@ export class UiA {
         if (this.entity.getApp().appA.environment.url?.hostname === 'localhost') {
             let profile = this.entity.getApp_typed().profileG.getProfile();
             if (profile) {
-                if (await profile.has('public')) {
-                    let publicContainer = await profile.get('public');
+                if (await profile.has(this.entity.getApp_typed().profileG.publicString)) {
+                    let publicContainer = await profile.get(this.entity.getApp_typed().profileG.publicString);
                     return publicContainer.contains(this.getObject());
                 }
             }

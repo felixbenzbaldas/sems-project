@@ -3,9 +3,10 @@ import {UiA_AppA} from "@/ui/UiA_AppA";
 
 export class AppA_ProfileG {
 
-    private lastRemovedString : string = 'lastRemoved';
-    private contentString : string = 'content';
-    rootString : string = 'root';
+    readonly lastRemovedString : string = 'lastRemoved';
+    readonly contentString : string = 'content';
+    readonly rootString : string = 'root';
+    readonly publicString : string = 'public';
 
     constructor(public entity : Entity) {
     }
