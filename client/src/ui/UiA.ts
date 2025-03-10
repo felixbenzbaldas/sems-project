@@ -427,9 +427,15 @@ export class UiA {
         }
     }
 
-    showContainerMark() {
+    async showContainerMark() {
         if (this.entity.getApp().appA.environment.url?.hostname === 'localhost') {
-            return this.getObject().containerMark();
+            let profile = this.entity.getApp_typed().profileG.getProfile();
+            if (profile) {
+                if (await profile.has('public')) {
+                    let publicContainer = await profile.get('public');
+                    return publicContainer.contains(this.getObject());
+                }
+            }
         } else {
             return false;
         }

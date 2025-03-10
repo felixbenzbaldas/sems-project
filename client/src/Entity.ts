@@ -343,19 +343,6 @@ export class Entity {
     deepCopy(targetContainer : ContainerA) : DeepCopyA {
         return new DeepCopyA(this, targetContainer);
     }
-
-    containerMark() : boolean {
-        if (this.name === 'sa9llaMlry') {
-            return true;
-        } else {
-            if (this.container) {
-                return this.container.containerMark();
-            } else {
-                return false;
-            }
-        }
-    }
-
     async script_setContextForAllObjectsInContainer() {
         for (let value of [this, ...this.containerA.mapNameEntity.values()]) {
             if (value.listA) {

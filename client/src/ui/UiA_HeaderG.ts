@@ -30,7 +30,7 @@ export class UiA_HeaderG {
         // this.divForContentAndBodyIcon.style.padding = '0.05rem';
         this.htmlElement.appendChild(this.contextIcon);
         if (this.withObject()) {
-            if (this.getUiA().showContainerMark()) {
+            if (await this.getUiA().showContainerMark()) {
                 this.htmlElement.appendChild(this.createContainerMark());
             }
         }
