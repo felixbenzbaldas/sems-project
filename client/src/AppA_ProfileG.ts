@@ -3,8 +3,9 @@ import {UiA_AppA} from "@/ui/UiA_AppA";
 
 export class AppA_ProfileG {
 
-    private lastRemovedString : string = '#lastRemoved';
-    private contentString : string = '#content';
+    private lastRemovedString : string = 'lastRemoved';
+    private contentString : string = 'content';
+    rootString : string = 'root';
 
     constructor(public entity : Entity) {
     }
@@ -21,19 +22,17 @@ export class AppA_ProfileG {
         let profile = this.entity.appA.unboundG.createText('profile');
         profile.installListA();
         profile.installContainerA();
-        let lastRemoved = await profile.containerA.createText(this.lastRemovedString);
-        await profile.listA.add(lastRemoved);
-        lastRemoved.installListA();
-        let content = await profile.containerA.createText(this.contentString);
-        await profile.listA.add(content);
-        content.installListA();
+        let lastRemovedList = await profile.containerA.createList();
+        await profile.set(this.lastRemovedString, profile.getPath(lastRemovedList));
+        let contentList = await profile.containerA.createList();
+        await profile.set(this.contentString, profile.getPath(contentList));
         await this.setProfile(profile);
     }
 
     async addToLastRemoved(entity: Entity) {
         let profile = this.getProfile();
         if (profile) {
-            let lastRemoved = await profile.listA.findByText(this.lastRemovedString);
+            let lastRemoved = await (await profile.get(this.lastRemovedString)).resolve();
             await lastRemoved.listA.add(entity);
             await lastRemoved.uis_update();
         } else {
@@ -43,14 +42,14 @@ export class AppA_ProfileG {
 
     async clearLastRemoved() {
         let profile = this.getProfile();
-        let lastRemoved = await profile.listA.findByText(this.lastRemovedString);
+        let lastRemoved = await (await profile.get(this.lastRemovedString)).resolve();
         lastRemoved.listA.jsList = [];
         await lastRemoved.uis_update();
     }
 
     async exportProfile() : Promise<any> {
         let profile = this.getProfile();
-        let forContent = await profile.listA.findByText(this.contentString);
+        let forContent = await (await profile.get(this.contentString)).resolve();
         forContent.listA.jsList = [];
         let content = this.entity.appA.uiA.mainColumnData;
         for (let resolved of await content.listA.getResolvedList()) {
@@ -62,7 +61,7 @@ export class AppA_ProfileG {
     async importProfile(json : any) {
         let created = this.entity.appA.unboundG.createFromJson(json);
         this.setProfile(created);
-        let forContent = await created.listA.findByText(this.contentString);
+        let forContent = await (await created.get(this.contentString)).resolve();
         for (let resolved of await forContent.listA.getResolvedList()) {
             await this.entity.appA.uiA.mainColumnData.listA.add(resolved);
         }
