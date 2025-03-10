@@ -158,11 +158,11 @@ export class UiA_AppA_GlobalEventG {
     async importProfile() {
         await this.getApp().profileG.importProfile(JSON.parse(this.getAppUi().input.get()));
         let profile = this.getApp().profileG.getProfile();
-        this.getAppUi().focus(this.getAppUi().mainColumnUi.listA.elements[0]);
+        this.getAppUi().focus(this.getAppUi().mainColumnUi);
         await this.getAppUi().input.clear();
         await this.getAppUi().input.ui.uiA.ensureCollapsed();
         if (await profile.has(this.getApp().profileG.rootString)) {
-            let root = await (await profile.get(this.getApp().profileG.rootString)).resolve();
+            let root = await profile.get(this.getApp().profileG.rootString);
             await this.entity.uiA.appA.supportColumn_freeSpace.listA.add(root);
             await this.entity.uiA.appA.supportColumn_freeSpace.uis_update();
         }
