@@ -62,7 +62,8 @@ export class Entity {
             link: this.link,
             editable: this.editable,
             content: this.appA?.uiA?.mainColumnData.json_withoutContainedObjects(),
-            context: this.context?.listOfNames
+            context: this.context?.listOfNames,
+            to: this.relationshipA?.to?.listOfNames
         };
         return obj;
     }
@@ -422,7 +423,7 @@ export class Entity {
         }
     }
 
-    async set(propertyName: string, pathOfValue: PathA) {
+    async set(propertyName: string, value : Entity) {
         if (!this.listA) {
             this.installListA();
         }
@@ -434,7 +435,7 @@ export class Entity {
             relationship.entity.text = propertyName;
             await this.listA.add(relationship.entity);
         }
-        relationship.to = pathOfValue;
+        relationship.to = relationship.entity.getPath(value);
     }
 
     async has(propertyName : string) {
@@ -449,9 +450,9 @@ export class Entity {
         }
     }
 
-    async get(propertyName: string) : Promise<PathA> {
+    async get(propertyName: string) : Promise<Entity> {
         if (this.listA) {
-            return (await this.getProperty(propertyName)).to;
+            return await (await this.getProperty(propertyName)).to.resolve();
         }
         return null;
     }

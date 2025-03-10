@@ -175,7 +175,7 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs(await containedAndSub.context.resolve(), container);
         assert(notNullUndefined(container.listA.jsList[0]));
         assert(await container.has('propertyName'));
-        assert_sameAs((await (await container.get('propertyName')).resolve()).text, 'valueObject');
+        assert_sameAs((await container.get('propertyName')).text, 'valueObject');
     }, createFromJson => {
         createFromJson.add('testData', async run => {
             let container = run.app.unboundG.createFromJson(testData);
@@ -414,16 +414,18 @@ export function test_add(tests : TestG_NestedTestsA) {
         let value = await run.app.createBoundEntity();
         value.text = 'theValue';
 
-        await entity.set(propertyName, entity.getApp_typed().direct_typed(value));
+        await entity.set(propertyName, value);
 
-        assert_sameAs(value, await (await entity.get(propertyName)).resolve());
+        assert_sameAs(value, await entity.get(propertyName));
     }, propertyTests => {
         propertyTests.add('setMultipleTimes', async run => {
             let propertyName = 'foo';
             let entity = await run.app.createBoundEntity();
+            let value = await run.app.createBoundEntity();
+            value.text = 'theValue';
 
-            await entity.set(propertyName, undefined);
-            await entity.set(propertyName, undefined);
+            await entity.set(propertyName, value);
+            await entity.set(propertyName, value);
 
             assert_sameAs(entity.listA.jsList.length, 1);
         });
@@ -436,10 +438,10 @@ export function test_add(tests : TestG_NestedTestsA) {
             let value = await run.app.createBoundEntity();
             value.text = 'theValue';
 
-            await entity.set(propertyName, entity.getApp_typed().direct_typed(value));
+            await entity.set(propertyName, value);
 
             assert_sameAs(entity.listA.jsList.length, 2);
-            assert_sameAs(await (await entity.get(propertyName)).resolve(), value);
+            assert_sameAs(await entity.get(propertyName), value);
         });
     });
 }
