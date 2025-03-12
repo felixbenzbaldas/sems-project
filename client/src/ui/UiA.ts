@@ -365,6 +365,38 @@ export class UiA {
         });
     }
 
+    async scaleDown(noContextJump? : boolean) : Promise<boolean> {
+        if (!this.isPlainList() && this.isCollapsed()) {
+            if (!noContextJump && this.context) {
+                this.context.focus();
+                await this.context.scaleDown();
+            }
+        } else {
+            let children = await this.getListOfChildren();
+            let scaledSomethingDown = false;
+            for (let child of children) {
+                let result = await child.scaleDown(true);
+                scaledSomethingDown = scaledSomethingDown || result;
+            }
+            if (scaledSomethingDown) {
+                return true;
+            } else {
+                if (this.isCollapsible()) {
+                    this.collapseWithAnimation();
+                    return true;
+                } else {
+                    if (!this.isColumn) {
+                        if (!noContextJump && this.context) {
+                            this.context.focus();
+                            await this.context.scaleDown();
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     async expandWithAnimation() {
         let promise = this.bodyG.expandWithAnimation();
         await this.headerG.updateBodyIcon();
