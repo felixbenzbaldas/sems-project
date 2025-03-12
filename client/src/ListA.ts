@@ -14,11 +14,11 @@ export class ListA {
     }
 
     async addByListOfNames(listOfNames : Array<string>) {
-        this.jsList.push(this.entity.getApp_typed().createPath(listOfNames, this.entity));
+        this.jsList.push(this.entity.getApp().createPath(listOfNames, this.entity));
     }
 
     addDirect(...entities: Array<Entity>) {
-        this.jsList.push(...entities.map((entity : Entity) => this.entity.getApp_typed().direct_typed(entity)));
+        this.jsList.push(...entities.map((entity : Entity) => this.entity.getApp().direct_typed(entity)));
     }
 
     json_withoutContainedObjects() {

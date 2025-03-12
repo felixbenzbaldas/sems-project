@@ -42,7 +42,7 @@ export class AppA_UiA {
     }
 
     createUi() : UiA {
-        let ui = this.entity.getApp().appA.createEntityWithApp();
+        let ui = this.entity.getApp().createEntityWithApp();
         ui.uiA = new UiA(ui);
         return ui.uiA;
     }
@@ -79,7 +79,7 @@ export class AppA_UiA {
     }
 
     async createUiStringEntityProperty(propertyName: string, pathForValue: PathA, collapsible : boolean) : Promise<UiA_RelationshipA> {
-        let object = this.entity.getApp_typed().unboundG.createText(propertyName);
+        let object = this.entity.getApp().unboundG.createText(propertyName);
         object.relationshipA = new RelationshipA(object);
         object.relationshipA.to = pathForValue;
         object.editable = false;

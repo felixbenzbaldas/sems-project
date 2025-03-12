@@ -51,7 +51,7 @@ export class UiA_HeaderG {
         }
         if (this.getUiA().relationshipA) {
             this.htmlElement.style.fontSize = '0.8rem';
-            this.htmlElement.style.color = this.entity.getApp_typed().uiA.theme.buttonFontColor;
+            this.htmlElement.style.color = this.entity.getApp().uiA.theme.buttonFontColor;
         }
         this.divForContentAndBodyIcon.style.border = 'solid';
         this.divForContentAndBodyIcon.style.borderWidth = '0.1rem';
@@ -85,7 +85,7 @@ export class UiA_HeaderG {
         containerMark.style.display = 'block';
         setWidth(containerMark, '0.8rem');
         containerMark.innerText = 'O'
-        containerMark.style.color = this.entity.getApp_typed().uiA.theme.secondMarkColor;
+        containerMark.style.color = this.entity.getApp().uiA.theme.secondMarkColor;
         return containerMark;
     }
 
@@ -98,9 +98,9 @@ export class UiA_HeaderG {
                 let link = document.createElement('a');
                 link.href = this.getObject().link;
                 link.innerText = this.link_getText();
-                link.style.fontFamily = this.entity.getApp_typed().uiA.theme.font;
-                link.style.fontSize = this.entity.getApp_typed().uiA.theme.fontSize;
-                link.style.color = this.entity.getApp_typed().uiA.theme.linkFontColor;
+                link.style.fontFamily = this.entity.getApp().uiA.theme.font;
+                link.style.fontSize = this.entity.getApp().uiA.theme.fontSize;
+                link.style.color = this.entity.getApp().uiA.theme.linkFontColor;
                 this.content.appendChild(link);
             } else if (notNullUndefined(this.getObject().text)) {
                 await this.entity.uiA.textG.update();
@@ -180,20 +180,20 @@ export class UiA_HeaderG {
     focusStyle_update() {
         if (this.entity.uiA.hasFocus() && this.getUiA().findAppUi().isActive()) {
             if (this.entity.uiA.editMode) {
-                this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme.focusBorderColor_editMode;
+                this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp().uiA.theme.focusBorderColor_editMode;
             } else {
-                this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme.focusBorderColor_viewMode;
+                this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp().uiA.theme.focusBorderColor_viewMode;
             }
         } else {
-            this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp_typed().uiA.theme.backgroundColor;
+            this.divForContentAndBodyIcon.style.borderColor = this.entity.getApp().uiA.theme.backgroundColor;
         }
     }
 
     updateContainerStyle() {
         if (this.getObject().containerA) {
-            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp_typed().uiA.theme.containerColor;
+            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp().uiA.theme.containerColor;
         } else {
-            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp_typed().uiA.theme.backgroundColor;
+            this.divForContentAndBodyIcon.style.backgroundColor = this.entity.getApp().uiA.theme.backgroundColor;
         }
     }
 

@@ -59,7 +59,7 @@ export class StarterA {
     }
 
     getEnvironment() : Environment {
-        return this.entity.getApp().appA.environment;
+        return this.entity.getApp().environment;
     }
 
     checkTestMode() {
@@ -72,7 +72,7 @@ export class StarterA {
         this.createdApp = new Entity();
         this.createdApp.text = 'simple application';
         this.createdApp.appA = new AppA(this.createdApp);
-        this.createdApp.appA.environment =  this.entity.getApp().appA.environment;
+        this.createdApp.appA.environment =  this.entity.getApp().environment;
         return this.createdApp;
     }
 

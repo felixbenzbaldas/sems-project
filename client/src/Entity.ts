@@ -80,7 +80,7 @@ export class Entity {
         } else {
             listOfNames = ['..', ...this.container.getPath(object).listOfNames];
         }
-        return this.getApp_typed().createPath(listOfNames, this);
+        return this.getApp().createPath(listOfNames, this);
     }
 
     contains(object : Entity) : boolean {
@@ -107,7 +107,7 @@ export class Entity {
 
     pathOrDirect(object : Entity) : PathA {
         if (object.isUnbound()) {
-            return this.getApp_typed().direct_typed(object);
+            return this.getApp().direct_typed(object);
         } else {
             return this.getPath(object);
         }
@@ -177,20 +177,16 @@ export class Entity {
         }
     }
 
-    getApp() {
+    getApp() : AppA {
         if (this.appA) {
-            return this;
+            return this.appA;
         } else {
-            return this.app;
+            return this.app?.appA;
         }
     }
 
-    getApp_typed() {
-        return this.getApp().appA;
-    }
-
     log(log: string) {
-        this.getApp()?.appA?.logG.log(this, log);
+        this.getApp()?.logG.log(this, log);
     }
 
     logInfo(log: string) {
@@ -289,21 +285,21 @@ export class Entity {
 
     createCode(name: string, jsFunction: Function) : Entity {
         let code : Entity = new Entity();
-        code.app = this.getApp();
+        code.app = this.getApp().entity;
         code.codeG_jsFunction = jsFunction;
-        let containerA = this.containerA ? this.containerA : this.getApp().containerA;
+        let containerA = this.containerA ? this.containerA : this.getApp().entity.containerA;
         containerA.bind(code, name);
         return code;
     }
 
     async testG_run(withoutNestedTests? : boolean) : Promise<Entity> {
-        let testRun : Entity = this.getApp_typed().createEntityWithApp();
+        let testRun : Entity = this.getApp().createEntityWithApp();
         testRun.installTestRunA();
         let testRunA = testRun.testRunA;
         testRunA.test = this;
         testRun.collapsible = true;
         if (!withoutNestedTests && this.testG_nestedTestsA) {
-            testRunA.nestedRuns = this.getApp().appA.unboundG.createList();
+            testRunA.nestedRuns = this.getApp().unboundG.createList();
             for (let nestedTest of await (this.testG_nestedTestsA.nestedTests.listA.getResolvedList())) {
                 let nestedTestRun = await nestedTest.testG_run();
                 testRunA.nestedRuns.listA.addDirect(nestedTestRun);
@@ -326,7 +322,7 @@ export class Entity {
     }
 
     async shallowCopy() : Promise<Entity> {
-        let copy = await this.getApp_typed().createBoundEntity();
+        let copy = await this.getApp().createBoundEntity();
         copy.text = this.text;
         copy.collapsible = this.collapsible;
         copy.link = this.link;
@@ -397,7 +393,7 @@ export class Entity {
         if (this.container) {
             this.container.containerA.mapNameEntity.delete(this.name);
         }
-        let app = this.getApp();
+        let app = this.getApp().entity;
         let object : any = this;
         for (let key of Object.keys(object)) {
             object[key] = undefined;

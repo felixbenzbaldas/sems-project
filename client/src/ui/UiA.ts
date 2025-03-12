@@ -79,9 +79,9 @@ export class UiA {
             let warningText = 'This item cannot be displayed. It contains itself. ' +
                 'The rendering would result in an endless recursion. ' +
                 'Do you want to make it collapsible to solve the problem?';
-            let data = this.entity.getApp_typed().unboundG.createList(
-                this.entity.getApp_typed().unboundG.createText(warningText),
-                this.entity.getApp_typed().unboundG.createButton('make collapsible', async () => {
+            let data = this.entity.getApp().unboundG.createList(
+                this.entity.getApp().unboundG.createText(warningText),
+                this.entity.getApp().unboundG.createButton('make collapsible', async () => {
                     this.getObject().collapsible = true;
                     await this.getObject().uis_update_collapsible();
                     await this.withObjectA_update();
@@ -231,7 +231,7 @@ export class UiA {
         } else {
             if (this.hasFocus() && this.findAppUi().isActive()) {
                 this.htmlElement.style.border = 'solid';
-                this.htmlElement.style.borderColor = this.entity.getApp_typed().uiA.theme.focusBorderColor_viewMode;
+                this.htmlElement.style.borderColor = this.entity.getApp().uiA.theme.focusBorderColor_viewMode;
             } else {
                 this.htmlElement.style.border = 'none';
             }
@@ -285,14 +285,14 @@ export class UiA {
 
     findContainerForNewSubitem() : ContainerA {
         if (this.useProfileContainer) {
-            return this.entity.getApp_typed().profileG.getProfile().containerA;
+            return this.entity.getApp().profileG.getProfile().containerA;
         } else {
             return this.getObject().findContainer();
         }
     }
 
     async mark() {
-        let appUi = this.entity.getApp_typed().uiA;
+        let appUi = this.entity.getApp().uiA;
         this.textG.save();
         appUi.clipboard = this.getObject();
         appUi.clipboard_lostContext = false; // important!
@@ -300,7 +300,7 @@ export class UiA {
     }
 
     async cut() {
-        let appA_uiA = this.entity.getApp_typed().uiA;
+        let appA_uiA = this.entity.getApp().uiA;
         appA_uiA.clipboard = this.getObject();
         appA_uiA.clipboard_lostContext = this.objectHasContext() && await this.inContext();
         await this.remove();
@@ -311,7 +311,7 @@ export class UiA {
             this.textG.save(); // important!
         }
         let obj = this.getObject();
-        await this.entity.getApp_typed().profileG.addToLastRemoved(obj);
+        await this.entity.getApp().profileG.addToLastRemoved(obj);
         let uiContext = this.context;
         let uiListItems = uiContext.listA.elements;
         let position = uiListItems.indexOf(this);
@@ -338,7 +338,7 @@ export class UiA {
             if (!this.getObject().listA) {
                 this.getObject().installListA();
             }
-            let appUi = this.entity.getApp_typed().uiA;
+            let appUi = this.entity.getApp().uiA;
             let position = 0;
             await appUi.insertClipboardAtPosition(this.getObject(), position);
             await this.ensureExpanded();
@@ -467,11 +467,11 @@ export class UiA {
     }
 
     async showContainerMark() {
-        if (this.entity.getApp().appA.environment.url?.hostname === 'localhost') {
-            let profile = this.entity.getApp_typed().profileG.getProfile();
+        if (this.entity.getApp().environment.url?.hostname === 'localhost') {
+            let profile = this.entity.getApp().profileG.getProfile();
             if (profile) {
-                if (await profile.has(this.entity.getApp_typed().profileG.publicString)) {
-                    let publicContainer = await profile.get(this.entity.getApp_typed().profileG.publicString);
+                if (await profile.has(this.entity.getApp().profileG.publicString)) {
+                    let publicContainer = await profile.get(this.entity.getApp().profileG.publicString);
                     return publicContainer.contains(this.getObject());
                 }
             }
@@ -561,7 +561,7 @@ export class UiA {
     }
 
     async createSubUiFor_transmitEditability(object: Entity) : Promise<UiA> {
-        let ui = this.entity.getApp_typed().uiA.prepareUiFor(object);
+        let ui = this.entity.getApp().uiA.prepareUiFor(object);
         ui.context = this;
         ui.editable = this.editable;
         await ui.install();
@@ -569,7 +569,7 @@ export class UiA {
     }
 
     async createSubUiFor(object: Entity) : Promise<UiA> {
-        let ui = this.entity.getApp_typed().uiA.prepareUiFor(object);
+        let ui = this.entity.getApp().uiA.prepareUiFor(object);
         ui.context = this;
         await ui.install();
         return ui;
@@ -722,7 +722,7 @@ export class UiA {
     }
 
     getScrollableRect() {
-        if (this.entity.getApp_typed().uiA.isWebsite) {
+        if (this.entity.getApp().uiA.isWebsite) {
             return this.findAppUi().website_scrollableArea.getBoundingClientRect();
         } else {
             return this.getColumn().htmlElement.getBoundingClientRect();

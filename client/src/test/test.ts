@@ -257,7 +257,7 @@ export function test_add(tests : TestG_NestedTestsA) {
         let starter : StarterA = starterApplication.createStarter();
 
         assert(notNullUndefined(starter));
-        assert_sameAs(starter.entity.getApp_typed(), starterApplication);
+        assert_sameAs(starter.entity.getApp(), starterApplication);
     });
     tests.addNestedTests('util', utilTests => {
         utilTests.add('randomString', async run => {

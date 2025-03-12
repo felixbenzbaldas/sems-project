@@ -19,7 +19,7 @@ export class UiA_TextG {
             this.htmlElement.innerText = this.getObject().text;
         }
         this.htmlElement.style.minHeight = '1rem';
-        this.htmlElement.style.fontFamily = this.entity.getApp_typed().uiA.theme.font;
+        this.htmlElement.style.fontFamily = this.entity.getApp().uiA.theme.font;
         // this.htmlElement.style.fontSize = this.entity.getApp_typed().uiA.theme.fontSize;
         this.htmlElement.style.whiteSpace = 'pre-wrap';
         this.htmlElement.style.outline = "0px solid transparent"; // prevent JS focus
@@ -76,7 +76,7 @@ export class UiA_TextG {
         } else {
             this.htmlElement.style.borderLeft = 'solid';
             if (document.activeElement != this.htmlElement && this.getUiA().isEditable() && this.getObject().text.length === 0) {
-                this.htmlElement.style.borderLeftColor = this.entity.getApp_typed().uiA.theme.fontColor;
+                this.htmlElement.style.borderLeftColor = this.entity.getApp().uiA.theme.fontColor;
             } else {
                 this.htmlElement.style.borderLeft = 'none';
             }

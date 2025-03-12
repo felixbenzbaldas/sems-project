@@ -219,7 +219,7 @@ export class UiA_AppA {
     }
 
     getApp() : AppA {
-        return this.entity.getApp_typed();
+        return this.entity.getApp();
     }
 
     ensureActive() {
@@ -241,7 +241,7 @@ export class UiA_AppA {
     }
 
     async createColumnFor(object : Entity) {
-        let ui = this.entity.getApp_typed().uiA.prepareUiFor(object);
+        let ui = this.entity.getApp().uiA.prepareUiFor(object);
         ui.editable = this.entity.uiA.editable;
         ui.isColumn = true;
         await ui.install();

@@ -82,8 +82,8 @@ export class UiA_BodyG {
         this.content_contextAsSubitem_htmlElement.innerHTML = null;
         if (await this.getUiA().hasContextAsSubitem()) {
             let contextObj = await this.getObject().context.resolve();
-            this.contextAsSubitemUi = (await this.entity.getApp_typed().uiA.createUiStringEntityProperty('context',
-                this.entity.getApp_typed().direct_typed(contextObj), true)).entity.uiA;
+            this.contextAsSubitemUi = (await this.entity.getApp().uiA.createUiStringEntityProperty('context',
+                this.entity.getApp().direct_typed(contextObj), true)).entity.uiA;
             this.contextAsSubitemUi.context = this.getUiA();
             this.content_contextAsSubitem_htmlElement.appendChild(this.contextAsSubitemUi.htmlElement);
         }
@@ -104,7 +104,7 @@ export class UiA_BodyG {
     async showMeta() {
         this.content_meta_htmlElement.innerHTML = null;
         this.content_meta_htmlElement.style.marginLeft = '0.7rem';
-        this.content_meta_htmlElement.style.borderLeft = '0.3rem solid ' + this.entity.getApp_typed().uiA.theme.meta;
+        this.content_meta_htmlElement.style.borderLeft = '0.3rem solid ' + this.entity.getApp().uiA.theme.meta;
         let hideButton : HTMLButtonElement = document.createElement('button');
         hideButton.onclick = async () => {
             await this.getUiA().hideMeta();
@@ -112,7 +112,7 @@ export class UiA_BodyG {
         hideButton.innerText = ' - ';
         hideButton.style.marginLeft = '0.4rem';
         this.content_meta_htmlElement.appendChild(hideButton);
-        let app = this.entity.getApp_typed();
+        let app = this.entity.getApp();
         let meta = app.unboundG.createList();
         let url = this.getObject().getUrl();
         if (notNullUndefined(url)) {
@@ -121,7 +121,7 @@ export class UiA_BodyG {
         let topLevelContainer = this.getObject().getTopLevelContainer();
         if (topLevelContainer) {
             let root : string;
-            if (topLevelContainer.entity === this.entity.getApp()) {
+            if (topLevelContainer.entity === this.entity.getApp().entity) {
                 root = 'App';
             } else {
                 root = 'unbound! ' + topLevelContainer.entity.getShortDescription();

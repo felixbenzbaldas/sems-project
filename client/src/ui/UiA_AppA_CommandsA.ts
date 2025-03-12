@@ -272,7 +272,7 @@ export class UiA_AppA_CommandsA {
     }
 
     private createAndRegisterCommand() : CommandA {
-        let command = this.entity.getApp_typed().createEntityWithApp();
+        let command = this.entity.getApp().createEntityWithApp();
         command.installCommandA();
         this.listOfStaticCommands.push(command.commandA);
         return command.commandA;

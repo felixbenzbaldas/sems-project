@@ -9,7 +9,7 @@ export class TestG_NestedTestsA {
     }
 
     install() {
-        this.nestedTests = this.entity.getApp().appA.unboundG.createList();
+        this.nestedTests = this.entity.getApp().unboundG.createList();
     }
 
     add_withoutApp(name: string, jsFunction: (run: TestRunA) => Promise<void>) : Entity {
@@ -20,7 +20,7 @@ export class TestG_NestedTestsA {
 
     add(name: string, jsFunction: (run: TestRunA) => Promise<void>) : Entity {
         return this.add_withoutApp(name, async _run => {
-           _run.app =  this.entity.getApp_typed().createStarter().createApp_typed();
+           _run.app =  this.entity.getApp().createStarter().createApp_typed();
            await jsFunction(_run);
         });
     }
@@ -33,12 +33,12 @@ export class TestG_NestedTestsA {
     }
 
     prepareApp(run : TestRunA) {
-        run.app = this.entity.getApp_typed().createStarter().createApp_typed();
+        run.app = this.entity.getApp().createStarter().createApp_typed();
     }
 
     prepareUi(run: TestRunA) {
-        run.app_uiA = this.entity.getApp_typed().createStarter().createAppWithUI_typed();
-        run.app = run.app_uiA.entity.getApp_typed();
+        run.app_uiA = this.entity.getApp().createStarter().createAppWithUI_typed();
+        run.app = run.app_uiA.entity.getApp();
     }
 
     addTestWithNestedTests_withoutApp(name: string, jsFunction : (run: TestRunA) => Promise<void>, creator : ((nestedTestsA : TestG_NestedTestsA) => void)) {

@@ -12,7 +12,7 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async exportApp() {
-        await this.getAppUi().output.setAndUpdateUi(JSON.stringify(await this.entity.getApp().export(), null, 4));
+        await this.getAppUi().output.setAndUpdateUi(JSON.stringify(await this.entity.getApp().entity.export(), null, 4));
     }
 
     async toggleCollapsible() {
@@ -87,7 +87,7 @@ export class UiA_AppA_GlobalEventG {
     async deepCopy() {
         let focusedObject = this.getAppUi().focused.getObject();
         if (focusedObject.containerA) {
-            let app_uiA = this.entity.getApp_typed().uiA;
+            let app_uiA = this.entity.getApp().uiA;
             if (app_uiA.clipboard) {
                 app_uiA.clipboard = await app_uiA.clipboard.deepCopy(focusedObject.containerA).run();
                 this.getAppUi().signal('copied deep: ' + app_uiA.clipboard.getShortDescription());
@@ -120,7 +120,7 @@ export class UiA_AppA_GlobalEventG {
     }
 
     getApp() : AppA {
-        return this.entity.getApp_typed();
+        return this.entity.getApp();
     }
 
     async editMode() {

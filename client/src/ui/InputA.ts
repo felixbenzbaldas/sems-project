@@ -11,10 +11,10 @@ export class InputA {
 
     static async create(entity : Entity) {
         let inputA = new InputA(entity);
-        let app = entity.getApp_typed();
+        let app = entity.getApp();
         inputA.input = app.unboundG.createText('');
         inputA.input.editable = true;
-        let html = entity.getApp_typed().createEntityWithApp();
+        let html = entity.getApp().createEntityWithApp();
         html.codeG_html = textFileInput(async text => {
             inputA.input.text = text;
             await inputA.input.uis_update_text();

@@ -54,7 +54,7 @@ export class UiA_ListA {
 
     async pasteNextOnSubitem(subitem: UiA) {
         let position : number = this.elements.indexOf(subitem) + 1;
-        await this.entity.getApp_typed().uiA.insertClipboardAtPosition(this.getObject(), position);
+        await this.entity.getApp().uiA.insertClipboardAtPosition(this.getObject(), position);
         this.entity.uiA.findAppUi().focus(this.elements[position]);
     }
 

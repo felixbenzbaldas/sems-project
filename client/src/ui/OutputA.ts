@@ -13,7 +13,7 @@ export class OutputA {
 
     static async create(entity : Entity) : Promise<OutputA> {
         let outputA = new OutputA(entity);
-        let app = outputA.entity.getApp_typed();
+        let app = outputA.entity.getApp();
         outputA.output = app.unboundG.createText('There is no output. Click on \'export\'');
         outputA.outputDownload = app.createEntityWithApp();
         outputA.outputDownload.codeG_html = div();
