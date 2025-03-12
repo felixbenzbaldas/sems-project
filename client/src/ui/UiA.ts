@@ -128,6 +128,13 @@ export class UiA {
     createPlaceholderArea() : HTMLElement {
         let placeholderArea = div();
         placeholderArea.style.height = '85%';
+        placeholderArea.onclick = async () => {
+            if (this.isColumn) {
+                (await this.getLast()).focus();
+            } else if (this.appA) {
+                (await this.appA.presentationModeA_contentUi.getLast()).focus();
+            }
+        }
         return placeholderArea;
     }
 
