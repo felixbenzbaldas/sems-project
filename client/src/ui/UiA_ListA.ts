@@ -40,7 +40,7 @@ export class UiA_ListA {
     }
 
     async defaultActionOnSubitem(subitem: UiA) {
-        let created = await subitem.getObject().findContainer().createText('');
+        let created = await subitem.object.findContainer().createText('');
         let position : number = this.elements.indexOf(subitem) + 1;
         let listA = this.getObject().listA;
         await listA.insertPathOrDirectAtPosition(created, position);
@@ -59,7 +59,7 @@ export class UiA_ListA {
     }
 
     getObject() : Entity {
-        return this.entity.uiA.getObject();
+        return this.entity.uiA.object;
     }
 
     async update_addedListItem(position: number) {

@@ -82,21 +82,21 @@ export class UiA {
             let data = this.entity.getApp().unboundG.createList(
                 this.entity.getApp().unboundG.createText(warningText),
                 this.entity.getApp().unboundG.createButton('make collapsible', async () => {
-                    this.getObject().collapsible = true;
-                    await this.getObject().uis_update_collapsible();
+                    this.object.collapsible = true;
+                    await this.object.uis_update_collapsible();
                     await this.withObjectA_update();
                 })
             );
             let ui = await this.createSubUiFor(data);
             this.htmlElement.appendChild(ui.htmlElement);
         } else {
-            if (this.getObject().text?.startsWith('#img') && !source) {
+            if (this.object.text?.startsWith('#img') && !source) {
                 await this.installImageA();
                 this.htmlElement.appendChild(this.imageA.htmlElement);
-            } else if (this.getObject().codeG_html) {
+            } else if (this.object.codeG_html) {
                 this.fullWidth();
-                this.htmlElement.appendChild(this.getObject().codeG_html);
-            } else if (this.getObject().appA) {
+                this.htmlElement.appendChild(this.object.codeG_html);
+            } else if (this.object.appA) {
                 this.htmlElement.innerText = "type: application";
             } else if (this.isHeaderBody()) {
                 await this.headerBodyG.install();
@@ -113,7 +113,7 @@ export class UiA {
             } else {
                 this.fullWidth();
                 let divElement = div();
-                divElement.innerText = this.getObject().getDescription();
+                divElement.innerText = this.object.getDescription();
                 this.htmlElement.appendChild(divElement);
             }
         }
@@ -139,19 +139,19 @@ export class UiA {
     }
 
     wouldProvokeEndlessRecursion() : boolean {
-        return !this.getObject().collapsible
+        return !this.object.collapsible
             && notNullUndefined(this.context)
-            && this.context.nonCollapsibleChainContains(this.getObject());
+            && this.context.nonCollapsibleChainContains(this.object);
     }
 
     nonCollapsibleChainContains(toCheck : Entity) : boolean {
         if (nullUndefined(this.object)) {
             return false;
         } else {
-            if (this.getObject().collapsible) {
+            if (this.object.collapsible) {
                 return false;
             } else {
-                if (this.getObject() == toCheck) {
+                if (this.object == toCheck) {
                     return true;
                 } else {
                     if (this.context) {
@@ -184,10 +184,10 @@ export class UiA {
 
     isHeaderBody() : boolean {
         if (this.object) {
-            return notNullUndefined(this.getObject().codeG_jsFunction) ||
-                notNullUndefined(this.getObject().link) ||
-                notNullUndefined(this.getObject().text) ||
-                notNullUndefined(this.getObject().testRunA);
+            return notNullUndefined(this.object.codeG_jsFunction) ||
+                notNullUndefined(this.object.link) ||
+                notNullUndefined(this.object.text) ||
+                notNullUndefined(this.object.testRunA);
         } else {
             return !this.listA;
         }
@@ -195,7 +195,7 @@ export class UiA {
 
     isPlainList() {
         if (this.object) {
-            return this.entity.uiA.getObject().listA && !this.isHeaderBody();
+            return this.entity.uiA.object.listA && !this.isHeaderBody();
         } else {
             return true; // TODO
         }
@@ -203,9 +203,9 @@ export class UiA {
 
     isEditable() {
         if (notNullUndefined(this.editable)) {
-            if (notNullUndefined(this.getObject().editable)) {
+            if (notNullUndefined(this.object.editable)) {
                 if (this.editable == true) {
-                    return this.getObject().editable;
+                    return this.object.editable;
                 } else {
                     return false;
                 }
@@ -213,16 +213,12 @@ export class UiA {
                 return this.editable;
             }
         } else {
-            if (notNullUndefined(this.getObject().editable)) {
-                return this.getObject().editable;
+            if (notNullUndefined(this.object.editable)) {
+                return this.object.editable;
             } else {
                 return false;
             }
         }
-    }
-
-    getObject() : Entity {
-        return this.object;
     }
 
     updateFocusStyle() {
@@ -265,15 +261,15 @@ export class UiA {
     }
 
     async newSubitem() {
-        if (!this.getObject().listA) {
-            this.getObject().installListA();
+        if (!this.object.listA) {
+            this.object.installListA();
         }
         let created = await this.findContainerForNewSubitem().createText('');
         let position = 0;
-        let listA = this.getObject().listA;
+        let listA = this.object.listA;
         await listA.insertPathOrDirectAtPosition(created, position);
-        if (notNullUndefined(this.getObject().text)) {
-            created.context = created.getPath(this.getObject());
+        if (notNullUndefined(this.object.text)) {
+            created.context = created.getPath(this.object);
         }
         await listA.entity.uis_update_addedListItem(position);
         if (!this.isPlainList()) {
@@ -287,35 +283,35 @@ export class UiA {
         if (this.useProfileContainer) {
             return this.entity.getApp().profileG.getProfile().containerA;
         } else {
-            return this.getObject().findContainer();
+            return this.object.findContainer();
         }
     }
 
     async mark() {
         let appUi = this.entity.getApp().uiA;
         this.textG.save();
-        appUi.clipboard = this.getObject();
+        appUi.clipboard = this.object;
         appUi.clipboard_lostContext = false; // important!
         this.findAppUi().signal('marked: ' + appUi.clipboard.getShortDescription());
     }
 
     async cut() {
         let appA_uiA = this.entity.getApp().uiA;
-        appA_uiA.clipboard = this.getObject();
+        appA_uiA.clipboard = this.object;
         appA_uiA.clipboard_lostContext = this.objectHasContext() && await this.inContext();
         await this.remove();
     }
 
     async remove() {
-        if (nullUndefined(this.getObject().link)) {
+        if (nullUndefined(this.object.link)) {
             this.textG.save(); // important!
         }
-        let obj = this.getObject();
+        let obj = this.object;
         await this.entity.getApp().profileG.addToLastRemoved(obj);
         let uiContext = this.context;
         let uiListItems = uiContext.listA.elements;
         let position = uiListItems.indexOf(this);
-        let uiContextObj = uiContext.getObject();
+        let uiContextObj = uiContext.object;
         if (this.objectHasContext() && await this.inContext()) {
             obj.context = null;
             await obj.uis_update_context();
@@ -335,20 +331,20 @@ export class UiA {
             await this.context.pasteNextOnSubitem(this);
             await this.remove();
         } else {
-            if (!this.getObject().listA) {
-                this.getObject().installListA();
+            if (!this.object.listA) {
+                this.object.installListA();
             }
             let appUi = this.entity.getApp().uiA;
             let position = 0;
-            await appUi.insertClipboardAtPosition(this.getObject(), position);
+            await appUi.insertClipboardAtPosition(this.object, position);
             await this.ensureExpanded();
             this.findAppUi().focus(this.entity.uiA.listA.elements[position]);
         }
     }
 
     async toggleCollapsible() {
-        this.getObject().collapsible = !this.getObject().collapsible;
-        await this.getObject().uis_update_collapsible();
+        this.object.collapsible = !this.object.collapsible;
+        await this.object.uis_update_collapsible();
     }
 
     async expandOrCollapse() {
@@ -444,7 +440,7 @@ export class UiA {
     async update_collapsible() {
         await this.headerG.updateCursorStyle();
         await this.headerG.updateBodyIcon();
-        if (!this.getObject().collapsible) {
+        if (!this.object.collapsible) {
             await this.ensureExpanded();
         }
     }
@@ -472,7 +468,7 @@ export class UiA {
             if (profile) {
                 if (await profile.has(this.entity.getApp().profileG.publicString)) {
                     let publicContainer = await profile.get(this.entity.getApp().profileG.publicString);
-                    return publicContainer.contains(this.getObject());
+                    return publicContainer.contains(this.object);
                 }
             }
         } else {
@@ -481,13 +477,13 @@ export class UiA {
     }
 
     objectHasContext() : boolean {
-        return notNullUndefined(this.getObject().context);
+        return notNullUndefined(this.object.context);
     }
 
     // check objectHasContext() before calling this method
     async inContext() : Promise<boolean> {
         if (notNullUndefined(this.context)) {
-            return this.context.getObject() === await this.getObject().context.resolve();
+            return this.context.object === await this.object.context.resolve();
         } else {
             return false;
         }
@@ -498,12 +494,12 @@ export class UiA {
     }
 
     async toggleContext() {
-        if (this.getObject().context) {
-            this.getObject().context = undefined;
+        if (this.object.context) {
+            this.object.context = undefined;
         } else {
-            this.getObject().context = this.getObject().getPath(this.context.getObject());
+            this.object.context = this.object.getPath(this.context.object);
         }
-        await this.getObject().uis_update_context();
+        await this.object.uis_update_context();
     }
 
     async pasteNext() {
@@ -529,13 +525,13 @@ export class UiA {
 
     async setLink() {
         let input = this.findAppUi().input;
-        this.getObject().link = input.get();
+        this.object.link = input.get();
         await input.clear();
-        await this.getObject().uis_update();
+        await this.object.uis_update();
     }
 
     async shakeTree() {
-        let obj = this.getObject();
+        let obj = this.object;
         if (obj.containerA) {
             let before = obj.containerA.countWithNestedEntities();
             await obj.containerA.shakeTree();

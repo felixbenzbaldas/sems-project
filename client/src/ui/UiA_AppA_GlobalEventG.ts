@@ -33,7 +33,7 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async ensureContainer() {
-        this.getAppUi().ensureContainer_AndUpdateStyle(this.getAppUi().focused.getObject());
+        this.getAppUi().ensureContainer_AndUpdateStyle(this.getAppUi().focused.object);
 
     }
 
@@ -48,13 +48,13 @@ export class UiA_AppA_GlobalEventG {
 
     async import() {
         let created = this.getApp().unboundG.createFromJson(JSON.parse(this.getAppUi().input.get()));
-        this.getAppUi().focused.getObject().containerA.bind(created);
+        this.getAppUi().focused.object.containerA.bind(created);
         this.getApp().uiA.clipboard = created;
     }
 
     async importOldJson() {
         let created = await this.getApp().unboundG.createFromOldJson(JSON.parse(this.getAppUi().input.get()));
-        this.getAppUi().focused.getObject().containerA.bind(created);
+        this.getAppUi().focused.object.containerA.bind(created);
         this.getApp().uiA.clipboard = created;
     }
 
@@ -85,7 +85,7 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async deepCopy() {
-        let focusedObject = this.getAppUi().focused.getObject();
+        let focusedObject = this.getAppUi().focused.object;
         if (focusedObject.containerA) {
             let app_uiA = this.entity.getApp().uiA;
             if (app_uiA.clipboard) {
@@ -104,7 +104,7 @@ export class UiA_AppA_GlobalEventG {
     }
 
     async script_setContextForAllObjectsInContainer() {
-        await this.getAppUi().focused.getObject().script_setContextForAllObjectsInContainer();
+        await this.getAppUi().focused.object.script_setContextForAllObjectsInContainer();
     }
 
     async focusUiContext() {

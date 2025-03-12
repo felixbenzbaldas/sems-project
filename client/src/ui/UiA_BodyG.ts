@@ -94,11 +94,7 @@ export class UiA_BodyG {
     }
 
     getObject() : Entity {
-        if (this.getUiA().object) {
-            return this.getUiA().object;
-        } else {
-            return this.entity;
-        }
+        return this.getUiA().object;
     }
 
     async showMeta() {

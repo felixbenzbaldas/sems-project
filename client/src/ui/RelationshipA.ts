@@ -11,7 +11,7 @@ export class UiA_RelationshipA {
 
     async bodyContentG_update() {
         this.bodyContentUi = await this.entity.uiA.createSubUiFor_transmitEditability(
-            await this.entity.uiA.getObject().relationshipA.to.resolve());
+            await this.entity.uiA.object.relationshipA.to.resolve());
     }
 
     async headerContentG_update() {

@@ -17,7 +17,7 @@ export class UiA_ImageA {
         let defaultHeight = "17rem";
         this.imgElement.style.height = defaultHeight;
         this.imgElement.style.cursor = "pointer";
-        let imgPathObj = await this.entity.uiA.getObject().listA.getResolved(0);
+        let imgPathObj = await this.entity.uiA.object.listA.getResolved(0);
         this.imgElement.src = '/resources/' + imgPathObj.text;
         this.imgElement.onclick = () => {
             if (this.fitWidthOnClick) {

@@ -58,7 +58,7 @@ export class UiA_TestRunG {
     }
 
     getObject() : Entity {
-        return this.entity.uiA.getObject();
+        return this.entity.uiA.object;
     }
 
     getPathString() : string {

@@ -7,7 +7,7 @@ export class UiA_HeaderBodyG {
     }
 
     async install() {
-        let object = this.getUiA().getObject();
+        let object = this.getUiA().object;
         if (object.testRunA) {
             await this.getUiA().testRunG.install();
             await this.getUiA().headerG.install();
@@ -93,7 +93,7 @@ export class UiA_HeaderBodyG {
     }
 
     getObject() : Entity {
-        return this.getUiA().getObject();
+        return this.getUiA().object;
     }
 
     bodyIsVisible() : boolean {
