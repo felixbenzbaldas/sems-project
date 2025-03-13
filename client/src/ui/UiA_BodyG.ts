@@ -83,7 +83,7 @@ export class UiA_BodyG {
         if (await this.getUiA().hasContextAsSubitem()) {
             let contextObj = await this.getObject().context.resolve();
             this.contextAsSubitemUi = (await this.entity.getApp().uiA.createUiStringEntityProperty('context',
-                this.entity.getApp().direct_typed(contextObj), true)).entity.uiA;
+                this.entity.getApp().direct_typed(contextObj), true, this.getUiA().editable)).entity.uiA;
             this.contextAsSubitemUi.context = this.getUiA();
             this.content_contextAsSubitem_htmlElement.appendChild(this.contextAsSubitemUi.htmlElement);
         }

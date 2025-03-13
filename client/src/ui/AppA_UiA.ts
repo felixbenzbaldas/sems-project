@@ -77,14 +77,14 @@ export class AppA_UiA {
         await entity.uiA.install();
         return entity.uiA;
     }
-
-    async createUiStringEntityProperty(propertyName: string, pathForValue: PathA, collapsible : boolean) : Promise<UiA_RelationshipA> {
+ 
+    async createUiStringEntityProperty(propertyName: string, pathForValue: PathA, collapsible : boolean, editable? : boolean) : Promise<UiA_RelationshipA> {
         let object = this.entity.getApp().unboundG.createText(propertyName);
         object.relationshipA = new RelationshipA(object);
         object.relationshipA.to = pathForValue;
         object.editable = false;
         object.collapsible = collapsible;
-        let ui = await this.createUiFor(object, true);
+        let ui = await this.createUiFor(object, editable);
         return ui.relationshipA;
     }
 }
