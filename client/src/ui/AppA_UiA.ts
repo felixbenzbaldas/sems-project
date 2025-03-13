@@ -77,7 +77,7 @@ export class AppA_UiA {
         await entity.uiA.install();
         return entity.uiA;
     }
- 
+
     async createUiStringEntityProperty(propertyName: string, pathForValue: PathA, collapsible : boolean, editable? : boolean) : Promise<UiA_RelationshipA> {
         let object = this.entity.getApp().unboundG.createText(propertyName);
         object.relationshipA = new RelationshipA(object);

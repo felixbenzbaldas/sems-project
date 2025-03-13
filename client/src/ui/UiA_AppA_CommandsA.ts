@@ -88,7 +88,7 @@ export class UiA_AppA_CommandsA {
             async () => {
                 await this.getGlobalEventG().mark();
             },
-            this.pattern('F1'), this.pattern_viewMode('m')
+            this.pattern_viewMode('m')
         );
 
         this.cut = this.addCommand(
@@ -96,7 +96,7 @@ export class UiA_AppA_CommandsA {
             async () => {
                 await this.getGlobalEventG().cut();
             },
-            this.pattern('F2')
+            this.pattern('F1'), this.pattern_viewMode('x')
         );
 
         this.pasteNext = this.addCommand(
@@ -104,7 +104,7 @@ export class UiA_AppA_CommandsA {
             async () => {
                 await this.getGlobalEventG().pasteNext();
             },
-            this.pattern('F3'),
+            this.pattern('F6'),
         );
 
         this.paste = this.addCommand(
@@ -112,7 +112,7 @@ export class UiA_AppA_CommandsA {
             async () => {
                 await this.getGlobalEventG().paste();
             },
-            this.pattern('F4')
+            this.pattern('F7')
         );
 
         this.focusUiContext = this.addCommand(
@@ -207,7 +207,7 @@ export class UiA_AppA_CommandsA {
             async () => {
                 await this.getGlobalEventG().toggleColumn();
             },
-            this.pattern_viewMode('j'), this.pattern('F7')
+            this.pattern_viewMode('j'), this.pattern('F9')
         )
 
         this.exportRawText = this.addCommand(
