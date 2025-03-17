@@ -87,7 +87,7 @@ export class UiA_AppA {
     }
 
     private async createMeta() : Promise<UiA> {
-        this.commandsUi = await this.getApp().uiA.createUiFor(this.createButtons());
+        this.commandsUi = await this.getApp().uiA.createUiFor(await this.createButtons());
         this.output = await OutputA.create(this.entity);
         this.input = await InputA.create(this.entity);
         let uiList = await this.getApp().uiA.createUiList(this.commandsUi, this.input.getUi().uiA, this.output.getUi().uiA);
@@ -160,7 +160,7 @@ export class UiA_AppA {
         entity.uis_update_containerStyle();
     }
 
-    createButtons() : Entity {
+    async createButtons() : Promise<Entity> {
         let lowPriorityButtons = this.getApp().unboundG.createTextWithList('mehr',
             this.getApp().unboundG.createButton('export app', async () => {
                 await this.globalEventG.exportApp();
