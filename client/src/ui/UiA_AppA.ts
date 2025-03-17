@@ -8,6 +8,7 @@ import {UiA_AppA_GlobalEventG} from "@/ui/UiA_AppA_GlobalEventG";
 import {UiA_AppA_CommandsA} from "@/ui/UiA_AppA_CommandsA";
 import type {UiA_RelationshipA} from "@/ui/RelationshipA";
 import {ParameterizedActionA} from "@/ParameterizedActionA";
+import type {ListA} from "@/ListA";
 
 export class UiA_AppA {
 
@@ -189,6 +190,13 @@ export class UiA_AppA {
         let createTextObjectWithName = this.getApp().unboundG.createText('create text-object with name');
         createTextObjectWithName.parameterizedActionA = new ParameterizedActionA(createTextObjectWithName);
         createTextObjectWithName.collapsible = true;
+        createTextObjectWithName.parameterizedActionA.parameters.push('name', 'container');
+        createTextObjectWithName.codeG_jsFunction = async (args : Entity) => {
+            let name = (await args.get('name')).text;
+            let createdObject = await this.getApp().profileG.getProfile().containerA.createBoundEntity(name);
+            createdObject.text = '';
+            return createdObject;
+        }
         return this.getApp().unboundG.createTextWithList('commands',
             this.commandsA.importProfile.entity,
             this.commandsA.exportProfile.entity,

@@ -1,5 +1,5 @@
 import type {Entity} from "@/Entity";
-import {div, notNullUndefined, setWidth, textElem} from "@/utils";
+import {div, notNullUndefined, nullUndefined, setWidth, textElem} from "@/utils";
 import type {UiA} from "@/ui/UiA";
 
 export class UiA_HeaderG {
@@ -92,7 +92,7 @@ export class UiA_HeaderG {
     async updateContent() {
         this.content.innerHTML = null;
         if (this.withObject()) {
-            if (this.getObject().codeG_jsFunction) {
+            if (this.getObject().codeG_jsFunction && nullUndefined(this.getObject().parameterizedActionA)) {
                 this.content.appendChild(this.action_getUiElement());
             } else if (notNullUndefined(this.getObject().link)) {
                 let link = document.createElement('a');
