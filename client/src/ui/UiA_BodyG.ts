@@ -62,7 +62,8 @@ export class UiA_BodyG {
             } else if (this.getObject().testRunA) {
                 this.content_htmlElement.appendChild(this.getUiA().testRunG.bodyContentUi.htmlElement);
             } else if (this.getObject().parameterizedActionA) {
-                this.content_htmlElement.innerText = 'parameterizedAction_body';
+                await this.getUiA().parameterizedActionA.bodyContentG_update();
+                this.content_htmlElement.appendChild(this.getUiA().parameterizedActionA.bodyContentUi.htmlElement);
             } else {
                 this.content_htmlElement.appendChild(this.content_contextAsSubitem_htmlElement);
                 await this.updateContextAsSubitem();

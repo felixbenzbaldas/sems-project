@@ -10,6 +10,7 @@ import {UiA_AppA} from "@/ui/UiA_AppA";
 import {UiA_ImageA} from "@/ui/UiA_ImageA";
 import type {ContainerA} from "@/ContainerA";
 import {UiA_RelationshipA} from "@/ui/RelationshipA";
+import {UiA_ParameterizedActionA} from "@/ui/UiA_ParameterizedActionA";
 
 export class UiA {
 
@@ -23,6 +24,10 @@ export class UiA {
     relationshipA: UiA_RelationshipA;
     installRelationshipA() {
         this.relationshipA = new UiA_RelationshipA(this.entity);
+    }
+    parameterizedActionA : UiA_ParameterizedActionA;
+    installParameterizedActionA() {
+        this.parameterizedActionA = new UiA_ParameterizedActionA(this.entity);
     }
     textG : UiA_TextG;
     headerG : UiA_HeaderG;
@@ -748,5 +753,4 @@ export class UiA {
             return this.withoutObjectG_collapsible;
         }
     }
-
 }

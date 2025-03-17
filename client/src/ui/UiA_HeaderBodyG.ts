@@ -21,6 +21,9 @@ export class UiA_HeaderBodyG {
             if (object.relationshipA) {
                 this.getUiA().installRelationshipA();
             }
+            if (object.parameterizedActionA) {
+                this.getUiA().installParameterizedActionA();
+            }
             await this.getUiA().headerG.install();
             this.getUiA().htmlElement.appendChild(this.getUiA().headerG.htmlElement);
             await this.getUiA().bodyG.install();
