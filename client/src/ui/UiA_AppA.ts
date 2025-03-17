@@ -7,6 +7,7 @@ import type {AppA} from "@/AppA";
 import {UiA_AppA_GlobalEventG} from "@/ui/UiA_AppA_GlobalEventG";
 import {UiA_AppA_CommandsA} from "@/ui/UiA_AppA_CommandsA";
 import type {UiA_RelationshipA} from "@/ui/RelationshipA";
+import {ParameterizedActionA} from "@/ParameterizedActionA";
 
 export class UiA_AppA {
 
@@ -185,6 +186,9 @@ export class UiA_AppA {
             })
         );
         lowPriorityButtons.collapsible = true;
+        let createTextObjectWithName = this.getApp().unboundG.createText('create text-object with name');
+        createTextObjectWithName.parameterizedActionA = new ParameterizedActionA(createTextObjectWithName);
+        createTextObjectWithName.collapsible = true;
         return this.getApp().unboundG.createTextWithList('commands',
             this.commandsA.importProfile.entity,
             this.commandsA.exportProfile.entity,
@@ -206,6 +210,7 @@ export class UiA_AppA {
             this.commandsA.toggleContext.entity,
             this.commandsA.shakeTree.entity,
             this.commandsA.exportRawText.entity,
+            createTextObjectWithName,
             lowPriorityButtons
         );
     }

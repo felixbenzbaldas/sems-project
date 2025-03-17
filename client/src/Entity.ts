@@ -10,6 +10,7 @@ import {TestRunA} from "@/tester/TestRunA";
 import {DeepCopyA} from "@/DeepCopyA";
 import {CommandA} from "@/CommandA";
 import type {RelationshipA} from "@/RelationshipA";
+import type {ParameterizedActionA} from "@/ParameterizedActionA";
 
 export class Entity {
 
@@ -24,6 +25,7 @@ export class Entity {
     uis: Array<UiA>;
     context: PathA;
     commandA : CommandA;
+    parameterizedActionA: ParameterizedActionA;
     installCommandA() {
         this.commandA = new CommandA(this);
     }

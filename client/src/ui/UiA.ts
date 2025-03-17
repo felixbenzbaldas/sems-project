@@ -184,7 +184,8 @@ export class UiA {
 
     isHeaderBody() : boolean {
         if (this.object) {
-            return notNullUndefined(this.object.codeG_jsFunction) ||
+            return notNullUndefined(this.object.parameterizedActionA) ||
+                notNullUndefined(this.object.codeG_jsFunction) ||
                 notNullUndefined(this.object.link) ||
                 notNullUndefined(this.object.text) ||
                 notNullUndefined(this.object.testRunA);

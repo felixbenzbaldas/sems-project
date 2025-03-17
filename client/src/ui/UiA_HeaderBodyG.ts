@@ -81,6 +81,8 @@ export class UiA_HeaderBodyG {
         if (this.getUiA().object) {
             if (this.getObject().relationshipA) {
                 return true;
+            } else if (this.getObject().parameterizedActionA) {
+                return true;
             } else if (this.getObject().testRunA) {
                 return this.getUiA().testRunG.hasBodyContent();
             } else {
