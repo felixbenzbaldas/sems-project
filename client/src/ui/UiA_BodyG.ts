@@ -2,7 +2,7 @@ import type {Entity} from "@/Entity";
 import type {UiA} from "@/ui/UiA";
 import {AnimatedExpandAndCollapse} from "@/ui/AnimatedExpandAndCollapse";
 import {div, notNullUndefined} from "@/utils";
-import type {UiA_RelationshipA} from "@/ui/RelationshipA";
+import type {UiA_RelationshipA} from "@/ui/UiA_RelationshipA";
 
 // TODO the body aspect should only exist if showBody === true
 export class UiA_BodyG {

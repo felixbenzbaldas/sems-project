@@ -421,9 +421,7 @@ export class Entity {
         if (await this.has(propertyName)) {
             relationship = await this.getProperty(propertyName);
         } else {
-            relationship = await this.findContainer().createRelationship();
-            relationship.entity.text = propertyName;
-            await this.listA.add(relationship.entity);
+            relationship = await this.addProperty(propertyName);
         }
         relationship.to = relationship.entity.getPath(value);
     }
@@ -438,6 +436,13 @@ export class Entity {
                 return item.relationshipA;
             }
         }
+    }
+
+    async addProperty(propertyName : string) : Promise<RelationshipA> {
+        let property = await this.findContainer().createRelationship();
+        property.entity.text = propertyName;
+        await this.listA.add(property.entity);
+        return property;
     }
 
     async get(propertyName: string) : Promise<Entity> {

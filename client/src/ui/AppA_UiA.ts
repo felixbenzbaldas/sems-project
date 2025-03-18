@@ -5,7 +5,7 @@ import {UiA_AppA} from "@/ui/UiA_AppA";
 import {Theme} from "@/ui/Theme";
 import {OutputA} from "@/ui/OutputA";
 import {InputA} from "@/ui/InputA";
-import type {UiA_RelationshipA} from "@/ui/RelationshipA";
+import type {UiA_RelationshipA} from "@/ui/UiA_RelationshipA";
 import {RelationshipA} from "@/RelationshipA";
 import type {PathA} from "@/PathA";
 

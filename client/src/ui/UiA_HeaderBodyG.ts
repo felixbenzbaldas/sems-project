@@ -83,7 +83,7 @@ export class UiA_HeaderBodyG {
     async hasBodyContent() : Promise<boolean> {
         if (this.getUiA().object) {
             if (this.getObject().relationshipA) {
-                return true;
+                return notNullUndefined(this.getObject().relationshipA.to);
             } else if (this.getObject().parameterizedActionA) {
                 return true;
             } else if (this.getObject().testRunA) {

@@ -9,7 +9,7 @@ import {UiA_TestRunG} from "@/ui/UiA_TestRunG";
 import {UiA_AppA} from "@/ui/UiA_AppA";
 import {UiA_ImageA} from "@/ui/UiA_ImageA";
 import type {ContainerA} from "@/ContainerA";
-import {UiA_RelationshipA} from "@/ui/RelationshipA";
+import {UiA_RelationshipA} from "@/ui/UiA_RelationshipA";
 import {UiA_ParameterizedActionA} from "@/ui/UiA_ParameterizedActionA";
 
 export class UiA {

@@ -14,7 +14,7 @@ export class UiA_ParameterizedActionA {
             if (parameter.type === 'stringValue') {
                 await parameters.set(parameter.name, await this.entity.getApp().createText(''));
             } else if (parameter.type === 'entity') {
-                // TODO
+                await parameters.addProperty(parameter.name);
             }
         }
         bodyContent.listA.addDirect(parameters);

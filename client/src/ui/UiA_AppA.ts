@@ -6,7 +6,7 @@ import {UiA} from "@/ui/UiA";
 import type {AppA} from "@/AppA";
 import {UiA_AppA_GlobalEventG} from "@/ui/UiA_AppA_GlobalEventG";
 import {UiA_AppA_CommandsA} from "@/ui/UiA_AppA_CommandsA";
-import type {UiA_RelationshipA} from "@/ui/RelationshipA";
+import type {UiA_RelationshipA} from "@/ui/UiA_RelationshipA";
 import {ParameterizedActionA} from "@/ParameterizedActionA";
 import type {ListA} from "@/ListA";
 import {Parameter} from "@/Parameter";
