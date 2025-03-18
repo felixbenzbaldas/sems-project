@@ -196,7 +196,8 @@ export class UiA_AppA {
             new Parameter('container', 'entity'));
         createTextObjectWithName.codeG_jsFunction = async (args : Entity) => {
             let name = (await args.get('name')).text;
-            let createdObject = await this.getApp().profileG.getProfile().containerA.createBoundEntity(name);
+            let container = (await args.get('container')).containerA;
+            let createdObject = await container.createBoundEntity(name);
             createdObject.text = '';
             return createdObject;
         }
