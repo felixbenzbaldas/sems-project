@@ -147,6 +147,9 @@ export class UiA_BodyG {
             if (this.getUiA().relationshipA) {
                 list.push(this.getUiA().relationshipA.bodyContentUi);
             }
+            if (this.getUiA().parameterizedActionA) {
+                list.push(this.getUiA().parameterizedActionA.bodyContentUi);
+            }
             if (this.getUiA().listA) {
                 list.push(...this.getUiA().listA.elements);
             }
