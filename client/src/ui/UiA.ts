@@ -333,18 +333,26 @@ export class UiA {
     }
 
     async paste() {
-        if (this.textG.getText() === '' && !await this.headerBodyG.hasBodyContent()) {
-            await this.context.pasteNextOnSubitem(this);
-            await this.remove();
-        } else {
-            if (!this.object.listA) {
-                this.object.installListA();
-            }
-            let appUi = this.entity.getApp().uiA;
-            let position = 0;
-            await appUi.insertClipboardAtPosition(this.object, position);
+        if (this.object.relationshipA) {
+            this.object.relationshipA.to = this.object.getPath(this.entity.getApp().uiA.clipboard);
+            this.entity.getApp().uiA.clipboard_lostContext = false;
+            await this.object.uis_update();
             await this.ensureExpanded();
-            this.findAppUi().focus(this.entity.uiA.listA.elements[position]);
+            this.relationshipA.bodyContentUi.focus();
+        } else {
+            if (this.textG.getText() === '' && !await this.headerBodyG.hasBodyContent()) {
+                await this.context.pasteNextOnSubitem(this);
+                await this.remove();
+            } else {
+                if (!this.object.listA) {
+                    this.object.installListA();
+                }
+                let appUi = this.entity.getApp().uiA;
+                let position = 0;
+                await appUi.insertClipboardAtPosition(this.object, position);
+                await this.ensureExpanded();
+                this.findAppUi().focus(this.entity.uiA.listA.elements[position]);
+            }
         }
     }
 
