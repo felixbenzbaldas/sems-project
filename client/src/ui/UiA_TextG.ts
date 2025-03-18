@@ -99,7 +99,7 @@ export class UiA_TextG {
                 this.htmlElement.style.cursor = 'default';
             }
         } else {
-            if (this.getObject().collapsible && await this.getUiA().headerBodyG.hasBodyContent()) {
+            if (this.getUiA().isCollapsible() && await this.getUiA().headerBodyG.hasBodyContent()) {
                 this.htmlElement.style.cursor = 'pointer';
             } else {
                 this.htmlElement.style.cursor = 'default';
