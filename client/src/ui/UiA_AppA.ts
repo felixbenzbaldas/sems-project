@@ -188,19 +188,6 @@ export class UiA_AppA {
             })
         );
         lowPriorityButtons.collapsible = true;
-        let createTextObjectWithName = this.getApp().unboundG.createText('create text-object with name');
-        createTextObjectWithName.parameterizedActionA = new ParameterizedActionA(createTextObjectWithName);
-        createTextObjectWithName.collapsible = true;
-        createTextObjectWithName.parameterizedActionA.parameters.push(
-            new Parameter('name', 'stringValue'),
-            new Parameter('container', 'entity'));
-        createTextObjectWithName.codeG_jsFunction = async (args : Entity) => {
-            let name = (await args.get('name')).text;
-            let container = (await args.get('container')).containerA;
-            let createdObject = await container.createBoundEntity(name);
-            createdObject.text = '';
-            return createdObject;
-        }
         return this.getApp().unboundG.createTextWithList('commands',
             this.commandsA.importProfile.entity,
             this.commandsA.exportProfile.entity,
@@ -222,9 +209,25 @@ export class UiA_AppA {
             this.commandsA.toggleContext.entity,
             this.commandsA.shakeTree.entity,
             this.commandsA.exportRawText.entity,
-            createTextObjectWithName,
+            await this.createParameterizedAction_createTextObjectWithName(),
             lowPriorityButtons
         );
+    }
+
+    async createParameterizedAction_createTextObjectWithName() : Promise<Entity> {
+        let createTextObjectWithName = this.getApp().unboundG.createText('create text-object with name');
+        createTextObjectWithName.parameterizedActionA = new ParameterizedActionA(createTextObjectWithName);
+        createTextObjectWithName.parameterizedActionA.parameters.push(
+            new Parameter('name', 'stringValue'),
+            new Parameter('container', 'entity'));
+        createTextObjectWithName.codeG_jsFunction = async (args : Entity) => {
+            let name = (await args.get('name')).text;
+            let container = (await args.get('container')).containerA;
+            let createdObject = await container.createBoundEntity(name);
+            createdObject.text = '';
+            return createdObject;
+        }
+        return createTextObjectWithName;
     }
 
     isActive() : boolean {

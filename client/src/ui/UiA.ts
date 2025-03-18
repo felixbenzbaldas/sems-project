@@ -756,7 +756,7 @@ export class UiA {
 
     isCollapsible() : boolean {
         if (this.object) {
-            return this.object.collapsible;
+            return this.object.collapsible || notNullUndefined(this.object.parameterizedActionA);
         } else {
             return this.withoutObjectG_collapsible;
         }
