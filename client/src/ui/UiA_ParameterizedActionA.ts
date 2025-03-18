@@ -1,5 +1,6 @@
 import type {Entity} from "@/Entity";
 import type {UiA} from "@/ui/UiA";
+import {notNullUndefined} from "@/utils";
 
 export class UiA_ParameterizedActionA {
     bodyContentUi: UiA;
@@ -10,7 +11,11 @@ export class UiA_ParameterizedActionA {
         let bodyContent = this.entity.getApp().unboundG.createList();
         let parameters = await this.entity.getApp().createList();
         for (let parameter of this.entity.uiA.object.parameterizedActionA.parameters) {
-            await parameters.set(parameter, await this.entity.getApp().createText(''));
+            if (parameter.type === 'stringValue') {
+                await parameters.set(parameter.name, await this.entity.getApp().createText(''));
+            } else if (parameter.type === 'entity') {
+                // TODO
+            }
         }
         bodyContent.listA.addDirect(parameters);
         let button = this.entity.getApp().unboundG.createButton('run', async () => {
