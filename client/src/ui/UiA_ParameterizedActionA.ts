@@ -19,7 +19,7 @@ export class UiA_ParameterizedActionA {
         }
         bodyContent.listA.addDirect(parameters);
         let button = this.entity.getApp().unboundG.createButton('run', async () => {
-            let result = await this.entity.uiA.object.codeG_jsFunction(parameters);
+            let result = await this.entity.uiA.object.parameterizedActionA.runWithArgs(parameters);
             if (result) {
                 this.entity.getApp().uiA.clipboard = result;
                 this.entity.getApp().uiA.clipboard_lostContext = false;

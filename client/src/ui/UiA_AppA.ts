@@ -220,23 +220,11 @@ export class UiA_AppA {
         createTextObjectWithName.parameterizedActionA.parameters.push(
             new Parameter('name', 'stringValue'),
             new Parameter('container', 'entity'));
-        let jsFunction : Function = async (name : string, container : Entity) => {
+        createTextObjectWithName.codeG_jsFunction = async (name : string, container : Entity) => {
             let createdObject = await container.containerA.createBoundEntity(name);
             createdObject.text = '';
             return createdObject;
         }
-        createTextObjectWithName.codeG_jsFunction = async (args : Entity) => {
-            let resolvedArgs = [];
-            for (let parameter of createTextObjectWithName.parameterizedActionA.parameters) {
-                if (parameter.type === 'stringValue') {
-                    resolvedArgs.push((await args.get(parameter.name)).text);
-                } else if (parameter.type === 'entity') {
-                    resolvedArgs.push(await args.get(parameter.name));
-                }
-            }
-            await jsFunction.call(null, ...resolvedArgs);
-        }
-
         return createTextObjectWithName;
     }
 
