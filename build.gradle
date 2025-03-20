@@ -37,3 +37,13 @@ jar {
 test {
     useJUnitPlatform()
 }
+
+task runWithConfig {
+    dependsOn run.taskDependencies
+    doLast {
+        println "pathToConfigFile: ${pathToConfigFile}"
+        println "command: ${project.command}"
+        tasks.run.args = [project.command, pathToConfigFile]
+        tasks.run.exec()
+    }
+}

@@ -16,22 +16,18 @@ public class Starter {
     public static final String PATH_FOR_TMP_FILES = TEST_RESOURCES_PATH + "/tmp";
 
     public static String deploymentPath;
+    public static String pathToConfigFile;
 
     public static void main(String[] args) throws IOException {
+        pathToConfigFile = args[1];
         deploymentPath = getProperty("deploymentPath");
-        System.out.println("deploymentPath " + deploymentPath);
-        if (args.length > 0) {
-            if (args[0].contains(",")) {
-                args = args[0].split(",");
-            }
-            String method = args[0];
-            switch (method) {
-                case "test" -> test();
-                case "run" -> run();
-                case "deployAndRun" -> deployAndRun();
-                case "replaceAndRun" -> replaceAndRun();
-                case "publish" -> publish();
-            }
+        String method = args[0];
+        switch (method) {
+            case "test" -> test();
+            case "run" -> run();
+            case "deployAndRun" -> deployAndRun();
+            case "replaceAndRun" -> replaceAndRun();
+            case "publish" -> publish();
         }
     }
 
@@ -68,7 +64,7 @@ public class Starter {
     }
 
     public static File getConfigFile() {
-        return new File(Config.pathToConfigFile);
+        return new File(pathToConfigFile);
     }
 
     public static Entity createApp() {

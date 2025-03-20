@@ -1,1 +1,1 @@
-start cmd.exe /k ".\gradlew.bat run --args deployAndRun"
+start cmd.exe /k ".\gradlew.bat runWithConfig -Pcommand=deployAndRun"

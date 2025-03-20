@@ -1,1 +1,1 @@
-start cmd.exe /k ".\gradlew.bat run --args publish"
+start cmd.exe /k ".\gradlew.bat runWithConfig -Pcommand=publish"

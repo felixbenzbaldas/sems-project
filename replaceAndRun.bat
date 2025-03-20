@@ -1,1 +1,1 @@
-start cmd.exe /k ".\gradlew.bat run --args replaceAndRun"
+start cmd.exe /k ".\gradlew.bat runWithConfig -Pcommand=replaceAndRun"

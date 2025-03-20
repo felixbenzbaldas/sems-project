@@ -1,1 +1,1 @@
-start cmd.exe /k ".\gradlew.bat run --args test"
+start cmd.exe /k ".\gradlew.bat runWithConfig -Pcommand=test"
