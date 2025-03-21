@@ -14,9 +14,24 @@ export class StarterA {
     fullStartG : StarterA_FullStartG;
     createdApp : Entity;
     data: Entity;
+    nameThemeMap: Map<string, () => Theme>;
 
     constructor(public entity : Entity) {
         this.fullStartG = new StarterA_FullStartG(entity);
+        this.nameThemeMap = new Map([
+            ['elegant', () => {
+                return Theme.elegant();
+            }],
+            ['simple', () => {
+                return Theme.simple();
+            }],
+            ['blackWhite', () => {
+                return Theme.blackWhite();
+            }],
+            ['dark', () => {
+                return Theme.dark();
+            }]
+        ]);
     }
 
     async fullStart() : Promise<HTMLElement> {
@@ -136,27 +151,19 @@ export class StarterA {
         return unboundWebMeta;
     }
 
-    theme() {
+    theme(defaultTheme? : string) {
+        let themeName : string;
         if (this.getEnvironment().url.searchParams.has('theme')) {
-            let theme = this.getEnvironment().url.searchParams.get('theme');
-            let nameThemeMap: Map<string, () => Theme> = new Map([
-                ['elegant', () => {
-                    return Theme.elegant();
-                }],
-                ['simple', () => {
-                    return Theme.simple();
-                }],
-                ['blackWhite', () => {
-                    return Theme.blackWhite();
-                }],
-                ['dark', () => {
-                    return Theme.dark();
-                }]
-            ]);
-            this.createdApp.appA.uiA.theme = nameThemeMap.get(theme).call(null);
+            themeName = this.getEnvironment().url.searchParams.get('theme');
         } else {
-            this.createdApp.appA.uiA.theme = Theme.simple();
+            if (defaultTheme) {
+                themeName = defaultTheme;
+            } else {
+                themeName = 'simple';
+            }
         }
+        this.createdApp.appA.uiA.theme = this.nameThemeMap.get(themeName).call(null);
+        console.log('theme = ' + themeName);
     }
 
     async playground() {

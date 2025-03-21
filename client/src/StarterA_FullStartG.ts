@@ -75,6 +75,7 @@ export class StarterA_FullStartG {
     async localApp() {
         let starter = this.getStarter();
         starter.createAppWithUI();
+        starter.theme('dark');
         starter.checkTestMode();
         let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true);
         starter.getEnvironment().ensureActive(appUi);
@@ -87,6 +88,7 @@ export class StarterA_FullStartG {
     async clientApp() {
         let starter = this.getStarter();
         starter.createAppWithUI();
+        starter.theme('blackWhite');
         starter.checkTestMode();
         starter.createdApp.appA.uiA.webMeta = await starter.createUnboundWebMeta(); // important
         let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true);
