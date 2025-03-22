@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
@@ -20,18 +22,33 @@ public class Utils {
     }
 
     static public void copyDirectory(Path source, Path target) throws IOException {
-        try (Stream<Path> stream = Files.walk(source)) {
-            stream.forEach(sourceFile -> copy(sourceFile, target.resolve(source.relativize(sourceFile))));
-        }
+        copyDirectory(source, target, true);
     }
 
-    private static void copy(Path source, Path dest) {
-        try {
-            if (!dest.toFile().isDirectory()) {
-                Files.copy(source, dest, REPLACE_EXISTING);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    static public void copyDirectory(Path source, Path target, boolean replaceExisting) throws IOException {
+        try (Stream<Path> stream = Files.walk(source)) {
+            stream.forEach(sourceFile -> {
+                if (sourceFile.toFile().isFile()) {
+                    Path targetFile = target.resolve(source.relativize(sourceFile));
+                    if (replaceExisting) {
+                        try {
+                            Files.copy(sourceFile, targetFile, REPLACE_EXISTING);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        if (!targetFile.toFile().exists()) {
+                            try {
+                                Files.copy(sourceFile, targetFile);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else {
+                            System.out.println("file already exists: " + targetFile.toString());
+                        }
+                    }
+                }
+            });
         }
     }
 
