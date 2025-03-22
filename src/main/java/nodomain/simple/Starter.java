@@ -8,6 +8,7 @@ import nodomain.simple.test.AppA_TestA;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -42,9 +43,11 @@ public class Starter {
         }
     }
 
-    public void backup() {
+    public void backup() throws IOException {
         Map<String, Object> backupConfig = (Map<String, Object>) config.get("backup");
-        System.out.println(backupConfig.get("static"));
+        Map<String, Object> staticConfig = (Map<String, Object>) backupConfig.get("static");
+        System.out.println(staticConfig.get("source"));
+        Utils.copyFolder(Path.of((String) staticConfig.get("source")), Path.of((String) staticConfig.get("target")));
     }
 
     public void run() {
