@@ -16,15 +16,21 @@ public class Starter {
     public static final String PATH_FOR_TMP_FILES = TEST_RESOURCES_PATH + "/tmp";
 
     public String deploymentPath;
-    public String pathToConfigFile;
+    public Map<String, Object> config;
 
     public static void main(String[] args) throws IOException {
         new Starter().start(args);
     }
 
     public void start(String[] args) throws IOException {
-        pathToConfigFile = args[1];
-        deploymentPath = getProperty("deploymentPath");
+        try {
+            this.config = (Map<String, Object>) new ObjectMapper().readValue(new File(args[1]), Object.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        deploymentPath = (String) config.get("deploymentPath");
         String method = args[0];
         switch (method) {
             case "test" -> test();
@@ -32,7 +38,13 @@ public class Starter {
             case "deployAndRun" -> deployAndRun();
             case "replaceAndRun" -> replaceAndRun();
             case "publish" -> publish();
+            case "backup" -> backup();
         }
+    }
+
+    public void backup() {
+        Map<String, Object> backupConfig = (Map<String, Object>) config.get("backup");
+        System.out.println(backupConfig.get("static"));
     }
 
     public void run() {
@@ -53,21 +65,6 @@ public class Starter {
     public void publish() {
         Entity app = createDeployer(deploymentPath);
         app.appA.deployG.publish();
-    }
-
-    public String getProperty(String key) {
-        try {
-            Map<String, Object> properties = (java.util.Map<String, Object>) new ObjectMapper().readValue(getConfigFile(), Object.class);
-            return (String) properties.get(key);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public File getConfigFile() {
-        return new File(pathToConfigFile);
     }
 
     public Entity createApp() {

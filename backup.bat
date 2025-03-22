@@ -1,0 +1,1 @@
+start cmd.exe /k ".\gradlew.bat runWithConfig -Pcommand=backup"
