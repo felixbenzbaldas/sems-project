@@ -15,10 +15,14 @@ public class Starter {
     public static final String TEST_RESOURCES_PATH = "./src/test/resources";
     public static final String PATH_FOR_TMP_FILES = TEST_RESOURCES_PATH + "/tmp";
 
-    public static String deploymentPath;
-    public static String pathToConfigFile;
+    public String deploymentPath;
+    public String pathToConfigFile;
 
     public static void main(String[] args) throws IOException {
+        new Starter().start(args);
+    }
+
+    public void start(String[] args) throws IOException {
         pathToConfigFile = args[1];
         deploymentPath = getProperty("deploymentPath");
         String method = args[0];
@@ -31,28 +35,27 @@ public class Starter {
         }
     }
 
-    public static void run() {
+    public void run() {
         Entity app = createDeployer(deploymentPath);
         app.appA.deployG.run();
     }
 
-    static void deployAndRun() throws IOException {
+    void deployAndRun() throws IOException {
         Entity app = createDeployer(deploymentPath);
         app.appA.deployG.deployAndRun();
     }
 
-    static void replaceAndRun() throws IOException {
+    void replaceAndRun() throws IOException {
         Entity app = createDeployer(deploymentPath);
         app.appA.deployG.replaceAndRun();
     }
 
-    // login to heroku at first
-    public static void publish() {
+    public void publish() {
         Entity app = createDeployer(deploymentPath);
         app.appA.deployG.publish();
     }
 
-    public static String getProperty(String key) {
+    public String getProperty(String key) {
         try {
             Map<String, Object> properties = (java.util.Map<String, Object>) new ObjectMapper().readValue(getConfigFile(), Object.class);
             return (String) properties.get(key);
@@ -63,18 +66,18 @@ public class Starter {
         }
     }
 
-    public static File getConfigFile() {
+    public File getConfigFile() {
         return new File(pathToConfigFile);
     }
 
-    public static Entity createApp() {
+    public Entity createApp() {
         Entity app = new Entity();
         app.appA = new AppA(app);
         app.text = "Sems application";
         return app;
     }
 
-    public static Entity createApp(File file) {
+    public Entity createApp(File file) {
         Entity app = new Entity();
         app.appA = new AppA(app);
         app.file = file;
@@ -82,7 +85,7 @@ public class Starter {
         return app;
     }
 
-    public static Entity loadApp(File file) {
+    public Entity loadApp(File file) {
         Entity app = new Entity();
         app.appA = new AppA(app);
         app.file = file;
@@ -90,7 +93,7 @@ public class Starter {
         return app;
     }
 
-    public static Entity createOnlyLocalhostServer(File file, int port) {
+    public Entity createOnlyLocalhostServer(File file, int port) {
         Entity app = new Entity();
         app.appA = new AppA(app);
         app.file = file;
@@ -100,14 +103,14 @@ public class Starter {
         return app;
     }
 
-    public static Entity createDeployer(String deploymentPath) {
+    public Entity createDeployer(String deploymentPath) {
         Entity app = new Entity();
         app.appA = new AppA(app);
         app.appA.deployG.path = deploymentPath;
         return app;
     }
 
-    public static void test() {
+    public void test() {
         Entity entity = new Entity();
         entity.appA = new AppA(entity);
         entity.appA.testA = new AppA_TestA(entity);

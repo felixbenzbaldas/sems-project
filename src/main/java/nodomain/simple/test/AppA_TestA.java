@@ -103,7 +103,7 @@ public class AppA_TestA {
                 String jsonString = new ObjectMapper().writeValueAsString(Map.of("text", "quote\" newline\n backslash\\end"));
                 System.out.println("jsonString        = " + jsonString);
 
-                String escapedJsonString = Starter.createApp().appA.escapeJsonString(jsonString);
+                String escapedJsonString = new Starter().createApp().appA.escapeJsonString(jsonString);
 
                 System.out.println("escapedJsonString = " + escapedJsonString);
                 String expected = "{\\\"text\\\":\\\"quote\\\\\\\" newline\\\\n backslash\\\\\\\\end\\\"}";

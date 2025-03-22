@@ -22,7 +22,7 @@ public class TestApp {
     void can_create_app_with_file() {
         File file = new File(PATH_FOR_TMP_FILES);
 
-        Entity app = Starter.createApp(file);
+        Entity app = new Starter().createApp(file);
 
         assertThat(app.file).isSameAs(file);
         assertThat(new File(file, "properties.json")).exists();
@@ -31,7 +31,7 @@ public class TestApp {
     @Test
     void can_set_text() {
         File file = new File(PATH_FOR_TMP_FILES);
-        Entity app = Starter.createApp(file);
+        Entity app = new Starter().createApp(file);
 
         app.set("text", "my application");
 
@@ -41,10 +41,10 @@ public class TestApp {
     @Test
     void can_load_app() {
         File file = new File(PATH_FOR_TMP_FILES);
-        Entity createdApp = Starter.createApp(file);
+        Entity createdApp = new Starter().createApp(file);
         createdApp.set("text", "my application");
 
-        Entity loadedApp = Starter.loadApp(file);
+        Entity loadedApp = new Starter().loadApp(file);
 
         assertThat(loadedApp.text).isEqualTo("my application");
         assertThat(loadedApp.file).isSameAs(file);
@@ -52,7 +52,7 @@ public class TestApp {
 
     @Test
     void can_create_object_with_text() {
-        Entity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
+        Entity app = new Starter().createApp(new File(PATH_FOR_TMP_FILES));
 
         Entity entity = app.appA.createText("bar");
 
@@ -64,7 +64,7 @@ public class TestApp {
     @Test
     void can_load_object_with_text() {
         String name = createObjectWithText("bar");
-        Entity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
+        Entity app = new Starter().createApp(new File(PATH_FOR_TMP_FILES));
 
         Entity loaded = app.containerAspect_getByName(name);
 
@@ -75,7 +75,7 @@ public class TestApp {
 
     // returns the name of the created object
     private String createObjectWithText(String text) {
-        Entity app = Starter.createApp(new File(PATH_FOR_TMP_FILES));
+        Entity app = new Starter().createApp(new File(PATH_FOR_TMP_FILES));
         Entity entity = app.appA.createText(text);
         return entity.name;
     }

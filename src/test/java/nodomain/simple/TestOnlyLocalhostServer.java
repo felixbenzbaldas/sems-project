@@ -22,7 +22,7 @@ public class TestOnlyLocalhostServer {
     void can_create_onlyLocalhostServer() {
         File file = new File(PATH_FOR_TMP_FILES);
 
-        Entity onlyLocalhostServer = Starter.createOnlyLocalhostServer(file, 8085);
+        Entity onlyLocalhostServer = new Starter().createOnlyLocalhostServer(file, 8085);
 
         assertThat(onlyLocalhostServer.data.get("port")).isEqualTo(8085);
         assertThat((List<List<String>>) onlyLocalhostServer.data.get("content")).isEmpty();
@@ -32,10 +32,10 @@ public class TestOnlyLocalhostServer {
     @Test
     void can_load_onlyLocalhostServer() {
         File file = new File(PATH_FOR_TMP_FILES);
-        Entity app = Starter.createOnlyLocalhostServer(file, 8087);
+        Entity app = new Starter().createOnlyLocalhostServer(file, 8087);
         app.set("content", "some content");
 
-        Entity loaded = Starter.loadApp(file);
+        Entity loaded = new Starter().loadApp(file);
 
         assertThat(loaded.data.get("port")).isEqualTo(8087);
         assertThat(loaded.data.get("content")).isEqualTo("some content");
@@ -45,20 +45,20 @@ public class TestOnlyLocalhostServer {
     @Test
     void can_reset() {
         File file = new File(PATH_FOR_TMP_FILES);
-        Entity app = Starter.createOnlyLocalhostServer(file, 8087);
+        Entity app = new Starter().createOnlyLocalhostServer(file, 8087);
         app.set("content", "bar");
         assertThat(app.data.get("content")).isEqualTo("bar");
 
         app.appA.onlyLocalhostServer_reset();
 
         assertThat((List<List<String>>) app.data.get("content")).isEmpty();
-        Entity reloaded = Starter.loadApp(file);
+        Entity reloaded = new Starter().loadApp(file);
         assertThat((List<List<String>>) reloaded.data.get("content")).isEmpty();
     }
 
     @Test
     void can_create_text() {
-        Entity app = Starter.createOnlyLocalhostServer(new File(PATH_FOR_TMP_FILES), 8087);
+        Entity app = new Starter().createOnlyLocalhostServer(new File(PATH_FOR_TMP_FILES), 8087);
 
         String name = app.appA.onlyLocalhostServer_createText(List.of(), "foo");
 
