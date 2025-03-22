@@ -75,7 +75,7 @@ export class StarterA_FullStartG {
     async localApp() {
         let starter = this.getStarter();
         starter.createAppWithUI();
-        starter.theme('dark');
+        starter.theme('blackWhite');
         starter.checkTestMode();
         let appUi = await starter.createdApp.appA.uiA.createAppUi(true, true);
         starter.getEnvironment().ensureActive(appUi);

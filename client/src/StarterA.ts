@@ -163,7 +163,6 @@ export class StarterA {
             }
         }
         this.createdApp.appA.uiA.theme = this.nameThemeMap.get(themeName).call(null);
-        console.log('theme = ' + themeName);
     }
 
     async playground() {
