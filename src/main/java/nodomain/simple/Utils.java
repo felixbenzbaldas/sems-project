@@ -1,14 +1,11 @@
 package nodomain.simple;
 
-import jdk.jshell.execution.Util;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
@@ -22,9 +19,9 @@ public class Utils {
         }
     }
 
-    static public void copyFolder(Path src, Path dest) throws IOException {
-        try (Stream<Path> stream = Files.walk(src)) {
-            stream.forEach(source -> copy(source, dest.resolve(src.relativize(source))));
+    static public void copyDirectory(Path source, Path target) throws IOException {
+        try (Stream<Path> stream = Files.walk(source)) {
+            stream.forEach(sourceFile -> copy(sourceFile, target.resolve(source.relativize(sourceFile))));
         }
     }
 

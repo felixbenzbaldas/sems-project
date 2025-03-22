@@ -30,7 +30,7 @@ public class AppA_DeployG {
     }
 
     public void copy() throws IOException {
-        Utils.copyFolder(Path.of("client/dist"), Path.of(this.path + "/heroku/sems"));
+        Utils.copyDirectory(Path.of("client/dist"), Path.of(this.path + "/heroku/sems"));
     }
 
     private void deleteOldFiles() throws IOException {

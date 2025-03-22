@@ -47,7 +47,7 @@ public class Starter {
         Map<String, Object> backupConfig = (Map<String, Object>) config.get("backup");
         Map<String, Object> staticConfig = (Map<String, Object>) backupConfig.get("static");
         System.out.println(staticConfig.get("source"));
-        Utils.copyFolder(Path.of((String) staticConfig.get("source")), Path.of((String) staticConfig.get("target")));
+        Utils.copyDirectory(Path.of((String) staticConfig.get("source")), Path.of((String) staticConfig.get("target")));
     }
 
     public void run() {
