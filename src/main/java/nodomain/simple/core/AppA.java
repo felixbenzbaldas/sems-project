@@ -1,7 +1,5 @@
 package nodomain.simple.core;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.simple.AppA_DeployG;
 import nodomain.simple.Entity;
 import nodomain.simple.test.AppA_TestA;
