@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -30,25 +31,29 @@ public class Utils {
             stream.forEach(sourceFile -> {
                 if (sourceFile.toFile().isFile()) {
                     Path targetFile = target.resolve(source.relativize(sourceFile));
-                    if (replaceExisting) {
-                        try {
-                            Files.copy(sourceFile, targetFile, REPLACE_EXISTING);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    } else {
-                        if (!targetFile.toFile().exists()) {
-                            try {
-                                Files.copy(sourceFile, targetFile);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        } else {
-                            System.out.println("file already exists: " + targetFile.toString());
-                        }
-                    }
+                    copyFile(sourceFile, targetFile, replaceExisting);
                 }
             });
+        }
+    }
+
+    static public void copyFile(Path source, Path target, boolean replaceExisting) {
+        if (replaceExisting) {
+            try {
+                Files.copy(source, target, REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            if (!source.toFile().exists()) {
+                try {
+                    Files.copy(source, target);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                System.out.println("file already exists: " + target.toString());
+            }
         }
     }
 
@@ -62,9 +67,10 @@ public class Utils {
     }
 
     public static void writeToFile(File file, String text) throws FileNotFoundException {
-        PrintWriter printWriter = new PrintWriter(file);
-        printWriter.write(text);
-        printWriter.flush();
+        try (PrintWriter printWriter = new PrintWriter(file)) {
+            printWriter.write(text);
+            printWriter.flush();
+        }
     }
 
     public static String readFromFile(File file) throws IOException {

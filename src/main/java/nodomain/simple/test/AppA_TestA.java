@@ -109,6 +109,44 @@ public class AppA_TestA {
                 String expected = "{\\\"text\\\":\\\"quote\\\\\\\" newline\\\\n backslash\\\\\\\\end\\\"}";
                 System.out.println("expected          = " + expected);
                 return expected.equals(escapedJsonString);
+            }),
+            this.createTest("copyDirectory_replace", test -> {
+                test.file.mkdirs();
+                File source = new File(test.file, "source");
+                source.mkdir();
+                File target = new File(test.file, "target");
+                target.mkdir();
+                String nameOfTestfile = "testFile.txt";
+                File testFile = new File(source, nameOfTestfile);
+                testFile.createNewFile();
+                Utils.writeToFile(testFile, "foo");
+                File testFileTarget = new File(target, nameOfTestfile);
+                testFileTarget.createNewFile();
+                Utils.writeToFile(testFileTarget, "bar");
+
+                Utils.copyDirectory(source.toPath(), target.toPath(), true);
+
+                return target.listFiles().length == 1
+                    && Utils.readFromFile(target.listFiles()[0]).equals("foo");
+            }),
+            this.createTest("copyDirectory_withoutReplace", test -> {
+                test.file.mkdirs();
+                File source = new File(test.file, "source");
+                source.mkdir();
+                File target = new File(test.file, "target");
+                target.mkdir();
+                String nameOfTestfile = "testFile.txt";
+                File testFile = new File(source, nameOfTestfile);
+                testFile.createNewFile();
+                Utils.writeToFile(testFile, "foo");
+                File testFileTarget = new File(target, nameOfTestfile);
+                testFileTarget.createNewFile();
+                Utils.writeToFile(testFileTarget, "bar");
+
+                Utils.copyDirectory(source.toPath(), target.toPath(), false);
+
+                return target.listFiles().length == 1
+                    && Utils.readFromFile(target.listFiles()[0]).equals("bar");
             })
         );
     }
