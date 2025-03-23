@@ -38,6 +38,7 @@ public class Utils {
     }
 
     static public void copyFile(Path source, Path target, boolean replaceExisting) {
+        target.toFile().getParentFile().mkdirs();
         if (replaceExisting) {
             try {
                 Files.copy(source, target, REPLACE_EXISTING);

@@ -147,7 +147,24 @@ public class AppA_TestA {
 
                 return target.listFiles().length == 1
                     && Utils.readFromFile(target.listFiles()[0]).equals("bar");
+            }),
+            this.createTest("copyDirectory_nested", test -> {
+                test.file.mkdirs();
+                File source = new File(test.file, "source");
+                source.mkdir();
+                File target = new File(test.file, "target");
+                target.mkdir();
+                File directory = new File(source, "directory");
+                directory.mkdir();
+                String nameOfTestfile = "testFile.txt";
+                File testFile = new File(directory, nameOfTestfile);
+                testFile.createNewFile();
+
+                Utils.copyDirectory(source.toPath(), target.toPath());
+
+                return target.listFiles()[0].listFiles()[0].getName().equals(nameOfTestfile);
             })
+
         );
     }
 }
