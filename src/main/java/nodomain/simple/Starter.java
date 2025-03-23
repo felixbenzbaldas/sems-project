@@ -9,6 +9,8 @@ import nodomain.simple.test.AppA_TestA;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -45,9 +47,19 @@ public class Starter {
 
     public void backup() throws IOException {
         Map<String, Object> backupConfig = (Map<String, Object>) config.get("backup");
-        Map<String, Object> staticConfig = (Map<String, Object>) backupConfig.get("static");
-        System.out.println(staticConfig.get("source"));
-        Utils.copyDirectory(Path.of((String) staticConfig.get("source")), Path.of((String) staticConfig.get("target")), false);
+        {
+            Map<String, Object> staticConfig = (Map<String, Object>) backupConfig.get("static");
+            System.out.println(staticConfig.get("source"));
+            Utils.copyDirectory(Path.of((String) staticConfig.get("source")), Path.of((String) staticConfig.get("target")), false);
+        }
+        {
+            Map<String, Object> fullConfig = (Map<String, Object>) backupConfig.get("full");
+            Path target = Path.of((String) fullConfig.get("target"));
+            Path currentTarget = target.resolve(new Date().toString().replaceAll(":", "-"));
+            currentTarget.toFile().mkdir();
+            Path source = Path.of((String) fullConfig.get("source"));
+            Utils.copyDirectory(source, currentTarget);
+        }
     }
 
     public void run() {
