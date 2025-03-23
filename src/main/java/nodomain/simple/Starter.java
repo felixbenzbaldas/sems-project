@@ -55,7 +55,8 @@ public class Starter {
         {
             Map<String, Object> fullConfig = (Map<String, Object>) backupConfig.get("full");
             Path target = Path.of((String) fullConfig.get("target"));
-            Path currentTarget = target.resolve(new Date().toString().replaceAll(":", "-"));
+            String dateString = new SimpleDateFormat("yyMMdd_HH_mm_ss E").format(new Date());
+            Path currentTarget = target.resolve(dateString);
             currentTarget.toFile().mkdir();
             Path source = Path.of((String) fullConfig.get("source"));
             Utils.copyDirectory(source, currentTarget);
