@@ -61,6 +61,16 @@ public class Starter {
             Path source = Path.of((String) fullConfig.get("source"));
             Utils.copyDirectory(source, currentTarget);
         }
+        {
+            Map<String, Object> gitConfig = (Map<String, Object>) backupConfig.get("git");
+            String gitExe = (String) gitConfig.get("exe");
+            String source = (String) gitConfig.get("source");
+            String target = (String) gitConfig.get("target");
+            Utils.runMultiplePlatformCommands(
+                "cd \"" + source + "\"",
+                "\"" + gitExe + "\" push --progress \"" + target + "\" main:main",
+                "pause");
+        }
     }
 
     public void run() {
