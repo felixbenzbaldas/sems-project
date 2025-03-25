@@ -46,26 +46,28 @@ public class Starter {
     }
 
     public void backup() throws IOException {
-        Map<String, Object> backupConfig = (Map<String, Object>) config.get("backup");
+        Object backupConfig = JSONUtil.get(config, "backup");
         {
-            Map<String, Object> staticConfig = (Map<String, Object>) backupConfig.get("static");
-            System.out.println(staticConfig.get("source"));
-            Utils.copyDirectory(Path.of((String) staticConfig.get("source")), Path.of((String) staticConfig.get("target")), false);
+            Object staticConfig = JSONUtil.get(backupConfig, "static");
+            Utils.copyDirectory(
+                Path.of(JSONUtil.getString(staticConfig, "source")),
+                Path.of(JSONUtil.getString(staticConfig, "target")),
+                false);
         }
         {
-            Map<String, Object> fullConfig = (Map<String, Object>) backupConfig.get("full");
-            Path target = Path.of((String) fullConfig.get("target"));
+            Object fullConfig = JSONUtil.get(backupConfig, "full");
+            Path target = Path.of(JSONUtil.getString(fullConfig, "target"));
             String dateString = new SimpleDateFormat("yyMMdd_HH_mm_ss E").format(new Date());
             Path currentTarget = target.resolve(dateString);
             currentTarget.toFile().mkdir();
-            Path source = Path.of((String) fullConfig.get("source"));
+            Path source = Path.of(JSONUtil.getString(fullConfig, "source"));
             Utils.copyDirectory(source, currentTarget);
         }
         {
-            Map<String, Object> gitConfig = (Map<String, Object>) backupConfig.get("git");
-            String gitExe = (String) gitConfig.get("exe");
-            String source = (String) gitConfig.get("source");
-            String target = (String) gitConfig.get("target");
+            Object gitConfig = JSONUtil.get(backupConfig, "git");
+            String gitExe = JSONUtil.getString(gitConfig, "exe");
+            String source = JSONUtil.getString(gitConfig, "source");
+            String target = JSONUtil.getString(gitConfig, "target");
             Utils.runMultiplePlatformCommands(
                 "cd \"" + source + "\"",
                 "\"" + gitExe + "\" push --progress \"" + target + "\" main:main",
