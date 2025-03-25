@@ -1,7 +1,6 @@
 package nodomain.simple;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nodomain.simple.core.AppA;
 import nodomain.simple.test.AppA_TestA;
@@ -12,28 +11,19 @@ import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class Starter {
     public static final String TEST_RESOURCES_PATH = "./src/test/resources";
     public static final String PATH_FOR_TMP_FILES = TEST_RESOURCES_PATH + "/tmp";
 
-    public String deploymentPath;
-    public Map<String, Object> config;
+    public Object config;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         new Starter().start(args);
     }
 
-    public void start(String[] args) throws IOException {
-        try {
-            this.config = (Map<String, Object>) new ObjectMapper().readValue(new File(args[1]), Object.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        deploymentPath = (String) config.get("deploymentPath");
+    public void start(String[] args) throws Exception {
+        this.config = new ObjectMapper().readValue(new File(args[1]), Object.class);
         String method = args[0];
         switch (method) {
             case "test" -> test();
@@ -75,23 +65,27 @@ public class Starter {
         }
     }
 
+    public String getDeploymentPath() {
+        return JSONUtil.getString(this.config, "deploymentPath");
+    };
+
     public void run() {
-        Entity app = createDeployer(deploymentPath);
+        Entity app = createDeployer(this.getDeploymentPath());
         app.appA.deployG.run();
     }
 
     void deployAndRun() throws IOException {
-        Entity app = createDeployer(deploymentPath);
+        Entity app = createDeployer(this.getDeploymentPath());
         app.appA.deployG.deployAndRun();
     }
 
     void replaceAndRun() throws IOException {
-        Entity app = createDeployer(deploymentPath);
+        Entity app = createDeployer(this.getDeploymentPath());
         app.appA.deployG.replaceAndRun();
     }
 
     public void publish() {
-        Entity app = createDeployer(deploymentPath);
+        Entity app = createDeployer(this.getDeploymentPath());
         app.appA.deployG.publish();
     }
 
