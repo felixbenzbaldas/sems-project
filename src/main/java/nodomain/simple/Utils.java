@@ -46,7 +46,7 @@ public class Utils {
                 throw new RuntimeException(e);
             }
         } else {
-            if (!source.toFile().exists()) {
+            if (!target.toFile().exists()) {
                 try {
                     Files.copy(source, target);
                 } catch (IOException e) {
