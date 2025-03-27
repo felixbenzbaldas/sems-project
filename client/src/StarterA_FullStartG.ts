@@ -57,7 +57,9 @@ export class StarterA_FullStartG {
             await starter.createdApp.appA.uiA.presentationModeA_contentData.listA.add(resolved);
         }
         if (starter.getEnvironment().setTitle)  {
-            starter.getEnvironment().setTitle((await website.get('title'))?.text);
+            if (await website.has('title')) {
+                starter.getEnvironment().setTitle((await website.get('title')).text);
+            }
         }
         starter.checkTestMode();
         if (starter.isPublicWeb()) {
