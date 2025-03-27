@@ -48,10 +48,10 @@ public class Starter {
             Object fullConfig = JSONUtil.get(backupConfig, "full");
             Path target = Path.of(JSONUtil.getString(fullConfig, "target"));
             String dateString = new SimpleDateFormat("yyMMdd_HH_mm_ss E").format(new Date());
-            Path currentTarget = target.resolve(dateString);
-            currentTarget.toFile().mkdir();
+            Path targetWithTimestamp = target.resolve(dateString);
+            targetWithTimestamp.toFile().mkdir();
             Path source = Path.of(JSONUtil.getString(fullConfig, "source"));
-            Utils.copyDirectory(source, currentTarget);
+            Utils.copyDirectory(source, targetWithTimestamp);
         }
         {
             Object gitConfig = JSONUtil.get(backupConfig, "git");
