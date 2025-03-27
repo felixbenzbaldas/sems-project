@@ -86,6 +86,12 @@ export const testData : any = {
         },
         "21": {
             "text": "start",
+            "to": [
+                "..",
+                "asdf5345"
+            ]
+        },
+        "asdf5345": {
             "list": [
                 [
                     "..",
@@ -128,11 +134,9 @@ export const testData : any = {
         },
         "FObPP80aX9": {
             "text": "webMeta",
-            "list": [
-                [
-                    "..",
-                    "p5L6xkXZAO"
-                ]
+            "to": [
+                "..",
+                "p5L6xkXZAO"
             ]
         },
         "p5L6xkXZAO": {
@@ -168,11 +172,9 @@ export const testData : any = {
         },
         "jgapYx8aBB": {
             "text": "title",
-            "list": [
-                [
-                    "..",
-                    "8GcqgBbINN"
-                ]
+            "to": [
+                "..",
+                "8GcqgBbINN"
             ]
         },
         "8GcqgBbINN": {
