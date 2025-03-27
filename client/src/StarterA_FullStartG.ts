@@ -52,12 +52,12 @@ export class StarterA_FullStartG {
         starter.createData();
         starter.theme();
         let website = await starter.data.listA.findByText(starter.hostname())
-        let start = await website.listA.findByText('start');
+        let start = await website.get('start');
         for (let resolved of await start.listA.getResolvedList()) {
             await starter.createdApp.appA.uiA.presentationModeA_contentData.listA.add(resolved);
         }
         if (starter.getEnvironment().setTitle)  {
-            starter.getEnvironment().setTitle((await (await website.listA.findByText('title'))?.listA.getResolved(0)).text);
+            starter.getEnvironment().setTitle((await website.get('title'))?.text);
         }
         starter.checkTestMode();
         if (starter.isPublicWeb()) {

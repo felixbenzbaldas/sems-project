@@ -145,9 +145,10 @@ export class StarterA {
         this.createdApp.containerA.bind(this.data, 'data');
     }
 
+    // TODO
     async createUnboundWebMeta() : Promise<Entity> {
         let unboundData = this.createdApp.appA.unboundG.createFromJson(this.getEnvironment().jsonData);
-        let unboundWebMeta = await (await (await unboundData.listA.getResolved(0)).listA.findByText('webMeta')).listA.getResolved(0);
+        let unboundWebMeta = await (await unboundData.listA.getResolved(0)).get('webMeta');
         return unboundWebMeta;
     }
 
