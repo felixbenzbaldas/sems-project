@@ -178,4 +178,8 @@ export class UiA_AppA_GlobalEventG {
         let rawText = await this.getAppUi().focused.textG.getRawText(0);
         await this.getAppUi().output.setAndUpdateUi(rawText);
     }
+
+    async transformToProperty() {
+        await this.getAppUi().focused.transformToProperty();
+    }
 }

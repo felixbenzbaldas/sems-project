@@ -11,6 +11,7 @@ import {UiA_ImageA} from "@/ui/UiA_ImageA";
 import type {ContainerA} from "@/ContainerA";
 import {UiA_RelationshipA} from "@/ui/UiA_RelationshipA";
 import {UiA_ParameterizedActionA} from "@/ui/UiA_ParameterizedActionA";
+import {RelationshipA} from "@/RelationshipA";
 
 export class UiA {
 
@@ -760,5 +761,11 @@ export class UiA {
         } else {
             return this.withoutObjectG_collapsible;
         }
+    }
+
+    async transformToProperty() {
+        this.object.relationshipA = new RelationshipA(this.object);
+        this.listA = undefined;
+        await this.object.uis_update();
     }
 }

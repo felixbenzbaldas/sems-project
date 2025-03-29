@@ -30,6 +30,7 @@ export class UiA_AppA_CommandsA {
     importProfile: CommandA;
     clear: CommandA;
     exportRawText: CommandA;
+    transformToProperty: CommandA;
 
     constructor(public entity: Entity) {
     }
@@ -214,6 +215,13 @@ export class UiA_AppA_CommandsA {
             'export raw text',
             async () => {
                 await this.getGlobalEventG().exportRawText();
+            }
+        )
+
+        this.transformToProperty = this.addCommand(
+            'transform to property',
+            async () => {
+                await this.getGlobalEventG().transformToProperty();
             }
         )
     }
