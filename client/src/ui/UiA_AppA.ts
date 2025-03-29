@@ -210,6 +210,7 @@ export class UiA_AppA {
             this.commandsA.shakeTree.entity,
             this.commandsA.exportRawText.entity,
             this.commandsA.transformToProperty.entity,
+            this.commandsA.transformToPlainList.entity,
             await this.createParameterizedAction_createTextObjectWithName(),
             lowPriorityButtons
         );

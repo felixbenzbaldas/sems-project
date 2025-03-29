@@ -116,6 +116,7 @@ export class UiA {
                 } else {
                     this.fullWidth();
                 }
+                this.updateFocusStyle();
             } else {
                 this.fullWidth();
                 let divElement = div();
@@ -774,6 +775,11 @@ export class UiA {
     async transformToProperty() {
         this.object.relationshipA = new RelationshipA(this.object);
         this.listA = undefined;
+        await this.object.uis_update();
+    }
+
+    async transformToPlainList() {
+        this.object.text = undefined;
         await this.object.uis_update();
     }
 }

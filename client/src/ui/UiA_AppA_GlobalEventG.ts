@@ -182,4 +182,8 @@ export class UiA_AppA_GlobalEventG {
     async transformToProperty() {
         await this.getAppUi().focused.transformToProperty();
     }
+
+    async transformToPlainList() {
+        await this.getAppUi().focused.transformToPlainList();
+    }
 }

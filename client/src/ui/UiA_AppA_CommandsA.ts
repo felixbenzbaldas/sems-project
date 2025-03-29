@@ -31,6 +31,7 @@ export class UiA_AppA_CommandsA {
     clear: CommandA;
     exportRawText: CommandA;
     transformToProperty: CommandA;
+    transformToPlainList: CommandA;
 
     constructor(public entity: Entity) {
     }
@@ -222,6 +223,13 @@ export class UiA_AppA_CommandsA {
             'transform to property',
             async () => {
                 await this.getGlobalEventG().transformToProperty();
+            }
+        )
+
+        this.transformToPlainList = this.addCommand(
+            'transform to PlainList',
+            async () => {
+                await this.getGlobalEventG().transformToPlainList();
             }
         )
     }
