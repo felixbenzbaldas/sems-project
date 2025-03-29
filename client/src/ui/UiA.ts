@@ -268,22 +268,30 @@ export class UiA {
     }
 
     async newSubitem() {
-        if (!this.object.listA) {
-            this.object.installListA();
+        if (this.object.relationshipA) {
+            let created = await this.findContainerForNewSubitem().createText('');
+            this.object.relationshipA.to = this.object.getPath(created);
+            await this.object.uis_update();
+            this.findAppUi().focus(this.entity.uiA.relationshipA.bodyContentUi);
+            this.findAppUi().focused.enterEditMode();
+        } else {
+            if (!this.object.listA) {
+                this.object.installListA();
+            }
+            let created = await this.findContainerForNewSubitem().createText('');
+            let position = 0;
+            let listA = this.object.listA;
+            await listA.insertPathOrDirectAtPosition(created, position);
+            if (notNullUndefined(this.object.text)) {
+                created.context = created.getPath(this.object);
+            }
+            await listA.entity.uis_update_addedListItem(position);
+            if (!this.isPlainList()) {
+                await this.ensureExpanded();
+            }
+            this.findAppUi().focus(this.entity.uiA.listA.elements[position]);
+            this.findAppUi().focused.enterEditMode();
         }
-        let created = await this.findContainerForNewSubitem().createText('');
-        let position = 0;
-        let listA = this.object.listA;
-        await listA.insertPathOrDirectAtPosition(created, position);
-        if (notNullUndefined(this.object.text)) {
-            created.context = created.getPath(this.object);
-        }
-        await listA.entity.uis_update_addedListItem(position);
-        if (!this.isPlainList()) {
-            await this.ensureExpanded();
-        }
-        this.findAppUi().focus(this.entity.uiA.listA.elements[position]);
-        this.findAppUi().focused.enterEditMode();
     }
 
     findContainerForNewSubitem() : ContainerA {
