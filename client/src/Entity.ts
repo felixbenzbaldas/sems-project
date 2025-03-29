@@ -351,30 +351,31 @@ export class Entity {
         }
     }
 
-    getUrl() : string {
-        if (this.getFixedUrl()) {
-            return this.getFixedUrl();
+    async getUrl() : Promise<string> {
+        if (await this.getFixedUrl()) {
+            return await this.getFixedUrl();
         } else {
-            let superiorWithFixedUrl = this.getSuperiorWithFixedUrl();
+            let superiorWithFixedUrl = await this.getSuperiorWithFixedUrl();
             if (superiorWithFixedUrl) {
-                return ensureEndsWithSlash(superiorWithFixedUrl.getFixedUrl()) + superiorWithFixedUrl.getPath(this).listOfNames.join('/');
+                return ensureEndsWithSlash(await superiorWithFixedUrl.getFixedUrl()) + superiorWithFixedUrl.getPath(this).listOfNames.join('/');
             }
         }
         return undefined;
     }
 
-    getFixedUrl() : string {
-        if (this.text?.startsWith('#http')) {
-            return this.text.substring(1);
+    async getFixedUrl() : Promise<string> {
+        let propertyName = 'fixedUrl';
+        if (await this.has(propertyName)) {
+            return (await this.get(propertyName)).text;
         }
     }
 
-    getSuperiorWithFixedUrl() : Entity {
+    async getSuperiorWithFixedUrl() : Promise<Entity> {
         if (this.container) {
-            if (this.container.getFixedUrl()) {
+            if (await this.container.getFixedUrl()) {
                 return this.container;
             } else {
-                return this.container.getSuperiorWithFixedUrl();
+                return await this.container.getSuperiorWithFixedUrl();
             }
         } else {
             return undefined;
@@ -427,7 +428,7 @@ export class Entity {
     }
 
     async has(propertyName : string) {
-        return notNullUndefined(await this.getProperty(propertyName));
+        return notNullUndefined(this.listA) && notNullUndefined(await this.getProperty(propertyName));
     }
 
     async getProperty(propertyName : string) : Promise<RelationshipA> {

@@ -113,7 +113,7 @@ export class UiA_BodyG {
         this.content_meta_htmlElement.appendChild(hideButton);
         let app = this.entity.getApp();
         let meta = app.unboundG.createList();
-        let url = this.getObject().getUrl();
+        let url = await this.getObject().getUrl();
         if (notNullUndefined(url)) {
             meta.listA.addDirect(app.unboundG.createLink(url));
         }
