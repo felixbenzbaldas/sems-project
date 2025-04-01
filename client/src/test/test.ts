@@ -318,8 +318,9 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs(code.codeG_jsFunction, jsFunction);
     });
     tests.add('getUrl', async run => {
-        let container = await run.app.createText('#https://testdomain6.org');
+        let container = await run.app.createBoundEntity();
         container.installContainerA();
+        await container.set('fixedUrl', await run.app.createText('https://testdomain6.org'));
         let subContainer = await container.containerA.createBoundEntity('foo');
         subContainer.installContainerA();
         let object = await subContainer.containerA.createBoundEntity('testName');
