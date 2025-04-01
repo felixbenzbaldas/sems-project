@@ -109,7 +109,7 @@ export class Entity {
 
     pathOrDirect(object : Entity) : PathA {
         if (object.isUnbound()) {
-            return this.getApp().direct_typed(object);
+            return this.getApp().direct(object);
         } else {
             return this.getPath(object);
         }

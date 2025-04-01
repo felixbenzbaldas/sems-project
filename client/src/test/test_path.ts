@@ -63,7 +63,7 @@ export function test_path_add(tests : TestG_NestedTestsA) {
                 let entity = run.app.createEntityWithApp();
                 let path = run.app.direct(entity);
 
-                let resolved = await path.pathA.resolve();
+                let resolved = await path.resolve();
 
                 assert_sameAs(resolved, entity);
             });

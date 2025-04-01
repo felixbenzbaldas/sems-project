@@ -14,7 +14,7 @@ export class AppA_UnboundG {
     createList(...jsList : Array<Entity>) : Entity {
         let list = this.entity.appA.createEntityWithApp();
         list.listA = new ListA(list, ...(jsList.map(entity => {
-            return this.entity.appA.direct_typed(entity);
+            return this.entity.appA.direct(entity);
         })));
         return list;
     }
@@ -40,7 +40,7 @@ export class AppA_UnboundG {
         let entity = this.entity.appA.createEntityWithApp();
         entity.text = text;
         entity.listA = new ListA(entity, ...(jsList.map(entity => {
-            return this.entity.appA.direct_typed(entity);
+            return this.entity.appA.direct(entity);
         })));
         return entity;
     }
@@ -97,7 +97,7 @@ export class AppA_UnboundG {
         if (json instanceof Array) {
             return this.entity.appA.createPath(json, subjectForPaths);
         } else {
-            return this.entity.appA.direct_typed(this.createFromJson(json, subjectForPaths));
+            return this.entity.appA.direct(this.createFromJson(json, subjectForPaths));
         }
     }
 

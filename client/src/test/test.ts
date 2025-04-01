@@ -206,7 +206,7 @@ export function test_add(tests : TestG_NestedTestsA) {
             let list : Entity = await run.app.createList();
             let listItem : Entity = run.app.unboundG.createText('subitem');
 
-            await list.listA.insertPathAtPosition(run.app.direct(listItem).pathA, 0);
+            await list.listA.insertPathAtPosition(run.app.direct(listItem), 0);
 
             assert_sameAs(await list.listA.jsList[0].resolve(), listItem);
         });

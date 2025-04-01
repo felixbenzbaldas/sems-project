@@ -63,15 +63,11 @@ export class AppA {
         return path.pathA;
     }
 
-    direct(entity : Entity) : Entity {
+    direct(entity : Entity) : PathA {
         let path = this.createEntityWithApp();
         path.installPathA();
         path.pathA.direct = entity;
-        return path;
-    }
-
-    direct_typed(entity : Entity) : PathA {
-        return this.direct(entity).pathA;
+        return path.pathA;
     }
 
     async createLink(href: string, text?: string) {

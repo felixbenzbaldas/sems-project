@@ -69,7 +69,7 @@ export class StarterA {
         let queryParams = this.getEnvironment().url.searchParams;
         let pathParam : string = queryParams.get('run');
         let run : Entity = await (await this.createdApp.resolveListOfNames(pathParam.split('_'))).testG_run(!queryParams.has('withNest'));
-        this.createdApp.appA.uiA.mainColumnData.listA.jsList.push(this.createdApp.appA.direct_typed(run));
+        this.createdApp.appA.uiA.mainColumnData.listA.jsList.push(this.createdApp.appA.direct(run));
         return this.createdApp;
     }
 
