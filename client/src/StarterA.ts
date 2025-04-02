@@ -30,6 +30,9 @@ export class StarterA {
             }],
             ['dark', () => {
                 return Theme.dark();
+            }],
+            ['darkColorful', () => {
+                return Theme.darkColorful();
             }]
         ]);
     }

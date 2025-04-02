@@ -104,4 +104,26 @@ export class Theme {
         theme.containerColor = Color.LIGHT_GOLD;
         return theme;
     }
+
+    static darkColorful() : Theme {
+        let theme : Theme = new Theme();
+        theme.secondBackgroundColor = Color.GREY_2;
+        theme.secondMarkColor = 'green';
+        theme.highlight = Color.LIGHT_BEIGE;
+        theme.success = 'green';
+        theme.failure = 'red';
+        theme.meta = 'blue';
+        theme.font = 'unset';
+        theme.fontSize = '1rem';
+        theme.linkFontColor = 'default';
+        theme.containerColor = Color.LIGHT_GREY;
+        //
+        theme.backgroundColor = Color.BLACK;
+        theme.fontColor = Color.ORANGE;
+        theme.buttonFontColor = Color.DARK_BEIGE;
+        theme.markColor = Color.BLUE;
+        theme.focusBorderColor_viewMode = Color.RED;
+        theme.focusBorderColor_editMode = Color.GREEN;
+        return theme;
+    }
 }

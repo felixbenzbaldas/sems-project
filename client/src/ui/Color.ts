@@ -22,5 +22,15 @@ export class Color {
     static MORE_MORE_GREYER = 'hsl(0,0%,42%)';
     static DARK_GREY = 'rgb(72,72,72)';
 
+    static ORANGE = "#C77D55";
+    static BLACK = "#1E1F22";
+    static BLUE = "#3574F0";
+    static VIOLET = "#C07CBA";
+    static GREEN = "#6AAB73";
+    static LIGHT_GREY_2 = "#DFE1E5";
+    static DARK_DARK_GREY = "#2B2D30";
+    static DARK_BEIGE = "#C29E4A";
+    static RED = "#DA5C5C";
+    static GREY_2 = "#4E5157";
 
 }
