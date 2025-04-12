@@ -45,13 +45,6 @@ export class UiA_TextG {
                 this.getUiA().focus();
             }
         }
-        this.htmlElement.ondblclick = (event) => {
-            if (this.getUiA().isEditable()) {
-                if (!this.getUiA().editMode) {
-                    this.getUiA().enterEditMode();
-                }
-            }
-        }
         this.updateEmptyMarker();
         this.htmlElement.style.display = 'inline-block';
         this.htmlElement.style.minWidth = '1rem';

@@ -49,6 +49,13 @@ export class UiA_HeaderG {
                 event.preventDefault();
             }
         }
+        this.htmlElement.ondblclick = (event) => {
+            if (this.getUiA().isEditable()) {
+                if (!this.getUiA().editMode) {
+                    this.getUiA().enterEditMode();
+                }
+            }
+        }
         if (this.getUiA().relationshipA) {
             this.htmlElement.style.fontSize = '0.8rem';
             this.htmlElement.style.color = this.entity.getApp().uiA.theme.buttonFontColor;
