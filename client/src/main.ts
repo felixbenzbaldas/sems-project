@@ -1,3 +1,5 @@
+import './assets/styles.css'
+
 import {createApp} from 'vue'
 import HotdeploymentWrapper from "@/VueStarter.vue";
 
