@@ -108,8 +108,9 @@ export class UiA_BodyG {
         hideButton.onclick = async () => {
             await this.getUiA().hideMeta();
         }
-        hideButton.innerText = ' - ';
+        hideButton.innerText = '-';
         hideButton.style.marginLeft = '0.4rem';
+        hideButton.style.marginBottom = '0.4rem'; // for the shadow of the button
         this.content_meta_htmlElement.appendChild(hideButton);
         let app = this.entity.getApp();
         let meta = app.unboundG.createList();
