@@ -25,10 +25,10 @@ export class Entity {
     uis: Array<UiA>;
     context: PathA;
     commandA : CommandA;
-    parameterizedActionA: ParameterizedActionA;
     installCommandA() {
         this.commandA = new CommandA(this);
     }
+    parameterizedActionA: ParameterizedActionA;
     codeG_jsFunction: Function;
     listA: ListA;
     installListA() {
