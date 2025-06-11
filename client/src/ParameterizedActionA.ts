@@ -8,7 +8,7 @@ export class ParameterizedActionA {
 
     async runWithArgs(args: Entity) : Promise<any> {
         let resolvedArgs = [];
-        for (let parameter of this.entity.parameterizedActionA.parameters) {
+        for (let parameter of this.parameters) {
             if (parameter.type === 'stringValue') {
                 resolvedArgs.push((await args.get(parameter.name)).text);
             } else if (parameter.type === 'entity') {
