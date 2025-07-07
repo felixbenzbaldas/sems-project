@@ -392,6 +392,17 @@ export class UiA {
         });
     }
 
+    async scaleUp() {
+        if (this.isCollapsible() && this.isCollapsed()) {
+            await this.expandWithAnimation();
+        } else {
+            let children = await this.getListOfChildren();
+            for (let child of children) {
+                let result = await child.scaleUp();
+            }
+        }
+    }
+
     async scaleDown(noContextJump? : boolean) : Promise<boolean> {
         if (!this.isPlainList() && this.isCollapsed()) {
             if (!noContextJump && this.context) {
