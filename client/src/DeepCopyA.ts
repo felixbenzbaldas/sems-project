@@ -1,6 +1,7 @@
 import type {Entity} from "@/Entity";
 import type {PathA} from "@/PathA";
 import type {ContainerA} from "@/ContainerA";
+import {RelationshipA} from "@/RelationshipA";
 
 export class DeepCopyA {
 
@@ -41,6 +42,10 @@ export class DeepCopyA {
             for (let listItem of object.listA.jsList) {
                 emptyEntity.listA.jsList.push(emptyEntity.getPath(this.map.get(await listItem.resolve())));
             }
+        }
+        if (object.relationshipA) {
+            emptyEntity.installRelationshipA();
+            emptyEntity.relationshipA.to = emptyEntity.getPath(this.map.get(await object.relationshipA.to.resolve()));
         }
     }
 }

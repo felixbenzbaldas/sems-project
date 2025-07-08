@@ -9,8 +9,8 @@ import {TestG_NestedTestsA} from "@/tester/TestG_NestedTestsA";
 import {TestRunA} from "@/tester/TestRunA";
 import {DeepCopyA} from "@/DeepCopyA";
 import {CommandA} from "@/CommandA";
-import type {RelationshipA} from "@/RelationshipA";
-import type {ParameterizedActionA} from "@/ParameterizedActionA";
+import {RelationshipA} from "@/RelationshipA";
+import {ParameterizedActionA} from "@/ParameterizedActionA";
 
 export class Entity {
 
@@ -55,6 +55,9 @@ export class Entity {
         this.testG_nestedTestsA.install();
     }
     relationshipA: RelationshipA;
+    installRelationshipA() {
+        this.relationshipA = new RelationshipA(this);
+    }
 
     json_withoutContainedObjects() : any {
         let obj: any = {
@@ -341,6 +344,7 @@ export class Entity {
     deepCopy(targetContainer : ContainerA) : DeepCopyA {
         return new DeepCopyA(this, targetContainer);
     }
+
     async script_setContextForAllObjectsInContainer() {
         for (let value of [this, ...this.containerA.mapNameEntity.values()]) {
             if (value.listA) {

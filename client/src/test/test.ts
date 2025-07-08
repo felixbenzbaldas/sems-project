@@ -16,6 +16,7 @@ import {Environment} from "@/Environment";
 import {StarterA} from "@/StarterA";
 import {test_path_add} from "@/test/test_path";
 import {test_additional_add} from "@/test/test_additional";
+import {RelationshipA} from "@/RelationshipA";
 
 export function test_add(tests : TestG_NestedTestsA) {
     test_tester_add(tests);
@@ -54,7 +55,7 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_sameAs(copy.text, object.text);
         assert_sameAs(copy.collapsible, object.collapsible);
     });
-    tests.add('deepCopy', async run => {
+    tests.addTestWithNestedTests('deepCopy', async run => {
         let object = await run.app.createList();
         let targetContainer = await run.app.createBoundEntity();
         targetContainer.installContainerA();
@@ -76,6 +77,18 @@ export function test_add(tests : TestG_NestedTestsA) {
         assert_notSameAs(await copy.listA.getResolved(0), dependency);
         assert_sameAs(await (await copy.listA.getResolved(1)).context.resolve(), copy);
         assert_sameAs(copy.container, targetContainer);
+    }, deepCopyTests => {
+        deepCopyTests.add('property', async run => {
+           let property = await run.app.createText('testProperty');
+           property.installRelationshipA();
+           property.relationshipA.to = property.getPath(await run.app.createText('testValue'));
+
+           let copy : Entity = await property.deepCopy(run.app.entity.containerA).run();
+
+           assert_notSameAs(undefined, copy.relationshipA);
+           assert_sameAs(copy.text, 'testProperty');
+           assert_sameAs((await copy.relationshipA.to.resolve()).text, 'testValue');
+        });
     });
     tests.add('createBoundEntity', async run => {
         let entity = await run.app.createBoundEntity();

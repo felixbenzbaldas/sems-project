@@ -87,7 +87,7 @@ export class AppA_UnboundG {
             }
         }
         if (notNullUndefined(json.to)) {
-            entity.relationshipA = new RelationshipA(entity);
+            entity.installRelationshipA();
             entity.relationshipA.to = this.getPathOrDirectForJson(json.to, subjectForPaths);
         }
         return entity;

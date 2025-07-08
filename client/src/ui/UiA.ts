@@ -784,7 +784,7 @@ export class UiA {
     }
 
     async transformToProperty() {
-        this.object.relationshipA = new RelationshipA(this.object);
+        this.object.installRelationshipA();
         this.listA = undefined;
         await this.object.uis_update();
     }
