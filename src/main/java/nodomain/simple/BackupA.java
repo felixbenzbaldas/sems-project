@@ -2,11 +2,10 @@ package nodomain.simple;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class BackupA {
 
@@ -24,24 +23,41 @@ public class BackupA {
                 subBackupA.context = backupA;
             }
         }
-        System.out.println("has list: " + JSONUtil.has(json, "list"));
-        System.out.println("list: " + backupA.list.size());
         return backupA;
     }
 
-    public void run() {
-        System.out.println("compute path for source: " + computePath("source"));
-        list.forEach(BackupA::run);
+    public void run() throws IOException {
+        for (BackupA backupA : list) {
+            backupA.run();
+        }
         if (JSONUtil.has(json, "type")) {
-            if (JSONUtil.getString(json, "type").equals("full")) {
-                System.out.println("full!!!");
+            Path source = computePath("source");
+            Path target = computePath("target");
+            switch (JSONUtil.getString(json, "type")) {
+                case "full" -> {
+                    String dateString = new SimpleDateFormat("yyMMdd_HH_mm_ss E").format(new Date());
+                    Path targetWithTimestamp = target.resolve(dateString);
+                    targetWithTimestamp.toFile().mkdir();
+                    Utils.copyDirectory(source, targetWithTimestamp);
+                }
+                case "static" -> {
+                    Utils.copyDirectory(source, target, false);
+                }
+                case "git" -> {
+                    String gitExe = JSONUtil.getString(json, "exe");
+                    Utils.runMultiplePlatformCommands(
+                        "cd \"" + source + "\"",
+                        "\"" + gitExe + "\" push --progress \"" + target + "\" main:main",
+                        "pause");
+                }
             }
         }
     }
 
     public Path computePath(String propertyName) {
         Path localPath = Path.of(JSONUtil.getString(json, propertyName));
-        if (localPath.isAbsolute()) {
+        System.out.println("localPath = " + localPath);
+        if (localPath.isAbsolute()) { // TODO does not work for "F:"
             return localPath;
         } else {
             // TODO how to concat paths?
