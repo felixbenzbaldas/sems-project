@@ -31,7 +31,7 @@ public class Starter {
             case "deployAndRun" -> deployAndRun();
             case "replaceAndRun" -> replaceAndRun();
             case "publish" -> publish();
-            case "backup" -> backup();
+            case "backup" -> backup2();
         }
     }
 
@@ -63,6 +63,12 @@ public class Starter {
                 "\"" + gitExe + "\" push --progress \"" + target + "\" main:main",
                 "pause");
         }
+    }
+
+    public void backup2() throws IOException {
+        Object backupConfig = JSONUtil.get(config, "backup");
+        BackupA backupA = BackupA.createFromJson(backupConfig);
+        backupA.run();
     }
 
     public String getDeploymentPath() {
