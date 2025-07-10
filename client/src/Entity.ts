@@ -418,6 +418,10 @@ export class Entity {
         }
     }
 
+    canFindContainer() : boolean {
+        return !!this.containerA || !!this.container;
+    }
+
     async set(propertyName: string, value : Entity) {
         if (!this.listA) {
             this.installListA();
@@ -444,9 +448,15 @@ export class Entity {
     }
 
     async addProperty(propertyName : string) : Promise<RelationshipA> {
-        let property = await this.findContainer().createRelationship();
+        let property : RelationshipA;
+        if (this.canFindContainer()) {
+            property = await this.findContainer().createRelationship();
+            await this.listA.add(property.entity);
+        } else {
+            property = this.getApp().unboundG.createRelationship();
+            this.listA.addDirect(property.entity);
+        }
         property.entity.text = propertyName;
-        await this.listA.add(property.entity);
         return property;
     }
 

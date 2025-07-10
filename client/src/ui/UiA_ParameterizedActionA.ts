@@ -18,14 +18,17 @@ export class UiA_ParameterizedActionA {
             }
         }
         bodyContent.listA.addDirect(parameters);
+        let resultsProperty = await bodyContent.addProperty("results");
+        let resultsList = this.entity.getApp().unboundG.createList();
+        resultsProperty.to = this.entity.getApp().direct(resultsList);
         let button = this.entity.getApp().unboundG.createButton('run', async () => {
             let result = await this.entity.uiA.object.parameterizedActionA.runWithArgs(parameters);
             if (result) {
                 this.entity.getApp().uiA.clipboard = result;
                 this.entity.getApp().uiA.clipboard_lostContext = false;
             }
-            bodyContent.listA.addDirect(result);
-            await bodyContent.uis_update_addedListItem(bodyContent.listA.jsList.length - 1);
+            resultsList.listA.addDirect(result);
+            await resultsList.uis_update_addedListItem(resultsList.listA.jsList.length - 1);
             this.entity.uiA.findAppUi().signal('run: ' + this.entity.uiA.object.text);
         });
         bodyContent.listA.addDirect(button);
