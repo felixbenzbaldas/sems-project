@@ -33,6 +33,7 @@ public class BackupA {
         if (JSONUtil.has(json, "type")) {
             Path source = computePath("source");
             Path target = computePath("target");
+            System.out.println("computed paths: " + source + "    " + target);
             switch (JSONUtil.getString(json, "type")) {
                 case "full" -> {
                     String dateString = new SimpleDateFormat("yyMMdd_HH_mm_ss E").format(new Date());
@@ -55,11 +56,11 @@ public class BackupA {
     }
 
     public Path computePath(String propertyName) {
-        String pathString = JSONUtil.getString(json, propertyName);
-        if (pathString == null) pathString = "";
-        Path localPath = Path.of(pathString);
+        String localPathString = JSONUtil.getString(json, propertyName);
+        if (localPathString == null) localPathString = "";
+        Path localPath = Path.of(localPathString);
         System.out.println("localPath = " + localPath);
-        if (localPath.isAbsolute()) { // TODO does not work for "F:"
+        if (context == null) {
             return localPath;
         } else {
             // TODO how to concat paths?
