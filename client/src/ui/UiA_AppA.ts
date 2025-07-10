@@ -212,11 +212,24 @@ export class UiA_AppA {
             this.commandsA.transformToProperty.entity,
             this.commandsA.transformToPlainList.entity,
             await this.createParameterizedAction_createTextObjectWithName(),
+            await this.createParameterizedAction_find(),
             lowPriorityButtons
         );
     }
 
     async createParameterizedAction_createTextObjectWithName() : Promise<Entity> {
+        let find = this.getApp().unboundG.createText('find');
+        find.parameterizedActionA = new ParameterizedActionA(find);
+        find.parameterizedActionA.parameters.push(
+            new Parameter('pattern', 'stringValue')
+        );
+        find.codeG_jsFunction = async (pattern : string) => {
+            return (await this.getApp().profileG.getProfile().find(pattern)).entity;
+        }
+        return find;
+    }
+
+    async createParameterizedAction_find() : Promise<Entity> {
         let createTextObjectWithName = this.getApp().unboundG.createText('create text-object with name');
         createTextObjectWithName.parameterizedActionA = new ParameterizedActionA(createTextObjectWithName);
         createTextObjectWithName.parameterizedActionA.parameters.push(
