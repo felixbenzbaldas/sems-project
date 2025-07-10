@@ -55,7 +55,9 @@ public class BackupA {
     }
 
     public Path computePath(String propertyName) {
-        Path localPath = Path.of(JSONUtil.getString(json, propertyName));
+        String pathString = JSONUtil.getString(json, propertyName);
+        if (pathString == null) pathString = "";
+        Path localPath = Path.of(pathString);
         System.out.println("localPath = " + localPath);
         if (localPath.isAbsolute()) { // TODO does not work for "F:"
             return localPath;
