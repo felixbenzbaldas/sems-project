@@ -2,6 +2,7 @@ package nodomain.simple;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
@@ -37,12 +38,15 @@ public class BackupA {
             System.out.println("computed source: " + source);
             Path target = computePath("target");
             System.out.println("computed target: " + target);
+            if (!target.toFile().exists()) {
+                throw new RuntimeException("Target folder does not exist. Are you sure that it is right?");
+            }
             switch (type) {
                 case "full" -> {
                     String dateString = new SimpleDateFormat("yyMMdd_HH_mm_ss E").format(new Date());
                     Path targetWithTimestamp = target.resolve(dateString);
                     targetWithTimestamp.toFile().mkdir();
-                    Utils.copyDirectory(source, targetWithTimestamp);
+                    Utils.copyDirectory(source, targetWithTimestamp, false);
                 }
                 case "static" -> {
                     Utils.copyDirectory(source, target, false);
