@@ -63,14 +63,11 @@ public class BackupA {
     }
 
     public Path computePath(String propertyName) {
-        String localPathString = JSONUtil.getString(json, propertyName);
-        if (localPathString == null) localPathString = "";
-        Path localPath = Path.of(localPathString);
+        Path localPath = Path.of(Utils.emptyForNull(JSONUtil.getString(json, propertyName)));
         if (context == null) {
             return localPath;
         } else {
-            // TODO how to concat paths?
-            return Path.of(context.computePath(propertyName).toString(), localPath.toString());
+            return context.computePath(propertyName).resolve(localPath);
         }
     }
 }

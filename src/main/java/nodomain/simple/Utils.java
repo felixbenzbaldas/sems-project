@@ -84,4 +84,12 @@ public class Utils {
         String content = Utils.readFromFile(file);
         Utils.writeToFile(file, content.replace(toReplace, replacement));
     }
+
+    public static String emptyForNull(String aString) {
+        if (aString == null) {
+            return "";
+        } else {
+            return aString;
+        }
+    }
 }
