@@ -7,9 +7,6 @@ import nodomain.simple.test.AppA_TestA;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class Starter {
@@ -31,41 +28,11 @@ public class Starter {
             case "deployAndRun" -> deployAndRun();
             case "replaceAndRun" -> replaceAndRun();
             case "publish" -> publish();
-            case "backup" -> backup2();
+            case "backup" -> backup();
         }
     }
 
     public void backup() throws IOException {
-        Object backupConfig = JSONUtil.get(config, "backup");
-        {
-            Object staticConfig = JSONUtil.get(backupConfig, "static");
-            Utils.copyDirectory(
-                Path.of(JSONUtil.getString(staticConfig, "source")),
-                Path.of(JSONUtil.getString(staticConfig, "target")),
-                false);
-        }
-        {
-            Object fullConfig = JSONUtil.get(backupConfig, "full");
-            Path target = Path.of(JSONUtil.getString(fullConfig, "target"));
-            String dateString = new SimpleDateFormat("yyMMdd_HH_mm_ss E").format(new Date());
-            Path targetWithTimestamp = target.resolve(dateString);
-            targetWithTimestamp.toFile().mkdir();
-            Path source = Path.of(JSONUtil.getString(fullConfig, "source"));
-            Utils.copyDirectory(source, targetWithTimestamp);
-        }
-        {
-            Object gitConfig = JSONUtil.get(backupConfig, "git");
-            String gitExe = JSONUtil.getString(gitConfig, "exe");
-            String source = JSONUtil.getString(gitConfig, "source");
-            String target = JSONUtil.getString(gitConfig, "target");
-            Utils.runMultiplePlatformCommands(
-                "cd \"" + source + "\"",
-                "\"" + gitExe + "\" push --progress \"" + target + "\" main:main",
-                "pause");
-        }
-    }
-
-    public void backup2() throws IOException {
         Object backupConfig = JSONUtil.get(config, "backup");
         BackupA backupA = BackupA.createFromJson(backupConfig);
         backupA.run();
