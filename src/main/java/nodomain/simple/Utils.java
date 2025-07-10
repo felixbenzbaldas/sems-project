@@ -42,6 +42,7 @@ public class Utils {
         if (replaceExisting) {
             try {
                 Files.copy(source, target, REPLACE_EXISTING);
+                System.out.println("copied from " + source + " to " + target + " (REPLACE_EXISTING)");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -49,6 +50,7 @@ public class Utils {
             if (!target.toFile().exists()) {
                 try {
                     Files.copy(source, target);
+                    System.out.println("copied from " + source + " to " + target);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

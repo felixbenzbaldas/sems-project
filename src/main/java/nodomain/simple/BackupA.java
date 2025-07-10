@@ -31,10 +31,13 @@ public class BackupA {
             backupA.run();
         }
         if (JSONUtil.has(json, "type")) {
+            String type = JSONUtil.getString(json, "type");
+            System.out.println("job of type " + type);
             Path source = computePath("source");
+            System.out.println("computed source: " + source);
             Path target = computePath("target");
-            System.out.println("computed paths: " + source + "    " + target);
-            switch (JSONUtil.getString(json, "type")) {
+            System.out.println("computed target: " + target);
+            switch (type) {
                 case "full" -> {
                     String dateString = new SimpleDateFormat("yyMMdd_HH_mm_ss E").format(new Date());
                     Path targetWithTimestamp = target.resolve(dateString);
@@ -59,7 +62,6 @@ public class BackupA {
         String localPathString = JSONUtil.getString(json, propertyName);
         if (localPathString == null) localPathString = "";
         Path localPath = Path.of(localPathString);
-        System.out.println("localPath = " + localPath);
         if (context == null) {
             return localPath;
         } else {
