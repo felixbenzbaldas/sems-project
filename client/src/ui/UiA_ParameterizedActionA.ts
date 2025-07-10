@@ -24,6 +24,8 @@ export class UiA_ParameterizedActionA {
                 this.entity.getApp().uiA.clipboard = result;
                 this.entity.getApp().uiA.clipboard_lostContext = false;
             }
+            bodyContent.listA.addDirect(result);
+            await bodyContent.uis_update_addedListItem(bodyContent.listA.jsList.length - 1);
             this.entity.uiA.findAppUi().signal('run: ' + this.entity.uiA.object.text);
         });
         bodyContent.listA.addDirect(button);
