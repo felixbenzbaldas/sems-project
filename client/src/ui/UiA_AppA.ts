@@ -219,40 +219,35 @@ export class UiA_AppA {
     }
 
     async createParameterizedAction_createTextObjectWithName() : Promise<Entity> {
-        let createTextObjectWithName = this.getApp().unboundG.createText('create text-object with name');
-        createTextObjectWithName.parameterizedActionA = new ParameterizedActionA(createTextObjectWithName);
-        createTextObjectWithName.parameterizedActionA.parameters.push(
-            new Parameter('name', 'stringValue'),
-            new Parameter('container', 'entity'));
-        createTextObjectWithName.codeG_jsFunction = async (name : string, container : Entity) => {
-            let createdObject = await container.containerA.createBoundEntity(name);
-            createdObject.text = '';
-            return createdObject;
-        }
-        return createTextObjectWithName;
+        return this.getApp().createParameterizedAction(
+            'create text-object with name',
+            [new Parameter('name', 'stringValue'), new Parameter('container', 'entity')],
+            async (name : string, container : Entity) => {
+                let createdObject = await container.containerA.createBoundEntity(name);
+                createdObject.text = '';
+                return createdObject;
+            }
+        ).entity;
     }
 
     async createParameterizedAction_find() : Promise<Entity> {
-        let find = this.getApp().unboundG.createText('find');
-        find.parameterizedActionA = new ParameterizedActionA(find);
-        find.parameterizedActionA.parameters.push(
-            new Parameter('pattern', 'stringValue')
-        );
-        find.codeG_jsFunction = async (pattern : string) => {
-            return (await this.getApp().profileG.getProfile().containerA.find(pattern)).entity;
-        }
-        return find;
+        return this.getApp().createParameterizedAction(
+            'find',
+            [new Parameter('pattern', 'stringValue')],
+            async (pattern : string) => {
+                return (await this.getApp().profileG.getProfile().containerA.find(pattern)).entity;
+            }
+        ).entity;
     }
 
     async createParameterizedAction_findUsages() : Promise<Entity> {
-        let findUsages = this.getApp().unboundG.createText('find usages');
-        findUsages.parameterizedActionA = new ParameterizedActionA(findUsages);
-        findUsages.parameterizedActionA.parameters.push(
-            new Parameter('used', 'entity'));
-        findUsages.codeG_jsFunction = async (used : Entity) => {
-            return (await this.getApp().profileG.getProfile().containerA.findUsages(used)).entity;
-        }
-        return findUsages;
+        return this.getApp().createParameterizedAction(
+            'find usages',
+            [new Parameter('used', 'entity')],
+            async (used : Entity) => {
+                return (await this.getApp().profileG.getProfile().containerA.findUsages(used)).entity
+            }
+        ).entity;
     }
 
     isActive() : boolean {

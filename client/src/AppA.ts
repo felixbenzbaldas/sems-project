@@ -8,6 +8,8 @@ import type {Environment} from "@/Environment";
 import {AppA_TesterA} from "@/tester/AppA_TesterA";
 import type {ContainerA} from "@/ContainerA";
 import {AppA_ProfileG} from "@/AppA_ProfileG";
+import {ParameterizedActionA} from "@/ParameterizedActionA";
+import {Parameter} from "@/Parameter";
 
 export class AppA {
 
@@ -78,6 +80,14 @@ export class AppA {
         let starter = this.createEntityWithApp();
         starter.starterA = new StarterA(starter);
         return starter.starterA;
+    }
+
+    createParameterizedAction(name : string, parameters : Array<Parameter>, action : Function) : ParameterizedActionA {
+        let find = this.unboundG.createText(name);
+        find.parameterizedActionA = new ParameterizedActionA(find);
+        find.parameterizedActionA.parameters.push(...parameters);
+        find.codeG_jsFunction = action;
+        return find.parameterizedActionA;
     }
 
     async shakeTree_withMultipleRoots(roots : Array<Entity>, ...containers : Array<ContainerA>) {
