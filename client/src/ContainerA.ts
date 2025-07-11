@@ -1,6 +1,7 @@
 import {Entity} from "@/Entity";
-import {createRandomString, nullUndefined} from "@/utils";
+import {createRandomString, notNullUndefined, nullUndefined} from "@/utils";
 import type {RelationshipA} from "@/RelationshipA";
+import {ListA} from "@/ListA";
 
 export class ContainerA {
 
@@ -71,13 +72,28 @@ export class ContainerA {
     }
 
     countWithNestedEntities() : number {
-        let count = this.mapNameEntity.size;
+        return this.getEntitiesWithNested().size;
+    }
+
+    getEntitiesWithNested() : Set<Entity> {
+        let set : Set<Entity> = new Set<Entity>();
         for (let contained of this.mapNameEntity.values()) {
+            set.add(contained);
             if (contained.containerA) {
-                count += contained.containerA.countWithNestedEntities();
+                contained.containerA.getEntitiesWithNested().forEach(entity => set.add(entity));
             }
         }
-        return count;
+        return set;
+    }
+
+    async find(pattern: string) : Promise<ListA> {
+        let list = this.entity.getApp().unboundG.createList();
+        for (let entity of this.getEntitiesWithNested()) {
+            if (notNullUndefined(entity.text) && entity.text.indexOf(pattern) >= 0) {
+                list.listA.addDirect(entity);
+            }
+        }
+        return list.listA;
     }
 
     async createRelationship() : Promise<RelationshipA> {

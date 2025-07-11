@@ -466,20 +466,4 @@ export class Entity {
         }
         return null;
     }
-
-    async find(pattern: string) : Promise<ListA> {
-        let list = this.getApp().unboundG.createList();
-        if (notNullUndefined(this.text) && this.text.indexOf(pattern) >= 0) {
-            list.listA.addDirect(this);
-        }
-        if (this.containerA) {
-            for (let contained of this.containerA.mapNameEntity.values()) {
-                let subresults = await contained.find(pattern);
-                if (subresults.jsList.length > 0) {
-                    list.listA.addDirect(subresults.entity);
-                }
-            }
-        }
-        return list.listA;
-    }
 }
