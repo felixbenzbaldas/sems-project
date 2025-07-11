@@ -99,13 +99,8 @@ export class ContainerA {
     async findUsages(used : Entity) : Promise<ListA> {
         let list = this.entity.getApp().unboundG.createList();
         for (let entity of this.getEntitiesWithNested()) {
-            if (entity.listA) {
-                for (let subitem of await entity.listA.getResolvedList()) {
-                    if (used === subitem) {
-                        list.listA.addDirect(entity);
-                        break;
-                    }
-                }
+            if (await entity.uses(used)) {
+                list.listA.addDirect(entity);
             }
         }
         return list.listA;

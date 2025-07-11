@@ -466,4 +466,18 @@ export class Entity {
         }
         return null;
     }
+
+    async uses(used: Entity) : Promise<boolean> {
+        if (this.listA) {
+            for (let subitem of await this.listA.getResolvedList()) {
+                if (used === subitem) {
+                    return true;
+                }
+            }
+        }
+        if ((await this.relationshipA?.to?.resolve()) === used) {
+            return true;
+        }
+        return false;
+    }
 }
