@@ -60,10 +60,20 @@ public class Utils {
         }
     }
 
-    static public void runMultiplePlatformCommands(String ...commands) {
-        String joined = String.join(" &&", commands);
+    public static void runMultiplePlatformCommands(String... commands) {
+        String joined = String.join(" && ", commands);
+        String os = System.getProperty("os.name").toLowerCase();
         try {
-            Runtime.getRuntime().exec(new String[]{"cmd", "/c", "start cmd.exe /K \"" + joined + " && exit\""});
+            if (os.contains("win")) {
+                Runtime.getRuntime().exec(new String[]{
+                    "cmd", "/c", "start", "cmd.exe", "/K", joined + " && exit"
+                });
+            } else {
+                String[] linuxCommand = {
+                    "/bin/bash", "-c", joined
+                };
+                Runtime.getRuntime().exec(linuxCommand);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
