@@ -1,15 +1,9 @@
 .settings
 /.idea
-
 .gradle
 build/
 tomcat/bin/setenv.bat
 gradle.properties
-/installDevelopmentEnvironment.bat
-/test_client-core_and_e2e.bat
-/test_e2e.bat
-/test_everything.bat
-/runServer.bat
 
 /src/test/resources/tmp
-/installDevelopmentEnvironment-withIntellij.bat
+scripts/local/
