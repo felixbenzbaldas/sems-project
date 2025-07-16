@@ -1,1 +1,31 @@
-{"file": "C:\\...\\sems-data"}
+{
+	"file": "/base/path",
+	"deploymentPath": "/path/to/deployed/app",
+	"backup": {
+		"target": "/testMedium",
+		"source": "/testSource",
+		"list": [
+			{
+				"type": "git",
+				"exe": "git",
+				"source": "relative/path/to/git/project",
+				"target": "projectBackup"
+			},
+			{
+				
+				"list": [
+					{
+						"type": "static",
+						"source": "static files",
+						"target": "static"
+					},
+					{
+						"type": "full",
+						"source": "small files",
+						"target": "full"
+					}
+				]
+			}
+		]
+	}
+}
